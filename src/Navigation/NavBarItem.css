@@ -1,0 +1,29 @@
+.navbar-item{
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    display: flex;
+}
+.navbar-icon {
+    position: relative; 
+    /* width: 26px; */
+    height: 30px;
+    padding-left: 13px; 
+}
+
+.navbar-name {
+    display: block;
+    left: 76px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 16px;
+    color: #687178;
+}
+
+.left-line{
+    width: 5px;
+    height: 50px;
+    background: #85BF4B;
+}
+

@@ -1,0 +1,31 @@
+.navbar {
+    display: block;
+    box-shadow: inset -1px 0px 0px #DDDDDD;
+    position: absolute;
+    height: 100%;
+    width: 200px;
+    /* padding: 10px; */
+    
+}
+
+.org-icon{
+    height: 50px;
+}
+
+.org-name{
+    /* position: relative; */
+    /* width: 86px; */
+    height: 70px;
+    left: 112px; 
+    /* top: 37px; */
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    padding-top: 15px;
+    display: flex;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 18px;
+
+    color: #243847;
+}
