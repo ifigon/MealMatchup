@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 // Firebase Config
 var config = {
     apiKey: "AIzaSyD3Xc6UzuD85FqkgStaJL72yb_WDQCIv0Y",
@@ -6,5 +8,5 @@ var config = {
     projectId: "uw-foodwaste",
     storageBucket: "uw-foodwaste.appspot.com",
     messagingSenderId: "432006812093"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
