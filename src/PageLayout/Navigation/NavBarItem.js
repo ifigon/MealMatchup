@@ -17,11 +17,11 @@ class NavBarItem extends Component {
     }
 
     render(){
-        let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
+        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return(
             <div className="navbar-item" onClick={this.changeColor.bind(this)}>
                 {/* <div className="left-line"></div> */}
-                <img src={logo} className="navbar-icon"/>
+                <img src={logo} className="navbar-icon" alt="icon"/>
                 <p className="navbar-name">{this.props.value}</p>
             </div>
         )
