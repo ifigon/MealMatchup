@@ -1,0 +1,2 @@
+Food log card
+Filter bar (no search)
