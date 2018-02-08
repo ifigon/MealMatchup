@@ -1,0 +1,8 @@
+.navbar {
+    display: block;
+    box-shadow: inset -1px 0px 0px #DDDDDD;
+    position: absolute;
+    height: 100%;
+    width: 200px;
+    padding:0px 10px;
+}

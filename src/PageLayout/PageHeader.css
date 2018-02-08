@@ -1,0 +1,11 @@
+.page-name {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 36px;
+}
+
+.page-container{
+    border: 1px solid #DDDDDD;
+}

@@ -1,6 +1,6 @@
 // NavBarButton.js
 import React, {Component} from 'react';
-import logo from '../logo.svg';
+import logo from 'public-encrypt';
 import './NavBarItem.css';
 
 class NavBarItem extends Component {
@@ -13,7 +13,7 @@ class NavBarItem extends Component {
     }
 
     changeColor(){
-            this.setState({lineHighlighted: !this.state.lineHighlighted})
+        this.setState({lineHighlighted: !this.state.lineHighlighted})
     }
 
     render(){
