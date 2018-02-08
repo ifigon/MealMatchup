@@ -1,8 +1,7 @@
 // NavBar.js
 import React, {Component} from 'react';
 import NavBarItem from './NavBarItem';
-import './NavBar.css'
-import logo from 'public-encrypt';
+import './NavBar.css';
 
 class NavBar extends Component {
     render() {

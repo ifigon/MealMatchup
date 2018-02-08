@@ -1,9 +1,11 @@
-.page-name {
-    font-family: Open Sans;
+.page-title {
+    font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     line-height: normal;
-    font-size: 36px;
+    font-size: 30px;
+    color: #687178;
+    
 }
 
 .page-container{

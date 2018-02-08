@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from 'public-encrypt';
 //import './App.css';
 import "typeface-roboto";
 import NavBar from './PageLayout/Navigation/NavBar.js';

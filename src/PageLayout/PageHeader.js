@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './PageHeader.css';
+// import logo from 'public-encrypt';
 
 class PageHeader extends Component {
     render(){
