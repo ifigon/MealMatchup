@@ -3,6 +3,7 @@
 import logo from 'public-encrypt';
 import './SignUpIn.css';
 import StudentSignUp1 from './StudentSignUp1';
+import StudentSignUp2 from './StudentSignUp2';
 let React = require('react');
 // var ReactDOM = require('react-dom');
 let createReactClass = require('create-react-class');
@@ -70,11 +71,11 @@ let SignUpStudent = createReactClass({
                     nextStep={this.nextStep}
                     previousStep={this.previousStep}
                     saveValues={this.saveValues} />
-            // case 2:
-            //     return <SurveyFields fieldValues={fieldValues}
-            //         nextStep={this.nextStep}
-            //         previousStep={this.previousStep}
-            //         saveValues={this.saveValues} />
+            case 2:
+                return <StudentSignUp2 fieldValues={fieldValues}
+                    nextStep={this.nextStep}
+                    previousStep={this.previousStep}
+                    saveValues={this.saveValues} />
             // case 3:
             //     return <Confirmation fieldValues={fieldValues}
             //         previousStep={this.previousStep}
@@ -88,8 +89,10 @@ let SignUpStudent = createReactClass({
         //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
-                <span className="progress-step">Ste {this.state.step}</span>
+            <div className="signup">
+                {/* <span className="progress-step">Ste {this.state.step}</span> */}
                 {this.showStep()}
+                </div>
             </div>
         )
     }

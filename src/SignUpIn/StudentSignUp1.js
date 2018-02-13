@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 
 class StudentSignUp1 extends Component {
+    constructor(props){
+        super(props);
+    }
     render() {
         return (
-            <div className="signup">
+            <div className="signup-content">
                 <div className="form-block">
                     <label className="form-component">Organizing Details</label><br />
                     <input type="text" id="organization" className="form-component" placeholder="Organization Name" defaultValue={this.props.fieldValues.organizationName} /><br />
@@ -21,8 +24,8 @@ class StudentSignUp1 extends Component {
                     All fields are required unless specified
                     </div>
                 <div className="buttons">
-                    <span className="cancel" onClick={this.nextStep}>CANCEL</span>
-                    <span className="next">NEXT</span>
+                    <span className="cancel" onClick={this.previousStep} >CANCEL</span>
+                    <span className="next" onClick={this.nextStep}>NEXT</span>
                 </div>
             </div>
         )
