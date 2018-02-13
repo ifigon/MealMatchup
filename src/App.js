@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import "typeface-roboto";
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
+import SignUpStudent from './SignUpIn/SignUpStudent';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -13,10 +14,13 @@ class App extends Component {
   render() {
     return (
       <div className="">
-        <header className="">
+        {/* <header className="">
           <PageHeader value={"Phi Sigma Rho"}></PageHeader>
-        </header>
-        <NavBar></NavBar>
+        </header> */}
+        {/* <NavBar></NavBar> */}
+        <div>
+        <SignUpStudent/>
+        </div>
       </div>
     );
   }

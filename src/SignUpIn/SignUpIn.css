@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+
+.signup-wrapper{
+    background-image: url('./SignUpBG.jpg');
+    background-size: auto 100vh;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+
+}
+.signup{
+    margin: 0 auto;
+    width: 40%;
+    background-color: rgba(255,255,255,.95);
+    height: 100vh;
+}
+
+form{
+    padding-top: 20px;
+    margin: 0 auto;
+    width: 70%;
+}
+
+.form-block {
+    padding-top: 30px;
+}
+
+label.form-component{
+    font-size: 18px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+input.form-component{
+    width: 100%;
+    margin-top: 10px;
+    height: 25px;
+    border: 2px solid #BDBDBD;
+    font-size: 12px;
+    color: #BDBDBD;    
+    padding: 5px;
+}
+
+.disclaimer{
+    font-size: 12px;
+    color: #4F4F4F;
+    padding-top: 30vh;
+}
+
+.buttons{
+    font-weight: 600;
+    padding-top: 15px;
+}
+.next{
+    padding-left: 35%;;
+}
+.cancel{
+    padding-right: 35%;
+}
+
+/* Form placeholder color */
+::placeholder{
+    color: #BDBDBD;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #BDBDBD;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #BDBDBD;
+}
