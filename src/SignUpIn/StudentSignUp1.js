@@ -4,6 +4,7 @@ let ReactDOM = require('react-dom');
 class StudentSignUp1 extends Component {
     constructor(props){
         super(props);
+        console.log(props);
         this.nextStep = this.nextStep.bind(this);
     }
     render() {
@@ -26,8 +27,8 @@ class StudentSignUp1 extends Component {
                     All fields are required unless specified
                     </div>
                 <div className="buttons">
-                    <span className="cancel" onClick={this.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.nextStep}>NEXT</span>
+                    <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
+                    <span className="next" onClick={this.props.nextStep}>NEXT</span>
                 </div>
             </div>
         )

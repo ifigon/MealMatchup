@@ -18,8 +18,8 @@ class StudentSignUp3 extends Component {
                 </div>
 
                 <div className="buttons">
-                    <span className="cancel" onClick={this.previousStep}>CANCEL</span>
-                    <span className="next">NEXT</span>
+                    <span className="cancel" onClick={this.props.previousStep}>CANCEL</span>
+                    <span className="next">DONE</span>
                 </div>
             </div>
         )

@@ -6,18 +6,19 @@
     background-repeat: no-repeat;
     width: 100vw;
     height: 100vh;
-    font-family: 'Open Sans', sans-serif;
+   
 
 }
 .signup{
     margin: 0 auto;
-    width: 50%;
+    width: 35%;
     background-color: rgba(255,255,255,.95);
     height: 100vh;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .signup-content{
-padding: 30px;
+padding: 50px;
 }
 
 form{
@@ -56,14 +57,27 @@ input.form-component{
 .buttons{
     font-weight: 600;
     padding-top: 15px;
+    position: absolute;
+    bottom: 0;
+    margin: 30px;
 }
 .next{
-    padding-left: 35%;;
+    /* padding-left:60%;; */
+    position: absolute;
+    left: 0;
+}
+.next:hover{
+    cursor: pointer;
 }
 .cancel{
-    padding-right: 35%;
+    /* padding-right: 35%; */
+    position:absolute;
+    right:0;
+    padding-right: 50px;
 }
-
+.cancel:hover{
+    cursor: pointer;
+}
 /* Form placeholder color */
 ::placeholder{
     color: #BDBDBD;
@@ -73,4 +87,31 @@ input.form-component{
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
     color: #BDBDBD;
+}
+
+.button{
+    font-size:25px;
+    font-weight: 600;
+    color: #243847;
+    width:20vw;
+    height: 10vh;
+    background-color: rgba(255,255,255,.95);
+    border: none;
+    border-radius: 10px;
+}
+
+.button:hover{
+    background-color: rgba(255,255,255,.8);
+    cursor: pointer;
+}
+.button-wrapper{
+    width: 20%;
+    margin: 0 auto;
+    padding: 25px;
+    display: table;
+}
+.login-buttons{
+
+    width: 100%;
+    padding-top: 35vh;
 }
