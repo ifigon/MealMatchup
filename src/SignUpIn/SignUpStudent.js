@@ -4,6 +4,7 @@ import logo from 'public-encrypt';
 import './SignUpIn.css';
 import StudentSignUp1 from './StudentSignUp1';
 import StudentSignUp2 from './StudentSignUp2';
+import StudentSignUp3 from './StudentSignIn3';
 let React = require('react');
 // var ReactDOM = require('react-dom');
 let createReactClass = require('create-react-class');
@@ -25,7 +26,7 @@ let fieldValues = {
     password: null,
     memberName: null,
     memberNumber: null,
-    rsoName: null,
+    memberEmail: null,
     position: null
 }
 
@@ -76,10 +77,10 @@ let SignUpStudent = createReactClass({
                     nextStep={this.nextStep}
                     previousStep={this.previousStep}
                     saveValues={this.saveValues} />
-            // case 3:
-            //     return <Confirmation fieldValues={fieldValues}
-            //         previousStep={this.previousStep}
-            //         submitRegistration={this.submitRegistration} />
+            case 3:
+                return <StudentSignUp3 fieldValues={fieldValues}
+                    previousStep={this.previousStep}
+                    submitRegistration={this.submitRegistration} />
             // case 4:
             //     return <Success fieldValues={fieldValues} />
         }

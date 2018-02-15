@@ -44,6 +44,7 @@ input.form-component{
     font-size: 12px;
     color: #BDBDBD;    
     padding: 5px;
+    border-radius: 3px;
 }
 
 .disclaimer{
