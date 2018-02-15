@@ -1,0 +1,67 @@
+.item{
+    margin-left: 200px ;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    padding-bottom: 20px;
+}
+.flex {
+    justify-content: space-between;
+}
+.heading{
+    display: flex;
+    border-bottom: 1px solid #DDDDDD;
+    margin:20px 20px 0px 20px;
+    
+}
+
+.info{
+    margin: 0px 20px 0px 20px;
+    justify-content: space-between;
+}
+.info-title{
+    font-size: 16px;
+    font-weight: bold;
+    color: #243847;
+}
+
+.info-subtitle{
+    font-size: 14px;
+    color: #828282;
+    margin: 0px;
+}
+
+.info-detail{
+    font-size: 12px;
+    color: #828282;
+    margin: 0px;
+}
+
+.date{
+    color: #828282;
+}
+
+.delivery {
+    font-weight: bold;
+}
+
+p{
+    font-size: 20px;
+    margin-bottom: 0px;
+    /* font-weight: 700;  */
+}
+
+.subitem{
+    height: 90px;
+    width: 250px;
+}
+
+.donationItem{
+    color: #243847;
+}
+
+.food{
+    display: flex;
+}
