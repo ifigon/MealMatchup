@@ -8,7 +8,6 @@ import StudentSignUp1 from './StudentSignUp1';
 import StudentSignUp2 from './StudentSignUp2';
 import StudentSignUp3 from './StudentSignIn3';
 let React = require('react');
-// var ReactDOM = require('react-dom');
 let createReactClass = require('create-react-class');
 
 
@@ -71,25 +70,25 @@ let SignUpStudentController = createReactClass({
         switch (this.state.step) {
             case 0:
                 return <StudentSignUp
-                nextStep={this.nextStep}/>
+                    nextStep={this.nextStep} />
             case 1:
-                return                 <div  className="signup">
-                <StudentSignUp1 fieldValues={fieldValues}
-                    nextStep={this.nextStep}
-                    previousStep={this.previousStep}
-                    saveValues={this.saveValues} />
-                    </div>
+                return <div className="signup">
+                    <StudentSignUp1 fieldValues={fieldValues}
+                        nextStep={this.nextStep}
+                        previousStep={this.previousStep}
+                        saveValues={this.saveValues} />
+                </div>
             case 2:
-                return                 <div  className="signup">
-                <StudentSignUp2 fieldValues={fieldValues}
-                    nextStep={this.nextStep}
-                    previousStep={this.previousStep}
-                    saveValues={this.saveValues} /></div>
+                return <div className="signup">
+                    <StudentSignUp2 fieldValues={fieldValues}
+                        nextStep={this.nextStep}
+                        previousStep={this.previousStep}
+                        saveValues={this.saveValues} /></div>
             case 3:
-                return                 <div  className="signup">
-                <StudentSignUp3 fieldValues={fieldValues}
-                    previousStep={this.previousStep}
-                    submitRegistration={this.submitRegistration} /></div>
+                return <div className="signup">
+                    <StudentSignUp3 fieldValues={fieldValues}
+                        previousStep={this.previousStep}
+                        submitRegistration={this.submitRegistration} /></div>
             // case 4:
             //     return <Success fieldValues={fieldValues} />
         }
@@ -99,11 +98,11 @@ let SignUpStudentController = createReactClass({
         //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
-                 {/* <div  className="signup"> */}
-                    {/* <span className="progress-step">Ste {this.state.step}</span> */}
-                    {this.showStep()}
+                {/* <div  className="signup"> */}
+                {/* <span className="progress-step">Ste {this.state.step}</span> */}
+                {this.showStep()}
                 {/* </div> */}
-             </div>
+            </div>
         )
     }
 })
