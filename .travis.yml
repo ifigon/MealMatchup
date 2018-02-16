@@ -7,5 +7,6 @@ cache:
 script:
   - npm test
   - npm run build
-  # notifications:
-  #   slack: pairingfooddrg2017:QlorEBlSQNC0yEBi4yCpvV59
+notifications:
+  slack:
+    secure: mmnpHAnk0p7IpoWPuqdnaRyksd0fEY9XpW5jVyC0qd2wis4reqnsAWSHPwRH3xzX9cxSp4LxCgvDgZJ20yZpXNWFVdStbi1UkVA
