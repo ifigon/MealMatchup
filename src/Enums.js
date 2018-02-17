@@ -18,4 +18,4 @@ const RequestRepeatType = {
     MONTHLY: "monthly",
     // TODO Nth weekday of month
 };
-export default RepeatType;
+export default RequestRepeatType;
