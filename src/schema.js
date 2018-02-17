@@ -5,10 +5,11 @@ It is not complete and should be updated as we encounter more data that
 we need.
 */
 
-SCHOOL (Account)
+SCHOOL ("/accounts/")
 
 	// key = UID of this school account in firebase
 	RheaQY1WxJT03sTPQICFZ4STpfm1 : {  
+		accountType: "school"
 		name: "University of Washington",
 		ceebCode: "4854",
 		address: {
@@ -42,10 +43,11 @@ SCHOOL (Account)
 
 -----------------------------------------------------
 
-DONATING AGENCY (Not an account)
+DONATING AGENCY ("/donating_agencies/") //not an account
 
 	// key = auto generated key by firebase
 	-K9HdKlCLjjk_ka82K0s: {
+		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		name: "Local Point",
 		address: {
 			street1: "1201 NE Campus Pkwy",
@@ -54,7 +56,6 @@ DONATING AGENCY (Not an account)
 			state: "WA",
 			zipcode: 98105
 		},
-		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		isVerified: true,
 		isActivated: true,
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
@@ -66,10 +67,11 @@ DONATING AGENCY (Not an account)
 
 -----------------------------------------------------
 
-DONATING AGENCY MEMBER (account)
+DONATING AGENCY MEMBER ("/accounts/")
 
 	// key = UID of the member's account in firebase
 	dhA03LwTp3cibXVUcb3nQqO34wj1: {
+		accountType: "donating_agency_member",
 		agency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
 		name: "Andrea Benson",
 		email: "bensoa3@uw.edu",
@@ -82,10 +84,12 @@ DONATING AGENCY MEMBER (account)
 
 -----------------------------------------------------
 
-RECEIVING AGENCY (account)
+RECEIVING AGENCY ("/accounts/")
 
 	// key = UID of the receiving agency's account
 	uGOFJ8NqHjbZhKAYzSZFRs1dSKD3: {
+		accountType: "receiving_agency",
+		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		name: "Seattle Union Gospel Mission",
 		address: {
 			street1: "124 Sesame St.",
@@ -94,7 +98,6 @@ RECEIVING AGENCY (account)
 			state: "WA",
 			zipcode: 98115
 		},
-		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		isVerified: true,
 		isActivated: true,
 		primaryContact: {
@@ -102,7 +105,7 @@ RECEIVING AGENCY (account)
 			email: "chrisstack@uniongospel.org",
 			phone: 2065869876
 		},
-		accecptEmergencyPickups: true,
+		acceptEmergencyPickups: true,
 		notification: [
 		]
 	}
@@ -110,10 +113,12 @@ RECEIVING AGENCY (account)
 
 -----------------------------------------------------
 
-DELIVERER GROUP (account)
+DELIVERER GROUP ("/accounts/")
 
 	// key = UID of the deliverer group's account
 	R8BAHrxdkfQoAmfWvGa1OJmjQP43: {
+		accountType: "deliverer_group"
+		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		name: "Phi Sigma Ro",
 		address: {
 			street1: "124 Sesame St.",
@@ -122,7 +127,6 @@ DELIVERER GROUP (account)
 			state: "WA",
 			zipcode: 98115
 		},
-		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		isVerified: true,
 		isActivated: true,
 		coordinator: {
@@ -137,13 +141,16 @@ DELIVERER GROUP (account)
 
 -----------------------------------------------------
 
-DELIVERY REQUEST
+DELIVERY REQUEST ("/delivery_requests/")
 
 	// key = auto generated key by firebase
 	-L5QoXeC_UrL5tRRED3e: {
 		startDate: "2018-02-28",
-		endDate: "2018-05-30",
-		repeats: "weekly",	// values in Enums.RepeatType
+		duration: {
+			type: "date",  // Enums.RequestDurationType
+			value: "2018-05-30"  // a date for "date" or a number for "num_recurrences"
+		},
+		repeats: "weekly",	// values in Enums.RequestRepeatType
 		startTime: "14:00",
 		endTime: "17:00",
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
@@ -168,7 +175,7 @@ DELIVERY REQUEST
 
 -----------------------------------------------------
 
-DELIVERY
+DELIVERY ("/deliveries/")
 
 	// key = auto generated key by firebase
 	-L5RkIS0CSPuXpkewaqA: {
