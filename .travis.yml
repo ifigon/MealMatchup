@@ -5,8 +5,8 @@ cache:
   directories:
   - node_modules
 script:
-- npm test
-- npm run build
+  - npm test
+  - npm run build
 notifications:
   slack:
-    secure: mmnpHAnk0p7IpoWPuqdnaRyksd0fEY9XpW5jVyC0qd2wis4reqnsAWSHPwRH3xzX9cxSp4LxCgvDgZJ20yZpXNWFVdStbi1UkVA+4L0KoXK8MGb0KnkRqmyWFjwOFzSinhy8VkwbGJzIyckhMKbO+w7FKB1qinI05lAG+TCVXccAugOuTzY0j9szFBhNPKxM7EoYJvqnC6fiDgPOh1Yd2t7XfTa0Ybt3NKgammE+CKcaWzpsLX/BFSDAJvUulLmPKsr8aIQV+mAdln6QOo6iKuxryncK4kliG/dDzrgsquyTKc+9aMTbf6VWMIp3OHRbtXU1X8ekHkNBXpzuSYz2zxewHXHvU/00u+6hvrNBk/pr/LdgxtiJQEUcWSo/fXp4duw8gIPzHWXfQJMeVVFVWSxEDpf2hpGlrURpcSfcVvs/gHd5xqMu9Z97ZmsFojU0RPm2ozajpM9j4+VwpEUQqpc5bwq9jJl9eYNvZC1BxtkxBL8g02UOf2mc7ohb7nBFqdHsrOFpzDLb6rZZ5MSYic3zoKMt0n5PLnr7BiAHrRntI70y/m66NkQYfXFfzsfwhchmPCqKC6/LGnro4Iiurocc8LbpRTo6BYgQHg4I3IZ4kJuGKtvgs/7lucIpaU0o+mAlAS7+bts6qTbGwajjACyICnijc2Bxgy/+hLtvhSY=
+    secure: mmnpHAnk0p7IpoWPuqdnaRyksd0fEY9XpW5jVyC0qd2wis4reqnsAWSHPwRH3xzX9cxSp4LxCgvDgZJ20yZpXNWFVdStbi1UkVA
