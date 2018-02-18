@@ -5,6 +5,15 @@ export const AccountType = {
 	DELIVERER_GROUP: "deliverer_group"
 };
 
+export const PageContent = {
+	ASSIGN_VOLUNTEERS: "Assign Volunteers",
+	CALENDAR: "Calendar",
+	DIRECTORY: "Directory",
+	FOOD_LOGS: "Food Logs",
+	REQUEST_PICKUP: "Request Pickup",
+	SETTINGS: "Settings"
+};
+
 export const RequestDurationType = {
 	DATE: "date",  // an end date
 	RECUR: "num_recurrences"  // number of recurrences
