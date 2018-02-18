@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
+import firebase, { auth } from './FirebaseConfig.js';
 
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
@@ -22,7 +22,7 @@ class App extends Component {
 
 	componentDidMount() {
 		// check whether user is logged in
-		firebase.auth().onAuthStateChanged(function(user) {
+		auth.onAuthStateChanged(function(user) {
 			if (user) {
 				var accountRef = firebase.database().ref('accounts').child(user.uid);
 				accountRef.once('value').then(function(snapshot) {
@@ -56,14 +56,14 @@ class App extends Component {
 		} else {
 			testEmail = "testdeliverergroup@test.com";
 		}
-		firebase.auth().signInWithEmailAndPassword(testEmail, "123456");
+		auth.signInWithEmailAndPassword(testEmail, "123456");
 
 		console.log("Signed in with " + testEmail);
 	}
 
 	tempSignOut(event) {
 		event.preventDefault();
-		firebase.auth().signOut();
+		auth.signOut();
 	}
 	// ====================== End Temporary Testing Code ======================
 	
