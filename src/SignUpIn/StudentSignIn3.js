@@ -6,6 +6,11 @@ class StudentSignUp3 extends Component {
         super(props);
         this.nextStep = this.nextStep.bind(this);
     }
+
+    componentDidUpdate() {
+        console.log(this.props);
+    }
+
     render() {
         return (
             <div className="signup-content">
@@ -19,7 +24,7 @@ class StudentSignUp3 extends Component {
 
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep}>CANCEL</span>
-                    <span className="next">DONE</span>
+                    <span className="next" onClick={this.nextStep}>DONE</span>
                 </div>
             </div>
         )
@@ -36,8 +41,16 @@ class StudentSignUp3 extends Component {
 
         }
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.submitRegistration();
     }
+
+
+    // This is the last page in the sign in / sign up flow. Firebase code should be added here.
+    // The controller for student sign in and sign up page basically saves all the data that is required by the application.
+    // Need to get that data from the props that were passed to this page.
+
+    
+
 }
 export default StudentSignUp3;

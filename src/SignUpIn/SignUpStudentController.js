@@ -7,6 +7,7 @@ import StudentSignUp from './StudentSignUp';
 import StudentSignUp1 from './StudentSignUp1';
 import StudentSignUp2 from './StudentSignUp2';
 import StudentSignUp3 from './StudentSignIn3';
+import firebase from 'firebase/app'
 let React = require('react');
 let createReactClass = require('create-react-class');
 
@@ -62,8 +63,16 @@ let SignUpStudentController = createReactClass({
         // Handle via ajax submitting the user data, upon
         // success return this.nextStop(). If it fails,
         // show the user the error but don't advance
+        
+        firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
+            .then(user => {
+                console.log('User created: ' + user.uid);
+            })
+            .catch(error => {
+                console.log(error.message)
+            });
 
-        this.nextStep()
+        this.nextStep();
     },
 
     showStep: function () {
@@ -88,6 +97,7 @@ let SignUpStudentController = createReactClass({
                 return <div className="signup">
                     <StudentSignUp3 fieldValues={fieldValues}
                         previousStep={this.previousStep}
+                        saveValues={this.saveValues}
                         submitRegistration={this.submitRegistration} /></div>
             // case 4:
             //     return <Success fieldValues={fieldValues} />

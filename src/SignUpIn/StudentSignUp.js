@@ -11,7 +11,7 @@ class StudentSignUp extends Component {
     render() {
         return (
             <div className="login-buttons">
-                <div className="button-wrapper"><button className="button">LOGIN </button> </div>
+                <div className="button-wrapper"><button className="button">LOGIN</button> </div>
                 <div className="button-wrapper"><button className="button" onClick={this.nextStep}>CREATE ACCOUNT</button></div>
             </div>
         )
