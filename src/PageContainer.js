@@ -27,6 +27,7 @@ class PageContainer extends Component {
 
 				{/* TODO: hook up with navbar */}
 				{/* TODO: replace placeholder text with real components */}
+				<div style={{marginLeft: 210 + 'px'}}>Content Placeholder:
 				{this.state.content === PageContent.CALENDAR &&
 					<div>Calendar</div>
 				}
@@ -45,6 +46,7 @@ class PageContainer extends Component {
 				{this.state.content === PageContent.SETTINGS &&
 					<div>Settings</div>
 				}
+				</div>
 			</div>
         )
     }

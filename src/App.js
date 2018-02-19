@@ -16,6 +16,8 @@ class App extends Component {
 		super(props);
 
 		this.state = {
+			// TODO: a hack to prevent showing logged out page first.. better way?
+			authenticated: false,
 			account: null
 		};
 	}
@@ -27,6 +29,7 @@ class App extends Component {
 				var accountRef = firebase.database().ref('accounts').child(user.uid);
 				accountRef.once('value').then(function(snapshot) {
 					this.setState({
+						authenticated: true,
 						account: snapshot.val()
 					});
 				}.bind(this));
@@ -34,11 +37,11 @@ class App extends Component {
 				console.log("logged in");
 			} else {
 				this.setState({
+					authenticated: true,
 					account: null
 				});
-
 				console.log("not logged in");
-			}
+			}	
 		}.bind(this));
 	}
 
@@ -56,9 +59,14 @@ class App extends Component {
 		} else {
 			testEmail = "testdeliverergroup@test.com";
 		}
-		auth.signInWithEmailAndPassword(testEmail, "123456");
+		auth.signInWithEmailAndPassword(testEmail, "123456").then(function(user) {
+			console.log("Signed in with " + testEmail);
+			console.log("User.uid: " + user.uid);
+		}).catch(function(error) {
+		  	var errorMessage = error.message;
+		  	console.log("Sign in ERROR: " + errorMessage);
+		});
 
-		console.log("Signed in with " + testEmail);
 	}
 
 	tempSignOut(event) {
@@ -71,42 +79,46 @@ class App extends Component {
 	render() {
 		return (
 			<div className="">
-				{this.state.account ?
-					<div>
-						{/* Show Calendar page if user is logged in */}
-						<PageContainer 
-							account={this.state.account}
-							content={PageContent.CALENDAR}>
-						</PageContainer>
+				{this.state.authenticated ?
+					(this.state.account ?
+						<div>
+							{/* Show Calendar page if user is logged in */}
+							<PageContainer 
+								account={this.state.account}
+								content={PageContent.CALENDAR}>
+							</PageContainer>
 
 
-						{/* ============= Temp Testing Code ============= */}
-						<form 
-							onSubmit={this.tempSignOut.bind(this)}
-							style={{marginLeft: 250 + 'px'}}>
-							<input type="submit" value="Test SignOut" />
+							{/* ============= Temp Testing Code ============= */}
+							<form 
+								onSubmit={this.tempSignOut.bind(this)}
+								style={{marginLeft: 210 + 'px'}}>
+								<input type="submit" value="Test SignOut" />
+							</form>
+							{/* ============= End Testing Code ============= */}
+						</div>
+					:
+						/* Show landing page if user is logged out */
+
+						/* ============= Temp Testing Code ============= */
+						/* TODO: 
+						 * 1. Replace the temp debug signin with SignUpIn page 
+						 * 2. Remove tempSignIn function
+						 */
+						<form onSubmit={this.tempSignIn.bind(this)}>
+							<label>Test Account Type<br/>
+								<input type="radio" name="accountType" value="DAMember" />Donating Agency Member<br/>
+								<input type="radio" name="accountType" value="RA" />Receiving Agency<br/>
+								<input type="radio" name="accountType" value="DG" />Deliverer Group
+							</label><br/>
+							<input type="submit" value="Test SignIn" />
 						</form>
-						{/* ============= End Testing Code ============= */}
-					</div>
+						/* ============= End Testing Code ============= */
+					)
 				:
-					/* Show landing page if user is logged out */
-
-
-					/* ============= Temp Testing Code ============= */
-					/* TODO: 
-					 * 1. Replace the temp debug signin with SignUpIn page 
-					 * 2. Remove tempSignIn function
-					 */
-					<form onSubmit={this.tempSignIn.bind(this)}>
-						<label>Test Account Type<br/>
-							<input type="radio" name="accountType" value="DAMember" />Donating Agency Member<br/>
-							<input type="radio" name="accountType" value="RA" />Receiving Agency<br/>
-							<input type="radio" name="accountType" value="DG" />Deliverer Group
-						</label><br/>
-						<input type="submit" value="Test SignIn" />
-					</form>
-					/* ============= End Testing Code ============= */
+				<div></div>
 				}
+					
 				
 			</div>
 		);
