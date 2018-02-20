@@ -7,10 +7,6 @@ class StudentSignUp3 extends Component {
         this.nextStep = this.nextStep.bind(this);
     }
 
-    componentDidUpdate() {
-        console.log(this.props);
-    }
-
     render() {
         return (
             <div className="signup-content">
