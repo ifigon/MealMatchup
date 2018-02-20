@@ -5,6 +5,7 @@ import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import SignUpStudentController from './SignUpIn/SignUpStudentController';
 import UserTypeController from './SignUpIn/UserTypeController';
+import SignUpShelterController from './SignUpIn/SignUpShelterController';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -20,7 +21,7 @@ class App extends Component {
         </header> */}
         {/* <NavBar></NavBar> */}
         <div>
-        <SignUpStudentController/>
+        <SignUpShelterController/>
         {/* <UserTypeController/> */}
         </div>
       </div>
