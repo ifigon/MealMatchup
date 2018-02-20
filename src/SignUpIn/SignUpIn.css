@@ -54,7 +54,8 @@ input.form-component{
     font-size: 12px;
     color: #4F4F4F;
     bottom: 0;
-    padding-bottom: 9vh;
+    position: absolute;
+    padding-bottom: 70px;
     padding-left: 60px;
 }
 
