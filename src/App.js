@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 //import './App.css';
-import "typeface-roboto";
-import NavBar from './PageLayout/Navigation/NavBar.js';
-import PageHeader from './PageLayout/PageHeader.js';
-import SignUpStudentController from './SignUpIn/SignUpStudentController';
-import UserTypeController from './SignUpIn/UserTypeController';
+// import "typeface-roboto";
+// import NavBar from './PageLayout/Navigation/NavBar.js';
+// import PageHeader from './PageLayout/PageHeader.js';
+// import SignUpStudentController from './SignUpIn/SignUpStudentController';
+// import UserTypeController from './SignUpIn/UserTypeController';
 import SignUpShelterController from './SignUpIn/SignUpShelterController';
 
 // The main entry page to load when user is not signed in.

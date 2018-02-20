@@ -1,6 +1,5 @@
 // NavBarButton.js
 // import React, { Component } from 'react';
-import logo from 'public-encrypt';
 import './SignUpIn.css';
 // import './SignUpStudent';
 import StudentSignUp from './StudentSignUp';
@@ -90,7 +89,7 @@ let SignUpStudentController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-            case 3:
+            default:
                 return <div className="signup">
                     <div className="circle-wrapper">
                         <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>

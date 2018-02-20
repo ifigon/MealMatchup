@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
 
 class UserTypeSignUp extends Component {
     constructor(props){
@@ -13,13 +12,13 @@ class UserTypeSignUp extends Component {
                 <div className="user-type-box">
                     <div className="user-type-label">SELECT ACCOUNT TYPE</div>
                     <div  className="user-type">
-                        <img type="image/svg+xml" src="../../icons/volunteer.png" />   Student Group
+                        <img alt="" type="image/svg+xml" src="../../icons/volunteer.png" />   Student Group
                     </div>
                     <div className="user-type">
-                        <img type="image/svg+xml" src="../icons/shelter.svg" />    Receiving Agency
+                        <img alt="" type="image/svg+xml" src="../icons/shelter.svg" />    Receiving Agency
                     </div>
                     <div className="user-type">
-                        <img type="image/svg+xml" src="../icons/vitamins.svg" />     Donating Agency
+                        <img alt="" type="image/svg+xml" src="../icons/vitamins.svg" />     Donating Agency
                     </div>
                 </div>
             </div> 

@@ -1,6 +1,5 @@
 // NavBarButton.js
 // import React, { Component } from 'react';
-import logo from 'public-encrypt';
 import './SignUpIn.css';
 // import './SignUpShelter';
 import ShelterSignUp from './ShelterSignUp';
@@ -101,7 +100,7 @@ let SignUpShelterController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-            case 4:
+            default:
                 return <SignUpComplete />
         }
     },

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
 
 class SignUpComplete extends Component {
     constructor(props){

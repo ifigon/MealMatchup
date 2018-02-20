@@ -1,7 +1,7 @@
 // NavBarButton.js
 import './SignUpIn.css';
-import StudentSignUp1 from './StudentSignUp1';
-import SignUpStudentController from './SignUpStudentController';
+// import StudentSignUp1 from './StudentSignUp1';
+// import SignUpStudentController from './SignUpStudentController';
 import UserTypeSetUp from './UserTypeSetUp';
 let React = require('react');
 let createReactClass = require('create-react-class');
@@ -101,7 +101,7 @@ let UserTypeController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 0:
+            default:
             return
                 <UserTypeSetUp nextStep={this.nextStep} />
             // <div className="user-type-wrapper">
@@ -118,16 +118,16 @@ let UserTypeController = createReactClass({
             //         </div>
             //     </div>
             // </div> 
-            case 1:
-                return
-                <div className="signup">
-                    <StudentSignUp1
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        fieldValues={this.fieldValues}
-                        saveValues={this.saveValues}
-                    />
-                </div>
+            // default:
+            //     return
+            //     <div className="signup">
+            //         <StudentSignUp1
+            //             nextStep={this.nextStep}
+            //             previousStep={this.previousStep}
+            //             fieldValues={this.fieldValues}
+            //             saveValues={this.saveValues}
+            //         />
+            //     </div>
             // case 2:
             //     return                 <div  className="signup">
             //     <StudentSignUp2 fieldValues={fieldValues}
