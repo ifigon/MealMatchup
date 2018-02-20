@@ -1,3 +1,31 @@
 .food-container{
     margin: 20px;
 }
+
+.dropdown{
+    margin: 10px 0px 20px 210px;
+}
+
+.filter{
+    margin-left: 210px;
+    color: #4F4F4F;
+    font-weight: 0px;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+.dropdown {
+    position: relative;
+    display: inline;
+}
+
+span{
+    color: #5DC0F9;
+    font-size: 16px;
+}
