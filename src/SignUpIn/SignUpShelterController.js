@@ -75,6 +75,9 @@ let SignUpShelterController = createReactClass({
                     nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                    </div>
                     <ShelterSignUp1 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
@@ -82,12 +85,18 @@ let SignUpShelterController = createReactClass({
                 </div>
             case 2:
                 return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
+                    </div>
                     <ShelterSignUp2 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
             case 3:
                 return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
+                    </div>
                     <ShelterSignUp3 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
@@ -101,6 +110,7 @@ let SignUpShelterController = createReactClass({
         //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
+
                 {this.showStep()}
             </div>
         )
