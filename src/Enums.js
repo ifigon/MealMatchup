@@ -25,12 +25,9 @@ export const RequestRepeatType = {
     MONTHLY: "monthly",
     // TODO Nth weekday of month
 };
-<<<<<<< HEAD
-=======
 
 export const NotificationType = {
     NEW_ACCOUNT: "new_account",
     RECURRING_PICKUP_REQUEST: "recurring_pickup_request",
     RECURRING_PICKUP_CONFIRMED: "recurring_pickup_confirmed",
 };
->>>>>>> ac76a8b230429173c627443187c6b83c2bee4277
