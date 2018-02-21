@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 
 .signup-wrapper{
     background-image: url('./SignUpBG.jpg');
@@ -265,4 +265,26 @@ float: left;
 
 i {
     font-size: 1vw;
+}
+
+.week{
+    width:15%;
+    margin:5px;
+}
+
+label.delivery {
+    margin-bottom: 10px;
+}
+
+.am, .PM {
+    font-size: 1vw;
+    color: #5DC0F9;
+}
+
+.am{
+    font-weight: 300;
+}
+
+.PM {
+    font-weight: 700;
 }
