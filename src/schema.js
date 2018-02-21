@@ -38,6 +38,11 @@ SCHOOL ("/accounts/")
 			...
 		],
 		notificatioins: [
+			{
+				type: "new_account",  // Enums.NotificationType
+				content: null  // TBD
+			}, 
+			...
 		]
 	}
 
@@ -78,6 +83,11 @@ DONATING AGENCY MEMBER ("/accounts/")
 		phone: 2065436975,
 		isAdmin: true,
 		notifications: [
+			{
+				type: "recurring_pickup_confirmed",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
@@ -107,6 +117,11 @@ RECEIVING AGENCY ("/accounts/")
 		},
 		acceptEmergencyPickups: true,
 		notification: [
+			{
+				type: "recurring_pickup_request",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
@@ -135,6 +150,11 @@ DELIVERER GROUP ("/accounts/")
 			phone: 2064872859
 		},
 		notification: [
+			{
+				type: "recurring_pickup_request",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
