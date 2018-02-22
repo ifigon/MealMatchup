@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 let ReactDOM = require('react-dom');
 
 class ShelterSignUp4 extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
     }
@@ -10,22 +10,168 @@ class ShelterSignUp4 extends Component {
         return (
             <div className="signup-content">
                 <div className="form-block">
-                    <label className="form-component delivery">Delivery Days</label><br />
-                    <input type="checkbox"/>Mon <input className="week" type="text"/><span className="am">AM</span>/<span className="PM">PM</span> to <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span><br/>
-                    <input type="checkbox"/>Tue <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span> to <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span><br/>
-                    <input type="checkbox"/>Wed <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span> to <input type="text" className="week" className="week" /><span className="am">AM</span>/<span className="PM">PM</span><br/>
-                    <input type="checkbox"/>Thur <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span> to <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span><br/>
-                    <input type="checkbox"/>Fri <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span> to <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span><br/>
-                    <input type="checkbox"/>Sat <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span> to <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span><br/>
-                    <input type="checkbox"/>Sun <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span> to <input type="text" className="week" /><span className="am">AM</span>/<span className="PM">PM</span><br/>
+                    <label className="form-component delivery">Delivery Days</label>
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Mon</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Tue</div>
+                    <div className="time-input-wrapper">
+                        <div className="input-wrapper">
+                            <input className="week" type="text" />
+                            <div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                        to
+                     <div className="input-wrapper">
+                            <input type="text" className="week" /><div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Wed</div>
+                    <div className="time-input-wrapper">
+                        <div className="input-wrapper">
+                            <input className="week" type="text" />
+                            <div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                        to
+                     <div className="input-wrapper">
+                            <input type="text" className="week" /><div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Thur</div>
+                    <div className="time-input-wrapper">
+<div className="input-wrapper">
+                            <input className="week" type="text" />
+                            <div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                        to
+                     <div className="input-wrapper">
+                            <input type="text" className="week" /><div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Fri</div>
+                    <div className="time-input-wrapper">
+ <div className="input-wrapper">
+                            <input className="week" type="text" />
+                            <div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                        to
+                     <div className="input-wrapper">
+                            <input type="text" className="week" /><div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sat</div>
+                    <div className="time-input-wrapper">
+                        <div className="input-wrapper">
+                            <input className="week" type="text" />
+                            <div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                        to
+                     <div className="input-wrapper">
+                            <input type="text" className="week" /><div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sun</div>
+                    <div className="time-input-wrapper">
+ <div className="input-wrapper">
+                            <input className="week" type="text" />
+                            <div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                        to
+                     <div className="input-wrapper">
+                            <input type="text" className="week" /><div className="am-pm">
+                                <span className="am">AM</span>
+                                /
+                                <span className="PM">PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <br />
 
                     <div className="emergency-pickup">
-                    <label>Emergency Pick Up Available</label><img src="../..icons/truck.svg" alt="" height="30px"/><br/>
-                    <input type="checkbox"/>Pick up food from donating agency, if notified, in cases of emergency.
+                        <label>Emergency Pick Up Available</label><img src="../..icons/truck.svg" alt="" height="30px" /><br />
+                        <input type="checkbox" />Pick up food from donating agency, if notified, in cases of emergency.
                     </div>
                     <div className="food-weight">
-                    Amount of food preferred <br/>
-                    <input type="text"/> <i>lbs</i> to <input type="text"/> <i>lbs</i> 
+                        Amount of food preferred <br />
+                        <input type="text" /> <i>lbs</i> to <input type="text" /> <i>lbs</i>
                     </div>
                 </div>
 
