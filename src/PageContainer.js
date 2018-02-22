@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
+import DirectoryPage from './PageContent/Directory/DirectoryPage.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -29,7 +30,8 @@ class PageContainer extends Component {
                 {/* TODO: replace placeholder text with real components */}
                 <div style={{marginLeft: 210 + 'px'}}>Content Placeholder:
                 {this.state.content === PageContent.CALENDAR &&
-                    <div>Calendar</div>
+                    // <div>Calendar</div>
+                    <div><DirectoryPage /></div>
                 }
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&
                     <div>Assign Volunteers</div>
