@@ -67,6 +67,22 @@ let SignUpStudentController = createReactClass({
         firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {
                 console.log('User created: ' + user.uid);
+                let postData = {
+                    organizationName: fieldValues.organizationName,
+                    numVolunteers: fieldValues.numVolunteers,
+                    contactName: fieldValues.contactName,
+                    contactNumber: fieldValues.contactNumber,
+                    email: fieldValues.email,
+                    password: fieldValues.password,
+                    memberName: fieldValues.memberName,
+                    memberNumber: fieldValues.memberNumber,
+                    memberEmail: fieldValues.memberEmail,
+                    position: fieldValues.position
+                }
+                let newPostKey = firebase.database().ref().child('accounts').push().key;
+                let updates = {};
+                updates['/accounts/' + user.uid] = postData;
+                return firebase.database().ref().update(updates);
             })
             .catch(error => {
                 console.log(error.message)
