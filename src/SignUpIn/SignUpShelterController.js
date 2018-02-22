@@ -70,7 +70,7 @@ let SignUpShelterController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 4:
+            case 0:
                 return <ShelterSignUp
                     nextStep={this.nextStep} />
             case 1:
@@ -101,7 +101,7 @@ let SignUpShelterController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-            case 0:
+            case 4:
                 
             return <div className="signup">
             <div className="circle-wrapper">

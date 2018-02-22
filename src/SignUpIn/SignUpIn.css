@@ -274,7 +274,7 @@ i {
     height: 2vh;
 }
 
-label.delivery {
+label.delivery{
     display: block;
 }
 
@@ -287,7 +287,7 @@ label.delivery {
 }
 
 .am-pm{
-    font-size: 1vw;
+    font-size: .7rem;
     color: #5DC0F9;
     display: inline-block;
     float: right;
@@ -318,7 +318,7 @@ input.week{
 }
 
 .row{
-    font-size: 1.3vw;
+    font-size: 1.1vw;
 }
 
 .input-wrapper {
@@ -347,4 +347,47 @@ input.week{
 
 .time-input-wrapper{
     float: right;
+}
+
+.emergency-pickup-label {
+    font-size: 1.4vw;
+    display: block;
+    margin-bottom: -30px;
+}
+
+.pickup-p{
+    display: inline-block;
+    width: 80%;
+    vertical-align: middle;
+    padding-left: 10px;
+    font-size: .9rem;
+}
+
+.lbs{
+    width: 4vw;
+    background: white;
+    border: solid #BDBDBD 1px;
+    border-radius: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.food-weight{
+    font-size: .9rem;
+}
+
+.lbs-wrapper{
+    font-size: 1.3rem;
+    display: inline;
+
+}
+.lbs-wrapper1{
+    margin-right: 40px;
+}
+
+
+.lbs-wrapper2{
+    margin-left: 40px;
 }
