@@ -7,20 +7,30 @@ class NavBarItem extends Component {
     super();
 
     this.state = {
-        highlighted: false
+        highlighted: false,
+        content: null
       }
     }
 
-    changeColor(){
-        this.setState({highlighted: !this.state.highlighted})
-    }
+    // onClick(){
+    //     this.setState({
+    //         highlighted: !this.state.highlighted,
+    //         content: this.props.item
+    //     })
+    //     console.log(this.state.content);
+    // }
+
+    // componentDidMount(){
+    //     this.setState({
+    //         content:this.props.item
+    //     })
+    // }
 
     render(){
         let lineColor = this.state.highlighted ? '#5DC0F9' : ''
         let itemColor = this.state.highlighted ? '#F2F2F2' : ''
         return(
-            <div className="navbar-item" style={{background: itemColor}} onClick={this.changeColor.bind(this)}>
-            {/* <div className="navbar-item" style={{background: itemColor}}> */}
+            <div className="navbar-item" style={{background: itemColor}} onClick={() => this.props.handler(this.props.item)}>
                 <div style={{background: lineColor}} className="left-line"></div>
                 <img src={this.props.icon} className="navbar-icon" alt="icon"/>
                 <p className="navbar-name">{this.props.item}</p>
