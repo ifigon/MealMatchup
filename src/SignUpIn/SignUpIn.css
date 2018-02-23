@@ -394,3 +394,9 @@ input.week{
 .gap{
     padding-top: 40px;
 }
+
+.icon{
+position: absolute;
+margin-top: 1.5vh;
+margin-left: 19.5vw;
+}
