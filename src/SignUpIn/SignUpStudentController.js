@@ -60,7 +60,7 @@ let SignUpStudentController = createReactClass({
                 console.log('User created: ' + user.uid);
                 let postData = {
                     accountType: "deliverer_group",
-                    organizationName: fieldValues.organizationName,
+                    name: fieldValues.organizationName,
                     numVolunteers: fieldValues.numVolunteers,
                     address: {
                         street1: "Test Street 1",
@@ -75,7 +75,10 @@ let SignUpStudentController = createReactClass({
                         email: fieldValues.memberEmail,
                         phone: fieldValues.memberNumber,
                         position: fieldValues.position
-                    }
+                    },
+                    school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
+                    isActivated: true,
+                    isVerified: true
                 }
                 let updates = {};
                 updates['/accounts/' + user.uid] = postData;
