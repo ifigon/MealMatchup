@@ -122,7 +122,6 @@ let SignUpShelterController = createReactClass({
         //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
-                {console.log(this.state.step)}
                 {this.showStep()}
             </div>
         )

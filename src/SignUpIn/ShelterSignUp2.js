@@ -18,15 +18,14 @@ class ShelterSignUp2 extends Component {
                 </div>
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>DONE</span>
+                    <span className="next" onClick={this.props.nextStep}>NEXT</span>
                 </div>
             </div>
         )
     }
     nextStep(e) {
         e.preventDefault()
-        console.log(this);
-        console.log(this.refs);
+
         // Get values via this.refs
         var data = {
             organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,
