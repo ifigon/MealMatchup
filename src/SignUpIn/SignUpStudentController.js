@@ -3,7 +3,7 @@ import firebase from 'firebase/app'
 import StudentSignUp from './StudentSignUp';
 import StudentSignUp1 from './StudentSignUp1';
 import StudentSignUp2 from './StudentSignUp2';
-import StudentSignUp3 from './StudentSignIn3';
+import StudentSignUp3 from './StudentSignUp3';
 import SignUpComplete from './SignUpComplete';
 
 let React = require('react');
@@ -59,20 +59,27 @@ let SignUpStudentController = createReactClass({
             .then(user => {
                 console.log('User created: ' + user.uid);
                 let postData = {
+                    accountType: "deliverer_group",
                     organizationName: fieldValues.organizationName,
                     numVolunteers: fieldValues.numVolunteers,
-                    contactName: fieldValues.contactName,
-                    contactNumber: fieldValues.contactNumber,
+                    address: {
+                        street1: "Test Street 1",
+                        street2: "Test Street 2",
+                        city: "Test City",
+                        state: "Test State",
+                        zip: "Test Zip"
+                    },
                     email: fieldValues.email,
-                    password: fieldValues.password,
-                    memberName: fieldValues.memberName,
-                    memberNumber: fieldValues.memberNumber,
-                    memberEmail: fieldValues.memberEmail,
-                    position: fieldValues.position
+                    coordinator: {
+                        name: fieldValues.memberName,
+                        email: fieldValues.memberEmail,
+                        phone: fieldValues.memberNumber,
+                        position: fieldValues.position
+                    }
                 }
-                let newPostKey = firebase.database().ref().child('accounts').push().key;
                 let updates = {};
                 updates['/accounts/' + user.uid] = postData;
+                console.log(user.uid);
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
