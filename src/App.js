@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import firebase, { auth } from './FirebaseConfig.js';
-import { PageContent } from './Enums.js';
-import PageContainer from './PageContainer.js';
+// import firebase, { auth } from './FirebaseConfig.js';
+// import { PageContent } from './Enums.js';
+// import PageContainer from './PageContainer.js';
 import "typeface-roboto";
 // import './App.css';
 // import "typeface-roboto";
