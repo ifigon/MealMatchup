@@ -1,7 +1,6 @@
 // NavBarButton.js
 // import React, { Component } from 'react';
 import './SignUpIn.css';
-// import './SignUpDonator';
 import DonatorSignUp from './DonatorSignUp';
 import DonatorSignUp1 from './DonatorSignUp1';
 import DonatorSignUp2 from './DonatorSignUp2';

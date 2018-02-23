@@ -1,7 +1,4 @@
-// NavBarButton.js
-// import React, { Component } from 'react';
 import './SignUpIn.css';
-// import './SignUpStudent';
 import StudentSignUp from './StudentSignUp';
 import StudentSignUp1 from './StudentSignUp1';
 import StudentSignUp2 from './StudentSignUp2';
@@ -9,13 +6,6 @@ import StudentSignUp3 from './StudentSignIn3';
 let React = require('react');
 let createReactClass = require('create-react-class');
 
-
-// class SignUpStudent extends Component {
-// constructor(props, context){
-//     super(props, context)
-//     this.state = {
-//         step: 1
-//     }
 let fieldValues = {
     organizationName: null,
     numVolunteers: null,
@@ -89,7 +79,7 @@ let SignUpStudentController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-            default:
+            case 3:
                 return <div className="signup">
                     <div className="circle-wrapper">
                         <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
@@ -97,8 +87,8 @@ let SignUpStudentController = createReactClass({
                     <StudentSignUp3 fieldValues={fieldValues}
                         previousStep={this.previousStep}
                         submitRegistration={this.submitRegistration} /></div>
-            // case 4:
-            //     return <Success fieldValues={fieldValues} />
+            default:
+                return <SignUpComplete/>
         }
     },
 
