@@ -48,7 +48,8 @@ class PageContainer extends Component {
                     <div>Assign Volunteers</div>
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
-                    <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> 
+                    // <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> 
+                    <div>Request Pickup</div>
                 }
                 {this.state.content === PageContent.FOOD_LOGS &&
                     <div>Food Logs</div>
