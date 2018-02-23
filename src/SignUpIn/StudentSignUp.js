@@ -1,7 +1,6 @@
 // No log in functionality yet
 
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
 
 class StudentSignUp extends Component {
     constructor(props) {
