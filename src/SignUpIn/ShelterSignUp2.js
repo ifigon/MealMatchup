@@ -2,41 +2,191 @@ import React, { Component } from 'react'
 let ReactDOM = require('react-dom');
 
 class ShelterSignUp2 extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        console.log(props);
         this.nextStep = this.nextStep.bind(this);
     }
+
     render() {
+        // let amWeight = this.state.am_font_weight;
+        // let pmWeight = this.state.pm_font_weight;
         return (
             <div className="signup-content">
                 <div className="form-block">
-                    <label className="form-component">Account Details</label><br />
-                    <input ref="email"type="text" id="organization" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} /><br />
-                    <input ref="password" type="password" id="password" className="form-component" placeholder="Password" defaultValue={this.props.fieldValues.password} />
-                    <input type="password" className="form-component" placeholder="Confirm Password" defaultValue={this.props.fieldValues.password} />
+                    <label className="form-component delivery">Delivery Days</label>
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Mon</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Tue</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Wed</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Thur</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Fri</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sat</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sun</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="emergency-pickup">
+                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img src="../..icons/truck.svg" alt="" height="30px" type="image/svg+xml"/><br />
+                        <input type="checkbox" className="checkbox" /><p className="pickup-p">Pick up food from donating agency, if notified, in cases of emergency.</p>
+                    </div>
+                    <div className="food-weight">
+                        Amount of food preferred: <br /><div className="lbs-wrapper lbs-wrapper1">
+                            <input type="text" className="lbs" /> <i>lbs</i></div> to <div className="lbs-wrapper lbs-wrapper2"><input type="text" className="lbs" /> <i>lbs</i></div>
+                    </div>
                 </div>
+
                 <div className="buttons">
-                    <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>NEXT</span>
+                    <span className="cancel" onClick={this.props.previousStep}>CANCEL</span>
+                    <span className="next" onClick={this.nextStep}>NEXT</span>
                 </div>
             </div>
         )
     }
     nextStep(e) {
         e.preventDefault()
-        console.log(this);
-        console.log(this.refs);
-        // Get values via this.refs
-        var data = {
-            organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,
-            numVolunteers: ReactDOM.findDOMNode(this.refs.numVolunteers).value,
-            contactName: ReactDOM.findDOMNode(this.refs.contactName).value,
-            contactEmail: ReactDOM.findDOMNode(this.refs.contactEmail).value,
-            contactNumber: ReactDOM.findDOMNode(this.refs.contactNumber).value,
-        }
-
-        this.props.saveValues(data)
         this.props.nextStep()
     }
 }

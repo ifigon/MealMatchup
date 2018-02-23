@@ -12,7 +12,7 @@ class UserTypeSignUp extends Component {
                 <div className="user-type-box">
                     <div className="user-type-label">SELECT ACCOUNT TYPE</div>
                     <div  className="user-type">
-                        <img alt="" type="image/svg+xml" src="../../icons/volunteer.png" />   Student Group
+                        <img alt="" type="image/svg+xml" src="../../icons/volunteer.svg" />   Student Group
                     </div>
                     <div className="user-type">
                         <img alt="" type="image/svg+xml" src="../icons/shelter.svg" />    Receiving Agency
