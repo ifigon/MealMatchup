@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 // import NavBar from './PageLayout/Navigation/NavBar.js';
 // import PageHeader from './PageLayout/PageHeader.js';
 // import SignUpStudentController from './SignUpIn/SignUpStudentController';
-// import UserTypeController from './SignUpIn/UserTypeController';
-import SignUpShelterController from './SignUpIn/SignUpShelterController';
+import UserTypeController from './SignUpIn/UserTypeController';
+// import SignUpShelterController from './SignUpIn/SignUpShelterController';
 // import SignUpDonatorController from './SignUpIn/SignUpDonatorController';
 
 // The main entry page to load when user is not signed in.
@@ -22,7 +22,7 @@ class App extends Component {
         </header> */}
         {/* <NavBar></NavBar> */}
         <div>
-        <SignUpShelterController/>
+        <UserTypeController/>
         {/* <UserTypeController/> */}
         </div>
       </div>

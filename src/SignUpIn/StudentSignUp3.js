@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 let ReactDOM = require('react-dom');
 
-class StudentSignUp2 extends Component {
+class StudentSignUp3 extends Component {
     constructor(props){
         super(props);
         this.nextStep = this.nextStep.bind(this);
@@ -10,15 +10,16 @@ class StudentSignUp2 extends Component {
         return (
             <div className="signup-content">
                 <div className="form-block">
-                    <label className="form-component">Account Details</label><br />
-                    <input ref="email" type="text" id="email" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} /><br />
-                    <input ref="password" type="password" id="password" className="form-component" placeholder="Password" defaultValue={this.props.fieldValues.password} />
-                    <input type="password" id="confirm-password" className="form-component" placeholder="Confirm Password" defaultValue={this.props.fieldValues.password} />
+                    <label className="form-component">Personal Details</label><br />
+                    <input ref="memberName" type="text" id="memberName" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.memberName} /><br />
+                    <input ref="position" type="text" id="position" className="form-component" placeholder="Position" defaultValue={this.props.fieldValues.position} />
+                    <input ref="memberEmail" type="text" id="memberPassword" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.memberEmail} />
+                    <input ref="memberNumber" type="text" id="memberNumber" className="form-component" placeholder="Phone Number" defaultValue={this.props.fieldValues.memberNumber} />
                 </div>
 
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep}>CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>NEXT</span>
+                    <span className="next" onClick={this.props.nextStep}>DONE</span>
                 </div>
             </div>
         )
@@ -28,12 +29,15 @@ class StudentSignUp2 extends Component {
 
         // Get values via this.refs
         var data = {
-            email: ReactDOM.findDOMNode(this.refs.email).value,
-            password: ReactDOM.findDOMNode(this.refs.password).value,
+            memberName: ReactDOM.findDOMNode(this.refs.memberName).value,
+            memberNumber: ReactDOM.findDOMNode(this.refs.memberNumber).value,
+            memberEmail: ReactDOM.findDOMNode(this.refs.memberEmail).value,
+            position: ReactDOM.findDOMNode(this.refs.position).value
+
         }
 
         this.props.saveValues(data)
         this.props.nextStep()
     }
 }
-export default StudentSignUp2;
+export default StudentSignUp3;

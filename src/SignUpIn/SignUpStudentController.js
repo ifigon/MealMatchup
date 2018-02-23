@@ -2,7 +2,9 @@ import './SignUpIn.css';
 import StudentSignUp from './StudentSignUp';
 import StudentSignUp1 from './StudentSignUp1';
 import StudentSignUp2 from './StudentSignUp2';
-import StudentSignUp3 from './StudentSignIn3';
+import StudentSignUp3 from './StudentSignUp3';
+import SignUpComplete from './SignUpComplete';
+
 let React = require('react');
 let createReactClass = require('create-react-class');
 
@@ -86,6 +88,7 @@ let SignUpStudentController = createReactClass({
                     </div>
                     <StudentSignUp3 fieldValues={fieldValues}
                         previousStep={this.previousStep}
+                        nextStep={this.nextStep}
                         submitRegistration={this.submitRegistration} /></div>
             default:
                 return <SignUpComplete/>
