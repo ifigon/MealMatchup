@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import firebase, { auth } from './FirebaseConfig.js';
-import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest'
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import "typeface-roboto";
-import NavBar from './PageLayout/Navigation/NavBar.js';
-import PageHeader from './PageLayout/PageHeader.js';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -85,8 +82,7 @@ class App extends Component {
                             {/* Show Calendar page if user is logged in */}
                             <PageContainer 
                                 account={this.state.account}
-                                content={PageContent.CALENDAR}
-                                >
+                                content={PageContent.CALENDAR}>
                             </PageContainer>
 
 
