@@ -1,9 +1,10 @@
+// NavBarButton.js
+// import React, { Component } from 'react';
 import './SignUpIn.css';
-import firebase from 'firebase/app'
-import StudentSignUp from './StudentSignUp';
-import StudentSignUp1 from './StudentSignUp1';
-import StudentSignUp2 from './StudentSignUp2';
-import StudentSignUp3 from './StudentSignIn3';
+import DonatorSignUp from './DonatorSignUp';
+import DonatorSignUp1 from './DonatorSignUp1';
+import DonatorSignUp2 from './DonatorSignUp2';
+import DonatorSignUp3 from './DonatorSignUp3';
 import SignUpComplete from './SignUpComplete';
 
 let React = require('react');
@@ -11,19 +12,46 @@ let createReactClass = require('create-react-class');
 
 let fieldValues = {
     organizationName: null,
-    numVolunteers: null,
-    contactName: null,
-    contactEmail: null,
-    contactNumber: null,
+    address1: null,
+    address2: null,
+    city: null,
+    state: null,
+    zip: null,
+    officeNumber: null,
     email: null,
     password: null,
+    adminName: null,
+    adminPosition: null,
+    adminEmail: null,
+    adminPhone: null,
+    adminPassword: null,
     memberName: null,
-    memberNumber: null,
+    memberPosition: null,
     memberEmail: null,
-    position: null
+    memberPhone: null,
+    memberPassword: null,
+
+    monStart: null,
+    monEnd: null,
+    tueStart: null,
+    tueEnd: null,
+    wedStart: null,
+    wedEnd: null,
+    thurStart: null,
+    thurEnd: null,
+    friStart: null,
+    friEnd: null,
+    satStart: null,
+    satEnd: null,
+    sunStart: null,
+    sunEnd: null,
+    emergencyAvailable: null,
+    startLbs: null,
+    endLbs: null
+
 }
 
-let SignUpStudentController = createReactClass({
+let SignUpDonatorController = createReactClass({
     getInitialState: function () {
         return {
             step: 0
@@ -54,79 +82,58 @@ let SignUpStudentController = createReactClass({
         // Handle via ajax submitting the user data, upon
         // success return this.nextStop(). If it fails,
         // show the user the error but don't advance
-        
-        firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
-            .then(user => {
-                console.log('User created: ' + user.uid);
-                let postData = {
-                    organizationName: fieldValues.organizationName,
-                    numVolunteers: fieldValues.numVolunteers,
-                    contactName: fieldValues.contactName,
-                    contactNumber: fieldValues.contactNumber,
-                    email: fieldValues.email,
-                    password: fieldValues.password,
-                    memberName: fieldValues.memberName,
-                    memberNumber: fieldValues.memberNumber,
-                    memberEmail: fieldValues.memberEmail,
-                    position: fieldValues.position
-                }
-                let newPostKey = firebase.database().ref().child('accounts').push().key;
-                let updates = {};
-                updates['/accounts/' + user.uid] = postData;
-                return firebase.database().ref().update(updates);
-            })
-            .catch(error => {
-                console.log(error.message)
-            });
 
-        this.nextStep();
+        this.nextStep()
     },
 
     showStep: function () {
         switch (this.state.step) {
             case 0:
-                return <StudentSignUp
+                return <DonatorSignUp
                     nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
                         <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
                     </div>
-                    <StudentSignUp1 fieldValues={fieldValues}
+                    <DonatorSignUp1 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} />
                 </div>
+
             case 2:
                 return <div className="signup">
                     <div className="circle-wrapper">
                         <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
                     </div>
-                    <StudentSignUp2 fieldValues={fieldValues}
+                    <DonatorSignUp2 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
+
             case 3:
                 return <div className="signup">
                     <div className="circle-wrapper">
                         <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
                     </div>
-                    <StudentSignUp3 fieldValues={fieldValues}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues}
+                    <DonatorSignUp3 fieldValues={fieldValues}
                         nextStep={this.nextStep}
-                        submitRegistration={this.submitRegistration} /></div>
+                        previousStep={this.previousStep}
+                        saveValues={this.saveValues} /></div>
             default:
-                return <SignUpComplete/>
+                return <SignUpComplete />
         }
     },
 
     render() {
+        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
+                {console.log(this.state.step)}
                 {this.showStep()}
             </div>
         )
     }
 })
-export default SignUpStudentController;
+export default SignUpDonatorController;
