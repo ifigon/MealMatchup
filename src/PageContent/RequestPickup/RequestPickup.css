@@ -1,7 +1,8 @@
 .form {
     box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
     border-radius: 3px;
-    margin: 30px 150px 0px 300px;
+    width: 600px;
+    margin: 30px auto 0px auto;
     font-family: 'Open Sans', sans-serif;
     font-style: normal;
     padding: 40px 0px 40px 0px;
@@ -17,13 +18,13 @@
 }
 
 #form-heading{
-    font-size: 20px;
+    font-size: 24px;
     color: #243847;
     margin: 0px 0px 10px 0px;
 }
 
 label{
-    font-size: 15px;
+    font-size: 18px;
     color: #828282;
 }
 
@@ -36,11 +37,13 @@ label{
     border: 1px solid #828282;
     box-sizing: border-box;
     border-radius: 4px;
-    height: 35px;
+    height: 40px;
+    font-size: 15px;
     outline: none;
     font-family: 'Open Sans', sans-serif;
     color: #5DC0F9;
     margin-bottom: 5px;
+    text-indent: 3px;
 }
 
 .form select{
@@ -48,22 +51,25 @@ label{
     background: #FFFFFF;
     box-sizing: border-box;
     border-radius: 4px;
-    height: 35px;
+    height: 40px;
     width: 200px;
     outline: none;
     font-family: 'Open Sans', sans-serif;
     color: #5DC0F9;
     margin: 10px 0px 20px 0px;
+    font-size: 15px;
 }
 .smaller{
-    font-size: 13px;
+    font-size: 15px;
     
 }
 .smaller input{
-    height: 25px;
+    height: 30px;
     border: 1px solid #828282;
     box-sizing: border-box;
     border-radius: 4px;
+    text-indent: 3px;
+    font-size: 13px;
 }
 
 .smaller input[type="date"]::-webkit-calendar-picker-indicator{
@@ -83,17 +89,20 @@ textarea {
     border: 1px solid #828282;
     margin-bottom: 30px;
     color: #5DC0F9;
+    font-size: 15px;
 }
 
 input[name="numRecurrences"]{
     width: 40px;
     margin: 0px 10px 0px 16px;
+    text-align: center;
 }
 input[name="startDate"]{
     width: 200px;
+    margin-top: 10px;
 }
 input[name="endDate"]{
-    width: 120px;
+    width: 140px;
     margin: 10px 0px 20px 10px;
 }
 input[type="time"]{
@@ -136,6 +145,10 @@ input[type="date"]::-webkit-inner-spin-button {
     display: none;    
 }
 
+input[name="numRecurrences"]::-webkit-inner-spin-button {
+    display: none;    
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator{
     color: rgba(0, 0, 0, 0);
     opacity: 1;
@@ -144,4 +157,22 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     width: 20px;
     height: 20px;
     border-width: thin;
+}
+
+.error {
+    color:#F77676;
+    margin: 0px;
+    visibility: show;
+}
+
+@media screen and (max-width: 1090px) {
+    .form {
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+        border-radius: 3px;
+        margin: 30px 150px 0px 300px;
+        font-family: 'Open Sans', sans-serif;
+        font-style: normal;
+        padding: 40px 0px 40px 0px;
+        overflow:hidden;
+    }
 }
