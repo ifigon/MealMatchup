@@ -93,13 +93,9 @@ let SignUpStudentController = createReactClass({
     },
 
     render() {
-        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
-                {/* <div  className="signup"> */}
-                {/* <span className="progress-step">Ste {this.state.step}</span> */}
                 {this.showStep()}
-                {/* </div> */}
             </div>
         )
     }
