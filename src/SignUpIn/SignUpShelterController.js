@@ -113,7 +113,7 @@ let SignUpShelterController = createReactClass({
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
 
-            case 5:
+            default:
                 return <SignUpComplete />
         }
     },

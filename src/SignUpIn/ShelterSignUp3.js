@@ -169,7 +169,7 @@ class ShelterSignUp3 extends Component {
                     <br />
 
                     <div className="emergency-pickup">
-                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img className="icon" src="../..icons/truck.svg" type="image/svg+xml"/><br />
+                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img alt="" className="icon" src="../..icons/truck.svg" type="image/svg+xml"/><br />
                         <input type="checkbox" className="checkbox" /><p className="pickup-p">Pick up food from donating agency, if notified, in cases of emergency.</p>
                     </div>
                     <div className="food-weight">
