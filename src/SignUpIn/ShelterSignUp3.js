@@ -2,54 +2,191 @@ import React, { Component } from 'react'
 let ReactDOM = require('react-dom');
 
 class ShelterSignUp3 extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        console.log(props);
         this.nextStep = this.nextStep.bind(this);
     }
+
     render() {
+        // let amWeight = this.state.am_font_weight;
+        // let pmWeight = this.state.pm_font_weight;
         return (
             <div className="signup-content">
                 <div className="form-block">
-                    <label className="form-component">Primary Contact Details</label><br />
-                    <input ref="primaryEmail"type="text" id="primaryEmail" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.primaryName} /><br />
-                    <input ref="primaryEmail" type="text" id="primaryEmail" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.primaryEmail} />
-                    <input ref="primaryPhone" type="text" className="form-component" placeholder="Phone" id="primaryPhone" defaultValue={this.props.fieldValues.primaryPhone} />
-                    <input ref="primaryPosition" type="text" className="form-component" placeholder="Position" id="primaryPosition" defaultValue={this.props.fieldValues.primaryPosition} />
+                    <label className="form-component delivery">Delivery Days</label>
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Mon</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Tue</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Wed</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Thur</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Fri</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sat</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sun</div>
+                        <div className="time-input-wrapper">
+                            <div className="input-wrapper">
+                                <input className="week" type="text" />
+                                <div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                            to
+                     <div className="input-wrapper">
+                                <input type="text" className="week" /><div className="am-pm">
+                                    <span className="am">AM</span>
+                                    /
+                                <span className="PM">PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="emergency-pickup">
+                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img className="icon" src="../..icons/truck.svg" type="image/svg+xml"/><br />
+                        <input type="checkbox" className="checkbox" /><p className="pickup-p">Pick up food from donating agency, if notified, in cases of emergency.</p>
+                    </div>
+                    <div className="food-weight">
+                        Amount of food preferred: <br /><div className="lbs-wrapper lbs-wrapper1">
+                            <input type="text" className="lbs" /> <i>lbs</i></div> to <div className="lbs-wrapper lbs-wrapper2"><input type="text" className="lbs" /> <i>lbs</i></div>
+                    </div>
                 </div>
-                <div className="form-block">
-                <label className="form-component">Secondary Contact Details </label><i>(Optional)</i><br />
-                    <input ref="secondaryName"type="text" id="secondaryName" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.secondaryName} /><br />
-                    <input ref="secondaryEmail" type="text" id="secondaryEmail" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.secondaryEmail} />
-                    <input ref="secondaryPhone" id="secondaryPhone" type="text" className="form-component" placeholder="Phone" defaultValue={this.props.fieldValues.secondaryPhone} />
-                    <input ref="secondaryPosition" type="text" className="form-component" placeholder="Position" id="secondaryPosition" defaultValue={this.props.fieldValues.secondaryPosition} />
-                </div>
+
                 <div className="buttons">
-                    <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>DONE</span>
+                    <span className="cancel" onClick={this.props.previousStep}>CANCEL</span>
+                    <span className="next" onClick={this.nextStep}>NEXT</span>
                 </div>
             </div>
         )
     }
     nextStep(e) {
         e.preventDefault()
-        console.log(this);
-        console.log(this.refs);
-        // Get values via this.refs
-        var data = {
-            primaryEmail: ReactDOM.findDOMNode(this.refs.primaryEmail).value,
-            primaryName: ReactDOM.findDOMNode(this.refs.primaryName).value,
-            primaryPhone: ReactDOM.findDOMNode(this.refs.primaryPhone).value,
-            primaryPosition: ReactDOM.findDOMNode(this.refs.primaryPosition).value,
-            
-            secondaryName: ReactDOM.findDOMNode(this.refs.secondaryName).value,
-            secondaryEmail: ReactDOM.findDOMNode(this.refs.secondaryEmail).value,
-            secondaryPhone: ReactDOM.findDOMNode(this.refs.secondaryPhone).value,
-            secondaryPosition: ReactDOM.findDOMNode(this.refs.secondaryPosition).value,
-
-        }
-
-        this.props.saveValues(data)
         this.props.nextStep()
     }
 }

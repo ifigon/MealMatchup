@@ -83,16 +83,15 @@ let SignUpShelterController = createReactClass({
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} />
                 </div>
-
-            case 2:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle "></div><div className="circle open"></div><div className="circle open"></div>
-                    </div>
-                    <ShelterSignUp2 fieldValues={fieldValues}
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues} /></div>
+                            case 2:
+                            return <div className="signup">
+                                <div className="circle-wrapper">
+                                    <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                                </div>
+                                <ShelterSignUp2 fieldValues={fieldValues}
+                                    nextStep={this.nextStep}
+                                    previousStep={this.previousStep}
+                                    saveValues={this.saveValues} /></div>
 
             case 3:
                 return <div className="signup">
@@ -103,6 +102,7 @@ let SignUpShelterController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
+
             case 4:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -112,6 +112,7 @@ let SignUpShelterController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
+
             case 5:
                 return <SignUpComplete />
         }
