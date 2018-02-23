@@ -26,7 +26,7 @@ class ShelterSignUp4 extends Component {
                 </div>
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>DONE</span>
+                    <span className="next" onClick={this.nextStep}>DONE</span>
                 </div>
             </div>
         )
@@ -50,7 +50,7 @@ class ShelterSignUp4 extends Component {
         }
 
         this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.submitRegistration();
     }
 }
 export default ShelterSignUp4;

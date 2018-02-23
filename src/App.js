@@ -7,8 +7,8 @@ import "typeface-roboto";
 // import "typeface-roboto";
 // import NavBar from './PageLayout/Navigation/NavBar.js';
 // import PageHeader from './PageLayout/PageHeader.js';
-import SignUpStudentController from './SignUpIn/SignUpStudentController';
-// import UserTypeController from './SignUpIn/UserTypeController';
+// import SignUpStudentController from './SignUpIn/SignUpStudentController';
+import UserTypeController from './SignUpIn/UserTypeController';
 // import SignUpShelterController from './SignUpIn/SignUpShelterController';
 // import SignUpDonatorController from './SignUpIn/SignUpDonatorController';
 
@@ -27,7 +27,7 @@ class App extends Component {
         </header> */}
         {/* <NavBar></NavBar> */}
         <div>
-        <SignUpStudentController/>
+        <UserTypeController/>
         {/* <UserTypeController/> */}
         </div>
       </div>

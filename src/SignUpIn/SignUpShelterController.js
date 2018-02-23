@@ -8,6 +8,7 @@ import ShelterSignUp2 from './ShelterSignUp2';
 import ShelterSignUp3 from './ShelterSignUp3';
 import ShelterSignUp4 from './ShelterSignUp4';
 import SignUpComplete from './SignUpComplete';
+import firebase from 'firebase/app'
 
 let React = require('react');
 let createReactClass = require('create-react-class');
@@ -30,7 +31,6 @@ let fieldValues = {
     secondaryEmail: null,
     secondaryPhone: null,
     secondaryPosition: null
-
 }
 
 let SignUpShelterController = createReactClass({
@@ -64,6 +64,39 @@ let SignUpShelterController = createReactClass({
         // Handle via ajax submitting the user data, upon
         // success return this.nextStop(). If it fails,
         // show the user the error but don't advance
+
+        firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
+            .then(user => {
+                console.log('User created: ' + user.uid);
+                let postData = {
+                    accountType: "receiving_agency",
+                    name: fieldValues.organizationName,
+                    address: {
+                        street1: fieldValues.address1,
+                        street2: fieldValues.address2,
+                        city: fieldValues.city,
+                        state: fieldValues.state,
+                        zip: fieldValues.zip
+                    },
+                    officeNumber: fieldValues.officeNumber,
+                    email: fieldValues.email,
+                    coordinator: {
+                        name: fieldValues.memberName,
+                        email: fieldValues.memberEmail,
+                        phone: fieldValues.memberNumber,
+                        position: fieldValues.position
+                    },
+                    school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
+                    isActivated: true,
+                    isVerified: true
+                }
+                let updates = {};
+                updates['/accounts/' + user.uid] = postData;
+                return firebase.database().ref().update(updates);
+            })
+            .catch(error => {
+                console.log(error.message)
+            });
 
         this.nextStep()
     },

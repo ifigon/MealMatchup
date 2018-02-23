@@ -18,7 +18,7 @@ class ShelterSignUp2 extends Component {
                 </div>
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>NEXT</span>
+                    <span className="next" onClick={this.nextStep}>NEXT</span>
                 </div>
             </div>
         )
@@ -28,11 +28,8 @@ class ShelterSignUp2 extends Component {
 
         // Get values via this.refs
         var data = {
-            organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,
-            numVolunteers: ReactDOM.findDOMNode(this.refs.numVolunteers).value,
-            contactName: ReactDOM.findDOMNode(this.refs.contactName).value,
-            contactEmail: ReactDOM.findDOMNode(this.refs.contactEmail).value,
-            contactNumber: ReactDOM.findDOMNode(this.refs.contactNumber).value,
+            email: ReactDOM.findDOMNode(this.refs.email).value,
+            password: ReactDOM.findDOMNode(this.refs.password).value
         }
 
         this.props.saveValues(data)
