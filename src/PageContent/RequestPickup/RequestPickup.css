@@ -169,7 +169,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     .form {
         box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
         border-radius: 3px;
-        margin: 30px 150px 0px 300px;
+        margin: 30px 150px 0px 80px;
         font-family: 'Open Sans', sans-serif;
         font-style: normal;
         padding: 40px 0px 40px 0px;
