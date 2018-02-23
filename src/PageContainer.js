@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import { PageContent } from './Enums.js';
+import firebase, { auth } from './FirebaseConfig.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
+import logo from './icons/temp-logo.svg'
+import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest'
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -13,17 +16,27 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: props.content
+            content: props.content,
+            account: props.account
         };
+
+        this.handler = this.handler.bind(this)
+    }
+
+    handler(e) {
+        this.setState({
+            content: e
+        })
+        console.log('container: ' + this.state.content)
     }
 
     render(){
         return(
             <div className="">
                 <header className="">
-                    <PageHeader title={this.props.account.name}></PageHeader>
+                    <PageHeader logo={logo} title={this.props.account.name}></PageHeader>
                 </header>
-                <NavBar accountType={this.props.account.accountType}></NavBar>
+                <NavBar accountType={this.props.account.accountType} handler={this.handler.bind(this)}></NavBar>
 
                 {/* TODO: hook up with navbar */}
                 {/* TODO: replace placeholder text with real components */}
@@ -35,7 +48,7 @@ class PageContainer extends Component {
                     <div>Assign Volunteers</div>
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
-                    <div>Request Pickup</div>
+                    <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> 
                 }
                 {this.state.content === PageContent.FOOD_LOGS &&
                     <div>Food Logs</div>

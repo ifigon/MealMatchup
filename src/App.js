@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase, { auth } from './FirebaseConfig.js';
-
+import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest'
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import "typeface-roboto";
@@ -45,7 +45,6 @@ class App extends Component {
         }.bind(this));
     }
 
-
     // ======================= Temporary Testing Code ========================
     tempSignIn(event) {
         event.preventDefault();
@@ -66,7 +65,6 @@ class App extends Component {
             var errorMessage = error.message;
             console.log("Sign in ERROR: " + errorMessage);
         });
-
     }
 
     tempSignOut(event) {
@@ -85,16 +83,18 @@ class App extends Component {
                             {/* Show Calendar page if user is logged in */}
                             <PageContainer 
                                 account={this.state.account}
-                                content={PageContent.CALENDAR}>
+                                content={PageContent.CALENDAR}
+                                >
                             </PageContainer>
 
 
                             {/* ============= Temp Testing Code ============= */}
-                            <form 
+                            {/* <form 
                                 onSubmit={this.tempSignOut.bind(this)}
                                 style={{marginLeft: 210 + 'px'}}>
                                 <input type="submit" value="Test SignOut" />
-                            </form>
+                            </form> */}
+                            {/* <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> */}
                             {/* ============= End Testing Code ============= */}
                         </div>
                     :
