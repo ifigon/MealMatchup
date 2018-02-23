@@ -82,7 +82,6 @@ let SignUpStudentController = createReactClass({
                 }
                 let updates = {};
                 updates['/accounts/' + user.uid] = postData;
-                console.log(user.uid);
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
