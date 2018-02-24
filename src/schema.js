@@ -138,7 +138,7 @@ RECEIVING AGENCY ("/accounts/")
 			min: 10,  // in lbs
 			max: 100  // in lbs
 		},
-		notification: [
+		notifications: [
 			{
 				type: "recurring_pickup_request",  // Enums.NotificationType
 				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
@@ -174,7 +174,7 @@ DELIVERER GROUP ("/accounts/")
 			phone: 2064872859,
 			position: "President"
 		},
-		notification: [
+		notifications: [
 			{
 				type: "recurring_pickup_request",  // Enums.NotificationType
 				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
@@ -200,6 +200,8 @@ DELIVERY REQUEST ("/delivery_requests/")
 		endTime: "17:00",
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		notes: "Enter through the back door.",
+		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
+		donatingAgency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
 		// receivingAgency & delivererGroups:
 		// The donating agency can choose to request specific receiving agency
 		// and/or deliverer group, or not.
@@ -207,7 +209,7 @@ DELIVERY REQUEST ("/delivery_requests/")
 		// b. It no specified, the uid would be null until someone claims this
 		//    request.
 		receivingAgency: {
-			uid: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of a receiving-agency
+			uid: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of a receiving-agency, could be null
 			confirmed: true
 		},
 		delivererGroup: {
