@@ -27,6 +27,7 @@ import { NotificationType } from '../../Enums.js';
  *   After a RA claims, the cases are the same as RA's above (without availabilities aspect).
  */
 
+// TODO clean up
 
 var accountsRef = firebase.database().ref('accounts');
 var requestsRef = firebase.database().ref('delivery_requests');
@@ -37,7 +38,7 @@ requestsRef.on('child_added', function(requestSnap) {
     // TODO delete if startDate is in the past?
     var request = requestSnap.val();
 
-    console.log(requestSnap.key);
+    console.log("request key: " + requestSnap.key);
     console.log(request);
 
     // check receiving agency
@@ -50,14 +51,14 @@ requestsRef.on('child_added', function(requestSnap) {
         };
 
         // If a specific RA was requested, send the notification regardless of availabilities
-        var forceNotify = (raStatus.pending.length == 1);
+        var forceNotify = (raStatus.pending.length === 1);
         console.log("forceNotify=" + forceNotify);
 
         // Add notification to all available RAs' accounts in the pending list
-        for (let i = 0; i < raStatus.pending.length; i++) {
-            accountsRef.child(raStatus.pending[i]).once('value').then(function (raSnap) {
+        for (let key in raStatus.pending) {
+            accountsRef.child(raStatus.pending[key]).once('value').then(function (raSnap) {
                 if (forceNotify || isAvailable(raSnap.val(), request)) {
-                    notifyAccount(raSnap.val(), notification);
+                    notifyAccount(raSnap, notification);
 
                     console.log("notified " + raSnap.key);
                 }
@@ -77,11 +78,31 @@ requestsRef.on('child_added', function(requestSnap) {
 
 // Common Helper function
 // Add the given notification to the given account if it doesn't exist already
-function notifyAccount(account, notification) {
-    // TODO
+function notifyAccount(accountSnap, notification) {
     console.log("Add notification");
-    console.log(account);
+    console.log(accountSnap.val());
     console.log(notification);
+
+    var notifExists = false;
+    // check if this notification exists
+    if (accountSnap.hasChild('notifications')) {
+        accountSnap.child('notifications').forEach(function(notifSnap) {
+            if (notifSnap.val().type === notification.type &&
+                notifSnap.val().content === notification.content) {
+                console.log("notification already exist")
+
+                // this notification already exists for this account
+                notifExists = true;
+                return true;
+            }
+        });
+    }
+
+    if (!notifExists) {
+        accountSnap.ref.child('notifications').push(notification);
+        
+        console.log("added notification");
+    }
 }
 
 // Helper function for Listener 1
