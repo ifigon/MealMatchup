@@ -205,16 +205,20 @@ DELIVERY REQUEST ("/delivery_requests/")
 		// receivingAgency & delivererGroups:
 		// The donating agency can choose to request specific receiving agency
 		// and/or deliverer group, or not.
-		// a. If specified, the uid would be populated, but confirmed=false
-		// b. It no specified, the uid would be null until someone claims this
-		//    request.
+		// a. If specified, the one single uid will be added to 'pending'
+		// b. It not specified, all RA/DG uids in this school will be added to 'pending'
 		receivingAgency: {
-			uid: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of a receiving-agency, could be null
-			confirmed: true
+			pending: [  // uid-key of receiving-agencies
+				"uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // a specific RA
+			], 
+			accepted: null  // uid-key of a receiving-agency (once a RA claims)
 		},
 		delivererGroup: {
-			uid: null,  // uid-key of a deliverer-group
-			confirmed: false
+			pending: [  // uid-key of deliverer-groups
+				"R8BAHrxdkfQoAmfWvGa1OJmjQP43",
+				...  							 // all DGs in this school
+			],
+			accepted: null  // uid-key of a deliverer-group (once a DG claims)
 		},
 		requestTimeStamp: "1518753363763"
 	}
