@@ -12,7 +12,7 @@ class DirectoryCard extends Component {
 				<hr />
 				<div className='cardPicture'>
 					{/* TODO: Center the logo image & add link to logo to the organization's page */}
-					<a href='#'><img src={ this.props.logo } alt='organization logo' /></a>
+					<img src={ this.props.logo } alt='organization logo' />
 				</div>
 				<div className='cardDetails'>
 					<div className='card-detail-3'>
@@ -37,7 +37,7 @@ class DirectoryCard extends Component {
 
 					{/* QUESTION: When is the second row of card details relevant? 
 									Only saw one example with a second row. Not sure if it is needed. */}
-									
+
 					{/*<h3>Member Accounts</h3>
 					<div className='card-detail-3'>
 						<h4>Chris Stack</h4>
