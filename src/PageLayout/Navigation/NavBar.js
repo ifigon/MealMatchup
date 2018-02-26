@@ -12,14 +12,6 @@ import truck from '../../icons/truck.svg';
 import assign_volunteer from '../../icons/assign_volunteer.svg';
 
 class NavBar extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    onChange(){
-        
-    }
-
     tempSignOut(event) {
         event.preventDefault();
         auth.signOut();
