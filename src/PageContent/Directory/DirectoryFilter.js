@@ -14,10 +14,6 @@ class DirectoryFilter extends Component {
                     <p className='dropDownOption'>Student Group &#8964;</p>
                     <p className='dropDownOption' style={{marginLeft: '15px'}}>Receiving Agency &#8964;</p>
                 </div>
-                <div className='searchFilter'>
-                    <span className="fa fa-search"></span>
-                    <input type="text" name="search" placeholder="Search" className='searchBar' />
-                </div>
             </div>
 		);
   }

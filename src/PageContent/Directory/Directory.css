@@ -92,29 +92,8 @@ img {
     margin-bottom: 40px;
 }
 
-.searchFilter {
-    float: right;
-    position: relative;
-}
-
 .dropDownFilter {
     float: left;
-}
-
-.searchFilter .fa-search { 
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-
-.searchBar {
-    font-size: 18px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    width: 300px;
-    padding: 5px;
-    text-indent: 32px;
 }
 
 .dropDownOption {
