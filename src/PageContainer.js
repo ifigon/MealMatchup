@@ -29,14 +29,14 @@ class PageContainer extends Component {
         })
         console.log('container: ' + this.state.content)
     }
-
+ 
     render(){
         return(
             <div>
                 {/* <header > */}
                     <PageHeader logo={logo} title={this.props.account.name}></PageHeader>
                 {/* </header> */}
-                <NavBar accountType={this.props.account.accountType} handler={this.navBarHandler.bind(this)}></NavBar>
+                <NavBar content={this.state.content} accountType={this.props.account.accountType} handler={this.navBarHandler.bind(this)}></NavBar>
 
                 {/* TODO: hook up with navbar */}
                 {/* TODO: replace placeholder text with real components */}

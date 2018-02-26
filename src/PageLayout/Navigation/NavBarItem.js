@@ -20,8 +20,8 @@ class NavBarItem extends Component {
     }
 
     render(){
-        let lineColor = this.state.highlighted ? '#5DC0F9' : ''
-        let itemColor = this.state.highlighted ? '#F2F2F2' : ''
+        let lineColor = this.props.highlighted ? '#5DC0F9' : ''
+        let itemColor = this.props.highlighted ? '#F2F2F2' : ''
         return(
             <div className="navbar-item" style={{background: itemColor}} onClick={() => this.props.handler(this.props.item)}>
                 <div style={{background: lineColor}} className="left-line"></div>
