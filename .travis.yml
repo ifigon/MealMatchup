@@ -8,5 +8,4 @@ script:
 - npm test
 - npm run build
 notifications:
-  slack:
-    secure: O+oEbkI/TGpHE72CskzsU25SJMKtTSca4AyRF4XKFqqDGat9lQy/a/+mpwZwY8QkCPlLNxz1t04929xeX1UEbp8QiiaAXTaxKEHE9u74XpzrVMPyqqrpbhjte6+mEiMjnoN++v2mk0i9PSs1naMmV7fmQ1vFekYQjE4TGq/gg4pE9iJHag5+F8PA063Q84StMMV++Hg4TDnZaCjfyRzY/3DeTdkr574e90C8H2ExIoR2mkNjbAbHkBLZe7NGTmyTBUPL3gmP6u/Pof6E38tCtkRD6lPXzlpqwImTZ/hMxFlbIUtL8ajH/6VXb5RDN0pGtDGJcZy5H/4iX+lGzAIqQAa/O5gYzFbBLUK8l0UrPlXA65z/ie6thcq664reo6/pwDSaugzR5ItgCxeI/KmzKei+KbHw/yBYuiyfq13poeL//07b+8+9o8ltMYQ1U3Z8BWzg4oiWE6P4gE6/ujzCIOHz6xsHBcEJtXsuzb+YxSlZh9ROla0gC+w9zBjWwxHY/IRt6WSRIbh6TMH2be5j8Kom+4G2yIXq2MwJz0v4uu7SMX9UFidWGlUAj1x0ttxGCZNK4ea/0kP5AnU1GprnuuBX+WqHAZipYBdzxRLJ/rLWyF2poKtzy2uuLsvy+DHXU4dn19jRfgeJCKRPL9N1SwpO31+k1q3NQJY7A96lGMo=
+  slack: pairingfooddrg2017:EcudGIQLOEAT1cAlKeqgtkfG
