@@ -46,8 +46,8 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Assign Volunteers</div>
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
-                    <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> 
-                    // <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>
+                    // <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> 
                 }
                 {this.state.content === PageContent.FOOD_LOGS &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
