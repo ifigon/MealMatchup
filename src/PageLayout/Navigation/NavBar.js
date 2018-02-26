@@ -31,13 +31,11 @@ class NavBar extends Component {
                 <NavBarItem highlighted={this.props.content === PageContent.FOOD_LOGS} item={PageContent.FOOD_LOGS} icon={foodLog} handler={this.props.handler}></NavBarItem>
                 <NavBarItem highlighted={this.props.content === PageContent.DIRECTORY} item={PageContent.DIRECTORY} icon={directory} handler={this.props.handler}></NavBarItem>
                 <NavBarItem highlighted={this.props.content === PageContent.SETTINGS} item={PageContent.SETTINGS} icon={settings} handler={this.props.handler}></NavBarItem>
-                <form 
-                    onSubmit={this.tempSignOut.bind(this)}
-                    style={{marginLeft: 0 + 'px'}}>
+                <form onSubmit={this.tempSignOut.bind(this)}>
                     <input type="submit" value="Test SignOut" />
                 </form>
             </div>
-        )
+        ) 
     }
 }
 

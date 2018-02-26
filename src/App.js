@@ -25,6 +25,7 @@ class App extends Component {
         // check whether user is logged in
         auth.onAuthStateChanged(function(user) {
             if (user) {
+                // grab user's account object
                 var accountRef = firebase.database().ref('accounts').child(user.uid);
                 accountRef.once('value').then(function(snapshot) {
                     this.setState({
@@ -32,14 +33,11 @@ class App extends Component {
                         account: snapshot.val()
                     });
                 }.bind(this));
-
-                console.log("logged in");
             } else {
                 this.setState({
                     authenticated: true,
                     account: null
                 });
-                console.log("not logged in");
             }   
         }.bind(this));
     }
@@ -65,11 +63,7 @@ class App extends Component {
             console.log("Sign in ERROR: " + errorMessage);
         });
     }
-
-    tempSignOut(event) {
-        event.preventDefault();
-        auth.signOut();
-    }
+    
     // ====================== End Temporary Testing Code ======================
     
 
@@ -78,23 +72,11 @@ class App extends Component {
             <div className="">
                 {this.state.authenticated ?
                     (this.state.account ?
-                        <div>
-                            {/* Show Calendar page if user is logged in */}
-                            <PageContainer 
-                                account={this.state.account}
-                                content={PageContent.CALENDAR}>
-                            </PageContainer>
-
-
-                            {/* ============= Temp Testing Code ============= */}
-                            {/* <form 
-                                onSubmit={this.tempSignOut.bind(this)}
-                                style={{marginLeft: 210 + 'px'}}>
-                                <input type="submit" value="Test SignOut" />
-                            </form> */}
-                            {/* <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> */}
-                            {/* ============= End Testing Code ============= */}
-                        </div>
+                        /* Show Calendar page if user is logged in */
+                        <PageContainer 
+                            account={this.state.account}
+                            content={PageContent.CALENDAR}>
+                        </PageContainer>
                     :
                         /* Show landing page if user is logged out */
 
@@ -114,10 +96,10 @@ class App extends Component {
                         /* ============= End Testing Code ============= */
                     )
                 :
-                <div></div>
+                    /* Show blank page if initial authentication hasn't finished */
+                    <div></div>
                 }
                     
-                
             </div>
         );
     }
