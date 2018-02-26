@@ -3,28 +3,21 @@ import React, {Component} from 'react';
 import './NavBarItem.css';
 
 class NavBarItem extends Component {
-    constructor(){
-    super();
+    constructor(props){
+    super(props);
 
     this.state = {
-        highlighted: false,
-        content: null
+        content: props.content,
+        highlighted: false
       }
     }
 
-    // onClick(){
-    //     this.setState({
-    //         highlighted: !this.state.highlighted,
-    //         content: this.props.item
-    //     })
-    //     console.log(this.state.content);
-    // }
-
-    // componentDidMount(){
-    //     this.setState({
-    //         content:this.props.item
-    //     })
-    // }
+    changeColor(){
+        this.setState({
+            highlighted: !this.state.highlighted
+        })
+        console.log(this.state.highlighted);
+    }
 
     render(){
         let lineColor = this.state.highlighted ? '#5DC0F9' : ''
@@ -38,4 +31,5 @@ class NavBarItem extends Component {
         )
     }
 }
+
 export default NavBarItem;

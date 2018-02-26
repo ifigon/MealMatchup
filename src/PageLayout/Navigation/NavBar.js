@@ -12,24 +12,6 @@ import truck from '../../icons/truck.svg';
 import assign_volunteer from '../../icons/assign_volunteer.svg';
 
 class NavBar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            content: props.content,
-            highlighted: true
-        };
-
-        this.navBarHandler = this.navBarHandler.bind(this)
-    }
-    
-    navBarHandler(value) {
-        // value.preventDefault();
-        this.setState({
-            content: value
-        })
-        console.log('navbar: ' + this.state.content);
-    }
-
     tempSignOut(event) {
         event.preventDefault();
         auth.signOut();
@@ -43,7 +25,7 @@ class NavBar extends Component {
                     <NavBarItem item={PageContent.REQUEST_PICKUP} icon={truck} handler={this.props.handler}></NavBarItem>
                 }
                 {this.props.accountType === AccountType.DELIVERER_GROUP &&
-                    <NavBarItem item={PageContent.ASSIGN_VOLUNTEERS} icon={assign_volunteer} handler={this.navBarHandler.bind(this)}></NavBarItem>
+                    <NavBarItem item={PageContent.ASSIGN_VOLUNTEERS} icon={assign_volunteer} handler={this.props.handler}></NavBarItem>
                 }
                 <NavBarItem item={PageContent.FOOD_LOGS} icon={foodLog} handler={this.props.handler}></NavBarItem>
                 <NavBarItem item={PageContent.DIRECTORY} icon={directory} handler={this.props.handler}></NavBarItem>
