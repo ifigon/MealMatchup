@@ -20,16 +20,9 @@ let fieldValues = {
     state: null,
     zip: null,
     officeNumber: null,
+
     email: null,
     password: null,
-    primaryName: null,
-    primaryEmail: null,
-    primaryPhone: null,
-    primaryPosition: null,
-    secondaryName: null,
-    secondaryEmail: null,
-    secondaryPhone: null,
-    secondaryPosition: null,
 
     monStart: null,
     monEnd: null,
@@ -47,7 +40,18 @@ let fieldValues = {
     sunEnd: null,
     emergencyAvailable: null,
     startLbs: null,
-    endLbs: null
+    endLbs: null,
+
+    primaryName: null,
+    primaryEmail: null,
+    primaryPhone: null,
+    primaryPosition: null,
+    secondaryName: null,
+    secondaryEmail: null,
+    secondaryPhone: null,
+    secondaryPosition: null
+
+
 
 }
 

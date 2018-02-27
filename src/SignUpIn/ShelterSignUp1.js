@@ -90,10 +90,11 @@ class ShelterSignUp1 extends Component {
         // Get values via this.refs
         var data = {
             organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,
-            numVolunteers: ReactDOM.findDOMNode(this.refs.numVolunteers).value,
-            contactName: ReactDOM.findDOMNode(this.refs.contactName).value,
-            contactEmail: ReactDOM.findDOMNode(this.refs.contactEmail).value,
-            contactNumber: ReactDOM.findDOMNode(this.refs.contactNumber).value,
+            address1: ReactDOM.findDOMNode(this.refs.address1).value,
+            address2: ReactDOM.findDOMNode(this.refs.address2).value,
+            city: ReactDOM.findDOMNode(this.refs.city).value,
+            state: ReactDOM.findDOMNode(this.refs.state).value,
+            officeNumber: ReactDOM.findDOMNode(this.refs.officeNumber).value
         }
 
         this.props.saveValues(data)
