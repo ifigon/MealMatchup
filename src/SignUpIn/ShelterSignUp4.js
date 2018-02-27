@@ -24,6 +24,9 @@ class ShelterSignUp4 extends Component {
                     <input ref="secondaryPhone" id="secondaryPhone" type="text" className="form-component" placeholder="Phone" defaultValue={this.props.fieldValues.secondaryPhone} />
                     <input ref="secondaryPosition" type="text" className="form-component" placeholder="Position" id="secondaryPosition" defaultValue={this.props.fieldValues.secondaryPosition} />
                 </div>
+                <div className="disclaimer">
+                    All fields are required unless specified
+                    </div>
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
                     <span className="next" onClick={this.props.nextStep}>DONE</span>

@@ -1,7 +1,4 @@
-// NavBarButton.js
-// import React, { Component } from 'react';
 import './SignUpIn.css';
-// import './SignUpShelter';
 import ShelterSignUp from './ShelterSignUp';
 import ShelterSignUp1 from './ShelterSignUp1';
 import ShelterSignUp2 from './ShelterSignUp2';
