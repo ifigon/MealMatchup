@@ -44,7 +44,6 @@ let UserTypeController = createReactClass({
                 return <SignUpShelterController />
             case 3:
                 return <SignUpDonatorController />
-
         }
     },
 

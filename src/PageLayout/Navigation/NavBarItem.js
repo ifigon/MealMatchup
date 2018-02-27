@@ -1,6 +1,5 @@
 // NavBarButton.js
 import React, {Component} from 'react';
-import logo from 'public-encrypt';
 import './NavBarItem.css';
 
 class NavBarItem extends Component {
@@ -8,21 +7,23 @@ class NavBarItem extends Component {
     super();
 
     this.state = {
-        lineHighlighted: false
+        highlighted: false
       }
     }
 
     changeColor(){
-        this.setState({lineHighlighted: !this.state.lineHighlighted})
+        this.setState({highlighted: !this.state.highlighted})
     }
 
     render(){
-        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
+        let lineColor = this.state.highlighted ? '#5DC0F9' : ''
+        let itemColor = this.state.highlighted ? '#F2F2F2' : ''
         return(
-            <div className="navbar-item" onClick={this.changeColor.bind(this)}>
-                {/* <div className="left-line"></div> */}
-                <img src={logo} className="navbar-icon" alt="icon"/>
-                <p className="navbar-name">{this.props.value}</p>
+            <div className="navbar-item" style={{background: itemColor}} onClick={this.changeColor.bind(this)}>
+            {/* <div className="navbar-item" style={{background: itemColor}}> */}
+                <div style={{background: lineColor}} className="left-line"></div>
+                <img src={this.props.icon} className="navbar-icon" alt="icon"/>
+                <p className="navbar-name">{this.props.item}</p>
             </div>
         )
     }

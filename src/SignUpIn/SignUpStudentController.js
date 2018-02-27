@@ -2,7 +2,6 @@ import './SignUpIn.css';
 import StudentSignUp from './StudentSignUp';
 import StudentSignUp1 from './StudentSignUp1';
 import StudentSignUp2 from './StudentSignUp2';
-import StudentSignUp3 from './StudentSignUp3';
 import SignUpComplete from './SignUpComplete';
 
 let React = require('react');
@@ -11,15 +10,18 @@ let createReactClass = require('create-react-class');
 let fieldValues = {
     organizationName: null,
     numVolunteers: null,
-    contactName: null,
-    contactEmail: null,
-    contactNumber: null,
+    address1: null,
+    address2: null,
+    city: null,
+    state: null,
+    zip: null,
+    
     email: null,
     password: null,
-    memberName: null,
-    memberNumber: null,
-    memberEmail: null,
-    position: null
+    contactName: null,
+    contactPosition: null,
+    contactEmail: null,
+    contactNumber: null,
 }
 
 let SignUpStudentController = createReactClass({
@@ -65,7 +67,7 @@ let SignUpStudentController = createReactClass({
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                        <div className="circle"></div><div className="circle open"></div>
                     </div>
                     <StudentSignUp1 fieldValues={fieldValues}
                         nextStep={this.nextStep}
@@ -75,21 +77,12 @@ let SignUpStudentController = createReactClass({
             case 2:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
+                        <div className="circle open"></div><div className="circle "></div>
                     </div>
                     <StudentSignUp2 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-            case 3:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
-                    </div>
-                    <StudentSignUp3 fieldValues={fieldValues}
-                        previousStep={this.previousStep}
-                        nextStep={this.nextStep}
-                        submitRegistration={this.submitRegistration} /></div>
             default:
                 return <SignUpComplete/>
         }

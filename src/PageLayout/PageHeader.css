@@ -1,13 +1,29 @@
 .page-title {
-    font-family: Roboto;
+    font-family:'Open Sans';
     font-style: normal;
     font-weight: normal;
     line-height: normal;
     font-size: 30px;
-    color: #687178;
-    
+    color: #4F4F4F;
 }
 
 .page-container{
     border: 1px solid #DDDDDD;
+}
+
+.flex{
+    display: flex;
+}
+
+.page-logo{
+    padding: 15px 30px;
+    position: relative; 
+}
+
+.flex img:last-child {
+    margin-left: auto;
+  }
+
+.notification-icon{
+    margin-right: 30px;
 }
