@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import DonatingAgencySignUp from './DonatingAgencySignUp';
 let ReactDOM = require('react-dom');
 
 class DonatingAgencySignUp1 extends Component {
