@@ -12,6 +12,10 @@ class PageContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            content: props.content
+        }
         
         this.navBarHandler = this.navBarHandler.bind(this)
     }
@@ -29,9 +33,8 @@ class PageContainer extends Component {
                 {/* <header > */}
                     <PageHeader logo={logo} title={this.props.account.name}></PageHeader>
                 {/* </header> */}
-                <NavBar content={this.state.content} accountType={this.props.account.accountType} handler={this.navBarHandler.bind(this)}></NavBar>
+                <NavBar content={this.state.content} accountType={this.props.account.accountType} handler={this.navBarHandler}></NavBar>
 
-                {/* TODO: hook up with navbar */}
                 {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Calendar</div>
@@ -41,7 +44,6 @@ class PageContainer extends Component {
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>
-                    // <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> 
                 }
                 {this.state.content === PageContent.FOOD_LOGS &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
