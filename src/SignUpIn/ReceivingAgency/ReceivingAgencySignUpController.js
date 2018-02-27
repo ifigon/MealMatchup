@@ -1,10 +1,10 @@
-import './SignUpIn.css';
-import ShelterSignUp from './ShelterSignUp';
-import ShelterSignUp1 from './ShelterSignUp1';
-import ShelterSignUp2 from './ShelterSignUp2';
-import ShelterSignUp3 from './ShelterSignUp3';
-import ShelterSignUp4 from './ShelterSignUp4';
-import SignUpComplete from './SignUpComplete';
+import '../SignUpIn.css';
+import ReceivingAgencySignUp from './ReceivingAgencySignUp';
+import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
+import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
+import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
+import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
+import SignUpComplete from '../SignUpComplete';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
@@ -90,34 +90,34 @@ let SignUpShelterController = createReactClass({
     showStep: function () {
         switch (this.state.step) {
             case 0:
-                return <ShelterSignUp
+                return <ReceivingAgencySignUp
                     nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
                         <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
                     </div>
-                    <ShelterSignUp1 fieldValues={fieldValues}
+                    <ReceivingAgencySignUp1 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} />
                 </div>
-                            case 2:
-                            return <div className="signup">
-                                <div className="circle-wrapper">
-                                    <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
-                                </div>
-                                <ShelterSignUp2 fieldValues={fieldValues}
-                                    nextStep={this.nextStep}
-                                    previousStep={this.previousStep}
-                                    saveValues={this.saveValues} /></div>
+            case 2:
+                return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                    </div>
+                    <ReceivingAgencySignUp2 fieldValues={fieldValues}
+                        nextStep={this.nextStep}
+                        previousStep={this.previousStep}
+                        saveValues={this.saveValues} /></div>
 
             case 3:
                 return <div className="signup">
                     <div className="circle-wrapper">
                         <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
                     </div>
-                    <ShelterSignUp3 fieldValues={fieldValues}
+                    <ReceivingAgencySignUp3 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
@@ -127,7 +127,7 @@ let SignUpShelterController = createReactClass({
                     <div className="circle-wrapper">
                         <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
                     </div>
-                    <ShelterSignUp4 fieldValues={fieldValues}
+                    <ReceivingAgencySignUp4 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>

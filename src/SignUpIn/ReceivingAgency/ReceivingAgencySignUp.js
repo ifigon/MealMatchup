@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 
-class StudentSignUp extends Component {
+class ReceivingAgencySignUp extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
@@ -10,7 +10,7 @@ class StudentSignUp extends Component {
     render() {
         return (
             <div className="login-buttons">
-                <div className="button-wrapper"><button className="button">LOGIN </button> </div>
+                <div className="button-wrapper"><button className="button">LOGIN</button> </div>
                 <div className="button-wrapper"><button className="button" onClick={this.nextStep}>CREATE ACCOUNT</button></div>
             </div>
         )
@@ -20,4 +20,4 @@ class StudentSignUp extends Component {
         this.props.nextStep()
     }
 }
-export default StudentSignUp;
+export default ReceivingAgencySignUp;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 let ReactDOM = require('react-dom');
 
-class StudentSignUp2 extends Component {
+class DelivererGroupSignUp2 extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
@@ -48,4 +48,4 @@ class StudentSignUp2 extends Component {
         this.props.nextStep()
     }
 }
-export default StudentSignUp2;
+export default DelivererGroupSignUp2;

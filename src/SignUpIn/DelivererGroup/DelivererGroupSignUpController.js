@@ -1,41 +1,30 @@
-// NavBarButton.js
-// import React, { Component } from 'react';
-import './SignUpIn.css';
-import DonatorSignUp from './DonatorSignUp';
-import DonatorSignUp1 from './DonatorSignUp1';
-import DonatorSignUp2 from './DonatorSignUp2';
-import DonatorSignUp3 from './DonatorSignUp3';
-import SignUpComplete from './SignUpComplete';
+import '../SignUpIn.css';
+import DelivererGroupSignUp from './DelivererGroupSignUp';
+import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
+import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
+import SignUpComplete from '../SignUpComplete';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
 
 let fieldValues = {
     organizationName: null,
+    numVolunteers: null,
     address1: null,
     address2: null,
     city: null,
     state: null,
     zip: null,
-    officeNumber: null,
-   
+    
     email: null,
     password: null,
-    adminName: null,
-    adminPosition: null,
-    adminEmail: null,
-    adminPhone: null,
-    adminPassword: null,
-
-    memberName: null,
-    memberPosition: null,
-    memberEmail: null,
-    memberPhone: null,
-    memberPassword: null,
-    
+    contactName: null,
+    contactPosition: null,
+    contactEmail: null,
+    contactNumber: null,
 }
 
-let SignUpDonatorController = createReactClass({
+let DelivererGroupSignUpController = createReactClass({
     getInitialState: function () {
         return {
             step: 0
@@ -73,51 +62,38 @@ let SignUpDonatorController = createReactClass({
     showStep: function () {
         switch (this.state.step) {
             case 0:
-                return <DonatorSignUp
+                return <DelivererGroupSignUp
                     nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                        <div className="circle"></div><div className="circle open"></div>
                     </div>
-                    <DonatorSignUp1 fieldValues={fieldValues}
+                    <DelivererGroupSignUp1 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} />
                 </div>
-
             case 2:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
+                        <div className="circle open"></div><div className="circle "></div>
                     </div>
-                    <DonatorSignUp2 fieldValues={fieldValues}
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues} /></div>
-
-            case 3:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
-                    </div>
-                    <DonatorSignUp3 fieldValues={fieldValues}
+                    <DelivererGroupSignUp2 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
             default:
-                return <SignUpComplete />
+                return <SignUpComplete/>
         }
     },
 
     render() {
-        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
-                {console.log(this.state.step)}
                 {this.showStep()}
             </div>
         )
     }
 })
-export default SignUpDonatorController;
+export default DelivererGroupSignUpController;

@@ -1,8 +1,8 @@
 import './SignUpIn.css';
 import UserTypeSignUp from './UserTypeSignUp';
-import SignUpShelterController from './SignUpShelterController';
-import SignUpStudentController from './SignUpStudentController';
-import SignUpDonatorController from './SignUpDonatorController';
+import ReceivingAgencySignUpController from './ReceivingAgency/ReceivingAgencySignUpController';
+import DelivererGroupSignUpController from './DelivererGroup/DelivererGroupSignUpController';
+import DonatingAgencySignUpController from './DonatingAgency/DonatingAgencySignUpController';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
@@ -38,12 +38,12 @@ let UserTypeController = createReactClass({
                     showShelter={this.showShelter}
                 />
             case 1:
-                return <SignUpStudentController />
+                return <DelivererGroupSignUpController />
 
             case 2:
-                return <SignUpShelterController />
+                return <ReceivingAgencySignUpController />
             case 3:
-                return <SignUpDonatorController />
+                return <DonatingAgencySignUpController />
         }
     },
 

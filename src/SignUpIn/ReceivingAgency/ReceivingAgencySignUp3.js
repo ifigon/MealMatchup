@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 let ReactDOM = require('react-dom');
 
-class ShelterSignUp3 extends Component {
+class ReceivingAgencySignUp3 extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
@@ -215,4 +215,4 @@ class ShelterSignUp3 extends Component {
                 this.props.nextStep()
     }
 }
-export default ShelterSignUp3;
+export default ReceivingAgencySignUp3;

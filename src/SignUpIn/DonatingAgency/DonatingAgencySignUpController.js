@@ -1,30 +1,39 @@
-import './SignUpIn.css';
-import StudentSignUp from './StudentSignUp';
-import StudentSignUp1 from './StudentSignUp1';
-import StudentSignUp2 from './StudentSignUp2';
-import SignUpComplete from './SignUpComplete';
+import '../SignUpIn.css';
+import DonatingAgencySignUp from './DonatingAgencySignUp';
+import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
+import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
+import DonatingAgencySignUp3 from './DonatingAgencySignUp3';
+import SignUpComplete from '../SignUpComplete';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
 
 let fieldValues = {
     organizationName: null,
-    numVolunteers: null,
     address1: null,
     address2: null,
     city: null,
     state: null,
     zip: null,
-    
+    officeNumber: null,
+   
     email: null,
     password: null,
-    contactName: null,
-    contactPosition: null,
-    contactEmail: null,
-    contactNumber: null,
+    adminName: null,
+    adminPosition: null,
+    adminEmail: null,
+    adminPhone: null,
+    adminPassword: null,
+
+    memberName: null,
+    memberPosition: null,
+    memberEmail: null,
+    memberPhone: null,
+    memberPassword: null,
+    
 }
 
-let SignUpStudentController = createReactClass({
+let DonatingAgencySignUpController = createReactClass({
     getInitialState: function () {
         return {
             step: 0
@@ -62,38 +71,51 @@ let SignUpStudentController = createReactClass({
     showStep: function () {
         switch (this.state.step) {
             case 0:
-                return <StudentSignUp
+                return <DonatingAgencySignUp
                     nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle"></div><div className="circle open"></div>
+                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
                     </div>
-                    <StudentSignUp1 fieldValues={fieldValues}
+                    <DonatingAgencySignUp1 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} />
                 </div>
+
             case 2:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle "></div>
+                        <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
                     </div>
-                    <StudentSignUp2 fieldValues={fieldValues}
+                    <DonatingAgencySignUp2 fieldValues={fieldValues}
+                        nextStep={this.nextStep}
+                        previousStep={this.previousStep}
+                        saveValues={this.saveValues} /></div>
+
+            case 3:
+                return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
+                    </div>
+                    <DonatingAgencySignUp3 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
             default:
-                return <SignUpComplete/>
+                return <SignUpComplete />
         }
     },
 
     render() {
+        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
+                {console.log(this.state.step)}
                 {this.showStep()}
             </div>
         )
     }
 })
-export default SignUpStudentController;
+export default DonatingAgencySignUpController;
