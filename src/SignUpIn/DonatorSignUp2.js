@@ -36,6 +36,7 @@ class DonatorSignUp2 extends Component {
         // Get values via this.refs
         var data = {
             adminEmail: ReactDOM.findDOMNode(this.refs.adminEmail).value,
+            adminPassword: ReactDOM.findDOMNode(this.refs.adminPassword).value,
             adminName: ReactDOM.findDOMNode(this.refs.adminName).value,
             adminPhone: ReactDOM.findDOMNode(this.refs.adminPhone).value,
             adminPosition: ReactDOM.findDOMNode(this.refs.adminPosition).value,

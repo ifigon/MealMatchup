@@ -29,7 +29,25 @@ let fieldValues = {
     secondaryName: null,
     secondaryEmail: null,
     secondaryPhone: null,
-    secondaryPosition: null
+    secondaryPosition: null,
+
+    monStart: null,
+    monEnd: null,
+    tueStart: null,
+    tueEnd: null,
+    wedStart: null,
+    wedEnd: null,
+    thurStart: null,
+    thurEnd: null,
+    friStart: null,
+    friEnd: null,
+    satStart: null,
+    satEnd: null,
+    sunStart: null,
+    sunEnd: null,
+    emergencyAvailable: null,
+    startLbs: null,
+    endLbs: null
 
 }
 
