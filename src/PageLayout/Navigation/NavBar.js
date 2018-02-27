@@ -10,6 +10,7 @@ import foodLog from '../../icons/food_log.svg';
 import settings from '../../icons/settings.svg';
 import truck from '../../icons/truck.svg';
 import assign_volunteer from '../../icons/assign_volunteer.svg';
+import signout from '../../icons/logout.svg';
 
 class NavBar extends Component {
     tempSignOut(event) {
@@ -31,9 +32,7 @@ class NavBar extends Component {
                 <NavBarItem highlighted={this.props.content === PageContent.FOOD_LOGS} item={PageContent.FOOD_LOGS} icon={foodLog} handler={this.props.handler}></NavBarItem>
                 <NavBarItem highlighted={this.props.content === PageContent.DIRECTORY} item={PageContent.DIRECTORY} icon={directory} handler={this.props.handler}></NavBarItem>
                 <NavBarItem highlighted={this.props.content === PageContent.SETTINGS} item={PageContent.SETTINGS} icon={settings} handler={this.props.handler}></NavBarItem>
-                <form onSubmit={this.tempSignOut.bind(this)}>
-                    <input type="submit" value="Test SignOut" />
-                </form>
+                <NavBarItem item={"signout"} icon={signout} handler={this.tempSignOut.bind(this)}></NavBarItem>
             </div>
         ) 
     }

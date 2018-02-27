@@ -18,7 +18,9 @@
     font-size: 16px;
     color: #687178;
 }
-
+.navbar-name .signout{
+    padding-right: 30px;
+}
 .left-line{
     width: 5px;
     height: 60px;
