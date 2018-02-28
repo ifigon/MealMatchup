@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import truck from "../../icons/truck.svg";
+
 let ReactDOM = require('react-dom');
 
 class ReceivingAgencySignUp3 extends Component {
@@ -169,7 +171,7 @@ class ReceivingAgencySignUp3 extends Component {
                     <br />
 
                     <div className="emergency-pickup">
-                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img alt="" className="icon" src="../..icons/truck.svg" type="image/svg+xml"/><br />
+                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img alt="icon" className="icon" src={truck} type="image/svg+xml"/><br />
                         <input type="checkbox" className="checkbox" /><p className="pickup-p">Pick up food from donating agency, if notified, in cases of emergency.</p>
                     </div>
                     <div className="food-weight">

@@ -397,8 +397,9 @@ input.week{
 
 .icon{
 position: absolute;
-margin-top: 1.5vh;
+margin-top: 1.3vh;
 margin-left: 19.5vw;
+fill: #F77676;
 }
 
 .user-icon{
