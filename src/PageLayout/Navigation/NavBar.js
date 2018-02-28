@@ -32,7 +32,7 @@ class NavBar extends Component {
                 <NavBarItem highlighted={this.props.content === PageContent.FOOD_LOGS} item={PageContent.FOOD_LOGS} icon={foodLog} handler={this.props.handler}></NavBarItem>
                 <NavBarItem highlighted={this.props.content === PageContent.DIRECTORY} item={PageContent.DIRECTORY} icon={directory} handler={this.props.handler}></NavBarItem>
                 <NavBarItem highlighted={this.props.content === PageContent.SETTINGS} item={PageContent.SETTINGS} icon={settings} handler={this.props.handler}></NavBarItem>
-                <NavBarItem item={"signout"} icon={signout} handler={this.tempSignOut.bind(this)}></NavBarItem>
+                <NavBarItem item={"signout"} icon={signout} handler={this.signOut.bind(this)}></NavBarItem>
             </div>
         ) 
     }
