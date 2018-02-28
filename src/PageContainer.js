@@ -15,16 +15,16 @@ class PageContainer extends Component {
 
         this.state = {
             content: props.content
-        }
+        };
         
-        this.navBarHandler = this.navBarHandler.bind(this)
+        this.navBarHandler = this.navBarHandler.bind(this);
     }
 
     navBarHandler(e) {
         this.setState({
             content: e
-        })
-        console.log('container: ' + this.state.content)
+        });
+        console.log('container: ' + this.state.content);
     }
  
     render(){
