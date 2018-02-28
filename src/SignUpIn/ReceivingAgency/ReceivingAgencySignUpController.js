@@ -1,4 +1,5 @@
 import '../SignUpIn.css';
+import firebase from '../../FirebaseConfig.js';
 import ReceivingAgencySignUp from './ReceivingAgencySignUp';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
 import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';

@@ -1,4 +1,5 @@
 import '../SignUpIn.css';
+import firebase from '../../FirebaseConfig';
 import DonatingAgencySignUp from './DonatingAgencySignUp';
 import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';

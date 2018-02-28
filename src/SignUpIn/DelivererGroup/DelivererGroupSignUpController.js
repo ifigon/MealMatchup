@@ -1,4 +1,5 @@
 import '../SignUpIn.css';
+import firebase from '../../FirebaseConfig.js';
 import DelivererGroupSignUp from './DelivererGroupSignUp';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
