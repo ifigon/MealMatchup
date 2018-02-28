@@ -13,7 +13,7 @@ import assign_volunteer from '../../icons/assign_volunteer.svg';
 import signout from '../../icons/logout.svg';
 
 class NavBar extends Component {
-    tempSignOut(event) {
+    signOut(event) {
         event.preventDefault();
         auth.signOut();
     }
