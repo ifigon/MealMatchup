@@ -400,3 +400,9 @@ position: absolute;
 margin-top: 1.5vh;
 margin-left: 19.5vw;
 }
+
+.user-icon{
+    height: 2.4 vh;
+    padding-right: 30px;
+    vertical-align: middle;
+}
