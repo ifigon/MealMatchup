@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 let ReactDOM = require('react-dom');
 
-class DonatorSignUp2 extends Component {
+class DonatingAgencySignUp2 extends Component {
     constructor(props) {
         super(props);
         console.log(props);
@@ -36,6 +36,7 @@ class DonatorSignUp2 extends Component {
         // Get values via this.refs
         var data = {
             adminEmail: ReactDOM.findDOMNode(this.refs.adminEmail).value,
+            adminPassword: ReactDOM.findDOMNode(this.refs.adminPassword).value,
             adminName: ReactDOM.findDOMNode(this.refs.adminName).value,
             adminPhone: ReactDOM.findDOMNode(this.refs.adminPhone).value,
             adminPosition: ReactDOM.findDOMNode(this.refs.adminPosition).value,
@@ -51,4 +52,4 @@ class DonatorSignUp2 extends Component {
         this.props.nextStep()
     }
 }
-export default DonatorSignUp2;
+export default DonatingAgencySignUp2;

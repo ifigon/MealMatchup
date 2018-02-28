@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 
-class ShelterSignUp extends Component {
+class DonatingAgencySignUp extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
@@ -20,4 +20,4 @@ class ShelterSignUp extends Component {
         this.props.nextStep()
     }
 }
-export default ShelterSignUp;
+export default DonatingAgencySignUp;

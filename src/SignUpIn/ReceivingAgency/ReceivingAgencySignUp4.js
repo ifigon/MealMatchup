@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 let ReactDOM = require('react-dom');
 
-class ShelterSignUp4 extends Component {
+class ReceivingAgencySignUp4 extends Component {
     constructor(props){
         super(props);
         console.log(props);
@@ -24,6 +25,9 @@ class ShelterSignUp4 extends Component {
                     <input ref="secondaryPhone" id="secondaryPhone" type="text" className="form-component" placeholder="Phone" defaultValue={this.props.fieldValues.secondaryPhone} />
                     <input ref="secondaryPosition" type="text" className="form-component" placeholder="Position" id="secondaryPosition" defaultValue={this.props.fieldValues.secondaryPosition} />
                 </div>
+                <div className="disclaimer">
+                    All fields are required unless specified
+                    </div>
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
                     <span className="next" onClick={this.nextStep}>DONE</span>
@@ -53,4 +57,4 @@ class ShelterSignUp4 extends Component {
         this.props.submitRegistration();
     }
 }
-export default ShelterSignUp4;
+export default ReceivingAgencySignUp4;

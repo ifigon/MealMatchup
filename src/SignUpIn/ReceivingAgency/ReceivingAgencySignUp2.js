@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import ReceivingAgencySignUp from './ReceivingAgencySignUp';
 let ReactDOM = require('react-dom');
 
-class ShelterSignUp2 extends Component {
+class ReceivingAgencySignUp2 extends Component {
     constructor(props){
         super(props);
         console.log(props);
@@ -29,11 +30,11 @@ class ShelterSignUp2 extends Component {
         // Get values via this.refs
         var data = {
             email: ReactDOM.findDOMNode(this.refs.email).value,
-            password: ReactDOM.findDOMNode(this.refs.password).value
+            password: ReactDOM.findDOMNode(this.refs.password).value,
         }
 
         this.props.saveValues(data)
         this.props.nextStep()
     }
 }
-export default ShelterSignUp2;
+export default ReceivingAgencySignUp2;

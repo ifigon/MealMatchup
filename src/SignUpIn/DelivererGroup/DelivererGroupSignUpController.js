@@ -1,39 +1,30 @@
-// NavBarButton.js
-// import React, { Component } from 'react';
-import './SignUpIn.css';
-// import './SignUpShelter';
-import ShelterSignUp from './ShelterSignUp';
-import ShelterSignUp1 from './ShelterSignUp1';
-import ShelterSignUp2 from './ShelterSignUp2';
-import ShelterSignUp3 from './ShelterSignUp3';
-import ShelterSignUp4 from './ShelterSignUp4';
-import SignUpComplete from './SignUpComplete';
-import firebase from 'firebase/app'
+import '../SignUpIn.css';
+import DelivererGroupSignUp from './DelivererGroupSignUp';
+import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
+import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
+import SignUpComplete from '../SignUpComplete';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
 
 let fieldValues = {
     organizationName: null,
+    numVolunteers: null,
     address1: null,
     address2: null,
     city: null,
     state: null,
     zip: null,
-    officeNumber: null,
+    
     email: null,
     password: null,
-    primaryName: null,
-    primaryEmail: null,
-    primaryPhone: null,
-    primaryPosition: null,
-    secondaryName: null,
-    secondaryEmail: null,
-    secondaryPhone: null,
-    secondaryPosition: null
+    contactName: null,
+    contactPosition: null,
+    contactEmail: null,
+    contactNumber: null,
 }
 
-let SignUpShelterController = createReactClass({
+let DelivererGroupSignUpController = createReactClass({
     getInitialState: function () {
         return {
             step: 0
@@ -64,21 +55,21 @@ let SignUpShelterController = createReactClass({
         // Handle via ajax submitting the user data, upon
         // success return this.nextStop(). If it fails,
         // show the user the error but don't advance
-
+        
         firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {
                 console.log('User created: ' + user.uid);
                 let postData = {
-                    accountType: "receiving_agency",
+                    accountType: "deliverer_group",
                     name: fieldValues.organizationName,
+                    numVolunteers: fieldValues.numVolunteers,
                     address: {
-                        street1: fieldValues.address1,
-                        street2: fieldValues.address2,
-                        city: fieldValues.city,
-                        state: fieldValues.state,
-                        zip: fieldValues.zip
+                        street1: "Test Street 1",
+                        street2: "Test Street 2",
+                        city: "Test City",
+                        state: "Test State",
+                        zip: "Test Zip"
                     },
-                    officeNumber: fieldValues.officeNumber,
                     email: fieldValues.email,
                     coordinator: {
                         name: fieldValues.memberName,
@@ -98,61 +89,39 @@ let SignUpShelterController = createReactClass({
                 console.log(error.message)
             });
 
-        this.nextStep()
+        this.nextStep();
     },
 
     showStep: function () {
         switch (this.state.step) {
             case 0:
-                return <ShelterSignUp
+                return <DelivererGroupSignUp
                     nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
+                        <div className="circle"></div><div className="circle open"></div>
                     </div>
-                    <ShelterSignUp1 fieldValues={fieldValues}
+                    <DelivererGroupSignUp1 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} />
                 </div>
-                            case 2:
-                            return <div className="signup">
-                                <div className="circle-wrapper">
-                                    <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
-                                </div>
-                                <ShelterSignUp2 fieldValues={fieldValues}
-                                    nextStep={this.nextStep}
-                                    previousStep={this.previousStep}
-                                    saveValues={this.saveValues} /></div>
-
-            case 3:
+            case 2:
                 return <div className="signup">
                     <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
+                        <div className="circle open"></div><div className="circle "></div>
                     </div>
-                    <ShelterSignUp3 fieldValues={fieldValues}
+                    <DelivererGroupSignUp2 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-
-            case 4:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
-                    </div>
-                    <ShelterSignUp4 fieldValues={fieldValues}
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues} /></div>
-
             default:
-                return <SignUpComplete />
+                return <SignUpComplete/>
         }
     },
 
     render() {
-        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
                 {this.showStep()}
@@ -160,4 +129,4 @@ let SignUpShelterController = createReactClass({
         )
     }
 })
-export default SignUpShelterController;
+export default DelivererGroupSignUpController;
