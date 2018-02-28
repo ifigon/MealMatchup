@@ -4,4 +4,19 @@
     position: absolute;
     height: 100%;
     width: 200px;
+    position: fixed;
+    top: 103px;
+    background-color: white;
+}
+
+.signout{
+    position: fixed;
+    bottom: 0px;
+    border-top: 1px solid #DDDDDD;
+    left: 10px;
+    padding-right: 50px;
+}
+
+.signout:hover{
+    border-top: 1px solid #5DC0F9;
 }
