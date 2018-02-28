@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import volunteer from "../icons/volunteer.svg"
+import shelter from "../icons/shelter.svg"
+import vitamins from "../icons/vitamins.svg"
 
 class UserTypeSignUp extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.showStudent = this.showStudent.bind(this);
         this.showDonator = this.showDonator.bind(this);
@@ -9,20 +12,20 @@ class UserTypeSignUp extends Component {
     }
     render() {
         return (
-           <div className="user-type-wrapper">
+            <div className="user-type-wrapper">
                 <div className="user-type-box">
                     <div className="user-type-label">SELECT ACCOUNT TYPE</div>
                     <div onClick={this.showStudent} className="user-type">
-                        <img alt="" type="image/svg+xml" src="../../icons/volunteer.svg" />   Student Group
+                        <img alt="icon" type="image/svg+xml" src={volunteer} className="user-icon"/>   Student Group
                     </div>
                     <div onClick={this.showShelter} className="user-type">
-                        <img alt="" type="image/svg+xml" src="../icons/shelter.svg" />    Receiving Agency
+                        <img alt="icon" type="image/svg+xml" src={shelter} className="user-icon"/>    Receiving Agency
                     </div>
                     <div onClick={this.showDonator} className="user-type">
-                        <img alt="" type="image/svg+xml" src="../icons/vitamins.svg" />     Donating Agency
+                        <img alt="icon" type="image/svg+xml" src={vitamins} className="user-icon"/>     Donating Agency
                     </div>
                 </div>
-            </div> 
+            </div>
         )
     }
     showStudent(e) {

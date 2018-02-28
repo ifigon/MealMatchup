@@ -5,10 +5,15 @@
     line-height: normal;
     font-size: 30px;
     color: #4F4F4F;
+    overflow-wrap: break-word;
 }
 
 .page-container{
     border: 1px solid #DDDDDD;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    top: 0px;
 }
 
 .flex{
@@ -16,7 +21,7 @@
 }
 
 .page-logo{
-    padding: 15px 30px;
+    padding: 10px 40px;
     position: relative; 
 }
 
@@ -25,5 +30,10 @@
   }
 
 .notification-icon{
-    margin-right: 30px;
+    margin-right: 80px;
 }
+
+/* @media screen and (max-width: 1090px) {
+    position: fixed;
+    margin-left: 100px
+} */

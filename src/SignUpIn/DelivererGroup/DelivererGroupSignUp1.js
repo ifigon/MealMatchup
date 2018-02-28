@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import DelivererGroupSignUp from './DelivererGroupSignUp';
 let ReactDOM = require('react-dom');
 
 class DelivererGroupSignUp1 extends Component {
