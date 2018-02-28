@@ -324,7 +324,7 @@ input.week{
 .input-wrapper {
     background: white;
     border: solid 1px #BDBDBD;
-    border-radius: 3px;
+    border-radius: 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -339,9 +339,12 @@ input.week{
     margin-right: 20px;
     margin-left: 5px;
 }
-
-.checkbox:checked:after{
+.checkbox:checked{
     background-color: #5DC0F9;
+}
+.checkbox:after{
+    background-color: #5DC0F9;
+    box-shadow: inset 0px 0px 7px 0px rgba(0, 0, 0, 0.25);
 }
 
 .time-input-wrapper{
