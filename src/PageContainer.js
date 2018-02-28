@@ -3,8 +3,7 @@ import { PageContent } from './Enums.js';
 import firebase, { auth } from './FirebaseConfig.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import logo from './icons/temp-logo.svg'
-import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest'
+import logo from './icons/temp-logo.svg';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -19,47 +18,44 @@ class PageContainer extends Component {
             content: props.content,
             account: props.account
         };
-
-        this.handler = this.handler.bind(this)
+        
+        this.navBarHandler = this.navBarHandler.bind(this);
     }
 
-    handler(e) {
+    navBarHandler(e) {
         this.setState({
             content: e
-        })
-        console.log('container: ' + this.state.content)
+        });
+        console.log('container: ' + this.state.content);
     }
-
+ 
     render(){
         return(
-            <div className="">
-                <header className="">
+            <div>
+                {/* <header > */}
                     <PageHeader logo={logo} title={this.props.account.name}></PageHeader>
-                </header>
-                <NavBar accountType={this.props.account.accountType} handler={this.handler.bind(this)}></NavBar>
+                {/* </header> */}
+                <NavBar content={this.state.content} accountType={this.props.account.accountType} handler={this.navBarHandler}></NavBar>
 
-                {/* TODO: hook up with navbar */}
                 {/* TODO: replace placeholder text with real components */}
-                <div style={{marginLeft: 210 + 'px'}}>Content Placeholder:
                 {this.state.content === PageContent.CALENDAR &&
-                    <div>Calendar</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Calendar</div>
                 }
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&
-                    <div>Assign Volunteers</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Assign Volunteers</div>
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
-                    <RecurringPickupRequest account={this.state.account}></RecurringPickupRequest> 
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>
                 }
                 {this.state.content === PageContent.FOOD_LOGS &&
-                    <div>Food Logs</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
                 }
                 {this.state.content === PageContent.DIRECTORY &&
-                    <div>Directory</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Directory</div>
                 }
                 {this.state.content === PageContent.SETTINGS &&
-                    <div>Settings</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
                 }
-                </div>
             </div>
         )
     }
