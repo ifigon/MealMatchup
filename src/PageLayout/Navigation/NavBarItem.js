@@ -8,20 +8,18 @@ class NavBarItem extends Component {
         let itemColor = this.props.highlighted ? '#F2F2F2' : ''
         return(
             <div>
-                {this.props.item === "signout" &&
+                {this.props.item === "signout" ?
                     <div className="navbar-item signout" onClick={this.props.handler}>
                         <img src={this.props.icon} className="navbar-icon" alt="icon"/>
                         <p className="navbar-name">Sign Out</p>
                     </div>
-                }
-                {this.props.item !== "signout" &&
+                :
                     <div className="navbar-item" style={{background: itemColor}} onClick={() => this.props.handler(this.props.item)}>
                         <div style={{background: lineColor}} className="left-line"></div>
                         <img src={this.props.icon} className="navbar-icon" alt="icon"/>
                         <p className="navbar-name">{this.props.item}</p>
                     </div>
                 }
-                
             </div>
         )
     }
