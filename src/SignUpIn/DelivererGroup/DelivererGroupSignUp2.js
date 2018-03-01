@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
 
 class DelivererGroupSignUp2 extends Component {
     constructor(props) {
@@ -11,16 +11,16 @@ class DelivererGroupSignUp2 extends Component {
             <div className="signup-content">
                 <div className="form-block">
                     <label className="form-component">Account Details</label><br />
-                    <input ref="email" type="text" id="email" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} /><br />
-                    <input ref="password" type="password" id="password" className="form-component" placeholder="Password" defaultValue={this.props.fieldValues.password} />
-                    <input type="password" id="confirm-password" className="form-component" placeholder="Confirm Password" defaultValue={this.props.fieldValues.password} />
+                    <input ref="email" type="text" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} /><br />
+                    <input ref="password" type="password" className="form-component" placeholder="Password" defaultValue={this.props.fieldValues.password} />
+                    <input type="password" className="form-component" placeholder="Confirm Password" defaultValue={this.props.fieldValues.password} />
                 </div>
                 <div className="form-block">
                     <label className="form-component">Coordinator Contact Information</label><br />
-                    <input ref="contactName" type="text" id="name" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.contactName} /><br />
-                    <input ref="contactPosition" type="text" id="position" className="form-component" placeholder="Position" defaultValue={this.props.fieldValues.contactPosition} /><br />
-                    <input ref="contactEmail" type="text" id="email" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.contactEmail} /><br />
-                    <input ref="contactNumber" type="text" id="phone" className="form-component" placeholder="Phone" defaultValue={this.props.fieldValues.contactNumber} /><br />
+                    <input ref="contactName" type="text"  className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.contactName} /><br />
+                    <input ref="contactPosition" type="text" className="form-component" placeholder="Position" defaultValue={this.props.fieldValues.contactPosition} /><br />
+                    <input ref="contactEmail" type="text" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.contactEmail} /><br />
+                    <input ref="contactNumber" type="text" className="form-component" placeholder="Phone" defaultValue={this.props.fieldValues.contactNumber} /><br />
                 </div>
 
                 <div className="buttons">

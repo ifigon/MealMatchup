@@ -1,3 +1,6 @@
+import React from 'react';
+import createReactClass from 'create-react-class'
+
 import '../SignUpIn.css';
 import ReceivingAgencySignUp from './ReceivingAgencySignUp';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
@@ -5,9 +8,6 @@ import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
-
-let React = require('react');
-let createReactClass = require('create-react-class');
 
 let fieldValues = {
     organizationName: null,

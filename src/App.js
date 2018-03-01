@@ -79,25 +79,7 @@ class App extends Component {
                             content={PageContent.CALENDAR}>
                         </PageContainer>
                     :
-                        /* Show landing page if user is logged out */
-
-                        /* ============= Temp Testing Code ============= */
-                        /* TODO: 
-                         * 1. Replace the temp debug signin with SignUpIn page 
-                         * 2. Remove tempSignIn function
-                        //  */
-                        // <form onSubmit={this.tempSignIn.bind(this)}>
-                        //     <label>Test Account Type<br/>
-                        //         <input type="radio" name="accountType" value="DAMember" />Donating Agency Member<br/>
-                        //         <input type="radio" name="accountType" value="RA" />Receiving Agency<br/>
-                        //         <input type="radio" name="accountType" value="DG" />Deliverer Group
-                        //     </label><br/>
-                        //     <input type="submit" value="Test SignIn" />
-                        // </form>
                         <UserTypeController/>
-
-
-                        /* ============= End Testing Code ============= */
                     )
                 :
                     /* Show blank page if initial authentication hasn't finished */

@@ -1,11 +1,10 @@
+import React from 'react';
+import createReactClass from 'create-react-class';
 import './SignUpIn.css';
 import UserTypeSignUp from './UserTypeSignUp';
 import ReceivingAgencySignUpController from './ReceivingAgency/ReceivingAgencySignUpController';
 import DelivererGroupSignUpController from './DelivererGroup/DelivererGroupSignUpController';
 import DonatingAgencySignUpController from './DonatingAgency/DonatingAgencySignUpController';
-
-let React = require('react');
-let createReactClass = require('create-react-class');
 
 let UserTypeController = createReactClass({
     getInitialState: function () {

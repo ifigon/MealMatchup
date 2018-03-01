@@ -1,12 +1,12 @@
+import React from 'react';
+import createReactClass from 'create-react-class'
+
 import '../SignUpIn.css';
 import DonatingAgencySignUp from './DonatingAgencySignUp';
 import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import DonatingAgencySignUp3 from './DonatingAgencySignUp3';
 import SignUpComplete from '../SignUpComplete';
-
-let React = require('react');
-let createReactClass = require('create-react-class');
 
 let fieldValues = {
     organizationName: null,
@@ -112,7 +112,6 @@ let DonatingAgencySignUpController = createReactClass({
         //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
-                {console.log(this.state.step)}
                 {this.showStep()}
             </div>
         )

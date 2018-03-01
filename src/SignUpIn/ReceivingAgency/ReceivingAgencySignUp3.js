@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom';
 import truck from "../../icons/truck.svg";
-
-let ReactDOM = require('react-dom');
 
 class ReceivingAgencySignUp3 extends Component {
     constructor(props) {
@@ -10,8 +9,6 @@ class ReceivingAgencySignUp3 extends Component {
     }
 
     render() {
-        // let amWeight = this.state.am_font_weight;
-        // let pmWeight = this.state.pm_font_weight;
         return (
             <div className="signup-content">
                 <div className="form-block">
