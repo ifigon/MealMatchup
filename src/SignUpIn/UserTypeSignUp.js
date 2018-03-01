@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import volunteer from "../icons/volunteer.svg"
-import shelter from "../icons/shelter.svg"
-import vitamins from "../icons/vitamins.svg"
+import React, { Component } from 'react';
+import volunteer from "../icons/volunteer.svg";
+import shelter from "../icons/shelter.svg";
+import vitamins from "../icons/vitamins.svg";
 
 class UserTypeSignUp extends Component {
     constructor(props) {
@@ -29,18 +29,18 @@ class UserTypeSignUp extends Component {
         )
     }
     showStudent(e) {
-        e.preventDefault()
+        e.preventDefault();
 
         // this.props.saveValues(data)
-        this.props.showStudent()
+        this.props.showStudent();
     }
     showShelter(e) {
-        e.preventDefault()
-        this.props.showShelter()
+        e.preventDefault();
+        this.props.showShelter();
     }
     showDonator(e) {
-        e.preventDefault()
-        this.props.showDonator()
+        e.preventDefault();
+        this.props.showDonator();
     }
 }
 export default UserTypeSignUp;

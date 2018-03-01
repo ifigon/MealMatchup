@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
 
 class ReceivingAgencySignUp4 extends Component {
     constructor(props){
         super(props);
-        console.log(props);
         this.nextStep = this.nextStep.bind(this);
     }
     render() {
@@ -35,9 +34,7 @@ class ReceivingAgencySignUp4 extends Component {
         )
     }
     nextStep(e) {
-        e.preventDefault()
-        console.log(this);
-        console.log(this.refs);
+        e.preventDefault();
         // Get values via this.refs
         var data = {
             primaryEmail: ReactDOM.findDOMNode(this.refs.primaryEmail).value,

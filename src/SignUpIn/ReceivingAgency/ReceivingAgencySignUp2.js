@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
 
 class ReceivingAgencySignUp2 extends Component {
     constructor(props){
         super(props);
-        console.log(props);
         this.nextStep = this.nextStep.bind(this);
     }
     render() {

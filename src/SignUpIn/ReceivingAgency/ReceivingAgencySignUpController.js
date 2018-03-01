@@ -1,3 +1,6 @@
+import React from 'react';
+import createReactClass from 'create-react-class'
+
 import '../SignUpIn.css';
 import firebase from '../../FirebaseConfig.js';
 import ReceivingAgencySignUp from './ReceivingAgencySignUp';
@@ -7,9 +10,6 @@ import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import { NotificationType } from '../../Enums';
-
-let React = require('react');
-let createReactClass = require('create-react-class');
 
 let fieldValues = {
     organizationName: null,

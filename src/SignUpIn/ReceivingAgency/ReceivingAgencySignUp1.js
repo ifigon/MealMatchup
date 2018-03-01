@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
 
 class ReceivingAgencySignUp1 extends Component {
     constructor(props){
         super(props);
-        console.log(props);
         this.nextStep = this.nextStep.bind(this);
     }
     render() {
@@ -85,8 +84,6 @@ class ReceivingAgencySignUp1 extends Component {
     }
     nextStep(e) {
         e.preventDefault()
-        console.log(this);
-        console.log(this.refs);
         // Get values via this.refs
         var data = {
             organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-let ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
 
 class DonatingAgencySignUp3 extends Component {
     constructor(props) {
@@ -30,8 +30,6 @@ class DonatingAgencySignUp3 extends Component {
     }
     nextStep(e) {
         e.preventDefault()
-        console.log(this);
-        console.log(this.refs);
         // Get values via this.refs
         var data = {
             memberName: ReactDOM.findDOMNode(this.refs.memberName).value,
