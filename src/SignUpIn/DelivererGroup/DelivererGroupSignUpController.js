@@ -89,7 +89,6 @@ let DelivererGroupSignUpController = createReactClass({
                 }
                 let updates = {};
                 updates['/accounts/' + user.uid] = postData;
-                console.log(firebase.database().ref());
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {

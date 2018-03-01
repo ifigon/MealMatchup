@@ -24,7 +24,7 @@ class DonatingAgencySignUp2 extends Component {
 
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>NEXT</span>
+                    <span className="next" onClick={this.nextStep}>NEXT</span>
                 </div>
             </div>
         )
@@ -40,11 +40,6 @@ class DonatingAgencySignUp2 extends Component {
             adminName: ReactDOM.findDOMNode(this.refs.adminName).value,
             adminPhone: ReactDOM.findDOMNode(this.refs.adminPhone).value,
             adminPosition: ReactDOM.findDOMNode(this.refs.adminPosition).value,
-
-            secondaryName: ReactDOM.findDOMNode(this.refs.secondaryName).value,
-            secondaryEmail: ReactDOM.findDOMNode(this.refs.secondaryEmail).value,
-            secondaryPhone: ReactDOM.findDOMNode(this.refs.secondaryPhone).value,
-            secondaryPosition: ReactDOM.findDOMNode(this.refs.secondaryPosition).value,
 
         }
 

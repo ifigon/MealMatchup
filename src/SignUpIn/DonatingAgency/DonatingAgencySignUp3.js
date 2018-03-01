@@ -17,14 +17,14 @@ class DonatingAgencySignUp3 extends Component {
                     <input ref="memberPhone" type="text" className="form-component" placeholder="Phone" id="memberPhone" defaultValue={this.props.fieldValues.memberPhone} />
 <div className="gap">
                     <input ref="memberEmail" type="text" id="memberEmail" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.memberEmail} />
-                    <input ref="memberPassword" type="password" id="memberPassword" className="form-component" placeholder="Create Password" defaultValue={this.props.fieldValues.memberEmail} />
+                    <input ref="memberPassword" type="password" id="memberPassword" className="form-component" placeholder="Create Password" defaultValue={this.props.fieldValues.memberPassword} />
                     <input type="password" className="form-component" placeholder="Confirm Password" />
                </div>
                 </div>
 
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>DONE</span>
+                    <span className="next" onClick={this.nextStep}>DONE</span>
                 </div>
             </div>
         )
@@ -40,12 +40,12 @@ class DonatingAgencySignUp3 extends Component {
             memberPhone: ReactDOM.findDOMNode(this.refs.memberPhone).value,
 
             memberEmail: ReactDOM.findDOMNode(this.refs.memberEmail).value,
-            memeberPassword: ReactDOM.findDOMNode(this.refs.memeberPassword).value
+            memeberPassword: ReactDOM.findDOMNode(this.refs.memberPassword).value
 
         }
-
-        this.props.saveValues(data)
-        this.props.nextStep()
+    
+        this.props.saveValues(data);
+        this.props.submitRegistration();
     }
 }
 export default DonatingAgencySignUp3;
