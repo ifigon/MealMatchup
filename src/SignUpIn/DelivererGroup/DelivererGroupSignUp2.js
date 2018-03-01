@@ -41,7 +41,7 @@ class DelivererGroupSignUp2 extends Component {
             contactName: ReactDOM.findDOMNode(this.refs.contactName).value,
             contactPosition: ReactDOM.findDOMNode(this.refs.contactPosition).value,
             contactEmail: ReactDOM.findDOMNode(this.refs.contactEmail).value,
-            contactNumber: ReactDOM.findDOMNode(this.refs.contactNumber).value,
+            contactNumber: ReactDOM.findDOMNode(this.refs.contactNumber).value
 
         }
 
