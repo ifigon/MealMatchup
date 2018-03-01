@@ -202,6 +202,7 @@ DELIVERY REQUEST ("/delivery_requests/")
 		notes: "Enter through the back door.",
 		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		donatingAgency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
+		requester: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		// receivingAgency & delivererGroups:
 		// The donating agency can choose to request specific receiving agency
 		// and/or deliverer group, or not.
@@ -236,7 +237,7 @@ DELIVERY ("/deliveries/")
 		isEmergency: false,
 		donatingAgency: {
 			agency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
-			primaryContact: 
+			primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		},
 		receivingAgency: {
 			agency: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of receiving-agency
