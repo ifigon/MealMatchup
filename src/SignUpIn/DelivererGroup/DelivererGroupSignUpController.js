@@ -4,6 +4,7 @@ import DelivererGroupSignUp from './DelivererGroupSignUp';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
+import { NotificationType } from '../../Enums';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
@@ -65,25 +66,30 @@ let DelivererGroupSignUpController = createReactClass({
                     name: fieldValues.organizationName,
                     numVolunteers: fieldValues.numVolunteers,
                     address: {
-                        street1: "Test Street 1",
-                        street2: "Test Street 2",
-                        city: "Test City",
-                        state: "Test State",
-                        zip: "Test Zip"
+                        street1: fieldValues.address1,
+                        street2: fieldValues.address2,
+                        city: fieldValues.city,
+                        state: fieldValues.state,
+                        zip: fieldValues.zip
                     },
                     email: fieldValues.email,
                     coordinator: {
-                        name: fieldValues.memberName,
-                        email: fieldValues.memberEmail,
-                        phone: fieldValues.memberNumber,
-                        position: fieldValues.position
+                        name: fieldValues.contactName,
+                        email: fieldValues.contactEmail,
+                        phone: fieldValues.contactNumber,
+                        position: fieldValues.contactPosition
                     },
                     school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
                     isActivated: true,
-                    isVerified: true
+                    isVerified: true,
+                    notification: {
+                        type: NotificationType,
+                        content: "-L5QoXeC_UrL5tRRED3e"
+                    }
                 }
                 let updates = {};
                 updates['/accounts/' + user.uid] = postData;
+                console.log(firebase.database().ref());
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
@@ -116,6 +122,7 @@ let DelivererGroupSignUpController = createReactClass({
                     <DelivererGroupSignUp2 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
+                        submitRegistration={this.submitRegistration}
                         saveValues={this.saveValues} /></div>
             default:
                 return <SignUpComplete/>

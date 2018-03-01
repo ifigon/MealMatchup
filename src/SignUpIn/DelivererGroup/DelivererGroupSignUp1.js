@@ -78,7 +78,7 @@ class DelivererGroupSignUp1 extends Component {
             </div>
         <div className="buttons">
             <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-            <span className="next" onClick={this.props.nextStep}>NEXT</span>
+            <span className="next" onClick={this.nextStep}>NEXT</span>
         </div>
     </div>
         )
@@ -97,8 +97,8 @@ class DelivererGroupSignUp1 extends Component {
             state: ReactDOM.findDOMNode(this.refs.state).value,
         }
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default DelivererGroupSignUp1;
