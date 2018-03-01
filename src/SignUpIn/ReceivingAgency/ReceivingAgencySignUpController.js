@@ -6,6 +6,7 @@ import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
+import { NotificationType } from '../../Enums';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
@@ -88,30 +89,57 @@ let SignUpShelterController = createReactClass({
         firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {
                 console.log('User created: ' + user.uid);
+                
                 let postData = {
                     accountType: "receiving_agency",
+                    school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
                     name: fieldValues.organizationName,
                     address: {
                         street1: fieldValues.address1,
                         street2: fieldValues.address2,
                         city: fieldValues.city,
                         state: fieldValues.state,
-                        zip: fieldValues.zip
+                        zip: fieldValues.zip,
+                        officeNumber: fieldValues.officeNumber
                     },
-                    officeNumber: fieldValues.officeNumber,
-                    email: fieldValues.email,
-                    coordinator: {
-                        name: fieldValues.memberName,
-                        email: fieldValues.memberEmail,
-                        phone: fieldValues.memberNumber,
-                        position: fieldValues.position
+                    isVerified: true,
+		            isActivated: true,
+                    primaryContact: {
+                        name: fieldValues.primaryName,
+                        email: fieldValues.primaryEmail,
+                        phone: fieldValues.primaryPhone,
+                        position: fieldValues.primaryPosition
                     },
-                    school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
-                    isActivated: true,
-                    isVerified: true
-                }
+                    secondaryContact: {
+                        name: fieldValues.secondaryName,
+                        email: fieldValues.secondaryEmail,
+                        phone: fieldValues.secondaryPhone,
+                        position: fieldValues.secondaryPosition
+                    },
+                    availabilities: {
+                        0: {startTime: fieldValues.monStart, endTime: fieldValues.monEnd},
+                        1: {startTime: fieldValues.tueStart, endTime: fieldValues.tueEnd},
+                        2: {startTime: fieldValues.wedStart, endTime: fieldValues.wedEnd},
+                        3: {startTime: fieldValues.thurStart, endTime: fieldValues.thurEnd},
+                        4: {startTime: fieldValues.friStart, endTime: fieldValues.friEnd},
+                        5: {startTime: fieldValues.satStart, endTime: fieldValues.satEnd},
+                        6: {startTime: fieldValues.sunStart, endTime: fieldValues.sunEnd}
+                    },
+                    acceptEmergencyPickups: fieldValues.emergencyAvailable,
+                    emergencyQuantity: {
+                        min: fieldValues.startLbs,
+                        max: fieldValues.endLbs
+                    },
+                    isAdmin: true,
+                    notification: {
+                        type: NotificationType,
+                        content: "-L5QoXeC_UrL5tRRED3e"
+                    }
+                };
+
                 let updates = {};
                 updates['/accounts/' + user.uid] = postData;
+
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
@@ -164,6 +192,7 @@ let SignUpShelterController = createReactClass({
                     <ReceivingAgencySignUp4 fieldValues={fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
+                        submitRegistration={this.submitRegistration}
                         saveValues={this.saveValues} /></div>
 
             default:

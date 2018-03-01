@@ -12,7 +12,7 @@ class ReceivingAgencySignUp4 extends Component {
             <div className="signup-content">
                 <div className="form-block">
                     <label className="form-component">Primary Contact Details</label><br />
-                    <input ref="primaryEmail"type="text" id="primaryEmail" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.primaryName} /><br />
+                    <input ref="primaryName"type="text" id="primaryEmail" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.primaryName} /><br />
                     <input ref="primaryEmail" type="text" id="primaryEmail" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.primaryEmail} />
                     <input ref="primaryPhone" type="text" className="form-component" placeholder="Phone" id="primaryPhone" defaultValue={this.props.fieldValues.primaryPhone} />
                     <input ref="primaryPosition" type="text" className="form-component" placeholder="Position" id="primaryPosition" defaultValue={this.props.fieldValues.primaryPosition} />
