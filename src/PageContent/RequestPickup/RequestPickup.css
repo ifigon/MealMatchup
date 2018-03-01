@@ -111,6 +111,37 @@ input[type="time"]{
     background-color: white;
 }
 
+input[type="radio"]{
+    /* position: absolute; */
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+.checkmark {
+    display: inline-block;
+    margin: 7px 5px auto auto;
+    height: 15px;
+    width: 15px;
+    background: #F2F2F2;
+    box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.container input:checked ~ .checkmark {
+    background-color: #5DC0F9;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkmark:hover {
+    background-color: #ccc;
+}
+
 .buttons input[type="submit"]{
     width: 150px;
 }

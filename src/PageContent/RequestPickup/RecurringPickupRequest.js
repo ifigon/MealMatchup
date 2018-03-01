@@ -155,15 +155,17 @@ class RecurringPickupRequest extends Component {
                                 <input ref="startDate" type="date" name="startDate" onChange={this.handleChange.bind(this, "startDate")} required/><br/>
                                 <p className="error">{this.state.errors["startDate"]}</p>
                             </span>
-                            <span className="grid smaller">
-                                <input type="radio" name="durationType" value={RequestDurationType.RECUR} required/>
-                                <label className="smaller">Recur</label >
-                                <input type="number" name="numRecurrences" />times<br/>
-
-                                <input type="radio" name="durationType" value={RequestDurationType.DATE} />
-                                <label className="smaller">End by</label>
-                                <input type="date" name="endDate" onChange={this.handleChange.bind(this, "endDate")} />
-                                {}
+                            <span className="grid">
+                                <label className="container smaller">
+                                    <input type="radio" name="durationType" value={RequestDurationType.RECUR} required/>
+                                    <span class="checkmark"></span>Recur
+                                    <input type="number" name="numRecurrences" />times<br/>
+                                </label >
+                                <label className="container smaller">
+                                    <input type="radio" name="durationType" value={RequestDurationType.DATE} />
+                                    <span class="checkmark"></span>End by
+                                    <input type="date" name="endDate" onChange={this.handleChange.bind(this, "endDate")} />
+                                </label>
                                 <br/>
                             </span>
                         </span>
