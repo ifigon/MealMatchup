@@ -2,9 +2,6 @@
 import React, { Component } from 'react'
 
 class SignUpIn extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <div className="login-wrapper">
