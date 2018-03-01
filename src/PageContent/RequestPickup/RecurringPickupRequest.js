@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import firebase from '../../FirebaseConfig.js';
 import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
 import './RequestPickup.css';
+import PickupSummary from './PickupSummary.js';
+import ReactDOM from 'react-dom';
 
 class RecurringPickupRequest extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +22,8 @@ class RecurringPickupRequest extends Component {
                 {id: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3', name: 'Test RA1'}
             ],
             fields: {},
-            errors: {}
+            errors: {},
+            isOpen: false
         }; 
         this.submitRequest = this.submitRequest.bind(this);
     }
@@ -31,7 +33,6 @@ class RecurringPickupRequest extends Component {
         daRef.on('value', (snapshot) => {
             let donatingAgency = snapshot.val();
             this.setState({
-                // memberList: donatingAgency.members,
                 schoolID: donatingAgency.school
             })
         });
@@ -78,11 +79,17 @@ class RecurringPickupRequest extends Component {
         this.setState({fields});
     }
 
+    toggleModal(){
+        this.setState({
+          isOpen: !this.state.isOpen
+        });
+      }
+
     submitRequest(event) {
         if(!this.handleValidation()){ 
             alert('Form has errors');
         }else{
-            document.getElementById('recurringForm').reset();
+            this.toggleModal();
         }
 
         event.preventDefault();
@@ -135,7 +142,6 @@ class RecurringPickupRequest extends Component {
         return (
             <div className="form" id="recurringForm">
                 <form onSubmit={this.submitRequest}>
-                    {/* TODO: everything should be required except for notes, and agencies involved */}
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
                         <p className="error">{this.state.errors["endBeforeStart"]}</p>
@@ -146,19 +152,17 @@ class RecurringPickupRequest extends Component {
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Date  <span className="red">*</span></label><br/>
-                                <input type="date" name="startDate" onChange={this.handleChange.bind(this, "startDate")} required/><br/>
+                                <input ref="startDate" type="date" name="startDate" onChange={this.handleChange.bind(this, "startDate")} required/><br/>
                                 <p className="error">{this.state.errors["startDate"]}</p>
                             </span>
                             <span className="grid smaller">
                                 <input type="radio" name="durationType" value={RequestDurationType.RECUR} required/>
-                                {/* <span className="radio" name="durationType" value={RequestDurationType.RECUR}/> */}
                                 <label className="smaller">Recur</label >
                                 <input type="number" name="numRecurrences" />times<br/>
 
                                 <input type="radio" name="durationType" value={RequestDurationType.DATE} />
                                 <label className="smaller">End by</label>
                                 <input type="date" name="endDate" onChange={this.handleChange.bind(this, "endDate")} />
-                                {/* TODO check if end date is after start date? */}
                                 {}
                                 <br/>
                             </span>
@@ -196,12 +200,13 @@ class RecurringPickupRequest extends Component {
                             <span className="grid">
                                 <label>End Time  <span className="red">*</span></label><br/>
                                 <input type="time" name="endTime" onChange={this.handleChange.bind(this, "endTime")} required/>
-                                {/* TODO check end time is later than start time? */}
                             </span>
                         </span>
                         <span className="grid">
                             <p id="form-heading">Notes for Pickup</p>
-                            <textarea name="notes" />
+                            <textarea name="notes" 
+                                placeHolder="Ex: Use the underground parking garage upon entrance. 
+                                Key card access required after 3:00pm."/>
                         </span>
                         <p id="form-heading">Agencies involved</p>
                         <span className="flex">
@@ -236,6 +241,13 @@ class RecurringPickupRequest extends Component {
                         </div>
                     </div>
                 </form>
+                <PickupSummary 
+                    type={"Request Recurring Pickup"} 
+                    // startDate={event.target.startDate.value}
+                    account={this.props.account}
+                    show={this.state.isOpen} 
+                    onClose={this.toggleModal.bind(this)}>
+                    sfsdlfkjk</PickupSummary>
             </div>
         );
     }

@@ -2,11 +2,11 @@
     box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
     border-radius: 3px;
     width: 600px;
-    margin: 30px auto 0px auto;
+    margin: 140px auto 30px auto;
     font-family: 'Open Sans', sans-serif;
     font-style: normal;
     padding: 40px 0px 40px 0px;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .flex{
@@ -108,10 +108,11 @@ input[name="endDate"]{
 input[type="time"]{
     width: 200px;
     margin: 10px 0px 20px 0px;
+    background-color: white;
 }
 
 .buttons input[type="submit"]{
-    width: 120px;
+    width: 150px;
 }
 
 .buttons{
@@ -169,7 +170,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     .form {
         box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
         border-radius: 3px;
-        margin: 30px 150px 0px 80px;
+        margin: 140px 150px 30px 220px;
         font-family: 'Open Sans', sans-serif;
         font-style: normal;
         padding: 40px 0px 40px 0px;
