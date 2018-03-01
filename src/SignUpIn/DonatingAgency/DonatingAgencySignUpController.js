@@ -44,7 +44,7 @@ let DonatingAgencySignUpController = createReactClass({
             // to and overriding keys in `fieldValues` with the `fields` with Object.assign
             // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
             fieldValues = Object.assign({}, fieldValues, fields)
-        }()
+        }
     },
 
     nextStep: function () {
