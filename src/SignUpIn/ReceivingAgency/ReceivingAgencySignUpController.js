@@ -3,7 +3,6 @@ import createReactClass from 'create-react-class'
 
 import '../SignUpIn.css';
 import firebase from '../../FirebaseConfig.js';
-import ReceivingAgencySignUp from './ReceivingAgencySignUp';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
 import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
@@ -50,14 +49,12 @@ let fieldValues = {
     secondaryPhone: null,
     secondaryPosition: null
 
-
-
 }
 
 let SignUpShelterController = createReactClass({
     getInitialState: function () {
         return {
-            step: 0
+            step: 1
         }
     },
     saveValues: function (fields) {
@@ -70,14 +67,14 @@ let SignUpShelterController = createReactClass({
     },
 
     nextStep: function () {
-        this.setState({
-            step: this.state.step + 1
+        this.setState((prevState) => {
+            return { step: prevState.step + 1 }
         })
     },
 
     previousStep: function () {
-        this.setState({
-            step: this.state.step - 1
+        this.setState((prevState) => {
+            return { step: prevState.step - 1 }
         })
     },
 
@@ -151,9 +148,6 @@ let SignUpShelterController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 0:
-                return <ReceivingAgencySignUp
-                    nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -196,7 +190,7 @@ let SignUpShelterController = createReactClass({
                         saveValues={this.saveValues} /></div>
 
             default:
-                return <SignUpComplete />
+                return <SignUpComplete fieldValues={fieldValues} />
         }
     },
 

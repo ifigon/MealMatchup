@@ -1,6 +1,5 @@
 import '../SignUpIn.css';
 import firebase from '../../FirebaseConfig.js';
-import DelivererGroupSignUp from './DelivererGroupSignUp';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
@@ -29,7 +28,7 @@ let fieldValues = {
 let DelivererGroupSignUpController = createReactClass({
     getInitialState: function () {
         return {
-            step: 0
+            step: 1
         }
     },
     saveValues: function (fields) {
@@ -38,18 +37,18 @@ let DelivererGroupSignUpController = createReactClass({
             // to and overriding keys in `fieldValues` with the `fields` with Object.assign
             // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
             fieldValues = Object.assign({}, fieldValues, fields)
-        }()
+        }
     },
 
     nextStep: function () {
-        this.setState({
-            step: this.state.step + 1
+        this.setState((prevState) => {
+          return { step: prevState.step + 1}
         })
     },
 
     previousStep: function () {
-        this.setState({
-            step: this.state.step - 1
+        this.setState((prevState) => {
+           return {step: prevState.step - 1}
         })
     },
 
@@ -100,9 +99,6 @@ let DelivererGroupSignUpController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 0:
-                return <DelivererGroupSignUp
-                    nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -124,7 +120,7 @@ let DelivererGroupSignUpController = createReactClass({
                         submitRegistration={this.submitRegistration}
                         saveValues={this.saveValues} /></div>
             default:
-                return <SignUpComplete/>
+                return <SignUpComplete fieldValues={fieldValues}/>
         }
     },
 

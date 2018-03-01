@@ -3,7 +3,6 @@ import createReactClass from 'create-react-class'
 
 import '../SignUpIn.css';
 import firebase from '../../FirebaseConfig';
-import DonatingAgencySignUp from './DonatingAgencySignUp';
 import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import DonatingAgencySignUp3 from './DonatingAgencySignUp3';
@@ -18,7 +17,7 @@ let fieldValues = {
     state: null,
     zip: null,
     officeNumber: null,
-   
+
     email: null,
     password: null,
     adminName: null,
@@ -32,13 +31,13 @@ let fieldValues = {
     memberEmail: null,
     memberPhone: null,
     memberPassword: null,
-    
+
 }
 
 let DonatingAgencySignUpController = createReactClass({
     getInitialState: function () {
         return {
-            step: 0
+            step: 1
         }
     },
     saveValues: function (fields) {
@@ -51,14 +50,14 @@ let DonatingAgencySignUpController = createReactClass({
     },
 
     nextStep: function () {
-        this.setState({
-            step: this.state.step + 1
+        this.setState((prevState) => {
+            return { step: prevState.step + 1 }
         })
     },
 
     previousStep: function () {
-        this.setState({
-            step: this.state.step - 1
+        this.setState((prevState) => {
+            return { step: prevState.step - 1 }
         })
     },
 
@@ -122,9 +121,6 @@ let DonatingAgencySignUpController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 0:
-                return <DonatingAgencySignUp
-                    nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -157,7 +153,7 @@ let DonatingAgencySignUpController = createReactClass({
                         submitRegistration={this.submitRegistration}
                         saveValues={this.saveValues} /></div>
             default:
-                return <SignUpComplete />
+                return <SignUpComplete fieldValues={this.fieldValues} />
         }
     },
 
