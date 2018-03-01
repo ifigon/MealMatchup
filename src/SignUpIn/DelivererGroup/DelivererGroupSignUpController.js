@@ -32,6 +32,7 @@ let DelivererGroupSignUpController = createReactClass({
         }
     },
     saveValues: function (fields) {
+        console.log(fields);
         return function () {
             // Remember, `fieldValues` is set at the top of this file, we are simply appending
             // to and overriding keys in `fieldValues` with the `fields` with Object.assign
