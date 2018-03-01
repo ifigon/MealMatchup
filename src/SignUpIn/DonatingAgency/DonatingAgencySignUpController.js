@@ -2,7 +2,6 @@ import React from 'react';
 import createReactClass from 'create-react-class'
 
 import '../SignUpIn.css';
-import DonatingAgencySignUp from './DonatingAgencySignUp';
 import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import DonatingAgencySignUp3 from './DonatingAgencySignUp3';
@@ -36,7 +35,7 @@ let fieldValues = {
 let DonatingAgencySignUpController = createReactClass({
     getInitialState: function () {
         return {
-            step: 0
+            step: 1
         }
     },
     saveValues: function (fields) {
@@ -62,9 +61,6 @@ let DonatingAgencySignUpController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 0:
-                return <DonatingAgencySignUp
-                    nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">

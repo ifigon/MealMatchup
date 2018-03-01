@@ -1,5 +1,4 @@
 import '../SignUpIn.css';
-import DelivererGroupSignUp from './DelivererGroupSignUp';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
@@ -27,7 +26,7 @@ let fieldValues = {
 let DelivererGroupSignUpController = createReactClass({
     getInitialState: function () {
         return {
-            step: 0
+            step: 1
         }
     },
     saveValues: function (fields) {
@@ -53,9 +52,6 @@ let DelivererGroupSignUpController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 0:
-                return <DelivererGroupSignUp
-                    nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">

@@ -2,7 +2,6 @@ import React from 'react';
 import createReactClass from 'create-react-class'
 
 import '../SignUpIn.css';
-import ReceivingAgencySignUp from './ReceivingAgencySignUp';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
 import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
@@ -48,14 +47,12 @@ let fieldValues = {
     secondaryPhone: null,
     secondaryPosition: null
 
-
-
 }
 
 let SignUpShelterController = createReactClass({
     getInitialState: function () {
         return {
-            step: 0
+            step: 1
         }
     },
     saveValues: function (fields) {
@@ -81,9 +78,6 @@ let SignUpShelterController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            case 0:
-                return <ReceivingAgencySignUp
-                    nextStep={this.nextStep} />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">

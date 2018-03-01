@@ -30,8 +30,6 @@ class UserTypeSignUp extends Component {
     }
     showDelivererGroup(e) {
         e.preventDefault();
-
-        // this.props.saveValues(data)
         this.props.showDelivererGroup();
     }
     showReceivingAgency(e) {
