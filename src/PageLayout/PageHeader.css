@@ -5,7 +5,8 @@
     line-height: normal;
     font-size: 30px;
     color: #4F4F4F;
-    overflow-wrap: break-word;
+    position: fixed;
+    margin-left: 150px;
 }
 
 .page-container{
@@ -33,7 +34,16 @@
     margin-right: 80px;
 }
 
-/* @media screen and (max-width: 1090px) {
-    position: fixed;
-    margin-left: 100px
-} */
+@media screen and (max-width: 540px) {
+    .page-title {
+        font-family:'Open Sans';
+        font-style: normal;
+        font-weight: normal;
+        line-height: normal;
+        font-size: 25px;
+        color: #4F4F4F;
+        position: fixed;
+        margin-left: 150px;
+        margin-right: 100px;
+    }
+}
