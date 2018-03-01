@@ -1,7 +1,7 @@
 import React from 'react';
 import './PickupSummary.css';
 import truck from '../../icons/green-truck.svg';
-import {GoogleApiWrapper} from 'google-maps-react';
+import Map from '../../Map/Map.js'
 
 class PickupSummary extends React.Component {
     constructor(props){
@@ -21,7 +21,6 @@ class PickupSummary extends React.Component {
                 <div className="summary-title flex">
                     <img src={truck}></img>
                     <p id="title">{this.props.type}</p>
-                    {/* <p id="exit">&times;</p> */}
                 </div>
                 <div className="wrapper grid">
                     <div className="details grid">
@@ -30,14 +29,17 @@ class PickupSummary extends React.Component {
                         <p>End Date: {}</p>
                         <p>Pickup between {}</p>
                     </div>
-                    <div className="agency grid">
-                        <p id="subheading">Dining Hall</p>
-                        <p id="name">Local Point</p>
-                        <div className="contact">
-                            <p>Andrea</p>
-                            <p>###-###-####</p>
-                            <p>email</p>
+                    <div className="flex">
+                        <div className="agency grid">
+                            <p id="subheading">Dining Hall</p>
+                            <p id="name">Local Point</p>
+                            <div className="contact">
+                                <p>Andrea</p>
+                                <p>###-###-####</p>
+                                <p>email</p>
+                            </div>
                         </div>
+                        <Map></Map>
                     </div>
                     <div className="details grid">
                         <p id="subheading">Notes for Pickup</p>

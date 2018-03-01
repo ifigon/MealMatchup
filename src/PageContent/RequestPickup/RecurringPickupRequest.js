@@ -23,7 +23,7 @@ class RecurringPickupRequest extends Component {
             ],
             fields: {},
             errors: {},
-            isOpen: false
+            isOpen: true
         }; 
         this.submitRequest = this.submitRequest.bind(this);
     }
