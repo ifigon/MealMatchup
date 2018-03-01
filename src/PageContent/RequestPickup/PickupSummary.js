@@ -4,10 +4,6 @@ import truck from '../../icons/green-truck.svg';
 import Map from '../../Map/Map.js'
 
 class PickupSummary extends React.Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         // Render nothing if the "show" prop is false
         if(!this.props.show) {
@@ -19,7 +15,7 @@ class PickupSummary extends React.Component {
                 <div className="top-line"></div>
                 <p id="exit" onClick={this.props.onClose}>&times;</p>
                 <div className="summary-title flex">
-                    <img src={truck}></img>
+                    <img src={truck} alt="truck"></img>
                     <p id="title">{this.props.type}</p>
                 </div>
                 <div className="wrapper grid">

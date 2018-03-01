@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { PageContent } from './Enums.js';
-import firebase, { auth } from './FirebaseConfig.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';

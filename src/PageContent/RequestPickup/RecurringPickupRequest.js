@@ -3,7 +3,6 @@ import firebase from '../../FirebaseConfig.js';
 import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
-import ReactDOM from 'react-dom';
 
 class RecurringPickupRequest extends Component {
     constructor(props) {
