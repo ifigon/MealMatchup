@@ -4,6 +4,7 @@ import firebase, { auth } from './FirebaseConfig.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import RecurringPickup from './PageContent/RequestPickup/RecurringPickupRequest.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -26,7 +27,6 @@ class PageContainer extends Component {
         this.setState({
             content: e
         });
-        console.log('container: ' + this.state.content);
     }
  
     render(){
@@ -45,7 +45,7 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Assign Volunteers</div>
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>
+                    <RecurringPickup account={this.state.account}></RecurringPickup>
                 }
                 {this.state.content === PageContent.FOOD_LOGS &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
