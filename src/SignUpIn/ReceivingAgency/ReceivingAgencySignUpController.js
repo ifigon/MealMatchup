@@ -68,23 +68,15 @@ let SignUpShelterController = createReactClass({
     },
 
     nextStep: function () {
-        this.setState({
-            step: this.state.step + 1
+        this.setState((prevState) => {
+            return { step: prevState.step + 1 }
         })
     },
 
     previousStep: function () {
-        this.setState({
-            step: this.state.step - 1
+        this.setState((prevState) => {
+            return { step: prevState.step - 1 }
         })
-    },
-
-    submitRegistration: function () {
-        // Handle via ajax submitting the user data, upon
-        // success return this.nextStop(). If it fails,
-        // show the user the error but don't advance
-
-        this.nextStep()
     },
 
     showStep: function () {
@@ -133,7 +125,7 @@ let SignUpShelterController = createReactClass({
                         saveValues={this.saveValues} /></div>
 
             default:
-                return <SignUpComplete />
+                return <SignUpComplete fieldValues={fieldValues} />
         }
     },
 
