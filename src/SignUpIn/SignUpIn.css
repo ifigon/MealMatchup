@@ -324,7 +324,7 @@ input.week{
 .input-wrapper {
     background: white;
     border: solid 1px #BDBDBD;
-    border-radius: 2px;
+    border-radius: 3px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -339,12 +339,9 @@ input.week{
     margin-right: 20px;
     margin-left: 5px;
 }
-.checkbox:checked{
+
+.checkbox:checked:after{
     background-color: #5DC0F9;
-}
-.checkbox:after{
-    background-color: #5DC0F9;
-    box-shadow: inset 0px 0px 7px 0px rgba(0, 0, 0, 0.25);
 }
 
 .time-input-wrapper{
@@ -409,4 +406,62 @@ fill: #F77676;
     height: 2.4 vh;
     padding-right: 30px;
     vertical-align: middle;
+}
+
+.login-wrapper{
+    background-color: rgba(255,255,255,.95);
+    width: 30vw;
+    margin: 0 auto;
+    margin-top: 30vh;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.login-button{
+background-color: #4F4F4F;
+color: white;
+border-radius: 12px;
+font-size: 1.5vw;
+padding-right: 3vw;
+padding-left: 3vw;
+padding-top: 1vw;
+padding-bottom: 1vw;
+font-family: 'Open Sans', sans-serif;
+font-weight: 300;
+}
+
+.login-button:hover{
+    cursor: pointer;
+}
+
+.login-button-wrapper{
+    padding: 30px;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+input.login-input{
+    width: 70%;
+    align-content: center;
+}
+.login-input-wrapper{
+    margin: 0 auto;
+    text-align: center
+}
+
+.forgot{
+    margin: 0 auto;
+    text-align: center;
+}
+p.forgot{
+    color: #4F4F4F;
+    padding: 10px
+}
+p.forgot:hover{
+    cursor: pointer;
+}
+
+input.login-wrapper{
+    width: 40vw;
 }

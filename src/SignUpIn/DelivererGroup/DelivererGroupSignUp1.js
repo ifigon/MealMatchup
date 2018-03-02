@@ -77,7 +77,7 @@ class DelivererGroupSignUp1 extends Component {
             </div>
         <div className="buttons">
             <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-            <span className="next" onClick={this.props.nextStep}>NEXT</span>
+            <span className="next" onClick={this.nextStep}>NEXT</span>
         </div>
     </div>
         )

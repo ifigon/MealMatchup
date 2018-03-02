@@ -6,41 +6,39 @@ import vitamins from "../icons/vitamins.svg";
 class UserTypeSignUp extends Component {
     constructor(props) {
         super(props);
-        this.showStudent = this.showStudent.bind(this);
-        this.showDonator = this.showDonator.bind(this);
-        this.showShelter = this.showShelter.bind(this);
+        this.showDelivererGroup = this.showDelivererGroup.bind(this);
+        this.showDonatingAgency = this.showDonatingAgency.bind(this);
+        this.showReceivingAgency = this.showReceivingAgency.bind(this);
     }
     render() {
         return (
             <div className="user-type-wrapper">
                 <div className="user-type-box">
                     <div className="user-type-label">SELECT ACCOUNT TYPE</div>
-                    <div onClick={this.showStudent} className="user-type">
+                    <div onClick={this.showDelivererGroup} className="user-type">
                         <img alt="icon" type="image/svg+xml" src={volunteer} className="user-icon"/>   Student Group
                     </div>
-                    <div onClick={this.showShelter} className="user-type">
+                    <div onClick={this.showReceivingAgency} className="user-type">
                         <img alt="icon" type="image/svg+xml" src={shelter} className="user-icon"/>    Receiving Agency
                     </div>
-                    <div onClick={this.showDonator} className="user-type">
+                    <div onClick={this.showDonatingAgency} className="user-type">
                         <img alt="icon" type="image/svg+xml" src={vitamins} className="user-icon"/>     Donating Agency
                     </div>
                 </div>
             </div>
         )
     }
-    showStudent(e) {
+    showDelivererGroup(e) {
         e.preventDefault();
-
-        // this.props.saveValues(data)
-        this.props.showStudent();
+        this.props.showDelivererGroup();
     }
-    showShelter(e) {
+    showReceivingAgency(e) {
         e.preventDefault();
-        this.props.showShelter();
+        this.props.showReceivingAgency();
     }
-    showDonator(e) {
+    showDonatingAgency(e) {
         e.preventDefault();
-        this.props.showDonator();
+        this.props.showDonatingAgency();
     }
 }
 export default UserTypeSignUp;

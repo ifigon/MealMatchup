@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+*{
+    font-family: 'Open Sans', sans-serif;
+    color: #243847;
+}
+
+.wrapper{
+    display: block;
+    margin: 0 auto;
+    padding: 40px;
+
+}
+
+.icon, h1{
+    display: inline;
+    vertical-align: middle;
+}
+
+.icon{
+    height: 5vh;
+    padding-right: 10px;
+    vertical-align: -webkit-baseline-middle;
+}
+
+h1{
+    font-weight: 600;
+}
+
+.pickup-details{
+    margin-bottom: 20px; 
+}
+
+h2{
+    font-weight: 600;
+    margin-bottom: 0px;
+    font-size: 1.1rem; 
+}
+
+label{
+    display: inline;
+}
+.start-date{
+    display: inline;
+}
+
+.start{
+    margin-bottom: 5px;
+}
+p{
+    font-weight: 400;
+    margin: 0px ;
+    margin-bottom: 5px;
+}
+
+.donating-recieving{
+    color: #828282;
+    margin: 0;
+    font-size: .9rem;
+}

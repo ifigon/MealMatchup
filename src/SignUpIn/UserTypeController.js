@@ -12,18 +12,18 @@ let UserTypeController = createReactClass({
             step: 0
         }
     },
-    showStudent: function () {
+    showDelivererGroup: function () {
         this.setState({
             step: 1
         })
     },
 
-    showShelter: function () {
+    showReceivingAgency: function () {
         this.setState({
             step: 2
         })
     },
-    showDonator: function () {
+    showDonatingAgency: function () {
         this.setState({
             step: 3
         })
@@ -32,9 +32,9 @@ let UserTypeController = createReactClass({
         switch (this.state.step) {
             default:
                 return <UserTypeSignUp
-                    showStudent={this.showStudent}
-                    showDonator={this.showDonator}
-                    showShelter={this.showShelter}
+                    showDelivererGroup={this.showDelivererGroup}
+                    showDonatingAgency={this.showDonatingAgency}
+                    showReceivingAgency={this.showReceivingAgency}
                 />
             case 1:
                 return <DelivererGroupSignUpController />

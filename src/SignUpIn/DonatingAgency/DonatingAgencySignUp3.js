@@ -23,7 +23,7 @@ class DonatingAgencySignUp3 extends Component {
 
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.props.nextStep}>DONE</span>
+                    <span className="next" onClick={this.nextStep}>DONE</span>
                 </div>
             </div>
         )

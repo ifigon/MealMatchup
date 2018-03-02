@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import "typeface-roboto";
-// import UserTypeController from './SignUpIn/UserTypeController.js'
+import RecurringDeliveryRequestController from './PageLayout/Notification/RecurringDeliveryRequestController.js';
+// import SignUpInController from './SignUpIn/SignUpInController.js'
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -74,19 +75,20 @@ class App extends Component {
                 {/* {this.state.authenticated ?
                     (this.state.account ?
                         /* Show Calendar page if user is logged in */ }
-                        <PageContainer 
+                        {/* <PageContainer 
                             account={this.state.account}
                             content={PageContent.CALENDAR}>
-                        </PageContainer>
-                {/* //     :
-                //         <UserTypeController/>
-                //     )
-                // :
-                //     /* Show blank page if initial authentication hasn't finished */
-                //     <div></div>
-                // }
-                     }
-             </div>
+                        </PageContainer> */}
+                        <RecurringDeliveryRequestController/>
+                    {/* :
+                        <SignUpInController/>
+                    )
+                :
+                    /* Show blank page if initial authentication hasn't finished */
+                    // <div></div>
+                } 
+                    
+            </div>
         );
     }
 }
