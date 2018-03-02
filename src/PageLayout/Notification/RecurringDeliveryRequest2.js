@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
 import truck from '../../icons/truck.svg';
 
-class RecurringDeliveryRequest1 extends Component {
+class RecurringDeliveryRequest2 extends Component {
     constructor(props) {
         super(props);
     }
@@ -10,7 +10,7 @@ class RecurringDeliveryRequest1 extends Component {
     render() {
         return (
             <div className="wrapper">
-                <img className="icon" src={truck} alt="icon" /><h1>Reccuring Pickup Requested</h1>
+                <img className="icon" src={truck} alt="icon" /><h1>Are you sure you want to claim this pickup?</h1>
                 <div className="pickup-details">
                     <h2>Pickup Details</h2>
                     <div className="start"><label>Start Date</label> <p className="start-date">Thursday, 11/21/2018</p></div>
@@ -40,4 +40,4 @@ class RecurringDeliveryRequest1 extends Component {
         )
     }
 }
-export default RecurringDeliveryRequest1;
+export default RecurringDeliveryRequest2;

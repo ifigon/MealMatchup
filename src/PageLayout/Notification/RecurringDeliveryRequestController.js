@@ -3,6 +3,8 @@ import createReactClass from 'create-react-class'
 import './Notification.css';
 
 import RecurringDeliveryRequest1 from './RecurringDeliveryRequest1';
+import RecurringDeliveryRequest2 from './RecurringDeliveryRequest2';
+
 
 
 let RecurringDeliveryRequestController = createReactClass({
@@ -27,23 +29,17 @@ let RecurringDeliveryRequestController = createReactClass({
         switch (this.state.step) {
             default:
                 return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
-                    </div>
                     <RecurringDeliveryRequest1 
                         nextStep={this.nextStep}
-                        previousStep={this.previousStep}
                        />
                 </div>
-            // case 2:
-            //     return <div className="signup">
-            //         <div className="circle-wrapper">
-            //             <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
-            //         </div>
-            //         <ReceivingAgencySignUp2 fieldValues={fieldValues}
-            //             nextStep={this.nextStep}
-            //             previousStep={this.previousStep}
-            //             saveValues={this.saveValues} /></div>
+                case 2:
+                return   
+                <div className="signup">            
+                <RecurringDeliveryRequest2 
+                    nextStep={this.nextStep}
+                   />
+                   </div>
 
             // case 3:
             //     return <div className="signup">
