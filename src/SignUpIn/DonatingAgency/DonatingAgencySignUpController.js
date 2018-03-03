@@ -6,6 +6,7 @@ import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import DonatingAgencySignUp3 from './DonatingAgencySignUp3';
 import SignUpComplete from '../SignUpComplete';
+import UserTypeController from '../UserTypeController';
 
 let fieldValues = {
     organizationName: null,
@@ -61,6 +62,8 @@ let DonatingAgencySignUpController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
+            default:
+            <UserTypeController/>
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -91,7 +94,7 @@ let DonatingAgencySignUpController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-            default:
+            case 4:
                 return <SignUpComplete fieldValues={this.fieldValues} />
         }
     },

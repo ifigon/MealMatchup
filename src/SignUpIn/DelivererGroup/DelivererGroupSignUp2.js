@@ -24,14 +24,14 @@ class DelivererGroupSignUp2 extends Component {
                 </div>
 
                 <div className="buttons">
-                    <span className="cancel" onClick={this.props.previousStep}>CANCEL</span>
+                    <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                     <span className="next" onClick={this.nextStep}>DONE</span>
                 </div>
             </div>
         )
     }
     nextStep(e) {
-        e.preventDefault()
+        e.preventDefault();
 
         // Get values via this.refs
         var data = {
@@ -44,8 +44,8 @@ class DelivererGroupSignUp2 extends Component {
 
         }
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default DelivererGroupSignUp2;

@@ -1,40 +1,44 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
+import React, {Component} from 'react';
 import './SignUpIn.css';
 import UserTypeSignUp from './UserTypeSignUp';
 import ReceivingAgencySignUpController from './ReceivingAgency/ReceivingAgencySignUpController';
 import DelivererGroupSignUpController from './DelivererGroup/DelivererGroupSignUpController';
 import DonatingAgencySignUpController from './DonatingAgency/DonatingAgencySignUpController';
 
-let UserTypeController = createReactClass({
-    getInitialState: function () {
-        return {
+class UserTypeController extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
             step: 0
         }
-    },
-    showDelivererGroup: function () {
+    }
+
+    showDelivererGroup() {
+        console.log(this.state);
         this.setState({
             step: 1
-        })
-    },
+        });
+    }
 
-    showReceivingAgency: function () {
+    showReceivingAgency() {
         this.setState({
             step: 2
         })
-    },
-    showDonatingAgency: function () {
+    }
+
+    showDonatingAgency() {
         this.setState({
             step: 3
         })
-    },
-    showStep: function () {
+    }
+
+    showStep() {
         switch (this.state.step) {
             default:
                 return <UserTypeSignUp
-                    showDelivererGroup={this.showDelivererGroup}
-                    showDonatingAgency={this.showDonatingAgency}
-                    showReceivingAgency={this.showReceivingAgency}
+                    showDelivererGroup={this.showDelivererGroup.bind(this)}
+                    showDonatingAgency={this.showDonatingAgency.bind(this)}
+                    showReceivingAgency={this.showReceivingAgency.bind(this)}
                 />
             case 1:
                 return <DelivererGroupSignUpController />
@@ -44,7 +48,7 @@ let UserTypeController = createReactClass({
             case 3:
                 return <DonatingAgencySignUpController />
         }
-    },
+    }
 
     render() {
         return (
@@ -53,5 +57,6 @@ let UserTypeController = createReactClass({
             </div>
         )
     }
-})
+}
+
 export default UserTypeController;

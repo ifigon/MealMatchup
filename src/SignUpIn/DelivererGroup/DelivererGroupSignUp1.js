@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';;
+import ReactDOM from 'react-dom';
 
 class DelivererGroupSignUp1 extends Component {
     constructor(props){
@@ -7,7 +7,8 @@ class DelivererGroupSignUp1 extends Component {
         this.nextStep = this.nextStep.bind(this);
     }
     render() {
-        return (            
+        return (          
+        <form>  
         <div className="signup-content">
         <div className="form-block">
             <label className="form-component">Organization Details</label><br />
@@ -80,10 +81,12 @@ class DelivererGroupSignUp1 extends Component {
             <span className="next" onClick={this.nextStep}>NEXT</span>
         </div>
     </div>
+    </form> 
+
         )
     }
     nextStep(e) {
-        e.preventDefault()
+        e.preventDefault();
         // Get values via this.refs
         var data = {
             organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,
@@ -93,9 +96,8 @@ class DelivererGroupSignUp1 extends Component {
             city: ReactDOM.findDOMNode(this.refs.city).value,
             state: ReactDOM.findDOMNode(this.refs.state).value,
         }
-
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default DelivererGroupSignUp1;

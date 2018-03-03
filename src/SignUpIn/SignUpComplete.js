@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 
 class SignUpComplete extends Component {
-    constructor(props){
-        super(props);
-        console.log("this.props.fieldValues", this.props.fieldValues)
-    }
-
     render() {
         return (
             <div className="signup-complete-wrapper">

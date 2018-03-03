@@ -27,7 +27,7 @@ class ReceivingAgencySignUp4 extends Component {
                     All fields are required unless specified
                     </div>
                 <div className="buttons">
-                    <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
+                    <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                     <span className="next" onClick={this.nextStep}>DONE</span>
                 </div>
             </div>

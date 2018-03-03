@@ -43,31 +43,6 @@ class App extends Component {
         }.bind(this));
     }
 
-    // ======================= Temporary Testing Code ========================
-    tempSignIn(event) {
-        event.preventDefault();
-
-        var testEmail = "";
-        var accountType = event.target.accountType.value;
-        if (accountType === "DAMember") {
-            testEmail = "testdonate1member1@test.com";
-        } else if (accountType === "RA") {
-            testEmail = "testreceiving@test.com";
-        } else {
-            testEmail = "testdeliverergroup@test.com";
-        }
-        auth.signInWithEmailAndPassword(testEmail, "123456").then(function(user) {
-            console.log("Signed in with " + testEmail);
-            console.log("User.uid: " + user.uid);
-        }).catch(function(error) {
-            var errorMessage = error.message;
-            console.log("Sign in ERROR: " + errorMessage);
-        });
-    }
-    
-    // ====================== End Temporary Testing Code ======================
-    
-
     render() {
         return (
             <div className="">

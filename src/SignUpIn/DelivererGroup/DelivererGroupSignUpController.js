@@ -2,6 +2,7 @@ import '../SignUpIn.css';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
+import UserTypeController from '../UserTypeController';
 
 let React = require('react');
 let createReactClass = require('create-react-class');
@@ -14,7 +15,7 @@ let fieldValues = {
     city: null,
     state: null,
     zip: null,
-    
+
     email: null,
     password: null,
     contactName: null,
@@ -40,18 +41,20 @@ let DelivererGroupSignUpController = createReactClass({
 
     nextStep: function () {
         this.setState((prevState) => {
-          return { step: prevState.step + 1}
+            return { step: prevState.step + 1 }
         })
     },
 
     previousStep: function () {
         this.setState((prevState) => {
-           return {step: prevState.step - 1}
+            return { step: prevState.step - 1 }
         })
     },
 
     showStep: function () {
         switch (this.state.step) {
+            default:
+                return <UserTypeController />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -71,8 +74,8 @@ let DelivererGroupSignUpController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-            default:
-                return <SignUpComplete fieldValues={fieldValues}/>
+            case 3:
+                return <SignUpComplete fieldValues={fieldValues} />
         }
     },
 

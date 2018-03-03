@@ -35,7 +35,7 @@ class ReceivingAgencySignUp3 extends Component {
                     </div>
                     <br />
 
-                    <div className="row"> <input  ref="tueStart" className="checkbox" type="checkbox" /><div className="day">Tue</div>
+                    <div className="row"> <input ref="tueStart" className="checkbox" type="checkbox" /><div className="day">Tue</div>
                         <div className="time-input-wrapper">
                             <div className="input-wrapper">
                                 <input className="week" type="text" />
@@ -168,7 +168,7 @@ class ReceivingAgencySignUp3 extends Component {
                     <br />
 
                     <div className="emergency-pickup">
-                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img alt="icon" className="icon" src={truck} type="image/svg+xml"/><br />
+                        <label className="emergency-pickup-label">Emergency Pick Up Available</label><img alt="icon" className="icon" src={truck} type="image/svg+xml" /><br />
                         <input type="checkbox" className="checkbox" /><p className="pickup-p">Pick up food from donating agency, if notified, in cases of emergency.</p>
                     </div>
                     <div className="food-weight">
@@ -178,7 +178,7 @@ class ReceivingAgencySignUp3 extends Component {
                 </div>
 
                 <div className="buttons">
-                    <span className="cancel" onClick={this.props.previousStep}>CANCEL</span>
+                    <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                     <span className="next" onClick={this.nextStep}>NEXT</span>
                 </div>
             </div>
@@ -187,31 +187,31 @@ class ReceivingAgencySignUp3 extends Component {
     nextStep(e) {
         e.preventDefault()
 
-                // Get values via this.refs
-                var data = {
-                    monStart: ReactDOM.findDOMNode(this.refs.monStart).value,
-                    monEnd: ReactDOM.findDOMNode(this.refs.monEnd).value,
-                    tueStart: ReactDOM.findDOMNode(this.refs.tueStart).value,
-                    tueEnd: ReactDOM.findDOMNode(this.refs.tueEnd).value,                  
-                    wedStart: ReactDOM.findDOMNode(this.refs.wedStart).value,
-                    wedEnd: ReactDOM.findDOMNode(this.refs.wedEnd).value,     
-                    thurStart: ReactDOM.findDOMNode(this.refs.thurStart).value,
-                    thurEnd: ReactDOM.findDOMNode(this.refs.thurEnd).value,     
-                    friStart: ReactDOM.findDOMNode(this.refs.friStart).value,
-                    friEnd: ReactDOM.findDOMNode(this.refs.friEnd).value,     
-                    satStart: ReactDOM.findDOMNode(this.refs.satStart).value,
-                    satEnd: ReactDOM.findDOMNode(this.refs.satEnd).value,     
-                    sunStart: ReactDOM.findDOMNode(this.refs.sunStart).value,
-                    sunEnd: ReactDOM.findDOMNode(this.refs.sunEnd).value,     
- 
+        // Get values via this.refs
+        var data = {
+            monStart: ReactDOM.findDOMNode(this.refs.monStart).value,
+            monEnd: ReactDOM.findDOMNode(this.refs.monEnd).value,
+            tueStart: ReactDOM.findDOMNode(this.refs.tueStart).value,
+            tueEnd: ReactDOM.findDOMNode(this.refs.tueEnd).value,
+            wedStart: ReactDOM.findDOMNode(this.refs.wedStart).value,
+            wedEnd: ReactDOM.findDOMNode(this.refs.wedEnd).value,
+            thurStart: ReactDOM.findDOMNode(this.refs.thurStart).value,
+            thurEnd: ReactDOM.findDOMNode(this.refs.thurEnd).value,
+            friStart: ReactDOM.findDOMNode(this.refs.friStart).value,
+            friEnd: ReactDOM.findDOMNode(this.refs.friEnd).value,
+            satStart: ReactDOM.findDOMNode(this.refs.satStart).value,
+            satEnd: ReactDOM.findDOMNode(this.refs.satEnd).value,
+            sunStart: ReactDOM.findDOMNode(this.refs.sunStart).value,
+            sunEnd: ReactDOM.findDOMNode(this.refs.sunEnd).value,
 
-                    startLbs: ReactDOM.findDOMNode(this.refs.startLbs).value,
-                    endLbs: ReactDOM.findDOMNode(this.refs.endLbs).value,
 
-                }
-        
-                this.props.saveValues(data)
-                this.props.nextStep()
+            startLbs: ReactDOM.findDOMNode(this.refs.startLbs).value,
+            endLbs: ReactDOM.findDOMNode(this.refs.endLbs).value,
+
+        }
+
+        this.props.saveValues(data)
+        this.props.nextStep()
     }
 }
 export default ReceivingAgencySignUp3;

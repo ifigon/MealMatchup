@@ -22,7 +22,7 @@ class DonatingAgencySignUp3 extends Component {
                 </div>
 
                 <div className="buttons">
-                    <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
+                    <span className="cancel" onClick={this.props.previousStep} >BACK</span>
                     <span className="next" onClick={this.nextStep}>DONE</span>
                 </div>
             </div>
@@ -37,7 +37,7 @@ class DonatingAgencySignUp3 extends Component {
             memberPhone: ReactDOM.findDOMNode(this.refs.memberPhone).value,
 
             memberEmail: ReactDOM.findDOMNode(this.refs.memberEmail).value,
-            memeberPassword: ReactDOM.findDOMNode(this.refs.memeberPassword).value
+            memberPassword: ReactDOM.findDOMNode(this.refs.memeberPassword).value
 
         }
 

@@ -11,7 +11,7 @@
 }
 .signup{
     margin: 0 auto;
-    width: 35%;
+    width: 35vw;
     background-color: rgba(255,255,255,.95);
     height: 100vh;
     font-family: 'Open Sans', sans-serif;
@@ -68,15 +68,13 @@ input.form-component{
     padding-left: 30px;
 }
 .next{
-    /* padding-left:60%;; */
-    left: 0;
+    padding-left: 22vw;
 }
+
 .next:hover{
     cursor: pointer;
 }
-.cancel{
-    padding-right: 20vw;
-}
+
 .cancel:hover{
     cursor: pointer;
 }
@@ -464,4 +462,9 @@ p.forgot:hover{
 
 input.login-wrapper{
     width: 40vw;
+}
+
+form{
+    margin: 0px;
+    width: 100%;
 }

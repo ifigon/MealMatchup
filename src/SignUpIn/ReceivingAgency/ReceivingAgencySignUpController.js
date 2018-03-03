@@ -7,6 +7,7 @@ import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
+import UserTypeController from '../UserTypeController';
 
 let fieldValues = {
     organizationName: null,
@@ -78,6 +79,8 @@ let SignUpShelterController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
+            default:
+            return <UserTypeController/>
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -118,13 +121,12 @@ let SignUpShelterController = createReactClass({
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
 
-            default:
+            case 5:
                 return <SignUpComplete fieldValues={fieldValues} />
         }
     },
 
     render() {
-        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
                 {this.showStep()}
