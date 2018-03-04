@@ -1,5 +1,0 @@
-Select account type
-login/create account
-Login form
-Sign up form (3 account types)
-Account pending message
