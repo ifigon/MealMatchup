@@ -8,19 +8,19 @@ class SignUpInController extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            step: 1
+            step: 0
         }
     }
     signIn() {
         this.setState({
             step: 1
-        })
+        });
     }
 
     createAccount() {
         this.setState({
             step: 2
-        })
+        });
     }
     showStep() {
         switch (this.state.step) {

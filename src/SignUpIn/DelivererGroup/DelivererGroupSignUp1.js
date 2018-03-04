@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
 
 class DelivererGroupSignUp1 extends Component {
     constructor(props){
@@ -8,17 +7,17 @@ class DelivererGroupSignUp1 extends Component {
     }
     render() {
         return (          
-        <form>  
+        <form onSubmit={this.nextStep}>  
         <div className="signup-content">
         <div className="form-block">
             <label className="form-component">Organization Details</label><br />
-            <input ref="organizationName"type="text" id="organization" className="form-component" placeholder="Organization Name" defaultValue={this.props.fieldValues.organizationName} /><br />
-            <input ref="numVolunteers" type="text" id="numVolunteers" className="form-component" placeholder="Number of Volunteers" defaultValue={this.props.fieldValues.officeNumber}/>
-            <input ref="address1" type="text" id="address1" className="form-component" placeholder="Street Address 1" defaultValue={this.props.fieldValues.address1} />
-            <input ref="address2" type="text" id="address2" className="form-component" placeholder="Street Address 2 (optional)" defaultValue={this.props.fieldValues.address2} />
-            <input ref="city" type="text" id="city" className="form-component" placeholder="City" defaultValue={this.props.fieldValues.city} />
+            <input name="organizationName"type="text" id="organization" className="form-component" placeholder="Organization Name" defaultValue={this.props.fieldValues.organizationName} /><br />
+            <input name="numVolunteers" type="text" id="numVolunteers" className="form-component" placeholder="Number of Volunteers" defaultValue={this.props.fieldValues.officeNumber}/>
+            <input name="address1" type="text" id="address1" className="form-component" placeholder="Street Address 1" defaultValue={this.props.fieldValues.address1} />
+            <input name="address2" type="text" id="address2" className="form-component" placeholder="Street Address 2 (optional)" defaultValue={this.props.fieldValues.address2} />
+            <input name="city" type="text" id="city" className="form-component" placeholder="City" defaultValue={this.props.fieldValues.city} />
             <span className="side-by-side-wrapper">
-            <select ref="state" type="text" id="state" name="state" className="form-component side-by-side" placeholder="State" defaultValue={this.props.fieldValues.state}>
+            <select name="state" type="text" id="state" name="state" className="form-component side-by-side" placeholder="State" defaultValue={this.props.fieldValues.state}>
             <option value="Alabama">Alabama</option>
             <option value="Alaska">Alaska</option>
             <option value="Arizona">Arizona</option>
@@ -69,7 +68,7 @@ class DelivererGroupSignUp1 extends Component {
             <option value="Wisconsin">Wisconsin</option>
             <option value="Wyoming">Wyoming</option>
             </select>
-            <input ref="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip}/>
+            <input name="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip}/>
             </span>
         </div>
 
@@ -78,7 +77,7 @@ class DelivererGroupSignUp1 extends Component {
             </div>
         <div className="buttons">
             <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-            <span className="next" onClick={this.nextStep}>NEXT</span>
+            <input type="submit" className="next" value="NEXT"></input>
         </div>
     </div>
     </form> 
@@ -87,14 +86,13 @@ class DelivererGroupSignUp1 extends Component {
     }
     nextStep(e) {
         e.preventDefault();
-        // Get values via this.refs
         var data = {
-            organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,
-            numVolunteers: ReactDOM.findDOMNode(this.refs.numVolunteers).value,
-            address1: ReactDOM.findDOMNode(this.refs.address1).value,
-            address2: ReactDOM.findDOMNode(this.refs.address2).value,
-            city: ReactDOM.findDOMNode(this.refs.city).value,
-            state: ReactDOM.findDOMNode(this.refs.state).value,
+            organizationName: e.target.organizationName.value,
+            numVolunteers: e.target.numVolunteers.value,
+            address1: e.target.address1.value,
+            address2: e.target.address2.value,
+            city: e.target.city.value,
+            state: e.target.state.value,
         }
         this.props.saveValues(data);
         this.props.nextStep();

@@ -66,9 +66,14 @@ input.form-component{
     bottom: 0;
     margin-bottom: 30px;
     padding-left: 30px;
+    font-size: 1.4vw;
 }
 .next{
-    padding-left: 22vw;
+    margin-left: 20vw;
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    font-size: 1.4vw;
 }
 
 .next:hover{
