@@ -3,6 +3,7 @@ import firebase, { auth } from './FirebaseConfig.js';
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import "typeface-roboto";
+import UserTypeController from './SignUpIn/UserTypeController.js'
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -84,15 +85,18 @@ class App extends Component {
                         /* TODO: 
                          * 1. Replace the temp debug signin with SignUpIn page 
                          * 2. Remove tempSignIn function
-                         */
-                        <form onSubmit={this.tempSignIn.bind(this)}>
-                            <label>Test Account Type<br/>
-                                <input type="radio" name="accountType" value="DAMember" />Donating Agency Member<br/>
-                                <input type="radio" name="accountType" value="RA" />Receiving Agency<br/>
-                                <input type="radio" name="accountType" value="DG" />Deliverer Group
-                            </label><br/>
-                            <input type="submit" value="Test SignIn" />
-                        </form>
+                        //  */
+                        // <form onSubmit={this.tempSignIn.bind(this)}>
+                        //     <label>Test Account Type<br/>
+                        //         <input type="radio" name="accountType" value="DAMember" />Donating Agency Member<br/>
+                        //         <input type="radio" name="accountType" value="RA" />Receiving Agency<br/>
+                        //         <input type="radio" name="accountType" value="DG" />Deliverer Group
+                        //     </label><br/>
+                        //     <input type="submit" value="Test SignIn" />
+                        // </form>
+                        <UserTypeController/>
+
+
                         /* ============= End Testing Code ============= */
                     )
                 :
