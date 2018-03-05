@@ -38,6 +38,11 @@ SCHOOL ("/accounts/")
 			...
 		],
 		notificatioins: [
+			{
+				type: "new_account",  // Enums.NotificationType
+				content: null  // TBD
+			}, 
+			...
 		]
 	}
 
@@ -54,7 +59,8 @@ DONATING AGENCY ("/donating_agencies/") //not an account
 			street2: "",
 			city: "Seattle",
 			state: "WA",
-			zipcode: 98105
+			zipcode: 98105,
+			officeNo: "220"
 		},
 		isVerified: true,
 		isActivated: true,
@@ -76,8 +82,14 @@ DONATING AGENCY MEMBER ("/accounts/")
 		name: "Andrea Benson",
 		email: "bensoa3@uw.edu",
 		phone: 2065436975,
+		position: "Manager"
 		isAdmin: true,
 		notifications: [
+			{
+				type: "recurring_pickup_confirmed",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
@@ -91,22 +103,47 @@ RECEIVING AGENCY ("/accounts/")
 		accountType: "receiving_agency",
 		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		name: "Seattle Union Gospel Mission",
+		email: "seauniongospel@test.org",
 		address: {
 			street1: "124 Sesame St.",
 			street2: "",
 			city: "Seattle",
 			state: "WA",
-			zipcode: 98115
+			zipcode: 98115,
+			officeNo: "110A"
 		},
 		isVerified: true,
 		isActivated: true,
 		primaryContact: {
 			name: "Chris Stack",
 			email: "chrisstack@uniongospel.org",
-			phone: 2065869876
+			phone: 2065869876,
+			position: "Manager"
+		},
+		secondaryContact: {  // could be null
+			name: "Dave Stack",
+			email: "davestack@uniongospel.org",
+			phone: 2065869876,
+			position: "Volunteer"
+		},
+		availabilities: {
+			0: {startTime: "10:00", endTime: "14:00"},  // Sunday
+			2: {startTime: "13:00", endTime: "17:00"},  // Tuesday
+			3: {startTime: "13:00", endTime: "17:00"},  // Wednesday
+			4: {startTime: "13:00", endTime: "17:00"},  // Thursday
+			6: {startTime: "10:00", endTime: "14:00"},  // Saturday
 		},
 		acceptEmergencyPickups: true,
+		emergencyQuantity: {  // could be null
+			min: 10,  // in lbs
+			max: 100  // in lbs
+		},
 		notification: [
+			{
+				type: "recurring_pickup_request",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
@@ -120,6 +157,7 @@ DELIVERER GROUP ("/accounts/")
 		accountType: "deliverer_group"
 		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
 		name: "Phi Sigma Ro",
+		email: "phisigmaro@uw.edu",
 		address: {
 			street1: "124 Sesame St.",
 			street2: "",
@@ -129,12 +167,19 @@ DELIVERER GROUP ("/accounts/")
 		},
 		isVerified: true,
 		isActivated: true,
+		numVolunteers: 50,
 		coordinator: {
 			name: "Andy Duncan",
 			email: "andyd@uw.edu",
-			phone: 2064872859
+			phone: 2064872859,
+			position: "President"
 		},
 		notification: [
+			{
+				type: "recurring_pickup_request",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
