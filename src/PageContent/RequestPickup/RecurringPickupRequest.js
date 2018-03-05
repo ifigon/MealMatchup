@@ -22,9 +22,11 @@ class RecurringPickupRequest extends Component {
             ],
             fields: {},
             errors: {},
-            isOpen: true
+            isOpen: false,
+            formInfo: []
         }; 
         this.submitRequest = this.submitRequest.bind(this);
+        this.createRequest = this.createRequest.bind(this);
     }
 
     componentDidMount(){
@@ -82,65 +84,70 @@ class RecurringPickupRequest extends Component {
         this.setState({
           isOpen: !this.state.isOpen
         });
-      }
+    }
 
-    submitRequest(event) {
+    // write to firebase
+    // var newRequest = firebase.database().ref().child("delivery_requests").push();
+    // newRequest.set(deliveryRequest);
+    
+    submitRequest(){
+        console.log("Added to DB!");
+    }
+
+    createRequest(event) {
         if(!this.handleValidation()){ 
             alert('Form has errors');
         }else{
+            event.preventDefault();
+            var raUid = event.target.receiveingAgency.value;
+            if (!raUid) raUid = null;
+            
+            var dgUid = event.target.delivererGroup.value;
+            if (!dgUid) dgUid = null;
+
+            var durationValue = null;
+            if (event.target.durationType.value === RequestDurationType.DATE) {
+                durationValue = event.target.endDate.value;
+            } else {
+                durationValue = event.target.numRecurrences.value;
+            }
+
+            // create DeliveryRequest object
+            var deliveryRequest = {
+                startDate: event.target.startDate.value,
+                duration:{
+                    type: event.target.durationType.value,
+                    value: durationValue
+                },
+                repeats: event.target.repeats.value,
+                startTime: event.target.startTime.value,
+                endTime: event.target.endTime.value,
+                primaryContact: event.target.primaryContact.value,
+                notes: event.target.notes.value,
+                receiveingAgency: {
+                    uid: raUid,
+                    confirmed: false
+                },
+                delivererGroup: {
+                    uid: dgUid,
+                    confirmed: false
+                },
+                requestTimestamp: Date.now()
+            };
+
+            this.setState({
+                formInfo: deliveryRequest
+            })
+            
+            console.log(deliveryRequest);
             this.toggleModal();
         }
-
-        event.preventDefault();
-        var raUid = event.target.receiveingAgency.value;
-        if (!raUid) raUid = null;
-        
-        var dgUid = event.target.delivererGroup.value;
-        if (!dgUid) dgUid = null;
-
-        var durationValue = null;
-        if (event.target.durationType.value === RequestDurationType.DATE) {
-            durationValue = event.target.endDate.value;
-        } else {
-            durationValue = event.target.numRecurrences.value;
-        }
-
-        // create DeliveryRequest object
-        var deliveryRequest = {
-            startDate: event.target.startDate.value,
-            duration: {
-                type: event.target.durationType.value,
-                value: durationValue
-            },
-            repeats: event.target.repeats.value,
-            startTime: event.target.startTime.value,
-            endTime: event.target.endTime.value,
-            primaryContact: event.target.primaryContact.value,
-            notes: event.target.notes.value,
-            receiveingAgency: {
-                uid: raUid,
-                confirmed: false
-            },
-            delivererGroup: {
-                uid: dgUid,
-                confirmed: false
-            },
-            requestTimestamp: Date.now()
-        };
-
-        console.log("request submitted!");
-        console.log(deliveryRequest);
-    
-        // write to firebase
-        // var newRequest = firebase.database().ref().child("delivery_requests").push();
-        // newRequest.set(deliveryRequest);
-        // console.log("Added to DB!");
     }
 
     render() {
         return (
             <div className="form" id="recurringForm">
-                <form onSubmit={this.submitRequest}>
+                <form onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
                         <p className="error">{this.state.errors["endBeforeStart"]}</p>
@@ -151,8 +158,7 @@ class RecurringPickupRequest extends Component {
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Date  <span className="red">*</span></label><br/>
-                                <input ref="startDate" type="date" name="startDate" onChange={this.handleChange.bind(this, "startDate")} required/><br/>
-                                <p className="error">{this.state.errors["startDate"]}</p>
+                                <input type="date" name="startDate" onChange={this.handleChange.bind(this, "startDate")} required/><br/>
                             </span>
                             <span className="grid">
                                 <label className="container smaller">
@@ -244,11 +250,16 @@ class RecurringPickupRequest extends Component {
                 </form>
                 <PickupSummary 
                     type={"Request Recurring Pickup"} 
-                    // startDate={event.target.startDate.value}
+                    startDate={this.state.formInfo.startDate} 
+                    endDate={this.state.formInfo.duration}
+                    startTime={this.state.formInfo.startTime}
+                    endTime={this.state.formInfo.endTime}
+                    notes={this.state.formInfo.notes}
                     account={this.props.account}
                     show={this.state.isOpen} 
-                    onClose={this.toggleModal.bind(this)}>
-                    sfsdlfkjk</PickupSummary>
+                    onClose={this.toggleModal.bind(this)}
+                    onConfirm={this.submitRequest}>
+                </PickupSummary>
             </div>
         );
     }

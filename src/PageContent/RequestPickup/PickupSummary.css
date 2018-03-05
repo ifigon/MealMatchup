@@ -7,7 +7,6 @@
     background: #fff;
     width: 50%;
     height: 70%;
-   max-width: 800px;
 }
 
 .backdrop{
@@ -20,7 +19,9 @@
     height: 100%;
     
 }
-
+body{
+    
+}
 .top-line{
     background-color: #37B674;
     height: 20px;

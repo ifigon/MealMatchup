@@ -11,6 +11,7 @@ class PickupSummary extends React.Component {
         }
         return (
         <div className="backdrop">
+        {/* TODO: fix background opacity. Maybe with iFrame. */}
             <div className="modal">
                 <div className="top-line"></div>
                 <p id="exit" onClick={this.props.onClose}>&times;</p>
@@ -22,8 +23,9 @@ class PickupSummary extends React.Component {
                     <div className="details grid">
                         <p id="subheading">Pickup Details</p>
                         <p>Start Date: {this.props.startDate}</p>
-                        <p>End Date: {}</p>
-                        <p>Pickup between {}</p>
+                        {/* TODO: determine end date if they chose recurring # times option */}
+                        <p>End Date: {this.props.endDate.value}</p>
+                        <p>Pickup between {this.props.startTime} and {this.props.endTime}</p>
                     </div>
                     <div className="flex">
                         <div className="agency grid">
@@ -39,12 +41,11 @@ class PickupSummary extends React.Component {
                     </div>
                     <div className="details grid">
                         <p id="subheading">Notes for Pickup</p>
-                        <p>Use the underground parking garage upon entrance. 
-                                    Key card access required after 3:00pm.</p>
+                        <p>{this.props.notes}</p>
                     </div>
-                    <div className="footer" onClick={this.props.onClose}>
-                        <input type="submit" value="Confirm" /> 
-                        <input type="submit" value="Cancel" />
+                    <div className="footer">
+                        <input type="submit" value="Confirm" onClick={this.props.onConfirm}/> 
+                        <input type="submit" value="Cancel" onClick={this.props.onClose}/>
                     </div>
                 </div>
             </div>
