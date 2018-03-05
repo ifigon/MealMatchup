@@ -7,19 +7,21 @@ class FoodLogsContainer extends Component {
     render(){
         return(
             <div className="food-container ">
-                <p className="filter">Filter</p>
-                <div className="dropdown">
-                    <span>Student Groups </span>
-                    <img src={arrow}></img>
-                    <div className="dropdown-content">
-                        <p>Green Greeks</p>
+                <div className="filter">
+                    <p>Filter</p>
+                    <div className="dropdown">
+                        <span>Student Groups </span>
+                        <img src={arrow} alt="arrow"></img>
+                        <div className="dropdown-content">
+                            <p>Green Greeks</p>
+                        </div>
                     </div>
-                </div>
-                <div className="dropdown">
-                    <span>Receiving Agency </span>
-                    <img src={arrow}></img>
-                    <div className="dropdown-content">
-                        <p>Green Greeks</p>
+                    <div className="dropdown">
+                        <span>Receiving Agency </span>
+                        <img src={arrow} alt="arrow"></img>
+                        <div className="dropdown-content">
+                            <p>Green Greeks</p>
+                        </div>
                     </div>
                 </div>
                 <FoodLogItem 

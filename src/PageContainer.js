@@ -3,6 +3,7 @@ import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -46,7 +47,8 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>
                 }
                 {this.state.content === PageContent.FOOD_LOGS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
+                    // <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
+                    <FoodLogs></FoodLogs>
                 }
                 {this.state.content === PageContent.DIRECTORY &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Directory</div>
