@@ -63,7 +63,7 @@ let DonatingAgencySignUpController = createReactClass({
     showStep: function () {
         switch (this.state.step) {
             default:
-            <UserTypeController/>
+                <UserTypeController />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -74,7 +74,6 @@ let DonatingAgencySignUpController = createReactClass({
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} />
                 </div>
-
             case 2:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -84,7 +83,6 @@ let DonatingAgencySignUpController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-
             case 3:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -94,6 +92,7 @@ let DonatingAgencySignUpController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
+                break;
             case 4:
                 return <SignUpComplete fieldValues={this.fieldValues} />
         }

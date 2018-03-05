@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
 
 class ReceivingAgencySignUp1 extends Component {
     constructor(props){
@@ -8,15 +7,16 @@ class ReceivingAgencySignUp1 extends Component {
     }
     render() {
         return (
+            <form onSubmit={this.nextStep}>
             <div className="signup-content">
                 <div className="form-block">
                     <label className="form-component">Organization Details</label><br />
-                    <input ref="organizationName"type="text" id="organization" className="form-component" placeholder="Organization Name" defaultValue={this.props.fieldValues.organizationName} /><br />
-                    <input ref="address1" type="text" id="address1" className="form-component" placeholder="Street Address 1" defaultValue={this.props.fieldValues.address1} />
-                    <input ref="address2" type="text" id="address2" className="form-component" placeholder="Street Address 2 (optional)" defaultValue={this.props.fieldValues.address2} />
-                    <input ref="city" type="text" id="city" className="form-component" placeholder="City" defaultValue={this.props.fieldValues.city} />
+                    <input name="organizationName"type="text" id="organization" className="form-component" placeholder="Organization Name" defaultValue={this.props.fieldValues.organizationName} /><br />
+                    <input name="address1" type="text" id="address1" className="form-component" placeholder="Street Address 1" defaultValue={this.props.fieldValues.address1} />
+                    <input name="address2" type="text" id="address2" className="form-component" placeholder="Street Address 2 (optional)" defaultValue={this.props.fieldValues.address2} />
+                    <input name="city" type="text" id="city" className="form-component" placeholder="City" defaultValue={this.props.fieldValues.city} />
                     <span className="side-by-side-wrapper">
-                    <select ref="state" type="text" id="state" name="state" className="form-component side-by-side" placeholder="State" defaultValue={this.props.fieldValues.state}>
+                    <select name="state" type="text" id="state" name="state" className="form-component side-by-side" placeholder="State" defaultValue={this.props.fieldValues.state}>
                     <option value="Alabama">Alabama</option>
                     <option value="Alaska">Alaska</option>
                     <option value="Arizona">Arizona</option>
@@ -67,9 +67,9 @@ class ReceivingAgencySignUp1 extends Component {
                     <option value="Wisconsin">Wisconsin</option>
                     <option value="Wyoming">Wyoming</option>
                     </select>
-                    <input ref="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip}/>
+                    <input name="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip}/>
                     </span>
-                    <input ref="officeNumber" type="text" id="office-number" className="form-component" placeholder="Office Number" defaultValue={this.props.fieldValues.officeNumber}/>
+                    <input name="officeNumber" type="text" id="office-number" className="form-component" placeholder="Office Number" defaultValue={this.props.fieldValues.officeNumber}/>
                 </div>
 
                 <div className="disclaimer">
@@ -77,21 +77,21 @@ class ReceivingAgencySignUp1 extends Component {
                     </div>
                 <div className="buttons">
                     <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
-                    <span className="next" onClick={this.nextStep}>NEXT</span>
+                    <input type="submit" className="next" value="NEXT"/>
                 </div>
             </div>
+            </form>
         )
     }
     nextStep(e) {
         e.preventDefault()
-        // Get values via this.refs
         var data = {
-            organizationName: ReactDOM.findDOMNode(this.refs.organizationName).value,
-            address1: ReactDOM.findDOMNode(this.refs.address1).value,
-            address2: ReactDOM.findDOMNode(this.refs.address2).value,
-            city: ReactDOM.findDOMNode(this.refs.city).value,
-            state: ReactDOM.findDOMNode(this.refs.state).value,
-            officeNumber: ReactDOM.findDOMNode(this.refs.officeNumber).value
+            organizationName: e.target.organizationName.value,
+            address1: e.target.address1.value,
+            address2: e.target.address2.value,
+            city: e.target.city.value,
+            state: e.target.state.value,
+            officeNumber: e.target.officeNumber.value
         }
 
         this.props.saveValues(data)

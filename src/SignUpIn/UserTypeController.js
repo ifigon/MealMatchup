@@ -5,7 +5,7 @@ import ReceivingAgencySignUpController from './ReceivingAgency/ReceivingAgencySi
 import DelivererGroupSignUpController from './DelivererGroup/DelivererGroupSignUpController';
 import DonatingAgencySignUpController from './DonatingAgency/DonatingAgencySignUpController';
 
-class UserTypeController extends React.Component{
+class UserTypeController extends Component{
     constructor(props){
         super(props);
         this.state = {

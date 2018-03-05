@@ -4,7 +4,7 @@ import UserTypeController from './UserTypeController';
 import SignUpIn from './SignUpIn';
 import SignIn from './SignIn';
 
-class SignUpInController extends React.Component {
+class SignUpInController extends Component {
     constructor(props) {
         super(props)
         this.state = {
