@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
 
 class DelivererGroupSignUp2 extends Component {
     constructor(props) {

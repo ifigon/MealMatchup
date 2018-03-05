@@ -14,7 +14,6 @@ class UserTypeController extends Component{
     }
 
     showDelivererGroup() {
-        console.log(this.state);
         this.setState({
             step: 1
         });

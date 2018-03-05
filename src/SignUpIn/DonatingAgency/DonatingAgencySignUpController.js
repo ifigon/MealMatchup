@@ -63,7 +63,7 @@ let DonatingAgencySignUpController = createReactClass({
     showStep: function () {
         switch (this.state.step) {
             default:
-                <UserTypeController />
+            return <UserTypeController/>
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -92,14 +92,12 @@ let DonatingAgencySignUpController = createReactClass({
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues} /></div>
-                break;
             case 4:
                 return <SignUpComplete fieldValues={this.fieldValues} />
         }
     },
 
     render() {
-        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="signup-wrapper">
                 {this.showStep()}

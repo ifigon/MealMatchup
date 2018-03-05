@@ -53,8 +53,6 @@ let DelivererGroupSignUpController = createReactClass({
 
     showStep: function () {
         switch (this.state.step) {
-            default:
-                return <UserTypeController />
             case 1:
                 return <div className="signup">
                     <div className="circle-wrapper">
@@ -76,6 +74,8 @@ let DelivererGroupSignUpController = createReactClass({
                         saveValues={this.saveValues} /></div>
             case 3:
                 return <SignUpComplete fieldValues={fieldValues} />
+            default:
+                return <UserTypeController />
         }
     },
 
