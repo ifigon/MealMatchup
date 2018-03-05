@@ -1,6 +1,4 @@
-import React from 'react';
-import createReactClass from 'create-react-class'
-
+import React, {Component} from 'react';
 import '../SignUpIn.css';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
 import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
@@ -50,34 +48,36 @@ let fieldValues = {
 
 }
 
-let SignUpShelterController = createReactClass({
-    getInitialState: function () {
-        return {
+class SignUpShelterController extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
             step: 1
         }
-    },
-    saveValues: function (fields) {
+    }
+
+    saveValues(fields) {
         return function () {
             // Remember, `fieldValues` is set at the top of this file, we are simply appending
             // to and overriding keys in `fieldValues` with the `fields` with Object.assign
             // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
             fieldValues = Object.assign({}, fieldValues, fields)
         }
-    },
+    }
 
-    nextStep: function () {
+    nextStep () {
         this.setState((prevState) => {
             return { step: prevState.step + 1 }
-        })
-    },
+        });
+    }
 
-    previousStep: function () {
+    previousStep() {
         this.setState((prevState) => {
             return { step: prevState.step - 1 }
-        })
-    },
+        });
+    }
 
-    showStep: function () {
+    showStep() {
         switch (this.state.step) {
             default:
             return <UserTypeController/>
@@ -87,9 +87,9 @@ let SignUpShelterController = createReactClass({
                         <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
                     </div>
                     <ReceivingAgencySignUp1 fieldValues={fieldValues}
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues} />
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} />
                 </div>
             case 2:
                 return <div className="signup">
@@ -97,9 +97,9 @@ let SignUpShelterController = createReactClass({
                         <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
                     </div>
                     <ReceivingAgencySignUp2 fieldValues={fieldValues}
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues} /></div>
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} /></div>
 
             case 3:
                 return <div className="signup">
@@ -107,9 +107,9 @@ let SignUpShelterController = createReactClass({
                         <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
                     </div>
                     <ReceivingAgencySignUp3 fieldValues={fieldValues}
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues} /></div>
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} /></div>
 
             case 4:
                 return <div className="signup">
@@ -117,14 +117,14 @@ let SignUpShelterController = createReactClass({
                         <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
                     </div>
                     <ReceivingAgencySignUp4 fieldValues={fieldValues}
-                        nextStep={this.nextStep}
-                        previousStep={this.previousStep}
-                        saveValues={this.saveValues} /></div>
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} /></div>
 
             case 5:
                 return <SignUpComplete fieldValues={fieldValues} />
         }
-    },
+    }
 
     render() {
         return (
@@ -133,5 +133,5 @@ let SignUpShelterController = createReactClass({
             </div>
         )
     }
-})
+}
 export default SignUpShelterController;

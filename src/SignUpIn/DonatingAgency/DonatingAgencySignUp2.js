@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class DonatingAgencySignUp2 extends Component {
     constructor(props) {
@@ -33,10 +33,10 @@ class DonatingAgencySignUp2 extends Component {
         e.preventDefault()
         var data = {
             adminEmail: e.target.adminEmail.value,
-            adminPassword:  e.target.adminPassword.value,
-            adminName:  e.target.adminName.value,
-            adminPhone:  e.target.adminPhone.value,
-            adminPosition:  e.target.adminPosition.value,
+            adminPassword: e.target.adminPassword.value,
+            adminName: e.target.adminName.value,
+            adminPhone: e.target.adminPhone.value,
+            adminPosition: e.target.adminPosition.value,
         }
 
         this.props.saveValues(data)

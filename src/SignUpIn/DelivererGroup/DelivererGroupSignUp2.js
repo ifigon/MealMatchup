@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class DelivererGroupSignUp2 extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ class DelivererGroupSignUp2 extends Component {
 
                     <div className="buttons">
                         <span className="cancel" onClick={this.props.previousStep}>BACK</span>
-                        <input type="submit" name="DONE" className="next"></input>
+                        <input type="submit" value="DONE" className="next"></input>
                     </div>
                 </div>
             </form>

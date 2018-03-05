@@ -29,7 +29,7 @@ form{
 
 .form-block {
     padding:50px;
-    padding-top: 10px;
+    padding-top: 0px;
     padding-bottom: 10px;
 }
 
@@ -472,4 +472,8 @@ input.login-wrapper{
 form{
     margin: 0px;
     width: 100%;
+}
+
+form {
+    padding-top: 0px;
 }
