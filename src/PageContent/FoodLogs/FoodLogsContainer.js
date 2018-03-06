@@ -63,6 +63,14 @@ class FoodLogsContainer extends Component {
             ]
         };
     }
+
+    componentDidMount(){
+        //TODO: query firebase
+        this.setState({
+
+        });
+    }
+    
     render(){
         return(
             <div className="food-container ">
