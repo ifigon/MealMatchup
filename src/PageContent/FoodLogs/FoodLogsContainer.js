@@ -220,5 +220,4 @@ class FoodLogsContainer extends Component {
         );
     }
 }
-
 export default FoodLogsContainer;
