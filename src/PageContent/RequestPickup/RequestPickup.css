@@ -145,6 +145,10 @@ input[type="radio"]{
     width: 150px;
 }
 
+.buttons-form input[type="reset"]{
+    width: 150px;
+}
+
 .buttons-form{
     display: flex;
     float: right;

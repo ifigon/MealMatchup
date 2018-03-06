@@ -258,7 +258,7 @@ class RecurringPickupRequest extends Component {
                         </span>
                         <div className="buttons-form">
                             <input type="submit" value="Done" /> 
-                            <input type="submit" value="Cancel" />
+                            <input type="reset" value="Cancel" />
                         </div>
                     </div>
                 </form>
