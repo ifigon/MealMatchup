@@ -27,14 +27,7 @@ export const RequestRepeatType = {
 };
 
 export const NotificationType = {
-<<<<<<< HEAD
-    NEW_ACCOUNT: "new_account",
-    RECURRING_PICKUP_REQUEST: "recurring_pickup_request",
-    RECURRING_PICKUP_CONFIRMED: "recurring_pickup_confirmed",
-};
-=======
     NEW_ACCOUNT: 'new_account',
     RECURRING_PICKUP_REQUEST: 'recurring_pickup_request',
     RECURRING_PICKUP_CONFIRMED: 'recurring_pickup_confirmed',
 };
->>>>>>> 7a92f82b0db4fa4aa19592282d739d31902c7aef

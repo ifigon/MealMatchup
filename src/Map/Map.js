@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import GoogleMap from 'google-map-react';
 
 class Map extends Component{
-    static defaultProps = {
-        center: [47.60, -122.33],
-        zoom: 13
+    constructor(props){
+        super(props);
+        this.state  = {
+            center: [47.60, -122.33],
+            zoom: 13
+        };
     }
 
     render() {
@@ -12,12 +15,12 @@ class Map extends Component{
             height: '150px',
             width: '350px',
             marginRight: '30px'
-        }
+        };
         return (
             <div className='google-map' style={style}>
                 <GoogleMap
-                    center={ this.props.center }
-                    zoom={ this.props.zoom }>
+                    center={ this.state.center }
+                    zoom={ this.state.zoom }>
                 </GoogleMap>
             </div>
         );

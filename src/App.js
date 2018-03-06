@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import firebase, { auth } from './FirebaseConfig.js';
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
-<<<<<<< HEAD
-=======
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
->>>>>>> 7a92f82b0db4fa4aa19592282d739d31902c7aef
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
