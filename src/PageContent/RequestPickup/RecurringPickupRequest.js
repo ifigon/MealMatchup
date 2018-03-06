@@ -31,10 +31,7 @@ class RecurringPickupRequest extends Component {
     }
 
     componentDidMount(){
-        const daRef = firebase.database().ref('donating_agencies').child(this.props.account.agency);
-        daRef.on('value', (snapshot) => {
-            let donatingAgency = snapshot.val();
-        });
+        // Query DB and setState for memberList, delivererGroups, and receivingAgencies
     }
 
     handleValidation(){
@@ -48,7 +45,7 @@ class RecurringPickupRequest extends Component {
             errors['startDate'] = 'Start date cannot be empty';
         }
 
-        if(fields['endDate'] < fields['startDate']){
+        if((fields['recurTimes'] === '' || !fields['recurTimes']) && fields['endDate'] !== '' && fields['endDate'] < fields['startDate']){
             formIsValid = false;
             errors['endBeforeStart'] = 'End date cannot be before start date';
         }
@@ -59,7 +56,7 @@ class RecurringPickupRequest extends Component {
             errors['startTime'] = 'Start time cannot be empty';
         }
 
-        if(!fields['endTime']){
+        if(!fields['endTime'] && (!fields['recurTimes'] || fields['recurTimes'] === '')){
             formIsValid = false;
             errors['endTime'] = 'End time cannot be empty';
         }
@@ -68,6 +65,19 @@ class RecurringPickupRequest extends Component {
             formIsValid = false;
             errors['time'] = 'Invalid time range';
         }    
+
+        //Recur times
+        if(fields['recurTimes'] <= 0 && fields['endDate'] !== '') {
+            formIsValid = false;
+            errors['recurTimes'] = 'Pickup must recur at least once';
+        }
+
+        if((fields['recurTimes'] === '' && fields['endDate'] === '') 
+            || !fields['recurTimes'] && !fields['endDate']){
+            formIsValid = false;
+            errors['recurTimes'] = 'Must enter value for recurring times or an end date';
+        }
+
         this.setState({errors: errors});
         return formIsValid;
     }
@@ -77,7 +87,7 @@ class RecurringPickupRequest extends Component {
         fields[field] = e.target.value;        
         this.setState({fields});
     }
-
+    
     toggleModal(){
         this.setState({
             isOpen: !this.state.isOpen
@@ -93,7 +103,9 @@ class RecurringPickupRequest extends Component {
     }
 
     createRequest(event) {
+        
         if(!this.handleValidation()){ 
+            event.preventDefault();
             alert('Form has errors');
         }else{
             event.preventDefault();
@@ -132,7 +144,7 @@ class RecurringPickupRequest extends Component {
                 },
                 requestTimestamp: Date.now()
             };
-
+            
             this.setState({
                 formInfo: deliveryRequest
             });
@@ -150,6 +162,7 @@ class RecurringPickupRequest extends Component {
                         <p className="error">{this.state.errors['endBeforeStart']}</p>
                         <p className="error">{this.state.errors['startTime']}</p>
                         <p className="error">{this.state.errors['endTime']}</p>
+                        <p className="error">{this.state.errors['recurTimes']}</p>
                         <p className="error">{this.state.errors['startDate']}</p>
                         <p className="error">{this.state.errors['time']}</p>
                         <span className="flex">
@@ -161,7 +174,7 @@ class RecurringPickupRequest extends Component {
                                 <label className="container smaller">
                                     <input type="radio" name="durationType" value={RequestDurationType.RECUR} required/>
                                     <span className="checkmark"></span>Recur
-                                    <input type="number" name="numRecurrences" />times<br/>
+                                    <input type="number" name="numRecurrences" onChange={this.handleChange.bind(this, 'recurTimes')} />times<br/>
                                 </label >
                                 <label className="container smaller">
                                     <input type="radio" name="durationType" value={RequestDurationType.DATE} />
