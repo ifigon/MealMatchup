@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import firebase, { auth } from './FirebaseConfig.js';
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
+import 'typeface-roboto';
+import SignUpInController from './SignUpIn/SignUpInController.js';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -41,31 +43,6 @@ class App extends Component {
         }.bind(this));
     }
 
-    // ======================= Temporary Testing Code ========================
-    tempSignIn(event) {
-        event.preventDefault();
-
-        var testEmail = "";
-        var accountType = event.target.accountType.value;
-        if (accountType === "DAMember") {
-            testEmail = "testdonate1member1@test.com";
-        } else if (accountType === "RA") {
-            testEmail = "testreceiving@test.com";
-        } else {
-            testEmail = "testdeliverergroup@test.com";
-        }
-        auth.signInWithEmailAndPassword(testEmail, "123456").then(function(user) {
-            console.log("Signed in with " + testEmail);
-            console.log("User.uid: " + user.uid);
-        }).catch(function(error) {
-            var errorMessage = error.message;
-            console.log("Sign in ERROR: " + errorMessage);
-        });
-    }
-    
-    // ====================== End Temporary Testing Code ======================
-    
-
     render() {
         return (
             <div className="">
@@ -76,25 +53,10 @@ class App extends Component {
                             account={this.state.account}
                             content={PageContent.CALENDAR}>
                         </PageContainer>
-                    :
-                        /* Show landing page if user is logged out */
-
-                        /* ============= Temp Testing Code ============= */
-                        /* TODO: 
-                         * 1. Replace the temp debug signin with SignUpIn page 
-                         * 2. Remove tempSignIn function
-                         */
-                        <form onSubmit={this.tempSignIn.bind(this)}>
-                            <label>Test Account Type<br/>
-                                <input type="radio" name="accountType" value="DAMember" />Donating Agency Member<br/>
-                                <input type="radio" name="accountType" value="RA" />Receiving Agency<br/>
-                                <input type="radio" name="accountType" value="DG" />Deliverer Group
-                            </label><br/>
-                            <input type="submit" value="Test SignIn" />
-                        </form>
-                        /* ============= End Testing Code ============= */
+                        :
+                        <SignUpInController/>
                     )
-                :
+                    :
                     /* Show blank page if initial authentication hasn't finished */
                     <div></div>
                 }

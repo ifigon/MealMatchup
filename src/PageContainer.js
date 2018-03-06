@@ -25,14 +25,13 @@ class PageContainer extends Component {
         this.setState({
             content: e
         });
-        console.log('container: ' + this.state.content);
     }
  
     render(){
         return(
             <div>
                 {/* <header > */}
-                    <PageHeader logo={logo} title={this.props.account.name}></PageHeader>
+                <PageHeader logo={logo} title={this.props.account.name}></PageHeader>
                 {/* </header> */}
                 <NavBar content={this.state.content} accountType={this.props.account.accountType} handler={this.navBarHandler}></NavBar>
 
@@ -57,7 +56,7 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
                 }
             </div>
-        )
+        );
     }
 }
 export default PageContainer;
