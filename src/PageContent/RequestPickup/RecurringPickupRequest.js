@@ -27,6 +27,7 @@ class RecurringPickupRequest extends Component {
         }; 
         this.submitRequest = this.submitRequest.bind(this);
         this.createRequest = this.createRequest.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
     componentDidMount(){
@@ -66,7 +67,7 @@ class RecurringPickupRequest extends Component {
             errors['endTime'] = 'End time cannot be empty';
         }
 
-        if(fields['startTime'] > fields['endTime'] || fields['endTime'] < fields['startTime']){
+        if(fields['endTime'] < fields['startTime']){
             formIsValid = false;
             errors['time'] = 'Invalid time range';
         }    
@@ -256,7 +257,7 @@ class RecurringPickupRequest extends Component {
                     notes={this.state.formInfo.notes}
                     account={this.props.account}
                     show={this.state.isOpen} 
-                    onClose={this.toggleModal.bind(this)}
+                    onClose={this.toggleModal}
                     onConfirm={this.submitRequest}>
                 </PickupSummary>
             </div>

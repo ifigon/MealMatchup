@@ -37,12 +37,18 @@ class PickupSummary extends React.Component {
                                     <p>email</p>
                                 </div>
                             </div>
+                            {/* TODO: Pass in address into map */}
                             <Map></Map>
                         </div>
-                        <div className="details grid">
-                            <p id="subheading">Notes for Pickup</p>
-                            <p>{this.props.notes}</p>
-                        </div>
+                        {this.props.notes != '' ?
+                            <div className="details grid">
+                                <p id="subheading">Notes for Pickup</p>
+                                <p>{this.props.notes}</p>
+                            </div>
+                            :
+                            <br/>
+                        }
+                    
                         <div className="footer">
                             <input type="submit" value="Confirm" onClick={this.props.onConfirm}/> 
                             <input type="submit" value="Cancel" onClick={this.props.onClose}/>
