@@ -186,7 +186,7 @@ class FoodLogsContainer extends Component {
 
         });
     }
-    
+
     render(){
         return(
             <div className="food-container ">
