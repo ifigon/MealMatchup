@@ -31,8 +31,8 @@ class FoodLogItem extends Component{
                         <div className="subitem">
                             <p className="info-title">Donation Description</p>
                             <div className="food">
-                                <p className="info-detail donationItem">{this.props.donationItem} &nbsp;</p>
-                                <p className="info-detail donationWeight">{this.props.donationWeight}</p>
+                                <p className="info-detail donationItem">{this.props.donationItem.item} &nbsp;</p>
+                                <p className="info-detail donationWeight">{this.props.donationWeight.weight}</p>
                             </div>
                         </div>
                         <div className="subitem">

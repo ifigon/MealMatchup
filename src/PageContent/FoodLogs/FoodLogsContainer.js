@@ -31,8 +31,12 @@ class FoodLogsContainer extends Component {
                     stuName2: 'James MacDonald',
                     stuPhone2: '206-323-1900',
                     stuEmail2: 'James@gmail.com',
-                    donationItem: 'Beans',
-                    donationWeight: '12 lbs',
+                    donations: [
+                        {
+                            item: 'rice',
+                            weight: '2 lbs'
+                        }
+                    ]
                 },
                 {
                     date: '10/23/2018',
@@ -57,8 +61,16 @@ class FoodLogsContainer extends Component {
                     stuName2: 'James MacDonald',
                     stuPhone2: '206-323-1900',
                     stuEmail2: 'James@gmail.com',
-                    donationItem: 'Beans',
-                    donationWeight: '12 lbs',
+                    donations: [
+                        {
+                            item: 'Beans',
+                            weight: '12 lbs'
+                        },
+                        {
+                            item: 'Rice',
+                            weight: '300 lbs'
+                        }
+                    ]
                 }
             ]
         };
@@ -70,7 +82,7 @@ class FoodLogsContainer extends Component {
 
         });
     }
-    
+
     render(){
         return(
             <div className="food-container ">
@@ -117,8 +129,8 @@ class FoodLogsContainer extends Component {
                                 stuName2={log.stuName2}
                                 stuPhone2={log.stuPhone2}
                                 stuEmail2={log.stuEmail2}
-                                donationItem={log.donationItem}
-                                donationWeight={log.donationWeight}
+                                donationItem={log.donations}
+                                donationWeight={log.donations}
                             ></FoodLogItem>
                         );
                     })
