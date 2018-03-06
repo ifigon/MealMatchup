@@ -1,9 +1,7 @@
-/*
-This file is purely for documentation purposes.
-It shows examples of what each object looks like in the database.
-It is not complete and should be updated as we encounter more data that
-we need.
-*/
+// This file is purely for documentation purposes.
+// It shows examples of what each object looks like in the database.
+// It is not complete and should be updated as we encounter more data that
+// we need.
 
 SCHOOL ("/accounts/")
 
@@ -11,7 +9,7 @@ SCHOOL ("/accounts/")
 	RheaQY1WxJT03sTPQICFZ4STpfm1 : {  
 		accountType: "school"
 		name: "University of Washington",
-		ceebCode: "4854",
+		ceebCode: "4854", 
 		address: {
 			street1: "1410 Northeast Campus Parkway",
 			street2: "",
