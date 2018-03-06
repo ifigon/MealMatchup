@@ -33,6 +33,7 @@ class PickupSummary extends React.Component {
                                         this.props.repeats === 'biweekly' ?
                                             <p>{this.props.duration.value} pickups requested for every other {this.props.dayOfWeek}</p>
                                             :
+                                            // TODO: calculate nth day of month
                                             <p>{this.props.duration.value} pickups requested for {this.props.repeats}</p>
                             }
                             
