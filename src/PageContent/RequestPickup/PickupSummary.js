@@ -22,9 +22,20 @@ class PickupSummary extends React.Component {
                     <div className="wrapper grid">
                         <div className="details grid">
                             <p id="subheading">Pickup Details</p>
-                            <p>Start Date: {this.props.startDate}</p>
-                            {/* TODO: determine end date if they chose recurring # times option */}
-                            <p>End Date: {this.props.endDate.value}</p>
+                            <p>Start Date: {this.props.dayOfWeek}, {this.props.startDate}</p>
+                            {
+                                this.props.duration.type === 'date' ?
+                                    <p>End Date: {this.props.duration.value}</p>
+                                    :
+                                    this.props.repeats === 'weekly' ? 
+                                        <p>{this.props.duration.value} pickups requested for every {this.props.dayOfWeek}</p>
+                                        :
+                                        this.props.repeats === 'biweekly' ?
+                                            <p>{this.props.duration.value} pickups requested for every other {this.props.dayOfWeek}</p>
+                                            :
+                                            <p>{this.props.duration.value} pickups requested for {this.props.repeats}</p>
+                            }
+                            
                             <p>Pickup between {this.props.startTime} and {this.props.endTime}</p>
                         </div>
                         <div className="flex">
@@ -40,7 +51,7 @@ class PickupSummary extends React.Component {
                             {/* TODO: Pass in address into map */}
                             <Map></Map>
                         </div>
-                        {this.props.notes != '' ?
+                        {this.props.notes !== '' ?
                             <div className="details grid">
                                 <p id="subheading">Notes for Pickup</p>
                                 <p>{this.props.notes}</p>
