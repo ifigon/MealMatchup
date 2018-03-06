@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import firebase from '../../FirebaseConfig.js';
 import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
@@ -23,7 +22,8 @@ class RecurringPickupRequest extends Component {
             fields: {},
             errors: {},
             isOpen: false,
-            formInfo: []
+            formInfo: [],
+            dayOfWeek: ''
         }; 
         this.submitRequest = this.submitRequest.bind(this);
         this.createRequest = this.createRequest.bind(this);
@@ -73,7 +73,7 @@ class RecurringPickupRequest extends Component {
         }
 
         if((fields['recurTimes'] === '' && fields['endDate'] === '') 
-            || !fields['recurTimes'] && !fields['endDate']){
+            || (!fields['recurTimes'] && !fields['endDate'])){
             formIsValid = false;
             errors['recurTimes'] = 'Must enter value for recurring times or an end date';
         }
@@ -87,7 +87,7 @@ class RecurringPickupRequest extends Component {
         fields[field] = e.target.value;        
         this.setState({fields});
     }
-    
+
     toggleModal(){
         this.setState({
             isOpen: !this.state.isOpen
@@ -144,9 +144,13 @@ class RecurringPickupRequest extends Component {
                 },
                 requestTimestamp: Date.now()
             };
-            
+            let date = new Date(deliveryRequest.startDate);
+            let day = date.getDay();
+            let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
             this.setState({
-                formInfo: deliveryRequest
+                formInfo: deliveryRequest,
+                dayOfWeek: days[day]
             });
             
             this.toggleModal();
@@ -261,7 +265,9 @@ class RecurringPickupRequest extends Component {
                 <PickupSummary 
                     type={'Request Recurring Pickup'} 
                     startDate={this.state.formInfo.startDate} 
-                    endDate={this.state.formInfo.duration}
+                    dayOfWeek={this.state.dayOfWeek}
+                    duration={this.state.formInfo.duration}
+                    repeats={this.state.formInfo.repeats}
                     startTime={this.state.formInfo.startTime}
                     endTime={this.state.formInfo.endTime}
                     notes={this.state.formInfo.notes}
