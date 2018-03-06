@@ -4,10 +4,17 @@ export const DateTimeFormat = {
 };
 
 export const AccountType = {
-    SCHOOL: 'school',
+    UMBRELLA: 'umbrella',
     DONATING_AGENCY_MEMBER: 'donating_agency_member',
     RECEIVING_AGENCY : 'receiving_agency',
     DELIVERER_GROUP: 'deliverer_group'
+};
+
+// For now (as of 3/5/2018), the only umbrella
+// account type is school (eg UW). In the future,
+// there could be other types such as corporate.
+export const UmbrellaType = {
+    SCHOOL: 'school',
 };
 
 export const PageContent = {
