@@ -34,9 +34,6 @@ class RecurringPickupRequest extends Component {
         const daRef = firebase.database().ref('donating_agencies').child(this.props.account.agency);
         daRef.on('value', (snapshot) => {
             let donatingAgency = snapshot.val();
-            this.setState({
-                schoolID: donatingAgency.school
-            });
         });
     }
 
