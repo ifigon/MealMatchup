@@ -29,7 +29,7 @@ class DelivererGroupSignUp2 extends Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
     nextStep(e) {
         e.preventDefault();
@@ -41,7 +41,7 @@ class DelivererGroupSignUp2 extends Component {
             contactEmail: e.target.contactEmail.value,
             contactNumber: e.target.contactNumber.value,
 
-        }
+        };
 
         this.props.saveValues(data);
         this.props.nextStep();

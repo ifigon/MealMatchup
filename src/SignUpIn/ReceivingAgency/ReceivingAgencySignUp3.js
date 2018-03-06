@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import truck from "../../icons/truck.svg";
+import React, { Component } from 'react';
+import truck from '../../icons/truck.svg';
 
 class ReceivingAgencySignUp3 extends Component {
     constructor(props) {
@@ -20,15 +20,15 @@ class ReceivingAgencySignUp3 extends Component {
                                     <div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                                 to
-                     <div className="input-wrapper">
+                                <div className="input-wrapper">
                                     <input name="monEnd" type="text" className="week" /><div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                             </div>
@@ -42,15 +42,15 @@ class ReceivingAgencySignUp3 extends Component {
                                     <div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                                 to
-                     <div className="input-wrapper">
+                                <div className="input-wrapper">
                                     <input name="tueEnd" type="text" className="week" /><div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                             </div>
@@ -64,15 +64,15 @@ class ReceivingAgencySignUp3 extends Component {
                                     <div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                                 to
-                     <div className="input-wrapper">
+                                <div className="input-wrapper">
                                     <input name="wedEnd" type="text" className="week" /><div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                             </div>
@@ -86,15 +86,15 @@ class ReceivingAgencySignUp3 extends Component {
                                     <div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                                 to
-                     <div className="input-wrapper">
+                                <div className="input-wrapper">
                                     <input name="thurEnd" type="text" className="week" /><div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                             </div>
@@ -108,15 +108,15 @@ class ReceivingAgencySignUp3 extends Component {
                                     <div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                                 to
-                     <div className="input-wrapper">
+                                <div className="input-wrapper">
                                     <input name="friEnd" type="text" className="week" /><div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                             </div>
@@ -130,15 +130,15 @@ class ReceivingAgencySignUp3 extends Component {
                                     <div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                                 to
-                     <div className="input-wrapper">
+                                <div className="input-wrapper">
                                     <input name="satEnd" type="text" className="week" /><div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                             </div>
@@ -152,15 +152,15 @@ class ReceivingAgencySignUp3 extends Component {
                                     <div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                                 to
-                     <div className="input-wrapper">
+                                <div className="input-wrapper">
                                     <input name="sunEnd" type="text" className="week" /><div className="am-pm">
                                         <span className="am">AM</span>
                                         /
-                                <span className="PM">PM</span>
+                                        <span className="PM">PM</span>
                                     </div>
                                 </div>
                             </div>
@@ -183,10 +183,10 @@ class ReceivingAgencySignUp3 extends Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
     nextStep(e) {
-        e.preventDefault()
+        e.preventDefault();
         var data = {
             monStart: e.target.monStart.value,
             monEnd: e.target.monEnd.value,
@@ -205,10 +205,10 @@ class ReceivingAgencySignUp3 extends Component {
 
             startLbs: e.target.startLbs.value,
             endLbs: e.target.endLbs.value,
-        }
+        };
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default ReceivingAgencySignUp3;

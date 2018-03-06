@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class ReceivingAgencySignUp2 extends Component {
     constructor(props) {
@@ -21,17 +21,17 @@ class ReceivingAgencySignUp2 extends Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
     nextStep(e) {
-        e.preventDefault()
+        e.preventDefault();
         var data = {
             email: e.target.email.value,
             password: e.target.password.value,
-        }
+        };
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default ReceivingAgencySignUp2;

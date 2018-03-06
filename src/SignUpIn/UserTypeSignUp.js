@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import volunteer from "../icons/volunteer.svg";
-import shelter from "../icons/shelter.svg";
-import vitamins from "../icons/vitamins.svg";
+import volunteer from '../icons/volunteer.svg';
+import shelter from '../icons/shelter.svg';
+import vitamins from '../icons/vitamins.svg';
 
 class UserTypeSignUp extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class UserTypeSignUp extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
     showDelivererGroup(e) {
         e.preventDefault();

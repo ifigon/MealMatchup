@@ -74,7 +74,7 @@ class DelivererGroupSignUp1 extends Component {
 
                     <div className="disclaimer">
                         All fields are required unless specified
-            </div>
+                    </div>
                     <div className="buttons">
                         <span className="cancel" onClick={this.props.previousStep} >CANCEL</span>
                         <input type="submit" className="next" value="NEXT"></input>
@@ -82,7 +82,7 @@ class DelivererGroupSignUp1 extends Component {
                 </div>
             </form>
 
-        )
+        );
     }
     nextStep(e) {
         e.preventDefault();
@@ -93,7 +93,7 @@ class DelivererGroupSignUp1 extends Component {
             address2: e.target.address2.value,
             city: e.target.city.value,
             state: e.target.state.value,
-        }
+        };
         this.props.saveValues(data);
         this.props.nextStep();
     }

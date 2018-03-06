@@ -1,6 +1,6 @@
 // No log in functionality yet
 import './SignUpIn.css';
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class SignUpIn extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class SignUpIn extends Component {
                 <div className="button-wrapper"><button className="button" onClick={this.signIn}>LOGIN</button> </div>
                 <div className="button-wrapper"><button className="button" onClick={this.createAccount}>CREATE ACCOUNT</button></div>
             </div>
-        )
+        );
     }
     createAccount(e) {
         e.preventDefault();

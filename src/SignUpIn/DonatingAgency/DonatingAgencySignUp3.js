@@ -27,10 +27,10 @@ class DonatingAgencySignUp3 extends Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
     nextStep(e) {
-        e.preventDefault()
+        e.preventDefault();
         var data = {
             memberName: e.target.memberName.value,
             memberPosition: e.target.memberPosition.value,
@@ -38,10 +38,10 @@ class DonatingAgencySignUp3 extends Component {
 
             memberEmail: e.target.memberEmail.value,
             memberPassword: e.target.memberPassword.value
-        }
+        };
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default DonatingAgencySignUp3;

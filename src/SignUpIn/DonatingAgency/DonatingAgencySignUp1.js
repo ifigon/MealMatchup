@@ -81,10 +81,10 @@ class DonatingAgencySignUp1 extends Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
     nextStep(e) {
-        e.preventDefault()
+        e.preventDefault();
         var data = {
             organizationName: e.target.organizationName.value,
             address1: e.target.address1.value,
@@ -92,10 +92,10 @@ class DonatingAgencySignUp1 extends Component {
             city: e.target.city.value,
             state: e.target.state.value,
             officeNumber: e.target.officeNumber.value
-        }
+        };
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default DonatingAgencySignUp1;

@@ -10,7 +10,7 @@ class UserTypeController extends Component{
         super(props);
         this.state = {
             step: 0
-        }
+        };
     }
 
     showDelivererGroup() {
@@ -22,30 +22,30 @@ class UserTypeController extends Component{
     showReceivingAgency() {
         this.setState({
             step: 2
-        })
+        });
     }
 
     showDonatingAgency() {
         this.setState({
             step: 3
-        })
+        });
     }
 
     showStep() {
         switch (this.state.step) {
-            default:
-                return <UserTypeSignUp
-                    showDelivererGroup={this.showDelivererGroup.bind(this)}
-                    showDonatingAgency={this.showDonatingAgency.bind(this)}
-                    showReceivingAgency={this.showReceivingAgency.bind(this)}
-                />
-            case 1:
-                return <DelivererGroupSignUpController />
+        default:
+            return <UserTypeSignUp
+                showDelivererGroup={this.showDelivererGroup.bind(this)}
+                showDonatingAgency={this.showDonatingAgency.bind(this)}
+                showReceivingAgency={this.showReceivingAgency.bind(this)}
+            />;
+        case 1:
+            return <DelivererGroupSignUpController />;
 
-            case 2:
-                return <ReceivingAgencySignUpController />
-            case 3:
-                return <DonatingAgencySignUpController />
+        case 2:
+            return <ReceivingAgencySignUpController />;
+        case 3:
+            return <DonatingAgencySignUpController />;
         }
     }
 
@@ -54,7 +54,7 @@ class UserTypeController extends Component{
             <div className="signup-wrapper">
                 {this.showStep()}
             </div>
-        )
+        );
     }
 }
 

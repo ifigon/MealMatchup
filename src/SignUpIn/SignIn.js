@@ -1,5 +1,5 @@
 // No log in functionality yet
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class SignIn extends Component {
     render() {
@@ -17,7 +17,7 @@ class SignIn extends Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
 }
 export default SignIn;

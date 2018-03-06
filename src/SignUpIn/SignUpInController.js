@@ -6,10 +6,10 @@ import SignIn from './SignIn';
 
 class SignUpInController extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             step: 0
-        }
+        };
     }
     signIn() {
         this.setState({
@@ -24,15 +24,15 @@ class SignUpInController extends Component {
     }
     showStep() {
         switch (this.state.step) {
-            default:
-                return <SignUpIn
-                    signIn={this.signIn.bind(this)}
-                    createAccount={this.createAccount.bind(this)}
-                />
-            case 1:
-                return <SignIn />
-            case 2:
-                return <UserTypeController />
+        default:
+            return <SignUpIn
+                signIn={this.signIn.bind(this)}
+                createAccount={this.createAccount.bind(this)}
+            />;
+        case 1:
+            return <SignIn />;
+        case 2:
+            return <UserTypeController />;
         }
     }
     render() {
@@ -40,7 +40,7 @@ class SignUpInController extends Component {
             <div className="signup-wrapper">
                 {this.showStep()}
             </div>
-        )
+        );
     }
 }
 export default SignUpInController;

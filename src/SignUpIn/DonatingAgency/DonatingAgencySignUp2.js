@@ -27,20 +27,20 @@ class DonatingAgencySignUp2 extends Component {
                     </div>
                 </div>
             </form>
-        )
+        );
     }
     nextStep(e) {
-        e.preventDefault()
+        e.preventDefault();
         var data = {
             adminEmail: e.target.adminEmail.value,
             adminPassword: e.target.adminPassword.value,
             adminName: e.target.adminName.value,
             adminPhone: e.target.adminPhone.value,
             adminPosition: e.target.adminPosition.value,
-        }
+        };
 
-        this.props.saveValues(data)
-        this.props.nextStep()
+        this.props.saveValues(data);
+        this.props.nextStep();
     }
 }
 export default DonatingAgencySignUp2;
