@@ -117,7 +117,6 @@ input[type="radio"]{
     cursor: pointer;
 }
 
-
 .checkmark {
     display: inline-block;
     margin: 7px 5px auto auto;
@@ -142,18 +141,18 @@ input[type="radio"]{
     background-color: #ccc;
 }
 
-.buttons input[type="submit"]{
+.buttons-form input[type="submit"]{
     width: 150px;
 }
 
-.buttons{
+.buttons-form{
     display: flex;
     float: right;
     padding-top: 20px;
 }
 
 input[value="Cancel"]{
-    color: #BDBDBD;
+    color: rgb(54, 19, 19);
     border: 1px solid #BDBDBD;
     margin-left: 50px;
 }

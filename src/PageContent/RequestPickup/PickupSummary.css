@@ -19,9 +19,7 @@
     height: 100%;
     
 }
-body{
-    
-}
+
 .top-line{
     background-color: #37B674;
     height: 20px;
@@ -88,7 +86,6 @@ body{
     float: right;
     margin-right: 10px;
     margin-top: 0px;
-        /* margin-left: 10px; */
 }
 
 #exit:hover{
@@ -110,6 +107,7 @@ body{
     color: #BDBDBD;
     border: 1px solid #BDBDBD;
     margin-left: 50px;
+    position: sticky;
 }
 
 .footer input[value="Cancel"]:hover{

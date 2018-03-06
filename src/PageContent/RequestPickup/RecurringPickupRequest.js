@@ -35,7 +35,7 @@ class RecurringPickupRequest extends Component {
             let donatingAgency = snapshot.val();
             this.setState({
                 schoolID: donatingAgency.school
-            })
+            });
         });
     }
 
@@ -45,33 +45,33 @@ class RecurringPickupRequest extends Component {
         let formIsValid = true;
 
         //Date
-        if(!fields["startDate"]){
-           formIsValid = false;
-           errors["startDate"] = "Start date cannot be empty";
+        if(!fields['startDate']){
+            formIsValid = false;
+            errors['startDate'] = 'Start date cannot be empty';
         }
 
-        if(fields["endDate"] < fields["startDate"]){
+        if(fields['endDate'] < fields['startDate']){
             formIsValid = false;
-            errors["endBeforeStart"] = "End date cannot be before start date";
+            errors['endBeforeStart'] = 'End date cannot be before start date';
         }
 
         //Time
-        if(!fields["startTime"]){
-           formIsValid = false;
-           errors["startTime"] = "Start time cannot be empty";
+        if(!fields['startTime']){
+            formIsValid = false;
+            errors['startTime'] = 'Start time cannot be empty';
         }
 
-        if(!fields["endTime"]){
+        if(!fields['endTime']){
             formIsValid = false;
-            errors["endTime"] = "End time cannot be empty";
-         }
+            errors['endTime'] = 'End time cannot be empty';
+        }
 
-         if(fields["startTime"] > fields["endTime"] || fields["endTime"] < fields["startTime"]){
+        if(fields['startTime'] > fields['endTime'] || fields['endTime'] < fields['startTime']){
             formIsValid = false;
-            errors["time"] = "Invalid time range";
+            errors['time'] = 'Invalid time range';
         }    
-       this.setState({errors: errors});
-       return formIsValid;
+        this.setState({errors: errors});
+        return formIsValid;
     }
 
     handleChange(field, e){         
@@ -82,7 +82,7 @@ class RecurringPickupRequest extends Component {
 
     toggleModal(){
         this.setState({
-          isOpen: !this.state.isOpen
+            isOpen: !this.state.isOpen
         });
     }
 
@@ -91,7 +91,7 @@ class RecurringPickupRequest extends Component {
     // newRequest.set(deliveryRequest);
     
     submitRequest(){
-        console.log("Added to DB!");
+        
     }
 
     createRequest(event) {
@@ -137,9 +137,8 @@ class RecurringPickupRequest extends Component {
 
             this.setState({
                 formInfo: deliveryRequest
-            })
+            });
             
-            console.log(deliveryRequest);
             this.toggleModal();
         }
     }
@@ -150,26 +149,26 @@ class RecurringPickupRequest extends Component {
                 <form onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
-                        <p className="error">{this.state.errors["endBeforeStart"]}</p>
-                        <p className="error">{this.state.errors["startTime"]}</p>
-                        <p className="error">{this.state.errors["endTime"]}</p>
-                        <p className="error">{this.state.errors["startDate"]}</p>
-                        <p className="error">{this.state.errors["time"]}</p>
+                        <p className="error">{this.state.errors['endBeforeStart']}</p>
+                        <p className="error">{this.state.errors['startTime']}</p>
+                        <p className="error">{this.state.errors['endTime']}</p>
+                        <p className="error">{this.state.errors['startDate']}</p>
+                        <p className="error">{this.state.errors['time']}</p>
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Date  <span className="red">*</span></label><br/>
-                                <input type="date" name="startDate" onChange={this.handleChange.bind(this, "startDate")} required/><br/>
+                                <input type="date" name="startDate" onChange={this.handleChange.bind(this, 'startDate')} required/><br/>
                             </span>
                             <span className="grid">
                                 <label className="container smaller">
                                     <input type="radio" name="durationType" value={RequestDurationType.RECUR} required/>
-                                    <span class="checkmark"></span>Recur
+                                    <span className="checkmark"></span>Recur
                                     <input type="number" name="numRecurrences" />times<br/>
                                 </label >
                                 <label className="container smaller">
                                     <input type="radio" name="durationType" value={RequestDurationType.DATE} />
-                                    <span class="checkmark"></span>End by
-                                    <input type="date" name="endDate" onChange={this.handleChange.bind(this, "endDate")} />
+                                    <span className="checkmark"></span>End by
+                                    <input type="date" name="endDate" onChange={this.handleChange.bind(this, 'endDate')} />
                                 </label>
                                 <br/>
                             </span>
@@ -194,7 +193,7 @@ class RecurringPickupRequest extends Component {
                                     {this.state.memberList.map((member,i) => {
                                         return (
                                             <option key={i} value={member.id}>{member.name}</option>
-                                        )
+                                        );
                                     })}
                                 </select><br/>
                             </span>
@@ -202,17 +201,17 @@ class RecurringPickupRequest extends Component {
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Time  <span className="red">*</span></label><br/>
-                                <input type="time" name="startTime" onChange={this.handleChange.bind(this, "startTime")} required/>
+                                <input type="time" name="startTime" onChange={this.handleChange.bind(this, 'startTime')} required/>
                             </span>
                             <span className="grid">
                                 <label>End Time  <span className="red">*</span></label><br/>
-                                <input type="time" name="endTime" onChange={this.handleChange.bind(this, "endTime")} required/>
+                                <input type="time" name="endTime" onChange={this.handleChange.bind(this, 'endTime')} required/>
                             </span>
                         </span>
                         <span className="grid">
                             <p id="form-heading">Notes for Pickup</p>
                             <textarea name="notes" 
-                                placeHolder="Ex: Use the underground parking garage upon entrance. 
+                                placeholder="Ex: Use the underground parking garage upon entrance. 
                                 Key card access required after 3:00pm."/>
                         </span>
                         <p id="form-heading">Agencies involved</p>
@@ -225,7 +224,7 @@ class RecurringPickupRequest extends Component {
                                     {this.state.delivererGroups.map((dg,i) => {
                                         return (
                                             <option key={i} value={dg.id}>{dg.name}</option>
-                                        )
+                                        );
                                     })}
                                 </select>
                             </span>
@@ -237,19 +236,19 @@ class RecurringPickupRequest extends Component {
                                     {this.state.receivingAgencies.map((ra, i) => {
                                         return (
                                             <option key={i} value={ra.id}>{ra.name}</option>
-                                        )
+                                        );
                                     })}
                                 </select>
                             </span>
                         </span>
-                        <div className="buttons">
+                        <div className="buttons-form">
                             <input type="submit" value="Done" /> 
                             <input type="submit" value="Cancel" />
                         </div>
                     </div>
                 </form>
                 <PickupSummary 
-                    type={"Request Recurring Pickup"} 
+                    type={'Request Recurring Pickup'} 
                     startDate={this.state.formInfo.startDate} 
                     endDate={this.state.formInfo.duration}
                     startTime={this.state.formInfo.startTime}
