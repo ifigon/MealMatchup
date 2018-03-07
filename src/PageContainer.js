@@ -3,6 +3,7 @@ import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import AssignVolunteers from './PageContent/AssignVolunteers/AssignVolunteers'
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -27,6 +28,7 @@ class PageContainer extends Component {
     }
  
     render(){
+        console.log(this.props);
         return(
             <div>
                 {/* <header > */}
@@ -39,7 +41,16 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Calendar</div>
                 }
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Assign Volunteers</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>
+                        <AssignVolunteers
+                            day="Saturday"
+                            date="11/21"
+                            from="10:00am"
+                            to="12:00pm"
+                            donatingAgency="Local Point"
+                            receivingAgency="Seattle's Union Gospel Shelter"
+                        />
+                    </div>
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>

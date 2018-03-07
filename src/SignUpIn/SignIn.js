@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import firebase from '../FirebaseConfig';
 import ReactDOM from 'react-dom';
 
-class SignUpIn extends Component {
+class SignIn extends Component {
 
     constructor(props) {
         super(props);
