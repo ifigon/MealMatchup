@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './FoodLogItem.css';
-
 class FoodLogItem extends Component{
     render(){
-        return(
+        return( 
             <div className="item">
                 <div className="heading">
                     <p className="delivery">Delivery Complete &nbsp;</p> 
@@ -30,9 +29,20 @@ class FoodLogItem extends Component{
                     <div className="info">
                         <div className="subitem">
                             <p className="info-title">Donation Description</p>
-                            <div className="food">
-                                <p className="info-detail donationItem">{this.props.donationItem.item} &nbsp;</p>
-                                <p className="info-detail donationWeight">{this.props.donationWeight.weight}</p>
+                            <div className="food-table">
+                                {/* TODO: split food items into another column if the number of
+                                    food items are greater than 5. */}
+                                {
+                                    this.props.donations.map((food, i) => {
+                                        return(
+                                            <div className="food">
+                                                <p className="info-detail donationItem">{food.item} &nbsp;</p>
+                                                <p className="info-detail donationWeight">{food.weight} &nbsp;</p>
+                                                <p className="info-detail donationWeight">{food.unit} &nbsp;</p>
+                                            </div>
+                                        );
+                                    })
+                                }
                             </div>
                         </div>
                         <div className="subitem">
@@ -50,6 +60,7 @@ class FoodLogItem extends Component{
                             <p className="info-title">Picked Up Donation</p>
                             <p className="info-subtitle">{this.props.pickedUpName}</p>
                             <div className="flex">
+                                {/* TODO: for the future if there are more than 2 deliverers, make this dynamic */}
                                 <div className="stu1">
                                     <p className="info-detail">{this.props.stuName1}</p>
                                     <p className="info-detail">{this.props.stuPhone1}</p>

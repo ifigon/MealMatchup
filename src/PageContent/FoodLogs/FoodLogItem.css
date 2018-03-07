@@ -10,6 +10,9 @@
 .flex {
     justify-content: space-between;
 }
+.flex-food{
+    display: inline-table;
+}
 .heading{
     display: flex;
     border-bottom: 1px solid #DDDDDD;
