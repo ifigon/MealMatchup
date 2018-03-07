@@ -1,0 +1,16 @@
+.confirmation-card-container {
+
+    position: relative;
+    height: 200px;
+    width: 320px;
+    background-color: #fff;
+    z-index: 1;
+    margin-top: 8%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.close-card {
+    cursor: pointer;
+}

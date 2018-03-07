@@ -45,7 +45,7 @@ class Edit extends Component {
                             </div>
                             <div className="form-child second-row form-buttons-container">
                                 <button type="button" className="form-button">Cancel</button>
-                                <button type="button" className="form-button" id="confirm-button">Confirm</button>
+                                <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleConfirmClick}>Confirm</button>
                             </div>
 
 
@@ -54,7 +54,7 @@ class Edit extends Component {
                     </form>
                 </div>
             </div>
-        )
+        );
 
     }
 
