@@ -5,6 +5,7 @@ import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
+import { NotificationType } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
