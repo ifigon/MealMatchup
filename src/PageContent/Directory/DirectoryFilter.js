@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './Directory.css';
-import "typeface-roboto";
+import 'typeface-roboto';
 
 // Component for directory filter
 
 class DirectoryFilter extends Component {
-  render() {
-		return (
+    render() {
+        return (
             <div className="filter">
                 <p style={{fontSize: '24px'}}>Filter</p>
                 {/* TODO: Click for a drop down menu */}
@@ -15,8 +15,8 @@ class DirectoryFilter extends Component {
                     <p className='dropDownOption' style={{marginLeft: '15px'}}>Receiving Agency &#8964;</p>
                 </div>
             </div>
-		);
-  }
+        );
+    }
 }
 
 export default DirectoryFilter;

@@ -16,9 +16,9 @@ h4 {
     margin-bottom: 5px;
 }
 
-p {
+.cardDetails p {
     margin: 0px;
-    margin-bottom: 5px;
+    margin-bottom: 5px; 
 }
 
 .cardPicture {
@@ -33,7 +33,7 @@ p {
     margin-top: 10px;
 }
 
-img {
+.cardPicture img {
     width: 175px;
     height: auto;
 }
@@ -66,18 +66,25 @@ img {
     font-size: 14px;
 }
 
-.card, .filter {
-    margin: 20px;
+.filter {
+    margin-top: 120px;
+    margin-left: 220px;
     display: block;
     overflow: hidden;
-    font-family: Roboto;
+    font-family: 'Open Sans';
+    /* position: fixed; */
+    background-color: white;
+    width: 100%;
 }
 
-.card {
-    padding: 15px;    
+.card { 
     -moz-box-shadow:    2px 2px 2px 2px #ccc;
     -webkit-box-shadow: 2px 2px 2px 2px #ccc;
     box-shadow:         2px 2px 2px 2px #ccc;
+    margin: 0px 20px 10px 220px;
+    display: block;
+    overflow: hidden;
+    font-family: 'Open Sans';
 }
 
 .title {

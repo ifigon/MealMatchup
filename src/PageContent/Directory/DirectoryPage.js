@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import DirectoryCard from './DirectoryCard.js';
 import DirectoryFilter from './DirectoryFilter.js';
 import './Directory.css';
-import "typeface-roboto";
-
-// Component for directory card
 
 class DirectoryPage extends Component {
 
     render() {
-		return (
+        return (
             <div className="directoryPage">
                 {/* TODO: For now, I'll keep the filter component separate
                             but I think I will move it to the Directory Page so that it will be easier
@@ -25,8 +22,8 @@ class DirectoryPage extends Component {
                     contactNumber='206-487-2859'
                     contactEmail='amypowell@gmail.com' />
             </div>
-		);
-  }
+        );
+    }
 }
 
 export default DirectoryPage;
