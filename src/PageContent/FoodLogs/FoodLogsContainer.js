@@ -181,7 +181,7 @@ class FoodLogsContainer extends Component {
     }
 
     componentDidMount(){
-        //TODO: query firebase
+        //TODO: query firebase for food logs
         this.setState({
 
         });

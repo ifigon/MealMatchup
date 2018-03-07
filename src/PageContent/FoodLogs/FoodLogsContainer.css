@@ -3,12 +3,17 @@
     margin-top: 100px;
 }
 
+.logs{
+    margin-top: 200px;
+}
+
 .dropdown{
-    margin: 0px 0px 20px 210px;
+    margin: 40px 40px auto 0px;
 }
 
 .filter{
-    margin-left: 210px;
+    margin-top: -102px;
+    margin-left: 195px;
     padding-bottom: 30px;
     color: #4F4F4F;
     font-weight: 0px;
