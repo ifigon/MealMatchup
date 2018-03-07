@@ -33,8 +33,19 @@ class FoodLogsContainer extends Component {
                     stuEmail2: 'James@gmail.com',
                     donations: [
                         {
-                            item: 'rice',
-                            weight: '2 lbs'
+                            item: 'Beans',
+                            weight: '12',
+                            unit: 'lb'
+                        },
+                        {
+                            item: 'Rice',
+                            weight: '300',
+                            unit: 'lb'
+                        },
+                        {
+                            item: 'Rice',
+                            weight: '300',
+                            unit: 'lb'
                         }
                     ]
                 },
@@ -63,12 +74,34 @@ class FoodLogsContainer extends Component {
                     stuEmail2: 'James@gmail.com',
                     donations: [
                         {
-                            item: 'Beans',
-                            weight: '12 lbs'
+                            item: 'Bread',
+                            weight: '12',
+                            unit: 'loaves'
                         },
                         {
-                            item: 'Rice',
-                            weight: '300 lbs'
+                            item: 'Soup',
+                            weight: '300',
+                            unit: 'lbs'
+                        },
+                        {
+                            item: 'Fish',
+                            weight: '300',
+                            unit: 'grams'
+                        },
+                        {
+                            item: 'Turkey',
+                            weight: '23',
+                            unit: 'whole'
+                        },
+                        {
+                            item: 'Turkey',
+                            weight: '23',
+                            unit: 'whole'
+                        },
+                        {
+                            item: 'Turkey',
+                            weight: '23',
+                            unit: 'whole'
                         }
                     ]
                 }
@@ -77,7 +110,7 @@ class FoodLogsContainer extends Component {
     }
 
     componentDidMount(){
-        //TODO: query firebase
+        //TODO: query firebase for food logs
         this.setState({
 
         });
@@ -85,56 +118,56 @@ class FoodLogsContainer extends Component {
 
     render(){
         return(
-            <div className="food-container ">
+            <div className="food-container">
+                {/* TODO: Filter functionality */}
                 <div className="filter">
                     <p>Filter</p>
-                    <div className="dropdown">
-                        <span>Student Groups </span>
-                        <img src={arrow} alt="arrow"></img>
-                        <div className="dropdown-content">
-                            <p>Green Greeks</p>
+                    <div className="filter-options">
+                        <div className="dropdown">
+                            <span>Student Groups </span>
+                            <img src={arrow} alt="arrow"></img>
+                        </div>
+                        <div className="dropdown">
+                            <span>Receiving Agency </span>
+                            <img src={arrow} alt="arrow"></img>
                         </div>
                     </div>
-                    <div className="dropdown">
-                        <span>Receiving Agency </span>
-                        <img src={arrow} alt="arrow"></img>
-                        <div className="dropdown-content">
-                            <p>Green Greeks</p>
-                        </div>
-                    </div>
+                    
                 </div>
-                {
-                    this.state.foodLogs.map((log, i) => {
-                        return (
-                            <FoodLogItem 
-                                date={log.date} 
-                                time={log.time} 
-                                daName={log.daName}
-                                daPhone={log.daPhone}
-                                daManager={log.daManager}
-                                daSigned={log.daSigned}
-                                daEmail={log.daEmail}
-                                raName={log.raName}
-                                raPhone={log.raPhone}
-                                raSigned={log.raSigned}
-                                raTime={log.raTime}
-                                raEmail={log.raEmail}
-                                freezerTemp={log.freezerTemp}
-                                freezerTime={log.freezerTime}
-                                notes={log.notes}
-                                pickedUpName={log.pickedUpName}
-                                stuName1={log.stuName1}
-                                stuPhone1={log.stuPhone1}
-                                stuEmail1={log.stuEmail1}
-                                stuName2={log.stuName2}
-                                stuPhone2={log.stuPhone2}
-                                stuEmail2={log.stuEmail2}
-                                donationItem={log.donations}
-                                donationWeight={log.donations}
-                            ></FoodLogItem>
-                        );
-                    })
-                }
+                <div className="logs">
+                    {
+                        this.state.foodLogs.map((log, i) => {
+                            return (
+                                <FoodLogItem 
+                                    key={i}
+                                    date={log.date} 
+                                    time={log.time} 
+                                    daName={log.daName}
+                                    daPhone={log.daPhone}
+                                    daManager={log.daManager}
+                                    daSigned={log.daSigned}
+                                    daEmail={log.daEmail}
+                                    raName={log.raName}
+                                    raPhone={log.raPhone}
+                                    raSigned={log.raSigned}
+                                    raTime={log.raTime}
+                                    raEmail={log.raEmail}
+                                    freezerTemp={log.freezerTemp}
+                                    freezerTime={log.freezerTime}
+                                    notes={log.notes}
+                                    pickedUpName={log.pickedUpName}
+                                    stuName1={log.stuName1}
+                                    stuPhone1={log.stuPhone1}
+                                    stuEmail1={log.stuEmail1}
+                                    stuName2={log.stuName2}
+                                    stuPhone2={log.stuPhone2}
+                                    stuEmail2={log.stuEmail2}
+                                    donations={log.donations}
+                                ></FoodLogItem>
+                            );
+                        })
+                    }
+                </div>
             </div>
         );
     }
