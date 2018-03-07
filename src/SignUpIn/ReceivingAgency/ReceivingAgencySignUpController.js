@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import '../SignUpIn.css';
+import firebase from '../../FirebaseConfig.js';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
 import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
+import { NotificationType } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -75,6 +77,74 @@ class SignUpShelterController extends Component {
         this.setState((prevState) => {
             return { step: prevState.step - 1 };
         });
+    }
+
+    submitRegistration() {
+        // Handle via ajax submitting the user data, upon
+        // success return this.nextStop(). If it fails,
+        // show the user the error but don't advance
+
+        firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
+            .then(user => {
+                console.log('User created: ' + user.uid);
+                
+                let postData = {
+                    accountType: "receiving_agency",
+                    school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
+                    name: fieldValues.organizationName,
+                    address: {
+                        street1: fieldValues.address1,
+                        street2: fieldValues.address2,
+                        city: fieldValues.city,
+                        state: fieldValues.state,
+                        zip: fieldValues.zip,
+                        officeNumber: fieldValues.officeNumber
+                    },
+                    isVerified: true,
+		            isActivated: true,
+                    primaryContact: {
+                        name: fieldValues.primaryName,
+                        email: fieldValues.primaryEmail,
+                        phone: fieldValues.primaryPhone,
+                        position: fieldValues.primaryPosition
+                    },
+                    secondaryContact: {
+                        name: fieldValues.secondaryName,
+                        email: fieldValues.secondaryEmail,
+                        phone: fieldValues.secondaryPhone,
+                        position: fieldValues.secondaryPosition
+                    },
+                    availabilities: {
+                        0: {startTime: fieldValues.monStart, endTime: fieldValues.monEnd},
+                        1: {startTime: fieldValues.tueStart, endTime: fieldValues.tueEnd},
+                        2: {startTime: fieldValues.wedStart, endTime: fieldValues.wedEnd},
+                        3: {startTime: fieldValues.thurStart, endTime: fieldValues.thurEnd},
+                        4: {startTime: fieldValues.friStart, endTime: fieldValues.friEnd},
+                        5: {startTime: fieldValues.satStart, endTime: fieldValues.satEnd},
+                        6: {startTime: fieldValues.sunStart, endTime: fieldValues.sunEnd}
+                    },
+                    acceptEmergencyPickups: fieldValues.emergencyAvailable,
+                    emergencyQuantity: {
+                        min: fieldValues.startLbs,
+                        max: fieldValues.endLbs
+                    },
+                    isAdmin: true,
+                    notification: {
+                        type: NotificationType,
+                        content: "-L5QoXeC_UrL5tRRED3e"
+                    }
+                };
+
+                let updates = {};
+                updates['/accounts/' + user.uid] = postData;
+
+                return firebase.database().ref().update(updates);
+            })
+            .catch(error => {
+                console.log(error.message)
+            });
+
+        this.nextStep()
     }
 
     showStep() {
