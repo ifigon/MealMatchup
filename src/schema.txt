@@ -5,13 +5,16 @@ It is not complete and should be updated as we encounter more data that
 we need.
 */
 
-SCHOOL ("/accounts/")
+UMBRELLA ("/accounts/")
 
-	// key = UID of this school account in firebase
+	// key = UID of this umbrella account in firebase
 	RheaQY1WxJT03sTPQICFZ4STpfm1 : {  
-		accountType: "school"
+		accountType: "umbrella",
+		umbrellaInfo: {
+			type: "school",  // Enums.UmbrellaType
+			ceebCode: "4854",  // different field depending on umbrella type
+		}
 		name: "University of Washington",
-		ceebCode: "4854",
 		address: {
 			street1: "1410 Northeast Campus Parkway",
 			street2: "",
@@ -52,7 +55,7 @@ DONATING AGENCY ("/donating_agencies/") //not an account
 
 	// key = auto generated key by firebase
 	-K9HdKlCLjjk_ka82K0s: {
-		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
+		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of an umbrella
 		name: "Local Point",
 		address: {
 			street1: "1201 NE Campus Pkwy",
@@ -101,7 +104,7 @@ RECEIVING AGENCY ("/accounts/")
 	// key = UID of the receiving agency's account
 	uGOFJ8NqHjbZhKAYzSZFRs1dSKD3: {
 		accountType: "receiving_agency",
-		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
+		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of an umbrella
 		name: "Seattle Union Gospel Mission",
 		email: "seauniongospel@test.org",
 		address: {
@@ -155,7 +158,7 @@ DELIVERER GROUP ("/accounts/")
 	// key = UID of the deliverer group's account
 	R8BAHrxdkfQoAmfWvGa1OJmjQP43: {
 		accountType: "deliverer_group"
-		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
+		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of an umbrella
 		name: "Phi Sigma Ro",
 		email: "phisigmaro@uw.edu",
 		address: {
@@ -220,7 +223,7 @@ DELIVERY REQUEST ("/delivery_requests/")
 
 -----------------------------------------------------
 
-DELIVERY ("/deliveries/")
+DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrella_uid>"
 
 	// key = auto generated key by firebase
 	-L5RkIS0CSPuXpkewaqA: {
