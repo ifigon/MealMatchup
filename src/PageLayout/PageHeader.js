@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './PageHeader.css';
-import notification from '../icons/notification.svg'
-
+import notification from '../icons/notification.svg';
 class PageHeader extends Component {
     render(){
         return(
@@ -13,7 +12,7 @@ class PageHeader extends Component {
                 </div>
                 
             </div>
-        )
+        );
     }
 }
 
