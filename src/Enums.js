@@ -1,6 +1,6 @@
 export const DateTimeFormat = {
-    DATE: "YYYY-MM-DD",
-    TIME: "HH:mm",
+    DATE: 'YYYY-MM-DD',
+    TIME: 'HH:mm',
 };
 
 export const AccountType = {
@@ -42,25 +42,25 @@ export const NotificationType = {
     /* When: a new DA/RA/DG account is created
        Receiver: School
        Actions: View */
-    NEW_ACCOUNT: "new_account",
+    NEW_ACCOUNT: 'new_account',
     /* When: a DA requests a new recurring pick
        Receiver: RA, DG
        Action: View -> Claim/Reject */
-    RECURRING_PICKUP_REQUEST: "recurring_pickup_request",
+    RECURRING_PICKUP_REQUEST: 'recurring_pickup_request',
     /* When: a recurring pick has been claimed by both RA and DG
        Receiver: DA
        Action: View -> View on Calendar */
-    RECURRING_PICKUP_CONFIRMED: "recurring_pickup_confirmed",
+    RECURRING_PICKUP_CONFIRMED: 'recurring_pickup_confirmed',
     /* When: no RA or DG claims the pickup request within the deadline
        Receiver: DA
        Action: View? */
-    RECURRING_PICKUP_EXPIRED: "recurring_pickup_expired",
+    RECURRING_PICKUP_EXPIRED: 'recurring_pickup_expired',
     /* When: all RAs rejected the pickup request
        Receiver: DA
        Action: View? */
-    RECURRING_PICKUP_REJECTED_RA: "recurring_pickup_rejected_ra",
+    RECURRING_PICKUP_REJECTED_RA: 'recurring_pickup_rejected_ra',
     /* When: all DGs rejected the pickup request
        Receiver: DA
        Action: View? */
-    RECURRING_PICKUP_REJECTED_DG: "recurring_pickup_rejected_dg",
+    RECURRING_PICKUP_REJECTED_DG: 'recurring_pickup_rejected_dg',
 };

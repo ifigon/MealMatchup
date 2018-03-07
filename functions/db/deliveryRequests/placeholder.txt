@@ -1,0 +1,3 @@
+Temporary placeholder for setting up the file structure for our server side code - cloud functions.
+
+Please follow the structure described under functions/README to add Realtime Database triggered functions for the path "/delivery_requests" under this directory. Once something is added, remove this placeholder.

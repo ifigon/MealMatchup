@@ -43,7 +43,7 @@ requestsRef.on('child_added', function(requestSnap) {
     // TODO edge case: delete if startDate is in the past?
     var request = requestSnap.val();
 
-    console.log("request key: " + requestSnap.key);
+    console.log('request key: ' + requestSnap.key);
     console.log(request);
 
     // check receiving agency
@@ -57,7 +57,7 @@ requestsRef.on('child_added', function(requestSnap) {
 
         // If a specific RA was requested, send the notification regardless of availabilities
         var forceNotify = (raStatus.pending.length === 1);
-        console.log("forceNotify=" + forceNotify);
+        console.log('forceNotify=' + forceNotify);
 
         // Add notification to all available RAs' accounts in the pending list
         for (let key in raStatus.pending) {
@@ -66,13 +66,13 @@ requestsRef.on('child_added', function(requestSnap) {
                 if (forceNotify || isAvailable(raSnap.val(), request)) {
                     notifyAccount(raSnap, notification);
 
-                    console.log("notified " + raSnap.key);
+                    console.log('notified ' + raSnap.key);
                 }
             });
         }
 
     } else {
-        console.log("ERROR: RA shouldn't be confirmed upon request.");
+        console.log('ERROR: RA shouldn\'t be confirmed upon request.');
     }
 });
 
@@ -85,7 +85,7 @@ requestsRef.on('child_added', function(requestSnap) {
 // Common Helper function
 // Add the given notification to the given account if it doesn't exist already
 function notifyAccount(accountSnap, notification) {
-    console.log("notifyAccount");
+    console.log('notifyAccount');
     console.log(accountSnap.val());
     console.log(notification);
 
@@ -95,7 +95,7 @@ function notifyAccount(accountSnap, notification) {
         accountSnap.child('notifications').forEach(function(notifSnap) {
             if (notifSnap.val().type === notification.type &&
                 notifSnap.val().content === notification.content) {
-                console.log("notification already exist")
+                console.log('notification already exist');
 
                 // this notification already exists for this account
                 notifExists = true;
@@ -109,14 +109,14 @@ function notifyAccount(accountSnap, notification) {
     if (!notifExists) {
         accountSnap.ref.child('notifications').push(notification);
         
-        console.log("added notification");
+        console.log('added notification');
     }
 }
 
 // Helper function for Listener 1
 // Check if the given RA is available for the pickup request
 function isAvailable(ra, request) {
-    console.log("isAvailable");
+    console.log('isAvailable');
     var requestDay = moment(request.startDate, DateTimeFormat.DATE).day();  // 0-6 for Sun-Sat
     var requestStart = moment(request.startTime, DateTimeFormat.TIME);
     var requestEnd = moment(request.endTime, DateTimeFormat.TIME);
@@ -133,7 +133,7 @@ function isAvailable(ra, request) {
 
         if (requestStart.isSameOrAfter(raStart) &&
             requestEnd.isSameOrBefore(raEnd)) {
-            console.log("RA AVAILABLE");
+            console.log('RA AVAILABLE');
             return true;
         }
     }
