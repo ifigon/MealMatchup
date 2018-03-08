@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
+import RecurringDeliveryRequestController from './PageLayout/Notification/RecurringDeliveryRequestController';
 import logo from './icons/temp-logo.svg';
 
 // The page to load when user is signed in.
@@ -14,24 +15,36 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: props.content
+            content: props.content,
+            showPopUp: false
         };
         
         this.navBarHandler = this.navBarHandler.bind(this);
+    }
+
+    openPopUp(){
+        this.setState({
+            showPopUp: true
+        });
+    }
+
+    closePopUp(){
+        this.setState({
+            showPopUp: false
+        });
     }
 
     navBarHandler(e) {
         this.setState({
             content: e
         });
-        console.log('container: ' + this.state.content);
     }
  
     render(){
         return(
             <div>
                 {/* <header > */}
-                    <PageHeader logo={logo} title={this.props.account.name}></PageHeader>
+                <PageHeader clickNotification={this.openPopUp.bind(this)} logo={logo} title={this.props.account.name}></PageHeader>
                 {/* </header> */}
                 <NavBar content={this.state.content} accountType={this.props.account.accountType} handler={this.navBarHandler}></NavBar>
 
@@ -54,8 +67,13 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.SETTINGS &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
                 }
+                {this.state.showPopUp ?
+                    <RecurringDeliveryRequestController closePopUp={this.closePopUp.bind(this)}/>
+                    : null    
+                }
+
             </div>
-        )
+        );
     }
 }
 export default PageContainer;

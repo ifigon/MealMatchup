@@ -94,3 +94,15 @@ button{
 button:hover{
     cursor: pointer;
 }
+
+.map{
+    display: inline-block;
+    height: 190px;
+    width: 320px;
+}
+
+Map{
+    display: inline-block;
+    height: 190px;
+    widows: 320px; 
+}

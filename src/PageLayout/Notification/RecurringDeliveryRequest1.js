@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
-import truck from '../../icons/truck.svg';
+import React, { Component } from 'react';
+import truck from '../../icons/green_truck.svg';
+import Map from '../../Map/Map.js';
 
 class RecurringDeliveryRequest1 extends Component {
     constructor(props) {
@@ -25,6 +25,10 @@ class RecurringDeliveryRequest1 extends Component {
                     <p className="donating-recieving" id="donatingContactEmail">bandrea247@gmail.com</p>
                 </div>
 
+                {/*To do: pass in coordinates*/}
+                <div className="map">
+                    <Map className="map"></Map>
+                </div>
 
                 <div className="receiving-agency">
                     <h2>Recipient</h2>
@@ -33,11 +37,16 @@ class RecurringDeliveryRequest1 extends Component {
                     <p className="donating-recieving" id="receivingContactEmail">amypowell@sugm.com</p>
                 </div>
 
+                {/*To do: pass in coordinates*/}
+                <div className="map">
+                    <Map className="map"></Map>                
+                </div>
+
                 <div className="buttons">
                     <button onClick={this.props.nextStep} className="claim" type="button">Claim</button> <button className="reject" type="button">Reject</button>
                 </div>
             </div>
-        )
+        );
     }
 }
 export default RecurringDeliveryRequest1;

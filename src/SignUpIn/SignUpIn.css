@@ -11,7 +11,7 @@
 }
 .signup{
     margin: 0 auto;
-    width: 35%;
+    width: 35vw;
     background-color: rgba(255,255,255,.95);
     height: 100vh;
     font-family: 'Open Sans', sans-serif;
@@ -29,7 +29,7 @@ form{
 
 .form-block {
     padding:50px;
-    padding-top: 10px;
+    padding-top: 0px;
     padding-bottom: 10px;
 }
 
@@ -66,17 +66,20 @@ input.form-component{
     bottom: 0;
     margin-bottom: 30px;
     padding-left: 30px;
+    font-size: 1.4vw;
 }
 .next{
-    /* padding-left:60%;; */
-    left: 0;
+    margin-left: 20vw;
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    font-size: 1.4vw;
 }
+
 .next:hover{
     cursor: pointer;
 }
-.cancel{
-    padding-right: 20vw;
-}
+
 .cancel:hover{
     cursor: pointer;
 }
@@ -464,4 +467,13 @@ p.forgot:hover{
 
 input.login-wrapper{
     width: 40vw;
+}
+
+form{
+    margin: 0px;
+    width: 100%;
+}
+
+form {
+    padding-top: 0px;
 }

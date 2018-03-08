@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './PageHeader.css';
-import notification from '../icons/notification.svg'
+import notification from '../icons/notification.svg';
 class PageHeader extends Component {
     render(){
         return(
@@ -8,11 +8,11 @@ class PageHeader extends Component {
                 <div className="flex">
                     <img src={this.props.logo} className="page-logo" alt="icon"/>
                     <p className="page-title">{this.props.title}</p>
-                    <img src={notification} className="notification-icon" alt="icon"/>
+                    <img onClick={this.props.clickNotification} src={notification} className="notification-icon" alt="icon"/>
                 </div>
                 
             </div>
-        )
+        );
     }
 }
 
