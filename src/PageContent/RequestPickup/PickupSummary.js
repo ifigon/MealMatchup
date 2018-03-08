@@ -2,6 +2,7 @@ import React from 'react';
 import './PickupSummary.css';
 import truck from '../../icons/green-truck.svg';
 import Map from '../../Map/Map.js';
+import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
 
 class PickupSummary extends React.Component {
     render() {
@@ -24,13 +25,13 @@ class PickupSummary extends React.Component {
                             <p id="subheading">Pickup Details</p>
                             <p>Start Date: {this.props.dayOfWeek}, {this.props.startDate}</p>
                             {
-                                this.props.duration.type === 'date' ?
+                                this.props.duration.type === RequestDurationType.DATE ? 
                                     <p>End Date: {this.props.duration.value}</p>
                                     :
-                                    this.props.repeats === 'weekly' ? 
+                                    this.props.repeats === RequestRepeatType.WEEKLY ? 
                                         <p>{this.props.duration.value} pickups requested for every {this.props.dayOfWeek}</p>
                                         :
-                                        this.props.repeats === 'biweekly' ?
+                                        this.props.repeats === RequestRepeatType.BIWEEKLY ?
                                             <p>{this.props.duration.value} pickups requested for every other {this.props.dayOfWeek}</p>
                                             :
                                             // TODO: calculate nth day of month
