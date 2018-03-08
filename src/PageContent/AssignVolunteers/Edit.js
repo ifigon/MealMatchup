@@ -44,7 +44,7 @@ class Edit extends Component {
                                 <h5 className="label-component" id="info">Email notifications will be sent to all deliverers.</h5>
                             </div>
                             <div className="form-child second-row form-buttons-container">
-                                <button type="button" className="form-button">Cancel</button>
+                                <button type="button" className="form-button" onClick={this.props.handleCancelClick}>Cancel</button>
                                 <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleConfirmClick}>Confirm</button>
                             </div>
 

@@ -1,0 +1,30 @@
+.avi-row {
+    display: flex;
+    margin-top: 8px;
+}
+
+.avi-detail {
+    flex-basis: 25%;
+}
+
+.avi-volunteers > h5 {
+    margin: 0px 0px 2px 0px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.avi-details-container {
+    display: flex;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.avi-headings {
+    display: flex;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    box-shadow: none;
+}
