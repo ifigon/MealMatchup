@@ -22,6 +22,7 @@ class AssignVolunteers extends Component {
                 {this.state.onConfirm ? 
                     <Confirmation 
                         handleCloseClick={this.handleCloseClick.bind(this)}
+                        studentGroup={this.props.studentGroup}
                     /> 
                     : 
                     <div />

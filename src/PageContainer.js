@@ -28,7 +28,7 @@ class PageContainer extends Component {
     }
  
     render(){
-        console.log(this.props);
+        console.log(this.props.account.name);
         return(
 
             <div>
@@ -44,6 +44,7 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>
                         <AssignVolunteers
+                            studentGroup={this.props.account.name}
                             day="Saturday"
                             date="11/21"
                             from="10:00am"

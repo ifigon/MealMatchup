@@ -10,6 +10,7 @@ class Confirmation extends Component {
 
             <div className="confirmation-container">
                 <ConfirmationCard 
+                    studentGroup={this.props.studentGroup}
                     handleCloseClick={this.props.handleCloseClick}
                 />
             </div>
