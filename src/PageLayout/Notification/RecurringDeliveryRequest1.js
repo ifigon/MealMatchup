@@ -3,10 +3,6 @@ import truck from '../../icons/green_truck.svg';
 import Map from '../../Map/Map.js';
 
 class RecurringDeliveryRequest1 extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="wrapper">
