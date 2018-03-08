@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
-import RecurringDeliveryRequestController from './PageLayout/Notification/RecurringDeliveryRequestController.js';
 // import SignUpInController from './SignUpIn/SignUpInController.js'
 
 // The main entry page to load when user is not signed in.

@@ -9,7 +9,7 @@ class RecurringDeliveryRequest1 extends Component {
                 <img className="icon" src={truck} alt="icon" /><h1>Reccuring Pickup Requested</h1>
                 <div className="pickup-details">
                     <h2>Pickup Details</h2>
-                    <div className="start"><label>Start Date</label> <p className="start-date">Thursday, 11/21/2018</p></div>
+                    <div className="start"><label>Start Date:</label> <p className="start-date">Thursday, 11/21/2018</p></div>
                     <p>10 Pickups requested for every Thursday</p>
                     <p>Pickup between 10 am -12 pm</p>
                 </div>
@@ -39,7 +39,7 @@ class RecurringDeliveryRequest1 extends Component {
                 </div>
 
                 <div className="buttons">
-                    <button onClick={this.props.nextStep} className="claim" type="button">Claim</button> <button className="reject" type="button">Reject</button>
+                    <button onClick={this.props.nextStep} className="claim" type="button">Claim</button> <button onClick={this.props.close} className="reject" type="button">Reject</button>
                 </div>
             </div>
         );

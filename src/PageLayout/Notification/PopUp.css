@@ -4,14 +4,24 @@
     font-family: 'Open Sans', sans-serif;
     color: #243847;
 }
+.popup-wrapper{
+    border-top: solid 15px #37B674;
+    width: 45vw;
+    margin-left: 30vw;
+    padding: 40px;
+    padding-top: 20px;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12)
+    ;
+}
+
+.close{
+    float: right;
+    height: 4vh;
+}
 
 .wrapper{
-    border-top: solid 15px #37B674;
     display: block;
     margin: 0 auto;
-    padding: 40px;
-    width: 40%;
-    padding-top: 20px;
 
 }
 
@@ -23,12 +33,13 @@
 .icon{
     height: 5vh;
     padding-right: 10px;
-    vertical-align: -webkit-baseline-middle;
     fill: #37B674;
 }
 
 h1{
     font-weight: 600;
+    font-size: 2vw;
+    margin-bottom: 10px;
 }
 
 .pickup-details{
@@ -38,11 +49,12 @@ h1{
 h2{
     font-weight: 600;
     margin-bottom: 0px;
-    font-size: 1.1rem; 
+    font-size: 1.7vw; 
 }
 
 label{
     display: inline;
+    font-size: 1.5vw;
 }
 .start-date{
     display: inline;
@@ -55,6 +67,7 @@ p{
     font-weight: 400;
     margin: 0px ;
     margin-bottom: 5px;
+    font-size: 1.5vw;
 }
 
 .donating-recieving{
@@ -97,12 +110,56 @@ button:hover{
 
 .map{
     display: inline-block;
-    height: 190px;
-    width: 320px;
+    width: 50%;
 }
 
 Map{
     display: inline-block;
     height: 190px;
     widows: 320px; 
+}
+
+.notification-wrapper{
+    float: right;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    border: solid 1px #E1E1E1;
+    margin-top: -40px;
+    margin-right: 5px;
+}
+
+.hover{
+    font-size: 1.2vw;
+    font-weight: 400;
+}
+
+.notification{
+    display: inline;
+    font-size: 1vw;
+    padding: 0px;
+    margin: 5px;
+}
+
+.warning{
+    color: #F77676;
+    padding-bottom: 5px;
+
+}
+
+.to-from{
+    font-weight: 600;
+}
+
+.right {
+    padding-left: 10px;
+}
+
+.margin{
+    margin-bottom: 15px;
+}
+
+.end{
+    width: 40%;
+    height: 30px;
+    font-size: 1.5vw;
 }

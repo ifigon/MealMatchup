@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import './Notification.css';
+import './PopUp.css';
 
 import RecurringDeliveryRequest1 from './RecurringDeliveryRequest1';
 import RecurringDeliveryRequest2 from './RecurringDeliveryRequest2';
 import RecurringDeliveryRequest3 from './RecurringDeliveryRequest3';
+import close from '../../icons/cross-out.svg';
 
 
 class RecurringDeliveryRequestController extends Component {
@@ -33,6 +34,7 @@ class RecurringDeliveryRequestController extends Component {
                 <RecurringDeliveryRequest1
                     nextStep={this.nextStep.bind(this)}
                     previousStep={this.previousStep.bind(this)}
+                    close={this.props.closePopUp}
                 />
             </div>;
         case 2:
@@ -40,6 +42,7 @@ class RecurringDeliveryRequestController extends Component {
                 <RecurringDeliveryRequest2
                     nextStep={this.nextStep.bind(this)}
                     previousStep={this.previousStep.bind(this)}
+                    close={this.props.closePopUp}
                 />
             </div>;
 
@@ -48,15 +51,16 @@ class RecurringDeliveryRequestController extends Component {
                 <RecurringDeliveryRequest3
                     nextStep={this.nextStep.bind(this)}
                     previousStep={this.previousStep.bind(this)}
+                    close={this.props.closePopUp}
                 />
             </div>;
         }
     }
 
     render() {
-        //let highlightLineColor = this.state.lineHighlighted ? "white" : "black"
         return (
             <div className="popup-wrapper">
+                <img className="close" src={close} alt="close" onClick={this.props.closePopUp}/>
                 {this.showStep()}
             </div>
         );
