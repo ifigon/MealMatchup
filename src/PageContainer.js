@@ -4,6 +4,7 @@ import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
 import AssignVolunteers from './PageContent/AssignVolunteers/AssignVolunteers';
+import StudentCoordinatorSettings from './PageContent/Settings/StudentCoordinatorSettings';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -28,7 +29,7 @@ class PageContainer extends Component {
     }
  
     render(){
-        console.log(this.props.account.name);
+        console.log(this.props);
         return(
 
             <div>
@@ -64,7 +65,16 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Directory</div>
                 }
                 {this.state.content === PageContent.SETTINGS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>
+                        <StudentCoordinatorSettings
+                            email={this.props.account.email}
+                            password="password"
+                            address={this.props.account.address}
+                            coordinator={this.props.account.coordinator}
+                            smsNotif={true}
+                            emailNotif={true}
+                        />
+                    </div>
                 }
             </div>
         );

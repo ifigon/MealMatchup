@@ -45,7 +45,8 @@ class AssignVolunteers extends Component {
 
     handleCloseClick() {
         this.setState({
-            onConfirm: false
+            onConfirm: false,
+            step: 0
         });
     }
 

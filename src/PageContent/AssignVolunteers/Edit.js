@@ -14,7 +14,7 @@ class Edit extends Component {
                     <i className="fas fa-circle ellipses" />
                     <i className="fas fa-circle ellipses" />
                     <i className="fas fa-circle ellipses" />
-                    <h5 className="location" id="bottom"><i class="fas fa-map-marker-alt marker" /><span className="spacing" />{this.props.receivingAgency}</h5>
+                    <h5 className="location" id="bottom"><i className="fas fa-map-marker-alt marker" /><span className="spacing" />{this.props.receivingAgency}</h5>
                 </div>
                 <div className="form-container">
                     <form onSubmit={this.nextStep}>
@@ -27,7 +27,7 @@ class Edit extends Component {
                                 <label className="label-component details">Student 1</label><br />
                                 <input name="name" type="text" className="form-input" /><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="password" className="form-input" /><br />
+                                <input name="phone" type="text" className="form-input" /><br />
                                 <label className="label-component details">Email</label><br />
                                 <input type="email" className="form-input" />
                             </div>
@@ -35,7 +35,7 @@ class Edit extends Component {
                                 <label className="label-component details">Student 2</label><br />
                                 <input name="name" type="text" className="form-input" /><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="password" className="form-input" /><br />
+                                <input name="phone" type="text" className="form-input" /><br />
                                 <label className="label-component details">Email</label><br />
                                 <input type="email" className="form-input" />
                             </div>
