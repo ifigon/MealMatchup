@@ -63,8 +63,19 @@ class StudentCoordinatorSettings extends Component {
                         smsNotif={this.state.smsNotif}
                         emailNotif={this.state.emailNotif}
                     />
-                )
-
+                );
+            default:
+                return (
+                    <SCSettings0 
+                        email={this.state.email}
+                        password={this.state.password}
+                        address={this.state.address}
+                        coordinator={this.state.coordinator}
+                        smsNotif={this.state.smsNotif}
+                        emailNotif={this.state.emailNotif}
+                        handleEditButton={this.handleEditButton.bind(this)}
+                    />
+                );
         }
 
     }
