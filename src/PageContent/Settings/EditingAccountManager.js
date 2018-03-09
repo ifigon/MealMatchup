@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class EditAccountManager extends Component {
+class EditingAccountManager extends Component {
 
     render() {
-
         return (
             <div className="scs-0">
                 <div className="scs-0-content scs-1-content">
                     <h5>Account Manager Details</h5>
                     <div className="amd-details amd-details-1">
                         <div className="amd-details-child">
+                            <label className="label-component details">Student 1</label><input name="name" type="text" className="form-input" /><br />
                             <h6>{this.props.coordinator.name}</h6>
                             <h6>{this.props.coordinator.position}</h6>
                             <h6>{this.props.coordinator.email}</h6>
@@ -22,14 +22,13 @@ class EditAccountManager extends Component {
                         </div>
                     </div>
                     <div className="amd-edit amd-edit-1">
-                        <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleEditAccManager}>Edit</button>
+                        <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleAccSave}>Save</button>
                     </div>
                 </div>
             </div>
         );
-
     }
 
 }
 
-export default EditAccountManager;
+export default EditingAccountManager;
