@@ -5,7 +5,6 @@
     color: #243847;
 }
 .popup-wrapper{
-    border-top: solid 15px #37B674;
     width: 45vw;
     margin-left: 30vw;
     padding: 40px;
@@ -14,9 +13,22 @@
     ;
 }
 
+.recurring {
+    border-top: solid 15px #37B674;
+}
+
+.emergency{
+    border-top: solid 15px #F77676;
+
+}
+
 .close{
     float: right;
     height: 4vh;
+}
+
+.close:hover {
+    cursor: pointer;
 }
 
 .wrapper{
@@ -36,10 +48,15 @@
     fill: #37B674;
 }
 
+.red {
+    height: 3vh;
+}
+
 h1{
     font-weight: 600;
     font-size: 2vw;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .pickup-details{
@@ -124,7 +141,7 @@ Map{
     box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
     padding: 10px;
     border: solid 1px #E1E1E1;
-    margin-top: -40px;
+    margin-top: -30px;
     margin-right: 5px;
 }
 
@@ -163,3 +180,48 @@ Map{
     height: 30px;
     font-size: 1.5vw;
 }
+
+.food{
+    list-style-type: none;
+    display: inline;
+    padding-right: 20px;
+    color: #4F4F4F;
+}
+
+.weight {
+    color: #F77676;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.emergency-info {
+    color:#828282;
+    font-size: 1.5vw;
+}
+
+h2.emergency-info{
+    font-size: 2.1vw;
+    color: black;
+    margin-bottom : 5px;
+}
+
+h3.emergency-info{
+    margin-top: 0px;
+    font-size: 1.9vw;
+    color: black;
+}
+
+p.emergency-info {
+    font-size: 1.7vw;
+    color: black;
+}
+
+.time {
+    margin-top: 10px;
+}
+
