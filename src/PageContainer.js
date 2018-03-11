@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import RecurringDeliveryRequestController from './PageLayout/Notification/RecurringDeliveryRequestController';
-import RecurringDeliveryRequestNotification from './PageLayout/Notification/RecurringDeliveryRequestNotification';
+import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
+// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
+import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
+import EmergencyDeliveryRequestController from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestController.js';
+
 import logo from './icons/temp-logo.svg';
 
 // The page to load when user is signed in.
@@ -81,7 +84,7 @@ class PageContainer extends Component {
                     : null
                 }
                 {this.state.showPopUp ?
-                    <RecurringDeliveryRequestController closePopUp={this.closePopUp.bind(this)}/>
+                    <EmergencyDeliveryRequestController closePopUp={this.closePopUp.bind(this)}/>
                     : null    
                 }
 
