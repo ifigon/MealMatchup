@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import '../PopUp.css';
 
 import EmergencyDeliveryRequest1 from './EmergencyDeliveryRequest1';
-// import EmergencyDeliveryRequest2 from './EmergencyDeliveryRequest2';
-// import EmergencyDeliveryRequest3 from './EmergencyDeliveryRequest3';
+import EmergencyDeliveryRequest2 from './EmergencyDeliveryRequest2';
+import EmergencyDeliveryRequest3 from './EmergencyDeliveryRequest3';
 import close from '../../../icons/cross-out.svg';
 
 
@@ -35,23 +35,18 @@ class EmergencyDeliveryRequestController extends Component {
                 previousStep={this.previousStep.bind(this)}
                 close={this.props.closePopUp}
             />;
-        // case 2:
-        //     return <div className="signup">
-        //         <EmergencyDeliveryRequest2
-        //             nextStep={this.nextStep.bind(this)}
-        //             previousStep={this.previousStep.bind(this)}
-        //             close={this.props.closePopUp}
-        //         />
-        //     </div>;
-
-        // case 3:
-        //     return <div className="signup">
-        //         <EmergencyDeliveryRequest3
-        //             nextStep={this.nextStep.bind(this)}
-        //             previousStep={this.previousStep.bind(this)}
-        //             close={this.props.closePopUp}
-        //         />
-        //     </div>;
+        case 2:
+            return <EmergencyDeliveryRequest2
+                nextStep={this.nextStep.bind(this)}
+                previousStep={this.previousStep.bind(this)}
+                close={this.props.closePopUp}
+            />;
+        case 3:
+            return <EmergencyDeliveryRequest3
+                nextStep={this.nextStep.bind(this)}
+                previousStep={this.previousStep.bind(this)}
+                close={this.props.closePopUp}
+            />;
         }
     }
 

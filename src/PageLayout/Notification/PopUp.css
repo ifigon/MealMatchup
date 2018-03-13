@@ -14,11 +14,11 @@
 }
 
 .recurring {
-    border-top: solid 15px #37B674;
+    border-top: solid 20px #37B674;
 }
 
 .emergency{
-    border-top: solid 15px #F77676;
+    border-top: solid 20px #F77676;
 
 }
 
@@ -205,23 +205,28 @@ h3 {
 }
 
 h2.emergency-info{
-    font-size: 2.1vw;
+    font-size: 1.9vw;
     color: black;
     margin-bottom : 5px;
 }
 
 h3.emergency-info{
     margin-top: 0px;
-    font-size: 1.9vw;
-    color: black;
-}
-
-p.emergency-info {
     font-size: 1.7vw;
     color: black;
 }
 
+p.emergency-info {
+    font-size: 1.4vw;
+    color: black;
+}
+
 .time {
+    font-size: 2vw;
     margin-top: 10px;
+}
+
+p.contact {
+    color: #828282;
 }
 
