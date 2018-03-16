@@ -12,7 +12,7 @@ class RecurringPickupRequest extends Component {
                 {id: 'fbCm3Yrbi4e12WgpVz3gq25VKea2', name: 'Test DA1 Member2'}
             ],
             delivererGroups: [
-                {id: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43', name: 'Test DG1'},
+                {id: 'R8BAHrxdkfQoAmfWpvGa1OJmjQP43', name: 'Test DG1'},
                 {id: 'sS4dqgxgLIXtPf42DydgkWLWeHT2', name: 'Test DG2'}
             ],
             receivingAgencies: [
@@ -20,7 +20,7 @@ class RecurringPickupRequest extends Component {
                 {id: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3', name: 'Test RA1'}
             ],
             fields: {},
-            errors: {},
+            errorList: {},
             isOpen: false,
             formInfo: [],
             dayOfWeek: ''
@@ -49,6 +49,17 @@ class RecurringPickupRequest extends Component {
             formIsValid = false;
             errors['endBeforeStart'] = 'End date cannot be before start date';
         }
+        // if (!fields['durationType']) {
+        //     // the they need to have one or the other error msg
+        //     errors['durationType'] = 'Must select radio button';
+        // } else {
+        //     if (fields['durationType'] === RequestDurationType.DATE) {
+        //         // perform all endDate related checks
+
+        //     } else {
+        //         // perform all recurTimes related checks
+        //     }
+        // }
 
         //Time
         if(!fields['startTime']){
@@ -78,13 +89,19 @@ class RecurringPickupRequest extends Component {
             errors['recurTimes'] = 'Must enter value for recurring times or an end date';
         }
 
-        this.setState({errors: errors});
+        this.setState({errorList: errors});
+        console.log(errors);
+        console.log(this.state.errorList);
         return formIsValid;
     }
 
-    handleChange(field, e){         
+    handleChange(field, e){   
         let fields = this.state.fields;
-        fields[field] = e.target.value;        
+        fields[field] = e.target.value; 
+        // if(e.target.value) {
+        //     fields.splice(e.target.event)
+        // }      
+        console.log('changed: ' + field + ', ' + e.target.value);
         this.setState({fields});
     }
 
@@ -97,7 +114,6 @@ class RecurringPickupRequest extends Component {
     // write to firebase
     // var newRequest = firebase.database().ref().child("delivery_requests").push();
     // newRequest.set(deliveryRequest);
-    
     submitRequest(){
         
     }
@@ -163,12 +179,20 @@ class RecurringPickupRequest extends Component {
                 <form onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
-                        <p className="error">{this.state.errors['endBeforeStart']}</p>
+                        {
+                            // loop through all error statements
+                            this.state.errorList.map((error, i) => {
+                                return (
+                                    <p className="error" key={i}>{this.state.errorList[error]}</p>
+                                );
+                            })
+                        }
+                        {/* <p className="error">{this.state.errors['endBeforeStart']}</p>
                         <p className="error">{this.state.errors['startTime']}</p>
                         <p className="error">{this.state.errors['endTime']}</p>
                         <p className="error">{this.state.errors['recurTimes']}</p>
                         <p className="error">{this.state.errors['startDate']}</p>
-                        <p className="error">{this.state.errors['time']}</p>
+                        <p className="error">{this.state.errors['time']}</p> */}
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Date  <span className="red">*</span></label><br/>
