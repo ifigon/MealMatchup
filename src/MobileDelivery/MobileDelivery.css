@@ -1,0 +1,51 @@
+.mobile-delivery{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+}
+
+.mobile-header{
+    /* position: absolute; */
+    background: #FFFFFF;
+    /* box-shadow: inset -1px 0px 0px #dddddd; */
+    /* box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25); */
+    margin: 15px 10px 0px 10px;
+    color: #3E3F40;
+}
+
+.mobile-start{
+    position: absolute;
+    width: 345.94px;
+    height: 500px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 30px auto 10px 13px;
+}
+
+.mobile-start p{
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+#mobile-time{
+    font-size: 15px;
+}
+
+#mobile-deliverers{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.mobile-card-line{
+    background-color: #9DCC6F;
+    height: 4px;
+}
+
+.mobile-deliverers{
+    display: flex;
+    font-size: 10px;
+}
+
+.mobile-deliverers p{
+    font-size: 15px;
+}
