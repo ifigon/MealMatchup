@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import firebase from '../FirebaseConfig';
 import ReactDOM from 'react-dom';
 
-class SignUpIn extends Component {
+class SignIn extends Component {
 
     constructor(props) {
         super(props);
@@ -13,13 +13,13 @@ class SignUpIn extends Component {
 
     render() {
         return (
-            <form>
+            <form onSubmit={this.nextStep}>
                 <div className="login-wrapper">
                     <div className="login-input-wrapper">
-                        <input type="text" id="email" className="login-input form-component" placeholder="Email" /><br />
-                        <input type="password" id="password" className="login-input form-component" placeholder="Password" /><br />
+                        <input name="email" type="text" id="email" className="login-input form-component" placeholder="Email" /><br />
+                        <input name="password" type="password" id="password" className="login-input form-component" placeholder="Password" /><br />
                     </div>
-                    <div className="login-button-wrapper"><button type="button" className="login-button">Login</button></div>
+                    <div className="login-button-wrapper"><button type="submit" className="login-button">Login</button></div>
                     <div className="forgot">
                         <p className="forgot">forgot password?</p>
                         <p className="forgot">forgot username?</p>
@@ -32,8 +32,8 @@ class SignUpIn extends Component {
     nextStep(e) {
         e.preventDefault();
 
-        let email = ReactDOM.findDOMNode(this.refs.email).value;
-        let password = ReactDOM.findDOMNode(this.refs.password).value;
+        let email = e.target.email.value;
+        let password = e.target.password.value;
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => {
