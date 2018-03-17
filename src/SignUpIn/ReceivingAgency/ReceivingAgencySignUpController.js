@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import '../SignUpIn.css';
+import firebase from '../../FirebaseConfig.js';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
 import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
+import { NotificationType } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -79,50 +81,50 @@ class SignUpShelterController extends Component {
 
     showStep() {
         switch (this.state.step) {
-        default:
-            return <UserTypeController/>;
-        case 1:
-            return <div className="signup">
-                <div className="circle-wrapper">
-                    <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
-                </div>
-                <ReceivingAgencySignUp1 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} />
-            </div>;
-        case 2:
-            return <div className="signup">
-                <div className="circle-wrapper">
-                    <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
-                </div>
-                <ReceivingAgencySignUp2 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
+            default:
+                return <UserTypeController/>;
+            case 1:
+                return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
+                    </div>
+                    <ReceivingAgencySignUp1 fieldValues={fieldValues}
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} />
+                </div>;
+            case 2:
+                return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                    </div>
+                    <ReceivingAgencySignUp2 fieldValues={fieldValues}
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} /></div>;
 
-        case 3:
-            return <div className="signup">
-                <div className="circle-wrapper">
-                    <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
-                </div>
-                <ReceivingAgencySignUp3 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
+            case 3:
+                return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
+                    </div>
+                    <ReceivingAgencySignUp3 fieldValues={fieldValues}
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} /></div>;
 
-        case 4:
-            return <div className="signup">
-                <div className="circle-wrapper">
-                    <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
-                </div>
-                <ReceivingAgencySignUp4 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
+            case 4:
+                return <div className="signup">
+                    <div className="circle-wrapper">
+                        <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
+                    </div>
+                    <ReceivingAgencySignUp4 fieldValues={fieldValues}
+                        nextStep={this.nextStep.bind(this)}
+                        previousStep={this.previousStep.bind(this)}
+                        saveValues={this.saveValues.bind(this)} /></div>;
 
-        case 5:
-            return <SignUpComplete fieldValues={fieldValues} />;
+            case 5:
+                return <SignUpComplete fieldValues={fieldValues} />;
         }
     }
 

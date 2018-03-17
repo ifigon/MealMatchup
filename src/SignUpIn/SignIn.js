@@ -1,7 +1,16 @@
 // No log in functionality yet
-import React, { Component } from 'react';
 
-class SignIn extends Component {
+import React, { Component } from 'react'
+import firebase from '../FirebaseConfig';
+import ReactDOM from 'react-dom';
+
+class SignUpIn extends Component {
+
+    constructor(props) {
+        super(props);
+        this.nextStep = this.nextStep.bind(this);
+    }
+
     render() {
         return (
             <form>
@@ -19,5 +28,22 @@ class SignIn extends Component {
             </form>
         );
     }
+
+    nextStep(e) {
+        e.preventDefault();
+
+        let email = ReactDOM.findDOMNode(this.refs.email).value;
+        let password = ReactDOM.findDOMNode(this.refs.password).value;
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user => {
+                console.log('Logged in!');
+                this.props.nextStep();
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
 }
 export default SignIn;
