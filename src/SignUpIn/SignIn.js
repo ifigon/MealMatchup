@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import firebase from '../FirebaseConfig';
-import ReactDOM from 'react-dom';
 
 class SignIn extends Component {
 
@@ -38,7 +37,6 @@ class SignIn extends Component {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => {
                 console.log('Logged in!');
-                this.props.nextStep();
             })
             .catch(error => {
                 console.log(error);
