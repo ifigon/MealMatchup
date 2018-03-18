@@ -4,7 +4,7 @@ class DelivererGroupSignUp2 extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
-        console.log(this.props);
+        console.log(this.props.fieldValues);
     }
     render() {
         return (
@@ -45,7 +45,7 @@ class DelivererGroupSignUp2 extends Component {
         };
 
         this.props.saveValues(data);
-        this.props.nextStep();
+        this.props.submitRegistration();
     }
 }
 export default DelivererGroupSignUp2;
