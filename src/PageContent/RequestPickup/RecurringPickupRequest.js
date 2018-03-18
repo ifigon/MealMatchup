@@ -84,8 +84,6 @@ class RecurringPickupRequest extends Component {
         }    
 
         this.setState({errors: errors});
-        console.log(errors);
-        console.log(this.state.errors);
         return formIsValid;
     }
 
@@ -96,8 +94,8 @@ class RecurringPickupRequest extends Component {
     }
 
     toggleModal(){
-        this.setState({
-            isOpen: !this.state.isOpen
+        this.setState((prevState) => {
+            return {isOpen: !prevState.isOpen};
         });
     }
 
