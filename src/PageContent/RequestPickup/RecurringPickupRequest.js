@@ -20,7 +20,7 @@ class RecurringPickupRequest extends Component {
                 {id: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3', name: 'Test RA1'}
             ],
             fields: {},
-            errorList: {},
+            errors: {},
             isOpen: false,
             formInfo: [],
             dayOfWeek: ''
@@ -45,21 +45,27 @@ class RecurringPickupRequest extends Component {
             errors['startDate'] = 'Start date cannot be empty';
         }
 
-        if((fields['recurTimes'] === '' || !fields['recurTimes']) && fields['endDate'] !== '' && fields['endDate'] < fields['startDate']){
-            formIsValid = false;
-            errors['endBeforeStart'] = 'End date cannot be before start date';
+        if (!fields['durationType']) {
+            // the they need to have one or the other error msg
+            errors['durationType'] = 'Must select radio button';
+        } else {
+            if (fields['durationType'] === RequestDurationType.DATE) {
+                // perform all endDate related checks
+                if(fields['endDate'] < fields['startDate']){
+                    formIsValid = false;
+                    errors['endBeforeStart'] = 'End date cannot be before start date';
+                }else if(fields['endDate'] === '' || !fields['endDate']){
+                    formIsValid = false;
+                    errors['endBeforeStart'] = 'Enter a end date';
+                }
+            } else {
+                // perform all recurTimes related checks
+                if(fields['recurTimes'] === '' || !fields['recurTimes'] || fields['recurTimes'] < 0){
+                    formIsValid = false;
+                    errors['invalidRecurTimes'] = 'Pickup must recur at least once';
+                }
+            }
         }
-        // if (!fields['durationType']) {
-        //     // the they need to have one or the other error msg
-        //     errors['durationType'] = 'Must select radio button';
-        // } else {
-        //     if (fields['durationType'] === RequestDurationType.DATE) {
-        //         // perform all endDate related checks
-
-        //     } else {
-        //         // perform all recurTimes related checks
-        //     }
-        // }
 
         //Time
         if(!fields['startTime']){
@@ -77,31 +83,15 @@ class RecurringPickupRequest extends Component {
             errors['time'] = 'Invalid time range';
         }    
 
-        //Recur times
-        if(fields['recurTimes'] <= 0 && fields['endDate'] !== '') {
-            formIsValid = false;
-            errors['recurTimes'] = 'Pickup must recur at least once';
-        }
-
-        if((fields['recurTimes'] === '' && fields['endDate'] === '') 
-            || (!fields['recurTimes'] && !fields['endDate'])){
-            formIsValid = false;
-            errors['recurTimes'] = 'Must enter value for recurring times or an end date';
-        }
-
-        this.setState({errorList: errors});
+        this.setState({errors: errors});
         console.log(errors);
-        console.log(this.state.errorList);
+        console.log(this.state.errors);
         return formIsValid;
     }
 
     handleChange(field, e){   
         let fields = this.state.fields;
         fields[field] = e.target.value; 
-        // if(e.target.value) {
-        //     fields.splice(e.target.event)
-        // }      
-        console.log('changed: ' + field + ', ' + e.target.value);
         this.setState({fields});
     }
 
@@ -179,20 +169,22 @@ class RecurringPickupRequest extends Component {
                 <form onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
-                        {
-                            // loop through all error statements
+                        {/* {
+                            // TODO: loop through all error statements
                             this.state.errorList.map((error, i) => {
                                 return (
                                     <p className="error" key={i}>{this.state.errorList[error]}</p>
                                 );
                             })
-                        }
-                        {/* <p className="error">{this.state.errors['endBeforeStart']}</p>
+                        } */}
+                        <p className="error">{this.state.errors['endBeforeStart']}</p>
                         <p className="error">{this.state.errors['startTime']}</p>
                         <p className="error">{this.state.errors['endTime']}</p>
                         <p className="error">{this.state.errors['recurTimes']}</p>
                         <p className="error">{this.state.errors['startDate']}</p>
-                        <p className="error">{this.state.errors['time']}</p> */}
+                        <p className="error">{this.state.errors['time']}</p>
+                        <p className="error">{this.state.errors['invalidRecurTimes']}</p>
+                        <p className="error">{this.state.errors['durationType']}</p>
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Date  <span className="red">*</span></label><br/>
@@ -200,12 +192,12 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestDurationType.RECUR} required/>
+                                    <input type="radio" name="durationType" value={RequestDurationType.RECUR} onChange={this.handleChange.bind(this, 'durationType')} required/>
                                     <span className="checkmark"></span>Recur
                                     <input type="number" name="numRecurrences" onChange={this.handleChange.bind(this, 'recurTimes')} />times<br/>
                                 </label >
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestDurationType.DATE} />
+                                    <input type="radio" name="durationType" value={RequestDurationType.DATE} onChange={this.handleChange.bind(this, 'durationType')}/>
                                     <span className="checkmark"></span>End by
                                     <input type="date" name="endDate" onChange={this.handleChange.bind(this, 'endDate')} />
                                 </label>
