@@ -32,11 +32,12 @@ class RecurringPickupRequest extends Component {
 
     componentDidMount(){
         // Query DB and setState for memberList, delivererGroups, and receivingAgencies
+        console.log(this.state.errors)
     }
 
     handleValidation(){
         let fields = this.state.fields;
-        let errors = {};
+        let errors = this.state.errors;
         let formIsValid = true;
 
         //Date
@@ -83,8 +84,12 @@ class RecurringPickupRequest extends Component {
             errors['time'] = 'Invalid time range';
         }    
 
-        this.setState({errors: errors});
+        this.setState({errors});
         return formIsValid;
+    }
+
+    addToErrors(error, message){
+
     }
 
     handleChange(field, e){   
@@ -150,7 +155,7 @@ class RecurringPickupRequest extends Component {
             };
             let date = new Date(deliveryRequest.startDate);
             let day = date.getDay();
-            let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
             this.setState({
                 formInfo: deliveryRequest,
@@ -167,22 +172,13 @@ class RecurringPickupRequest extends Component {
                 <form onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
-                        {/* {
-                            // TODO: loop through all error statements
-                            this.state.errorList.map((error, i) => {
+                        {
+                            Object.keys(this.state.errors).map((error, i) => {
                                 return (
-                                    <p className="error" key={i}>{this.state.errorList[error]}</p>
+                                    <p className="error" key={i}>{this.state.errors[error]}</p>
                                 );
                             })
-                        } */}
-                        <p className="error">{this.state.errors['endBeforeStart']}</p>
-                        <p className="error">{this.state.errors['startTime']}</p>
-                        <p className="error">{this.state.errors['endTime']}</p>
-                        <p className="error">{this.state.errors['recurTimes']}</p>
-                        <p className="error">{this.state.errors['startDate']}</p>
-                        <p className="error">{this.state.errors['time']}</p>
-                        <p className="error">{this.state.errors['invalidRecurTimes']}</p>
-                        <p className="error">{this.state.errors['durationType']}</p>
+                        }
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Date  <span className="red">*</span></label><br/>
