@@ -59,10 +59,11 @@ label{
     margin: 10px 0px 20px 0px;
     font-size: 15px;
 }
+
 .smaller{
     font-size: 15px;
-    
 }
+
 .smaller input{
     height: 30px;
     border: 1px solid #828282;
@@ -75,8 +76,8 @@ label{
 .smaller input[type="date"]::-webkit-calendar-picker-indicator{
     display: block;
     background: url('../../icons/calendar_for_date.svg') no-repeat;
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
     border-width: thin;
 }
 
@@ -156,7 +157,7 @@ input[type="radio"]{
 }
 
 input[value="Cancel"]{
-    color: rgb(54, 19, 19);
+    color: #BDBDBD;
     border: 1px solid #BDBDBD;
     margin-left: 50px;
 }
