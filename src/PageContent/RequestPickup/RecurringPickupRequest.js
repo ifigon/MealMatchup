@@ -32,7 +32,6 @@ class RecurringPickupRequest extends Component {
 
     componentDidMount(){
         // Query DB and setState for memberList, delivererGroups, and receivingAgencies
-        console.log(this.state.errors)
     }
 
     handleValidation(){
@@ -236,8 +235,7 @@ class RecurringPickupRequest extends Component {
                         <span className="grid">
                             <p id="form-heading">Notes for Pickup</p>
                             <textarea name="notes" 
-                                placeholder="Ex: Use the underground parking garage upon entrance. 
-                                Key card access required after 3:00pm."/>
+                                placeholder="Ex: Use the underground parking garage upon entrance. Key card access required after 3:00pm."/>
                         </span>
                         <p id="form-heading">Agencies involved</p>
                         <span className="flex">
