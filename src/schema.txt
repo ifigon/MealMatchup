@@ -13,7 +13,6 @@ UMBRELLA ("/accounts/")
 			ceebCode: "4854",  // different field depending on umbrella type
 		}
 		name: "University of Washington",
-		ceebCode: "4854", 
 		address: {
 			street1: "1410 Northeast Campus Parkway",
 			street2: "",
