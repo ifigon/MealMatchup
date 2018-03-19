@@ -56,11 +56,11 @@ class RecurringPickupRequest extends Component {
                     errors['endBeforeStart'] = 'End date cannot be before start date';
                 }else if(fields['endDate'] === '' || !fields['endDate']){
                     formIsValid = false;
-                    errors['endBeforeStart'] = 'Enter a end date';
+                    errors['endBeforeStart'] = 'Enter an end date';
                 }
             } else {
                 // perform all recurTimes related checks
-                if(fields['recurTimes'] === '' || !fields['recurTimes'] || fields['recurTimes'] < 0){
+                if(fields['recurTimes'] === '' || !fields['recurTimes'] || fields['recurTimes'] < 1){
                     formIsValid = false;
                     errors['invalidRecurTimes'] = 'Pickup must recur at least once';
                 }
@@ -71,11 +71,6 @@ class RecurringPickupRequest extends Component {
         if(!fields['startTime']){
             formIsValid = false;
             errors['startTime'] = 'Start time cannot be empty';
-        }
-
-        if(!fields['endTime'] && (!fields['recurTimes'] || fields['recurTimes'] === '')){
-            formIsValid = false;
-            errors['endTime'] = 'End time cannot be empty';
         }
 
         if(fields['endTime'] < fields['startTime']){
