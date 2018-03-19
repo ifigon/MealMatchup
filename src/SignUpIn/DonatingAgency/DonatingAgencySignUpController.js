@@ -47,7 +47,7 @@ class DonatingAgencySignUpController extends Component {
             // to and overriding keys in `fieldValues` with the `fields` with Object.assign
             // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
             fieldValues = Object.assign({}, fieldValues, fields);
-        };
+        }();
     }
 
     nextStep() {
@@ -151,6 +151,7 @@ class DonatingAgencySignUpController extends Component {
                     <DonatingAgencySignUp3 fieldValues={fieldValues}
                         nextStep={this.nextStep.bind(this)}
                         previousStep={this.previousStep.bind(this)}
+                        submitRegistration={this.submitRegistration.bind(this)}
                         saveValues={this.saveValues.bind(this)} /></div>;
             case 4:
                 return <SignUpComplete />;
