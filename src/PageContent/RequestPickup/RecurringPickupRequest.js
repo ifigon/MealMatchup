@@ -87,10 +87,6 @@ class RecurringPickupRequest extends Component {
         return formIsValid;
     }
 
-    addToErrors(error, message){
-
-    }
-
     handleChange(field, e){   
         let fields = this.state.fields;
         fields[field] = e.target.value; 
