@@ -35,6 +35,11 @@ class RecurringPickupRequest extends Component {
     }
 
     handleValidation(){
+        // Clear previous errors
+        this.setState({
+            errors: {}
+        });
+
         let fields = this.state.fields;
         let errors = this.state.errors;
         let formIsValid = true;
@@ -79,6 +84,7 @@ class RecurringPickupRequest extends Component {
         }    
 
         this.setState({errors});
+        // console.log(errors);
         return formIsValid;
     }
 
