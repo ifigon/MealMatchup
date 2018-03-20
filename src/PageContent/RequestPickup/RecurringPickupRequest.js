@@ -35,13 +35,8 @@ class RecurringPickupRequest extends Component {
     }
 
     handleValidation(){
-        // Clear previous errors
-        this.setState({
-            errors: {}
-        });
-
         let fields = this.state.fields;
-        let errors = this.state.errors;
+        let errors = {};
         let formIsValid = true;
 
         //Date
@@ -73,18 +68,14 @@ class RecurringPickupRequest extends Component {
         }
 
         //Time
-        if(!fields['startTime']){
-            formIsValid = false;
-            errors['startTime'] = 'Start time cannot be empty';
-        }
-
         if(fields['endTime'] < fields['startTime']){
             formIsValid = false;
             errors['time'] = 'Invalid time range';
         }    
 
-        this.setState({errors});
-        // console.log(errors);
+        this.setState({
+            errors: errors
+        });
         return formIsValid;
     }
 
