@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import truck from '../../icons/green_truck.svg';
+import truck from '../../../icons/green_truck.svg';
 
 class RecurringDeliveryRequest2 extends Component {
     render() {

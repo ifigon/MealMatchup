@@ -6,7 +6,7 @@ class EmergencyDeliveryRequest1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: 'donating-agency'
+            user: 'shelter'
         };
 
     }
@@ -51,8 +51,9 @@ class EmergencyDeliveryRequest1 extends Component {
                         <div className="donation-wrapper">
                             <h2 className="emergency-info">Donation Description</h2>
                             <div className="weight">Total Weight: {weight}</div>
-                            {food}
-
+                            <ol>
+                                {food}
+                            </ol>
                             <h2 className="emergency-info">Notes for Pickup</h2>
                             <p className="emergency-info">Use the underground parking garage upon entrance. Key card access required after 3:00pm.  </p>
 
@@ -66,8 +67,9 @@ class EmergencyDeliveryRequest1 extends Component {
                             <div className="donation-wrapper">
                                 <h2 className="emergency-info">Donation Description</h2>
                                 <div className="weight">Total Weight: {weight}</div>
-                                {food}
-
+                                <ol>
+                                    {food}
+                                </ol>
                                 <h2 className="emergency-info">Notes for Pickup</h2>
                                 <p className="emergency-info">Use the underground parking garage upon entrance. Key card access required after 3:00pm.  </p>
                             </div>

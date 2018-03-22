@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import truck from '../../icons/green_truck.svg';
+import truck from '../../../icons/green_truck.svg';
 
 class RecurringDeliveryRequest3 extends Component {
     // TODO: add pick up to calendar

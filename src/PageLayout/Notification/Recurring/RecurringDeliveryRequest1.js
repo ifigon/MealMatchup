@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import truck from '../../icons/green_truck.svg';
-import Map from '../../Map/Map.js';
+import truck from '../../../icons/green_truck.svg';
+import Map from '../../../Map/Map.js';
 
 class RecurringDeliveryRequest1 extends Component {
     render() {
@@ -13,7 +13,7 @@ class RecurringDeliveryRequest1 extends Component {
                     <p>10 Pickups requested for every Thursday</p>
                     <p>Pickup between 10 am -12 pm</p>
                 </div>
-
+ 
                 <div className="donating-agency">
                     <h2 id="organizationName">Dining Hall</h2>
                     <p className="donating-recieving" id="donatingContactName">Andrea Benson</p>
