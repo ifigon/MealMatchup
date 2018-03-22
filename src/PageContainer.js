@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import RecurringDeliveryRequestController from './PageLayout/Notification/RecurringDeliveryRequestController';
-import RecurringDeliveryRequestNotification from './PageLayout/Notification/RecurringDeliveryRequestNotification';
+import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController';
+import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
 import logo from './icons/temp-logo.svg';
 
 // The page to load when user is signed in.
@@ -11,7 +11,6 @@ import logo from './icons/temp-logo.svg';
 // Default page content is Calendar.
 
 class PageContainer extends Component {
-
     constructor(props) {
         super(props);
 
@@ -20,24 +19,24 @@ class PageContainer extends Component {
             showPopUp: false,
             hover: false
         };
-        
+
         this.navBarHandler = this.navBarHandler.bind(this);
     }
 
-    openPopUp(){
+    openPopUp() {
         this.setState({
             showPopUp: true,
             hover: false
         });
     }
 
-    closePopUp(){
+    closePopUp() {
         this.setState({
             showPopUp: false
         });
     }
 
-    hover(){
+    hover() {
         this.setState({
             hover: true
         });
@@ -48,43 +47,64 @@ class PageContainer extends Component {
             content: e
         });
     }
- 
-    render(){
-        return(
+
+    render() {
+        return (
             <div>
                 {/* <header > */}
-                <PageHeader hover={this.hover.bind(this)} logo={logo} title={this.props.account.name}></PageHeader>
+                <PageHeader
+                    hover={this.hover.bind(this)}
+                    logo={logo}
+                    title={this.props.account.name}
+                />
                 {/* </header> */}
-                <NavBar content={this.state.content} accountType={this.props.account.accountType} handler={this.navBarHandler}></NavBar>
+                <NavBar
+                    content={this.state.content}
+                    accountType={this.props.account.accountType}
+                    handler={this.navBarHandler}
+                />
 
                 {/* TODO: replace placeholder text with real components */}
-                {this.state.content === PageContent.CALENDAR &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Calendar</div>
-                }
-                {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Assign Volunteers</div>
-                }
-                {this.state.content === PageContent.REQUEST_PICKUP &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Request Pickup</div>
-                }
-                {this.state.content === PageContent.FOOD_LOGS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
-                }
-                {this.state.content === PageContent.DIRECTORY &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Directory</div>
-                }
-                {this.state.content === PageContent.SETTINGS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
-                }
-                {this.state.hover ? 
-                    <RecurringDeliveryRequestNotification clickNotification={this.openPopUp.bind(this)}/>
-                    : null
-                }
-                {this.state.showPopUp ?
-                    <RecurringDeliveryRequestController closePopUp={this.closePopUp.bind(this)}/>
-                    : null    
-                }
-
+                {this.state.content === PageContent.CALENDAR && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Calendar
+                    </div>
+                )}
+                {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Assign Volunteers
+                    </div>
+                )}
+                {this.state.content === PageContent.REQUEST_PICKUP && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Request Pickup
+                    </div>
+                )}
+                {this.state.content === PageContent.FOOD_LOGS && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Food Logs
+                    </div>
+                )}
+                {this.state.content === PageContent.DIRECTORY && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Directory
+                    </div>
+                )}
+                {this.state.content === PageContent.SETTINGS && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Settings
+                    </div>
+                )}
+                {this.state.hover ? (
+                    <RecurringDeliveryRequestNotification
+                        clickNotification={this.openPopUp.bind(this)}
+                    />
+                ) : null}
+                {this.state.showPopUp ? (
+                    <RecurringDeliveryRequestController
+                        closePopUp={this.closePopUp.bind(this)}
+                    />
+                ) : null}
             </div>
         );
     }
