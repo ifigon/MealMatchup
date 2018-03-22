@@ -1,165 +1,172 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
-*{
-    font-family: 'Open Sans', sans-serif;
-    color: #243847;
+* {
+  font-family: "Open Sans", sans-serif;
+  color: #243847;
 }
-.popup-wrapper{
-    border-top: solid 15px #37B674;
-    width: 45vw;
-    margin-left: 30vw;
-    padding: 40px;
-    padding-top: 20px;
-    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12)
-    ;
-}
-
-.close{
-    float: right;
-    height: 4vh;
+.popup-wrapper {
+  border-top: solid 15px #37b674;
+  width: 45vw;
+  margin-left: 30vw;
+  padding: 40px;
+  padding-top: 20px;
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-.wrapper{
-    display: block;
-    margin: 0 auto;
-
+.close {
+  float: right;
+  height: 4vh;
 }
 
-.icon, h1{
-    display: inline;
-    vertical-align: middle;
+.wrapper {
+  display: block;
+  margin: 0 auto;
 }
 
-.icon{
-    height: 5vh;
-    padding-right: 10px;
-    fill: #37B674;
+.icon,
+h1 {
+  display: inline;
+  vertical-align: middle;
 }
 
-h1{
-    font-weight: 600;
-    font-size: 2vw;
-    margin-bottom: 10px;
+.icon {
+  height: 5vh;
+  padding-right: 10px;
+  fill: #37b674;
 }
 
-.pickup-details{
-    margin-bottom: 20px; 
+h1 {
+  font-weight: 600;
+  font-size: 2vw;
+  margin-bottom: 10px;
 }
 
-h2{
-    font-weight: 600;
-    margin-bottom: 0px;
-    font-size: 1.7vw; 
+.pickup-details {
+  margin-bottom: 20px;
 }
 
-label{
-    display: inline;
-    font-size: 1.5vw;
-}
-.start-date{
-    display: inline;
+h2 {
+  font-weight: 600;
+  margin-bottom: 0px;
+  font-size: 1.7vw;
 }
 
-.start{
-    margin-bottom: 5px;
+label {
+  display: inline;
+  font-size: 1.5vw;
 }
-p{
-    font-weight: 400;
-    margin: 0px ;
-    margin-bottom: 5px;
-    font-size: 1.5vw;
+.start-date {
+  display: inline;
 }
 
-.donating-recieving{
-    color: #828282;
-    margin: 0;
-    font-size: .9rem;
+.start {
+  margin-bottom: 5px;
+}
+p {
+  font-weight: 400;
+  margin: 0px;
+  margin-bottom: 5px;
+  font-size: 1.5vw;
 }
 
-.buttons{
-    margin: 0 auto;
-    align-content: center;
-    text-align: center;
-    margin-top: 30px;
+.donating-recieving {
+  color: #828282;
+  margin: 0;
+  font-size: 0.9rem;
 }
 
-button{
-    width: 10vw;
-    height: 3vw;
-    border-radius: 3px;
-    margin: 20px;
-    font-weight: 600;
-    font-size: .9rem;
+.buttons {
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
+  margin-top: 30px;
 }
 
-.claim{
-    background-color: #5DC0F9; 
-    border: none;
-    color: white;
+button {
+  width: 10vw;
+  height: 3vw;
+  border-radius: 3px;
+  margin: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.reject{
-    background: transparent;
-    border: solid 2px #E0E0E0;
-    color: #BDBDBD;
+.claim {
+  background-color: #5dc0f9;
+  border: none;
+  color: white;
 }
 
-button:hover{
-    cursor: pointer;
+.reject {
+  background: transparent;
+  border: solid 2px #e0e0e0;
+  color: #bdbdbd;
 }
 
-.map{
-    display: inline-block;
-    width: 50%;
+button:hover {
+  cursor: pointer;
 }
 
-Map{
-    display: inline-block;
-    height: 190px;
-    widows: 320px; 
+.map {
+  display: inline-block;
+  width: 50%;
 }
 
-.notification-wrapper{
-    float: right;
-    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
-    padding: 10px;
-    border: solid 1px #E1E1E1;
-    margin-top: -40px;
-    margin-right: 5px;
+map {
+  display: inline-block;
+  height: 190px;
+  widows: 320px;
 }
 
-.hover{
-    font-size: 1.2vw;
-    font-weight: 400;
+.notification-wrapper {
+  float: right;
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
+  padding: 10px;
+  border: solid 1px #e1e1e1;
+  margin-top: -40px;
+  margin-right: 5px;
 }
 
-.notification{
-    display: inline;
-    font-size: 1vw;
-    padding: 0px;
-    margin: 5px;
+.hover {
+  font-size: 1.2vw;
+  font-weight: 400;
 }
 
-.warning{
-    color: #F77676;
-    padding-bottom: 5px;
-
+.notification {
+  display: inline;
+  font-size: 1vw;
+  padding: 0px;
+  margin: 5px;
 }
 
-.to-from{
-    font-weight: 600;
+.warning {
+  color: #f77676;
+  padding-bottom: 5px;
+}
+
+.to-from {
+  font-weight: 600;
 }
 
 .right {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
-.margin{
-    margin-bottom: 15px;
+.margin {
+  margin-bottom: 15px;
 }
 
-.end{
-    width: 40%;
-    height: 30px;
-    font-size: 1.5vw;
+.end {
+  width: 40%;
+  height: 30px;
+  font-size: 1.5vw;
+}
+
+.orgName {
+  font-weight: 400;
+  font-size: 1.7vw;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 0px;
+  color: #243847;
 }
