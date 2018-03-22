@@ -78,6 +78,10 @@ class RecurringDeliveryRequest1 extends Component {
             delivererCoordinator['phone']
         );
 
+        // let notes;
+        let notes =
+            'Use the underground parking garage upon entrance. Key card access required after 3:00pm.';
+
         return (
             <div className="wrapper">
                 <img className="icon" src={truck} alt="icon" />
@@ -154,12 +158,19 @@ class RecurringDeliveryRequest1 extends Component {
                     <p className="donating-recieving" id="donatingContactEmail">
                         {donatingPrimaryContactEmail}
                     </p>
+
+                    {/*To do: pass in coordinates*/}
+                    <div className="map">
+                        <Map className="map" />
+                    </div>
                 </div>
 
-                {/*To do: pass in coordinates*/}
-                <div className="map">
-                    <Map className="map" />
-                </div>
+                {notes ? (
+                    <div>
+                        <h2>Notes for Pickup</h2>
+                        <p className="notes">{notes}</p>
+                    </div>
+                ) : null}
 
                 <div className="buttons">
                     <button
