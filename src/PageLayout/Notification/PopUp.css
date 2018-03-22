@@ -230,3 +230,21 @@ p.contact {
     color: #828282;
 }
 
+/* ul{
+    width:100%;
+    margin-bottom:20px;
+    overflow:hidden;
+    border-top:1px solid #ccc;
+  }
+  li{
+    line-height:1.5em;
+    float:left;
+    display: inline;
+  }
+  #double li  { width:50%;}  */
+/* 
+  ul {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+  } */
