@@ -8,7 +8,7 @@ class RecurringDeliveryRequest1 extends Component {
         let hours = time.split(':');
         if (hours[0] > 12) {
             time = hours[0] - 12 + ':' + hours[1] + ' pm';
-        } else if (hours[0] == 12) {
+        } else if (hours[0] === '12') {
             time += ' pm';
         } else {
             time += ' am';
