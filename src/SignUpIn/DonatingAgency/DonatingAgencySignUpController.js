@@ -68,12 +68,10 @@ class DonatingAgencySignUpController extends Component {
         // show the user the error but don't advance
 
         firebase.auth().createUserWithEmailAndPassword(fieldValues.adminEmail, fieldValues.adminPassword)
-            .then(user => {
-                console.log('User created: ' + user.uid);
+            .then(user => {    
                 let agencyKey = firebase.database().ref().child('accounts').push().key;
-                
                 let member_postData = {
-                    accountType: "donating_agency_member",
+                    accountType: 'donating_agency_member',
                     agency: agencyKey,
                     name: fieldValues.memberName,
                     email: fieldValues.memberEmail,
@@ -82,12 +80,12 @@ class DonatingAgencySignUpController extends Component {
                     isAdmin: true,
                     notification: {
                         type: NotificationType,
-                        content: "-L5QoXeC_UrL5tRRED3e"
+                        content: '-L5QoXeC_UrL5tRRED3e'
                     }
                 };
 
                 let agency_postData = {
-                    school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
+                    school: 'RheaQY1WxJT03sTPQICFZ4STpfm1',
                     name: fieldValues.organizationName,
                     address: {
                         street1: fieldValues.address1,
@@ -101,7 +99,7 @@ class DonatingAgencySignUpController extends Component {
                     isActivated: true,
                     primaryContact: user.uid,
                     members: [user.uid]
-                }
+                };
 
                 let accounts_updates = {};
                 accounts_updates['/accounts/' + user.uid] = member_postData;
@@ -114,7 +112,7 @@ class DonatingAgencySignUpController extends Component {
                 return firebase.database().ref().update(accounts_updates);
             })
             .catch(error => {
-                console.log(error.message)
+                return error;
             });
 
         this.nextStep();
@@ -122,39 +120,39 @@ class DonatingAgencySignUpController extends Component {
 
     showStep() {
         switch (this.state.step) {
-            default:
-                return <UserTypeController />;
-            case 1:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
-                    </div>
-                    <DonatingAgencySignUp1 fieldValues={fieldValues}
-                        nextStep={this.nextStep.bind(this)}
-                        previousStep={this.previousStep.bind(this)}
-                        saveValues={this.saveValues.bind(this)} />
-                </div>;
-            case 2:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
-                    </div>
-                    <DonatingAgencySignUp2 fieldValues={fieldValues}
-                        nextStep={this.nextStep.bind(this)}
-                        previousStep={this.previousStep.bind(this)}
-                        saveValues={this.saveValues.bind(this)} /></div>;
-            case 3:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
-                    </div>
-                    <DonatingAgencySignUp3 fieldValues={fieldValues}
-                        nextStep={this.nextStep.bind(this)}
-                        previousStep={this.previousStep.bind(this)}
-                        submitRegistration={this.submitRegistration.bind(this)}
-                        saveValues={this.saveValues.bind(this)} /></div>;
-            case 4:
-                return <SignUpComplete />;
+        default:
+            return <UserTypeController />;
+        case 1:
+            return <div className="signup">
+                <div className="circle-wrapper">
+                    <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                </div>
+                <DonatingAgencySignUp1 fieldValues={fieldValues}
+                    nextStep={this.nextStep.bind(this)}
+                    previousStep={this.previousStep.bind(this)}
+                    saveValues={this.saveValues.bind(this)} />
+            </div>;
+        case 2:
+            return <div className="signup">
+                <div className="circle-wrapper">
+                    <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
+                </div>
+                <DonatingAgencySignUp2 fieldValues={fieldValues}
+                    nextStep={this.nextStep.bind(this)}
+                    previousStep={this.previousStep.bind(this)}
+                    saveValues={this.saveValues.bind(this)} /></div>;
+        case 3:
+            return <div className="signup">
+                <div className="circle-wrapper">
+                    <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
+                </div>
+                <DonatingAgencySignUp3 fieldValues={fieldValues}
+                    nextStep={this.nextStep.bind(this)}
+                    previousStep={this.previousStep.bind(this)}
+                    submitRegistration={this.submitRegistration.bind(this)}
+                    saveValues={this.saveValues.bind(this)} /></div>;
+        case 4:
+            return <SignUpComplete />;
         }
     }
 

@@ -85,12 +85,10 @@ class SignUpShelterController extends Component {
         // show the user the error but don't advance
 
         firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
-            .then(user => {
-                console.log('User created: ' + user.uid);
-                
+            .then(user => {   
                 let postData = {
-                    accountType: "receiving_agency",
-                    school: "RheaQY1WxJT03sTPQICFZ4STpfm1",
+                    accountType: 'receiving_agency',
+                    school: 'RheaQY1WxJT03sTPQICFZ4STpfm1',
                     name: fieldValues.organizationName,
                     address: {
                         street1: fieldValues.address1,
@@ -101,7 +99,7 @@ class SignUpShelterController extends Component {
                         officeNumber: fieldValues.officeNumber
                     },
                     isVerified: true,
-		            isActivated: true,
+                    isActivated: true,
                     primaryContact: {
                         name: fieldValues.primaryName,
                         email: fieldValues.primaryEmail,
@@ -131,7 +129,7 @@ class SignUpShelterController extends Component {
                     isAdmin: true,
                     notification: {
                         type: NotificationType,
-                        content: "-L5QoXeC_UrL5tRRED3e"
+                        content: '-L5QoXeC_UrL5tRRED3e'
                     }
                 };
 
@@ -141,7 +139,7 @@ class SignUpShelterController extends Component {
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
-                console.log(error.message)
+                return error;
             });
 
         this.nextStep();
@@ -149,51 +147,51 @@ class SignUpShelterController extends Component {
 
     showStep() {
         switch (this.state.step) {
-            default:
-                return <UserTypeController/>;
-            case 1:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
-                    </div>
-                    <ReceivingAgencySignUp1 fieldValues={fieldValues}
-                        nextStep={this.nextStep.bind(this)}
-                        previousStep={this.previousStep.bind(this)}
-                        saveValues={this.saveValues.bind(this)} />
-                </div>;
-            case 2:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
-                    </div>
-                    <ReceivingAgencySignUp2 fieldValues={fieldValues}
-                        nextStep={this.nextStep.bind(this)}
-                        previousStep={this.previousStep.bind(this)}
-                        saveValues={this.saveValues.bind(this)} /></div>;
+        default:
+            return <UserTypeController/>;
+        case 1:
+            return <div className="signup">
+                <div className="circle-wrapper">
+                    <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
+                </div>
+                <ReceivingAgencySignUp1 fieldValues={fieldValues}
+                    nextStep={this.nextStep.bind(this)}
+                    previousStep={this.previousStep.bind(this)}
+                    saveValues={this.saveValues.bind(this)} />
+            </div>;
+        case 2:
+            return <div className="signup">
+                <div className="circle-wrapper">
+                    <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
+                </div>
+                <ReceivingAgencySignUp2 fieldValues={fieldValues}
+                    nextStep={this.nextStep.bind(this)}
+                    previousStep={this.previousStep.bind(this)}
+                    saveValues={this.saveValues.bind(this)} /></div>;
 
-            case 3:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
-                    </div>
-                    <ReceivingAgencySignUp3 fieldValues={fieldValues}
-                        nextStep={this.nextStep.bind(this)}
-                        previousStep={this.previousStep.bind(this)}
-                        saveValues={this.saveValues.bind(this)} /></div>;
+        case 3:
+            return <div className="signup">
+                <div className="circle-wrapper">
+                    <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
+                </div>
+                <ReceivingAgencySignUp3 fieldValues={fieldValues}
+                    nextStep={this.nextStep.bind(this)}
+                    previousStep={this.previousStep.bind(this)}
+                    saveValues={this.saveValues.bind(this)} /></div>;
 
-            case 4:
-                return <div className="signup">
-                    <div className="circle-wrapper">
-                        <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
-                    </div>
-                    <ReceivingAgencySignUp4 fieldValues={fieldValues}
-                        nextStep={this.nextStep.bind(this)}
-                        previousStep={this.previousStep.bind(this)}
-                        submitRegistration={this.submitRegistration.bind(this)}
-                        saveValues={this.saveValues.bind(this)} /></div>;
+        case 4:
+            return <div className="signup">
+                <div className="circle-wrapper">
+                    <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
+                </div>
+                <ReceivingAgencySignUp4 fieldValues={fieldValues}
+                    nextStep={this.nextStep.bind(this)}
+                    previousStep={this.previousStep.bind(this)}
+                    submitRegistration={this.submitRegistration.bind(this)}
+                    saveValues={this.saveValues.bind(this)} /></div>;
 
-            case 5:
-                return <SignUpComplete fieldValues={fieldValues} />;
+        case 5:
+            return <SignUpComplete fieldValues={fieldValues} />;
         }
     }
 

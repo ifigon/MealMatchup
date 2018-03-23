@@ -1,6 +1,6 @@
 // No log in functionality yet
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import firebase from '../FirebaseConfig';
 
 class SignIn extends Component {
@@ -36,10 +36,10 @@ class SignIn extends Component {
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => {
-                console.log('Logged in!');
+
             })
             .catch(error => {
-                console.log(error);
+                return error;
             });
     }
 
