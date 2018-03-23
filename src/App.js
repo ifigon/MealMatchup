@@ -45,7 +45,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="">
+            <div>
                 {this.state.authenticated ?
                     (this.state.account ?
                         /* Show Calendar page if user is logged in */
