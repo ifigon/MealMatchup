@@ -1,3 +1,43 @@
 request pickup Form
     recurring pickup
     emergency pickup
+
+=== Backend Notes ===
+
+Recurring Pickup Request Form:
+   	- Start Date: 
+        name = "startDate"
+        value = the date in a date format
+   	- name = durationType (Radio)
+       	- Recur (value = Enums.RequestDurationType.RECUR):
+           	name = "numRecurrence"
+            value = a number
+       	- End by (value = Enums.RequestDurationType.DATE):
+            name = "endDate"
+            value = date in a date format
+   	- Repeats:
+        name = "repeats"
+        value = values from Enums.RequestRepeatType
+   	- Primary Contact:
+        name = "primaryContact"
+        value = donating agency member account UIDs (populate from currentUser->agency->members. Use props after app_setup merged)
+   	- Start Time:
+   		name = "startTime"
+   		value = time in a time format
+   	- End Time:
+   		name = "endTime"
+   		value = time in a time format
+   	- Notes:
+   		name = "notes"
+   		value = text
+   	- Student Group:
+   		name = "delivererGroup"
+   		value = deliverer group account UIDs (populate from currentUser->school->delivererGroups)
+   	- Shelter:
+   		name = "receivingAgency"
+   		value = receiving agency account UIDs (populate from currentUser->school->receivingAgencies)
+
+On form submit:
+	- write DeliveryRequest object to db
+	- listener that processes the request and send notifications
+   	

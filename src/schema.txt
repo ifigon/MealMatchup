@@ -1,9 +1,7 @@
-/*
-This file is purely for documentation purposes.
-It shows examples of what each object looks like in the database.
-It is not complete and should be updated as we encounter more data that
-we need.
-*/
+// This file is purely for documentation purposes.
+// It shows examples of what each object looks like in the database.
+// It is not complete and should be updated as we encounter more data that
+// we need.
 
 UMBRELLA ("/accounts/")
 
