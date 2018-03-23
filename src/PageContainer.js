@@ -43,17 +43,7 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Calendar</div>
                 }
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>
-                        <AssignVolunteers
-                            studentGroup={this.props.account.name}
-                            day="Saturday"
-                            date="11/21"
-                            from="10:00am"
-                            to="12:00pm"
-                            donatingAgency="Local Point"
-                            receivingAgency="Seattle's Union Gospel Shelter"
-                        />
-                    </div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Assign Volunteers</div>
                 }
                 {this.state.content === PageContent.REQUEST_PICKUP &&
                     <RecurringPickup account={this.state.account}></RecurringPickup>
