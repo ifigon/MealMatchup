@@ -4,7 +4,6 @@ import './ConfirmationCard.css';
 class ConfirmationCard extends Component {
 
     render() {
-        console.log(this.props);
         return (
             <div className="confirmation-card-container">
                 <div className="card-content">

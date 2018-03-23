@@ -4,7 +4,6 @@ class DelivererGroupSignUp2 extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
-        console.log(this.props);
     }
     render() {
         return (

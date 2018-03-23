@@ -28,7 +28,6 @@ class PageContainer extends Component {
     }
  
     render(){
-        console.log(this.props.account.name);
         return(
 
             <div>
