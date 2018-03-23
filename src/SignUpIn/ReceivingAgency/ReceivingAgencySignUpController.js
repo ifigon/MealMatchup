@@ -86,7 +86,6 @@ class SignUpShelterController extends Component {
 
         firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {
-                console.log('User created: ' + user.uid);
                 
                 let postData = {
                     accountType: "receiving_agency",
@@ -101,7 +100,7 @@ class SignUpShelterController extends Component {
                         officeNumber: fieldValues.officeNumber
                     },
                     isVerified: true,
-		            isActivated: true,
+                    isActivated: true,
                     primaryContact: {
                         name: fieldValues.primaryName,
                         email: fieldValues.primaryEmail,
@@ -141,7 +140,7 @@ class SignUpShelterController extends Component {
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
-                console.log(error.message)
+                return error;
             });
 
         this.nextStep()

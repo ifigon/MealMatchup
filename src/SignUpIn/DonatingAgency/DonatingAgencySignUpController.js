@@ -69,7 +69,6 @@ class DonatingAgencySignUpController extends Component {
 
         firebase.auth().createUserWithEmailAndPassword(fieldValues.adminEmail, fieldValues.adminPassword)
             .then(user => {
-                console.log('User created: ' + user.uid);
                 let agencyKey = firebase.database().ref().child('accounts').push().key;
                 
                 let member_postData = {
@@ -114,7 +113,7 @@ class DonatingAgencySignUpController extends Component {
                 return firebase.database().ref().update(accounts_updates);
             })
             .catch(error => {
-                console.log(error.message)
+                return error;
             });
 
         this.nextStep();

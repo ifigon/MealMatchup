@@ -33,11 +33,10 @@ class SignIn extends Component {
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => {
-                console.log('Logged in!');
                 this.props.nextStep();
             })
             .catch(error => {
-                console.log(error);
+                return error;
             });
 
     }
