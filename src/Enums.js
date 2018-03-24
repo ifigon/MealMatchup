@@ -3,8 +3,8 @@
 /*eslint no-undef: "error"*/
 
 exports.DateTimeFormat = {
-    DATE: 'YYYY-MM-DD',
-    TIME: 'HH:mm',
+    DATE: 'YYYY-MM-DD',  // '2018-03-24'
+    TIME: 'HH:mm',  // '15:30'
 };
 
 exports.AccountType = {

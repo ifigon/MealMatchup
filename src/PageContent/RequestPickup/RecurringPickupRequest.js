@@ -45,7 +45,6 @@ class RecurringPickupRequest extends Component {
             // add deliverer groups in the same umbrella to state.delivererGroups
             var dgs = umbrellaSnap.val().delivererGroups;
             this.addListToState(dgs, 'delivererGroups');
-
         }.bind(this));
     }
 
