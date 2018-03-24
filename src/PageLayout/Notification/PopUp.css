@@ -238,3 +238,7 @@ ol li {
   list-style-type: none;
   color: #4f4f4f;
 }
+
+.summary {
+  padding-top: 10px;
+}
