@@ -2,6 +2,11 @@
 /*global exports:true*/
 /*eslint no-undef: "error"*/
 
+exports.DateTimeFormat = {
+    DATE: 'YYYY-MM-DD',
+    TIME: 'HH:mm',
+};
+
 exports.AccountType = {
     UMBRELLA: 'umbrella',
     DONATING_AGENCY_MEMBER: 'donating_agency_member',

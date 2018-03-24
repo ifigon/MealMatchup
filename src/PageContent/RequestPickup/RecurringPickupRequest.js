@@ -1,39 +1,72 @@
 import React, {Component} from 'react';
+
+import firebase, { accountsRef } from '../../FirebaseConfig.js';
 import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
+import { getWeekdayFromDateString } from '../../Utils.js';
+
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 
 class RecurringPickupRequest extends Component {
+
     constructor(props) {
+        // Props: account, donatingAgency
         super(props);
+
         this.state = {
-            memberList: [
-                {id: 'dhA03LwTp3cibXVUcb3nQqO34wj1', name: 'Test DA1 Member1'}, 
-                {id: 'fbCm3Yrbi4e12WgpVz3gq25VKea2', name: 'Test DA1 Member2'}
-            ],
-            delivererGroups: [
-                {id: 'R8BAHrxdkfQoAmfWpvGa1OJmjQP43', name: 'Test DG1'},
-                {id: 'sS4dqgxgLIXtPf42DydgkWLWeHT2', name: 'Test DG2'}
-            ],
-            receivingAgencies: [
-                {id: 'uCm0OG4WeoSyjk3c0rdY3mlaBXl2', name: 'Test RA2'},
-                {id: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3', name: 'Test RA1'}
-            ],
+            memberList: [],
+            delivererGroups: [],
+            receivingAgencies: [],
             fields: {},
             errors: {},
             isOpen: false,
-            formInfo: [],
+            request: {},
             dayOfWeek: ''
-        }; 
+        };
+
         this.submitRequest = this.submitRequest.bind(this);
         this.createRequest = this.createRequest.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.addListToState = this.addListToState.bind(this);
     }
 
+    // Query DB to populate lists in this.state
     componentDidMount(){
-        // Query DB and setState for memberList, delivererGroups, and receivingAgencies
+        // add members in this donating agency to state.memberList
+        var members = this.props.donatingAgency.members;
+        this.addListToState(members, 'memberList');
+
+        var umbrella = this.props.donatingAgency.umbrella;
+        accountsRef.child(umbrella).once('value').then(function (umbrellaSnap) {
+            // add receiving agencies in the same umbrella to state.receivingAgencies
+            var ras = umbrellaSnap.val().receivingAgencies;
+            this.addListToState(ras, 'receivingAgencies');
+
+            // add deliverer groups in the same umbrella to state.delivererGroups
+            var dgs = umbrellaSnap.val().delivererGroups;
+            this.addListToState(dgs, 'delivererGroups');
+
+        }.bind(this));
     }
 
+    // Helper function: append {id, name} for each entry in the list to
+    // the given field in this.state
+    addListToState(list, field) {
+        for (let key in list) {
+            accountsRef.child(list[key]).once('value').then(function (snap) {
+                var entry = {
+                    id: snap.key, 
+                    name: snap.val().name
+                };
+                // append entry into state
+                this.setState((prevState) => {
+                    return {[field]: prevState[field].concat(entry)}
+                });
+            }.bind(this));
+        }
+    }
+
+    // Validate the request form inputs
     handleValidation(){
         let fields = this.state.fields;
         let errors = {};
@@ -48,6 +81,7 @@ class RecurringPickupRequest extends Component {
         if (!fields['durationType']) {
             // the they need to have one or the other error msg
             errors['durationType'] = 'Must select radio button';
+            formIsValid = false;
         } else {
             if (fields['durationType'] === RequestDurationType.DATE) {
                 // perform all endDate related checks
@@ -91,31 +125,39 @@ class RecurringPickupRequest extends Component {
         });
     }
 
-    // write to firebase
-    // var newRequest = firebase.database().ref().child("delivery_requests").push();
-    // newRequest.set(deliveryRequest);
-    submitRequest(){
-        
-    }
-
     createRequest(event) {
-        
-        if(!this.handleValidation()){ 
-            event.preventDefault();
+        event.preventDefault();
+        if (!this.handleValidation()) {
             alert('Form has errors');
-        }else{
-            event.preventDefault();
-            var raUid = event.target.receiveingAgency.value;
-            if (!raUid) raUid = null;
-            
-            var dgUid = event.target.delivererGroup.value;
-            if (!dgUid) dgUid = null;
-
+        } else {
+            // process various fields
             var durationValue = null;
             if (event.target.durationType.value === RequestDurationType.DATE) {
                 durationValue = event.target.endDate.value;
             } else {
                 durationValue = event.target.numRecurrences.value;
+            }
+
+            var pendingRAs = [];
+            var raUid = event.target.receiveingAgency.value;
+            if (raUid) {
+                pendingRAs.push(raUid);
+            } else {
+                // if no specific RA requested, add all RAs to pending list
+                for (let ra in this.state.receivingAgencies) {
+                    pendingRAs.push(this.state.receivingAgencies[ra].id);
+                }
+            }
+            
+            var pendingDGs = [];
+            var dgUid = event.target.delivererGroup.value;
+            if (dgUid) {
+                pendingDGs.push(dgUid);
+            } else {
+                // if no specific DG requested, add all DGs to pending list
+                for (let dg in this.state.delivererGroups) {
+                    pendingDGs.push(this.state.delivererGroups[dg].id);
+                }
             }
 
             // create DeliveryRequest object
@@ -130,27 +172,32 @@ class RecurringPickupRequest extends Component {
                 endTime: event.target.endTime.value,
                 primaryContact: event.target.primaryContact.value,
                 notes: event.target.notes.value,
+                umbrella: this.props.donatingAgency.umbrella,
+                donatingAgency: this.props.account.agency,
+                requester: this.props.account.name,
                 receiveingAgency: {
-                    uid: raUid,
-                    confirmed: false
+                    pending: pendingRAs
                 },
                 delivererGroup: {
-                    uid: dgUid,
-                    confirmed: false
+                    pending: pendingDGs
                 },
                 requestTimestamp: Date.now()
             };
-            let date = new Date(deliveryRequest.startDate);
-            let day = date.getDay();
-            let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+            var weekday = getWeekdayFromDateString(deliveryRequest.startDate);
             this.setState({
-                formInfo: deliveryRequest,
-                dayOfWeek: days[day]
+                request: deliveryRequest,
+                dayOfWeek: weekday
             });
             
             this.toggleModal();
         }
+    }
+
+    // write to firebase
+    submitRequest(){
+        var newRequest = firebase.database().ref('delivery_requests').push();
+        newRequest.set(this.state.request);
     }
 
     render() {
@@ -188,8 +235,8 @@ class RecurringPickupRequest extends Component {
                         <span className="flex">
                             <span className="grid">
                                 <label>Repeats <span className="red">*</span></label><br/>
-                                <select name="repeats" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
+                                <select name="repeats" defaultValue="" required>
+                                    <option value="" disabled>Select</option>
                                     <option value={RequestRepeatType.WEEKLY}>Weekly</option>
                                     <option value={RequestRepeatType.BIWEEKLY}>Every other week</option>
                                     {/* TODO warning if not every month in the range has this date */}
@@ -200,8 +247,8 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label>Primary Contact <span className="red">*</span></label><br/>
-                                <select name="primaryContact" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
+                                <select name="primaryContact" defaultValue="" required>
+                                    <option value="" disabled>Select</option>
                                     {this.state.memberList.map((member,i) => {
                                         return (
                                             <option key={i} value={member.id}>{member.name}</option>
@@ -229,9 +276,8 @@ class RecurringPickupRequest extends Component {
                         <span className="flex">
                             <span className="grid">
                                 <label>Student Group</label><br/>
-                                <select name="delivererGroup" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
-                                    {/* TODO: populate based on directory */}
+                                <select name="delivererGroup" defaultValue="">
+                                    <option value="">Select</option>
                                     {this.state.delivererGroups.map((dg,i) => {
                                         return (
                                             <option key={i} value={dg.id}>{dg.name}</option>
@@ -241,9 +287,8 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label>Shelter</label><br/>
-                                <select name="receiveingAgency" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
-                                    {/* TODO: populate based on directory */}
+                                <select name="receiveingAgency" defaultValue="">
+                                    <option value="">Select</option>
                                     {this.state.receivingAgencies.map((ra, i) => {
                                         return (
                                             <option key={i} value={ra.id}>{ra.name}</option>
@@ -260,13 +305,13 @@ class RecurringPickupRequest extends Component {
                 </form>
                 <PickupSummary 
                     type={'Request Recurring Pickup'} 
-                    startDate={this.state.formInfo.startDate} 
+                    startDate={this.state.request.startDate} 
                     dayOfWeek={this.state.dayOfWeek}
-                    duration={this.state.formInfo.duration}
-                    repeats={this.state.formInfo.repeats}
-                    startTime={this.state.formInfo.startTime}
-                    endTime={this.state.formInfo.endTime}
-                    notes={this.state.formInfo.notes}
+                    duration={this.state.request.duration}
+                    repeats={this.state.request.repeats}
+                    startTime={this.state.request.startTime}
+                    endTime={this.state.request.endTime}
+                    notes={this.state.request.notes}
                     account={this.props.account}
                     show={this.state.isOpen} 
                     onClose={this.toggleModal}
