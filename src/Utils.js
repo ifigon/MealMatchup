@@ -9,4 +9,4 @@ export function getWeekdayFromDateString(dateStr) {
     let m = moment(dateStr, DateTimeFormat.DATE);
     let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return days[m.day()];
-};
+}

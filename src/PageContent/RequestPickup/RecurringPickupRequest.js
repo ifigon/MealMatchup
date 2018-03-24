@@ -60,7 +60,7 @@ class RecurringPickupRequest extends Component {
                 };
                 // append entry into state
                 this.setState((prevState) => {
-                    return {[field]: prevState[field].concat(entry)}
+                    return {[field]: prevState[field].concat(entry)};
                 });
             }.bind(this));
         }
