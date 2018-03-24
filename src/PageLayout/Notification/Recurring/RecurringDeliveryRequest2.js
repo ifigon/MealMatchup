@@ -11,11 +11,13 @@ class RecurringDeliveryRequest2 extends Component {
                     Once a pickup is claimed it cannot be cancelled.
                 </h2>
                 <p>
-                    <span className="to-from">From:</span> Local Point{' '}
-                    <span className="right to-from">To:</span> Seattle Union
-                    Gospel Mission <br />
-                    Start Date: Thursday, 11/21/2018 10 Pickups requested for
-                    every Thursday Pickup between 10 am -12 pm
+                    <span className="to-from">From:</span>
+                    {this.props.donatingAgency}
+                    <span className="right to-from">To:</span>{' '}
+                    {this.props.receivingAgency}
+                    <br />
+                    Start Date: {this.props.startDate} {this.props.duration}{' '}
+                    Pickup between {this.props.startTime} - {this.props.endTime}
                 </p>
 
                 <div className="buttons">
