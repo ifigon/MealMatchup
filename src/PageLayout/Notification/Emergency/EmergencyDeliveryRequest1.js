@@ -19,6 +19,9 @@ class EmergencyDeliveryRequest1 extends Component {
         let email = 'bandrea247@gmail.com';
         let weight = '50 lbs';
 
+        let notes =
+            ' Use the underground parking garage upon entrance. Key card access required after 3:00pm.';
+
         let foods = [
             { food: 'Baked Beans', amount: '15 lbs' },
             { food: 'Coleslaw', amount: '20-25 lbs' },
@@ -70,11 +73,9 @@ class EmergencyDeliveryRequest1 extends Component {
                             </h2>
                             <div className="weight">Total Weight: {weight}</div>
                             <ol>{food}</ol>
+                            <br className="br" />
                             <h2 className="emergency-info">Notes for Pickup</h2>
-                            <p className="emergency-info">
-                                Use the underground parking garage upon
-                                entrance. Key card access required after 3:00pm.{' '}
-                            </p>
+                            <p className="emergency-info">{notes}</p>
 
                             <div className="buttons">
                                 <button

@@ -178,13 +178,6 @@ map {
   font-size: 1.5vw;
 }
 
-.food {
-  list-style-type: none;
-  display: inline;
-  padding-right: 20px;
-  color: #4f4f4f;
-}
-
 .weight {
   color: #f77676;
   font-weight: 600;
@@ -227,21 +220,21 @@ p.contact {
   color: #828282;
 }
 
-/* ul{
-    width:100%;
-    margin-bottom:20px;
-    overflow:hidden;
-    border-top:1px solid #ccc;
-  }
-  li{
-    line-height:1.5em;
-    float:left;
-    display: inline;
-  }
-  #double li  { width:50%;}  */
-/* 
-  ul {
-    columns: 2;
-    -webkit-columns: 2;
-    -moz-columns: 2;
-  } */
+ol {
+  width: 100%;
+  list-style-position: outside;
+  padding-left: 0px;
+}
+
+ol li {
+  float: left;
+  width: 50%;
+}
+.br {
+  clear: left;
+}
+
+.food {
+  list-style-type: none;
+  color: #4f4f4f;
+}
