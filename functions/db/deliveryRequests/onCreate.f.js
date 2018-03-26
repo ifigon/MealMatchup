@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const moment = require('moment');
-const enums = require('../../../src/Enums.js');
+const enums = require('../../Enums.js');
 
 /*
  * When a delivery request is created, send notifications to 
