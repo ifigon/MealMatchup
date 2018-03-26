@@ -69,6 +69,13 @@ DONATING AGENCY ("/donating_agencies/") //not an account
 		members: [
 			"dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of donating-agency-member
 			"fbCm3Yrbi4e12WgpVz3gq25VKea2",
+		],
+		notifications: [
+			{
+				type: "recurring_pickup_confirmed",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
@@ -84,14 +91,7 @@ DONATING AGENCY MEMBER ("/accounts/")
 		email: "bensoa3@uw.edu",
 		phone: 2065436975,
 		position: "Manager"
-		isAdmin: true,
-		notifications: [
-			{
-				type: "recurring_pickup_confirmed",  // Enums.NotificationType
-				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
-			},
-			...
-		]
+		isAdmin: true
 	}
 
 

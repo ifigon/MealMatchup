@@ -67,4 +67,8 @@ exports.NotificationType = {
        Receiver: DA
        Action: View? */
     RECURRING_PICKUP_REJECTED_DG: 'recurring_pickup_rejected_dg',
+    /* When: no available RAs to send to
+       Receiver: DA
+       Action: View? */
+    RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable',
 };
