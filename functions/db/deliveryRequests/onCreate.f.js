@@ -24,12 +24,12 @@ exports = module.exports = functions.database
         
         if (raInfo.accepted) {
             console.error('ERROR: RA shouldn\'t be confirmed upon request.');
-            return;
+            return Promise.resolve();
         }
 
         if (!raInfo.pending) {
             console.error('ERROR: No pending RAs in the request.');
-            return
+            return Promise.resolve();
         }
 
         // create pickup request notification
