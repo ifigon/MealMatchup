@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
 import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
 import { getWeekdayFromDateString } from '../../Utils.js';
-
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 
@@ -138,7 +136,7 @@ class RecurringPickupRequest extends Component {
             }
 
             var pendingRAs = [];
-            var raUid = event.target.receiveingAgency.value;
+            var raUid = event.target.receivingAgency.value;
             if (raUid) {
                 pendingRAs.push(raUid);
             } else {
@@ -174,7 +172,7 @@ class RecurringPickupRequest extends Component {
                 umbrella: this.props.donatingAgency.umbrella,
                 donatingAgency: this.props.account.agency,
                 requester: this.props.account.name,
-                receiveingAgency: {
+                receivingAgency: {
                     pending: pendingRAs
                 },
                 delivererGroup: {
@@ -286,7 +284,7 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label>Shelter</label><br/>
-                                <select name="receiveingAgency" defaultValue="">
+                                <select name="receivingAgency" defaultValue="">
                                     <option value="">Select</option>
                                     {this.state.receivingAgencies.map((ra, i) => {
                                         return (
