@@ -11,78 +11,78 @@ const enums = require('../../Enums.js');
  *     pending list.
  */
 exports = module.exports = functions.database
-.ref('/delivery_requests/{pushId}')
-.onCreate(event => {
-    // TODO: setup Admin SDK in the future?
-    const accountsRef = event.data.ref.parent.parent.child('accounts');
-    const dasRef = accountsRef.parent.child('donating_agencies');
+    .ref('/delivery_requests/{pushId}')
+    .onCreate(event => {
+        // TODO: setup Admin SDK in the future?
+        const accountsRef = event.data.ref.parent.parent.child('accounts');
+        const dasRef = accountsRef.parent.child('donating_agencies');
 
-    var requestKey = event.params.pushId;
-    var request = event.data.val();
-    var raInfo = request.receivingAgency;
-    console.info('New recurring request added: ' + requestKey);
-    
-    if (raInfo.accepted) {
-        console.error('ERROR: RA shouldn\'t be confirmed upon request.');
-        return Promise.resolve();
-    }
-
-    if (!raInfo.pending) {
-        console.error('ERROR: No pending RAs in the request.');
-        return Promise.resolve();
-    }
-
-    // create pickup request notification
-    var notification = {
-        type: enums.NotificationType.RECURRING_PICKUP_REQUEST,
-        content: requestKey
-    };
-
-    // If a specific RA was requested
-    var forceNotify = (raInfo.pending.length === 1);
-
-    // Compose all promises to get RA snapshots from db
-    var raSnapPromises = [];
-    for (let ra in raInfo.pending) {
-        raSnapPromises.push(getRASnapPromise(accountsRef, raInfo.pending[ra]));
-    }
-
-    // Get all RA snapshot request results and process them
-    return Promise.all(raSnapPromises).then((results) => {
-        var promise = null;
-
-        for (let i in results) {
-            var raSnap = results[i];
-            var available = isAvailable(raSnap.val(), request);
-
-            console.info('RA "' + raSnap.key + '": forceNotify=' + forceNotify
-                         + ', available=' + available);
-
-            if (forceNotify || available) {
-                promise = raSnap.ref.child('notifications').push(notification);
-
-                console.info('Notified RA "' + raSnap.key + '": ' +
-                             JSON.stringify(notification));
-            }
+        var requestKey = event.params.pushId;
+        var request = event.data.val();
+        var raInfo = request.receivingAgency;
+        console.info('New recurring request added: ' + requestKey);
+        
+        if (raInfo.accepted) {
+            console.error('ERROR: RA shouldn\'t be confirmed upon request.');
+            return;
         }
 
-        // no available RA, send notification back to DA
-        if (!promise) {
-            // create pickup unavailable notification
-            notification = {
-                type: enums.NotificationType.RECURRING_PICKUP_UNAVAILABLE,
-                content: requestKey
-            }
-            promise = dasRef.child(request.donatingAgency).child('notifications')
-                      .push(notification);
-
-            console.info('No RA available, notified DA "' + request.donatingAgency
-                          + '": ' + JSON.stringify(notification));
+        if (!raInfo.pending) {
+            console.error('ERROR: No pending RAs in the request.');
+            return
         }
 
-        return promise;
+        // create pickup request notification
+        var notification = {
+            type: enums.NotificationType.RECURRING_PICKUP_REQUEST,
+            content: requestKey
+        };
+
+        // If a specific RA was requested
+        var forceNotify = (raInfo.pending.length === 1);
+
+        // Compose all promises to get RA snapshots from db
+        var raSnapPromises = [];
+        for (let ra in raInfo.pending) {
+            raSnapPromises.push(getRASnapPromise(accountsRef, raInfo.pending[ra]));
+        }
+
+        // Get all RA snapshot request results and process them
+        return Promise.all(raSnapPromises).then((results) => {
+            var promise = null;
+
+            for (let i in results) {
+                var raSnap = results[i];
+                var available = isAvailable(raSnap.val(), request);
+
+                console.info('RA "' + raSnap.key + '": forceNotify=' + forceNotify
+                             + ', available=' + available);
+
+                if (forceNotify || available) {
+                    promise = raSnap.ref.child('notifications').push(notification);
+
+                    console.info('Notified RA "' + raSnap.key + '": ' +
+                                 JSON.stringify(notification));
+                }
+            }
+
+            // no available RA, send notification back to DA
+            if (!promise) {
+                // create pickup unavailable notification
+                notification = {
+                    type: enums.NotificationType.RECURRING_PICKUP_UNAVAILABLE,
+                    content: requestKey
+                };
+                promise = dasRef.child(request.donatingAgency).child('notifications')
+                    .push(notification);
+
+                console.info('No RA available, notified DA "' + request.donatingAgency
+                              + '": ' + JSON.stringify(notification));
+            }
+
+            return promise;
+        });
     });
-});
 
 // Firebase calls are asynchronous, return promises in order to execute
 // in sequence as we need to.
