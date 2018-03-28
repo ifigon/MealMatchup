@@ -18,6 +18,9 @@ class SignIn extends Component {
                     </div>
                     <div className="login-button-wrapper"><button type="submit" className="login-button">Login</button></div>
                     <div className="forgot">
+
+                        {/* Add functionality to reset username and password */}
+
                         <p className="forgot">forgot password?</p>
                         <p className="forgot">forgot username?</p>
                     </div>
