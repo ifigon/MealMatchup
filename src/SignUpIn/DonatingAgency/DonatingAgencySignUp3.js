@@ -41,7 +41,7 @@ class DonatingAgencySignUp3 extends Component {
         };
 
         this.props.saveValues(data);
-        this.props.nextStep();
+        this.props.submitRegistration();
     }
 }
 export default DonatingAgencySignUp3;
