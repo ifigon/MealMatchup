@@ -1,5 +1,3 @@
-// No log in functionality yet
-
 import React, { Component } from 'react';
 import firebase from '../FirebaseConfig';
 
@@ -15,8 +13,8 @@ class SignIn extends Component {
             <form onSubmit={this.nextStep}>
                 <div className="login-wrapper">
                     <div className="login-input-wrapper">
-                        <input name="email" type="text" id="email" className="login-input form-component" placeholder="Email" /><br />
-                        <input name="password" type="password" id="password" className="login-input form-component" placeholder="Password" /><br />
+                        <input name="email" type="text" id="email" className="login-input form-component" placeholder="Email" required/><br />
+                        <input name="password" type="password" id="password" className="login-input form-component" placeholder="Password" required/><br />
                     </div>
                     <div className="login-button-wrapper"><button type="submit" className="login-button">Login</button></div>
                     <div className="forgot">
