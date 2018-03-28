@@ -7,7 +7,7 @@ import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { NotificationType } from '../../Enums';
+import { AccountType } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -87,9 +87,10 @@ class SignUpShelterController extends Component {
         firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {   
                 let postData = {
-                    accountType: 'receiving_agency',
-                    school: 'RheaQY1WxJT03sTPQICFZ4STpfm1',
+                    accountType: AccountType.RECEIVING_AGENCY,
+                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // TODO: Manually setting this field for now, users should be doing it in the future
                     name: fieldValues.organizationName,
+                    email: fieldValues.email,
                     address: {
                         street1: fieldValues.address1,
                         street2: fieldValues.address2,
@@ -98,8 +99,8 @@ class SignUpShelterController extends Component {
                         zip: fieldValues.zip,
                         officeNumber: fieldValues.officeNumber
                     },
-                    isVerified: true,
-                    isActivated: true,
+                    isVerified: false,
+                    isActivated: false,
                     primaryContact: {
                         name: fieldValues.primaryName,
                         email: fieldValues.primaryEmail,
@@ -112,6 +113,9 @@ class SignUpShelterController extends Component {
                         phone: fieldValues.secondaryPhone,
                         position: fieldValues.secondaryPosition
                     },
+
+                    // TODO: Use a loop here instead
+
                     availabilities: {
                         0: {startTime: fieldValues.monStart, endTime: fieldValues.monEnd},
                         1: {startTime: fieldValues.tueStart, endTime: fieldValues.tueEnd},
@@ -125,11 +129,6 @@ class SignUpShelterController extends Component {
                     emergencyQuantity: {
                         min: fieldValues.startLbs,
                         max: fieldValues.endLbs
-                    },
-                    isAdmin: true,
-                    notification: {
-                        type: NotificationType,
-                        content: '-L5QoXeC_UrL5tRRED3e'
                     }
                 };
 
@@ -139,6 +138,9 @@ class SignUpShelterController extends Component {
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
+
+                // TODO: Add UI to handle the error
+
                 return error;
             });
 
