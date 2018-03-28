@@ -36,10 +36,10 @@ class SignIn extends Component {
         let password = e.target.password.value;
 
         firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(user => {
-
-            })
             .catch(error => {
+
+                // Add UI to show the error to the user
+
                 return error;
             });
     }
