@@ -5,7 +5,7 @@ import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { NotificationType } from '../../Enums';
+import { AccountType } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -61,7 +61,7 @@ class DelivererGroupSignUpController extends Component {
         firebase.auth().createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {
                 let postData = {
-                    accountType: 'deliverer_group',
+                    accountType: AccountType.DELIVERER_GROUP,
                     name: fieldValues.organizationName,
                     numVolunteers: fieldValues.numVolunteers,
                     address: {
@@ -78,19 +78,18 @@ class DelivererGroupSignUpController extends Component {
                         phone: fieldValues.contactNumber,
                         position: fieldValues.contactPosition
                     },
-                    school: 'RheaQY1WxJT03sTPQICFZ4STpfm1',
-                    isActivated: true,
-                    isVerified: true,
-                    notification: {
-                        type: NotificationType,
-                        content: '-L5QoXeC_UrL5tRRED3e'
-                    }
+                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1',
+                    isActivated: false,
+                    isVerified: false
                 };
                 let updates = {};
                 updates['/accounts/' + user.uid] = postData;
                 return firebase.database().ref().update(updates);
             })
             .catch(error => {
+
+                // TODO: Add UI to handle the error.
+
                 return error;
             });
 
