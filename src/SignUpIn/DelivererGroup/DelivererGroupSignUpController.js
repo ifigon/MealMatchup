@@ -78,7 +78,7 @@ class DelivererGroupSignUpController extends Component {
                         phone: fieldValues.contactNumber,
                         position: fieldValues.contactPosition
                     },
-                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1',
+                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // Manually setting this for now. In future, users should be able to do it.
                     isActivated: false,
                     isVerified: false
                 };

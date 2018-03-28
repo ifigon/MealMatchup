@@ -117,13 +117,13 @@ class SignUpShelterController extends Component {
                     // TODO: Use a loop here instead
 
                     availabilities: {
-                        0: {startTime: fieldValues.monStart, endTime: fieldValues.monEnd},
-                        1: {startTime: fieldValues.tueStart, endTime: fieldValues.tueEnd},
-                        2: {startTime: fieldValues.wedStart, endTime: fieldValues.wedEnd},
-                        3: {startTime: fieldValues.thurStart, endTime: fieldValues.thurEnd},
-                        4: {startTime: fieldValues.friStart, endTime: fieldValues.friEnd},
-                        5: {startTime: fieldValues.satStart, endTime: fieldValues.satEnd},
-                        6: {startTime: fieldValues.sunStart, endTime: fieldValues.sunEnd}
+                        0: {startTime: fieldValues.sunStart, endTime: fieldValues.sunEnd},
+                        1: {startTime: fieldValues.monStart, endTime: fieldValues.monEnd},
+                        2: {startTime: fieldValues.tueStart, endTime: fieldValues.tueEnd},
+                        3: {startTime: fieldValues.wedStart, endTime: fieldValues.wedEnd},
+                        4: {startTime: fieldValues.thurStart, endTime: fieldValues.thurEnd},
+                        5: {startTime: fieldValues.friStart, endTime: fieldValues.friEnd},
+                        6: {startTime: fieldValues.satStart, endTime: fieldValues.satEnd},
                     },
                     acceptEmergencyPickups: fieldValues.emergencyAvailable,
                     emergencyQuantity: {
