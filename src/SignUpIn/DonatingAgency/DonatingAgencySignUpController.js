@@ -6,7 +6,7 @@ import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import DonatingAgencySignUp3 from './DonatingAgencySignUp3';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { NotificationType } from '../../Enums';
+import { AccountType } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -69,23 +69,19 @@ class DonatingAgencySignUpController extends Component {
 
         firebase.auth().createUserWithEmailAndPassword(fieldValues.adminEmail, fieldValues.adminPassword)
             .then(user => {    
-                let agencyKey = firebase.database().ref().child('accounts').push().key;
+                let agencyKey = firebase.database().ref().child('donating_agencies').push().key;
                 let member_postData = {
-                    accountType: 'donating_agency_member',
+                    accountType: AccountType.DONATING_AGENCY_MEMBER,
                     agency: agencyKey,
                     name: fieldValues.memberName,
                     email: fieldValues.memberEmail,
                     phone: fieldValues.memberPhone,
                     position: fieldValues.memberPosition,
                     isAdmin: true,
-                    notification: {
-                        type: NotificationType,
-                        content: '-L5QoXeC_UrL5tRRED3e'
-                    }
                 };
 
                 let agency_postData = {
-                    school: 'RheaQY1WxJT03sTPQICFZ4STpfm1',
+                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // TODO: Manually setting this field for now. In future, user should have the ability to do this.
                     name: fieldValues.organizationName,
                     address: {
                         street1: fieldValues.address1,
@@ -95,8 +91,8 @@ class DonatingAgencySignUpController extends Component {
                         zipcode: fieldValues.zip,
                         officeNo: fieldValues.officeNumber
                     },
-                    isVerified: true,
-                    isActivated: true,
+                    isVerified: false,
+                    isActivated: false,
                     primaryContact: user.uid,
                     members: [user.uid]
                 };
@@ -112,6 +108,9 @@ class DonatingAgencySignUpController extends Component {
                 return firebase.database().ref().update(accounts_updates);
             })
             .catch(error => {
+
+                // TODO: Add UI to handle the error
+
                 return error;
             });
 
