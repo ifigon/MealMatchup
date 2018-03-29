@@ -10,7 +10,7 @@ class EmergencyDeliveryRequest2 extends Component {
                 <h2 className="warning">
                     Once a pickup is claimed it cannot be cancelled.
                 </h2>
-                <p>
+                <p className="summary">
                     {this.props.receivingAgency}
                     <br />
                     Date: {this.props.date} {this.props.time}

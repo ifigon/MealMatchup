@@ -78,7 +78,7 @@ label {
 .start {
   margin-bottom: 5px;
 }
-p {
+p.summary {
   font-weight: 400;
   margin: 0px;
   margin-bottom: 5px;
