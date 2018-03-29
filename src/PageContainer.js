@@ -72,7 +72,7 @@ class PageContainer extends Component {
                             account={this.props.account}
                             donatingAgency={this.state.donatingAgency}>
                         </RecurringPickupRequest>
-                    :
+                        :
                         /* TODO: add loading UI? */
                         <div></div>
                     )

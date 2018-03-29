@@ -49,7 +49,7 @@ exports.RequestStatus = {
     CONFIRMED: 'confirmed',
     // failed at some step
     FAILED: 'failed'
-}
+};
 
 exports.NotificationType = {
     NEW_ACCOUNT: 'new_account',
