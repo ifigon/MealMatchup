@@ -12,4 +12,5 @@ var config = {
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
+export const accountsRef = firebase.database().ref('accounts');
 export default firebase;
