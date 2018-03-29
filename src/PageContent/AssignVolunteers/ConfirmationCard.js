@@ -3,6 +3,8 @@ import './ConfirmationCard.css';
 
 class ConfirmationCard extends Component {
 
+    // TODO: Save the volunteers and send them email notifications.
+
     render() {
         return (
             <div className="confirmation-card-container">
