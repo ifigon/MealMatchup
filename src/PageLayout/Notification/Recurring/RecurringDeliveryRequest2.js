@@ -10,7 +10,7 @@ class RecurringDeliveryRequest2 extends Component {
                 <h2 className="warning">
                     Once a pickup is claimed it cannot be cancelled.
                 </h2>
-                <p>
+                <p className="summary">
                     <span className="to-from">From:</span>
                     {this.props.donatingAgency}
                     <span className="right to-from">To:</span>{' '}

@@ -10,7 +10,7 @@ class RecurringDeliveryRequest3 extends Component {
                     <img className="icon" src={truck} alt="icon" />
                     <h1>Reoccuring pickup is scheduled!</h1>
                 </div>
-                <p>
+                <p className="summary">
                     <span className="to-from">From:</span>{' '}
                     {this.props.donatingAgency}
                     <span className="right to-from">To:</span>{' '}
