@@ -11,22 +11,32 @@ class AssignVolunteers extends Component {
         super(props);
         this.state = {
             step: 0,
-            onConfirm: false
+            onConfirm: false,
+            s1name: "",
+            s1phone: "",
+            s1email: "",
+            s2name: "",
+            s2phone: "",
+            s2email: "",
         }
     }
 
     render() {
-
         return (
-
             <div className="container">
 
                 {this.showStep()}
 
-                {this.state.onConfirm ? 
+                {this.state.onConfirm ?
                     <Confirmation 
                         handleCloseClick={this.handleCloseClick.bind(this)}
                         studentGroup={this.props.studentGroup}
+                        s1name={this.state.s1name}
+                        s1phone={this.state.s1phone}
+                        s1email={this.state.s1email}
+                        s2name={this.state.s2name}
+                        s2phone={this.state.s2phone}
+                        s2email={this.state.s2email}
                     /> 
                     : 
                     <div />
@@ -37,9 +47,15 @@ class AssignVolunteers extends Component {
 
     }
 
-    handleConfirmClick() {
+    handleConfirmClick(s1name, s1phone, s1email, s2name, s2phone, s2email) {
         this.setState({
-            onConfirm: true
+            onConfirm: true,
+            s1name: s1name,
+            s1phone: s1phone,
+            s1email: s1email,
+            s2name: s2name,
+            s2phone: s2phone,
+            s2email: s2email
         });
     }
 

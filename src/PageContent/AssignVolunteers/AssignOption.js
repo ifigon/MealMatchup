@@ -4,6 +4,9 @@ class AssignOption extends Component {
 
     render() {
         return (
+
+            // TODO: Need backend code to generate this information dynamically and then UI code to render that.
+
             <div className="avi-row">
                 <div className="container avi-details-container">
                     <div className="avi-detail">

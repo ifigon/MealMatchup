@@ -4,6 +4,7 @@ import './ConfirmationCard.css';
 class ConfirmationCard extends Component {
 
     render() {
+        console.log(this.props);
         return (
             <div className="confirmation-card-container">
                 <div className="card-content">
@@ -22,8 +23,8 @@ class ConfirmationCard extends Component {
                     <div className="delivery-details">
                         <h5>Student Deliverers</h5>
                         <h4>{this.props.studentGroup}</h4>
-                        <h6 className="det">James Mathew (206-389-2318)</h6>
-                        <h6 className="det">Erika Zhang (206-876-5432)</h6>
+                        <h6 className="det">{this.props.s1name} ({this.props.s1phone})</h6>
+                        <h6 className="det">{this.props.s2name} ({this.props.s2phone})</h6>
                     </div>
                 </div>
                 <div className="details-content">
