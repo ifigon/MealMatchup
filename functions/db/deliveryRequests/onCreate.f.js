@@ -14,7 +14,8 @@ exports = module.exports = functions.database
     .ref('/delivery_requests/{pushId}')
     .onCreate(event => {
         // TODO: setup Admin SDK in the future?
-        const accountsRef = event.data.ref.parent.parent.child('accounts');
+        const requestRef = event.data.ref;
+        const accountsRef = requestRef.parent.parent.child('accounts');
         const dasRef = accountsRef.parent.child('donating_agencies');
 
         var requestKey = event.params.pushId;
@@ -22,13 +23,18 @@ exports = module.exports = functions.database
         var raInfo = request.receivingAgency;
         console.info('New recurring request added: ' + requestKey);
         
-        if (raInfo.accepted) {
+        if (request.status !== enums.RequestStatus.PENDING) {
+            console.error('ERROR: Request should have pending status upon request.');
+            return Promise.resolve();
+        }
+
+        if (raInfo.claimed) {
             console.error('ERROR: RA shouldn\'t be confirmed upon request.');
             return Promise.resolve();
         }
 
-        if (!raInfo.pending) {
-            console.error('ERROR: No pending RAs in the request.');
+        if (!raInfo.requested && !raInfo.pending) {
+            console.error('ERROR: No RAs in the request to notify.');
             return Promise.resolve();
         }
 
@@ -38,8 +44,16 @@ exports = module.exports = functions.database
             content: requestKey
         };
 
-        // If a specific RA was requested
-        var forceNotify = (raInfo.pending.length === 1);
+        // If a specific RA was requested, force push notification
+        if (raInfo.requested) {
+            console.info('A specific RA requested: ' + raInfo.requested);
+            var raRef = accountsRef.child(raInfo.requested);
+
+            return pushNotification(raRef, notification, 'RA');
+        }
+
+        console.info('No specific RA requested, ' + raInfo.pending.length + 
+            ' pending RAs');
 
         // Compose all promises to get RA snapshots from db
         var raSnapPromises = [];
@@ -55,34 +69,38 @@ exports = module.exports = functions.database
                 var raSnap = results[i];
                 var available = isAvailable(raSnap.val(), request);
 
-                console.info('RA "' + raSnap.key + '": forceNotify=' + forceNotify
-                             + ', available=' + available);
+                console.info('RA "' + raSnap.key + '": available=' + available);
 
-                if (forceNotify || available) {
-                    promise = raSnap.ref.child('notifications').push(notification);
-
-                    console.info('Notified RA "' + raSnap.key + '": ' +
-                                 JSON.stringify(notification));
+                if (available) {
+                    promise = pushNotification(raSnap.ref, notification, 'RA');
                 }
             }
 
             // no available RA, send notification back to DA
             if (!promise) {
+                // update status of the request
+                promise = requestRef.child('status').set(enums.RequestStatus.UNAVAILABLE);
+                console.info('No RA available, updated request status');
+
                 // create pickup unavailable notification
                 notification = {
                     type: enums.NotificationType.RECURRING_PICKUP_UNAVAILABLE,
                     content: requestKey
                 };
-                promise = dasRef.child(request.donatingAgency).child('notifications')
-                    .push(notification);
-
-                console.info('No RA available, notified DA "' + request.donatingAgency
-                              + '": ' + JSON.stringify(notification));
+                var daRef = dasRef.child(request.donatingAgency);
+                promise = pushNotification(daRef, notification, 'DA');
             }
 
             return promise;
         });
     });
+
+function pushNotification(accountRef, notification, label) {
+    var promise = accountRef.child('notifications').push(notification);
+    console.info('Notified ' + label + ' "' + accountRef.key + '": '
+        + JSON.stringify(notification));
+    return promise;
+}
 
 // Firebase calls are asynchronous, return promises in order to execute
 // in sequence as we need to.

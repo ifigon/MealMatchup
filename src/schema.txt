@@ -38,7 +38,7 @@ UMBRELLA ("/accounts/")
 			"R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
 			...
 		],
-		notificatioins: [
+		notifications: [
 			{
 				type: "new_account",  // Enums.NotificationType
 				content: null  // TBD
@@ -202,26 +202,37 @@ DELIVERY REQUEST ("/delivery_requests/")
 		endTime: "17:00",
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		notes: "Enter through the back door.",
-		school: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a school
+		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a umbrella
 		donatingAgency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
 		requester: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		// receivingAgency & delivererGroups:
 		// The donating agency can choose to request specific receiving agency
 		// and/or deliverer group, or not.
-		// a. If specified, the one single uid will be added to 'pending'
-		// b. It not specified, all RA/DG uids in this school will be added to 'pending'
+		// a. If specified, 'requested' field will be the uid-key of that RA
+		// b. It not specified, all RA/DG uids in this umbrella will be added to 'pending'
 		receivingAgency: {
-			pending: [  // uid-key of receiving-agencies
-				"uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // a specific RA
-			], 
-			accepted: null  // uid-key of a receiving-agency (once a RA claims)
+			// Depending on the status of the request, this
+			// map will have 1 out of the 3 possible fields:
+			// "requested", "pending" (list), "claimed"
+			requested: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // uid-key of a RA
+			// OR
+			pending: [  
+				"uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of all RAs
+				...
+			]
+			// OR
+			claimed: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // uid-key of a RA (once a RA claims)
 		},
 		delivererGroup: {
-			pending: [  // uid-key of deliverer-groups
-				"R8BAHrxdkfQoAmfWvGa1OJmjQP43",
-				...  							 // all DGs in this school
-			],
-			accepted: null  // uid-key of a deliverer-group (once a DG claims)
+			// same as receivingAgency above:
+			requested: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG
+			// OR
+			pending: [
+				"R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of all DGs
+				...
+			]
+			// OR
+			claimed: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG (once a DG claims)
 		},
 		requestTimeStamp: "1518753363763"
 	}
