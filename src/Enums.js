@@ -2,6 +2,11 @@
 /*global exports:true*/
 /*eslint no-undef: "error"*/
 
+exports.DateTimeFormat = {
+    DATE: 'YYYY-MM-DD',  // '2018-03-24'
+    TIME: 'HH:mm',  // '15:30'
+};
+
 exports.AccountType = {
     UMBRELLA: 'umbrella',
     DONATING_AGENCY_MEMBER: 'donating_agency_member',
@@ -35,6 +40,15 @@ exports.RequestRepeatType = {
     BIWEEKLY: 'biweekly', // every other week
     MONTHLY: 'monthly',
     // TODO Nth weekday of month
+};
+
+exports.RequestStatus = {
+    // waiting on RA/DG response
+    PENDING: 'pending',
+    // claimed by all parties
+    CONFIRMED: 'confirmed',
+    // failed at some step
+    FAILED: 'failed'
 };
 
 exports.NotificationType = {
