@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
+import { RequestRepeatType, RequestDurationType, RequestStatus } from '../../Enums.js';
 import { getWeekdayFromDateString } from '../../Utils.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
@@ -17,10 +17,12 @@ class RecurringPickupRequest extends Component {
             receivingAgencies: [],
             fields: {},
             errors: {},
-            isOpen: false,
+            showPopup: false,
             request: {},
             dayOfWeek: ''
         };
+
+        this.formId = 'recurringRequestForm';
 
         this.submitRequest = this.submitRequest.bind(this);
         this.createRequest = this.createRequest.bind(this);
@@ -118,10 +120,11 @@ class RecurringPickupRequest extends Component {
 
     toggleModal(){
         this.setState((prevState) => {
-            return {isOpen: !prevState.isOpen};
+            return {showPopup: !prevState.showPopup};
         });
     }
 
+    // When "Done" is clicked on the request form
     createRequest(event) {
         event.preventDefault();
         if (!this.handleValidation()) {
@@ -159,6 +162,7 @@ class RecurringPickupRequest extends Component {
 
             // create DeliveryRequest object
             var deliveryRequest = {
+                status: RequestStatus.PENDING,
                 startDate: event.target.startDate.value,
                 duration:{
                     type: event.target.durationType.value,
@@ -191,16 +195,21 @@ class RecurringPickupRequest extends Component {
         }
     }
 
-    // write to firebase
+    // when "Confirm" is clicked on the summary popup
     submitRequest(){
+        // write to firebase
         var newRequest = firebase.database().ref('delivery_requests').push();
         newRequest.set(this.state.request);
+
+        // hide popup and clear form
+        this.toggleModal();
+        document.getElementById(this.formId).reset();
     }
 
     render() {
         return (
-            <div className="form" id="recurringForm">
-                <form onSubmit={this.createRequest}>
+            <div className="form">
+                <form id={this.formId} onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
                         {
@@ -300,20 +309,22 @@ class RecurringPickupRequest extends Component {
                         </div>
                     </div>
                 </form>
-                <PickupSummary 
-                    type={'Request Recurring Pickup'} 
-                    startDate={this.state.request.startDate} 
-                    dayOfWeek={this.state.dayOfWeek}
-                    duration={this.state.request.duration}
-                    repeats={this.state.request.repeats}
-                    startTime={this.state.request.startTime}
-                    endTime={this.state.request.endTime}
-                    notes={this.state.request.notes}
-                    account={this.props.account}
-                    show={this.state.isOpen} 
-                    onClose={this.toggleModal}
-                    onConfirm={this.submitRequest}>
-                </PickupSummary>
+
+                {this.state.showPopup &&
+                    <PickupSummary
+                        type={'Request Recurring Pickup'}
+                        startDate={this.state.request.startDate}
+                        dayOfWeek={this.state.dayOfWeek}
+                        duration={this.state.request.duration}
+                        repeats={this.state.request.repeats}
+                        startTime={this.state.request.startTime}
+                        endTime={this.state.request.endTime}
+                        notes={this.state.request.notes}
+                        account={this.props.account}
+                        onClose={this.toggleModal}
+                        onConfirm={this.submitRequest}>
+                    </PickupSummary>
+                }
             </div>
         );
     }

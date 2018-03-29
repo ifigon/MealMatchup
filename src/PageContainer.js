@@ -66,10 +66,16 @@ class PageContainer extends Component {
                 }
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&
-                    <RecurringPickupRequest 
-                        account={this.props.account}
-                        donatingAgency={this.state.donatingAgency}>
-                    </RecurringPickupRequest>
+                    (this.state.donatingAgency ?
+                        /* Wait for donating agency to be fetched */
+                        <RecurringPickupRequest 
+                            account={this.props.account}
+                            donatingAgency={this.state.donatingAgency}>
+                        </RecurringPickupRequest>
+                    :
+                        /* TODO: add loading UI? */
+                        <div></div>
+                    )
                 }
 
                 {this.state.content === PageContent.FOOD_LOGS &&

@@ -42,6 +42,15 @@ exports.RequestRepeatType = {
     // TODO Nth weekday of month
 };
 
+exports.RequestStatus = {
+    // waiting on RA/DG response
+    PENDING: 'pending',
+    // claimed by all parties
+    CONFIRMED: 'confirmed',
+    // failed at some step
+    FAILED: 'failed'
+}
+
 exports.NotificationType = {
     NEW_ACCOUNT: 'new_account',
     RECURRING_PICKUP_REQUEST: 'recurring_pickup_request',
