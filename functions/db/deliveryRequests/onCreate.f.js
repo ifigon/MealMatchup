@@ -13,7 +13,7 @@ const enums = require('../../Enums.js');
 exports = module.exports = functions.database
     .ref('/delivery_requests/{pushId}')
     .onCreate(event => {
-        // TODO: setup Admin SDK in the future?
+        // TODO: setup Admin SDK in the future? So that we can use absolute path.
         const requestRef = event.data.ref;
         const accountsRef = requestRef.parent.parent.child('accounts');
         const dasRef = accountsRef.parent.child('donating_agencies');
@@ -24,18 +24,17 @@ exports = module.exports = functions.database
         console.info('New recurring request added: ' + requestKey);
         
         if (request.status !== enums.RequestStatus.PENDING) {
-            console.error('ERROR: Request should have pending status upon request.');
-            return Promise.resolve();
+            return Promise.reject(
+                new Error('Request should have pending status upon request.'));
         }
 
         if (raInfo.claimed) {
-            console.error('ERROR: RA shouldn\'t be confirmed upon request.');
-            return Promise.resolve();
+            return Promise.reject(
+                new Error('RA shouldn\'t be confirmed upon request.'));
         }
 
         if (!raInfo.requested && !raInfo.pending) {
-            console.error('ERROR: No RAs in the request to notify.');
-            return Promise.resolve();
+            return Promise.reject(new Error('No RAs in the request to notify.'));
         }
 
         // create pickup request notification
@@ -63,7 +62,7 @@ exports = module.exports = functions.database
 
         // Get all RA snapshot request results and process them
         return Promise.all(raSnapPromises).then((results) => {
-            var promise = null;
+            var promises = [];
 
             for (let i in results) {
                 var raSnap = results[i];
@@ -72,14 +71,14 @@ exports = module.exports = functions.database
                 console.info('RA "' + raSnap.key + '": available=' + available);
 
                 if (available) {
-                    promise = pushNotification(raSnap.ref, notification, 'RA');
+                    promises.push(pushNotification(raSnap.ref, notification, 'RA'));
                 }
             }
 
             // no available RA, send notification back to DA
-            if (!promise) {
+            if (promises.length === 0) {
                 // update status of the request
-                promise = requestRef.child('status').set(enums.RequestStatus.UNAVAILABLE);
+                promises.push(requestRef.child('status').set(enums.RequestStatus.UNAVAILABLE));
                 console.info('No RA available, updated request status');
 
                 // create pickup unavailable notification
@@ -88,10 +87,10 @@ exports = module.exports = functions.database
                     content: requestKey
                 };
                 var daRef = dasRef.child(request.donatingAgency);
-                promise = pushNotification(daRef, notification, 'DA');
+                promises.push(pushNotification(daRef, notification, 'DA'));
             }
 
-            return promise;
+            return Promise.all(promises);
         });
     });
 
