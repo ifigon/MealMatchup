@@ -1,44 +1,40 @@
 import React, { Component } from 'react';
 import '../SignUpIn.css';
-import firebase from '../../FirebaseConfig';
+import firebase, { accountsRef, auth } from '../../FirebaseConfig';
 import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
-import DonatingAgencySignUp3 from './DonatingAgencySignUp3';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType } from '../../Enums';
+import { AccountType, UmbrellaId } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
     address1: null,
     address2: null,
     city: null,
-    state: null,
+    state: '',
     zip: null,
     officeNumber: null,
 
-    email: null,
-    password: null,
     adminName: null,
     adminPosition: null,
-    adminEmail: null,
     adminPhone: null,
-    adminPassword: null,
-
-    memberName: null,
-    memberPosition: null,
-    memberEmail: null,
-    memberPhone: null,
-    memberPassword: null,
-
+    adminEmail: null,
+    adminPassword: null
 };
 
 class DonatingAgencySignUpController extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             step: 1
         };
+
+        this.saveValues = this.saveValues.bind(this);
+        this.nextStep = this.nextStep.bind(this);
+        this.previousStep = this.previousStep.bind(this);
+        this.submitRegistration = this.submitRegistration.bind(this);
     }
 
     saveValues(fields) {
@@ -67,21 +63,25 @@ class DonatingAgencySignUpController extends Component {
         // success return this.nextStop(). If it fails,
         // show the user the error but don't advance
 
-        firebase.auth().createUserWithEmailAndPassword(fieldValues.adminEmail, fieldValues.adminPassword)
-            .then(user => {    
-                let agencyKey = firebase.database().ref().child('donating_agencies').push().key;
-                let member_postData = {
+        auth.createUserWithEmailAndPassword(fieldValues.adminEmail, fieldValues.adminPassword)
+            .then(user => {
+                let dasRef = firebase.database().ref('donating_agencies');
+                let agencyKey = dasRef.push().key;
+
+                let adminPostData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
                     agency: agencyKey,
-                    name: fieldValues.memberName,
-                    email: fieldValues.memberEmail,
-                    phone: fieldValues.memberPhone,
-                    position: fieldValues.memberPosition,
-                    isAdmin: true,
+                    name: fieldValues.adminName,
+                    email: fieldValues.adminEmail,
+                    phone: fieldValues.adminPhone,
+                    position: fieldValues.adminPosition,
+                    isAdmin: true
                 };
 
-                let agency_postData = {
-                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // TODO: Manually setting this field for now. In future, user should have the ability to do this.
+                let agencyPostData = {
+                    // TODO: Manually setting this for now. In future, users should
+                    // choose which umbrella they are signing up under.
+                    umbrella: UmbrellaId.TEST,
                     name: fieldValues.organizationName,
                     address: {
                         street1: fieldValues.address1,
@@ -97,20 +97,21 @@ class DonatingAgencySignUpController extends Component {
                     members: [user.uid]
                 };
 
-                let accounts_updates = {};
-                accounts_updates['/accounts/' + user.uid] = member_postData;
+                // write account and agency to db
+                accountsRef.child(user.uid).set(adminPostData);
+                dasRef.child(agencyKey).set(agencyPostData);
 
-                let agency_updates = {};
-                agency_updates['/donating_agencies/' + agencyKey] = agency_postData;
+                // add agency to umbrella
+                accountsRef.child(UmbrellaId.TEST).child('donatingAgencies')
+                    .push(agencyKey);
 
-                firebase.database().ref().update(agency_updates);
-
-                return firebase.database().ref().update(accounts_updates);
+                // firebase's create account automatically signs the user in
+                // we need to keep the user signed out since the account hasn't
+                // been approved yet
+                auth.signOut();
             })
             .catch(error => {
-
                 // TODO: Add UI to handle the error
-
                 return error;
             });
 
@@ -126,31 +127,24 @@ class DonatingAgencySignUpController extends Component {
                 <div className="circle-wrapper">
                     <div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
                 </div>
-                <DonatingAgencySignUp1 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} />
+                <DonatingAgencySignUp1 
+                    fieldValues={fieldValues}
+                    nextStep={this.nextStep}
+                    previousStep={this.previousStep}
+                    saveValues={this.saveValues} />
             </div>;
         case 2:
             return <div className="signup">
                 <div className="circle-wrapper">
                     <div className="circle open"></div><div className="circle "></div><div className="circle open"></div>
                 </div>
-                <DonatingAgencySignUp2 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
+                <DonatingAgencySignUp2 
+                    fieldValues={fieldValues}
+                    nextStep={this.nextStep}
+                    previousStep={this.previousStep}
+                    submitRegistration={this.submitRegistration}
+                    saveValues={this.saveValues} /></div>;
         case 3:
-            return <div className="signup">
-                <div className="circle-wrapper">
-                    <div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
-                </div>
-                <DonatingAgencySignUp3 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    submitRegistration={this.submitRegistration.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
-        case 4:
             return <SignUpComplete />;
         }
     }

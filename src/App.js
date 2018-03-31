@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase, { auth } from './FirebaseConfig.js';
+import { auth, accountsRef } from './FirebaseConfig.js';
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
@@ -18,6 +18,7 @@ class App extends Component {
         this.state = {
             // TODO: a hack to prevent showing logged out page first.. better way?
             authenticated: false,
+            signInDenied: false,
             account: null
         };
     }
@@ -27,12 +28,22 @@ class App extends Component {
         auth.onAuthStateChanged(function(user) {
             if (user) {
                 // grab user's account object
-                var accountRef = firebase.database().ref('accounts').child(user.uid);
-                accountRef.once('value').then(function(snapshot) {
-                    this.setState({
-                        authenticated: true,
-                        account: snapshot.val()
-                    });
+                accountsRef.child(user.uid).once('value').then(function(snapshot) {
+                    var account = snapshot.val();
+                    if (account.isVerified && account.isActivated) {
+                        this.setState({
+                            authenticated: true,
+                            account: account
+                        });
+                    } else {
+                        // account is not verified or activated, deny sign in
+                        this.setState({
+                            authenticated: true,
+                            signInDenied: true
+                        });
+                        auth.signOut();
+                    }
+                        
                 }.bind(this));
             } else {
                 this.setState({
@@ -54,7 +65,7 @@ class App extends Component {
                             content={PageContent.CALENDAR}>
                         </PageContainer>
                         :
-                        <SignUpInController/>
+                        <SignUpInController signInDenied={this.state.signInDenied} />
                     )
                     :
                     /* Show blank page if initial authentication hasn't finished */

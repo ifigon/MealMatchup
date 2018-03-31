@@ -11,10 +11,10 @@ class ReceivingAgencySignUp4 extends Component {
                 <div className="signup-content">
                     <div className="form-block">
                         <label className="form-component">Primary Contact Details</label><br />
-                        <input name="primaryName" type="text" id="primaryEmail" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.primaryName} /><br />
-                        <input name="primaryEmail" type="text" id="primaryEmail" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.primaryEmail} />
-                        <input name="primaryPhone" type="text" className="form-component" placeholder="Phone" id="primaryPhone" defaultValue={this.props.fieldValues.primaryPhone} />
-                        <input name="primaryPosition" type="text" className="form-component" placeholder="Position" id="primaryPosition" defaultValue={this.props.fieldValues.primaryPosition} />
+                        <input name="primaryName" type="text" id="primaryName" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.primaryName} required /><br />
+                        <input name="primaryEmail" type="text" id="primaryEmail" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.primaryEmail} required />
+                        <input name="primaryPhone" type="text" className="form-component" placeholder="Phone" id="primaryPhone" defaultValue={this.props.fieldValues.primaryPhone} required />
+                        <input name="primaryPosition" type="text" className="form-component" placeholder="Position" id="primaryPosition" defaultValue={this.props.fieldValues.primaryPosition} required />
                     </div>
                     <div className="form-block">
                         <label className="form-component">Secondary Contact Details </label><i>(Optional)</i><br />

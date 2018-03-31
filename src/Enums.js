@@ -2,6 +2,12 @@
 /*global exports:true*/
 /*eslint no-undef: "error"*/
 
+// TODO: temporary for pilot, manually setting a fixed umbrella
+exports.UmbrellaId = {
+    TEST: 'PrE7oCZajNcRAOXNAFwRQizQQcJ3'
+    // TODO: create a real umbrella for UW
+};
+
 exports.DateTimeFormat = {
     DATE: 'YYYY-MM-DD',  // '2018-03-24'
     TIME: 'HH:mm',  // '15:30'

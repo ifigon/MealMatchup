@@ -11,9 +11,9 @@ class ReceivingAgencySignUp2 extends Component {
                 <div className="signup-content">
                     <div className="form-block">
                         <label className="form-component">Account Details</label><br />
-                        <input name="email" type="text" id="organization" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} /><br />
-                        <input name="password" type="password" id="password" className="form-component" placeholder="Password" defaultValue={this.props.fieldValues.password} />
-                        <input type="password" className="form-component" placeholder="Confirm Password" defaultValue={this.props.fieldValues.password} />
+                        <input name="email" type="text" id="organization" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} required /><br />
+                        <input name="password" type="password" id="password" className="form-component" placeholder="Password" required />
+                        <input type="password" className="form-component" placeholder="Confirm Password" required />
                     </div>
                     <div className="buttons">
                         <span className="cancel" onClick={this.props.previousStep} >BACK</span>
