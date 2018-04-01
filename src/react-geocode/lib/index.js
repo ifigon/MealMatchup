@@ -1,3 +1,4 @@
+/*eslint-disable */
 let handleUrl = (() => {
   var _ref = _asyncToGenerator(function* (url) {
     const response = yield fetch(url).catch(function (error) {
