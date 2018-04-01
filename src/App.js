@@ -24,7 +24,6 @@ class App extends Component {
 
     componentDidMount() {
         // check whether user is logged in
-        auth.signInWithEmailAndPassword('testdonate1member1@test.com', '123456');
         auth.onAuthStateChanged(function(user) {
             if (user) {
                 // grab user's account object
