@@ -36,10 +36,6 @@ class MobileController extends React.Component {
         this.showStart = this.showStart.bind(this);
     }
 
-    componentDidMount(){
-        
-    }
-
     showStart(){
         this.setState({
             step: 1
@@ -53,7 +49,7 @@ class MobileController extends React.Component {
                 pickup={this.state.pickup}
                 showStart={this.showStart}/>;
         case 1:
-            return <MobileStart pickip={this.state.pickup}/>;
+            return <MobileStart pickup={this.state.pickup}/>;
         }
     }
 

@@ -1,12 +1,7 @@
 import React from 'react';
 import './MobileDelivery.css';
-import MobileStart from './Start/MobileStart';
-// import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
 
 class MobileDelivery extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <div className="mobile-delivery">

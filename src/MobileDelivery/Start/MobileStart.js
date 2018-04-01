@@ -3,11 +3,6 @@ import '../MobileDelivery.css';
 import './MobileStart.css';
 
 class MobileStart extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    componentDidMount(){
-    }
     render() {
         return (
             <div className="mobile-delivery">
@@ -16,6 +11,7 @@ class MobileStart extends React.Component {
                 </div>
                 <div className="mobile-card">
                     <div className="mobile-card-line"></div>
+                    <p>{this.props.pickup.daName}</p>
                     <input type="submit" value="Start" id="start-delivery-btn"/> 
                 </div>
             </div>

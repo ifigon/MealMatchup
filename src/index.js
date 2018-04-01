@@ -5,7 +5,6 @@ import 'typeface-roboto';
 import App from './App';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
-import MobileDelivery from './MobileDelivery/MobileDelivery';
 import MobileController from './MobileDelivery/MobileController';
 
 ReactDOM.render(
