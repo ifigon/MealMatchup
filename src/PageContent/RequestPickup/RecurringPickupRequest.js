@@ -138,26 +138,30 @@ class RecurringPickupRequest extends Component {
                 durationValue = event.target.numRecurrences.value;
             }
 
-            var pendingRAs = [];
+            var raInfo = {};
             var raUid = event.target.receivingAgency.value;
             if (raUid) {
-                pendingRAs.push(raUid);
+                raInfo['requested'] = raUid;
             } else {
                 // if no specific RA requested, add all RAs to pending list
+                let pending = [];
                 for (let ra in this.state.receivingAgencies) {
-                    pendingRAs.push(this.state.receivingAgencies[ra].id);
+                    pending.push(this.state.receivingAgencies[ra].id);
                 }
+                raInfo['pending'] = pending;
             }
             
-            var pendingDGs = [];
+            var dgInfo = {};
             var dgUid = event.target.delivererGroup.value;
             if (dgUid) {
-                pendingDGs.push(dgUid);
+                dgInfo['requested'] = dgUid;
             } else {
                 // if no specific DG requested, add all DGs to pending list
+                let pending = [];
                 for (let dg in this.state.delivererGroups) {
-                    pendingDGs.push(this.state.delivererGroups[dg].id);
+                    pending.push(this.state.delivererGroups[dg].id);
                 }
+                dgInfo['pending'] = pending;
             }
 
             // create DeliveryRequest object
@@ -176,12 +180,8 @@ class RecurringPickupRequest extends Component {
                 umbrella: this.props.donatingAgency.umbrella,
                 donatingAgency: this.props.account.agency,
                 requester: this.props.account.name,
-                receivingAgency: {
-                    pending: pendingRAs
-                },
-                delivererGroup: {
-                    pending: pendingDGs
-                },
+                receivingAgency: raInfo,
+                delivererGroup: dgInfo,
                 requestTimestamp: Date.now()
             };
 
@@ -198,8 +198,7 @@ class RecurringPickupRequest extends Component {
     // when "Confirm" is clicked on the summary popup
     submitRequest(){
         // write to firebase
-        var newRequest = firebase.database().ref('delivery_requests').push();
-        newRequest.set(this.state.request);
+        firebase.database().ref('delivery_requests').push(this.state.request);
 
         // hide popup and clear form
         this.toggleModal();
