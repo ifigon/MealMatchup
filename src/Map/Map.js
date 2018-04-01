@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMap from 'google-map-react';
-import Geocode from 'react-geocode';
+import Geocode from '../react-geocode';
 import './Marker.css';
 
 const Marker = ({ text }) => (
