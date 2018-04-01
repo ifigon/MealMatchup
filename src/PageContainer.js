@@ -27,7 +27,7 @@ class PageContainer extends Component {
             showPopUp: false,
             hover: false,
             donatingAgency: null,
-            dialogOpen: true
+            dialogOpen: false
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -56,7 +56,6 @@ class PageContainer extends Component {
     }
 
     openDialog() {
-        console.log('open dialog');
         this.setState({
             dialogOpen: true
         });
@@ -94,7 +93,6 @@ class PageContainer extends Component {
     }
 
     render() {
-        console.log('this.state', this.state);
         return (
             <div>
                 <PageHeader
