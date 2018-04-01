@@ -46,8 +46,13 @@ class PickupSummary extends React.Component {
                                     <p>email</p>
                                 </div>
                             </div>
-                            {/* TODO: Pass in address into map */}
-                            <Map></Map>
+                            {/* concat address fields into a string */}
+                            <Map 
+                                address={Object.keys(this.props.address).map(key => this.props.address[key]).join(' ')}
+                                height={'150px'}
+                                width={'350px'}
+                                marginRight={'30px'}
+                            />
                         </div>
                         {this.props.notes !== '' ?
                             <div className="details grid">

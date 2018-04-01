@@ -5,7 +5,6 @@ import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
-import Map from './Map/Map';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -59,7 +58,7 @@ class PageContainer extends Component {
 
                 {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}><Map/></div>
+                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Calendar</div>
                 }
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&

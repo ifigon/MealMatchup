@@ -7,9 +7,7 @@ const Marker = ({ text }) => (
     <div>
         <div className="pin bounce"></div>
         <div className='pulse'></div>
-        <p>{text}</p>
     </div>
-    
 );
 
 class Map extends Component{
@@ -18,44 +16,49 @@ class Map extends Component{
         
         this.state  = {
             center: {},
-            zoom: 15
+            zoom: 15,
+            validAddress: true
         };
-        var address = '3411 167th pl sw lynnwood wa 98037';
+    }
 
+    componentDidMount(){
         // Convert address to Lat, Long
-        Geocode.fromAddress(address).then(
+        Geocode.fromAddress(this.props.address).then(
             response => {
                 this.setState({
                     center: response.results[0].geometry.location
                 });
-                
             },
             error => {
-                return <div>Unable to load map</div>;
+                this.setState((prevState) => {
+                    return {validAddress: !prevState.validAddress};
+                });
             }
         );
     }
-    componentDidMount(){
-        console.log(this.state.center);
-    }
+
     render() {
         const style = {
-            height: '150px',
-            width: '350px',
-            marginRight: '30px'
+            height: this.props.height,
+            width: this.props.width,
+            marginRight: this.props.marginRight
         };
         return (
             <div className='google-map' style={style}>
-                <GoogleMap
-                    center={ this.state.center }
-                    zoom={ this.state.zoom }>
-                    <Marker
-                        latLng={this.state.center}
-                        lat={this.state.center.lat}
-                        lng={this.state.center.long}
-                        text={'Kreyser Avrora'}
-                    />
-                </GoogleMap>
+                {this.state.validAddress ?
+                    <GoogleMap
+                        center={ this.state.center }
+                        zoom={ this.state.zoom }>
+                        <Marker
+                            latLng={this.state.center}
+                            lat={this.state.center.lat}
+                            lng={this.state.center.long}
+                            text={'Kreyser Avrora'}
+                        />
+                    </GoogleMap>
+                    :
+                    <div className="error">Unable to load map</div>
+                }
             </div>
         );
     }
