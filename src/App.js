@@ -4,7 +4,6 @@ import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
-import MobileDelivery from './MobileDelivery/MobileDelivery';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).

@@ -6,46 +6,141 @@
 }
 
 .mobile-header{
-    /* position: absolute; */
     background: #FFFFFF;
-    /* box-shadow: inset -1px 0px 0px #dddddd; */
-    /* box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25); */
-    margin: 15px 10px 0px 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-agenda{
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Open Sans';
+    font-size: 28px;
+    color: #243847;
+}
+
+.mobile-header p{
+    margin: 10px 20px;
+    font-size: 18px;
     color: #3E3F40;
+    padding-bottom: 10px;
+}
+
+#mobile-header-pickup{
+    color: #828282;
 }
 
 .mobile-start{
-    position: absolute;
-    width: 345.94px;
+    width: 90%;
     height: 500px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin: 30px auto 10px 13px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+    margin: 30px auto 10px auto;
 }
 
 .mobile-start p{
-    font-size: 20px;
     margin-left: 20px;
+}
+
+#mobile-day{
+    margin-right: 20px;
 }
 
 #mobile-time{
     font-size: 15px;
+    font-family: 'Open Sans';
+    font-size: 20px;
+    color: #243847;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
-#mobile-deliverers{
-    font-size: 15px;
-    font-weight: bold;
+.mobile-time{
+    display: flex;
+}
+
+#mobile-request{
+    font-family: Open Sans;
+    font-size: 20px;
+    color: #828282;
+    margin: 0px 20px 30px;
+}
+
+.mobile-content-header{
+    font-family:'Open Sans';
+    font-weight: 600;
+    font-size: 18px;
+    color: #243847;
+    margin-bottom: 10px;
 }
 
 .mobile-card-line{
     background-color: #9DCC6F;
     height: 4px;
+    width: 100%;
 }
 
-.mobile-deliverers{
+.mobile-deliverers, .mobile-to-from{
     display: flex;
-    font-size: 10px;
+    margin-bottom: 20px;
 }
 
-.mobile-deliverers p{
-    font-size: 15px;
+.mobile-student-info p{
+    margin: 3px 40px auto 20px
+}
+
+.mobile-student-info[id="0"]{
+    /* width: 50%; */
+}
+.mobile-to-from p{
+    margin: 3px 10px auto 20px
+}
+
+#mobile-da{
+    width: 60%;
+}
+
+#mobile-name{
+    font-family: 'Open Sans';
+    font-size: 16px;
+    color: #243847;     
+}
+
+#mobile-org{
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color:#828282;
+}
+
+#start-delivery-btn{
+    height: 38.84px;
+    background: #9DCC6F;
+    border-radius: 4px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center; 
+    color: #FFFFFF;
+    width: 70%;
+    margin: auto;
+    border-color: #9DCC6F;
+    display: block;
+}
+
+.dot{
+    height: 28px;
+    width: 28px;
+    background-color: #9DCC6F;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+a[href^="tel:"] {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: #2D9CDB;
+    text-decoration: none;
+    margin-left: 20px;
 }

@@ -11,7 +11,9 @@ ReactDOM.render(
     <Router>
         <div>
             <Route exact path="/" component={App} />
-            {/* TODO: Mobile route */}
+            {/* TODO: Mobile route 
+                - unique path to a pickup and pass info into MobileDelivery
+            */}
             <Route exact path="/mobile" component={MobileDelivery} />
         </div>
     </Router>,
