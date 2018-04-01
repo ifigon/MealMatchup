@@ -1,0 +1,26 @@
+.event-container {
+  background-color: rgba(46, 204, 113, 0.1);
+  border-left: 3.8px solid #2ecc71;
+  padding: 10px;
+  width: 160px;
+}
+
+.truck-icon {
+  width: 30px;
+  vertical-align: middle;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.event-header {
+  font: #4f4f4f;
+  font-size: 12px;
+}
+
+.event-time {
+  font: #4f4f4f;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}

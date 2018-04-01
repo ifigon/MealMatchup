@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
 import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
+import EventCard from './PageContent/Calendar/EventCard.js';
 // import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
 // import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
 import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
@@ -16,7 +17,6 @@ import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupR
 // Default page content is Calendar.
 
 class PageContainer extends Component {
-
     constructor(props) {
         // Props: content, account
         super(props);
@@ -27,25 +27,25 @@ class PageContainer extends Component {
             hover: false,
             donatingAgency: null
         };
-        
+
         this.navBarHandler = this.navBarHandler.bind(this);
         this.hover = this.hover.bind(this);
     }
 
-    openPopUp(){
+    openPopUp() {
         this.setState({
             showPopUp: true,
             hover: false
         });
     }
 
-    closePopUp(){
+    closePopUp() {
         this.setState({
             showPopUp: false
         });
     }
 
-    hover(){
+    hover() {
         this.setState({
             hover: true
         });
@@ -53,13 +53,21 @@ class PageContainer extends Component {
 
     componentDidMount() {
         // grab the DA entity if user is DA member
-        if (this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            var daRef = firebase.database().ref('donating_agencies').child(this.props.account.agency);
-            daRef.once('value').then(function(daSnap) {
-                this.setState({
-                    donatingAgency: daSnap.val()
-                });
-            }.bind(this));
+        if (
+            this.props.account.accountType ===
+            AccountType.DONATING_AGENCY_MEMBER
+        ) {
+            var daRef = firebase
+                .database()
+                .ref('donating_agencies')
+                .child(this.props.account.agency);
+            daRef.once('value').then(
+                function(daSnap) {
+                    this.setState({
+                        donatingAgency: daSnap.val()
+                    });
+                }.bind(this)
+            );
         }
     }
 
@@ -68,64 +76,75 @@ class PageContainer extends Component {
             content: e
         });
     }
- 
-    render(){
-        return(
-            <div>
-                <PageHeader 
-                    logo={logo} 
-                    title={this.props.account.name}
-                    hover={this.hover}>
-                </PageHeader>
 
-                <NavBar 
-                    content={this.state.content} 
-                    accountType={this.props.account.accountType} 
-                    handler={this.navBarHandler}>
-                </NavBar>
+    render() {
+        return (
+            <div>
+                <PageHeader
+                    logo={logo}
+                    title={this.props.account.name}
+                    hover={this.hover}
+                />
+
+                <NavBar
+                    content={this.state.content}
+                    accountType={this.props.account.accountType}
+                    handler={this.navBarHandler}
+                />
 
                 {/* TODO: replace placeholder text with real components */}
-                {this.state.content === PageContent.CALENDAR &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Calendar</div>
-                }
+                {this.state.content === PageContent.CALENDAR && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Calendar
+                        <EventCard />
+                    </div>
+                )}
 
-                {this.state.content === PageContent.ASSIGN_VOLUNTEERS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Assign Volunteers</div>
-                }
+                {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Assign Volunteers
+                    </div>
+                )}
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&
-                    (this.state.donatingAgency ?
+                    (this.state.donatingAgency ? (
                         /* Wait for donating agency to be fetched */
-                        <RecurringPickupRequest 
+                        <RecurringPickupRequest
                             account={this.props.account}
-                            donatingAgency={this.state.donatingAgency}>
-                        </RecurringPickupRequest>
-                        :
+                            donatingAgency={this.state.donatingAgency}
+                        />
+                    ) : (
                         /* TODO: add loading UI? */
-                        <div></div>
-                    )
-                }
+                        <div />
+                    ))}
 
-                {this.state.content === PageContent.FOOD_LOGS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
-                }
+                {this.state.content === PageContent.FOOD_LOGS && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Food Logs
+                    </div>
+                )}
 
-                {this.state.content === PageContent.DIRECTORY &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Directory</div>
-                }
+                {this.state.content === PageContent.DIRECTORY && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Directory
+                    </div>
+                )}
 
-                {this.state.content === PageContent.SETTINGS &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
-                }
-                {this.state.hover ? 
-                    <RecurringDeliveryRequestNotification clickNotification={this.openPopUp.bind(this)}/>
-                    : null
-                }
-                {this.state.showPopUp ?
-                    <EmergencyDeliveryRequestController closePopUp={this.closePopUp.bind(this)}/>
-                    : null    
-                }
-
+                {this.state.content === PageContent.SETTINGS && (
+                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                        Settings
+                    </div>
+                )}
+                {this.state.hover ? (
+                    <RecurringDeliveryRequestNotification
+                        clickNotification={this.openPopUp.bind(this)}
+                    />
+                ) : null}
+                {this.state.showPopUp ? (
+                    <EmergencyDeliveryRequestController
+                        closePopUp={this.closePopUp.bind(this)}
+                    />
+                ) : null}
             </div>
         );
     }
