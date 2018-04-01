@@ -4,6 +4,7 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
+import Dialog from './PageContent/Calendar/Dialog.js';
 // import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
 // import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
 import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
@@ -25,11 +26,14 @@ class PageContainer extends Component {
             content: props.content,
             showPopUp: false,
             hover: false,
-            donatingAgency: null
+            donatingAgency: null,
+            dialogOpen: true
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
         this.hover = this.hover.bind(this);
+        this.openDialog = this.openDialog.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
     }
 
     openPopUp() {
@@ -48,6 +52,18 @@ class PageContainer extends Component {
     hover() {
         this.setState({
             hover: true
+        });
+    }
+
+    openDialog() {
+        console.log('open dialog');
+        this.setState({
+            dialogOpen: true
+        });
+    }
+    closeDialog() {
+        this.setState({
+            dialogOpen: false
         });
     }
 
@@ -78,6 +94,7 @@ class PageContainer extends Component {
     }
 
     render() {
+        console.log('this.state', this.state);
         return (
             <div>
                 <PageHeader
@@ -96,7 +113,12 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         Calendar
-                        <EventCard />
+                        <div onClick={this.openDialog}>
+                            <EventCard />
+                        </div>
+                        {this.state.dialogOpen ? (
+                            <Dialog closeDialog={this.closeDialog} />
+                        ) : null}
                     </div>
                 )}
 
