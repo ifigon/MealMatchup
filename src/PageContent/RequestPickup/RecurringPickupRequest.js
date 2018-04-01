@@ -1,39 +1,71 @@
 import React, {Component} from 'react';
-import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
+import firebase, { accountsRef } from '../../FirebaseConfig.js';
+import { RequestRepeatType, RequestDurationType, RequestStatus } from '../../Enums.js';
+import { getWeekdayFromDateString } from '../../Utils.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 
 class RecurringPickupRequest extends Component {
+
     constructor(props) {
+        // Props: account, donatingAgency
         super(props);
+
         this.state = {
-            memberList: [
-                {id: 'dhA03LwTp3cibXVUcb3nQqO34wj1', name: 'Test DA1 Member1'}, 
-                {id: 'fbCm3Yrbi4e12WgpVz3gq25VKea2', name: 'Test DA1 Member2'}
-            ],
-            delivererGroups: [
-                {id: 'R8BAHrxdkfQoAmfWpvGa1OJmjQP43', name: 'Test DG1'},
-                {id: 'sS4dqgxgLIXtPf42DydgkWLWeHT2', name: 'Test DG2'}
-            ],
-            receivingAgencies: [
-                {id: 'uCm0OG4WeoSyjk3c0rdY3mlaBXl2', name: 'Test RA2'},
-                {id: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3', name: 'Test RA1'}
-            ],
+            memberList: [],
+            delivererGroups: [],
+            receivingAgencies: [],
             fields: {},
-            errorList: {},
-            isOpen: false,
-            formInfo: [],
+            errors: {},
+            showPopup: false,
+            request: {},
             dayOfWeek: ''
-        }; 
+        };
+
+        this.formId = 'recurringRequestForm';
+
         this.submitRequest = this.submitRequest.bind(this);
         this.createRequest = this.createRequest.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.addListToState = this.addListToState.bind(this);
     }
 
+    // Query DB to populate lists in this.state
     componentDidMount(){
-        // Query DB and setState for memberList, delivererGroups, and receivingAgencies
+        // add members in this donating agency to state.memberList
+        var members = this.props.donatingAgency.members;
+        this.addListToState(members, 'memberList');
+
+        var umbrella = this.props.donatingAgency.umbrella;
+        accountsRef.child(umbrella).once('value').then(function (umbrellaSnap) {
+            // add receiving agencies in the same umbrella to state.receivingAgencies
+            var ras = umbrellaSnap.val().receivingAgencies;
+            this.addListToState(ras, 'receivingAgencies');
+
+            // add deliverer groups in the same umbrella to state.delivererGroups
+            var dgs = umbrellaSnap.val().delivererGroups;
+            this.addListToState(dgs, 'delivererGroups');
+        }.bind(this));
     }
 
+    // Helper function: append {id, name} for each entry in the list to
+    // the given field in this.state
+    addListToState(list, field) {
+        for (let key in list) {
+            accountsRef.child(list[key]).once('value').then(function (snap) {
+                var entry = {
+                    id: snap.key, 
+                    name: snap.val().name
+                };
+                // append entry into state
+                this.setState((prevState) => {
+                    return {[field]: prevState[field].concat(entry)};
+                });
+            }.bind(this));
+        }
+    }
+
+    // Validate the request form inputs
     handleValidation(){
         let fields = this.state.fields;
         let errors = {};
@@ -45,92 +77,60 @@ class RecurringPickupRequest extends Component {
             errors['startDate'] = 'Start date cannot be empty';
         }
 
-        if((fields['recurTimes'] === '' || !fields['recurTimes']) && fields['endDate'] !== '' && fields['endDate'] < fields['startDate']){
+        if (!fields['durationType']) {
+            // the they need to have one or the other error msg
+            errors['durationType'] = 'Must select radio button';
             formIsValid = false;
-            errors['endBeforeStart'] = 'End date cannot be before start date';
+        } else {
+            if (fields['durationType'] === RequestDurationType.DATE) {
+                // perform all endDate related checks
+                if(fields['endDate'] < fields['startDate']){
+                    formIsValid = false;
+                    errors['endBeforeStart'] = 'End date cannot be before start date';
+                }else if(fields['endDate'] === '' || !fields['endDate']){
+                    formIsValid = false;
+                    errors['endBeforeStart'] = 'Enter an end date';
+                }
+            } else {
+                // perform all recurTimes related checks
+                if(fields['recurTimes'] === '' || !fields['recurTimes'] || fields['recurTimes'] < 1){
+                    formIsValid = false;
+                    errors['invalidRecurTimes'] = 'Pickup must recur at least once';
+                }
+            }
         }
-        // if (!fields['durationType']) {
-        //     // the they need to have one or the other error msg
-        //     errors['durationType'] = 'Must select radio button';
-        // } else {
-        //     if (fields['durationType'] === RequestDurationType.DATE) {
-        //         // perform all endDate related checks
-
-        //     } else {
-        //         // perform all recurTimes related checks
-        //     }
-        // }
 
         //Time
-        if(!fields['startTime']){
-            formIsValid = false;
-            errors['startTime'] = 'Start time cannot be empty';
-        }
-
-        if(!fields['endTime'] && (!fields['recurTimes'] || fields['recurTimes'] === '')){
-            formIsValid = false;
-            errors['endTime'] = 'End time cannot be empty';
-        }
-
         if(fields['endTime'] < fields['startTime']){
             formIsValid = false;
             errors['time'] = 'Invalid time range';
         }    
 
-        //Recur times
-        if(fields['recurTimes'] <= 0 && fields['endDate'] !== '') {
-            formIsValid = false;
-            errors['recurTimes'] = 'Pickup must recur at least once';
-        }
-
-        if((fields['recurTimes'] === '' && fields['endDate'] === '') 
-            || (!fields['recurTimes'] && !fields['endDate'])){
-            formIsValid = false;
-            errors['recurTimes'] = 'Must enter value for recurring times or an end date';
-        }
-
-        this.setState({errorList: errors});
-        console.log(errors);
-        console.log(this.state.errorList);
+        this.setState({
+            errors: errors
+        });
         return formIsValid;
     }
 
     handleChange(field, e){   
         let fields = this.state.fields;
         fields[field] = e.target.value; 
-        // if(e.target.value) {
-        //     fields.splice(e.target.event)
-        // }      
-        console.log('changed: ' + field + ', ' + e.target.value);
         this.setState({fields});
     }
 
     toggleModal(){
-        this.setState({
-            isOpen: !this.state.isOpen
+        this.setState((prevState) => {
+            return {showPopup: !prevState.showPopup};
         });
     }
 
-    // write to firebase
-    // var newRequest = firebase.database().ref().child("delivery_requests").push();
-    // newRequest.set(deliveryRequest);
-    submitRequest(){
-        
-    }
-
+    // When "Done" is clicked on the request form
     createRequest(event) {
-        
-        if(!this.handleValidation()){ 
-            event.preventDefault();
+        event.preventDefault();
+        if (!this.handleValidation()) {
             alert('Form has errors');
-        }else{
-            event.preventDefault();
-            var raUid = event.target.receiveingAgency.value;
-            if (!raUid) raUid = null;
-            
-            var dgUid = event.target.delivererGroup.value;
-            if (!dgUid) dgUid = null;
-
+        } else {
+            // process various fields
             var durationValue = null;
             if (event.target.durationType.value === RequestDurationType.DATE) {
                 durationValue = event.target.endDate.value;
@@ -138,8 +138,35 @@ class RecurringPickupRequest extends Component {
                 durationValue = event.target.numRecurrences.value;
             }
 
+            var raInfo = {};
+            var raUid = event.target.receivingAgency.value;
+            if (raUid) {
+                raInfo['requested'] = raUid;
+            } else {
+                // if no specific RA requested, add all RAs to pending list
+                let pending = [];
+                for (let ra in this.state.receivingAgencies) {
+                    pending.push(this.state.receivingAgencies[ra].id);
+                }
+                raInfo['pending'] = pending;
+            }
+            
+            var dgInfo = {};
+            var dgUid = event.target.delivererGroup.value;
+            if (dgUid) {
+                dgInfo['requested'] = dgUid;
+            } else {
+                // if no specific DG requested, add all DGs to pending list
+                let pending = [];
+                for (let dg in this.state.delivererGroups) {
+                    pending.push(this.state.delivererGroups[dg].id);
+                }
+                dgInfo['pending'] = pending;
+            }
+
             // create DeliveryRequest object
             var deliveryRequest = {
+                status: RequestStatus.PENDING,
                 startDate: event.target.startDate.value,
                 duration:{
                     type: event.target.durationType.value,
@@ -150,49 +177,47 @@ class RecurringPickupRequest extends Component {
                 endTime: event.target.endTime.value,
                 primaryContact: event.target.primaryContact.value,
                 notes: event.target.notes.value,
-                receiveingAgency: {
-                    uid: raUid,
-                    confirmed: false
-                },
-                delivererGroup: {
-                    uid: dgUid,
-                    confirmed: false
-                },
+                umbrella: this.props.donatingAgency.umbrella,
+                donatingAgency: this.props.account.agency,
+                requester: this.props.account.name,
+                receivingAgency: raInfo,
+                delivererGroup: dgInfo,
                 requestTimestamp: Date.now()
             };
-            let date = new Date(deliveryRequest.startDate);
-            let day = date.getDay();
-            let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+            var weekday = getWeekdayFromDateString(deliveryRequest.startDate);
             this.setState({
-                formInfo: deliveryRequest,
-                dayOfWeek: days[day]
+                request: deliveryRequest,
+                dayOfWeek: weekday
             });
             
             this.toggleModal();
         }
     }
 
+    // when "Confirm" is clicked on the summary popup
+    submitRequest(){
+        // write to firebase
+        firebase.database().ref('delivery_requests').push(this.state.request);
+
+        // hide popup and clear form
+        this.toggleModal();
+        document.getElementById(this.formId).reset();
+    }
+
     render() {
         return (
-            <div className="form" id="recurringForm">
-                <form onSubmit={this.createRequest}>
+            <div className="form">
+                <form id={this.formId} onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
                         {
-                            // loop through all error statements
-                            this.state.errorList.map((error, i) => {
+                            Object.keys(this.state.errors).map((error, i) => {
                                 return (
-                                    <p className="error" key={i}>{this.state.errorList[error]}</p>
+                                    <p className="error" key={i}>{this.state.errors[error]}</p>
                                 );
                             })
                         }
-                        {/* <p className="error">{this.state.errors['endBeforeStart']}</p>
-                        <p className="error">{this.state.errors['startTime']}</p>
-                        <p className="error">{this.state.errors['endTime']}</p>
-                        <p className="error">{this.state.errors['recurTimes']}</p>
-                        <p className="error">{this.state.errors['startDate']}</p>
-                        <p className="error">{this.state.errors['time']}</p> */}
                         <span className="flex">
                             <span className="grid">
                                 <label>Start Date  <span className="red">*</span></label><br/>
@@ -200,12 +225,12 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestDurationType.RECUR} required/>
+                                    <input type="radio" name="durationType" value={RequestDurationType.RECUR} onChange={this.handleChange.bind(this, 'durationType')} required/>
                                     <span className="checkmark"></span>Recur
                                     <input type="number" name="numRecurrences" onChange={this.handleChange.bind(this, 'recurTimes')} />times<br/>
                                 </label >
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestDurationType.DATE} />
+                                    <input type="radio" name="durationType" value={RequestDurationType.DATE} onChange={this.handleChange.bind(this, 'durationType')}/>
                                     <span className="checkmark"></span>End by
                                     <input type="date" name="endDate" onChange={this.handleChange.bind(this, 'endDate')} />
                                 </label>
@@ -215,8 +240,8 @@ class RecurringPickupRequest extends Component {
                         <span className="flex">
                             <span className="grid">
                                 <label>Repeats <span className="red">*</span></label><br/>
-                                <select name="repeats" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
+                                <select name="repeats" defaultValue="" required>
+                                    <option value="" disabled>Select</option>
                                     <option value={RequestRepeatType.WEEKLY}>Weekly</option>
                                     <option value={RequestRepeatType.BIWEEKLY}>Every other week</option>
                                     {/* TODO warning if not every month in the range has this date */}
@@ -227,8 +252,8 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label>Primary Contact <span className="red">*</span></label><br/>
-                                <select name="primaryContact" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
+                                <select name="primaryContact" defaultValue="" required>
+                                    <option value="" disabled>Select</option>
                                     {this.state.memberList.map((member,i) => {
                                         return (
                                             <option key={i} value={member.id}>{member.name}</option>
@@ -250,16 +275,14 @@ class RecurringPickupRequest extends Component {
                         <span className="grid">
                             <p id="form-heading">Notes for Pickup</p>
                             <textarea name="notes" 
-                                placeholder="Ex: Use the underground parking garage upon entrance. 
-                                Key card access required after 3:00pm."/>
+                                placeholder="Ex: Use the underground parking garage upon entrance. Key card access required after 3:00pm."/>
                         </span>
                         <p id="form-heading">Agencies involved</p>
                         <span className="flex">
                             <span className="grid">
                                 <label>Student Group</label><br/>
-                                <select name="delivererGroup" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
-                                    {/* TODO: populate based on directory */}
+                                <select name="delivererGroup" defaultValue="">
+                                    <option value="">Select</option>
                                     {this.state.delivererGroups.map((dg,i) => {
                                         return (
                                             <option key={i} value={dg.id}>{dg.name}</option>
@@ -269,9 +292,8 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label>Shelter</label><br/>
-                                <select name="receiveingAgency" defaultValue="select">
-                                    <option value="select" disabled>Select</option>
-                                    {/* TODO: populate based on directory */}
+                                <select name="receivingAgency" defaultValue="">
+                                    <option value="">Select</option>
                                     {this.state.receivingAgencies.map((ra, i) => {
                                         return (
                                             <option key={i} value={ra.id}>{ra.name}</option>
@@ -286,20 +308,22 @@ class RecurringPickupRequest extends Component {
                         </div>
                     </div>
                 </form>
-                <PickupSummary 
-                    type={'Request Recurring Pickup'} 
-                    startDate={this.state.formInfo.startDate} 
-                    dayOfWeek={this.state.dayOfWeek}
-                    duration={this.state.formInfo.duration}
-                    repeats={this.state.formInfo.repeats}
-                    startTime={this.state.formInfo.startTime}
-                    endTime={this.state.formInfo.endTime}
-                    notes={this.state.formInfo.notes}
-                    account={this.props.account}
-                    show={this.state.isOpen} 
-                    onClose={this.toggleModal}
-                    onConfirm={this.submitRequest}>
-                </PickupSummary>
+
+                {this.state.showPopup &&
+                    <PickupSummary
+                        type={'Request Recurring Pickup'}
+                        startDate={this.state.request.startDate}
+                        dayOfWeek={this.state.dayOfWeek}
+                        duration={this.state.request.duration}
+                        repeats={this.state.request.repeats}
+                        startTime={this.state.request.startTime}
+                        endTime={this.state.request.endTime}
+                        notes={this.state.request.notes}
+                        account={this.props.account}
+                        onClose={this.toggleModal}
+                        onConfirm={this.submitRequest}>
+                    </PickupSummary>
+                }
             </div>
         );
     }

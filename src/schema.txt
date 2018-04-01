@@ -13,7 +13,10 @@ UMBRELLA ("/accounts/")
 			ceebCode: "4854",  // different field depending on umbrella type
 		}
 		name: "University of Washington",
+<<<<<<< HEAD
 		ceebCode: "4854", 
+=======
+>>>>>>> 8c27430ea9f39f545dbf9e897a5f32a9ab63f956
 		address: {
 			street1: "1410 Northeast Campus Parkway",
 			street2: "",
@@ -39,7 +42,7 @@ UMBRELLA ("/accounts/")
 			"R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
 			...
 		],
-		notificatioins: [
+		notifications: [
 			{
 				type: "new_account",  // Enums.NotificationType
 				content: null  // TBD
@@ -70,6 +73,13 @@ DONATING AGENCY ("/donating_agencies/") //not an account
 		members: [
 			"dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of donating-agency-member
 			"fbCm3Yrbi4e12WgpVz3gq25VKea2",
+		],
+		notifications: [
+			{
+				type: "recurring_pickup_confirmed",  // Enums.NotificationType
+				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+			},
+			...
 		]
 	}
 
@@ -85,14 +95,7 @@ DONATING AGENCY MEMBER ("/accounts/")
 		email: "bensoa3@uw.edu",
 		phone: 2065436975,
 		position: "Manager"
-		isAdmin: true,
-		notifications: [
-			{
-				type: "recurring_pickup_confirmed",  // Enums.NotificationType
-				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
-			},
-			...
-		]
+		isAdmin: true
 	}
 
 
@@ -140,7 +143,7 @@ RECEIVING AGENCY ("/accounts/")
 			min: 10,  // in lbs
 			max: 100  // in lbs
 		},
-		notification: [
+		notifications: [
 			{
 				type: "recurring_pickup_request",  // Enums.NotificationType
 				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
@@ -176,7 +179,7 @@ DELIVERER GROUP ("/accounts/")
 			phone: 2064872859,
 			position: "President"
 		},
-		notification: [
+		notifications: [
 			{
 				type: "recurring_pickup_request",  // Enums.NotificationType
 				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
@@ -192,6 +195,7 @@ DELIVERY REQUEST ("/delivery_requests/")
 
 	// key = auto generated key by firebase
 	-L5QoXeC_UrL5tRRED3e: {
+		status: 'pending',  // Enums.RequestStatus
 		startDate: "2018-02-28",
 		duration: {
 			type: "date",  // Enums.RequestDurationType
@@ -202,19 +206,37 @@ DELIVERY REQUEST ("/delivery_requests/")
 		endTime: "17:00",
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		notes: "Enter through the back door.",
+		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a umbrella
+		donatingAgency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
+		requester: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		// receivingAgency & delivererGroups:
 		// The donating agency can choose to request specific receiving agency
 		// and/or deliverer group, or not.
-		// a. If specified, the uid would be populated, but confirmed=false
-		// b. It no specified, the uid would be null until someone claims this
-		//    request.
+		// a. If specified, 'requested' field will be the uid-key of that RA
+		// b. It not specified, all RA/DG uids in this umbrella will be added to 'pending'
 		receivingAgency: {
-			uid: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of a receiving-agency
-			confirmed: true
+			// Depending on the status of the request, this
+			// map will have 1 out of the 3 possible fields:
+			// "requested", "pending" (list), "claimed"
+			requested: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // uid-key of a RA
+			// OR
+			pending: [  
+				"uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of all RAs
+				...
+			]
+			// OR
+			claimed: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // uid-key of a RA (once a RA claims)
 		},
 		delivererGroup: {
-			uid: null,  // uid-key of a deliverer-group
-			confirmed: false
+			// same as receivingAgency above:
+			requested: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG
+			// OR
+			pending: [
+				"R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of all DGs
+				...
+			]
+			// OR
+			claimed: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG (once a DG claims)
 		},
 		requestTimeStamp: "1518753363763"
 	}
@@ -232,7 +254,7 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 		isEmergency: false,
 		donatingAgency: {
 			agency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
-			primaryContact: 
+			primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		},
 		receivingAgency: {
 			agency: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of receiving-agency
