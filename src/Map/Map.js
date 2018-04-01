@@ -4,9 +4,12 @@ import Geocode from 'react-geocode';
 import './Marker.css';
 
 const Marker = ({ text }) => (
-    <div className="marker">
-        {text}
+    <div>
+        <div className="pin bounce"></div>
+        <div className='pulse'></div>
+        <p>{text}</p>
     </div>
+    
 );
 
 class Map extends Component{
@@ -14,11 +17,10 @@ class Map extends Component{
         super(props);
         
         this.state  = {
-            // Defaults to Seattle
-            center: {lat:47.60, lng:-122.33},
-            zoom: 13
+            center: {},
+            zoom: 15
         };
-        var address = 'local point';
+        var address = '3411 167th pl sw lynnwood wa 98037';
 
         // Convert address to Lat, Long
         Geocode.fromAddress(address).then(
@@ -26,12 +28,15 @@ class Map extends Component{
                 this.setState({
                     center: response.results[0].geometry.location
                 });
-                console.log(this.state.center);
+                
             },
             error => {
-                console.error(error);
+                return <div>Unable to load map</div>;
             }
         );
+    }
+    componentDidMount(){
+        console.log(this.state.center);
     }
     render() {
         const style = {
@@ -44,18 +49,13 @@ class Map extends Component{
                 <GoogleMap
                     center={ this.state.center }
                     zoom={ this.state.zoom }>
-                </GoogleMap>
-                {/* <GoogleMap
-                    defaultCenter={ this.state.center }
-                    defaultZoom={ this.state.zoom }>
-                />
                     <Marker
                         latLng={this.state.center}
                         lat={this.state.center.lat}
-                        lng={this.state.center.lng}
-                        text={'local point'}
+                        lng={this.state.center.long}
+                        text={'Kreyser Avrora'}
                     />
-                </GoogleMap> */}
+                </GoogleMap>
             </div>
         );
     }
