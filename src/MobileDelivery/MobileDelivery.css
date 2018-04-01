@@ -29,16 +29,16 @@
     color: #828282;
 }
 
-.mobile-start{
+.mobile-card{
     width: 90%;
-    height: 500px;
+    height: 100%;
     background: #FFFFFF;
     box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
     border-radius: 3px;
     margin: 30px auto 10px auto;
 }
 
-.mobile-start p{
+.mobile-card p{
     margin-left: 20px;
 }
 
@@ -124,6 +124,7 @@
     color: #FFFFFF;
     width: 70%;
     margin: auto;
+    margin-bottom: 20px;
     border-color: #9DCC6F;
     display: block;
 }
