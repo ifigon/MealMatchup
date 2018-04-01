@@ -11,14 +11,10 @@ ReactDOM.render(
     <Router>
         <div>
             <Route exact path="/" component={App} />
-<<<<<<< HEAD
             {/* TODO: Mobile route 
                 - unique path to a pickup and pass info into MobileDelivery
             */}
             <Route exact path="/mobile" component={MobileController} />
-=======
-            {/* TODO: Mobile route */}
->>>>>>> 8c27430ea9f39f545dbf9e897a5f32a9ab63f956
         </div>
     </Router>,
     document.getElementById('root')
