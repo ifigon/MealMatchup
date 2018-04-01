@@ -23,7 +23,7 @@ class Map extends Component{
 
     componentDidMount(){
         // Convert address to Lat, Long
-        Geocode.fromAddress(this.props.address).then(
+        Geocode.fromAddress(Object.keys(this.props.address).map(key => this.props.address[key]).join(' ')).then(
             response => {
                 this.setState({
                     center: response.results[0].geometry.location

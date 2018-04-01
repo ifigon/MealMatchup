@@ -48,7 +48,7 @@ class PickupSummary extends React.Component {
                             </div>
                             {/* concat address fields into a string */}
                             <Map 
-                                address={Object.keys(this.props.address).map(key => this.props.address[key]).join(' ')}
+                                address={this.props.address}
                                 height={'150px'}
                                 width={'350px'}
                                 marginRight={'30px'}
