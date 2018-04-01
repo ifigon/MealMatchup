@@ -41,7 +41,10 @@ class Map extends Component{
         const style = {
             height: this.props.height,
             width: this.props.width,
-            marginRight: this.props.marginRight
+            marginLeft: this.props.marginLeft,
+            marginRight: this.props.marginRight,
+            marginTop: this.props.marginTop,
+            marginBottom: this.props.marginBottom
         };
         return (
             <div className='google-map' style={style}>

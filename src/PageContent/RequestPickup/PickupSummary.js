@@ -52,6 +52,9 @@ class PickupSummary extends React.Component {
                                 height={'150px'}
                                 width={'350px'}
                                 marginRight={'30px'}
+                                marginTop={'0px'}
+                                marginBottom={'0px'}
+                                marginLeft={'10px'}
                             />
                         </div>
                         {this.props.notes !== '' ?
