@@ -1,12 +1,12 @@
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!   AUTO GENERATED FROM src/Enums.js, DO NOT MODIFY   !!
+// !!   Please modify src/Enums.js instead and run:       !!
+// !!             `python hacks/cp_enums.py`              !!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 // Disable undeclared variable check on 'exports'
 /*global exports:true*/
 /*eslint no-undef: "error"*/
-
-// TODO: temporary for pilot, manually setting a fixed umbrella
-exports.UmbrellaId = {
-    TEST: 'PrE7oCZajNcRAOXNAFwRQizQQcJ3'
-    // TODO: create a real umbrella for UW
-};
 
 exports.DateTimeFormat = {
     DATE: 'YYYY-MM-DD',  // '2018-03-24'
