@@ -21,12 +21,13 @@
 }
 
 .event-header {
-  font: #4f4f4f;
+  color: #4f4f4f;
   font-size: 12px;
+  display: inline-block;
 }
 
 .event-time {
-  font: #4f4f4f;
+  color: #4f4f4f;
   font-size: 12px;
   font-weight: 400;
   margin-top: 5px;

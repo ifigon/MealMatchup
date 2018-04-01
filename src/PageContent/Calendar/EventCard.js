@@ -9,7 +9,7 @@ class EventCard extends Component {
         this.state = {
             eventType: 'recurring',
             eventTime: '10am - 12pm',
-            eventStatus: 'past'
+            eventStatus: 'future'
         };
     }
     render() {
