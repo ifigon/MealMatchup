@@ -53,9 +53,18 @@ class RecurringPickupRequest extends Component {
     addListToState(list, field) {
         for (let key in list) {
             accountsRef.child(list[key]).once('value').then(function (snap) {
+                var snapVal = snap.val();
+
+                // if account has to be verified/activated, 
+                // only add verified and activated accounts
+                if ((snap.hasChild('isVerified') && !snapVal.isVerified) || 
+                    (snap.hasChild('isActivated') && !snapVal.isActivated)) {
+                    return;
+                }
+
                 var entry = {
                     id: snap.key, 
-                    name: snap.val().name
+                    name: snapVal.name
                 };
                 // append entry into state
                 this.setState((prevState) => {
