@@ -10,17 +10,21 @@ class MobileStart extends React.Component {
         this.state  = {
             lat: '',
             long: '',
-            fullAddress: Object.keys(this.props.pickup.address).map(key => this.props.pickup.address[key]).join(' ')
+            fullAddress: ''
         };
     }
 
     componentDidMount(){
+        // concatenate address in a specific order
+        var keyOrder = ['street1', 'street2', 'city', 'state', 'zipcode'];
+        var address = keyOrder.map(key => this.props.pickup.address[key]).join(' ');
         // Convert address to Lat, Long
-        Geocode.fromAddress(this.state.fullAddress).then(
+        Geocode.fromAddress(address).then(
             response => {
                 this.setState({
                     lat: response.results[0].geometry.location.lat,
-                    long: response.results[0].geometry.location.lng
+                    long: response.results[0].geometry.location.lng,
+                    fullAddress: address
                 });
             }
         );
