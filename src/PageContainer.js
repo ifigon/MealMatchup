@@ -117,16 +117,6 @@ class PageContainer extends Component {
                         Settings
                     </div>
                 )}
-                {/* {this.state.hover ? (
-                    <RecurringDeliveryRequestNotification
-                        clickNotification={this.openPopUp.bind(this)}
-                    />
-                ) : null}
-                {this.state.showPopUp ? (
-                    <EmergencyDeliveryRequestController
-                        closePopUp={this.closePopUp.bind(this)}
-                    />
-                ) : null} */}
             </div>
         );
     }
