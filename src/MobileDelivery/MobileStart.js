@@ -1,5 +1,5 @@
 import React from 'react';
-import './MobileDelivery.css';
+import './Mobile.css';
 
 class MobileDelivery extends React.Component {
     render() {

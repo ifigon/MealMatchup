@@ -1,7 +1,7 @@
 import React from 'react';
-import './MobileDelivery.css';
-import MobileDelivery from './MobileDelivery';
-import MobileStart from './Start/MobileStart';
+import './Mobile.css';
+import MobileStart from './MobileStart';
+import MobilePickup from './MobilePickup';
 
 class MobileController extends React.Component { 
     constructor(props) {
@@ -56,11 +56,11 @@ class MobileController extends React.Component {
     showStep() {
         switch (this.state.step) {
         default:
-            return <MobileDelivery 
+            return <MobileStart 
                 pickup={this.state.pickup}
                 showStart={this.showStart}/>;
         case 1:
-            return <MobileStart pickup={this.state.pickup}/>;
+            return <MobilePickup pickup={this.state.pickup}/>;
         }
     }
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import Map from '../../Map/Map';
-import Geocode from '../../react-geocode';
-import '../MobileDelivery.css';
-import './MobileStart.css';
+import Map from '../Map/Map';
+import Geocode from '../react-geocode';
+import './Mobile.css';
 
 class MobileStart extends React.Component {
     constructor(props){
