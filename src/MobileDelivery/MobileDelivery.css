@@ -214,17 +214,17 @@ a[href] {
 
 #ms-next-btn{
     height: 38.84px;
-    background: white;
+    background: #9DCC6F;
+    border: 2px solid #9DCC6F;
+    box-sizing: border-box;
+    border-radius: 3px;
     font-family: Open Sans;
     font-style: normal;
     font-size: 18px;
     text-align: center; 
-    color: #828282;
+    color: white;
     width: 20%;
     margin: 15px 20px 30px auto;
-    border: 2px solid #828282;
-    box-sizing: border-box;
-    border-radius: 3px;
     display: block;
     float: right;
 }
