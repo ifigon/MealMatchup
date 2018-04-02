@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { RequestRepeatType, RequestDurationType, RequestStatus } from '../../Enums.js';
+import { AccountType, RequestRepeatType, RequestDurationType, RequestStatus } from '../../Enums.js';
 import { getWeekdayFromDateString } from '../../Utils.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
@@ -74,6 +74,11 @@ class RecurringPickupRequest extends Component {
                     entry['email'] = snapVal.email;
                 } else {
                     entry['address'] = snapVal.address;
+                    if (snapVal.accountType === AccountType.RECEIVING_AGENCY) {
+                        entry['primaryContact'] = snapVal.primaryContact;
+                    } else if (snapVal.accountType === AccountType.DELIVERER_GROUP) {
+                        entry['coordinator'] = snapVal.coordinator;
+                    }
                 }
 
                 // append entry into state
@@ -347,8 +352,7 @@ class RecurringPickupRequest extends Component {
                         raRequested={this.state.raRequested}
                         dgRequested={this.state.dgRequested}
                         onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}
-                        address={this.state.address}>
+                        onConfirm={this.submitRequest}>
                     </PickupSummary>
                 }
             </div>

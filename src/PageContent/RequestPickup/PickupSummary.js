@@ -49,9 +49,8 @@ class PickupSummary extends React.Component {
                                     <p>{this.props.primaryContact.email}</p>
                                 </div>
                             </div>
-                            {/* concat address fields into a string */}
                             <Map 
-                                address={this.props.address}
+                                address={this.props.donatingAgency.address}
                                 height={'150px'}
                                 width={'350px'}
                                 marginRight={'30px'}
@@ -60,30 +59,59 @@ class PickupSummary extends React.Component {
                                 marginLeft={'10px'}
                             />
                         </div>
-                        {this.props.raRequested && 
-                            <div className="flex">
-                                <div className="agency grid">
-                                    <p id="subheading">Recipient Requested</p>
-                                    <p id="name">{this.props.raRequested.name}</p>
-                                    <div className="contact">
-                                        <p>To be confirmed.</p>
+                        <div className="flex">
+                            <div className="agency grid">
+                                <p id="subheading">Recipient</p>
+                                {this.props.raRequested ?
+                                    <div>
+                                        <p id="name">{this.props.raRequested.name}</p>
+                                        <div className="contact">
+                                            <p>{this.props.raRequested.primaryContact.name}</p>
+                                            <p>{this.props.raRequested.primaryContact.phone}</p>
+                                            <p>{this.props.raRequested.primaryContact.email}</p>
+                                            <p>Confirmation pending.</p>
+                                        </div>
                                     </div>
-                                </div>
-                                {/* TODO: Pass in address into map */}
-                                <Map></Map>
-                            </div>
-                        }
-                        {this.props.dgRequested && 
-                            <div className="flex">
-                                <div className="agency grid">
-                                    <p id="subheading">Student Deliverer Requested</p>
-                                    <p id="name">{this.props.dgRequested.name}</p>
+                                    :
                                     <div className="contact">
-                                        <p>To be confirmed.</p>
+                                        <p>Request will be sent to all participating shelters.</p>
+                                        <p>Confirmation pending.</p>
                                     </div>
-                                </div>
+                                }
                             </div>
-                        }
+                            {this.props.raRequested &&
+                                <Map 
+                                    address={this.props.raRequested.address}
+                                    height={'150px'}
+                                    width={'350px'}
+                                    marginRight={'30px'}
+                                    marginTop={'0px'}
+                                    marginBottom={'0px'}
+                                    marginLeft={'10px'}
+                                />
+                            }
+                        </div>
+                        <div className="flex">
+                            <div className="agency grid">
+                                <p id="subheading">Student Group</p>
+                                {this.props.dgRequested ?
+                                    <div>
+                                        <p id="name">{this.props.dgRequested.name}</p>
+                                        <div className="contact">
+                                            <p>{this.props.dgRequested.coordinator.name}</p>
+                                            <p>{this.props.dgRequested.coordinator.phone}</p>
+                                            <p>{this.props.dgRequested.coordinator.email}</p>
+                                            <p>Confirmation pending.</p>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div className="contact">
+                                        <p>Request will be sent to all participating student groups.</p>
+                                        <p>Confirmation pending.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                         {this.props.request.notes !== '' ?
                             <div className="details grid">
                                 <p id="subheading">Notes for Pickup</p>
@@ -92,7 +120,6 @@ class PickupSummary extends React.Component {
                             :
                             <br/>
                         }
-                    
                         <div className="footer">
                             <input type="submit" value="Confirm" onClick={this.props.onConfirm}/> 
                             <input type="submit" value="Cancel" onClick={this.props.onClose}/>
