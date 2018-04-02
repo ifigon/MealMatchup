@@ -18,8 +18,6 @@ class PageContainer extends Component {
 
         this.state = {
             content: props.content,
-            showPopUp: false,
-            hover: false,
             donatingAgency: null
         };
 
@@ -55,11 +53,7 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader
-                    logo={logo}
-                    title={this.props.account.name}
-                    hover={this.hover}
-                />
+                <PageHeader logo={logo} title={this.props.account.name} />
 
                 <NavBar
                     content={this.state.content}
