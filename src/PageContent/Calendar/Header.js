@@ -17,7 +17,10 @@ class Header extends Component {
                     src={white_cross}
                     alt="close"
                 />
-                <p className="header-time">{this.props.eventTime}</p>
+                <p className="header-time">
+                    {this.props.date} {this.props.startTime} -{' '}
+                    {this.props.endTime}
+                </p>
             </div>
         );
     }

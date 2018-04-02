@@ -2,15 +2,22 @@
 /*global exports:true*/
 /*eslint no-undef: "error"*/
 
-exports.DateTimeFormat = {
-    DATE: 'YYYY-MM-DD',  // '2018-03-24'
-    TIME: 'HH:mm',  // '15:30' (24hr)
+// TODO: temporary for pilot, manually setting a fixed umbrella
+exports.UmbrellaId = {
+    TEST: 'PrE7oCZajNcRAOXNAFwRQizQQcJ3'
+    // TODO: create a real umbrella for UW
+};
+
+exports.StringFormat = {
+    DATE: 'YYYY-MM-DD', // '2018-03-24'
+    TIME: 'HH:mm', // '15:30' (24hr),
+    PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}' // '206-345-7890'
 };
 
 exports.AccountType = {
     UMBRELLA: 'umbrella',
     DONATING_AGENCY_MEMBER: 'donating_agency_member',
-    RECEIVING_AGENCY : 'receiving_agency',
+    RECEIVING_AGENCY: 'receiving_agency',
     DELIVERER_GROUP: 'deliverer_group'
 };
 
@@ -18,7 +25,7 @@ exports.AccountType = {
 // account type is school (eg UW). In the future,
 // there could be other types such as corporate.
 exports.UmbrellaType = {
-    SCHOOL: 'school',
+    SCHOOL: 'school'
 };
 
 exports.PageContent = {
@@ -31,14 +38,14 @@ exports.PageContent = {
 };
 
 exports.RequestDurationType = {
-    DATE: 'date',  // an end date
-    RECUR: 'num_recurrences'  // number of recurrences
+    DATE: 'date', // an end date
+    RECUR: 'num_recurrences' // number of recurrences
 };
 
 exports.RequestRepeatType = {
     WEEKLY: 'weekly',
     BIWEEKLY: 'biweekly', // every other week
-    MONTHLY: 'monthly',
+    MONTHLY: 'monthly'
     // TODO Nth weekday of month
 };
 
@@ -56,7 +63,7 @@ exports.RequestStatus = {
     // failed due to all DGs rejected
     REJECTED_DG: 'rejected_dg',
     // failed due to no available RAs
-    UNAVAILABLE: 'unavailable',
+    UNAVAILABLE: 'unavailable'
 };
 
 exports.NotificationType = {
@@ -91,5 +98,10 @@ exports.NotificationType = {
     /* When: no available RAs to send to
        Receiver: DA
        Action: View? */
-    RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable',
+    RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable'
+};
+
+exports.DeliveryType = {
+    RECURRING: 'recurring',
+    EMERGENCY: 'emergency'
 };

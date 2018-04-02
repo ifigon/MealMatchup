@@ -8,9 +8,11 @@ class Dialog extends Component {
         return (
             <dialog className="event-dialog" open>
                 <Header
-                    eventType="recurring"
+                    eventType={this.props.eventType}
                     closeDialog={this.props.closeDialog}
-                    eventTime="11/14/2017 10am-12pm"
+                    date={this.props.date}
+                    startTime={this.props.startTime}
+                    endTime={this.props.endTime}
                 />
                 <DialogContent />
             </dialog>

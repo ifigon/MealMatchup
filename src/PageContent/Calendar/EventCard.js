@@ -4,44 +4,31 @@ import green_truck from '../../icons/green_truck.svg';
 import grey_truck from '../../icons/grey_truck.svg';
 
 class EventCard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            eventType: 'recurring',
-            eventTime: '10am - 12pm',
-            eventStatus: 'future'
-        };
-    }
     render() {
         let type = '';
-        if (this.state.eventType === 'recurring') {
+        if (this.props.eventType === 'recurring') {
             type = 'Reccuring Pick Up';
         }
+        let truck = '';
+        let truckAlt = '';
+        let style = '';
+        if (this.props.futureEvent) {
+            truck = green_truck;
+            truckAlt = 'green truck';
+            style = 'event-container event-container-future';
+        } else {
+            truck = grey_truck;
+            truckAlt = 'grey truck';
+            style = 'event-container event-container-past';
+        }
+
         return (
-            <div>
-                {this.state.eventStatus === 'future' ? (
-                    <div className="event-container event-container-future">
-                        <h1 className="event-header">{type}</h1>
-
-                        <img
-                            className="truck-icon"
-                            src={green_truck}
-                            alt="green truck"
-                        />
-                        <p className="event-time">{this.state.eventTime}</p>
-                    </div>
-                ) : this.state.eventStatus === 'past' ? (
-                    <div className="event-container event-container-past">
-                        <h1 className="event-header">{type}</h1>
-
-                        <img
-                            className="truck-icon"
-                            src={grey_truck}
-                            alt="grey truck"
-                        />
-                        <p className="event-time">{this.state.eventTime}</p>
-                    </div>
-                ) : null}
+            <div className={style}>
+                <h1 className="event-header">{type}</h1>
+                <img className="truck-icon" src={truck} alt={truckAlt} />
+                <p className="event-time">
+                    {this.props.startTime} - {this.props.endTime}
+                </p>
             </div>
         );
     }

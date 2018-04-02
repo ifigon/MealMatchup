@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent } from './Enums.js';
+import { AccountType, PageContent, DeliveryType } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
 import Dialog from './PageContent/Calendar/Dialog.js';
-// import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
-// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
-// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
-// import EmergencyDeliveryRequestController from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestController.js';
-
 import logo from './icons/temp-logo.svg';
-// import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -111,12 +105,23 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         Calendar
-                        <div onClick={this.openDialog}>
-                            <EventCard />
-                        </div>
                         {this.state.dialogOpen ? (
-                            <Dialog closeDialog={this.closeDialog} />
+                            <Dialog
+                                closeDialog={this.closeDialog}
+                                eventType={DeliveryType.RECURRING}
+                                date="11/14/2017"
+                                startTime="10am"
+                                endTime="12pm"
+                            />
                         ) : null}
+                        <div onClick={this.openDialog}>
+                            <EventCard
+                                eventType={DeliveryType.RECURRING}
+                                startTime="10am"
+                                endTime="12pm"
+                                futureEvent={true}
+                            />
+                        </div>
                     </div>
                 )}
 
@@ -125,20 +130,6 @@ class PageContainer extends Component {
                         Assign Volunteers
                     </div>
                 )}
-
-                {
-                    /* {this.state.content === PageContent.REQUEST_PICKUP &&
-                    (this.state.donatingAgency ? ( }
-                        /* Wait for donating agency to be fetched */
-                    //     <RecurringPickupRequest
-                    //         account={this.props.account}
-                    //         donatingAgency={this.state.donatingAgency}
-                    //     />
-                    // ) : (
-                    /* TODO: add loading UI? */
-                    //     <div />
-                    // )) */
-                }
 
                 {this.state.content === PageContent.FOOD_LOGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
@@ -157,16 +148,6 @@ class PageContainer extends Component {
                         Settings
                     </div>
                 )}
-                {/* {this.state.hover ? (
-                    <RecurringDeliveryRequestNotification
-                        clickNotification={this.openPopUp.bind(this)}
-                    />
-                ) : null}
-                {this.state.showPopUp ? (
-                    <EmergencyDeliveryRequestController
-                        closePopUp={this.closePopUp.bind(this)}
-                    />
-                ) : null} */}
             </div>
         );
     }
