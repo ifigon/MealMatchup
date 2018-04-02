@@ -19,7 +19,16 @@ class RecurringPickupRequest extends Component {
             errors: {},
             showPopup: false,
             request: {},
-            dayOfWeek: ''
+            dayOfWeek: '',
+            // TODO: pass in donatingAgency.address
+            address: {
+                street1: '1201 NE Campus Pkwy',
+                street2: '',
+                city: 'Seattle',
+                state: 'WA',
+                zipcode: 98105,
+                officeNo: '220'
+            }
         };
 
         this.formId = 'recurringRequestForm';
@@ -321,7 +330,8 @@ class RecurringPickupRequest extends Component {
                         notes={this.state.request.notes}
                         account={this.props.account}
                         onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}>
+                        onConfirm={this.submitRequest}
+                        address={this.state.address}>
                     </PickupSummary>
                 }
             </div>

@@ -95,7 +95,9 @@ DONATING AGENCY MEMBER ("/accounts/")
 		email: "bensoa3@uw.edu",
 		phone: 2065436975,
 		position: "Manager"
-		isAdmin: true
+		isAdmin: true,
+		isVerified: true,  // same as parent agency's
+		isActivated: true  // same as parent agency's
 	}
 
 

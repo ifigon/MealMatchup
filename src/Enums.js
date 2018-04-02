@@ -2,9 +2,16 @@
 /*global exports:true*/
 /*eslint no-undef: "error"*/
 
-exports.DateTimeFormat = {
+// TODO: temporary for pilot, manually setting a fixed umbrella
+exports.UmbrellaId = {
+    TEST: 'PrE7oCZajNcRAOXNAFwRQizQQcJ3'
+    // TODO: create a real umbrella for UW
+};
+
+exports.StringFormat = {
     DATE: 'YYYY-MM-DD',  // '2018-03-24'
-    TIME: 'HH:mm',  // '15:30' (24hr)
+    TIME: 'HH:mm',  // '15:30' (24hr),
+    PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}'  // '206-345-7890'
 };
 
 exports.AccountType = {
