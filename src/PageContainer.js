@@ -25,28 +25,8 @@ class PageContainer extends Component {
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
-        this.hover = this.hover.bind(this);
         this.openDialog = this.openDialog.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
-    }
-
-    openPopUp() {
-        this.setState({
-            showPopUp: true,
-            hover: false
-        });
-    }
-
-    closePopUp() {
-        this.setState({
-            showPopUp: false
-        });
-    }
-
-    hover() {
-        this.setState({
-            hover: true
-        });
     }
 
     openDialog() {
