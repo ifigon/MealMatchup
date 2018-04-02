@@ -16,6 +16,7 @@ class MobileDelivery extends React.Component {
                     </div>
                     <div className="mobile-time">
                         <span className="dot"></span>
+                        {/* TODO: AM/PM */}
                         <p id="mobile-time">{this.props.pickup.startTime} &ndash; {this.props.pickup.endTime}</p>
                     </div>
                     <p id="mobile-request">Pickup Requested</p>
@@ -38,13 +39,13 @@ class MobileDelivery extends React.Component {
                         <div id="mobile-da">
                             <p className="mobile-content-header">Pick Up From</p>
                             <p id="mobile-name">{this.props.pickup.daName}</p>
-                            <p id="mobile-org">{this.props.pickup.daManager}</p>
+                            <p id="mobile-org">{this.props.pickup.daContact}</p>
                             <a href={'tel:' + this.props.pickup.daPhone}>{this.props.pickup.daPhone}</a>
                         </div>
                         <div id="mobile-ra">
                             <p className="mobile-content-header">Deliver To</p>
                             <p id="mobile-name">{this.props.pickup.raName}</p>
-                            <p id="mobile-org">{this.props.pickup.raManager}</p>
+                            <p id="mobile-org">{this.props.pickup.raContact}</p>
                             <a href={'tel:' + this.props.pickup.raPhone}>{this.props.pickup.raPhone}</a>
                         </div>
                     </div>

@@ -3,14 +3,14 @@ import './MobileDelivery.css';
 import MobileDelivery from './MobileDelivery';
 import MobileStart from './Start/MobileStart';
 
-class MobileController extends React.Component {
+class MobileController extends React.Component { 
     constructor(props) {
         super(props);
         this.state = {
             pickup: {
                 date: '3/5', // only need month and day
                 startTime: '12:00',
-                endTime: '4:00',
+                endTime: '2:00',
                 deliverers: [
                     {
                         name: 'Joyce Huang',
@@ -24,11 +24,22 @@ class MobileController extends React.Component {
                     }
                 ],
                 daName: 'Local Point',
-                daManager: 'Phil Fill',
+                daContact: 'Phil Fill',
+                daPosition: 'Head Cook',
                 daPhone: '999-999-9999',
                 raName: 'Seattle Union Gospel Mission',
-                raManager: 'Andy Dickinson',
-                raPhone: '344-123-9457'
+                raContact: 'Andy Dickinson',
+                raPosition: 'Manager',
+                raPhone: '344-123-9457',
+                address: {
+                    street1: '1201 NE Campus Pkwy',
+                    street2: '',
+                    city: 'Seattle',
+                    state: 'WA',
+                    zipcode: 98105,
+                    officeNo: '220'
+                },
+                notes: 'Entrance is 3.25 steps to your left and around the corner.'
             },
             step: 0
         };

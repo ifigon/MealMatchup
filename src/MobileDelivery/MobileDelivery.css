@@ -80,7 +80,7 @@
     width: 100%;
 }
 
-.mobile-deliverers, .mobile-to-from{
+.mobile-deliverers, .mobile-to-from, .ms-content{
     display: flex;
     margin-bottom: 20px;
 }
@@ -89,24 +89,21 @@
     margin: 3px 40px auto 20px
 }
 
-.mobile-student-info[id="0"]{
-    /* width: 50%; */
-}
 .mobile-to-from p{
     margin: 3px 10px auto 20px
 }
 
-#mobile-da{
+#mobile-da, #ms-notes{
     width: 60%;
 }
 
-#mobile-name{
+#mobile-name, #ms-contact{
     font-family: 'Open Sans';
     font-size: 16px;
     color: #243847;     
 }
 
-#mobile-org{
+#mobile-org, #ms-position{
     font-family: 'Open Sans';
     font-size: 14px;
     color:#828282;
@@ -138,10 +135,96 @@
     margin-left: 20px;
 }
 
-a[href^="tel:"] {
+a[href] {
     font-family: 'Open Sans';
     font-size: 14px;
-    color: #2D9CDB;
+    color: #5DC0F9;;
     text-decoration: none;
     margin-left: 20px;
+    word-wrap: break-word;
+}
+
+/* MOBILE START */
+.ms-header{
+    font-weight: 600;
+    font-size: 24px;
+    color: #333333;
+    margin: 10px auto 0px 10px;
+}
+
+#ms-highlight{
+    color: #9DCC6F;
+}
+.ms-pickup-time{
+    font-size: 14x;
+    color: #333333;
+    margin: 0px;
+}
+
+.ms-content-header{
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+
+.ms-notes{
+    font-size: 14px;
+    color: #828282;
+    margin: 0px 20px;
+}
+
+#ms-name, #ms-position {
+    margin: 0px;
+    margin-left: 20px;
+    font-size: 14px;
+    color: #828282;
+}
+
+.ms-input{
+    color: #5DC0F9;
+    background: url('../icons/fahrenheit.svg') no-repeat scroll right center;
+    background-position: right auto;
+    border: 3px solid #E0E0E0;
+    border-radius: 3px;
+    height: 25px;
+    width: 80%;
+    margin: 10px 20px;
+    padding-left: 10px;
+    outline: none;
+}
+
+.ms-signature{
+    color: #5DC0F9;
+    border: 3px solid #E0E0E0;
+    border-radius: 3px;
+    height: 25px;
+    width: 80%;
+    margin: 10px 20px;
+    padding-left: 10px;
+    outline: none;
+}
+
+.ms-input::placeholder, .ms-signature::placeholder{
+    color: #5DC0F9;
+    font-weight: 100;
+}
+
+#ms-address{
+    font-size: 3.5vw;
+}
+
+#ms-next-btn{
+    height: 38.84px;
+    background: white;
+    font-family: Open Sans;
+    font-style: normal;
+    font-size: 18px;
+    text-align: center; 
+    color: #828282;
+    width: 20%;
+    margin: 15px 20px 30px auto;
+    border: 2px solid #828282;
+    box-sizing: border-box;
+    border-radius: 3px;
+    display: block;
+    float: right;
 }
