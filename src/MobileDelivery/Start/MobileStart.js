@@ -1,7 +1,6 @@
 import React from 'react';
 import Map from '../../Map/Map';
 import Geocode from '../../react-geocode';
-import fDegrees from '../../icons/fahrenheit.svg';
 import '../MobileDelivery.css';
 import './MobileStart.css';
 
