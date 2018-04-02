@@ -1,28 +1,66 @@
 import React, { Component } from 'react';
 import GoogleMap from 'google-map-react';
+import Geocode from '../react-geocode';
+import './Marker.css';
+
+const Marker = ({ text }) => (
+    <div>
+        <div className="pin bounce"></div>
+        <div className='pulse'></div>
+    </div>
+);
 
 class Map extends Component{
     constructor(props){
         super(props);
+        
         this.state  = {
-            // Defaults to Seattle
-            center: [47.60, -122.33],
-            zoom: 13
+            center: {},
+            zoom: 15,
+            validAddress: true
         };
+    }
+
+    componentDidMount(){
+        // Convert address to Lat, Long
+        Geocode.fromAddress(Object.keys(this.props.address).map(key => this.props.address[key]).join(' ')).then(
+            response => {
+                this.setState({
+                    center: response.results[0].geometry.location
+                });
+            },
+            error => {
+                this.setState((prevState) => {
+                    return {validAddress: !prevState.validAddress};
+                });
+            }
+        );
     }
 
     render() {
         const style = {
-            height: '150px',
-            width: '350px',
-            marginRight: '30px'
+            height: this.props.height,
+            width: this.props.width,
+            marginLeft: this.props.marginLeft,
+            marginRight: this.props.marginRight,
+            marginTop: this.props.marginTop,
+            marginBottom: this.props.marginBottom
         };
         return (
             <div className='google-map' style={style}>
-                <GoogleMap
-                    center={ this.state.center }
-                    zoom={ this.state.zoom }>
-                </GoogleMap>
+                {this.state.validAddress ?
+                    <GoogleMap
+                        center={ this.state.center }
+                        zoom={ this.state.zoom }>
+                        <Marker
+                            latLng={this.state.center}
+                            lat={this.state.center.lat}
+                            lng={this.state.center.long}
+                        />
+                    </GoogleMap>
+                    :
+                    <div className="error">Unable to load map</div>
+                }
             </div>
         );
     }
