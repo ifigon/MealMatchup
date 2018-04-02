@@ -465,6 +465,13 @@ p.forgot:hover{
     cursor: pointer;
 }
 
+.sign-in-error{
+    margin: 0 auto;
+    text-align: center;
+    color: #F77676;
+    padding: 10px;
+}
+
 input.login-wrapper{
     width: 40vw;
 }
