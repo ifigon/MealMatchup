@@ -25,12 +25,13 @@ class SignUpInController extends Component {
     showStep() {
         switch (this.state.step) {
         default:
-            return <SignUpIn
-                signIn={this.signIn.bind(this)}
-                createAccount={this.createAccount.bind(this)}
-            />;
+            return (
+                <SignUpIn
+                    signIn={this.signIn.bind(this)}
+                    createAccount={this.createAccount.bind(this)} />
+            );
         case 1:
-            return <SignIn />;
+            return <SignIn signInDenied={this.props.signInDenied} />;
         case 2:
             return <UserTypeController />;
         }

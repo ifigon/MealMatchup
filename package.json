@@ -6,8 +6,10 @@
     "create-react-class": "^15.6.3",
     "firebase": "^4.9.1",
     "google-maps-react": "^1.1.2",
+    "moment": "^2.21.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-geocode": "0.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
     "roboto-fontface": "^0.8.0",
@@ -19,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint src/ --ext .js"
+    "lint": "eslint src/ --ext .js",
+    "lint-functions": "cd functions && npm run lint"
   },
   "devDependencies": {
     "eslint": "^4.18.2",

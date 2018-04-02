@@ -11,12 +11,13 @@ class DonatingAgencySignUp1 extends Component {
                 <div className="signup-content">
                     <div className="form-block">
                         <label className="form-component">Organization Details</label><br />
-                        <input name="organizationName" type="text" id="organization" className="form-component" placeholder="Organization Name" defaultValue={this.props.fieldValues.organizationName} /><br />
-                        <input name="address1" type="text" id="address1" className="form-component" placeholder="Street Address 1" defaultValue={this.props.fieldValues.address1} />
+                        <input name="organizationName" type="text" id="organization" className="form-component" placeholder="Organization Name" defaultValue={this.props.fieldValues.organizationName} required /><br />
+                        <input name="address1" type="text" id="address1" className="form-component" placeholder="Street Address 1" defaultValue={this.props.fieldValues.address1} required />
                         <input name="address2" type="text" id="address2" className="form-component" placeholder="Street Address 2 (optional)" defaultValue={this.props.fieldValues.address2} />
-                        <input name="city" type="text" id="city" className="form-component" placeholder="City" defaultValue={this.props.fieldValues.city} />
+                        <input name="city" type="text" id="city" className="form-component" placeholder="City" defaultValue={this.props.fieldValues.city} required />
                         <span className="side-by-side-wrapper">
-                            <select name="state" type="text" id="state" className="form-component side-by-side" placeholder="State" defaultValue={this.props.fieldValues.state}>
+                            <select name="state" type="text" id="state" className="form-component side-by-side" defaultValue={this.props.fieldValues.state} required>
+                                <option value="" disabled>Select State</option>
                                 <option value="Alabama">Alabama</option>
                                 <option value="Alaska">Alaska</option>
                                 <option value="Arizona">Arizona</option>
@@ -67,7 +68,7 @@ class DonatingAgencySignUp1 extends Component {
                                 <option value="Wisconsin">Wisconsin</option>
                                 <option value="Wyoming">Wyoming</option>
                             </select>
-                            <input name="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip} />
+                            <input name="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip} required />
                         </span>
                         <input name="officeNumber" type="text" id="office-number" className="form-component" placeholder="Office Number" defaultValue={this.props.fieldValues.officeNumber} />
                     </div>
@@ -91,6 +92,7 @@ class DonatingAgencySignUp1 extends Component {
             address2: e.target.address2.value,
             city: e.target.city.value,
             state: e.target.state.value,
+            zip: e.target.zip.value,
             officeNumber: e.target.officeNumber.value
         };
 
