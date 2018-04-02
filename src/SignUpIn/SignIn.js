@@ -1,19 +1,57 @@
-// No log in functionality yet
 import React, { Component } from 'react';
+import { auth } from '../FirebaseConfig';
 
 class SignIn extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            error: null
+        };
+
+        this.signIn = this.signIn.bind(this);
+    }
+
+    signIn(e) {
+        e.preventDefault();
+
+        let email = e.target.email.value;
+        let password = e.target.password.value;
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then(user => {
+                this.setState({
+                    error: null
+                });
+            })
+            .catch(error => {
+                this.setState({
+                    error: error
+                });
+            });
+    }
+
     render() {
         return (
-            <form>
+            <form onSubmit={this.signIn}>
                 <div className="login-wrapper">
                     <div className="login-input-wrapper">
-                        <input type="text" id="email" className="login-input form-component" placeholder="Email" /><br />
-                        <input type="password" id="password" className="login-input form-component" placeholder="Password" /><br />
+                        <input name="email" type="email" id="email" className="login-input form-component" placeholder="Email" required/><br />
+                        <input name="password" type="password" id="password" className="login-input form-component" placeholder="Password" required/><br />
                     </div>
-                    <div className="login-button-wrapper"><button type="button" className="login-button">Login</button></div>
+                    {this.props.signInDenied &&
+                        <p className="sign-in-error">Log in denied. Account is not verified or activated.</p>
+                    }
+                    {this.state.error &&
+                        /* TODO: give better error msg */
+                        <p className="sign-in-error">Unable to log in.</p>
+                    }
+                    <div className="login-button-wrapper"><button type="submit" className="login-button">Login</button></div>
                     <div className="forgot">
-                        <p className="forgot">forgot password?</p>
-                        <p className="forgot">forgot username?</p>
+                        {/* TODO: Add functionality to reset username and password */}
+                        {/* <p className="forgot">forgot password?</p> */}
+                        {/* <p className="forgot">forgot username?</p> */}
                     </div>
                 </div>
             </form>
