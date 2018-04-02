@@ -56,7 +56,6 @@ class Map extends Component{
                             latLng={this.state.center}
                             lat={this.state.center.lat}
                             lng={this.state.center.long}
-                            text={'Kreyser Avrora'}
                         />
                     </GoogleMap>
                     :
