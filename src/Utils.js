@@ -3,10 +3,10 @@
 /*eslint no-undef: "error"*/
 
 import moment from 'moment';
-import { DateTimeFormat } from './Enums.js';
+import { StringFormat } from './Enums.js';
 
 export function getWeekdayFromDateString(dateStr) {
-    let m = moment(dateStr, DateTimeFormat.DATE);
+    let m = moment(dateStr, StringFormat.DATE);
     let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return days[m.day()];
 }

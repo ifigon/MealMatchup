@@ -347,7 +347,8 @@ class RecurringPickupRequest extends Component {
                         raRequested={this.state.raRequested}
                         dgRequested={this.state.dgRequested}
                         onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}>
+                        onConfirm={this.submitRequest}
+                        address={this.state.address}>
                     </PickupSummary>
                 }
             </div>
