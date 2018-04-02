@@ -11,7 +11,6 @@ import SignUpInController from './SignUpIn/SignUpInController.js';
 // For now, rendering sign up/in components
 
 class App extends Component {
-
     constructor(props) {
         super(props);
 
@@ -25,53 +24,60 @@ class App extends Component {
 
     componentDidMount() {
         // check whether user is logged in
-        auth.onAuthStateChanged(function(user) {
-            if (user) {
-                // grab user's account object
-                accountsRef.child(user.uid).once('value').then(function(snapshot) {
-                    var account = snapshot.val();
-                    if (account.isVerified && account.isActivated) {
-                        this.setState({
-                            authenticated: true,
-                            account: account
-                        });
-                    } else {
-                        // account is not verified or activated, deny sign in
-                        this.setState({
-                            authenticated: true,
-                            signInDenied: true
-                        });
-                        auth.signOut();
-                    }
-                        
-                }.bind(this));
-            } else {
-                this.setState({
-                    authenticated: true,
-                    account: null
-                });
-            }   
-        }.bind(this));
+        auth.onAuthStateChanged(
+            function(user) {
+                if (user) {
+                    // grab user's account object
+                    accountsRef
+                        .child(user.uid)
+                        .once('value')
+                        .then(
+                            function(snapshot) {
+                                var account = snapshot.val();
+                                if (account.isVerified && account.isActivated) {
+                                    this.setState({
+                                        authenticated: true,
+                                        account: account
+                                    });
+                                } else {
+                                    // account is not verified or activated, deny sign in
+                                    this.setState({
+                                        authenticated: true,
+                                        signInDenied: true
+                                    });
+                                    auth.signOut();
+                                }
+                            }.bind(this)
+                        );
+                } else {
+                    this.setState({
+                        authenticated: true,
+                        account: null
+                    });
+                }
+            }.bind(this)
+        );
     }
 
     render() {
         return (
             <div className="">
-                {this.state.authenticated ?
-                    (this.state.account ?
+                {this.state.authenticated ? (
+                    this.state.account ? (
                         /* Show Calendar page if user is logged in */
-                        <PageContainer 
+                        <PageContainer
                             account={this.state.account}
-                            content={PageContent.CALENDAR}>
-                        </PageContainer>
-                        :
-                        <SignUpInController signInDenied={this.state.signInDenied} />
+                            content={PageContent.CALENDAR}
+                        />
+                    ) : (
+                        <SignUpInController
+                            signInDenied={this.state.signInDenied}
+                        />
                     )
-                    :
+                ) : (
                     /* Show blank page if initial authentication hasn't finished */
-                    <div></div>
-                }
-                    
+                    <div />
+                )}
             </div>
         );
     }
