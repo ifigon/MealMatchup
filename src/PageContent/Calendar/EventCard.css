@@ -1,0 +1,35 @@
+.event-container {
+  padding: 10px;
+  width: 160px;
+}
+
+.event-container-future {
+  background-color: rgba(46, 204, 113, 0.1);
+  border-left: 3.8px solid #2ecc71;
+}
+
+.event-container-past {
+  background-color: #eef1f7;
+  border-left: 3.8px solid #8c97b2;
+}
+
+.truck-icon {
+  width: 30px;
+  vertical-align: middle;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.event-header {
+  color: #4f4f4f;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.event-time {
+  color: #4f4f4f;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
