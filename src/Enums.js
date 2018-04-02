@@ -8,9 +8,10 @@ exports.UmbrellaId = {
     // TODO: create a real umbrella for UW
 };
 
-exports.DateTimeFormat = {
+exports.StringFormat = {
     DATE: 'YYYY-MM-DD',  // '2018-03-24'
-    TIME: 'HH:mm',  // '15:30' (24hr)
+    TIME: 'HH:mm',  // '15:30' (24hr),
+    PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}'  // '206-345-7890'
 };
 
 exports.AccountType = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase, { auth, accountsRef } from '../../FirebaseConfig';
-import { AccountType } from '../../Enums';
+import { AccountType, StringFormat } from '../../Enums';
 import '../SignUpIn.css';
 
 class DonatingAgencyMemberSignup extends Component {
@@ -50,7 +50,9 @@ class DonatingAgencyMemberSignup extends Component {
                     email: values.email,
                     phone: values.phone,
                     position: values.position,
-                    isAdmin: false
+                    isAdmin: false,
+                    isVerified: true,
+                    isActivated: true
                 };
                 accountsRef.child(user.uid).set(postData);
 
@@ -64,6 +66,16 @@ class DonatingAgencyMemberSignup extends Component {
                 // TODO: Add UI to handle the error
                 return error;
             });
+    }
+
+    comparePasswords(e) {
+        var password = document.getElementById('memberPassword');
+        var confirmPassword = document.getElementById('confirmPassword');
+        if (e.target.value !== password.value) {
+            confirmPassword.setCustomValidity('Passwords Don\'t Match');
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
     }
 
     render() {
@@ -84,11 +96,11 @@ class DonatingAgencyMemberSignup extends Component {
                                 <label className="form-component">New Member Account</label><br />
                                 <input name="memberName" type="text" className="form-component" placeholder="Name" id="memberName" required />
                                 <input name="memberPosition" type="text" className="form-component" placeholder="Position" id="memberPosition" required />
-                                <input name="memberPhone" type="text" className="form-component" placeholder="Phone" id="memberPhone" required />
+                                <input name="memberPhone" type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="123-456-7890" id="memberPhone" required />
                                 <div className="gap">
-                                    <input name="memberEmail" type="text" id="memberEmail" className="form-component" placeholder="Email" required />
-                                    <input name="memberPassword" type="password" id="memberPassword" className="form-component" placeholder="Create Password" required />
-                                    <input type="password" className="form-component" placeholder="Confirm Password" required />
+                                    <input type="email" name="memberEmail" id="memberEmail" className="form-component" placeholder="Email" required />
+                                    <input type="password" id="memberPassword" name="memberPassword" className="form-component" placeholder="Create Password" required />
+                                    <input type="password" id="confirmPassword" onChange={this.comparePasswords} className="form-component" placeholder="Confirm Password" required />
                                 </div>
                             </div>
 

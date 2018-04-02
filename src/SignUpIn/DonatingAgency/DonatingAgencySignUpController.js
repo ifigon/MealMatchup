@@ -75,7 +75,9 @@ class DonatingAgencySignUpController extends Component {
                     email: fieldValues.adminEmail,
                     phone: fieldValues.adminPhone,
                     position: fieldValues.adminPosition,
-                    isAdmin: true
+                    isAdmin: true,
+                    isVerified: false,
+                    isActivated: false
                 };
 
                 let agencyPostData = {
