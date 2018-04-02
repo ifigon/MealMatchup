@@ -31,7 +31,8 @@ class App extends Component {
                 accountRef.once('value').then(function(snapshot) {
                     this.setState({
                         authenticated: true,
-                        account: snapshot.val()
+                        account: snapshot.val(),
+                        userId: user.uid
                     });
                 }.bind(this));
             } else {
@@ -51,7 +52,8 @@ class App extends Component {
                         /* Show Calendar page if user is logged in */
                         <PageContainer 
                             account={this.state.account}
-                            content={PageContent.CALENDAR}>
+                            content={PageContent.CALENDAR}
+                            userId={this.state.userId}>
                         </PageContainer>
                         :
                         <SignUpInController/>

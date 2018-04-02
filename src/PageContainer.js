@@ -14,7 +14,9 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: props.content
+            content: props.content,
+            account: props.account,
+            userId: props.userId
         };
         
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -48,7 +50,7 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
                 }
                 {this.state.content === PageContent.DIRECTORY &&
-                    <Directory/>
+                    <Directory account={this.state.account} userId={this.state.userId}/>
                 }
                 {this.state.content === PageContent.SETTINGS &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
