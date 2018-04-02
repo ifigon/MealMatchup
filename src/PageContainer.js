@@ -6,7 +6,7 @@ import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
-import AssignVolunteers from './PageContent/AssignVolunteers/AssignVolunteers.js';
+import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -77,7 +77,7 @@ class PageContainer extends Component {
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        <AssignVolunteers />
+                        <AssignVolunteersController />
                     </div>
                 )}
 
