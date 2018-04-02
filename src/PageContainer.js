@@ -3,8 +3,12 @@ import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+<<<<<<< HEAD
 import RecurringPickup from './PageContent/RequestPickup/RecurringPickupRequest.js';
 
+=======
+import Directory from './PageContent/Directory/DirectoryPage.js';
+>>>>>>> 9f669f62c98101b67757639fdcbd0b44e662e027
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -16,7 +20,12 @@ class PageContainer extends Component {
 
         this.state = {
             content: props.content,
+<<<<<<< HEAD
             account: props.account
+=======
+            account: props.account,
+            userId: props.userId
+>>>>>>> 9f669f62c98101b67757639fdcbd0b44e662e027
         };
         
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -50,7 +59,7 @@ class PageContainer extends Component {
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Food Logs</div>
                 }
                 {this.state.content === PageContent.DIRECTORY &&
-                    <div style={{marginTop: '120px', marginLeft:'250px'}}>Directory</div>
+                    <Directory account={this.state.account} userId={this.state.userId}/>
                 }
                 {this.state.content === PageContent.SETTINGS &&
                     <div style={{marginTop: '120px', marginLeft:'250px'}}>Settings</div>
