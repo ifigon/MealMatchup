@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent } from './Enums.js';
+import { AccountType, PageContent, DeliveryType } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
@@ -90,7 +90,12 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         Calendar
-                        <EventCard />
+                        <EventCard
+                            eventType={DeliveryType.RECURRING}
+                            startTime="10am"
+                            endTime="12pm"
+                            futureEvent={true}
+                        />
                     </div>
                 )}
 
