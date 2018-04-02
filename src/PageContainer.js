@@ -4,13 +4,7 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
-// import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
-// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
-// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
-// import EmergencyDeliveryRequestController from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestController.js';
-
 import logo from './icons/temp-logo.svg';
-// import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -105,20 +99,6 @@ class PageContainer extends Component {
                         Assign Volunteers
                     </div>
                 )}
-
-                {
-                    /* {this.state.content === PageContent.REQUEST_PICKUP &&
-                    (this.state.donatingAgency ? ( }
-                        /* Wait for donating agency to be fetched */
-                    //     <RecurringPickupRequest
-                    //         account={this.props.account}
-                    //         donatingAgency={this.state.donatingAgency}
-                    //     />
-                    // ) : (
-                    /* TODO: add loading UI? */
-                    //     <div />
-                    // )) */
-                }
 
                 {this.state.content === PageContent.FOOD_LOGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
