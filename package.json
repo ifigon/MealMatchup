@@ -8,7 +8,7 @@
     "google-maps-react": "^1.1.2",
     "moment": "^2.21.0",
     "react": "^16.2.0",
-    "react-dom": "^0.14.9",
+    "react-dom": "^16.2.0",
     "react-geocode": "0.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
