@@ -1,45 +1,9 @@
 import React, { Component } from 'react';
 import DirectoryCard from './DirectoryCard.js';
 import DirectoryFilter from './DirectoryFilter.js';
-
-import firebase from '../../FirebaseConfig.js';
-import {AccountType} from '../../Enums.js'
 import './Directory.css';
-const db = firebase.database();
-
-
 
 class DirectoryPage extends Component {
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-            account: props.account,
-            userId: props.userId
-        };
-    }
-
-    componentDidMount() {
-
-        console.log(this.state.account);
-        
-        // db.ref('accounts').orderByChild('umbrella').equalTo()
-
-    }
-
-    getUmbrellaId(account) {
-        switch (account.accountType) {
-            case AccountType.DONATING_AGENCY_MEMBER:
-                return
-            case AccountType.RECEIVING_AGENCY || AccountType.DELIVERER_GROUP:
-                return account.umbrella
-            case AccountType.UMBRELLA:
-                return this.state.userId
-            default:
-                console.error("AccountType is not valid");
-          }
-
-    }
 
     render() {
         return (
