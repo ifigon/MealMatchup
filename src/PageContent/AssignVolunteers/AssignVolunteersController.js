@@ -12,12 +12,12 @@ class AssignVolunteersController extends Component {
             step: 0,
             deliveries: [],
             selectedDelivery: -1,
-            s1name: "",
-            s1phone: "",
-            s1email: "",
-            s2name: "",
-            s2phone: "",
-            s2email: ""
+            s1name: '',
+            s1phone: '',
+            s1email: '',
+            s2name: '',
+            s2phone: '',
+            s2email: ''
         };
     }
 
@@ -26,36 +26,36 @@ class AssignVolunteersController extends Component {
     componentWillMount() {
         let deliveryList = [];
         deliveryList.push({
-            date: "2018-02-28",
-            startTime: "14:00",
-            endTime: "17:00",
+            date: '2018-02-28',
+            startTime: '14:00',
+            endTime: '17:00',
             donatingAgency: {
-                agency: "Local Point",
-                address: "Test Address",
+                agency: 'Local Point',
+                address: 'Test Address',
                 primaryContact: {
-                    name: "Alice",
+                    name: 'Alice',
                     phone: 7739939922
                 }
             },
             receivingAgency: {
-                agency: "Union Gospel Shelter",
+                agency: 'Union Gospel Shelter',
                 primaryContact: {
-                    name: "Bob",
-                    email: "bob@uniongospel.org",
+                    name: 'Bob',
+                    email: 'bob@uniongospel.org',
                     phone: 1237894560
                 }
             },
             delivererGroup: {
-                group: "Deliverer Test Group",  // uid-key of deliverer-group
+                group: 'Deliverer Test Group',  // uid-key of deliverer-group
                 deliverers: [
                     {
-                        name: "Alice",
-                        email: "alice@uw.edu",
+                        name: 'Alice',
+                        email: 'alice@uw.edu',
                         phone: 1237894560
                     },
                     {
-                        name: "Chris",
-                        email: "chris@uw.edu",
+                        name: 'Chris',
+                        email: 'chris@uw.edu',
                         phone: 4561230789
                     }
                 ]
@@ -63,40 +63,40 @@ class AssignVolunteersController extends Component {
             description: {
                 foodItems: [
                     {
-                        food: "Baked beans",
+                        food: 'Baked beans',
                         quantity: 15,
-                        unit: "lb"  // Enums.FoodUnit
+                        unit: 'lb'  // Enums.FoodUnit
                     },
                     {
-                        food: "Bread",
+                        food: 'Bread',
                         quantity: 4,
-                        unit: "loaves"  // Enums.FoodUnit
+                        unit: 'loaves'  // Enums.FoodUnit
                     },
                 ]
             }
         });
         deliveryList.push({
-            date: "2018-02-26",
-            startTime: "14:00",
-            endTime: "17:00",
+            date: '2018-02-26',
+            startTime: '14:00',
+            endTime: '17:00',
             donatingAgency: {
-                agency: "Local Point",
-                address: "Test Address",
+                agency: 'Local Point',
+                address: 'Test Address',
                 primaryContact: {
-                    name: "Alice",
+                    name: 'Alice',
                     phone: 7739939922
                 }
             },
             receivingAgency: {
-                agency: "Union Gospel Shelter",
+                agency: 'Union Gospel Shelter',
                 primaryContact: {
-                    name: "Bob",
-                    email: "bob@uniongospel.org",
+                    name: 'Bob',
+                    email: 'bob@uniongospel.org',
                     phone: 1237894560
                 }
             },
             delivererGroup: {
-                group: "Deliverer Test Group",  // uid-key of deliverer-group
+                group: 'Deliverer Test Group',  // uid-key of deliverer-group
                 deliverers: [
                     
                 ]
@@ -104,14 +104,14 @@ class AssignVolunteersController extends Component {
             description: {
                 foodItems: [
                     {
-                        food: "Baked beans",
+                        food: 'Baked beans',
                         quantity: 15,
-                        unit: "lb"  // Enums.FoodUnit
+                        unit: 'lb'  // Enums.FoodUnit
                     },
                     {
-                        food: "Bread",
+                        food: 'Bread',
                         quantity: 4,
-                        unit: "loaves"  // Enums.FoodUnit
+                        unit: 'loaves'  // Enums.FoodUnit
                     },
                 ]
             }
