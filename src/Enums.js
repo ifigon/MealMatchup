@@ -100,3 +100,5 @@ exports.NotificationType = {
        Action: View? */
     RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable',
 };
+
+exports.DaysOfWeek = ['Sun', 'M', 'T', 'W', 'Th', 'F', 'Sat'];
