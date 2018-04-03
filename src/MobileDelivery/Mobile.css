@@ -203,7 +203,7 @@ a[href] {
     outline: none;
 }
 
-.ms-input::placeholder, .ms-signature::placeholder{
+.ms-input::placeholder, .ms-signature::placeholder, .ms-signature-deliver::placeholder{
     color: #5DC0F9;
     font-weight: 100;
 }
@@ -227,4 +227,16 @@ a[href] {
     margin: 15px 20px 30px auto;
     display: block;
     float: right;
+}
+
+/* MOBILE DELIVERY */
+.ms-signature-deliver{
+    color: #5DC0F9;
+    border: 3px solid #E0E0E0;
+    border-radius: 3px;
+    height: 50px;
+    width: 80%;
+    margin: 10px 20px;
+    padding-left: 10px;
+    outline: none;
 }

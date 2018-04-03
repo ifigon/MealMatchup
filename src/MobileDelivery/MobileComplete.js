@@ -1,7 +1,7 @@
 import React from 'react';
 import './Mobile.css';
 
-class MobileStart extends React.Component {
+class MobileComplete extends React.Component {
     render() {
         return (
             <div className="mobile-delivery">
@@ -57,4 +57,4 @@ class MobileStart extends React.Component {
     }
 }
 
-export default MobileStart;
+export default MobileComplete;
