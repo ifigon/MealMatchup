@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { DeliveryType } from '../../Enums';
 import './EventCard.css';
 import green_truck from '../../icons/green_truck.svg';
 import grey_truck from '../../icons/grey_truck.svg';
@@ -6,7 +7,7 @@ import grey_truck from '../../icons/grey_truck.svg';
 class EventCard extends Component {
     render() {
         let type = '';
-        if (this.props.eventType === 'recurring') {
+        if (this.props.eventType === DeliveryType.RECURRING) {
             type = 'Reccuring Pick Up';
         }
         let truck = '';

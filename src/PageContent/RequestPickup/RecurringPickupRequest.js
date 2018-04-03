@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { RequestRepeatType, RequestDurationType, RequestStatus } from '../../Enums.js';
+import { AccountType, RequestRepeatType, RequestDurationType, RequestStatus } from '../../Enums.js';
 import { getWeekdayFromDateString } from '../../Utils.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
@@ -19,7 +19,10 @@ class RecurringPickupRequest extends Component {
             errors: {},
             showPopup: false,
             request: {},
-            dayOfWeek: ''
+            dayOfWeek: '',
+            primaryContact: {},
+            raRequested: null,
+            dgRequested: null
         };
 
         this.formId = 'recurringRequestForm';
@@ -34,29 +37,50 @@ class RecurringPickupRequest extends Component {
     componentDidMount(){
         // add members in this donating agency to state.memberList
         var members = this.props.donatingAgency.members;
-        this.addListToState(members, 'memberList');
+        this.addListToState(members, 'memberList', true);
 
         var umbrella = this.props.donatingAgency.umbrella;
         accountsRef.child(umbrella).once('value').then(function (umbrellaSnap) {
             // add receiving agencies in the same umbrella to state.receivingAgencies
             var ras = umbrellaSnap.val().receivingAgencies;
-            this.addListToState(ras, 'receivingAgencies');
+            this.addListToState(ras, 'receivingAgencies', false);
 
             // add deliverer groups in the same umbrella to state.delivererGroups
             var dgs = umbrellaSnap.val().delivererGroups;
-            this.addListToState(dgs, 'delivererGroups');
+            this.addListToState(dgs, 'delivererGroups', false);
         }.bind(this));
     }
 
     // Helper function: append {id, name} for each entry in the list to
     // the given field in this.state
-    addListToState(list, field) {
+    addListToState(list, field, isMember) {
         for (let key in list) {
             accountsRef.child(list[key]).once('value').then(function (snap) {
+                var snapVal = snap.val();
+
+                // if adding agencies, only add verified and activated ones
+                if (!isMember && (!snapVal.isVerified || !snapVal.isActivated)) {
+                    return;
+                }
+
                 var entry = {
                     id: snap.key, 
-                    name: snap.val().name
+                    name: snapVal.name
                 };
+
+                // also grab the phone and email for DA Members
+                if (isMember) {
+                    entry['phone'] = snapVal.phone;
+                    entry['email'] = snapVal.email;
+                } else {
+                    entry['address'] = snapVal.address;
+                    if (snapVal.accountType === AccountType.RECEIVING_AGENCY) {
+                        entry['primaryContact'] = snapVal.primaryContact;
+                    } else if (snapVal.accountType === AccountType.DELIVERER_GROUP) {
+                        entry['coordinator'] = snapVal.coordinator;
+                    }
+                }
+
                 // append entry into state
                 this.setState((prevState) => {
                     return {[field]: prevState[field].concat(entry)};
@@ -139,9 +163,11 @@ class RecurringPickupRequest extends Component {
             }
 
             var raInfo = {};
-            var raUid = event.target.receivingAgency.value;
-            if (raUid) {
-                raInfo['requested'] = raUid;
+            var raRequested = null;
+            var raIndex = event.target.receivingAgency.value;
+            if (raIndex) {
+                raRequested = this.state.receivingAgencies[raIndex];
+                raInfo['requested'] = raRequested.id;
             } else {
                 // if no specific RA requested, add all RAs to pending list
                 let pending = [];
@@ -152,9 +178,11 @@ class RecurringPickupRequest extends Component {
             }
             
             var dgInfo = {};
-            var dgUid = event.target.delivererGroup.value;
-            if (dgUid) {
-                dgInfo['requested'] = dgUid;
+            var dgRequested = null;
+            var dgIndex = event.target.delivererGroup.value;
+            if (dgIndex) {
+                dgRequested = this.state.delivererGroups[dgIndex];
+                dgInfo['requested'] = dgRequested.id;
             } else {
                 // if no specific DG requested, add all DGs to pending list
                 let pending = [];
@@ -163,6 +191,8 @@ class RecurringPickupRequest extends Component {
                 }
                 dgInfo['pending'] = pending;
             }
+
+            var primaryContact = this.state.memberList[event.target.primaryContact.value];
 
             // create DeliveryRequest object
             var deliveryRequest = {
@@ -175,7 +205,7 @@ class RecurringPickupRequest extends Component {
                 repeats: event.target.repeats.value,
                 startTime: event.target.startTime.value,
                 endTime: event.target.endTime.value,
-                primaryContact: event.target.primaryContact.value,
+                primaryContact: primaryContact.id,
                 notes: event.target.notes.value,
                 umbrella: this.props.donatingAgency.umbrella,
                 donatingAgency: this.props.account.agency,
@@ -188,7 +218,10 @@ class RecurringPickupRequest extends Component {
             var weekday = getWeekdayFromDateString(deliveryRequest.startDate);
             this.setState({
                 request: deliveryRequest,
-                dayOfWeek: weekday
+                dayOfWeek: weekday,
+                primaryContact: primaryContact,
+                raRequested: raRequested,
+                dgRequested: dgRequested
             });
             
             this.toggleModal();
@@ -256,7 +289,7 @@ class RecurringPickupRequest extends Component {
                                     <option value="" disabled>Select</option>
                                     {this.state.memberList.map((member,i) => {
                                         return (
-                                            <option key={i} value={member.id}>{member.name}</option>
+                                            <option key={i} value={i}>{member.name}</option>
                                         );
                                     })}
                                 </select><br/>
@@ -285,7 +318,7 @@ class RecurringPickupRequest extends Component {
                                     <option value="">Select</option>
                                     {this.state.delivererGroups.map((dg,i) => {
                                         return (
-                                            <option key={i} value={dg.id}>{dg.name}</option>
+                                            <option key={i} value={i}>{dg.name}</option>
                                         );
                                     })}
                                 </select>
@@ -296,7 +329,7 @@ class RecurringPickupRequest extends Component {
                                     <option value="">Select</option>
                                     {this.state.receivingAgencies.map((ra, i) => {
                                         return (
-                                            <option key={i} value={ra.id}>{ra.name}</option>
+                                            <option key={i} value={i}>{ra.name}</option>
                                         );
                                     })}
                                 </select>
@@ -311,15 +344,13 @@ class RecurringPickupRequest extends Component {
 
                 {this.state.showPopup &&
                     <PickupSummary
-                        type={'Request Recurring Pickup'}
-                        startDate={this.state.request.startDate}
+                        title={'Request Recurring Pickup'}
+                        request={this.state.request}
                         dayOfWeek={this.state.dayOfWeek}
-                        duration={this.state.request.duration}
-                        repeats={this.state.request.repeats}
-                        startTime={this.state.request.startTime}
-                        endTime={this.state.request.endTime}
-                        notes={this.state.request.notes}
-                        account={this.props.account}
+                        donatingAgency={this.props.donatingAgency}
+                        primaryContact={this.state.primaryContact}
+                        raRequested={this.state.raRequested}
+                        dgRequested={this.state.dgRequested}
                         onClose={this.toggleModal}
                         onConfirm={this.submitRequest}>
                     </PickupSummary>

@@ -7,6 +7,10 @@
   padding-left: 32px;
 }
 
+.close:hover {
+  cursor: pointer;
+}
+
 .header-title {
   display: inline-block;
   font-weight: 300;
