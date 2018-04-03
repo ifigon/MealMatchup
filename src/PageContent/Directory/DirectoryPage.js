@@ -18,93 +18,100 @@ class DirectoryPage extends Component {
             account: props.account,
             userId: props.userId,
             umbrella: null,
-            orgsList: []
+            raList: [],
+            dgList: [],
+            daList: []
         };
     }
 
     async componentDidMount() {
         let umbrellaId = await this.getUmbrellaId();
         this.setState({umbrellaId: umbrellaId});
-
-        db.ref('accounts').on('value', (snapshot) => { // attach on-value-change listener on /accounts/
-            this.setState({orgList: []}); // clear up current list
-            this.fetchOrgs();
-        });
+        this.fetchOrgs();
     }
 
     componentWillUnmount() {
-        // detatch listener
-        db.ref('accounts').off();
+        // detach listener
+        db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).off();
     }
 
     fetchOrgs() {
         switch (this.state.account.accountType) {
         case AccountType.DONATING_AGENCY_MEMBER:
-            this.fetchRAorDG([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]); 
+            this.fetchRaAndDg([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]); 
             break;
         case AccountType.RECEIVING_AGENCY:
-            this.fetchRAorDG([AccountType.DELIVERER_GROUP]); 
+            this.fetchRaAndDg([AccountType.DELIVERER_GROUP]); 
 
             break;
         case AccountType.DELIVERER_GROUP:
-            this.fetchRAorDG([AccountType.RECEIVING_AGENCY]);
+            this.fetchRaAndDg([AccountType.RECEIVING_AGENCY]);
 
             break;
         case AccountType.UMBRELLA:
-            this.fetchRAorDG([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]);   
+            this.fetchRaAndDg([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]);   
             break;
         default:
             // console.error("AccountType is not valid");
         }
     }
 
-    fetchRAorDG(orgTypes) { // fetch receiving agencies or dilivery groups
-        db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).once('value', (snapshot) => {
-            let AccountObjects = snapshot.val();
-            let orgsList = [];
-            for (var key in AccountObjects) {
+    fetchRaAndDg(orgTypes) { // fetch receiving agencies or dilivery groups
+        db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).on('value', (snapshot) => {
+            let AccountObjects = snapshot.val();       
+            let raList = [];
+            let dgList = [];
+
+            for (let key in AccountObjects) {
                 let accountItem = AccountObjects[key];
-                if (AccountObjects.hasOwnProperty(key) // filter out prototype props
-                    && orgTypes.includes(accountItem.accountType)) { // check accountTypes to be fetched
-                    let org = this.aggRAorDGOrgObj(accountItem);
-                    orgsList.push(org);
+
+                // return immediately if the conditions are not met:
+                if (!AccountObjects.hasOwnProperty(key)  // filter out prototype props
+                    || !orgTypes.includes(accountItem.accountType)) { // if accountType is not in orgTypes 
+                    return;
                 }
+
+                let org = this.aggrRAorDGOrgObj(accountItem);
+                if (accountItem.accountType === AccountType.RECEIVING_AGENCY) 
+                    raList.push(org);
+                else  // AccountType.DELIVERER_GROUP
+                    dgList.push(org);  
             }
             // console.log(orgsList);
-            this.setState({orgsList: this.state.orgsList.push(...orgsList)});
+            this.setState({raList: raList, dgList: dgList});
         });
     }
 
-    aggRAorDGOrgObj(accountItem) {
-        let org = {};
+    aggrRAorDGOrgObj(accountItem) {
+        let personnel = accountItem.accountType === AccountType.DELIVERER_GROUP ?
+        accountItem.coordinator : accountItem.primaryContact;
+
+        let org = {
+            organization = accountItem.name,
+            logo = logoURL,
+            accountType = accountItem.accountType,
+            contactName = personnel.name,
+            contactTitle = personnel.position,
+            contactNumber = personnel.phone,
+            contactEmail = accountItem.email,
+        };
+
         let itemAddr = accountItem.address;
-
-        org.organization = accountItem.name;
-        org.logo = logoURL;
-        org.accountType = accountItem.accountType;
-
         org.address1 = itemAddr.street1;
         // append street2 and officeNumber if exists
         org.address1 += itemAddr.street2 ? ` ${itemAddr.street2}` : '';
         org.address1 += itemAddr.officeNumber ? ` ${itemAddr.officeNumber}` : '';
         org.address2 = `${itemAddr.city}, ${itemAddr.state} ${itemAddr.zipcode}`;
         
-        let personnel = accountItem.accountType === AccountType.DELIVERER_GROUP ?
-            accountItem.coordinator : accountItem.primaryContact;
-
-        org.contactName = personnel.name;
-        org.contactTitle = personnel.position;
-        org.contactNumber = personnel.phone;
-        org.contactEmail = accountItem.email;
-
-        if (accountItem.accountType === AccountType.RECEIVING_AGENCY) 
-            org.availability = this.aggAvailabilityList(accountItem.availabilities);
+        if (accountItem.accountType === AccountType.RECEIVING_AGENCY) {
+            org.availability = this.aggrAvailability(accountItem.availabilities);
+        }
         return org;
     }
 
-    aggAvailabilityList(obj) {
+    aggrAvailability(obj) {
         let availabilityList = [];
-        for (var key in obj) {
+        for (let key in obj) {
             if (obj.hasOwnProperty(key)) { // filter out prototype props
                 let item = obj[key];
                 availabilityList.push(`${DaysOfWeek[key]}: ${item.startTime} - ${item.endTime}`);
