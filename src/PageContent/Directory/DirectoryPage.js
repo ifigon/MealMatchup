@@ -3,12 +3,12 @@ import DirectoryCard from './DirectoryCard.js';
 import DirectoryFilter from './DirectoryFilter.js';
 
 import firebase from '../../FirebaseConfig.js';
-import {AccountType, DaysOfWeek} from '../../Enums.js'
+import {AccountType, DaysOfWeek} from '../../Enums.js';
 import './Directory.css';
 const db = firebase.database();
 
 // 04/02/2018: No logo data found in database, temporarily use UW logo to populate logo prop
-const logoURL = 'https://www.washington.edu/brand/files/2014/09/W-Logo_Purple_Hex.png'
+const logoURL = 'https://www.washington.edu/brand/files/2014/09/W-Logo_Purple_Hex.png';
 
 class DirectoryPage extends Component {
     
@@ -23,13 +23,12 @@ class DirectoryPage extends Component {
     }
 
     async componentDidMount() {
-        let umbrellaId = await this.getUmbrellaId()
-        this.setState({umbrellaId: umbrellaId})
+        let umbrellaId = await this.getUmbrellaId();
+        this.setState({umbrellaId: umbrellaId});
 
         db.ref('accounts').on('value', (snapshot) => { // attach on-value-change listener on /accounts/
             this.setState({orgList: []}); // clear up current list
-            console.log('Fetching new data...');
-            this.fetchOrgs()
+            this.fetchOrgs();
         });
     }
 
@@ -40,22 +39,22 @@ class DirectoryPage extends Component {
 
     fetchOrgs() {
         switch (this.state.account.accountType) {
-            case AccountType.DONATING_AGENCY_MEMBER:
-                this.fetchRAorDG([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]); 
-                break;
-            case AccountType.RECEIVING_AGENCY:
-                this.fetchRAorDG([AccountType.DELIVERER_GROUP]); 
+        case AccountType.DONATING_AGENCY_MEMBER:
+            this.fetchRAorDG([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]); 
+            break;
+        case AccountType.RECEIVING_AGENCY:
+            this.fetchRAorDG([AccountType.DELIVERER_GROUP]); 
 
-                break;
-            case AccountType.DELIVERER_GROUP:
-                this.fetchRAorDG([AccountType.RECEIVING_AGENCY]);
+            break;
+        case AccountType.DELIVERER_GROUP:
+            this.fetchRAorDG([AccountType.RECEIVING_AGENCY]);
 
-                break;
-            case AccountType.UMBRELLA:
-                this.fetchRAorDG([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]);   
-                break;
-            default:
-                console.error("AccountType is not valid");
+            break;
+        case AccountType.UMBRELLA:
+            this.fetchRAorDG([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]);   
+            break;
+        default:
+            // console.error("AccountType is not valid");
         }
     }
 
@@ -68,27 +67,27 @@ class DirectoryPage extends Component {
                 if (AccountObjects.hasOwnProperty(key) // filter out prototype props
                     && orgTypes.includes(accountItem.accountType)) { // check accountTypes to be fetched
                     let org = this.aggRAorDGOrgObj(accountItem);
-                    orgsList.push(org)
+                    orgsList.push(org);
                 }
             }
-            console.log(orgsList);
+            // console.log(orgsList);
             this.setState({orgsList: this.state.orgsList.push(...orgsList)});
         });
     }
 
     aggRAorDGOrgObj(accountItem) {
-        let org = {}
+        let org = {};
         let itemAddr = accountItem.address;
 
         org.organization = accountItem.name;
         org.logo = logoURL;
         org.accountType = accountItem.accountType;
 
-        org.address1 = itemAddr.street1
+        org.address1 = itemAddr.street1;
         // append street2 and officeNumber if exists
-        org.address1 += itemAddr.street2 ? ` ${itemAddr.street2}` : ""
-        org.address1 += itemAddr.officeNumber ? ` ${itemAddr.officeNumber}` : ""
-        org.address2 = `${itemAddr.city}, ${itemAddr.state} ${itemAddr.zipcode}`
+        org.address1 += itemAddr.street2 ? ` ${itemAddr.street2}` : '';
+        org.address1 += itemAddr.officeNumber ? ` ${itemAddr.officeNumber}` : '';
+        org.address2 = `${itemAddr.city}, ${itemAddr.state} ${itemAddr.zipcode}`;
         
         let personnel = accountItem.accountType === AccountType.DELIVERER_GROUP ?
             accountItem.coordinator : accountItem.primaryContact;
@@ -125,18 +124,19 @@ class DirectoryPage extends Component {
     }
 
     async getUmbrellaId() {
-        let account = this.state.account
+        let account = this.state.account;
         switch (account.accountType) {
-            case AccountType.DONATING_AGENCY_MEMBER:
-                let donatingAgency = await db.ref(`donating_agencies/${account.agency}`).once('value');
-                let { umbrella } = donatingAgency.val()
-                return umbrella
-            case AccountType.RECEIVING_AGENCY || AccountType.DELIVERER_GROUP:
-                return account.umbrella
-            case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
-                return this.state.userId
-            default:
-                console.error("AccountType is not valid");
+        case AccountType.DONATING_AGENCY_MEMBER: {
+            let donatingAgency = await db.ref(`donating_agencies/${account.agency}`).once('value');
+            let { umbrella } = donatingAgency.val();
+            return umbrella;
+        }
+        case AccountType.RECEIVING_AGENCY || AccountType.DELIVERER_GROUP:
+            return account.umbrella;
+        case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
+            return this.state.userId;
+        default:
+            // console.error("AccountType is not valid");
         }
     }
 
