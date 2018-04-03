@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { DeliveryType } from '../../Enums';
 import './Header.css';
 import white_cross from '../../icons/white_cross.svg';
 
 class Header extends Component {
     render() {
         let deliveryType = '';
-        if (this.props.eventType === 'recurring') {
+        if (this.props.eventType === DeliveryType.RECURRING) {
             deliveryType = 'Recurring Delivery';
         }
         return (
