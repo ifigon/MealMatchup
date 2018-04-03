@@ -84,16 +84,16 @@ class DirectoryPage extends Component {
 
     aggrRAorDGOrgObj(accountItem) {
         let personnel = accountItem.accountType === AccountType.DELIVERER_GROUP ?
-        accountItem.coordinator : accountItem.primaryContact;
+            accountItem.coordinator : accountItem.primaryContact;
 
         let org = {
-            organization = accountItem.name,
-            logo = logoURL,
-            accountType = accountItem.accountType,
-            contactName = personnel.name,
-            contactTitle = personnel.position,
-            contactNumber = personnel.phone,
-            contactEmail = accountItem.email,
+            organization: accountItem.name,
+            logo: logoURL,
+            accountType: accountItem.accountType,
+            contactName: personnel.name,
+            contactTitle: personnel.position,
+            contactNumber: personnel.phone,
+            contactEmail: accountItem.email,
         };
 
         let itemAddr = accountItem.address;
