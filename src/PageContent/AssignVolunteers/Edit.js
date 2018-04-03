@@ -12,8 +12,18 @@ class Edit extends Component {
             from: this.props.delivery.startTime,
             to: this.props.delivery.endTime,
             donatingAgency: this.props.delivery.donatingAgency.agency,
-            receivingAgency: this.props.delivery.receivingAgency.agency
+            receivingAgency: this.props.delivery.receivingAgency.agency,
+            s1name: '',
+            s1phone: '',
+            s1email: '',
+            s2name: '',
+            s2phone: '',
+            s2email: '',
         };
+    }
+
+    componentDidMount() {
+        this.checkStudents(this.props);
     }
 
     render() {
@@ -39,19 +49,19 @@ class Edit extends Component {
 
                             <div className="form-child">
                                 <label className="label-component details">Student 1</label><br />
-                                <input name="name" type="text" className="form-input" onChange={this.handleNameOne.bind(this)} required/><br />
+                                <input name="name" type="text" className="form-input" onChange={this.handleNameOne.bind(this)} placeholder={this.state.s1name} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneOne.bind(this)} required/><br />
+                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneOne.bind(this)} placeholder={this.state.s1phone} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input type="email" className="form-input" onChange={this.handleEmailOne.bind(this)} required/>
+                                <input type="email" className="form-input" onChange={this.handleEmailOne.bind(this)} placeholder={this.state.s1email} required/>
                             </div>
                             <div className="form-child">
                                 <label className="label-component details">Student 2</label><br />
-                                <input name="name" type="text" className="form-input" onChange={this.handleNameTwo.bind(this)} required/><br />
+                                <input name="name" type="text" className="form-input" onChange={this.handleNameTwo.bind(this)} placeholder={this.state.s2name} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneTwo.bind(this)} required/><br />
+                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneTwo.bind(this)} placeholder={this.state.s2phone} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input type="email" className="form-input" onChange={this.handleEmailTwo.bind(this)} required/>
+                                <input type="email" className="form-input" onChange={this.handleEmailTwo.bind(this)} placeholder={this.state.s2email} required/>
                             </div>
 
                             <div className="form-child second-row">
@@ -70,6 +80,23 @@ class Edit extends Component {
             </div>
         );
 
+    }
+
+    checkStudents(props) {
+        if(props.delivery.delivererGroup.deliverers[0]) {
+            this.setState({
+                s1name: props.delivery.delivererGroup.deliverers[0].name,
+                s1email: props.delivery.delivererGroup.deliverers[0].email,
+                s1phone: props.delivery.delivererGroup.deliverers[0].phone,
+            });
+            if(props.delivery.delivererGroup.deliverers[1]) {
+                this.setState({
+                    s2name: props.delivery.delivererGroup.deliverers[1].name,
+                    s2email: props.delivery.delivererGroup.deliverers[1].email,
+                    s2phone: props.delivery.delivererGroup.deliverers[1].phone,
+                });
+            }
+        }
     }
 
     handleNameOne(e) {
