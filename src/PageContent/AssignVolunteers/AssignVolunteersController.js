@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './AssignVolunteers.css';
 import Edit from './Edit';
-import Confirmation from './Confirmation'
+import Confirmation from './Confirmation';
 import AssignVolunteersIndex from './AssignVolunteersIndex';
-// import firebase from '../../FirebaseConfig';
 
 class AssignVolunteers extends Component {
 
@@ -12,13 +11,49 @@ class AssignVolunteers extends Component {
         this.state = {
             step: 0,
             onConfirm: false,
-            s1name: "",
-            s1phone: "",
-            s1email: "",
-            s2name: "",
-            s2phone: "",
-            s2email: "",
-        }
+            deliveries: []
+        };
+    }
+
+    componentWillMount() {
+        let deliveryList = [];
+        deliveryList.push({
+            date: "2018-02-28",
+            startTime: "14:00",
+            endTime: "17:00",
+            delivererGroup: {
+                group: "R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
+                deliverers: [
+                    {
+                        name: "Alice",
+                        email: "alice@uw.edu",
+                        phone: 1237894560
+                    },
+                    {
+                        name: "Chris",
+                        email: "chris@uw.edu",
+                        phone: 4561230789
+                    }
+                ]
+            },
+            description: {
+                foodItems: [
+                    {
+                        food: "Baked beans",
+                        quantity: 15,
+                        unit: "lb"  // Enums.FoodUnit
+                    },
+                    {
+                        food: "Bread",
+                        quantity: 4,
+                        unit: "loaves"  // Enums.FoodUnit
+                    },
+                ]
+            }
+        });
+        this.setState({
+            deliveries: deliveryList
+        });
     }
 
     render() {
@@ -78,33 +113,33 @@ class AssignVolunteers extends Component {
     }
 
     showStep() {
-
         switch(this.state.step) {
 
-            case 0:
-                return (
-                    <AssignVolunteersIndex 
-                        handleEditClick={this.handleEditClick.bind(this)}
-                    />
-                );
+        case 0:
+            return (
+                <AssignVolunteersIndex 
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    deliveries={this.state.deliveries}
+                />
+            );
 
-            case 1:
-                return (
-                        <Edit 
-                            day={this.props.day}
-                            date={this.props.date}
-                            from={this.props.from}
-                            to={this.props.to}
-                            donatingAgency={this.props.donatingAgency}
-                            receivingAgency={this.props.receivingAgency}
-                            handleConfirmClick={this.handleConfirmClick.bind(this)}
-                            handleCancelClick={this.handleCancelClick.bind(this)}
-                        />
-                );
-            default:
-                return (
-                    <div />
-                );
+        case 1:
+            return (
+                <Edit 
+                    day={this.props.day}
+                    date={this.props.date}
+                    from={this.props.from}
+                    to={this.props.to}
+                    donatingAgency={this.props.donatingAgency}
+                    receivingAgency={this.props.receivingAgency}
+                    handleConfirmClick={this.handleConfirmClick.bind(this)}
+                    handleCancelClick={this.handleCancelClick.bind(this)}
+                />
+            );
+        default:
+            return (
+                <div />
+            );
 
         }
 
