@@ -4,8 +4,6 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
-import RecurringPickup from './PageContent/RequestPickup/RecurringPickupRequest.js';
-
 import Directory from './PageContent/Directory/DirectoryPage.js';
 
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
