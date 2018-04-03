@@ -76,13 +76,18 @@ class ConfirmationCard extends Component {
                 </div>
                 <div className="details-content">
                     <div className="edit-button">
-                        <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleCloseClick}>Edit</button>
+                        <button type="button" className="form-button confirm-button" onClick={this.handleSave.bind(this)}>Save</button>
                     </div>
                 </div>
 
             </div>
         );
 
+    }
+
+    handleSave() {
+        // Backend TODO: Write values to DB
+        this.props.handleSave();
     }
 
 }

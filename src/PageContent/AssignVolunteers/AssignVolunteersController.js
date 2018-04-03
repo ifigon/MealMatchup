@@ -73,6 +73,47 @@ class AssignVolunteersController extends Component {
                 ]
             }
         });
+        deliveryList.push({
+            date: "2018-02-26",
+            startTime: "14:00",
+            endTime: "17:00",
+            donatingAgency: {
+                agency: "Local Point",
+                address: "Test Address",
+                primaryContact: {
+                    name: "Alice",
+                    phone: 7739939922
+                }
+            },
+            receivingAgency: {
+                agency: "Union Gospel Shelter",
+                primaryContact: {
+                    name: "Bob",
+                    email: "bob@uniongospel.org",
+                    phone: 1237894560
+                }
+            },
+            delivererGroup: {
+                group: "Deliverer Test Group",  // uid-key of deliverer-group
+                deliverers: [
+                    
+                ]
+            },
+            description: {
+                foodItems: [
+                    {
+                        food: "Baked beans",
+                        quantity: 15,
+                        unit: "lb"  // Enums.FoodUnit
+                    },
+                    {
+                        food: "Bread",
+                        quantity: 4,
+                        unit: "loaves"  // Enums.FoodUnit
+                    },
+                ]
+            }
+        });
         this.setState({
             deliveries: deliveryList
         });
@@ -120,6 +161,12 @@ class AssignVolunteersController extends Component {
         });
     }
 
+    handleSave() {
+        this.setState({
+            step: 0
+        });
+    }
+
     showStep() {
         switch(this.state.step) {
 
@@ -143,6 +190,7 @@ class AssignVolunteersController extends Component {
             return (
                 <Confirmation
                     handleCloseClick={this.handleCloseClick.bind(this)}
+                    handleSave={this.handleSave.bind(this)}
                     delivery={this.state.deliveries[this.state.selectedDelivery]}
                     s1name={this.state.s1name}
                     s1phone={this.state.s1phone}

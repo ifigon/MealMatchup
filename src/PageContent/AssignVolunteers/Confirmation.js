@@ -4,11 +4,6 @@ import ConfirmationCard from './ConfirmationCard';
 
 class Confirmation extends Component {
 
-    constructor(props) {
-        super(props);
-        console.log(props);
-    }
-
     render() {
 
         return (
@@ -17,6 +12,7 @@ class Confirmation extends Component {
                 <ConfirmationCard 
                     delivery={this.props.delivery}
                     handleCloseClick={this.props.handleCloseClick}
+                    handleSave={this.props.handleSave}
                     s1name={this.props.s1name}
                     s1phone={this.props.s1phone}
                     s1email={this.props.s1email}
