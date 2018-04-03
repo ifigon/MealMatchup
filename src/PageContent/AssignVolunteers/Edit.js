@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class Edit extends Component {
 
     constructor(props) {
         super(props);
+        let date = new Date(this.props.delivery.date);
         this.state = {
-            s1name: "",
-            s1phone: "",
-            s1email: "",
-            s2name: "",
-            s2phone: "",
-            s2email: ""
-        }
+            day: moment(date).format('dddd'),
+            date: moment(date).format('l'),
+            from: this.props.delivery.startTime,
+            to: this.props.delivery.endTime,
+            donatingAgency: this.props.delivery.donatingAgency.agency,
+            receivingAgency: this.props.delivery.receivingAgency.agency
+        };
     }
 
     render() {
@@ -19,17 +21,17 @@ class Edit extends Component {
         return (
             <div>
                 <div className="date-container">
-                    {this.props.day} {this.props.date} Pick-up between {this.props.from} - {this.props.to}
+                    {this.state.day} {this.state.date} Pick-up between {this.state.from} - {this.state.to}
                 </div>
                 <div className="content-container">
-                    <h5 className="location" id="top"><i className="fas fa-circle circle-marker" /><span className="spacing" />{this.props.donatingAgency}</h5>
+                    <h5 className="location" id="top"><i className="fas fa-circle circle-marker" /><span className="spacing" />{this.state.donatingAgency}</h5>
                     <i className="fas fa-circle ellipses" />
                     <i className="fas fa-circle ellipses" />
                     <i className="fas fa-circle ellipses" />
-                    <h5 className="location" id="bottom"><i className="fas fa-map-marker-alt marker" /><span className="spacing" />{this.props.receivingAgency}</h5>
+                    <h5 className="location" id="bottom"><i className="fas fa-circle circle-marker" /><span className="spacing" />{this.state.receivingAgency}</h5>
                 </div>
                 <div className="form-container">
-                    <form onSubmit={this.nextStep}>
+                    <form onSubmit={this.handleConfirmClick.bind(this)}>
 
                         <label className="label-component">Student Deliverers</label>
 
@@ -37,19 +39,19 @@ class Edit extends Component {
 
                             <div className="form-child">
                                 <label className="label-component details">Student 1</label><br />
-                                <input name="name" type="text" className="form-input" onChange={this.handleNameOne.bind(this)} /><br />
+                                <input name="name" type="text" className="form-input" onChange={this.handleNameOne.bind(this)} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneOne.bind(this)} /><br />
+                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneOne.bind(this)} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input type="email" className="form-input" onChange={this.handleEmailOne.bind(this)} />
+                                <input type="email" className="form-input" onChange={this.handleEmailOne.bind(this)} required/>
                             </div>
                             <div className="form-child">
                                 <label className="label-component details">Student 2</label><br />
-                                <input name="name" type="text" className="form-input" onChange={this.handleNameTwo.bind(this)} /><br />
+                                <input name="name" type="text" className="form-input" onChange={this.handleNameTwo.bind(this)} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneTwo.bind(this)} /><br />
+                                <input name="phone" type="tel" className="form-input" onChange={this.handlePhoneTwo.bind(this)} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input type="email" className="form-input" onChange={this.handleEmailTwo.bind(this)} />
+                                <input type="email" className="form-input" onChange={this.handleEmailTwo.bind(this)} required/>
                             </div>
 
                             <div className="form-child second-row">
@@ -57,7 +59,7 @@ class Edit extends Component {
                             </div>
                             <div className="form-child second-row form-buttons-container">
                                 <button type="button" className="form-button" onClick={this.props.handleCancelClick}>Cancel</button>
-                                <button type="submit" className="form-button" id="confirm-button" onClick={this.handleConfirmClick.bind(this)}>Confirm</button>
+                                <button type="submit" className="form-button confirm-button" onSubmit={this.handleConfirmClick.bind(this)}>Confirm</button>
                             </div>
 
 
@@ -94,7 +96,8 @@ class Edit extends Component {
         this.setState({s2email: e.target.value});
     }
 
-    handleConfirmClick() {
+    handleConfirmClick(e) {
+        e.preventDefault();
         this.props.handleConfirmClick(this.state.s1name, this.state.s1phone, this.state.s1email, this.state.s2name, this.state.s2phone, this.state.s2email);
     }
 

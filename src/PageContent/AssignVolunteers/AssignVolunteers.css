@@ -115,7 +115,7 @@
     cursor: pointer;
 }
 
-#confirm-button {
+.confirm-button {
     color: #5DC0F9;
     border: 1px solid #5DC0F9;
 }

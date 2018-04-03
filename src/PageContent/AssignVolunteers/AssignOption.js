@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class AssignOption extends Component {
 
     constructor(props) {
         super(props);
+        let date = new Date(this.props.delivery.date);
         this.state = {
-            date: this.props.delivery.date,
-            deliverers: this.props.delivery.delivererGroup.deliverers
+            day: moment(date).format('dddd'),
+            date: moment(date).format('l'),
+            deliverers: this.props.delivery.delivererGroup.deliverers,
+            receivingAgency: this.props.delivery.receivingAgency.agency
         };
     }
 
@@ -18,19 +22,21 @@ class AssignOption extends Component {
             <div className="avi-row">
                 <div className="container avi-details-container">
                     <div className="avi-detail">
-                        Tuesday {this.state.date} Pick-up 
+                        {this.state.day} {this.state.date} Pick-up 
                     </div>
                     <div className="avi-detail">
-                        Union Gospel Mission
+                        {this.state.receivingAgency}
                     </div>
                     <div className="avi-detail avi-volunteers">
-                        {this.state.deliverers.map((deliverer, index) => {
-                            return <h5 key={index}>{deliverer.name}</h5>;
-                        })}
+                        {
+                            this.state.deliverers.map((deliverer, index) => {
+                                return <h5 key={index}>{deliverer.name}</h5>;
+                            })
+                        }
                     </div>
                     <div className="avi-detail avi-volunteers">
-                        {this.state.deliverers.length === 0 ? <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleEditClick}>Assign Volunteers</button>
-                            : <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleEditClick}>Edit</button>
+                        {this.state.deliverers.length === 0 ? <button type="button" className="form-button confirm-button" id={this.props.id} onClick={this.props.handleEditClick}>Assign Volunteers</button>
+                            : <button type="button" className="form-button confirm-button" id={this.props.id} onClick={this.props.handleEditClick}>Edit</button>
                         }
                     </div>
                 </div>

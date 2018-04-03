@@ -23,7 +23,7 @@ class AssignVolunteersIndex extends Component {
                 </div>
                 {
                     this.props.deliveries.map((delivery, index) => {
-                        return <AssignOption handleEditClick={this.props.handleEditClick} key={index} delivery={delivery}/>;
+                        return <AssignOption handleEditClick={this.props.handleEditClick} key={index} delivery={delivery} id={index}/>;
                     })
                 }
                 

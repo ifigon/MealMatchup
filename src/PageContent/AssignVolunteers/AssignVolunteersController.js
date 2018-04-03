@@ -4,14 +4,20 @@ import Edit from './Edit';
 import Confirmation from './Confirmation';
 import AssignVolunteersIndex from './AssignVolunteersIndex';
 
-class AssignVolunteers extends Component {
+class AssignVolunteersController extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             step: 0,
-            onConfirm: false,
-            deliveries: []
+            deliveries: [],
+            selectedDelivery: -1,
+            s1name: "",
+            s1phone: "",
+            s1email: "",
+            s2name: "",
+            s2phone: "",
+            s2email: ""
         };
     }
 
@@ -21,8 +27,24 @@ class AssignVolunteers extends Component {
             date: "2018-02-28",
             startTime: "14:00",
             endTime: "17:00",
+            donatingAgency: {
+                agency: "Local Point",
+                address: "Test Address",
+                primaryContact: {
+                    name: "Alice",
+                    phone: 7739939922
+                }
+            },
+            receivingAgency: {
+                agency: "Union Gospel Shelter",
+                primaryContact: {
+                    name: "Bob",
+                    email: "bob@uniongospel.org",
+                    phone: 1237894560
+                }
+            },
             delivererGroup: {
-                group: "R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
+                group: "Deliverer Test Group",  // uid-key of deliverer-group
                 deliverers: [
                     {
                         name: "Alice",
@@ -62,21 +84,6 @@ class AssignVolunteers extends Component {
 
                 {this.showStep()}
 
-                {this.state.onConfirm ?
-                    <Confirmation 
-                        handleCloseClick={this.handleCloseClick.bind(this)}
-                        studentGroup={this.props.studentGroup}
-                        s1name={this.state.s1name}
-                        s1phone={this.state.s1phone}
-                        s1email={this.state.s1email}
-                        s2name={this.state.s2name}
-                        s2phone={this.state.s2phone}
-                        s2email={this.state.s2email}
-                    /> 
-                    : 
-                    <div />
-                }
-                
             </div>
         );
 
@@ -84,7 +91,7 @@ class AssignVolunteers extends Component {
 
     handleConfirmClick(s1name, s1phone, s1email, s2name, s2phone, s2email) {
         this.setState({
-            onConfirm: true,
+            step: 2,
             s1name: s1name,
             s1phone: s1phone,
             s1email: s1email,
@@ -96,13 +103,14 @@ class AssignVolunteers extends Component {
 
     handleCloseClick() {
         this.setState({
-            onConfirm: false
+            step: 1
         });
     }
 
-    handleEditClick() {
+    handleEditClick(e) {
         this.setState({
-            step: 1
+            step: 1,
+            selectedDelivery: e.target.id
         });
     }
 
@@ -126,14 +134,21 @@ class AssignVolunteers extends Component {
         case 1:
             return (
                 <Edit 
-                    day={this.props.day}
-                    date={this.props.date}
-                    from={this.props.from}
-                    to={this.props.to}
-                    donatingAgency={this.props.donatingAgency}
-                    receivingAgency={this.props.receivingAgency}
+                    delivery={this.state.deliveries[this.state.selectedDelivery]}
                     handleConfirmClick={this.handleConfirmClick.bind(this)}
                     handleCancelClick={this.handleCancelClick.bind(this)}
+                />
+            );
+        case 2:
+            return (
+                <Confirmation
+                    handleCloseClick={this.handleCloseClick.bind(this)}
+                    delivery={this.state.deliveries[this.state.selectedDelivery]}
+                    s1name={this.state.s1name}
+                    s1phone={this.state.s1phone}
+                    s1email={this.state.s1email}
+                    s2name={this.state.s2name}
+                    s2phone={this.state.s2phone}
                 />
             );
         default:
@@ -146,4 +161,4 @@ class AssignVolunteers extends Component {
     }
 }
 
-export default AssignVolunteers;
+export default AssignVolunteersController;
