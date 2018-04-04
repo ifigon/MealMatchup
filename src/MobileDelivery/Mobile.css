@@ -20,7 +20,7 @@
 
 .mobile-header p{
     margin: 10px 20px;
-    font-size: 18px;
+    font-size: 18px; 
     color: #3E3F40;
     padding-bottom: 10px;
 }
@@ -203,7 +203,7 @@ a[href] {
     outline: none;
 }
 
-.ms-input::placeholder, .ms-signature::placeholder, .ms-signature-deliver::placeholder{
+.ms-input::placeholder, .ms-signature::placeholder, .ms-signature-delivery::placeholder, .ms-input-delivery::placeholder{
     color: #5DC0F9;
     font-weight: 100;
 }
@@ -230,11 +230,23 @@ a[href] {
 }
 
 /* MOBILE DELIVERY */
-.ms-signature-deliver{
+.ms-signature-delivery{
     color: #5DC0F9;
     border: 3px solid #E0E0E0;
     border-radius: 3px;
     height: 50px;
+    width: 80%;
+    margin: 10px 20px;
+    padding-left: 10px;
+    outline: none;
+}
+
+.ms-input-delivery{
+    color: #5DC0F9;
+    background-position: right auto;
+    border: 3px solid #E0E0E0;
+    border-radius: 3px;
+    height: 25px;
     width: 80%;
     margin: 10px 20px;
     padding-left: 10px;

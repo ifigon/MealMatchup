@@ -13,6 +13,18 @@ class MobileDelivery extends React.Component {
             long: '',
             fullAddress: ''
         };
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onSubmit(e){
+        e.preventDefault();
+        var data = {
+            raSignature: e.target.signature.value,
+            raPrintName: e.target.print.value,
+            timeCompleted: moment().format()
+        };
+        this.props.nextStep();
+        this.props.saveValues(data);
     }
 
     componentDidMount(){
@@ -57,17 +69,19 @@ class MobileDelivery extends React.Component {
                             <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
                     </div>
-                    <div id="ms-confirm">
-                        <p className="ms-content-header">Confirmation Signature</p>
-                        <p className="ms-notes">Get a confirmation signature and printed name from 
-                        {this.props.ra.primaryContact.name} at the non profit after you drop-off food items at the destination.</p>
-                        {/* TODO: Signature */}
-                        <input className="ms-signature-deliver" type="text" placeholder="Sign Here"/>
-                        <input className="ms-input" type="text" placeholder="Print Name"/>
-                    </div>
-                    
+                    <form onSubmit={this.onSubmit}>
+                        <div id="ms-confirm">
+                            <p className="ms-content-header">Confirmation Signature</p>
+                            <p className="ms-notes">Get a confirmation signature and printed name from 
+                            {this.props.ra.primaryContact.name} at the non profit after you drop-off food items at the destination.</p>
+                            {/* TODO: Signature */}
+                            <input name="signature" className="ms-signature-delivery" type="text" placeholder="Sign Here" required/>
+                            <input name="print" className="ms-input-delivery" type="text" placeholder="Print Name" required/>
+                        </div>
+                        <input type="submit" value="Next" id="ms-next-btn"/> 
+                    </form>
                 </div>
-                <input type="submit" value="Next" id="ms-next-btn"/> 
+                
             </div>
         );
     }
