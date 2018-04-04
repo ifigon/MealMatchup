@@ -38,7 +38,7 @@ class DirectoryCard extends Component {
                     {/* QUESTION: When is the second row of card details relevant? 
 									Only saw one example with a second row. Not sure if it is needed. */}
 
-                    {/*<h3>Member Accounts</h3>
+                    {/* <h3>Member Accounts</h3>
 					<div className='card-detail-3'>
 						<h4>Chris Stack</h4>
 						<h4>Shelter Manager</h4>
@@ -55,7 +55,7 @@ class DirectoryCard extends Component {
 						<h3><b>Street Address</b></h3>
 						<p className='note'>123 Seasame St.</p>
 						<p className='note'>Seattle, WA 98115</p>
-					</div>*/}
+					</div> */}
                 </div>
             </div>
         );

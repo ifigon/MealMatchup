@@ -55,8 +55,7 @@ class DirectoryPage extends Component {
     fetchOrgs() {
         switch (this.state.account.accountType) {
         case AccountType.DONATING_AGENCY_MEMBER:
-            this.fetchRaAndDg([AccountType.RECEIVING_AGENCY, AccountType.DELIVERER_GROUP]); 
-            this.fetchDAM();
+            this.fetchRaAndDg([AccountType.DELIVERER_GROUP, AccountType.RECEIVING_AGENCY]); 
             break;
         case AccountType.RECEIVING_AGENCY:
             this.fetchRaAndDg([AccountType.DELIVERER_GROUP]); 
@@ -83,20 +82,14 @@ class DirectoryPage extends Component {
 
             for (let key in AccountObjects) {
                 let accountItem = AccountObjects[key];
-
-                // return immediately if the conditions are not met:
-                if (!AccountObjects.hasOwnProperty(key)  // filter out prototype props
-                    || !orgTypes.includes(accountItem.accountType)) { // if accountType is not in orgTypes 
-                    return;
+                if (AccountObjects.hasOwnProperty(key)  // filter out prototype props
+                    && orgTypes.includes(accountItem.accountType)) { // if accountType is in orgTypes 
+                    let org = this.aggrRAorDGOrgObj(accountItem);
+                    (accountItem.accountType === AccountType.RECEIVING_AGENCY) ? 
+                        raList.push(org) : dgList.push(org);        
                 }
-
-                let org = this.aggrRAorDGOrgObj(accountItem);
-                (accountItem.accountType === AccountType.RECEIVING_AGENCY) ? 
-                    raList.push(org) : dgList.push(org);  
             }
             this.setState({raList: raList, dgList: dgList});
-            // console.log("RA List: ", this.state.raList);
-            // console.log("DG List: ", this.state.dgList);
         });
     }
 
@@ -111,7 +104,7 @@ class DirectoryPage extends Component {
             contactName: personnel.name,
             contactTitle: personnel.position,
             contactNumber: personnel.phone,
-            contactEmail: accountItem.email,
+            contactEmail: personnel.email,
         };
 
         this.aggrAddress(org, accountItem.address);
@@ -124,10 +117,11 @@ class DirectoryPage extends Component {
 
     aggrAddress(org, addrObj) {
         org.address1 = addrObj.street1;
+        org.address2 = `${addrObj.city}, ${addrObj.state} ${addrObj.zipcode}`;
+
         // append street2 and officeNumber if exists
         org.address1 += addrObj.street2 ? ` ${addrObj.street2}` : '';
         org.address1 += addrObj.officeNumber ? ` ${addrObj.officeNumber}` : '';
-        org.address2 = `${addrObj.city}, ${addrObj.state} ${addrObj.zipcode}`;
     }
 
     aggrAvailability(obj) {
@@ -144,42 +138,44 @@ class DirectoryPage extends Component {
     fetchDAM() { // fetch donating agencies, with members
         db.ref('donating_agencies').orderByChild('umbrella').equalTo(this.state.umbrellaId).on('value', async (snapshot) => {
             let daObjects = snapshot.val();            
-            let daList = [];
-            let daMemberKey = [];
-            let daPromiseList = [];
+            let daList = [];        // [da1. da2, da3, ...]
+            let daMemberKey = [];   // [ [da1Member1Key, da1Member2Key, ...], [da2Member1Key, ...], ... ]
+            let daPromiseList = []; // [ [da1Member1Promise, da1Member2Promise, ...], [da1Member1Promise, ...] ... ]
 
             for (let key in daObjects) {
-                if (!daObjects.hasOwnProperty(key)) { // filter out prototype props
-                    return;
-                }
-
-                let daItem = daObjects[key];
-                daList.push(daItem);
-
-                let members = daItem.members;
-                daMemberKey.push(members);
-                let daMemberPromiseList = members.map((damId) => 
-                    new Promise( 
+                if (daObjects.hasOwnProperty(key)) { // filter out prototype props
+                    let daItem = daObjects[key];
+                    daList.push(daItem);
+                    let members = daItem.members;
+                    daMemberKey.push(members);
+    
+                    // for every da member, create promise to fetch data,
+                    // will be resolved when get this member data
+                    let daMemberPromiseList = members.map((damId) =>
+                        new Promise( 
+                            async (resolve, reject) => {
+                                let snapshot = await db.ref(`accounts/${damId}`).once('value');
+                                resolve(snapshot.val());
+                            }
+                        )
+                    );
+    
+                    // a parent promise that contains all member-promises of that da,
+                    // will be resolved when get all members' data
+                    let daPromise = new Promise( 
                         async (resolve, reject) => {
-                            let snapshot = await db.ref(`accounts/${damId}`).once('value');
-                            resolve(snapshot.val());
+                            let daMembers = await Promise.all(daMemberPromiseList);
+                            resolve(daMembers);
                         }
-                    )
-                );
-
-                let daPromise = new Promise( 
-                    async (resolve, reject) => {
-                        let daMembers = await Promise.all(daMemberPromiseList);
-                        resolve(daMembers);
-                    }
-                );
-                daPromiseList.push(daPromise);
+                    );
+                    daPromiseList.push(daPromise);
+                }
             }
 
-            let daMemberList = await Promise.all(daPromiseList);
+            // [ [da1Member1Data, da1Member2Data, ...], [da2Member1Data, ...], ... ]
+            let daMemberList = await Promise.all(daPromiseList); // all da-parent-promises of this umbrella 
             let aggredDaList = this.aggrDaList(daList, daMemberList, daMemberKey);
             this.setState({daList: aggredDaList});
-            // console.log("DA List: ", this.state.daList);
         });
     }
 
@@ -201,7 +197,7 @@ class DirectoryPage extends Component {
                 let memberKey = daMemberKey[i][j];
                 let {name, position, phone, email} = member;
 
-                if (daItem.primaryContact === memberKey) {
+                if (daItem.primaryContact === memberKey) { // if this member is primaryContact
                     org.contactName = name;
                     org.contactTitle = position;
                     org.contactNumber = phone;
@@ -221,23 +217,25 @@ class DirectoryPage extends Component {
         return result;
     }
 
+    getViews() {
+        let list = [this.state.daList, this.state.raList, this.state.dgList];
+        list = list.reduce((prev, curr) => curr.concat(prev));  // concat all lists
+        let listView = list.map((orgInfo) => {  // get populated views 
+            orgInfo.key = orgInfo.organization;
+            return React.cloneElement(<DirectoryCard />, orgInfo);
+        });
+        return listView;
+    }
+
     render() {
+        let orgListView = this.getViews();
         return (
             <div className="directoryPage">
                 {/* TODO: For now, I'll keep the filter component separate
                             but I think I will move it to the Directory Page so that it will be easier
                             to grab the filter query and use it to display the directory cards below */}
                 <DirectoryFilter />
-                <DirectoryCard 
-                    organization='Local Point University of Washington'
-                    logo='https://www.washington.edu/brand/files/2014/09/W-Logo_Purple_Hex.png' 
-                    address1='123 Seasame St.'
-                    address2='Seattle, WA 98115' 
-                    contactName='Amy Powell'
-                    contactTitle='Program Coordinator' 
-                    contactNumber='206-487-2859'
-                    contactEmail='amypowell@gmail.com' />
-                    
+                { orgListView }                 
             </div>
         );
     }
