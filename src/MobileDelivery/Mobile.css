@@ -297,3 +297,38 @@ a[href] {
     color: #243847;
 }
 
+/* MOBILE COMPLETED */
+#mobile-completed{
+    font-size: 20px;
+    color: #828282;
+    margin-top: 0px;
+}
+
+.gray-dot{
+    height: 28px;
+    width: 28px;
+    background-color: #BDBDBD;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+#mobile-completed-btn{
+    height: 38.84px;
+    background: #BDBDBD;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center; 
+    color: #FFFFFF;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.mobile-card-line-gray{
+    background-color: #BDBDBD;
+    height: 4px;
+    width: 100%;
+}
