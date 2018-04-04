@@ -6,6 +6,8 @@
 div.react-calendar__month-view__days > button {
     border: 1px black;
     text-align: right;
+    border: 1px #E5E5E5 solid;
+    vertical-align: top;
 }
 
 .react-calendar__navigation {
@@ -30,4 +32,5 @@ div.react-calendar__month-view__days > button {
     padding: 10px;
     width: 160px;
     height: 140px;
+    border: 1px #4f4f4f solid;
 }

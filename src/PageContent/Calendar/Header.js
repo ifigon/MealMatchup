@@ -8,37 +8,48 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        // TODO ADD CIRCLES AROUND EACH TIME FOR "TODAY" INDICATOR
-        var dayTimeTags = document.getElementsByTagName('time');
+    //     // TODO ADD CIRCLES AROUND EACH TIME FOR "TODAY" INDICATOR
+    //     var dayTimeTags = document.getElementsByTagName('time');
 
-        for (var i = 0; i < dayTimeTags.length; i++) {
-            // `element` is the element you want to wrap
-            var parent = dayTimeTags[i].parentNode;
-            var wrapper = document.createElement('div');
-            wrapper.className = "calendar-day-wrapper";
+    //     for (var i = 0; i < dayTimeTags.length; i++) {
+    //         // `element` is the element you want to wrap
+            // var parent = dayTimeTags[i].parentNode;
+            // var wrapper = document.createElement('div');
+            // wrapper.className = "calendar-day-wrapper";
 
-            // set the wrapper as child (instead of the element)
-            parent.replaceChild(wrapper, dayTimeTags[i]);
-            // set element as child of wrapper
-            wrapper.appendChild(dayTimeTags[i]);
+    //         // set the wrapper as child (instead of the element)
+    //         parent.replaceChild(wrapper, dayTimeTags[i]);
+    //         // set element as child of wrapper
+    //         wrapper.appendChild(dayTimeTags[i]);
 
-            // dayTimeTags[i].
-            // console.log(dayTimeTags[i].firstChild.data); //second console output
-        }
+    //         // dayTimeTags[i].
+    //         // console.log(dayTimeTags[i].firstChild.data); //second console output
+    //     }
 
         var calendarTiles = document.getElementsByClassName("react-calendar__tile");
+        var dayTimeTags = document.getElementsByTagName('time');
+
         for (var i = 0; i < calendarTiles.length; i++) {
             var eventsDiv = document.createElement('div');
             eventsDiv.innerHTML = "event";
             // TODO APPEND EVENTS TO THIS DIV
             calendarTiles[i].appendChild(eventsDiv);
+
+            // var parent = dayTimeTags[i].parentNode;
+            // console.log(parent)
+            // var wrapper = document.createElement('div');
+            // wrapper.className = "calendar-day-wrapper";
+            // wrapper.innerHTML = dayTimeTags[i].innerHTML;
+            // console.log(wrapper)
+            // //when replace, is it removing parent classes?
+            // parent.replaceChild(wrapper, dayTimeTags[i]);
         }
 
     }
 
     render() {
         return (
-            <div style={{marginTop: '120px', marginLeft:'250px'}} id="calHeader">
+            <div style={{marginTop: '120px', marginLeft:'250px', marginRight:'50px', marginBottom:'25px'}} id="calHeader">
                 <Calendar />
             </div>
         );
