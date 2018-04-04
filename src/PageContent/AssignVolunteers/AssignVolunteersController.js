@@ -22,6 +22,7 @@ class AssignVolunteersController extends Component {
     }
 
     // TODO: Manually setting the values for now. Values would need to be queried from DB
+    // TODO: componentDidMount()?
 
     componentWillMount() {
         let deliveryList = [];
