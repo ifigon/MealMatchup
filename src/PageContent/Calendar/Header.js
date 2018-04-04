@@ -9,8 +9,14 @@ class Header extends Component {
         if (this.props.eventType === DeliveryType.RECURRING) {
             deliveryType = 'Recurring Delivery';
         }
+        let headerClass = '';
+        if (this.props.futureEvent) {
+            headerClass = 'header future-header';
+        } else {
+            headerClass = 'header past-header';
+        }
         return (
-            <div className="header">
+            <div className={headerClass}>
                 <h1 className="header-title">{deliveryType}</h1>
                 <img
                     onClick={this.props.closeDialog}

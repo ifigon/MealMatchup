@@ -13,6 +13,7 @@ class Dialog extends Component {
                     date={this.props.date}
                     startTime={this.props.startTime}
                     endTime={this.props.endTime}
+                    futureEvent={this.props.futureEvent}
                 />
                 <DialogContent />
             </dialog>
