@@ -20,11 +20,15 @@
 }
 
 .header {
-  background-color: #2ecc71;
   margin: 0px;
   padding: 15px;
 }
-
+.past-header {
+  background-color: #8c97b2;
+}
+.future-header {
+  background-color: #2ecc71;
+}
 .header-time {
   padding: 0px;
   color: white;

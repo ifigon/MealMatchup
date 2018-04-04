@@ -68,15 +68,16 @@ class DelivererGroupContent extends Component {
                             />
                         </div>
                     )}
-                    {this.props.accountType === AccountType.DELIVERER_GROUP ? (
-                        <button
-                            className="edit-button"
-                            type="button"
-                            onClick={this.edit}
-                        >
-                            {buttonContent}
-                        </button>
-                    ) : null}
+                    {this.props.accountType === AccountType.DELIVERER_GROUP &&
+                    this.props.futureEvent ? (
+                            <button
+                                className="edit-button"
+                                type="button"
+                                onClick={this.edit}
+                            >
+                                {buttonContent}
+                            </button>
+                        ) : null}
                 </div>
             </div>
         );
