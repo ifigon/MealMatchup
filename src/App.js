@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase, { auth } from './FirebaseConfig.js';
+import { auth, accountsRef } from './FirebaseConfig.js';
 import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
@@ -11,56 +11,73 @@ import SignUpInController from './SignUpIn/SignUpInController.js';
 // For now, rendering sign up/in components
 
 class App extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
             // TODO: a hack to prevent showing logged out page first.. better way?
             authenticated: false,
+            signInDenied: false,
             account: null
         };
     }
 
     componentDidMount() {
         // check whether user is logged in
-        auth.onAuthStateChanged(function(user) {
-            if (user) {
-                // grab user's account object
-                var accountRef = firebase.database().ref('accounts').child(user.uid);
-                accountRef.once('value').then(function(snapshot) {
+        auth.onAuthStateChanged(
+            function(user) {
+                if (user) {
+                    // grab user's account object
+                    accountsRef
+                        .child(user.uid)
+                        .once('value')
+                        .then(
+                            function(snapshot) {
+                                var account = snapshot.val();
+                                if (account.isVerified && account.isActivated) {
+                                    this.setState({
+                                        authenticated: true,
+                                        account: account
+                                    });
+                                } else {
+                                    // account is not verified or activated, deny sign in
+                                    this.setState({
+                                        authenticated: true,
+                                        signInDenied: true
+                                    });
+                                    auth.signOut();
+                                }
+                            }.bind(this)
+                        );
+                } else {
                     this.setState({
                         authenticated: true,
-                        account: snapshot.val()
+                        account: null
                     });
-                }.bind(this));
-            } else {
-                this.setState({
-                    authenticated: true,
-                    account: null
-                });
-            }   
-        }.bind(this));
+                }
+            }.bind(this)
+        );
     }
 
     render() {
         return (
             <div className="">
-                {this.state.authenticated ?
-                    (this.state.account ?
+                {this.state.authenticated ? (
+                    this.state.account ? (
                         /* Show Calendar page if user is logged in */
-                        <PageContainer 
+                        <PageContainer
                             account={this.state.account}
-                            content={PageContent.CALENDAR}>
-                        </PageContainer>
-                        :
-                        <SignUpInController/>
+                            content={PageContent.CALENDAR}
+                        />
+                    ) : (
+                        <SignUpInController
+                            signInDenied={this.state.signInDenied}
+                        />
                     )
-                    :
+                ) : (
                     /* Show blank page if initial authentication hasn't finished */
-                    <div></div>
-                }
-                    
+                    <div />
+                )}
             </div>
         );
     }
