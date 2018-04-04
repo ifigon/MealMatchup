@@ -79,6 +79,7 @@ class MobilePickup extends React.Component {
                         <div className="ms-temp">
                             <p className="ms-content-header">Temperature Directions</p>
                             <p className="ms-notes">Take the initial temperature of the freezer where the food being delivered is stored before deliviering.</p>
+                            {/* TODO: validate input in less than 32 degrees */}
                             <input name="temp" className="ms-input" type="number" placeholder="Freezer Temperature" required/>
                         </div>
                         <div id="ms-confirm">
