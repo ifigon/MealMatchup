@@ -154,7 +154,7 @@ class RecurringPickupRequest extends Component {
         if (!this.handleValidation()) {
             alert('Form has errors');
         } else {
-            let dateTimeStringToTimestamp = (dateString, timeString) => Date.parse(dateString + " " + timeString);
+            let dateTimeStringToTimestamp = (dateString, timeString) => Date.parse(dateString + ' ' + timeString);
             let startTimestamp = dateTimeStringToTimestamp(event.target.startDate.value, event.target.startTime.value);
 
             // process various fields
