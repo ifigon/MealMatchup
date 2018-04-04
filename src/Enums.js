@@ -37,7 +37,7 @@ exports.PageContent = {
     SETTINGS: 'Settings'
 };
 
-exports.RequestDurationType = {
+exports.RequestEndCriteriaType = {
     DATE: 'date', // an end date
     RECUR: 'num_recurrences' // number of recurrences
 };

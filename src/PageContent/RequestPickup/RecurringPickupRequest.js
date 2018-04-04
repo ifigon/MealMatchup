@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { AccountType, RequestRepeatType, RequestDurationType, RequestStatus } from '../../Enums.js';
+import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus } from '../../Enums.js';
 import { getWeekdayFromDateString } from '../../Utils.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
@@ -106,7 +106,7 @@ class RecurringPickupRequest extends Component {
             errors['durationType'] = 'Must select radio button';
             formIsValid = false;
         } else {
-            if (fields['durationType'] === RequestDurationType.DATE) {
+            if (fields['durationType'] === RequestEndCriteriaType.DATE) {
                 // perform all endDate related checks
                 if(fields['endDate'] < fields['startDate']){
                     formIsValid = false;
@@ -154,12 +154,29 @@ class RecurringPickupRequest extends Component {
         if (!this.handleValidation()) {
             alert('Form has errors');
         } else {
+            let dateTimeStringToTimestamp = (dateString, timeString) => Date.parse(dateString + " " + timeString);
+            let startTimestamp = dateTimeStringToTimestamp(event.target.startDate.value, event.target.startTime.value);
+
             // process various fields
             var durationValue = null;
-            if (event.target.durationType.value === RequestDurationType.DATE) {
+            let endTimestamp;
+            if (event.target.durationType.value === RequestEndCriteriaType.DATE) {
                 durationValue = event.target.endDate.value;
+                endTimestamp = dateTimeStringToTimestamp(durationValue, event.target.startTime.value);
             } else {
                 durationValue = event.target.numRecurrences.value;
+                let freq = event.target.repeats.value;
+                let startDate = new Date(startTimestamp);
+                if (freq === RequestRepeatType.WEEKLY) {
+                    startDate.setDate(startDate.getDate() + durationValue * 7);
+                    endTimestamp = startDate.getTime();
+                } else if (freq === RequestRepeatType.BIWEEKLY) {
+                    startDate.setDate(startDate.getDate() + durationValue * 14);
+                    endTimestamp = startDate.getTime();
+                } else {
+                    // TODO (jkbach): handle monthly
+                    endTimestamp = -1;
+                }
             }
 
             var raInfo = {};
@@ -193,12 +210,13 @@ class RecurringPickupRequest extends Component {
             }
 
             var primaryContact = this.state.memberList[event.target.primaryContact.value];
-
+            
             // create DeliveryRequest object
             var deliveryRequest = {
                 status: RequestStatus.PENDING,
-                startDate: event.target.startDate.value,
-                duration:{
+                startDate: startTimestamp,
+                endDate: endTimestamp,
+                endCriteria:{
                     type: event.target.durationType.value,
                     value: durationValue
                 },
@@ -215,11 +233,12 @@ class RecurringPickupRequest extends Component {
                 requestTimestamp: Date.now()
             };
 
-            var weekday = getWeekdayFromDateString(deliveryRequest.startDate);
+            var weekday = getWeekdayFromDateString(event.target.startDate.value);
             this.setState({
                 request: deliveryRequest,
                 dayOfWeek: weekday,
                 primaryContact: primaryContact,
+                startDate: event.target.startDate.value,
                 raRequested: raRequested,
                 dgRequested: dgRequested
             });
@@ -231,7 +250,7 @@ class RecurringPickupRequest extends Component {
     // when "Confirm" is clicked on the summary popup
     submitRequest(){
         // write to firebase
-        firebase.database().ref('delivery_requests').push(this.state.request);
+        firebase.database().ref('delivery_requests/' + this.props.donatingAgency.umbrella).push(this.state.request);
 
         // hide popup and clear form
         this.toggleModal();
@@ -258,12 +277,12 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestDurationType.RECUR} onChange={this.handleChange.bind(this, 'durationType')} required/>
+                                    <input type="radio" name="durationType" value={RequestEndCriteriaType.RECUR} onChange={this.handleChange.bind(this, 'durationType')} required/>
                                     <span className="checkmark"></span>Recur
                                     <input type="number" name="numRecurrences" onChange={this.handleChange.bind(this, 'recurTimes')} />times<br/>
                                 </label >
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestDurationType.DATE} onChange={this.handleChange.bind(this, 'durationType')}/>
+                                    <input type="radio" name="durationType" value={RequestEndCriteriaType.DATE} onChange={this.handleChange.bind(this, 'durationType')}/>
                                     <span className="checkmark"></span>End by
                                     <input type="date" name="endDate" onChange={this.handleChange.bind(this, 'endDate')} />
                                 </label>
@@ -278,7 +297,7 @@ class RecurringPickupRequest extends Component {
                                     <option value={RequestRepeatType.WEEKLY}>Weekly</option>
                                     <option value={RequestRepeatType.BIWEEKLY}>Every other week</option>
                                     {/* TODO warning if not every month in the range has this date */}
-                                    <option value={RequestRepeatType.MONTHLY}>Monthly</option>
+                                    {/* <option value={RequestRepeatType.MONTHLY}>Monthly</option> */}
                                     {/* (TODO SPR18) Nth Weekday of Month */}
                                     {/* <option value={RequestRepeatType.??}>Monthly, on the ith of X</option> */}
                                 </select><br/>
@@ -347,6 +366,7 @@ class RecurringPickupRequest extends Component {
                         title={'Request Recurring Pickup'}
                         request={this.state.request}
                         dayOfWeek={this.state.dayOfWeek}
+                        startDate={this.state.startDate}
                         donatingAgency={this.props.donatingAgency}
                         primaryContact={this.state.primaryContact}
                         raRequested={this.state.raRequested}

@@ -2,7 +2,7 @@ import React from 'react';
 import './PickupSummary.css';
 import truck from '../../icons/green-truck.svg';
 import Map from '../../Map/Map.js';
-import { RequestRepeatType, RequestDurationType } from '../../Enums.js';
+import { RequestRepeatType, RequestEndCriteriaType } from '../../Enums.js';
 
 class PickupSummary extends React.Component {
 
@@ -15,10 +15,10 @@ class PickupSummary extends React.Component {
         };
 
         var durationText = '';
-        if (this.props.request.duration.type === RequestDurationType.RECUR) {
-            durationText = this.props.request.duration.value + ' pickups requested';
+        if (this.props.request.endCriteria.type === RequestEndCriteriaType.RECUR) {
+            durationText = (parseInt(this.props.request.endCriteria.value, 10) + 1) + ' pickups requested'; // number of occurrences is num_recurrences + 1
         } else {
-            durationText = 'Ending ' + this.props.request.duration.value;
+            durationText = 'Ending ' + this.props.request.endCriteria.value;
         }
         durationText += ' for ' + repeatMap[this.props.request.repeats];
 
@@ -35,7 +35,7 @@ class PickupSummary extends React.Component {
                     <div className="wrapper grid">
                         <div className="details grid">
                             <p id="subheading">Pickup Details</p>
-                            <p>Start Date: {this.props.dayOfWeek}, {this.props.request.startDate}</p>
+                            <p>Start Date: {this.props.dayOfWeek}, {this.props.startDate}</p>
                             <p>{durationText}</p>
                             <p>Pickup between {this.props.request.startTime} and {this.props.request.endTime}</p>
                         </div>
