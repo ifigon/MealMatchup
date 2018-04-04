@@ -18,11 +18,6 @@ class DelivererGroupContent extends Component {
     }
 
     render() {
-        let delivererGroup = 'Green Greeks';
-        let deliverer1 = 'Blake Johnson';
-        let phone1 = '(206-389-2318)';
-        let deliverer2 = 'Erika Zhang';
-        let phone2 = '(206-876-5432)';
         let buttonContent = '';
         let buttonClass = '';
         if (!this.state.edit) {
@@ -41,33 +36,35 @@ class DelivererGroupContent extends Component {
                     ) : (
                         <h1 className="section-header">Picking Up Donation</h1>
                     )}
-                    <h2 className="organization">{delivererGroup}</h2>
+                    <h2 className="organization">
+                        {this.props.delivererGroup}
+                    </h2>
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
                             <p className="content-details">
-                                {deliverer1} {phone1}
+                                {this.props.deliverer1} {this.props.phone1}
                             </p>
                             <p className="content-details">
-                                {deliverer2} {phone2}
+                                {this.props.deliverer2} {this.props.phone2}
                             </p>
                         </div>
                     ) : (
                         <div className="content-details-wrapper inline-wrapper">
                             <input
                                 className="content-details inline-details"
-                                value={deliverer1}
+                                value={this.props.deliverer1}
                             />
                             <input
                                 className="content-details inline-details"
-                                value={phone1}
+                                value={this.props.phone1}
                             />
                             <input
                                 className="content-details inline-details"
-                                value={deliverer2}
+                                value={this.props.deliverer2}
                             />
                             <input
                                 className="content-details inline-details"
-                                value={phone2}
+                                value={this.props.phone2}
                             />
                         </div>
                     )}

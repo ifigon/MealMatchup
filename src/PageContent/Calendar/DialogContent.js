@@ -9,6 +9,11 @@ class DialogContent extends Component {
                 <DelivererGroupContent
                     accountType={this.props.accountType}
                     futureEvent={this.props.futureEvent}
+                    delivererGroup="Green Greeks"
+                    deliverer1="Blake Johnson"
+                    phone1="(206-389-2318)"
+                    deliverer2="Erika Zhang"
+                    phone2="(206-876-5432)"
                 />
             </div>
         );
