@@ -58,8 +58,7 @@ class MobileController extends React.Component {
                     ],
                     updatedBy: 'dhA03LwTp3cibXVUcb3nQqO34wj1'  // uid-key of a donating-agency-member
                 },
-                notes: 'Enter through the back door.',
-                deliveryCompleted: false
+                notes: 'Enter through the back door.'
             },
             receivingAgency :{
                 agency: 'Seattle Union Gospel Shelter',
@@ -99,13 +98,14 @@ class MobileController extends React.Component {
 
             // TODO: add these fields to deliveryObject
             // TODO: save signatures as image
-            completedDelivery: {
+            currentDelivery: {
                 temp: '',
                 daSignature: '',
                 raSignature: '',
                 raPrintName: '',
                 timePickedUp: '',
                 timeCompleted: '',
+                deliveryCompleted: false
             },
             step: 0
         };
@@ -130,9 +130,8 @@ class MobileController extends React.Component {
     // TODO: Save completed delivery
     saveValues(fields) {
         this.setState({
-            completedDelivery: Object.assign({}, this.state.completedDelivery, fields)
+            currentDelivery: Object.assign({}, this.state.currentDelivery, fields)
         });
-        console.log(this.state.completedDelivery);
     }
 
     showStep() {
@@ -157,7 +156,7 @@ class MobileController extends React.Component {
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
                 nextStep={this.nextStep}
-                completedDelivery={this.state.completedDelivery}
+                currentDelivery={this.state.currentDelivery}
                 saveValues={this.saveValues}
             />;
         case 3: 
@@ -165,7 +164,7 @@ class MobileController extends React.Component {
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
-                completedDelivery={this.state.currentDelivery}
+                currentDelivery={this.state.currentDelivery}
                 nextStep={this.nextStep}
             />;
         }

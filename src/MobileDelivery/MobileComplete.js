@@ -4,7 +4,7 @@ import './Mobile.css';
 class MobileComplete extends React.Component {
     render() {
         return (
-            <div className="mobile-delivery">
+            <div className="mobile-delivery"> 
                 <div className="mobile-header">
                     <p>Schedule | <span id="mobile-header-pickup">Pick-up</span></p>
                 </div>
@@ -50,7 +50,7 @@ class MobileComplete extends React.Component {
                         </div>
                     </div>
                     
-                    <input type="submit" value="Start" id="start-delivery-btn" onClick={this.props.showStart}/> 
+                    <input type="submit" value="Start" id="start-delivery-btn" /> 
                 </div>
             </div>
         );
