@@ -165,7 +165,6 @@ class MobileController extends React.Component {
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
                 currentDelivery={this.state.currentDelivery}
-                nextStep={this.nextStep}
             />;
         }
     }
