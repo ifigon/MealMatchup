@@ -30,9 +30,26 @@ class DirectoryPage extends Component {
     }
 
     componentWillUnmount() {
-        // detatch listeners
+        // detach listeners
         db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).off();
         db.ref('donating_agencies').orderByChild('umbrella').equalTo(this.state.umbrellaId).off();
+    }
+
+    async getUmbrellaId() {
+        let account = this.state.account;
+        switch (account.accountType) {
+        case AccountType.DONATING_AGENCY_MEMBER: {
+            let daSnapshot = await db.ref(`donating_agencies/${account.agency}`).once('value');
+            let { umbrella } = daSnapshot.val();
+            return umbrella;
+        }
+        case AccountType.RECEIVING_AGENCY || AccountType.DELIVERER_GROUP:
+            return account.umbrella;
+        case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
+            return this.state.userId;
+        default:
+            break;
+        }
     }
 
     fetchOrgs() {
@@ -78,6 +95,8 @@ class DirectoryPage extends Component {
                     raList.push(org) : dgList.push(org);  
             }
             this.setState({raList: raList, dgList: dgList});
+            // console.log("RA List: ", this.state.raList);
+            // console.log("DG List: ", this.state.dgList);
         });
     }
 
@@ -103,6 +122,14 @@ class DirectoryPage extends Component {
         return org;
     }
 
+    aggrAddress(org, addrObj) {
+        org.address1 = addrObj.street1;
+        // append street2 and officeNumber if exists
+        org.address1 += addrObj.street2 ? ` ${addrObj.street2}` : '';
+        org.address1 += addrObj.officeNumber ? ` ${addrObj.officeNumber}` : '';
+        org.address2 = `${addrObj.city}, ${addrObj.state} ${addrObj.zipcode}`;
+    }
+
     aggrAvailability(obj) {
         let availabilityList = [];
         for (let key in obj) {
@@ -112,14 +139,6 @@ class DirectoryPage extends Component {
             }
         }
         return availabilityList;
-    }
-
-    aggrAddress(org, addrObj) {
-        org.address1 = addrObj.street1;
-        // append street2 and officeNumber if exists
-        org.address1 += addrObj.street2 ? ` ${addrObj.street2}` : '';
-        org.address1 += addrObj.officeNumber ? ` ${addrObj.officeNumber}` : '';
-        org.address2 = `${addrObj.city}, ${addrObj.state} ${addrObj.zipcode}`;
     }
 
     fetchDAM() { // fetch donating agencies, with members
@@ -160,6 +179,7 @@ class DirectoryPage extends Component {
             let daMemberList = await Promise.all(daPromiseList);
             let aggredDaList = this.aggrDaList(daList, daMemberList, daMemberKey);
             this.setState({daList: aggredDaList});
+            // console.log("DA List: ", this.state.daList);
         });
     }
 
@@ -178,8 +198,10 @@ class DirectoryPage extends Component {
             
             for (let j = 0; j < daMembers[i].length; j++) {
                 let member = daMembers[i][j];
+                let memberKey = daMemberKey[i][j];
                 let {name, position, phone, email} = member;
-                if (daItem.primaryContact === daMemberKey[i][j]) {
+
+                if (daItem.primaryContact === memberKey) {
                     org.contactName = name;
                     org.contactTitle = position;
                     org.contactNumber = phone;
@@ -197,23 +219,6 @@ class DirectoryPage extends Component {
             result.push(org);
         }
         return result;
-    }
-
-    async getUmbrellaId() {
-        let account = this.state.account;
-        switch (account.accountType) {
-        case AccountType.DONATING_AGENCY_MEMBER: {
-            let daSnapshot = await db.ref(`donating_agencies/${account.agency}`).once('value');
-            let { umbrella } = daSnapshot.val();
-            return umbrella;
-        }
-        case AccountType.RECEIVING_AGENCY || AccountType.DELIVERER_GROUP:
-            return account.umbrella;
-        case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
-            return this.state.userId;
-        default:
-            break;
-        }
     }
 
     render() {
