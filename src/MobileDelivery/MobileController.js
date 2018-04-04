@@ -87,11 +87,11 @@ class MobileController extends React.Component {
                     phone: '205-385-3312'
                 },
                 address: {
-                    street1: '318 2nd Ave Extension South',
+                    street1: '1245 NE Campus Pkwy',
                     street2: '',
                     city: 'Seattle',
                     state: 'WA',
-                    zipcode: 98104,
+                    zipcode: 98105,
                     officeNo: ''
                 }
             },

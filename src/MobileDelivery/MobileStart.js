@@ -51,13 +51,13 @@ class MobileStart extends React.Component {
                     <div className="mobile-to-from">
                         <div id="mobile-da">
                             <p className="mobile-content-header">Pick Up From</p>
-                            <p id="mobile-name">{this.props.da.name}</p>
+                            <p id="mobile-name">{this.props.da.agency}</p>
                             <p id="mobile-org">{this.props.da.primaryContact.name}</p>
                             <a href={'tel:' + this.props.da.primaryContact.phone}>{this.props.da.primaryContact.phone}</a>
                         </div>
                         <div id="mobile-ra">
                             <p className="mobile-content-header">Pick Up From</p>
-                            <p id="mobile-name">{this.props.ra.name}</p>
+                            <p id="mobile-name">{this.props.ra.agency}</p>
                             <p id="mobile-org">{this.props.ra.primaryContact.name}</p>
                             <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
