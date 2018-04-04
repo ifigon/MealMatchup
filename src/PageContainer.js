@@ -5,7 +5,7 @@ import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
 import logo from './icons/temp-logo.svg';
-import Header from './PageContent/Calendar/Header'
+import BigCalendar from './PageContent/Calendar/BigCalendar'
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 
 // The page to load when user is signed in.
@@ -68,7 +68,7 @@ class PageContainer extends Component {
           {/*THIS IS WHERE CONFLICT WAS - IS THIS WHERE EVENTCARD IS SUPPOSED TO BE?*/}
                 {this.state.content === PageContent.CALENDAR && (
                     <div>
-                        <Header></Header>
+                        <BigCalendar></BigCalendar>
                         <EventCard style={{ marginTop: '120px', marginLeft: '250px' }}
                             eventType={DeliveryType.RECURRING}
                             startTime="10am"

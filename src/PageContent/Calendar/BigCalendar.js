@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css'
 
-class Header extends Component {
+class BigCalendar extends Component {
     constructor(props) {
         super(props);
     }
@@ -79,4 +79,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default BigCalendar;
