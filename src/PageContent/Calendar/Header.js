@@ -27,22 +27,45 @@ class Header extends Component {
     //     }
 
         var calendarTiles = document.getElementsByClassName("react-calendar__tile");
-        var dayTimeTags = document.getElementsByTagName('time');
+        // var dayTimeTags = document.getElementsByTagName('time');
 
         for (var i = 0; i < calendarTiles.length; i++) {
+            var date = calendarTiles[i].children[0];
+            var wrapper = document.createElement('span');
+            wrapper.className = "button-date-text";
+            wrapper.appendChild(date)
+            // console.log(wrapper)
+            calendarTiles[i].appendChild(wrapper)
+            console.log(calendarTiles[i])
+
+
+
+
+
+            // // console.log(date.innerHTML)
+            
+            // // var newDate = document.createElement('time');
+            // // newDate = date;
+
+            // var parent = dayTimeTags[i].parentNode;
+            // // console.log(parent)
+           
+            
+            // wrapper.className = "calendar-day-wrapper";
+            // wrapper.appendChild(date);
+            // // wrapper.innerHTML = date.innerHTML;
+            // // console.log(wrapper)
+            // // //when replace, is it removing parent classes?
+            // console.log(calendarTiles[i])
+            // // calendarTiles[i].replaceChild(wrapper, calendarTiles[i].children[0]);
+            // // date.replaceChild
+
+
             var eventsDiv = document.createElement('div');
             eventsDiv.innerHTML = "event";
             // TODO APPEND EVENTS TO THIS DIV
             calendarTiles[i].appendChild(eventsDiv);
-
-            // var parent = dayTimeTags[i].parentNode;
-            // console.log(parent)
-            // var wrapper = document.createElement('div');
-            // wrapper.className = "calendar-day-wrapper";
-            // wrapper.innerHTML = dayTimeTags[i].innerHTML;
-            // console.log(wrapper)
-            // //when replace, is it removing parent classes?
-            // parent.replaceChild(wrapper, dayTimeTags[i]);
+            
         }
 
     }
