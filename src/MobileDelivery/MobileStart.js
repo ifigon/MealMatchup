@@ -1,8 +1,19 @@
 import React from 'react';
+import moment from 'moment';
 import './Mobile.css';
 
 class MobileStart extends React.Component {
-    render() {
+    constructor(props) {
+        super(props);
+        let date = new Date(this.props.deliveryObj.date);
+        this.state = {
+            day: moment(date).format('dddd'),
+            date: moment(date).format('l'),
+            deliverers: this.props.deliveryObj.delivererGroup.deliverers,
+            receivingAgency: this.props.deliveryObj.receivingAgency.agency
+        };
+    }
+    render() { 
         return (
             <div className="mobile-delivery">
                 <div className="mobile-header">
@@ -12,23 +23,25 @@ class MobileStart extends React.Component {
                     <div className="mobile-card-line"></div>
                     <div className="mobile-agenda">
                         <p className="mobile-today">Today's Agenda</p>
-                        <p className="mobile-today" id="mobile-day">{this.props.pickup.date}</p>
+                        <p className="mobile-today" id="mobile-day">
+                            {moment(this.props.deliveryObj.date).format('L').replace(new RegExp('[^.]?' + moment(this.props.deliveryObj.date).format('YYYY') + '.?'), '')}
+                        </p>
                     </div>
                     <div className="mobile-time">
                         <span className="dot"></span>
-                        {/* TODO: AM/PM */}
-                        <p id="mobile-time">{this.props.pickup.startTime} &ndash; {this.props.pickup.endTime}</p>
+                        <p id="mobile-time">{moment(this.props.deliveryObj.startTime,'HH:mm').format('LT')} &ndash; {moment(this.props.deliveryObj.endTime, 'HH:mm').format('LT')}</p>
                     </div>
                     <p id="mobile-request">Pickup Requested</p>
                     <p className="mobile-content-header">Student Deliverers</p>
                     <div className="mobile-deliverers">
                         {
                             // loop through deliverers
-                            this.props.pickup.deliverers.map((deliverer, i) => {
+                            this.props.deliveryObj.delivererGroup.deliverers.map((deliverer, i) => {
                                 return (
                                     <div className="mobile-student-info" id={i} key={i}>
                                         <p id="mobile-name">{deliverer.name}</p>
-                                        <p id="mobile-org">{deliverer.org}</p>
+                                        {/* TODO: Query for DelivererGroup name (currently uid)*/}
+                                        <p id="mobile-org">{this.props.deliveryObj.delivererGroup.group}</p>
                                         <a href={'tel:' + deliverer.phone}>{deliverer.phone}</a>
                                     </div>
                                 );
@@ -38,15 +51,15 @@ class MobileStart extends React.Component {
                     <div className="mobile-to-from">
                         <div id="mobile-da">
                             <p className="mobile-content-header">Pick Up From</p>
-                            <p id="mobile-name">{this.props.pickup.daName}</p>
-                            <p id="mobile-org">{this.props.pickup.daContact}</p>
-                            <a href={'tel:' + this.props.pickup.daPhone}>{this.props.pickup.daPhone}</a>
+                            <p id="mobile-name">{this.props.da.name}</p>
+                            <p id="mobile-org">{this.props.da.primaryContact.name}</p>
+                            <a href={'tel:' + this.props.da.primaryContact.phone}>{this.props.da.primaryContact.phone}</a>
                         </div>
                         <div id="mobile-ra">
-                            <p className="mobile-content-header">Deliver To</p>
-                            <p id="mobile-name">{this.props.pickup.raName}</p>
-                            <p id="mobile-org">{this.props.pickup.raContact}</p>
-                            <a href={'tel:' + this.props.pickup.raPhone}>{this.props.pickup.raPhone}</a>
+                            <p className="mobile-content-header">Pick Up From</p>
+                            <p id="mobile-name">{this.props.ra.name}</p>
+                            <p id="mobile-org">{this.props.ra.primaryContact.name}</p>
+                            <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
                     </div>
                     

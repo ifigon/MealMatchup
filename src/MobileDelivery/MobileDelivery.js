@@ -1,6 +1,7 @@
 import React from 'react';
 import Map from '../Map/Map';
 import Geocode from '../react-geocode';
+import moment from 'moment';
 import './Mobile.css';
 
 class MobileDelivery extends React.Component {
@@ -8,7 +9,7 @@ class MobileDelivery extends React.Component {
         super(props);
         
         this.state  = {
-            lat: '',
+            lat: '', 
             long: '',
             fullAddress: ''
         };
@@ -17,7 +18,7 @@ class MobileDelivery extends React.Component {
     componentDidMount(){
         // concatenate address in a specific order
         var keyOrder = ['street1', 'street2', 'city', 'state', 'zipcode'];
-        var address = keyOrder.map(key => this.props.pickup.raAddress[key]).join(' ');
+        var address = keyOrder.map(key => this.props.ra.address[key]).join(' ');
         // Convert address to Lat, Long
         Geocode.fromAddress(address).then(
             response => {
@@ -38,26 +39,28 @@ class MobileDelivery extends React.Component {
                 </div>
                 <div className="mobile-card">
                     <div className="mobile-card-line"></div>
-                    <p className="ms-header">{this.props.pickup.raName}</p>
-                    <p className="ms-pickup-time">Deliver by {this.props.pickup.startTime} - {this.props.pickup.endTime} pm</p>
-                    <Map marginLeft="20px" height="90px" width="90%" address={this.props.pickup.raAddress}/>
+                    <p className="ms-header">{this.props.ra.agency}</p>
+                    <p className="ms-pickup-time">Deliver by {moment(this.props.completedDelivery.timePickedUp, 'HH:mm').add(3, 'hours').format('LT')}
+                    </p>
+                    <Map marginTop="10px" marginLeft="20px" height="90px" width="90%" address={this.props.ra.address}/>
                     {/* Prompts user to open maps on their phone */}
                     <a id="ms-address" href={'geo:' + this.state.lat + ',' + this.state.long} target="_blank">{this.state.fullAddress}</a>
                     <div className="ms-content">
                         <div id="ms-notes">
                             <p className="ms-content-header">Notes</p>
-                            <p className="ms-notes">{this.props.pickup.raNotes}</p>
+                            <p className="ms-notes">{this.props.ra.notes}</p>
                         </div>
                         <div id="ms-contact">
                             <p className="ms-content-header">Contact</p>
-                            <p id="ms-name">{this.props.pickup.raContact}</p>
-                            <p id="ms-position">{this.props.pickup.raPosition}</p>
-                            <a href={'tel:' + this.props.pickup.raPhone}>{this.props.pickup.raPhone}</a>
+                            <p id="ms-name">{this.props.ra.primaryContact.name}</p>
+                            <p id="ms-position">{this.props.ra.primaryContact.position}</p>
+                            <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
                     </div>
                     <div id="ms-confirm">
                         <p className="ms-content-header">Confirmation Signature</p>
-                        <p className="ms-notes">Get a confirmation signature and printed name from {this.props.pickup.raContact} at the non profit after you drop-off food items at the destination.</p>
+                        <p className="ms-notes">Get a confirmation signature and printed name from 
+                        {this.props.ra.primaryContact.name} at the non profit after you drop-off food items at the destination.</p>
                         {/* TODO: Signature */}
                         <input className="ms-signature-deliver" type="text" placeholder="Sign Here"/>
                         <input className="ms-input" type="text" placeholder="Print Name"/>

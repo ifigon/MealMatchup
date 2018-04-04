@@ -9,62 +9,110 @@ class MobileController extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pickup: {
-                date: '3/5', // only need month and day
-                startTime: '12:00',
-                endTime: '2:00',
-                deliverers: [
-                    {
-                        name: 'Joyce Huang',
-                        org: 'Green Greeks',
-                        phone: '206-324-1211'
-                    },
-                    {
-                        name: 'Billy Bob',
-                        org: 'Green Greeks',
-                        phone: '243-255-4444'
-                    }
-                ],
-                daName: 'Local Point',
-                daContact: 'Phil Fill',
-                daPosition: 'Head Cook',
-                daPhone: '999-999-9999',
-                raName: 'Seattle Union Gospel Mission',
-                raContact: 'Andy Dickinson',
-                raPosition: 'Manager',
-                raPhone: '344-123-9457',
-                daAddress: {
-                    street1: '1201 NE Campus Pkwy',
-                    street2: '',
-                    city: 'Seattle',
-                    state: 'WA',
-                    zipcode: 98105,
-                    officeNo: '220'
+            deliveryObj: {
+                date: '2018-02-28',
+                startTime: '14:00',
+                endTime: '17:00',
+                isEmergency: false,
+                donatingAgency: {
+                    agency: '-K9HdKlCLjjk_ka82K0s',  // autogen-key of a donating-agency
+                    primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1',  // uid-key of a donating-agency-member
                 },
-                raAddress:{
+                receivingAgency: {
+                    agency: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of receiving-agency
+                    primaryContact: {
+                        name: 'Bob',
+                        email: 'bob@uniongospel.org',
+                        phone: '098-765-4321'
+                    }
+                },
+                // delivererGroup is null if isEmergency=true
+                delivererGroup: {
+                    // TODO: Get group name with UID. Replaced UID here with name for frontend
+                    group: 'Green Greeks',  // uid-key of deliverer-group
+                    deliverers: [
+                        {
+                            name: 'Alice',
+                            email: 'alice@uw.edu',
+                            phone: '123-789-4560'
+                        },
+                        {
+                            name: 'Chris',
+                            email: 'chris@uw.edu',
+                            phone: '456-123-0789'
+                        }
+                    ]
+                },
+                description: {
+                    foodItems: [
+                        {
+                            food: 'Baked beans',
+                            quantity: 15,
+                            unit: 'lb'  // Enums.FoodUnit
+                        },
+                        {
+                            food: 'Bread',
+                            quantity: 4,
+                            unit: 'loaves'  // Enums.FoodUnit
+                        }
+                    ],
+                    updatedBy: 'dhA03LwTp3cibXVUcb3nQqO34wj1'  // uid-key of a donating-agency-member
+                },
+                notes: 'Enter through the back door.',
+                deliveryCompleted: false
+            },
+            receivingAgency :{
+                agency: 'Seattle Union Gospel Shelter',
+                primaryContact: {
+                    name: 'Billy Jones',
+                    position: 'Manager',
+                    email: 'billy@jones.com',
+                    phone: '324-321-7665'
+                },
+                notes: 'Only enter if there is a wizard at the front door.',
+                address: {
                     street1: '318 2nd Ave Extension South',
                     street2: '',
                     city: 'Seattle',
                     state: 'WA',
                     zipcode: 98104,
                     officeNo: ''
-                },
-                daNotes: 'Entrance is 3.25 steps to your left and around the corner.',
-                raNotes: 'If a wizard is at the front door, you are at the wrong place.',
-                status: false
+                }
             },
+            donatingAgency :{
+                agency: 'Local Point',
+                primaryContact: {
+                    name: 'Amanda Hernandez',
+                    position: 'Head Cook',
+                    email: 'amanda@lp.com',
+                    phone: '205-385-3312'
+                },
+                address: {
+                    street1: '318 2nd Ave Extension South',
+                    street2: '',
+                    city: 'Seattle',
+                    state: 'WA',
+                    zipcode: 98104,
+                    officeNo: ''
+                }
+            },
+
             // TODO: add these fields to deliveryObject
+            // TODO: save signatures as image
             completedDelivery: {
                 temp: '',
                 daSignature: '',
                 raSignature: '',
                 raPrintName: '',
+                timePickedUp: '',
+                timeCompleted: '',
             },
             step: 0
         };
         this.showStep = this.showStep.bind(this);
         this.showStart = this.showStart.bind(this);
         this.nextStep = this.nextStep.bind(this);
+        this.saveValues = this.saveValues.bind(this);
     }
 
     showStart(){
@@ -79,30 +127,61 @@ class MobileController extends React.Component {
         });
     }
 
+    // TODO: Save completed delivery
+    saveValues(fields) {
+        this.setState({
+            completedDelivery: Object.assign({}, this.state.completedDelivery, fields)
+        });
+        console.log(this.state.completedDelivery);
+    }
+
     showStep() {
         switch (this.state.step) {
         default:
             return <MobileStart 
-                pickup={this.state.pickup}
+                deliveryObj={this.state.deliveryObj}
+                da={this.state.donatingAgency} 
+                ra={this.state.receivingAgency}
                 showStart={this.showStart}/>;
         case 1:
-            return <MobilePickup pickup={this.state.pickup} nextStep={this.nextStep}/>;
+            return <MobilePickup 
+                deliveryObj={this.state.deliveryObj} 
+                da={this.state.donatingAgency} 
+                ra={this.state.receivingAgency} 
+                nextStep={this.nextStep}
+                saveValues={this.saveValues}
+            />;
         case 2:
-            return <MobileDelivery pickup={this.state.pickup} nextStep={this.nextStep}/>;
+            return <MobileDelivery 
+                deliveryObj={this.state.deliveryObj} 
+                da={this.state.donatingAgency} 
+                ra={this.state.receivingAgency} 
+                nextStep={this.nextStep}
+                completedDelivery={this.state.completedDelivery}
+                saveValues={this.saveValues}
+            />;
         case 3: 
-            return <MobileComplete pickup={this.state.pickup} nextStep={this.nextStep}/>;
+            return <MobileComplete 
+                deliveryObj={this.state.deliveryObj} 
+                da={this.state.donatingAgency} 
+                ra={this.state.receivingAgency} 
+                completedDelivery={this.state.currentDelivery}
+                nextStep={this.nextStep}
+            />;
         }
-    }
-
-    // TODO: Save completed delivery
-    saveDelivery(){
-
     }
 
     render() {
         return (
             <div className="mobile-wrapper">
-                {this.showStep()}
+                {this.state.deliveryObj.deliveryCompleted ?
+                    <MobileComplete 
+                        deliveryObj={this.state.deliveryObj} 
+                        da={this.state.donatingAgency} 
+                        ra={this.state.receivingAgency}/>
+                    :
+                    this.showStep()
+                }
             </div>
         );
     }
