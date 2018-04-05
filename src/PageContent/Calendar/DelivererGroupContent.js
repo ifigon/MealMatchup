@@ -10,10 +10,17 @@ class DelivererGroupContent extends Component {
             edit: false
         };
         this.edit = this.edit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     edit() {
         this.setState({
             edit: true
+        });
+    }
+
+    handleChange(id, value) {
+        this.setState({
+            '${id}': '${value}'
         });
     }
 
@@ -57,6 +64,10 @@ class DelivererGroupContent extends Component {
                             <input
                                 className="content-details inline-details"
                                 value={this.props.phone1}
+                                id="phone1"
+                                onChange={e =>
+                                    this.handleChange('phone1', e.target.value)
+                                }
                             />
                             <input
                                 className="content-details inline-details"
