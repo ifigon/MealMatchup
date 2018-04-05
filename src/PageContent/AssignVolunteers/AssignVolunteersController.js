@@ -17,12 +17,14 @@ class AssignVolunteersController extends Component {
             s1email: '',
             s2name: '',
             s2phone: '',
-            s2email: ''
+            s2email: '',
+            onConfirm: false
         };
     }
 
     // TODO: Manually setting the values for now. Values would need to be queried from DB
     // TODO: componentDidMount()?
+    // TODO: Add the month navigation header bar
 
     componentWillMount() {
         let deliveryList = [];
@@ -35,7 +37,7 @@ class AssignVolunteersController extends Component {
                 address: 'Test Address',
                 primaryContact: {
                     name: 'Alice',
-                    phone: 7739939922
+                    phone: '773-993-9922'
                 }
             },
             receivingAgency: {
@@ -43,7 +45,7 @@ class AssignVolunteersController extends Component {
                 primaryContact: {
                     name: 'Bob',
                     email: 'bob@uniongospel.org',
-                    phone: 1237894560
+                    phone: '123-789-4560'
                 }
             },
             delivererGroup: {
@@ -52,12 +54,12 @@ class AssignVolunteersController extends Component {
                     {
                         name: 'Alice',
                         email: 'alice@uw.edu',
-                        phone: 1237894560
+                        phone: '123-789-4560'
                     },
                     {
                         name: 'Chris',
                         email: 'chris@uw.edu',
-                        phone: 4561230789
+                        phone: '456-123-0789'
                     }
                 ]
             },
@@ -126,16 +128,31 @@ class AssignVolunteersController extends Component {
         return (
             <div className="container">
 
-                {this.showStep()}
+                {
+                    this.state.onConfirm ? 
+                    <Confirmation
+                        handleCloseClick={this.handleCloseClick.bind(this)}
+                        handleSave={this.handleSave.bind(this)}
+                        delivery={this.state.deliveries[this.state.selectedDelivery]}
+                        s1name={this.state.s1name}
+                        s1phone={this.state.s1phone}
+                        s1email={this.state.s1email}
+                        s2name={this.state.s2name}
+                        s2phone={this.state.s2phone}
+                    /> :
+                    this.showStep()
+
+                }
 
             </div>
         );
 
     }
 
+    // Backend TODO: Write to DB here
     handleConfirmClick(s1name, s1phone, s1email, s2name, s2phone, s2email) {
         this.setState({
-            step: 2,
+            onConfirm: true,
             s1name: s1name,
             s1phone: s1phone,
             s1email: s1email,

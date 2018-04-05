@@ -28,9 +28,6 @@ class ConfirmationCard extends Component {
                         <h5>Recurring Pickup</h5>
                         <h6>{this.state.date} {this.state.from} - {this.state.to}</h6>
                     </div>
-                    <div className="close-container">
-                        <i className="fas fa-times close-card" onClick={this.props.handleCloseClick} />
-                    </div>
                 </div>
 
                 <div className="details-content">
@@ -69,25 +66,21 @@ class ConfirmationCard extends Component {
                         <h5>Donation Description</h5>
                         {
                             this.state.foodItems.map((foodItem, index) => {
-                                return <h4 key={index}>{foodItem.food} {foodItem.quantity}{foodItem.unit}</h4>;
+                                return <h4 key={index}>{foodItem.food} {foodItem.quantity} {foodItem.unit}</h4>;
                             })
                         }
                     </div>
                 </div>
                 <div className="details-content">
                     <div className="edit-button">
-                        <button type="button" className="form-button confirm-button" onClick={this.handleSave.bind(this)}>Save</button>
+                        <button type="button" className="form-button confirm-button confirm-button-confirmation" onClick={this.props.handleCloseClick.bind(this)}>Edit</button>
+                        <button type="button" className="form-button confirm-button confirm-button-confirmation" onClick={this.props.handleSave.bind(this)}>OK</button>
                     </div>
                 </div>
 
             </div>
         );
 
-    }
-
-    handleSave() {
-        // Backend TODO: Write values to DB
-        this.props.handleSave();
     }
 
 }
