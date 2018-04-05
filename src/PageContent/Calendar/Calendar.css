@@ -15,10 +15,31 @@ div.react-calendar__month-view__days > button {
 }
 
 .button-date-text {
-    position:absolute;
-    top:0;
-    right:0;;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
+
+.date-current-day {
+    background-color: #5DC0F9;
+    color: #FFFFFF;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.circle {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    font-size: 50px;
+    color: #fff;
+    line-height: 500px;
+    text-align: center;
+    background: #000
+  }
+
 .react-calendar__navigation {
     background-color: #FAFAFA;
 }
