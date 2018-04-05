@@ -206,7 +206,7 @@ DELIVERY REQUEST ("/delivery_requests/")
 		notes: "Enter through the back door.",
 		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a umbrella
 		donatingAgency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
-		requester: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
+		requester: "Andrea Benson",  // name of a donating-agency-member
 		// receivingAgency & delivererGroups:
 		// The donating agency can choose to request specific receiving agency
 		// and/or deliverer group, or not.
