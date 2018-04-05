@@ -12,7 +12,7 @@ class Confirmation extends Component {
                 <ConfirmationCard 
                     delivery={this.props.delivery}
                     handleCloseClick={this.props.handleCloseClick}
-                    handleSave={this.props.handleSave}
+                    handleCancelClick={this.props.handleCancelClick}
                     s1name={this.props.s1name}
                     s1phone={this.props.s1phone}
                     s1email={this.props.s1email}

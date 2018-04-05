@@ -128,11 +128,11 @@ class AssignVolunteersController extends Component {
         return (
             <div className="container">
 
-                {
-                    this.state.onConfirm ? 
+                {this.showStep()}
+                {this.state.onConfirm ?
                     <Confirmation
                         handleCloseClick={this.handleCloseClick.bind(this)}
-                        handleSave={this.handleSave.bind(this)}
+                        handleCancelClick={this.handleCancelClick.bind(this)}
                         delivery={this.state.deliveries[this.state.selectedDelivery]}
                         s1name={this.state.s1name}
                         s1phone={this.state.s1phone}
@@ -140,8 +140,7 @@ class AssignVolunteersController extends Component {
                         s2name={this.state.s2name}
                         s2phone={this.state.s2phone}
                     /> :
-                    this.showStep()
-
+                    <div />
                 }
 
             </div>
@@ -164,12 +163,14 @@ class AssignVolunteersController extends Component {
 
     handleCloseClick() {
         this.setState({
+            onConfirm: false,
             step: 1
         });
     }
 
     handleEditClick(e) {
         this.setState({
+            onConfirm: false,
             step: 1,
             selectedDelivery: e.target.id
         });
@@ -177,6 +178,7 @@ class AssignVolunteersController extends Component {
 
     handleCancelClick() {
         this.setState({
+            onConfirm: false,
             step: 0
         });
     }
