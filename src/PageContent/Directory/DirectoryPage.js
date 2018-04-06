@@ -6,7 +6,7 @@ import {AccountType, DaysOfWeek} from '../../Enums.js';
 import './Directory.css';
 const db = firebase.database();
 
-// 04/02/2018: No logo data found in database, temporarily use this placeholder
+// @leon 04/02/2018: No logo data found in database, temporarily use this placeholder
 const logoURL = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
 
 class DirectoryPage extends Component {

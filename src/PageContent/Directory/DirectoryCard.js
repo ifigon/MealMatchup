@@ -35,7 +35,7 @@ class DirectoryCard extends Component {
     
     render() { 
         
-        // get availabilityView if accountType is RECEIVING_AGENCY, otherwise display empty card-detail-2
+        // get availabilityView if accountType is RECEIVING_AGENCY, otherwise display empty card-detail-3
         let availabilityView = (this.props.accountType === AccountType.RECEIVING_AGENCY) ? 
             this.getAvailabilityView() : <div className='card-detail-3'></div>;
 
