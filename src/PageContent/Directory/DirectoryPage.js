@@ -77,14 +77,14 @@ class DirectoryPage extends Component {
     fetchRaAndDg(orgTypes) { // fetch receiving agencies or dilivery groups
         // keeps listening for real-time database change 
         db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).on('value', (snapshot) => { 
-            let AccountObjects = snapshot.val();       
+            let accountObjects = snapshot.val();       
             let raList = [];
             let dgList = [];
 
             // loop through all AccountObjects
-            for (let key in AccountObjects) {
-                let accountItem = AccountObjects[key];
-                if (AccountObjects.hasOwnProperty(key)  // filter out prototype props
+            for (let key in accountObjects) {
+                let accountItem = accountObjects[key];
+                if (accountObjects.hasOwnProperty(key)  // filter out prototype props
                     && orgTypes.includes(accountItem.accountType)) { // if accountType is in orgTypes 
                     let org = this.aggrRAorDGOrgObj(accountItem);
                     if (accountItem.accountType === AccountType.RECEIVING_AGENCY)
