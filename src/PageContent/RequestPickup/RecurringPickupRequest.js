@@ -183,7 +183,7 @@ class RecurringPickupRequest extends Component {
             }
             let pickupTimeDiffMs = (moment(event.target.endTime.value, StringFormat.TIME)
                     - moment(event.target.startTime.value, StringFormat.TIME))
-                    .valueOf();
+                .valueOf();
             endTimestamp += pickupTimeDiffMs; //encode endTime
 
             var raInfo = {};
