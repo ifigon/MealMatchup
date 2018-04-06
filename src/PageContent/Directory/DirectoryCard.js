@@ -1,11 +1,48 @@
 import React, { Component } from 'react';
+import { AccountType } from '../../Enums.js';
 import 'typeface-roboto';
 
 // Component for directory card
 
 class DirectoryCard extends Component {
-    render() {
-    // this.props.accountType
+    
+    getAvailabilityView() {
+        let availabilityList = this.props.availability.map(
+            day => <p className='note number' key={day}>{day}</p>
+        );
+
+        return (
+            <div className='card-detail-3'>
+                <p className='title'>Hours of Operation</p>
+                { availabilityList }
+                <p className='note'>Sun: Closed</p>
+            </div>
+        ); 
+    }
+
+    getDaMemberView() {
+        let daMemberListView = this.props.members.map(
+            member =>  
+                <div className='card-detail-3' key={member.contactName}>
+                    <h4>{member.contactName}</h4>
+                    <h4>{member.contactTitle}</h4>
+                    <p>{member.contactEmail}</p>
+                    <p>Business: {member.contactNumber}</p>
+                </div>
+        );
+        return daMemberListView;
+    }
+    
+    render() { 
+        
+        // get availabilityView if accountType is RECEIVING_AGENCY, otherwise display empty card-detail-2
+        let availabilityView = (this.props.accountType === AccountType.RECEIVING_AGENCY) ? 
+            this.getAvailabilityView() : <div className='card-detail-3'></div>;
+
+        // get daMemberListView if accountType is DONATING_AGENCY, otherwise display nothing
+        let daMemberListView = (this.props.accountType === AccountType.DONATING_AGENCY) ? 
+            this.getDaMemberView() : null;
+
         return (
             <div className='card'>
                 <h1 className='orgName'>{ this.props.organization }</h1>
@@ -21,45 +58,23 @@ class DirectoryCard extends Component {
                         <p>{ this.props.contactName }</p>
                         <p className='note number'>Email: { this.props.contactEmail }</p>
                         <p className='note number'>Business: { this.props.contactNumber }</p>
-                    </div>
-                    <div className='card-detail-3'>
-                        <p className='title'>Hours of Operation</p>
-                        {/* TODO: What do the hours object look like? */}
-                        <p className='notes'>M-F: 9AM-6PM</p>
-                        <p>Sat: 10-4pm</p>
-                        <p className='note'>Sun: Closed</p>
-                    </div>
+                    </div>     
                     <div className='card-detail-3'>
                         <p className='title'>Street Address</p>
                         <p className='note'>{ this.props.address1 }</p>
                         <p className='note'>{ this.props.address2 }</p>
                     </div>
+                    
+                    { availabilityView }
 
-                    {/* QUESTION: When is the second row of card details relevant? 
-									Only saw one example with a second row. Not sure if it is needed. */}
+                    { daMemberListView }
 
-                    {/* <h3>Member Accounts</h3>
-					<div className='card-detail-3'>
-						<h4>Chris Stack</h4>
-						<h4>Shelter Manager</h4>
-						<p>Email: chris.st@gmail.com</p>
-						<p>Business: 208-586-9876</p>
-					</div>
-					<div className='card-detail-3'>
-						<h3><b>Hours of Operation</b></h3>
-						<p className='notes'>M-F: 9AM-6PM</p>
-						<p>Sat: 10-4pm</p>
-						<p>Sun: Closed</p>
-					</div>
-					<div className='card-detail-3'>
-						<h3><b>Street Address</b></h3>
-						<p className='note'>123 Seasame St.</p>
-						<p className='note'>Seattle, WA 98115</p>
-					</div> */}
                 </div>
             </div>
         );
     }
 }
+
+
 
 export default DirectoryCard;

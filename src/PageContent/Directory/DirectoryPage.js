@@ -6,8 +6,8 @@ import {AccountType, DaysOfWeek} from '../../Enums.js';
 import './Directory.css';
 const db = firebase.database();
 
-// 04/02/2018: No logo data found in database, temporarily use UW logo to populate logo prop
-const logoURL = 'https://www.washington.edu/brand/files/2014/09/W-Logo_Purple_Hex.png';
+// 04/02/2018: No logo data found in database, temporarily use this placeholder
+const logoURL = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
 
 class DirectoryPage extends Component {
     
@@ -16,7 +16,7 @@ class DirectoryPage extends Component {
         this.state = {
             account: props.account,
             userId: props.userId,
-            umbrella: null,
+            umbrellaId: '',
             raList: [],
             dgList: [],
             daList: []
@@ -38,7 +38,7 @@ class DirectoryPage extends Component {
     async getUmbrellaId() {
         let account = this.state.account;
         switch (account.accountType) {
-        case AccountType.DONATING_AGENCY_MEMBER: {
+        case AccountType.DONATING_AGENCY_MEMBER: { // get umbrellaId from db.ref(`donating_agencies)
             let daSnapshot = await db.ref(`donating_agencies/${account.agency}`).once('value');
             let { umbrella } = daSnapshot.val();
             return umbrella;
@@ -48,7 +48,7 @@ class DirectoryPage extends Component {
         case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
             return this.state.userId;
         default:
-            break;
+            return;
         }
     }
 
@@ -75,7 +75,8 @@ class DirectoryPage extends Component {
     }
 
     fetchRaAndDg(orgTypes) { // fetch receiving agencies or dilivery groups
-        db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).on('value', (snapshot) => {
+        // keeps listening for real-time database change 
+        db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).on('value', (snapshot) => { 
             let AccountObjects = snapshot.val();       
             let raList = [];
             let dgList = [];
@@ -85,8 +86,10 @@ class DirectoryPage extends Component {
                 if (AccountObjects.hasOwnProperty(key)  // filter out prototype props
                     && orgTypes.includes(accountItem.accountType)) { // if accountType is in orgTypes 
                     let org = this.aggrRAorDGOrgObj(accountItem);
-                    (accountItem.accountType === AccountType.RECEIVING_AGENCY) ? 
-                        raList.push(org) : dgList.push(org);        
+                    if (accountItem.accountType === AccountType.RECEIVING_AGENCY)
+                        raList.push(org);
+                    else
+                        dgList.push(org);     
                 }
             }
             this.setState({raList: raList, dgList: dgList});
@@ -119,7 +122,7 @@ class DirectoryPage extends Component {
         org.address1 = addrObj.street1;
         org.address2 = `${addrObj.city}, ${addrObj.state} ${addrObj.zipcode}`;
 
-        // append street2 and officeNumber if exists
+        // append street2 and officeNumber if exist
         org.address1 += addrObj.street2 ? ` ${addrObj.street2}` : '';
         org.address1 += addrObj.officeNumber ? ` ${addrObj.officeNumber}` : '';
     }
@@ -136,6 +139,7 @@ class DirectoryPage extends Component {
     }
 
     fetchDAM() { // fetch donating agencies, with members
+        // keeps listening for real-time database change 
         db.ref('donating_agencies').orderByChild('umbrella').equalTo(this.state.umbrellaId).on('value', async (snapshot) => {
             let daObjects = snapshot.val();            
             let daList = [];        // [da1. da2, da3, ...]
@@ -181,7 +185,7 @@ class DirectoryPage extends Component {
 
     aggrDaList(daList, daMembers, daMemberKey) {
         let result = [];
-        for (let i = 0; i < daList.length; i++) {
+        for (let i = 0; i < daList.length; i++) { // loop through all DAs
             let daItem = daList[i];
 
             let org = {
@@ -192,10 +196,10 @@ class DirectoryPage extends Component {
             };
             this.aggrAddress(org, daItem.address);
             
-            for (let j = 0; j < daMembers[i].length; j++) {
+            for (let j = 0; j < daMembers[i].length; j++) { // loop through all members of that DA
                 let member = daMembers[i][j];
                 let memberKey = daMemberKey[i][j];
-                let {name, position, phone, email} = member;
+                let { name, position, phone, email } = member;
 
                 if (daItem.primaryContact === memberKey) { // if this member is primaryContact
                     org.contactName = name;
@@ -221,7 +225,7 @@ class DirectoryPage extends Component {
         let list = [this.state.daList, this.state.raList, this.state.dgList];
         list = list.reduce((prev, curr) => curr.concat(prev));  // concat all lists
         let listView = list.map((orgInfo) => {  // get populated views 
-            orgInfo.key = orgInfo.organization;
+            orgInfo.key = orgInfo.organization; // add key for iterable React Component
             return React.cloneElement(<DirectoryCard />, orgInfo);
         });
         return listView;
