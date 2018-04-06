@@ -45,12 +45,6 @@ class DelivererGroupContent extends Component {
     }
 
     render() {
-        let buttonContent = '';
-        if (!this.state.edit) {
-            buttonContent = 'edit';
-        } else {
-            buttonContent = 'save';
-        }
         return (
             <div className="wrapper">
                 <img className="content-icon" src={volunteer} alt="volunteer" />
@@ -73,34 +67,43 @@ class DelivererGroupContent extends Component {
                             </p>
                         </div>
                     ) : (
-                        <div className="content-details-wrapper inline-wrapper">
-                            <form onSubmit={this.handleChange}>
-                                <input
-                                    className="content-details inline-details"
-                                    defaultValue={this.state.deliverer1}
-                                    name="deliverer1"
-                                    type="textyeah "
-                                />
-                                <input
-                                    className="content-details inline-details"
-                                    defaultValue={this.state.phone1}
-                                    name="phone1"
-                                    type="tel"
-                                />
-                                <input
-                                    className="content-details inline-details"
-                                    defaultValue={this.state.deliverer2}
-                                    type="text"
-                                    name="deliverer2"
-                                />
-                                <input
-                                    className="content-details inline-details"
-                                    defaultValue={this.state.phone2}
-                                    type="tel"
-                                    name="phone2"
-                                />
+                        <div className="content-details-wrapper">
+                            <form
+                                className="edit-dg"
+                                onSubmit={this.handleChange}
+                            >
+                                <div className="input-wrapper">
+                                    <input
+                                        className="content-details inline-details"
+                                        defaultValue={this.state.deliverer1}
+                                        name="deliverer1"
+                                        type="textyeah "
+                                    />
+                                    <input
+                                        className="content-details inline-details"
+                                        defaultValue={this.state.phone1}
+                                        name="phone1"
+                                        type="tel"
+                                    />
+                                    <input
+                                        className="content-details inline-details"
+                                        defaultValue={this.state.deliverer2}
+                                        type="text"
+                                        name="deliverer2"
+                                    />
+                                    <input
+                                        className="content-details inline-details"
+                                        defaultValue={this.state.phone2}
+                                        type="tel"
+                                        name="phone2"
+                                    />
+                                </div>
 
-                                <input type="submit" className="edit-button" />
+                                <input
+                                    type="submit"
+                                    className="edit-button"
+                                    value="save"
+                                />
                             </form>
                         </div>
                     )}
@@ -112,7 +115,7 @@ class DelivererGroupContent extends Component {
                                 className="edit-button"
                                 onClick={this.edit}
                             >
-                                {buttonContent}
+                            Edit
                             </button>
                         ) : null}
                 </div>

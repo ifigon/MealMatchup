@@ -26,6 +26,7 @@
   font-weight: 400;
   font-size: 14px;
   margin: 0px;
+  margin-bottom: 3px;
 }
 
 .content-icon {
@@ -44,12 +45,7 @@
   margin: 0px;
 }
 .inline-details {
-  display: inline-block;
-  width: 80px;
-}
-.inline-wrapper {
-  width: 70%;
-  vertical-align: middle;
+  width: 100px;
 }
 
 .editing {
@@ -59,7 +55,19 @@
   border: #5dc0f9 2px solid;
   border-radius: 4px;
   color: #5dc0f9;
+  -webkit-appearance: none;
 }
 .edit-button:hover {
   cursor: pointer;
+}
+
+.input-wrapper {
+  display: inline-block;
+  width: 79%;
+  margin-left: 0px !important;
+  border: none !important;
+}
+
+.edit-dg {
+  width: 110%;
 }
