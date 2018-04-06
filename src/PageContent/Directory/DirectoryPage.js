@@ -14,8 +14,6 @@ class DirectoryPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            account: props.account,
-            userId: props.userId,
             umbrellaId: '',
             raList: [],
             dgList: [],
@@ -36,7 +34,7 @@ class DirectoryPage extends Component {
     }
 
     async getUmbrellaId() {
-        let account = this.state.account;
+        let account = this.props.account;
         switch (account.accountType) {
         case AccountType.DONATING_AGENCY_MEMBER: { // get umbrellaId from db.ref(`donating_agencies)
             let daSnapshot = await db.ref(`donating_agencies/${account.agency}`).once('value');
@@ -46,14 +44,14 @@ class DirectoryPage extends Component {
         case AccountType.RECEIVING_AGENCY || AccountType.DELIVERER_GROUP:
             return account.umbrella;
         case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
-            return this.state.userId;
+            return this.props.userId;
         default:
             return;
         }
     }
 
     fetchOrgs() {
-        switch (this.state.account.accountType) {
+        switch (this.props.account.accountType) {
         case AccountType.DONATING_AGENCY_MEMBER:
             this.fetchRaAndDg([AccountType.DELIVERER_GROUP, AccountType.RECEIVING_AGENCY]); 
             break;
