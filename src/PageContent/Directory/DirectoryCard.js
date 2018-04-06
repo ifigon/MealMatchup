@@ -15,7 +15,6 @@ class DirectoryCard extends Component {
             <div className='card-detail-3'>
                 <p className='title'>Hours of Operation</p>
                 { availabilityList }
-                <p className='note'>Sun: Closed</p>
             </div>
         ); 
     }
