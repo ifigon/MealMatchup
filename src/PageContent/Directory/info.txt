@@ -13,9 +13,4 @@ Directory card
 /> 
 
 
-issues:
-- email
-- logo image
-- availability
-
 
