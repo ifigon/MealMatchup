@@ -2,26 +2,31 @@ import React from 'react';
 import './PickupSummary.css';
 import truck from '../../icons/green-truck.svg';
 import Map from '../../Map/Map.js';
-import { RequestRepeatType, RequestEndCriteriaType } from '../../Enums.js';
+import { RequestRepeatType, RequestEndCriteriaType, StringFormat } from '../../Enums.js';
+import moment from 'moment';
 
 class PickupSummary extends React.Component {
 
     render() {
+        let dayOfWeek = moment(this.props.request.startTimestamp).format(StringFormat.WEEKDAY);
         var repeatMap = {
-            [RequestRepeatType.WEEKLY]: 'every ' + this.props.dayOfWeek,
-            [RequestRepeatType.BIWEEKLY]: 'every other ' + this.props.dayOfWeek,
+            [RequestRepeatType.WEEKLY]: 'every ' + dayOfWeek,
+            [RequestRepeatType.BIWEEKLY]: 'every other ' + dayOfWeek,
             // TODO: calculate nth day of month
             [RequestRepeatType.MONTHLY]: 'monthly',
         };
 
         var durationText = '';
-        if (this.props.request.endCriteria.type === RequestEndCriteriaType.RECUR) {
-            durationText = (parseInt(this.props.request.endCriteria.value, 10) + 1) + ' pickups requested'; // number of occurrences is num_recurrences + 1
+        if (this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR) {
+            durationText = (parseInt(this.props.request.endCriteria.value, 10)) + ' pickups requested';
         } else {
             durationText = 'Ending ' + this.props.request.endCriteria.value;
         }
         durationText += ' for ' + repeatMap[this.props.request.repeats];
 
+        let start_date_with_weekday = moment(this.props.request.startTimestamp).format(StringFormat.WEEKDAY_WITH_DATE);
+        let startTime = moment(this.props.request.startTimestamp).format(StringFormat.TIME);
+        let endTime = moment(this.props.request.endTimestamp).format(StringFormat.TIME);
         return (
             <div className="backdrop">
                 {/* TODO: fix background opacity. Maybe with iFrame. */}
@@ -35,9 +40,9 @@ class PickupSummary extends React.Component {
                     <div className="wrapper grid">
                         <div className="details grid">
                             <p id="subheading">Pickup Details</p>
-                            <p>Start Date: {this.props.dayOfWeek}, {this.props.startDate}</p>
+                            <p>Start Date: {start_date_with_weekday} </p>
                             <p>{durationText}</p>
-                            <p>Pickup between {this.props.request.startTime} and {this.props.request.endTime}</p>
+                            <p>Pickup between {startTime} and {endTime}</p>
                         </div>
                         <div className="flex">
                             <div className="agency grid">

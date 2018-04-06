@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus } from '../../Enums.js';
+import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus, StringFormat } from '../../Enums.js';
 import { getWeekdayFromDateString } from '../../Utils.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
+import moment from 'moment';
 
 class RecurringPickupRequest extends Component {
 
@@ -101,12 +102,12 @@ class RecurringPickupRequest extends Component {
             errors['startDate'] = 'Start date cannot be empty';
         }
 
-        if (!fields['durationType']) {
+        if (!fields['endCriteria']) {
             // the they need to have one or the other error msg
-            errors['durationType'] = 'Must select radio button';
+            errors['endCriteria'] = 'Must select radio button';
             formIsValid = false;
         } else {
-            if (fields['durationType'] === RequestEndCriteriaType.DATE) {
+            if (fields['endCriteria'] === RequestEndCriteriaType.DATE) {
                 // perform all endDate related checks
                 if(fields['endDate'] < fields['startDate']){
                     formIsValid = false;
@@ -116,10 +117,10 @@ class RecurringPickupRequest extends Component {
                     errors['endBeforeStart'] = 'Enter an end date';
                 }
             } else {
-                // perform all recurTimes related checks
-                if(fields['recurTimes'] === '' || !fields['recurTimes'] || fields['recurTimes'] < 1){
+                // perform all occurTimes related checks
+                if(fields['occurTimes'] === '' || !fields['occurTimes'] || fields['occurTimes'] < 2){
                     formIsValid = false;
-                    errors['invalidRecurTimes'] = 'Pickup must recur at least once';
+                    errors['invalidOccurTimes'] = 'Pickup must recur at least once';
                 }
             }
         }
@@ -159,25 +160,31 @@ class RecurringPickupRequest extends Component {
 
             // process various fields
             var durationValue = null;
+
+            // compute ending Timestamp
             let endTimestamp;
-            if (event.target.durationType.value === RequestEndCriteriaType.DATE) {
+            if (event.target.endCriteria.value === RequestEndCriteriaType.DATE) {
                 durationValue = event.target.endDate.value;
                 endTimestamp = dateTimeStringToTimestamp(durationValue, event.target.startTime.value);
             } else {
-                durationValue = event.target.numRecurrences.value;
+                durationValue = event.target.numOccurrences.value;
                 let freq = event.target.repeats.value;
-                let startDate = new Date(startTimestamp);
+                let endDate = new Date(startTimestamp);
                 if (freq === RequestRepeatType.WEEKLY) {
-                    startDate.setDate(startDate.getDate() + durationValue * 7);
-                    endTimestamp = startDate.getTime();
+                    endDate.setDate(endDate.getDate() + (durationValue - 1) * 7);
+                    endTimestamp = endDate.getTime();
                 } else if (freq === RequestRepeatType.BIWEEKLY) {
-                    startDate.setDate(startDate.getDate() + durationValue * 14);
-                    endTimestamp = startDate.getTime();
+                    endDate.setDate(endDate.getDate() + (durationValue - 1) * 14);
+                    endTimestamp = endDate.getTime();
                 } else {
                     // TODO (jkbach): handle monthly
                     endTimestamp = -1;
                 }
             }
+            let pickupTimeDiffMs = (moment(event.target.endTime.value, StringFormat.TIME)
+                    - moment(event.target.startTime.value, StringFormat.TIME))
+                    .valueOf();
+            endTimestamp += pickupTimeDiffMs; //encode endTime
 
             var raInfo = {};
             var raRequested = null;
@@ -214,15 +221,13 @@ class RecurringPickupRequest extends Component {
             // create DeliveryRequest object
             var deliveryRequest = {
                 status: RequestStatus.PENDING,
-                startDate: startTimestamp,
-                endDate: endTimestamp,
+                startTimestamp: startTimestamp,
+                endTimestamp: endTimestamp,
                 endCriteria:{
-                    type: event.target.durationType.value,
+                    type: event.target.endCriteria.value,
                     value: durationValue
                 },
                 repeats: event.target.repeats.value,
-                startTime: event.target.startTime.value,
-                endTime: event.target.endTime.value,
                 primaryContact: primaryContact.id,
                 notes: event.target.notes.value,
                 umbrella: this.props.donatingAgency.umbrella,
@@ -250,7 +255,7 @@ class RecurringPickupRequest extends Component {
     // when "Confirm" is clicked on the summary popup
     submitRequest(){
         // write to firebase
-        firebase.database().ref('delivery_requests/' + this.props.donatingAgency.umbrella).push(this.state.request);
+        firebase.database().ref('delivery_requests').child(this.props.donatingAgency.umbrella).push(this.state.request);
 
         // hide popup and clear form
         this.toggleModal();
@@ -276,14 +281,14 @@ class RecurringPickupRequest extends Component {
                                 <input type="date" name="startDate" onChange={this.handleChange.bind(this, 'startDate')} required/><br/>
                             </span>
                             <span className="grid">
+                                <label> End Criteria <span className="red">*</span></label><br/>
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestEndCriteriaType.RECUR} onChange={this.handleChange.bind(this, 'durationType')} required/>
-                                    <span className="checkmark"></span>Recur
-                                    <input type="number" name="numRecurrences" onChange={this.handleChange.bind(this, 'recurTimes')} />times<br/>
+                                    <input type="radio" name="endCriteria" value={RequestEndCriteriaType.OCCUR} onChange={this.handleChange.bind(this, 'endCriteria')} required/>
+                                    <span className="checkmark"></span>After <input type="number" name="numOccurrences" onChange={this.handleChange.bind(this, 'occurTimes')} /> times<br/>
                                 </label >
                                 <label className="container smaller">
-                                    <input type="radio" name="durationType" value={RequestEndCriteriaType.DATE} onChange={this.handleChange.bind(this, 'durationType')}/>
-                                    <span className="checkmark"></span>End by
+                                    <input type="radio" name="endCriteria" value={RequestEndCriteriaType.DATE} onChange={this.handleChange.bind(this, 'endCriteria')}/>
+                                    <span className="checkmark"></span>End on
                                     <input type="date" name="endDate" onChange={this.handleChange.bind(this, 'endDate')} />
                                 </label>
                                 <br/>

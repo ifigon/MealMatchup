@@ -11,7 +11,9 @@ exports.UmbrellaId = {
 exports.StringFormat = {
     DATE: 'YYYY-MM-DD', // '2018-03-24'
     TIME: 'HH:mm', // '15:30' (24hr),
-    PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}' // '206-345-7890'
+    PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}', // '206-345-7890',
+    WEEKDAY: 'dddd', // 'Wednesday'
+    WEEKDAY_WITH_DATE: 'dddd, YYYY-MM-DD' // 'Wednesday, 2018-04-25'
 };
 
 exports.AccountType = {
@@ -39,7 +41,7 @@ exports.PageContent = {
 
 exports.RequestEndCriteriaType = {
     DATE: 'date', // an end date
-    RECUR: 'num_recurrences' // number of recurrences
+    OCCUR: 'num_occurrences' // number of occurrences
 };
 
 exports.RequestRepeatType = {

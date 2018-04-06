@@ -194,11 +194,11 @@ DELIVERY REQUEST ("/delivery_requests/RheaQY1WxJT03sTPQICFZ4STpfm1")   //"/deliv
 	// key = auto generated key by firebase
 	-L5QoXeC_UrL5tRRED3e: {
 		status: 'pending',  // Enums.RequestStatus
-		startDate: 1519826400,
-		endDate: 1527688800,
+		startTimestamp: 1519826400,  // start date + start hour
+		endTimestamp: 1527688800,    // end date + end hour
 		endCriteria: {
 			type: "date",  // Enums.RequestEndCriteriaType
-			value: 1527688800  // a date for "date" or a number for "num_recurrences"
+			value: "2018-02-09"  // a date for "date" or a number for "num_occurrences"
 		},
 		spawnedDeliveries: [
 			// individual deliveries that were created to fulfill this delivery request
@@ -206,8 +206,6 @@ DELIVERY REQUEST ("/delivery_requests/RheaQY1WxJT03sTPQICFZ4STpfm1")   //"/deliv
 			...
 		],
 		repeats: "weekly",	// values in Enums.RequestRepeatType
-		startTime: "14:00",
-		endTime: "17:00",
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		notes: "Enter through the back door.",
 		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a umbrella
@@ -255,7 +253,7 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 		startTime: 1521295200,
 		endTime: 1521302400,
 		isEmergency: false,
-		spawning_delivery_request: "-L5QoXeC_UrL5tRRED3e",
+		spawningDeliveryRequest: "-L5QoXeC_UrL5tRRED3e",
 		donatingAgency: {
 			agency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
 			primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
