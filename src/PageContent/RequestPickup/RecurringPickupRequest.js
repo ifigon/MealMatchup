@@ -238,7 +238,6 @@ class RecurringPickupRequest extends Component {
                 requestTimestamp: Date.now()
             };
 
-            var weekday = getWeekdayFromDateString(event.target.startDate.value);
             this.setState({
                 request: deliveryRequest,
                 primaryContact: primaryContact,
