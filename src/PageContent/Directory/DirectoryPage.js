@@ -81,6 +81,7 @@ class DirectoryPage extends Component {
             let raList = [];
             let dgList = [];
 
+            // loop through all AccountObjects
             for (let key in AccountObjects) {
                 let accountItem = AccountObjects[key];
                 if (AccountObjects.hasOwnProperty(key)  // filter out prototype props
@@ -146,6 +147,7 @@ class DirectoryPage extends Component {
             let daMemberKey = [];   // [ [da1Member1Key, da1Member2Key, ...], [da2Member1Key, ...], ... ]
             let daPromiseList = []; // [ [da1Member1Promise, da1Member2Promise, ...], [da1Member1Promise, ...] ... ]
 
+            // loop through all daObjects
             for (let key in daObjects) {
                 if (daObjects.hasOwnProperty(key)) { // filter out prototype props
                     let daItem = daObjects[key];
