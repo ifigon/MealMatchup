@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DeliveryType, AccountType } from '../../Enums';
+import { AccountType } from '../../Enums';
 import './Content.css';
 import volunteer from '../../icons/volunteer.svg';
 
@@ -7,7 +7,12 @@ class DelivererGroupContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: false
+            edit: false,
+            delivererGroup: this.props.delivererGroup,
+            deliverer1: this.props.deliverer1,
+            deliverer2: this.props.deliverer2,
+            phone1: this.props.phone1,
+            phone2: this.props.phone2
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -18,21 +23,33 @@ class DelivererGroupContent extends Component {
         });
     }
 
-    handleChange(id, value) {
+    handleChange(e) {
+        e.preventDefault();
+        // pass these in from firebase
+        let values = {
+            delivererGroup: 'Green Greeks',
+            deliverer1: e.target.deliverer1.value,
+            phone1: e.target.phone1.value,
+            deliverer2: e.target.deliverer2.value,
+            phone2: e.target.phone2.value
+        };
         this.setState({
-            '${id}': '${value}'
+            edit: false,
+            deliverer1: e.target.deliverer1.value,
+            phone1: e.target.phone1.value,
+            deliverer2: e.target.deliverer2.value,
+            phone2: e.target.phone2.value
         });
+
+        this.props.saveValues(values);
     }
 
     render() {
         let buttonContent = '';
-        let buttonClass = '';
         if (!this.state.edit) {
             buttonContent = 'edit';
-            buttonClass = 'edit-button';
         } else {
             buttonContent = 'save';
-            buttonClass = 'edit-button editing';
         }
         return (
             <div className="wrapper">
@@ -49,41 +66,50 @@ class DelivererGroupContent extends Component {
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
                             <p className="content-details">
-                                {this.props.deliverer1} {this.props.phone1}
+                                {this.state.deliverer1} {this.state.phone1}
                             </p>
                             <p className="content-details">
-                                {this.props.deliverer2} {this.props.phone2}
+                                {this.state.deliverer2} {this.state.phone2}
                             </p>
                         </div>
                     ) : (
                         <div className="content-details-wrapper inline-wrapper">
-                            <input
-                                className="content-details inline-details"
-                                value={this.props.deliverer1}
-                            />
-                            <input
-                                className="content-details inline-details"
-                                value={this.props.phone1}
-                                id="phone1"
-                                onChange={e =>
-                                    this.handleChange('phone1', e.target.value)
-                                }
-                            />
-                            <input
-                                className="content-details inline-details"
-                                value={this.props.deliverer2}
-                            />
-                            <input
-                                className="content-details inline-details"
-                                value={this.props.phone2}
-                            />
+                            <form onSubmit={this.handleChange}>
+                                <input
+                                    className="content-details inline-details"
+                                    defaultValue={this.state.deliverer1}
+                                    name="deliverer1"
+                                    type="textyeah "
+                                />
+                                <input
+                                    className="content-details inline-details"
+                                    defaultValue={this.state.phone1}
+                                    name="phone1"
+                                    type="tel"
+                                />
+                                <input
+                                    className="content-details inline-details"
+                                    defaultValue={this.state.deliverer2}
+                                    type="text"
+                                    name="deliverer2"
+                                />
+                                <input
+                                    className="content-details inline-details"
+                                    defaultValue={this.state.phone2}
+                                    type="tel"
+                                    name="phone2"
+                                />
+
+                                <input type="submit" className="edit-button" />
+                            </form>
                         </div>
                     )}
                     {this.props.accountType === AccountType.DELIVERER_GROUP &&
+                    !this.state.edit &&
                     this.props.futureEvent ? (
                             <button
-                                className="edit-button"
                                 type="button"
+                                className="edit-button"
                                 onClick={this.edit}
                             >
                                 {buttonContent}

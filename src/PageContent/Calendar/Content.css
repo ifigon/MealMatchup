@@ -43,15 +43,6 @@
   color: #828282;
   margin: 0px;
 }
-
-.edit-button {
-  border: #5dc0f9 2px solid;
-  border-radius: 4px;
-  color: #5dc0f9;
-}
-.edit-button:hover {
-  cursor: pointer;
-}
 .inline-details {
   display: inline-block;
   width: 80px;
@@ -63,4 +54,12 @@
 
 .editing {
   vertical-align: middle;
+}
+.edit-button {
+  border: #5dc0f9 2px solid;
+  border-radius: 4px;
+  color: #5dc0f9;
+}
+.edit-button:hover {
+  cursor: pointer;
 }

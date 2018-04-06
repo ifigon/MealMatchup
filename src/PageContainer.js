@@ -84,12 +84,11 @@ class PageContainer extends Component {
                             <Dialog
                                 closeDialog={this.closeDialog}
                                 accountType={this.props.account.accountType}
-                                futureEvent={true}
                                 eventType={DeliveryType.RECURRING}
                                 date="11/14/2017"
                                 startTime="10am"
                                 endTime="12pm"
-                                futureEvent={false}
+                                futureEvent={true}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
@@ -97,7 +96,7 @@ class PageContainer extends Component {
                                 eventType={DeliveryType.RECURRING}
                                 startTime="10am"
                                 endTime="12pm"
-                                futureEvent={false}
+                                futureEvent={true}
                             />
                         </div>
                     </div>
