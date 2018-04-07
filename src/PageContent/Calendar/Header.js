@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DeliveryType } from '../../Enums';
+import { AccountType, DeliveryType } from '../../Enums';
 import './Header.css';
 import white_cross from '../../icons/white_cross.svg';
 
@@ -7,7 +7,11 @@ class Header extends Component {
     render() {
         let deliveryType = '';
         if (this.props.eventType === DeliveryType.RECURRING) {
-            deliveryType = 'Recurring Delivery';
+            if (this.props.accountType !== AccountType.RECEIVING_AGENCY) {
+                deliveryType = 'Recurring Pickup';
+            } else {
+                deliveryType = 'Recurring Delivery';
+            }
         }
         let headerClass = '';
         if (this.props.futureEvent) {

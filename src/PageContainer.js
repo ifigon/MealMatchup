@@ -84,6 +84,7 @@ class PageContainer extends Component {
                             <Dialog
                                 closeDialog={this.closeDialog}
                                 eventType={DeliveryType.RECURRING}
+                                accountType={this.props.account.accountType}
                                 date="11/14/2017"
                                 startTime="10am"
                                 endTime="12pm"
