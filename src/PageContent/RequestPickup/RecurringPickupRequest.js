@@ -19,7 +19,6 @@ class RecurringPickupRequest extends Component {
             errors: {},
             showPopup: false,
             request: {},
-            dayOfWeek: '',
             primaryContact: {},
             raRequested: null,
             dgRequested: null
@@ -90,13 +89,13 @@ class RecurringPickupRequest extends Component {
     }
 
     // Validate the request form inputs
-    handleValidation(){
+    handleValidation() {
         let fields = this.state.fields;
         let errors = {};
         let formIsValid = true;
 
         //Date
-        if(!fields['startDate']){
+        if (!fields['startDate']) {
             formIsValid = false;
             errors['startDate'] = 'Start date cannot be empty';
         }
@@ -105,27 +104,22 @@ class RecurringPickupRequest extends Component {
             // the they need to have one or the other error msg
             errors['endCriteria'] = 'Must select radio button';
             formIsValid = false;
-        } else {
-            if (fields['endCriteria'] === RequestEndCriteriaType.DATE) {
-                // perform all endDate related checks
-                if(fields['endDate'] < fields['startDate']){
-                    formIsValid = false;
-                    errors['endBeforeStart'] = 'End date cannot be before start date';
-                }else if(fields['endDate'] === '' || !fields['endDate']){
-                    formIsValid = false;
-                    errors['endBeforeStart'] = 'Enter an end date';
-                }
-            } else {
-                // perform all occurTimes related checks
-                if(fields['occurTimes'] === '' || !fields['occurTimes'] || fields['occurTimes'] < 2){
-                    formIsValid = false;
-                    errors['invalidOccurTimes'] = 'Pickup must recur at least once';
-                }
+        } else if (fields['endCriteria'] === RequestEndCriteriaType.DATE) {
+            // perform all endDate related checks
+            if (fields['endDate'] < fields['startDate']) {
+                formIsValid = false;
+                errors['endBeforeStart'] = 'End date cannot be before start date';
+            } else if(fields['endDate'] === '' || !fields['endDate']) {
+                formIsValid = false;
+                errors['endBeforeStart'] = 'Enter an end date';
             }
+        } else if(fields['occurTimes'] === '' || !fields['occurTimes'] || fields['occurTimes'] < 2) {
+            formIsValid = false;
+            errors['invalidOccurTimes'] = 'Pickup must recur at least once';
         }
 
         //Time
-        if(fields['endTime'] < fields['startTime']){
+        if (fields['endTime'] < fields['startTime']) {
             formIsValid = false;
             errors['time'] = 'Invalid time range';
         }    
@@ -136,13 +130,13 @@ class RecurringPickupRequest extends Component {
         return formIsValid;
     }
 
-    handleChange(field, e){   
+    handleChange(field, e) {   
         let fields = this.state.fields;
         fields[field] = e.target.value; 
         this.setState({fields});
     }
 
-    toggleModal(){
+    toggleModal() {
         this.setState((prevState) => {
             return {showPopup: !prevState.showPopup};
         });
@@ -249,7 +243,7 @@ class RecurringPickupRequest extends Component {
     }
 
     // when "Confirm" is clicked on the summary popup
-    submitRequest(){
+    submitRequest() {
         // write to firebase
         firebase.database().ref('delivery_requests').child(this.props.donatingAgency.umbrella).push(this.state.request);
 
@@ -366,8 +360,6 @@ class RecurringPickupRequest extends Component {
                     <PickupSummary
                         title={'Request Recurring Pickup'}
                         request={this.state.request}
-                        dayOfWeek={this.state.dayOfWeek}
-                        startDate={this.state.startDate}
                         donatingAgency={this.props.donatingAgency}
                         primaryContact={this.state.primaryContact}
                         raRequested={this.state.raRequested}

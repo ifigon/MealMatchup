@@ -9,11 +9,11 @@ exports.UmbrellaId = {
 };
 
 exports.StringFormat = {
-    DATE: 'YYYY-MM-DD', // '2018-03-24'
+    DATE: 'MM/DD/YYYY', // '03/14/2018'
     TIME: 'HH:mm', // '15:30' (24hr),
     PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}', // '206-345-7890',
     WEEKDAY: 'dddd', // 'Wednesday'
-    WEEKDAY_WITH_DATE: 'dddd, YYYY-MM-DD' // 'Wednesday, 2018-04-25'
+    WEEKDAY_WITH_DATE: 'dddd, MM/DD/YYYY' // 'Wednesday, 03/14/2018'
 };
 
 exports.AccountType = {
