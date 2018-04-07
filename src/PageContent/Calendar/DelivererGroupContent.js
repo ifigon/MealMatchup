@@ -45,6 +45,7 @@ class DelivererGroupContent extends Component {
     }
 
     render() {
+        console.log('state', this.state);
         return (
             <div className="wrapper">
                 <img className="content-icon" src={volunteer} alt="volunteer" />
