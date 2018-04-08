@@ -153,16 +153,8 @@ class AssignVolunteersController extends Component {
     handleConfirmClick(d1, d2) {
         this.setState({
             onConfirm: true,
-            deliverer1 : {
-                name: d1.name,
-                phone: d1.phone,
-                email: d1.email
-            },
-            deliverer2 : {
-                name: d2.name,
-                phone: d2.phone,
-                email: d2.email
-            }
+            deliverer1 : d1,
+            deliverer2 : d2
         });
     }
 

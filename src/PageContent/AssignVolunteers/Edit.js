@@ -14,16 +14,7 @@ class Edit extends Component {
             to: this.props.delivery.endTime,
             donatingAgency: this.props.delivery.donatingAgency.agency,
             receivingAgency: this.props.delivery.receivingAgency.agency,
-            deliverer1: {
-                name: '',
-                phone: '',
-                email: ''
-            },
-            deliverer2: {
-                name: '',
-                phone: '',
-                email: ''
-            }
+            deliverers: this.props.delivery.delivererGroup.deliverers
         };
     }
 
@@ -49,19 +40,19 @@ class Edit extends Component {
 
                             <div className="form-child">
                                 <label className="label-component details">Student 1</label><br />
-                                <input name="name1" type="text" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[0] ? this.props.delivery.delivererGroup.deliverers[0].name : ''} required/><br />
+                                <input name="name1" type="text" className="form-input" defaultValue={this.state.deliverers[0] ? this.state.deliverers[0].name : ''} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone1" type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[0] ? this.props.delivery.delivererGroup.deliverers[0].phone : ''} required/><br />
+                                <input name="phone1" type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={this.state.deliverers[0] ? this.state.deliverers[0].phone : ''} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input name="email1" type="email" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[0] ? this.props.delivery.delivererGroup.deliverers[0].email : ''} required/>
+                                <input name="email1" type="email" className="form-input" defaultValue={this.state.deliverers[0] ? this.state.deliverers[0].email : ''} required/>
                             </div>
                             <div className="form-child">
                                 <label className="label-component details">Student 2</label><br />
-                                <input name="name2" type="text" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[1] ? this.props.delivery.delivererGroup.deliverers[1].name : ''} required/><br />
+                                <input name="name2" type="text" className="form-input" defaultValue={this.state.deliverers[1] ? this.state.deliverers[1].name : ''} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone2" type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[1] ? this.props.delivery.delivererGroup.deliverers[1].phone : ''} required/><br />
+                                <input name="phone2" type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={this.state.deliverers[1] ? this.state.deliverers[1].phone : ''} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input name="email2" type="email" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[1] ? this.props.delivery.delivererGroup.deliverers[1].email : ''} required/>
+                                <input name="email2" type="email" className="form-input" defaultValue={this.state.deliverers[1] ? this.state.deliverers[1].email : ''} required/>
                             </div>
 
                             <div className="form-child second-row">
@@ -84,14 +75,16 @@ class Edit extends Component {
 
     handleConfirmClick(e) {
         e.preventDefault();
-        let d1 = {...this.state.deliverer1};
-        d1.name = e.target.name1.value;
-        d1.phone = e.target.phone1.value;
-        d1.email = e.target.email1.value;
-        let d2 = {...this.state.deliverer2};
-        d2.name = e.target.name2.value;
-        d2.phone = e.target.phone2.value;
-        d2.email = e.target.email2.value;
+        let d1 = {
+            name: e.target.name1.value,
+            phone: e.target.phone1.value,
+            email: e.target.email1.value
+        };
+        let d2 = {
+            name: e.target.name2.value,
+            phone: e.target.phone2.value,
+            email: e.target.email2.value
+        };
         this.props.handleConfirmClick(d1, d2);
     }
 

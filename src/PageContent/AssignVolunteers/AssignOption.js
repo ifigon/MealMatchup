@@ -7,7 +7,7 @@ class AssignOption extends Component {
         super(props);
         let date = new Date(this.props.delivery.date);
         this.state = {
-            day: moment(date).format('dddd'),
+            day: moment(date).format('MM/DD'),
             date: moment(date).format('l'),
             deliverers: this.props.delivery.delivererGroup.deliverers,
             receivingAgency: this.props.delivery.receivingAgency.agency
