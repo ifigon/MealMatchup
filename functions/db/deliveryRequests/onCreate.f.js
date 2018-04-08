@@ -111,19 +111,20 @@ function getRASnapPromise(accountsRef, raId) {
 
 // Check if the given RA is available for the pickup request
 function isAvailable(ra, request) {
-    var requestStart = moment(request.startTimestamp);
-    var requestEnd = moment(request.endTimestamp);
+    var reqDay = moment(request.startTimestamp).day();
+    // moment queries compare all units, we only care about time
+    var timeFormat = 'HH:mm';
+    var reqStart = moment(moment(request.startTimestamp).format(timeFormat), timeFormat);
+    var reqEnd = moment(moment(request.endTimestamp).format(timeFormat), timeFormat);
 
     // raDay could be null if no available slots for that day
-    var raDay = ra.availabilities[requestStart.day()];
+    var raDay = ra.availabilities[reqDay];
     if (raDay) {
-        var raStart = moment(raDay.startTimestamp);
-        var raEnd = moment(raDay.endTimestamp);
+        var raStart = moment(moment(raDay.startTimestamp).format(timeFormat), timeFormat);
+        var raEnd = moment(moment(raDay.endTimestamp).format(timeFormat), timeFormat);
 
-        if (requestStart.isSameOrAfter(raStart, 'hour') &&
-            requestStart.isSameOrAfter(raStart, 'minute') &&
-            requestEnd.isSameOrBefore(raEnd, 'hour') &&
-            requestEnd.isSameOrBefore(raEnd, 'minute')) {
+        if (reqStart.isSameOrAfter(raStart) &&
+            reqEnd.isSameOrBefore(raEnd)) {
             return true;
         }
     }
