@@ -9,15 +9,15 @@ Recurring Pickup Request Form:
         name = "startDate"
         value = the date in a date format
    	- name = durationType (Radio)
-       	- Recur (value = Enums.RequestDurationType.RECUR):
+       	- Recur (value = Enums.RequestEndCriteriaType.RECUR):
            	name = "numRecurrence"
             value = a number
-       	- End by (value = Enums.RequestDurationType.DATE):
+       	- End by (value = Enums.RequestEndCriteriaType.DATE):
             name = "endDate"
             value = date in a date format
    	- Repeats:
         name = "repeats"
-        value = values from Enums.RequestRepeatType
+        value = values from Enums.RequestEndCriteriaType
    	- Primary Contact:
         name = "primaryContact"
         value = donating agency member account UIDs (populate from currentUser->agency->members. Use props after app_setup merged)
