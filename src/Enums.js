@@ -107,3 +107,15 @@ exports.DeliveryType = {
     RECURRING: 'recurring',
     EMERGENCY: 'emergency'
 };
+
+exports.DeliveryStatus = {
+    SCHEDULED: 'scheduled',
+    IP: 'in_progress',
+    COMPLETED: 'completed'
+};
+
+exports.FoodUnit = {
+    LB: 'lb',
+    CASES: 'cases',
+    LOAVES: 'loaves'
+};
