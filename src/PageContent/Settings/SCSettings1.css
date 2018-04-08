@@ -1,0 +1,33 @@
+.amd-details-1 {
+    width: 100%;
+}
+
+.scs-1-content {
+    flex-basis: 100%;
+}
+
+.amd-edit-1 {
+    width: 100%;
+}
+
+.scs-1-editing {
+    display: flex;
+    flex-direction: column;
+}
+
+.editing-box {
+    display: flex;
+}
+
+.editing-child-1 {
+    flex-basis: 10%;
+    font-size: 18px;
+}
+
+.editing-child-2 {
+    flex-basis: 90%;
+}
+
+.amd-editing-2 {
+    flex-basis: 50%;
+}
