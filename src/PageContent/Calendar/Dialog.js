@@ -20,6 +20,7 @@ class Dialog extends Component {
                     donatingAgency={'Local Point'}
                     donatingAgencyContactName={'Andrea Benson'}
                     donatingAgencyContactPhone={2065436975}
+                    accountType={this.props.accountType}
                 />
             </dialog>
         );

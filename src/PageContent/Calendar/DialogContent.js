@@ -14,6 +14,7 @@ class DialogContent extends Component {
                     donatingAgencyContactPhone={
                         this.props.donatingAgencyContactPhone
                     }
+                    accountType={this.props.accountType}
                 />
             </div>
         );
