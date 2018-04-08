@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AccountType } from '../../Enums';
-// import './Content.css';
+import './Content.css';
 import shelter from '../../icons/shelter.svg';
 
 class DonatingAgencyContent extends Component {
@@ -33,7 +33,7 @@ class DonatingAgencyContent extends Component {
                     </h2>
                     <div className="content-details-wrapper">
                         <p className="content-details">
-                            {this.props.donatingAgencyContactName} {phone}
+                            {this.props.donatingAgencyContactName} ({phone})
                         </p>
                     </div>
                 </div>
