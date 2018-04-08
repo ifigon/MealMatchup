@@ -76,9 +76,7 @@ class PageContainer extends Component {
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        <AssignVolunteersController />
-                    </div>
+                    <AssignVolunteersController />
                 )}
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&

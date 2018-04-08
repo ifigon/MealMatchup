@@ -12,12 +12,16 @@ class AssignVolunteersController extends Component {
             step: 0,
             deliveries: [],
             selectedDelivery: -1,
-            s1name: '',
-            s1phone: '',
-            s1email: '',
-            s2name: '',
-            s2phone: '',
-            s2email: '',
+            deliverer1: {
+                name: '',
+                phone: '',
+                email: ''
+            },
+            deliverer2: {
+                name: '',
+                phone: '',
+                email: ''
+            },
             onConfirm: false
         };
     }
@@ -126,7 +130,7 @@ class AssignVolunteersController extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container assign-volunteers-container">
 
                 {this.showStep()}
                 {this.state.onConfirm ?
@@ -134,11 +138,8 @@ class AssignVolunteersController extends Component {
                         handleCloseClick={this.handleCloseClick.bind(this)}
                         handleCancelClick={this.handleCancelClick.bind(this)}
                         delivery={this.state.deliveries[this.state.selectedDelivery]}
-                        s1name={this.state.s1name}
-                        s1phone={this.state.s1phone}
-                        s1email={this.state.s1email}
-                        s2name={this.state.s2name}
-                        s2phone={this.state.s2phone}
+                        deliverer1={this.state.deliverer1}
+                        deliverer2={this.state.deliverer2}
                     /> :
                     <div />
                 }
@@ -149,22 +150,25 @@ class AssignVolunteersController extends Component {
     }
 
     // Backend TODO: Write to DB here
-    handleConfirmClick(s1name, s1phone, s1email, s2name, s2phone, s2email) {
+    handleConfirmClick(d1, d2) {
         this.setState({
             onConfirm: true,
-            s1name: s1name,
-            s1phone: s1phone,
-            s1email: s1email,
-            s2name: s2name,
-            s2phone: s2phone,
-            s2email: s2email
+            deliverer1 : {
+                name: d1.name,
+                phone: d1.phone,
+                email: d1.email
+            },
+            deliverer2 : {
+                name: d2.name,
+                phone: d2.phone,
+                email: d2.email
+            }
         });
     }
 
     handleCloseClick() {
         this.setState({
-            onConfirm: false,
-            step: 1
+            onConfirm: false
         });
     }
 
@@ -179,14 +183,6 @@ class AssignVolunteersController extends Component {
     handleCancelClick() {
         this.setState({
             onConfirm: false,
-            step: 0
-        });
-    }
-
-    // Backend TODO: Write to DB
-
-    handleSave() {
-        this.setState({
             step: 0
         });
     }
@@ -208,19 +204,6 @@ class AssignVolunteersController extends Component {
                     delivery={this.state.deliveries[this.state.selectedDelivery]}
                     handleConfirmClick={this.handleConfirmClick.bind(this)}
                     handleCancelClick={this.handleCancelClick.bind(this)}
-                />
-            );
-        case 2:
-            return (
-                <Confirmation
-                    handleCloseClick={this.handleCloseClick.bind(this)}
-                    handleSave={this.handleSave.bind(this)}
-                    delivery={this.state.deliveries[this.state.selectedDelivery]}
-                    s1name={this.state.s1name}
-                    s1phone={this.state.s1phone}
-                    s1email={this.state.s1email}
-                    s2name={this.state.s2name}
-                    s2phone={this.state.s2phone}
                 />
             );
         default:

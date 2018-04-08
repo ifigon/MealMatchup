@@ -13,12 +13,8 @@ class Confirmation extends Component {
                     delivery={this.props.delivery}
                     handleCloseClick={this.props.handleCloseClick}
                     handleCancelClick={this.props.handleCancelClick}
-                    s1name={this.props.s1name}
-                    s1phone={this.props.s1phone}
-                    s1email={this.props.s1email}
-                    s2name={this.props.s2name}
-                    s2phone={this.props.s2phone}
-                    s2email={this.props.s2email}
+                    deliverer1={this.props.deliverer1}
+                    deliverer2={this.props.deliverer2}
                 />
             </div>
         );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { StringFormat } from '../../Enums'
 
 class Edit extends Component {
 
@@ -13,21 +14,20 @@ class Edit extends Component {
             to: this.props.delivery.endTime,
             donatingAgency: this.props.delivery.donatingAgency.agency,
             receivingAgency: this.props.delivery.receivingAgency.agency,
-            s1name: '',
-            s1phone: '',
-            s1email: '',
-            s2name: '',
-            s2phone: '',
-            s2email: '',
+            deliverer1: {
+                name: '',
+                phone: '',
+                email: ''
+            },
+            deliverer2: {
+                name: '',
+                phone: '',
+                email: ''
+            }
         };
     }
 
-    componentDidMount() {
-        this.checkStudents(this.props);
-    }
-
     render() {
-
         return (
             <div>
                 <div className="date-container">
@@ -49,19 +49,19 @@ class Edit extends Component {
 
                             <div className="form-child">
                                 <label className="label-component details">Student 1</label><br />
-                                <input name="name" type="text" className="form-input" onChange={this.handleNameOne.bind(this)} value={this.state.s1name} required/><br />
+                                <input name="name1" type="text" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[0] ? this.props.delivery.delivererGroup.deliverers[0].name : ''} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="xxx-xxx-xxxx" className="form-input" onChange={this.handlePhoneOne.bind(this)} value={this.state.s1phone} required/><br />
+                                <input name="phone1" type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[0] ? this.props.delivery.delivererGroup.deliverers[0].phone : ''} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input type="email" className="form-input" onChange={this.handleEmailOne.bind(this)} value={this.state.s1email} required/>
+                                <input name="email1" type="email" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[0] ? this.props.delivery.delivererGroup.deliverers[0].email : ''} required/>
                             </div>
                             <div className="form-child">
                                 <label className="label-component details">Student 2</label><br />
-                                <input name="name" type="text" className="form-input" onChange={this.handleNameTwo.bind(this)} value={this.state.s2name} required/><br />
+                                <input name="name2" type="text" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[1] ? this.props.delivery.delivererGroup.deliverers[1].name : ''} required/><br />
                                 <label className="label-component details">Phone</label><br />
-                                <input name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="xxx-xxx-xxxx" className="form-input" onChange={this.handlePhoneTwo.bind(this)} value={this.state.s2phone} required/><br />
+                                <input name="phone2" type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[1] ? this.props.delivery.delivererGroup.deliverers[1].phone : ''} required/><br />
                                 <label className="label-component details">Email</label><br />
-                                <input type="email" className="form-input" onChange={this.handleEmailTwo.bind(this)} value={this.state.s2email} required/>
+                                <input name="email2" type="email" className="form-input" defaultValue={this.props.delivery.delivererGroup.deliverers[1] ? this.props.delivery.delivererGroup.deliverers[1].email : ''} required/>
                             </div>
 
                             <div className="form-child second-row">
@@ -82,50 +82,17 @@ class Edit extends Component {
 
     }
 
-    checkStudents(props) {
-        if(props.delivery.delivererGroup.deliverers[0]) {
-            this.setState({
-                s1name: props.delivery.delivererGroup.deliverers[0].name,
-                s1email: props.delivery.delivererGroup.deliverers[0].email,
-                s1phone: props.delivery.delivererGroup.deliverers[0].phone,
-            });
-            if(props.delivery.delivererGroup.deliverers[1]) {
-                this.setState({
-                    s2name: props.delivery.delivererGroup.deliverers[1].name,
-                    s2email: props.delivery.delivererGroup.deliverers[1].email,
-                    s2phone: props.delivery.delivererGroup.deliverers[1].phone,
-                });
-            }
-        }
-    }
-
-    handleNameOne(e) {
-        this.setState({s1name: e.target.value});
-    }
-
-    handlePhoneOne(e) {
-        this.setState({s1phone: e.target.value});
-    }
-
-    handleEmailOne(e) {
-        this.setState({s1email: e.target.value});
-    }
-
-    handleNameTwo(e) {
-        this.setState({s2name: e.target.value});
-    }
-
-    handlePhoneTwo(e) {
-        this.setState({s2phone: e.target.value});
-    }
-
-    handleEmailTwo(e) {
-        this.setState({s2email: e.target.value});
-    }
-
     handleConfirmClick(e) {
         e.preventDefault();
-        this.props.handleConfirmClick(this.state.s1name, this.state.s1phone, this.state.s1email, this.state.s2name, this.state.s2phone, this.state.s2email);
+        let d1 = {...this.state.deliverer1};
+        d1.name = e.target.name1.value;
+        d1.phone = e.target.phone1.value;
+        d1.email = e.target.email1.value;
+        let d2 = {...this.state.deliverer2};
+        d2.name = e.target.name2.value;
+        d2.phone = e.target.phone2.value;
+        d2.email = e.target.email2.value;
+        this.props.handleConfirmClick(d1, d2);
     }
 
 }
