@@ -82,12 +82,15 @@ class ReceivingAgencySignUp3 extends Component {
 
             // only add availability if checkbox was checked
             if (e.target[checkboxName].checked) {
-                var startName = day + 'Start';
-                var endName = day + 'End';
+                var startStr = e.target[day + 'Start'].value; // eg "10:00"
+                var endStr = e.target[day + 'End'].value; // eg "17:00"
+                var today = new Date();
+                var startTimestamp = new Date(today.toDateString() + ' ' + startStr);
+                var endTimestamp = new Date(today.toDateString() + ' ' + endStr);
 
                 availabilities[i] = {
-                    startTime: e.target[startName].value,
-                    endTime: e.target[endName].value
+                    startTimestamp: startTimestamp.getTime(),
+                    endTimestamp: endTimestamp.getTime()
                 };
             }
         }

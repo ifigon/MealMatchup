@@ -130,11 +130,30 @@ RECEIVING AGENCY ("/accounts/")
 			position: "Volunteer"
 		},
 		availabilities: {
-			0: {startTime: "10:00", endTime: "14:00"},  // Sunday
-			2: {startTime: "13:00", endTime: "17:00"},  // Tuesday
-			3: {startTime: "13:00", endTime: "17:00"},  // Wednesday
-			4: {startTime: "13:00", endTime: "17:00"},  // Thursday
-			6: {startTime: "10:00", endTime: "14:00"},  // Saturday
+			// Indices 0-6 represents Sunday - Saturday
+			// Using timestamps for start/end hours to eliminate potential
+			// timezone problems. Only the hour and minute parts of the
+			// timestamp is valid.
+			0: {  // Sunday 10:00 - 14:00
+				startTimestamp: "1523120400000",
+				endTimestamp: "1523134800000"
+			},
+			2: {  // Tuesday 13:00 - 17:00
+				startTimestamp: "1523131200000",
+				endTimestamp: "1523145600000"
+			},
+			3: {  // Wednesday 13:00 - 17:00
+				startTimestamp: "1523131200000",
+				endTimestamp: "1523145600000"
+			},
+			4: {  // Thursday 13:00 - 17:00
+				startTimestamp: "1523131200000",
+				endTimestamp: "1523145600000"
+			},
+			6: {  // Saturday 10:00 - 14:00
+				startTimestamp: "1523120400000",
+				endTimestamp: "1523134800000"
+			},
 		},
 		acceptEmergencyPickups: true,
 		emergencyQuantity: {  // could be null

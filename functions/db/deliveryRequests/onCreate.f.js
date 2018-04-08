@@ -11,15 +11,15 @@ const enums = require('../../Enums.js');
  *     pending list.
  */
 exports = module.exports = functions.database
-    .ref('/delivery_requests/{pushId}')
-    .onCreate(event => {
+    .ref('/delivery_requests/{umbrellaId}/{pushId}')
+    .onCreate((snap, context) => {
         // TODO: setup Admin SDK in the future? So that we can use absolute path.
-        const requestRef = event.data.ref;
-        const accountsRef = requestRef.parent.parent.child('accounts');
+        const requestRef = snap.ref;
+        const accountsRef = requestRef.parent.parent.parent.child('accounts');
         const dasRef = accountsRef.parent.child('donating_agencies');
 
-        var requestKey = event.params.pushId;
-        var request = event.data.val();
+        var requestKey = context.params.pushId;
+        var request = snap.val();
         var raInfo = request.receivingAgency;
         console.info('New recurring request added: ' + requestKey);
         
@@ -111,20 +111,19 @@ function getRASnapPromise(accountsRef, raId) {
 
 // Check if the given RA is available for the pickup request
 function isAvailable(ra, request) {
-    // 0-6 for Sun-Sat
-    var requestDay = moment(request.startDate, enums.DateTimeFormat.DATE).day();
-    var requestStart = moment(request.startTime, enums.DateTimeFormat.TIME);
-    var requestEnd = moment(request.endTime, enums.DateTimeFormat.TIME);
+    var requestStart = moment(request.startTimestamp);
+    var requestEnd = moment(request.endTimestamp);
 
     // raDay could be null if no available slots for that day
-    var raDay = ra.availabilities[requestDay];
-
+    var raDay = ra.availabilities[requestStart.day()];
     if (raDay) {
-        var raStart = moment(raDay.startTime, enums.DateTimeFormat.TIME);
-        var raEnd = moment(raDay.endTime, enums.DateTimeFormat.TIME);
+        var raStart = moment(raDay.startTimestamp);
+        var raEnd = moment(raDay.endTimestamp);
 
-        if (requestStart.isSameOrAfter(raStart) &&
-            requestEnd.isSameOrBefore(raEnd)) {
+        if (requestStart.isSameOrAfter(raStart, 'hour') &&
+            requestStart.isSameOrAfter(raStart, 'minute') &&
+            requestEnd.isSameOrBefore(raEnd, 'hour') &&
+            requestEnd.isSameOrBefore(raEnd, 'minute')) {
             return true;
         }
     }
