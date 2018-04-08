@@ -7,9 +7,13 @@ class DialogContent extends Component {
         return (
             <div>
                 <DonatingAgencyContent
-                    donatingAgency={'Local Point'}
-                    donatingAgencyContactName={'Andrea Benson'}
-                    donatingAgencyContactPhone={2065436975}
+                    donatingAgency={this.props.donatingAgency}
+                    donatingAgencyContactName={
+                        this.props.donatingAgencyContactName
+                    }
+                    donatingAgencyContactPhone={
+                        this.props.donatingAgencyContactPhone
+                    }
                 />
             </div>
         );

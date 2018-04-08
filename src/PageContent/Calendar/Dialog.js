@@ -16,7 +16,11 @@ class Dialog extends Component {
                     futureEvent={this.props.futureEvent}
                     accountType={this.props.accountType}
                 />
-                <DialogContent />
+                <DialogContent
+                    donatingAgency={'Local Point'}
+                    donatingAgencyContactName={'Andrea Benson'}
+                    donatingAgencyContactPhone={2065436975}
+                />
             </dialog>
         );
     }
