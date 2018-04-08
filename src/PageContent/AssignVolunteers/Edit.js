@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { StringFormat } from '../../Enums'
+import { StringFormat } from '../../Enums';
 
 class Edit extends Component {
 
