@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './DialogContent.css';
 import ContactContent from './ContactContent';
 
 class DialogContent extends Component {
