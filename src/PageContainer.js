@@ -5,6 +5,7 @@ import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
 import logo from './icons/temp-logo.svg';
+import BigCalendar from './PageContent/Calendar/BigCalendar'
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 
@@ -63,10 +64,13 @@ class PageContainer extends Component {
                 />
 
                 {/* TODO: replace placeholder text with real components */}
+          
+          
+          {/*THIS IS WHERE CONFLICT WAS - IS THIS WHERE EVENTCARD IS SUPPOSED TO BE?*/}
                 {this.state.content === PageContent.CALENDAR && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Calendar
-                        <EventCard
+                    <div>
+                        <BigCalendar></BigCalendar>
+                        <EventCard style={{ marginTop: '120px', marginLeft: '250px' }}
                             eventType={DeliveryType.RECURRING}
                             startTime="10am"
                             endTime="12pm"
