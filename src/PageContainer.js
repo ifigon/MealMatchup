@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-// import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
+import NotificationPopup from './PageLayout/Notification/NotificationPopup.js';
 // import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
-import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
+// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
 import EmergencyDeliveryRequestController from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestController.js';
 
 import logo from './icons/temp-logo.svg';
@@ -122,7 +122,7 @@ class PageContainer extends Component {
                 }
                 {/* this only shows notification */}
                 {this.state.hover ? 
-                    <RecurringDeliveryRequestNotification clickNotification={this.openPopUp.bind(this)}/>
+                    <NotificationPopup clickNotification={this.openPopUp.bind(this)}/>
                     : null
                 }
                 {/* this shows popup card */}
