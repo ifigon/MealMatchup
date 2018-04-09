@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import { AccountType } from '../../Enums';
 import './Content.css';
 import phone from '../../icons/phone.svg';
