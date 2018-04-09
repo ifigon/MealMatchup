@@ -6,7 +6,13 @@ class DialogContent extends Component {
     render() {
         return (
             <div>
-                <DescriptionContent />
+                <DescriptionContent
+                    futureEvent={this.props.futureEvent}
+                    accountType={this.props.accountType}
+                    donationDescription={this.props.donationDescription}
+                    saveValues={this.props.saveValues}
+                    accountOwnerName={this.props.accountOwnerName}
+                />
             </div>
         );
     }

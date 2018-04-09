@@ -89,6 +89,7 @@ class PageContainer extends Component {
                                 startTime="10am"
                                 endTime="12pm"
                                 futureEvent={true}
+                                accountOwnerName={this.props.account.name}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>

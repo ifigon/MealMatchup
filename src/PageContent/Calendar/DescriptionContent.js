@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { AccountType } from '../../Enums';
 import './Content.css';
 import groceries from '../../icons/groceries.svg';
@@ -6,13 +7,36 @@ import groceries from '../../icons/groceries.svg';
 class DescriptionContent extends Component {
     constructor(props) {
         super(props);
+        let foodList = '';
+        if (typeof this.props.donationDescription === 'string') {
+            foodList = this.props.donationDescription;
+        } else {
+            if (this.props.donationDescription.length > 0) {
+                foodList +=
+                    this.props.donationDescription[0].name +
+                    ' ' +
+                    this.props.donationDescription[0].amount +
+                    ' ' +
+                    this.props.donationDescription[0].unit;
+                for (
+                    let i = 1;
+                    i < this.props.donationDescription.length;
+                    i++
+                ) {
+                    foodList +=
+                        ', ' +
+                        this.props.donationDescription[i].name +
+                        ' ' +
+                        this.props.donationDescription[i].amount +
+                        ' ' +
+                        this.props.donationDescription[i].unit;
+                }
+            }
+        }
+
         this.state = {
             edit: false,
-            delivererGroup: this.props.delivererGroup,
-            deliverer1: this.props.deliverer1,
-            deliverer2: this.props.deliverer2,
-            phone1: this.convertPhone(this.props.phone1),
-            phone2: this.convertPhone(this.props.phone2)
+            donationDescription: foodList
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -39,20 +63,15 @@ class DescriptionContent extends Component {
         e.preventDefault();
         // pass these in from firebase
         let values = {
-            delivererGroup: 'Green Greeks',
-            deliverer1: e.target.deliverer1.value,
-            phone1: e.target.phone1.value,
-            deliverer2: e.target.deliverer2.value,
-            phone2: e.target.phone2.value
+            donationDescription: e.target.donationDescription.value
         };
+        let time = Date();
         this.setState({
+            donationDescription: e.target.donationDescription.value,
             edit: false,
-            deliverer1: e.target.deliverer1.value,
-            phone1: e.target.phone1.value,
-            deliverer2: e.target.deliverer2.value,
-            phone2: e.target.phone2.value
+            editedBy: this.props.accountOwnerName,
+            editedAt: moment().format('MM/DD h:mma')
         });
-
         this.props.saveValues(values);
     }
 
@@ -60,16 +79,19 @@ class DescriptionContent extends Component {
         return (
             <div className="wrapper">
                 <img className="content-icon" src={groceries} alt="volunteer" />
-                <div className="content-wrapper">
+                <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
-
+                    {this.state.editedBy ? (
+                        <p className="edited">
+                            {' '}
+                            Edited by {this.state.editedBy},{' '}
+                            {this.state.editedAt}
+                        </p>
+                    ) : null}
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
-                            <p className="content-details">
-                                {this.state.deliverer1} {this.state.phone1}
-                            </p>
-                            <p className="content-details">
-                                {this.state.deliverer2} {this.state.phone2}
+                            <p className="content-details description-content">
+                                {this.state.donationDescription}
                             </p>
                         </div>
                     ) : (
@@ -79,29 +101,12 @@ class DescriptionContent extends Component {
                                 onSubmit={this.handleChange}
                             >
                                 <div className="input-wrapper">
-                                    <input
-                                        className="content-details inline-details"
-                                        defaultValue={this.state.deliverer1}
-                                        name="deliverer1"
-                                        type="textyeah "
-                                    />
-                                    <input
-                                        className="content-details inline-details"
-                                        defaultValue={this.state.phone1}
-                                        name="phone1"
-                                        type="tel"
-                                    />
-                                    <input
-                                        className="content-details inline-details"
-                                        defaultValue={this.state.deliverer2}
-                                        type="text"
-                                        name="deliverer2"
-                                    />
-                                    <input
-                                        className="content-details inline-details"
-                                        defaultValue={this.state.phone2}
-                                        type="tel"
-                                        name="phone2"
+                                    <textarea
+                                        className="content-details inline-details description-input"
+                                        defaultValue={
+                                            this.state.donationDescription
+                                        }
+                                        name="donationDescription"
                                     />
                                 </div>
 
