@@ -65,7 +65,6 @@ class DescriptionContent extends Component {
         let values = {
             donationDescription: e.target.donationDescription.value
         };
-        let time = Date();
         this.setState({
             donationDescription: e.target.donationDescription.value,
             edit: false,
