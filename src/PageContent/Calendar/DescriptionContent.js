@@ -118,7 +118,8 @@ class DescriptionContent extends Component {
                             </form>
                         </div>
                     )}
-                    {this.props.accountType === AccountType.DELIVERER_GROUP &&
+                    {this.props.accountType ===
+                        AccountType.DONATING_AGENCY_MEMBER &&
                     !this.state.edit &&
                     this.props.futureEvent ? (
                             <button
