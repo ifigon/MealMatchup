@@ -46,18 +46,6 @@ class DescriptionContent extends Component {
             edit: true
         });
     }
-    convertPhone(phone) {
-        if (phone !== undefined) {
-            let phoneString = phone.toString();
-            let formattedPhone =
-                phoneString.substr(0, 3) +
-                '-' +
-                phoneString.substr(3, 3) +
-                '-' +
-                phoneString.substr(6);
-            return formattedPhone;
-        }
-    }
 
     handleChange(e) {
         e.preventDefault();
