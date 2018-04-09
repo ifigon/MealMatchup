@@ -3,7 +3,17 @@ import './Dialog.css';
 import Header from './Header';
 import DialogContent from './DialogContent';
 
+let values = {
+    name: 'Chris Stack',
+    phone: 2065436975
+};
+
 class Dialog extends Component {
+    saveValues(fields) {
+        return (function() {
+            values = Object.assign({}, values, fields);
+        })();
+    }
     render() {
         return (
             <dialog className="event-dialog" open>
@@ -19,8 +29,9 @@ class Dialog extends Component {
                 <DialogContent
                     futureEvent={this.props.futureEvent}
                     accountType={this.props.accountType}
-                    phone={2065436975}
-                    name={'Chris Stack'}
+                    saveValues={this.saveValues.bind(this)}
+                    phone={values.phone}
+                    name={values.name}
                 />
             </dialog>
         );

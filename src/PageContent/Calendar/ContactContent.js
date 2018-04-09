@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { AccountType } from '../../Enums';
-// import './Content.css';
+import './Content.css';
 import phone from '../../icons/phone.svg';
 
 class DescriptionContent extends Component {
@@ -54,18 +54,10 @@ class DescriptionContent extends Component {
                 <img className="content-icon" src={phone} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
-                    {this.state.editedBy ? (
-                        <p className="edited">
-                            {' '}
-                            Edited by {this.state.editedBy},{' '}
-                            {this.state.editedAt}
-                        </p>
-                    ) : null}
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
-                            <p className="content-details description-content">
-                                {this.state.name}
-                                {this.state.phone}
+                            <p className="content-details contact-content">
+                                {this.state.name} ({this.state.phone})
                             </p>
                         </div>
                     ) : (
@@ -74,7 +66,7 @@ class DescriptionContent extends Component {
                                 className="edit-dg"
                                 onSubmit={this.handleChange}
                             >
-                                <div className="input-wrapper">
+                                <div className="input-wrapper contact-wrapper">
                                     <input
                                         type="text"
                                         className="content-details "
