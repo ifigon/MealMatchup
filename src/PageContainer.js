@@ -28,7 +28,7 @@ class PageContainer extends Component {
             hover: false,
             notification: 
                 {
-                    type: 'recurring_pickup_request',  // Enums.NotificationType
+                    type: 'recurring_pickup_confirmed',  // Enums.NotificationType
                     content: '-L5QoXeC_UrL5tRRED3e'  // key of DeliveryRequest
                 }
             ,

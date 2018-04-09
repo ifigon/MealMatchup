@@ -98,14 +98,14 @@ p.summary {
   margin-top: 30px;
 }
 
-button {
+/* button {
   width: 10vw;
   height: 3vw;
   border-radius: 3px;
   margin: 20px;
   font-weight: 600;
   font-size: 0.9rem;
-}
+} */
 
 .claim {
   background-color: #5dc0f9;
