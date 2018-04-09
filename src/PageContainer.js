@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import { PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-// import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
-// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Recurring/RecurringDeliveryRequestNotification';
-import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
-import EmergencyDeliveryRequestController from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestController.js';
+import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
+import NotificationPopup from './PageLayout/Notification/NotificationPopup';
+// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
+// import EmergencyDeliveryRequestController from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestController.js';
 
 import logo from './icons/temp-logo.svg';
 
@@ -22,12 +22,12 @@ class PageContainer extends Component {
             content: props.content,
             showPopUp: false,
             hover: false,
-            notifications: [
+            notification: 
                 {
                     type: 'recurring_pickup_request',  // Enums.NotificationType
                     content: '-L5QoXeC_UrL5tRRED3e'  // key of DeliveryRequest
                 }
-            ],
+            ,
             deliveryRequest: {
                 status: 'pending',  // Enums.RequestStatus
                 startTimestamp: 1519826400,  // start date + start hour
@@ -122,14 +122,17 @@ class PageContainer extends Component {
                 }
                 {/* this only shows notification */}
                 {this.state.hover ? 
-                    <RecurringDeliveryRequestNotification clickNotification={this.openPopUp.bind(this)}/>
+                    <NotificationPopup 
+                        notificationType={this.state.notification.type} 
+                        account='receiving_agency'
+                        clickNotification={this.openPopUp.bind(this)}/>
                     : null
                 }
                 {/* this shows popup card */}
-                {this.state.showPopUp ?
+                {/* {this.state.showPopUp ?
                     <EmergencyDeliveryRequestController closePopUp={this.closePopUp.bind(this)}/>
                     : null    
-                }
+                } */}
 
             </div>
         );
