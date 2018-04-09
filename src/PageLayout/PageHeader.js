@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './PageHeader.css';
 import notification from '../icons/notification.svg';
 class PageHeader extends Component {
-    render(){
+    render() {
         return(
             <div className="page-container">
                 <div className="flex">
