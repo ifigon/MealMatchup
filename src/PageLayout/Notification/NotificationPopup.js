@@ -9,7 +9,7 @@ class NotificationPopup extends Component {
             <div>
                 {
                     this.props.notificationType === NotificationType.RECURRING_PICKUP_REQUEST &&
-                    this.props.account === AccountType.RECEIVING_AGENCY || this.props.account === AccountType.DELIVERER_GROUP ?
+                    (this.props.account === AccountType.RECEIVING_AGENCY || this.props.account === AccountType.DELIVERER_GROUP) ?
                         <div className="notification-wrapper recurring arrow-up">
                             <img className="popup-icon" src={truckG} alt="icon"/><h1 className="hover">Recurring pickup requested</h1>
                             <div className="notification-buttons notification">
