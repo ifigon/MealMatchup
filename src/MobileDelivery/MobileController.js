@@ -14,6 +14,8 @@ class MobileController extends React.Component {
         this.state = {
             umbrellaId: '',
             deliveryId: '',
+            deliveryDbRefPath: '',
+            
             deliveryObj: {
                 date: '2018-02-28',
                 startTime: '14:00',
@@ -122,21 +124,24 @@ class MobileController extends React.Component {
 
     componentDidMount() {
         let { uId: umbrellaId, dId: deliveryId } = this.props.match.params;
+        let deliveryDbRefPath = `deliveries/${umbrellaId}/${deliveryId}`;
         this.setState({ 
             umbrellaId: umbrellaId, 
             deliveryId: deliveryId,
-            deliveryDbRef: `deliveries/${umbrellaId}/${deliveryId}`, 
+            deliveryDbRefPath: deliveryDbRefPath, 
         });
 
-        db.ref(this.state.deliveryDbRef).on('value', (snapshot) => {
+        db.ref(deliveryDbRefPath).on('value', (snapshot) => {
             let deliveryData = snapshot.val();
-            // console.log(deliveryData);
+            console.log(deliveryData);
+
+
         });
     }
 
     componentWillUnmount() {
         //detach listener
-        db.ref(this.state.deliveryDbRef).off();
+        db.ref(this.state.deliveryDbRefPath).off();
     }
 
     showStart(){

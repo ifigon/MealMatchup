@@ -3,6 +3,8 @@ import GoogleMap from 'google-map-react';
 import Geocode from '../react-geocode';
 import './Marker.css';
 
+const GoogleMap_API_KEY = 'AIzaSyBhUNXr9HGzNW1k0Va7EGeyFsJqUSlkwCU';
+
 const Marker = ({ text }) => (
     <div>
         <div className="pin bounce"></div>
@@ -15,7 +17,7 @@ class Map extends Component{
         super(props);
         
         this.state  = {
-            center: {},
+            center: {lat: 0, lng: 0}, // initial marker state
             zoom: 15,
             validAddress: true
         };
@@ -54,6 +56,9 @@ class Map extends Component{
             <div className='google-map' style={style}>
                 {this.state.validAddress ?
                     <GoogleMap
+                        bootstrapURLKeys={{
+                            key: GoogleMap_API_KEY,
+                        }}
                         center={ this.state.center }
                         zoom={ this.state.zoom }>
                         <Marker
