@@ -3,11 +3,7 @@ import firebase from './FirebaseConfig.js';
 import { AccountType, PageContent, DeliveryType } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-// import RecurringDeliveryRequestController from './PageLayout/Notification/Recurring/RecurringDeliveryRequestController.js';
 import NotificationPopup from './PageLayout/Notification/NotificationPopup';
-// import RecurringDeliveryRequestNotification from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestNotification';
-// import EmergencyDeliveryRequestController from './PageLayout/Notification/Emergency/EmergencyDeliveryRequestController.js';
-
 import EventCard from './PageContent/Calendar/EventCard.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
@@ -147,11 +143,6 @@ class PageContainer extends Component {
                         account={this.props.account.accountType}
                         clickNotification={this.openPopUp.bind(this)}/>
                 }
-                {/* this shows popup card */}
-                {/* {this.state.showPopUp ?
-                    <EmergencyDeliveryRequestController closePopUp={this.closePopUp.bind(this)}/>
-                    : null    
-                } */}
             </div>
         );
     }
