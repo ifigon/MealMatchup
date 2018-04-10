@@ -139,8 +139,11 @@ map {
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
   padding: 10px;
   border: solid 1px #e1e1e1;
-  margin-top: -30px;
   margin-right: 5px;
+  top: 90px;
+  right: 0px;
+  position: fixed;
+  background-color: white;
 }
 
 .hover {
