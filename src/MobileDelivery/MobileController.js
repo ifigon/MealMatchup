@@ -5,10 +5,15 @@ import MobilePickup from './MobilePickup';
 import MobileDelivery from './MobileDelivery';
 import MobileComplete from './MobileComplete';
 
+import firebase from '../FirebaseConfig.js';
+const db = firebase.database();
+
 class MobileController extends React.Component { 
     constructor(props) {
         super(props);
         this.state = {
+            umbrellaId: '',
+            deliveryId: '',
             deliveryObj: {
                 date: '2018-02-28',
                 startTime: '14:00',
@@ -113,6 +118,25 @@ class MobileController extends React.Component {
         this.showStart = this.showStart.bind(this);
         this.nextStep = this.nextStep.bind(this);
         this.saveValues = this.saveValues.bind(this);
+    }
+
+    componentDidMount() {
+        let { uId: umbrellaId, dId: deliveryId } = this.props.match.params;
+        this.setState({ 
+            umbrellaId: umbrellaId, 
+            deliveryId: deliveryId,
+            deliveryDbRef: `deliveries/${umbrellaId}/${deliveryId}`, 
+        });
+
+        db.ref(this.state.deliveryDbRef).on('value', (snapshot) => {
+            let deliveryData = snapshot.val();
+            // console.log(deliveryData);
+        });
+    }
+
+    componentWillUnmount() {
+        //detach listener
+        db.ref(this.state.deliveryDbRef).off();
     }
 
     showStart(){

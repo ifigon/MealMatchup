@@ -15,7 +15,7 @@ ReactDOM.render(
             {/* TODO: Mobile route 
                 - unique path to a pickup and pass info into MobileDelivery
             */}
-            <Route exact path="/mobile" component={MobileController} />
+            <Route exact path="/mobile/delivery/:uId/:dId" component={MobileController} />
             {/* TODO: DA Member Signup route with agency key */}
             <Route exact 
                 path="/signup/donatingagency/member" 
