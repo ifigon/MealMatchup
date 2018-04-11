@@ -7,23 +7,26 @@ const formatterCache = {};
  * just yet, it will be created on the fly.
  */
 const getFormatter = (options, locale) => {
-  if (!locale) {
-    // Default parameter is not enough as it does not protect us from null values
-    // eslint-disable-next-line no-param-reassign
-    locale = getDefaultLocale();
-  }
+    if (!locale) {
+        // Default parameter is not enough as it does not protect us from null values
+        // eslint-disable-next-line no-param-reassign
+        locale = getDefaultLocale();
+    }
 
-  const stringifiedOptions = JSON.stringify(options);
+    const stringifiedOptions = JSON.stringify(options);
 
-  if (!formatterCache[locale]) {
-    formatterCache[locale] = {};
-  }
+    if (!formatterCache[locale]) {
+        formatterCache[locale] = {};
+    }
 
-  if (!formatterCache[locale][stringifiedOptions]) {
-    formatterCache[locale][stringifiedOptions] = new Intl.DateTimeFormat(locale, options).format;
-  }
+    if (!formatterCache[locale][stringifiedOptions]) {
+        formatterCache[locale][stringifiedOptions] = new Intl.DateTimeFormat(
+            locale,
+            options
+        ).format;
+    }
 
-  return formatterCache[locale][stringifiedOptions];
+    return formatterCache[locale][stringifiedOptions];
 };
 
 /**
@@ -35,27 +38,21 @@ const getFormatter = (options, locale) => {
  *
  * @param {Date} date Date.
  */
-const toSafeHour = (date) => {
-  const safeDate = new Date(date);
-  return new Date(safeDate.setHours(12));
+const toSafeHour = date => {
+    const safeDate = new Date(date);
+    return new Date(safeDate.setHours(12));
 };
 
-export const formatDate = (date, locale) => getFormatter(
-  { day: 'numeric', month: 'numeric', year: 'numeric' },
-  locale,
-)(toSafeHour(date));
+export const formatDate = (date, locale) =>
+    getFormatter({ day: 'numeric', month: 'numeric', year: 'numeric' }, locale)(
+        toSafeHour(date)
+    );
 
-export const formatMonthYear = (date, locale) => getFormatter(
-  { month: 'long', year: 'numeric' },
-  locale,
-)(toSafeHour(date));
+export const formatMonthYear = (date, locale) =>
+    getFormatter({ month: 'long', year: 'numeric' }, locale)(toSafeHour(date));
 
-export const formatMonth = (date, locale) => getFormatter(
-  { month: 'long' },
-  locale,
-)(toSafeHour(date));
+export const formatMonth = (date, locale) =>
+    getFormatter({ month: 'long' }, locale)(toSafeHour(date));
 
-export const formatShortWeekday = (date, locale) => getFormatter(
-  { weekday: 'short' },
-  locale,
-)(toSafeHour(date));
+export const formatShortWeekday = (date, locale) =>
+    getFormatter({ weekday: 'short' }, locale)(toSafeHour(date));

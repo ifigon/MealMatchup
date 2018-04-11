@@ -5,109 +5,109 @@ import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
 
-import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
+import {
+    isCalendarType,
+    isMaxDate,
+    isMinDate,
+    isValue
+} from './shared/propTypes';
 
 // import '../Calendar/Calendar.css'
 export default class MonthView extends PureComponent {
-  get calendarType() {
-    const { calendarType, locale } = this.props;
+    get calendarType() {
+        const { calendarType, locale } = this.props;
 
-    if (calendarType) {
-      return calendarType;
+        if (calendarType) {
+            return calendarType;
+        }
+
+        switch (locale) {
+        case 'en-US':
+            return 'US';
+        default:
+            return 'ISO 8601';
+        }
     }
 
-    switch (locale) {
-      case 'en-US':
-        return 'US';
-      default:
-        return 'ISO 8601';
-    }
-  }
-
-  renderWeekdays() {
-    return (
-      <Weekdays
-        calendarType={this.calendarType}
-        locale={this.props.locale}
-        month={this.props.activeStartDate}
-        formatShortWeekday={this.props.formatShortWeekday}
-      />
-    );
-  }
-
-  renderWeekNumbers() {
-    const { showWeekNumbers } = this.props;
-
-    if (!showWeekNumbers) {
-      return null;
+    renderWeekdays() {
+        return (
+            <Weekdays
+                calendarType={this.calendarType}
+                locale={this.props.locale}
+                month={this.props.activeStartDate}
+                formatShortWeekday={this.props.formatShortWeekday}
+            />
+        );
     }
 
-    return (
-      <WeekNumbers
-        activeStartDate={this.props.activeStartDate}
-        calendarType={this.calendarType}
-        onClickWeekNumber={this.props.onClickWeekNumber}
-      />
-    );
-  }
+    renderWeekNumbers() {
+        const { showWeekNumbers } = this.props;
 
-  renderDays() {
-    const { calendarType, showWeekNumbers, ...childProps } = this.props;
+        if (!showWeekNumbers) {
+            return null;
+        }
 
-    return (
-      <Days
-        calendarType={this.calendarType}
-        {...childProps}
-      />
-    );
-  }
+        return (
+            <WeekNumbers
+                activeStartDate={this.props.activeStartDate}
+                calendarType={this.calendarType}
+                onClickWeekNumber={this.props.onClickWeekNumber}
+            />
+        );
+    }
 
-  render() {
-    const { showWeekNumbers } = this.props;
+    renderDays() {
+        const { calendarType, showWeekNumbers, ...childProps } = this.props;
 
-    const className = 'react-calendar__month-view';
+        return <Days calendarType={this.calendarType} {...childProps} />;
+    }
 
-    return (
-      <div
-        className={[
-          className,
-          showWeekNumbers ? `${className}--weekNumbers` : '',
-        ].join(' ')}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-          }}
-        >
-          {this.renderWeekNumbers()}
-          <div
-            style={{
-              flexGrow: 1,
-              width: '100%',
-            }}
-          >
-            {this.renderWeekdays()}
-            {this.renderDays()}
-          </div>
-        </div>
-      </div>
-    );
-  }
+    render() {
+        const { showWeekNumbers } = this.props;
+
+        const className = 'react-calendar__month-view';
+
+        return (
+            <div
+                className={[
+                    className,
+                    showWeekNumbers ? `${className}--weekNumbers` : ''
+                ].join(' ')}
+            >
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'flex-end'
+                    }}
+                >
+                    {this.renderWeekNumbers()}
+                    <div
+                        style={{
+                            flexGrow: 1,
+                            width: '100%'
+                        }}
+                    >
+                        {this.renderWeekdays()}
+                        {this.renderDays()}
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 MonthView.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  calendarType: isCalendarType,
-  formatShortWeekday: PropTypes.func,
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onChange: PropTypes.func,
-  onClickWeekNumber: PropTypes.func,
-  setActiveRange: PropTypes.func,
-  showNeighboringMonth: PropTypes.bool,
-  showWeekNumbers: PropTypes.bool,
-  value: isValue,
-  valueType: PropTypes.string,
+    activeStartDate: PropTypes.instanceOf(Date).isRequired,
+    calendarType: isCalendarType,
+    formatShortWeekday: PropTypes.func,
+    locale: PropTypes.string,
+    maxDate: isMaxDate,
+    minDate: isMinDate,
+    onChange: PropTypes.func,
+    onClickWeekNumber: PropTypes.func,
+    setActiveRange: PropTypes.func,
+    showNeighboringMonth: PropTypes.bool,
+    showWeekNumbers: PropTypes.bool,
+    value: isValue,
+    valueType: PropTypes.string
 };

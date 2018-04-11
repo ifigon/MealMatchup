@@ -6,29 +6,27 @@ import Months from './YearView/Months';
 import { isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
 export default class YearView extends PureComponent {
-  renderMonths() {
-    return (
-      <Months {...this.props} />
-    );
-  }
+    renderMonths() {
+        return <Months {...this.props} />;
+    }
 
-  render() {
-    return (
-      <div className="react-calendar__year-view">
-        {this.renderMonths()}
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="react-calendar__year-view">
+                {this.renderMonths()}
+            </div>
+        );
+    }
 }
 
 YearView.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  formatMonth: PropTypes.func,
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onChange: PropTypes.func,
-  setActiveRange: PropTypes.func,
-  value: isValue,
-  valueType: PropTypes.string,
+    activeStartDate: PropTypes.instanceOf(Date).isRequired,
+    formatMonth: PropTypes.func,
+    locale: PropTypes.string,
+    maxDate: isMaxDate,
+    minDate: isMinDate,
+    onChange: PropTypes.func,
+    setActiveRange: PropTypes.func,
+    value: isValue,
+    valueType: PropTypes.string
 };

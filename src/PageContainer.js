@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent} from './Enums.js';
+import { AccountType, PageContent } from './Enums.js';
 // import { DeliveryType } from './Enums.js'
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
@@ -8,7 +8,7 @@ import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
-import Calendar from './PageContent/Calendar/Calendar'
+import Calendar from './PageContent/Calendar/Calendar';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
