@@ -6,9 +6,9 @@ import DialogContent from './DialogContent';
 let values = {
     delivererGroup: 'Green Greeks',
     deliverer1: 'Blake Johnson',
-    phone1: 2063892318,
+    phone1: '206-389-2318',
     deliverer2: 'Erika Zhang',
-    phone2: 2068765432
+    phone2: '206-876-5432'
 };
 
 class Dialog extends Component {

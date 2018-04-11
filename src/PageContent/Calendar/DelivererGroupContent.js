@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AccountType } from '../../Enums';
+import { AccountType, StringFormat } from '../../Enums';
 import './Content.css';
 import volunteer from '../../icons/volunteer.svg';
 
@@ -11,8 +11,8 @@ class DelivererGroupContent extends Component {
             delivererGroup: this.props.delivererGroup,
             deliverer1: this.props.deliverer1,
             deliverer2: this.props.deliverer2,
-            phone1: this.convertPhone(this.props.phone1),
-            phone2: this.convertPhone(this.props.phone2)
+            phone1: this.props.phone1,
+            phone2: this.props.phone2
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -21,18 +21,6 @@ class DelivererGroupContent extends Component {
         this.setState({
             edit: true
         });
-    }
-    convertPhone(phone) {
-        if (phone !== undefined) {
-            let phoneString = phone.toString();
-            let formattedPhone =
-                phoneString.substr(0, 3) +
-                '-' +
-                phoneString.substr(3, 3) +
-                '-' +
-                phoneString.substr(6);
-            return formattedPhone;
-        }
     }
 
     handleChange(e) {
@@ -89,13 +77,14 @@ class DelivererGroupContent extends Component {
                                         className="content-details inline-details"
                                         defaultValue={this.state.deliverer1}
                                         name="deliverer1"
-                                        type="textyeah "
+                                        type="text "
                                     />
                                     <input
                                         className="content-details inline-details"
                                         defaultValue={this.state.phone1}
                                         name="phone1"
                                         type="tel"
+                                        pattern={StringFormat.PHONE}
                                     />
                                     <input
                                         className="content-details inline-details"
@@ -108,6 +97,7 @@ class DelivererGroupContent extends Component {
                                         defaultValue={this.state.phone2}
                                         type="tel"
                                         name="phone2"
+                                        pattern={StringFormat.PHONE}
                                     />
                                 </div>
 
