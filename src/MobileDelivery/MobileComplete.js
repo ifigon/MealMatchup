@@ -52,7 +52,6 @@ class MobileComplete extends React.Component {
                             <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
                     </div>
-                    
                     <input defaultValue="Completed" id="mobile-completed-btn"/> 
                 </div>
             </div>

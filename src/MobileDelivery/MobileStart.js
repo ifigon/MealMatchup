@@ -71,8 +71,7 @@ class MobileStart extends React.Component {
                             <p id="mobile-org">{this.props.ra.primaryContact.name}</p>
                             <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
-                    </div>
-                    
+                    </div>    
                     <input type="submit" value="Start" id="start-delivery-btn" onClick={this.handleStart.bind(this)}/> 
                 </div>
             </div>
