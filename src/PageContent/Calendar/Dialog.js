@@ -10,7 +10,7 @@ class Dialog extends Component {
                 <Header
                     eventType={this.props.delivery.eventType}
                     closeDialog={this.props.closeDialog}
-                    date={this.props.date}
+                    date={this.props.delivery.date}
                     startTime={this.props.delivery.startTime}
                     endTime={this.props.delivery.endTime}
                     futureEvent={this.props.futureEvent}
