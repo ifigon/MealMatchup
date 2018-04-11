@@ -32,7 +32,6 @@ class DescriptionContent extends Component {
             phone: e.target.phone.value,
             edit: false
         });
-        this.props.saveValues(values);
     }
 
     render() {
