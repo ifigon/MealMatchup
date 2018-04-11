@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent, DeliveryType } from './Enums.js';
+import { AccountType, PageContent} from './Enums.js';
+// import { DeliveryType } from './Enums.js'
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import EventCard from './PageContent/Calendar/EventCard/EventCard.js';
+// import EventCard from './PageContent/Calendar/EventCard/EventCard.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';

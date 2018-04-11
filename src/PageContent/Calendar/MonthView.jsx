@@ -7,6 +7,7 @@ import WeekNumbers from './MonthView/WeekNumbers';
 
 import { isCalendarType, isMaxDate, isMinDate, isValue } from './shared/propTypes';
 
+// import '../Calendar/Calendar.css'
 export default class MonthView extends PureComponent {
   get calendarType() {
     const { calendarType, locale } = this.props;

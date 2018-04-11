@@ -13,7 +13,7 @@ import { getBegin, getEnd, getValueRange } from '../Calendar/shared/dates';
 import { isCalendarType, isClassName, isMaxDate, isMinDate, isValue } from '../Calendar/shared/propTypes';
 import { between, callIfDefined, mergeFunctions } from '../Calendar/shared/utils';
 
-// import './calendar.css'
+import './Calendar.css'
 
 const allViews = ['century', 'decade', 'year', 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
