@@ -4,9 +4,9 @@ import polyfill from 'react-lifecycles-compat';
 import mergeClassNames from 'merge-class-names';
 
 import Navigation from '../Calendar/Navigation';
-import CenturyView from './CenturyView';
-import DecadeView from './DecadeView';
-import YearView from './YearView';
+// import CenturyView from './CenturyView';
+// import DecadeView from './DecadeView';
+// import YearView from './YearView';
 import MonthView from './MonthView';
 
 import { getBegin, getEnd, getValueRange } from '../Calendar/shared/dates';
@@ -15,7 +15,7 @@ import { between, callIfDefined, mergeFunctions } from '../Calendar/shared/utils
 
 import './Calendar.css'
 
-const allViews = ['century', 'decade', 'year', 'month'];
+const allViews = [ 'month'];
 const allValueTypes = [...allViews.slice(1), 'day'];
 
 const datesAreDifferent = (date1, date2) => (
@@ -321,28 +321,28 @@ export default class Calendar extends Component {
     const clickAction = this.drillDownAvailable ? this.drillDown : this.onChange;
 
     switch (view) {
-      case 'century':
-        return (
-          <CenturyView
-            onClick={mergeFunctions(clickAction, this.props.onClickDecade)}
-            {...commonProps}
-          />
-        );
-      case 'decade':
-        return (
-          <DecadeView
-            onClick={mergeFunctions(clickAction, this.props.onClickYear)}
-            {...commonProps}
-          />
-        );
-      case 'year':
-        return (
-          <YearView
-            formatMonth={this.props.formatMonth}
-            onClick={mergeFunctions(clickAction, this.props.onClickMonth)}
-            {...commonProps}
-          />
-        );
+      // case 'century':
+      //   return (
+      //     <CenturyView
+      //       onClick={mergeFunctions(clickAction, this.props.onClickDecade)}
+      //       {...commonProps}
+      //     />
+      //   );
+      // case 'decade':
+      //   return (
+      //     <DecadeView
+      //       onClick={mergeFunctions(clickAction, this.props.onClickYear)}
+      //       {...commonProps}
+      //     />
+      //   );
+      // case 'year':
+      //   return (
+      //     <YearView
+      //       formatMonth={this.props.formatMonth}
+      //       onClick={mergeFunctions(clickAction, this.props.onClickMonth)}
+      //       {...commonProps}
+      //     />
+      //   );
       case 'month':
         return (
           <MonthView

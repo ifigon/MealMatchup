@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
 
 import { tileProps } from './shared/propTypes';
+import EventCard from './EventCard/EventCard'
 
 const Tile = ({
   children,
@@ -41,6 +42,13 @@ const Tile = ({
       {children}
     </time>
     {typeof tileContent === 'function' ? tileContent({ date, view }) : tileContent}
+    
+    <EventCard
+        eventType='recurring'
+        startTime="10am"
+        endTime="12pm"
+        futureEvent={true}
+    />
   </button>
 );
 

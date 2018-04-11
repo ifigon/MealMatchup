@@ -11,7 +11,7 @@ div.react-calendar__month-view__days > button {
     /* display: inline-flex; */
     position:relative;
     align-items: flex-start;
-    appearance: none;
+    /* appearance: none; */
 }
 
 .button-date-text {
