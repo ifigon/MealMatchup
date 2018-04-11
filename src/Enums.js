@@ -111,6 +111,7 @@ exports.DeliveryType = {
 exports.DeliveryStatus = {
     SCHEDULED: 'scheduled',
     IP: 'in_progress',
+    PICKED_UP: 'picked_up',
     COMPLETED: 'completed'
 };
 

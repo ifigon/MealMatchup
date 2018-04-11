@@ -15,92 +15,30 @@ class MobileController extends React.Component {
             umbrellaId: '',
             deliveryId: '',
             deliveryDbRefPath: '',
-            
             deliveryObj: {
-                date: '2018-02-28',
-                startTime: '14:00',
-                endTime: '17:00',
-                isEmergency: false,
-                donatingAgency: {
-                    agency: '-K9HdKlCLjjk_ka82K0s',  // autogen-key of a donating-agency
-                    primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1',  // uid-key of a donating-agency-member
+                date: '',
+                startTime: '',
+                endTime: '',
+                isEmergency: null,
+                donatingAgency: {},
+                receivingAgency: {},
+                delivererGroup: { // delivererGroup is null if isEmergency=true
+                    group: '', 
+                    deliverers: [],
                 },
-                receivingAgency: {
-                    agency: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of receiving-agency
-                    primaryContact: {
-                        name: 'Bob',
-                        email: 'bob@uniongospel.org',
-                        phone: '098-765-4321'
-                    }
-                },
-                // delivererGroup is null if isEmergency=true
-                delivererGroup: {
-                    // TODO: Get group name with UID. Replaced UID here with name for frontend
-                    group: 'Green Greeks',  // uid-key of deliverer-group
-                    deliverers: [
-                        {
-                            name: 'Alice',
-                            email: 'alice@uw.edu',
-                            phone: '123-789-4560'
-                        },
-                        {
-                            name: 'Chris',
-                            email: 'chris@uw.edu',
-                            phone: '456-123-0789'
-                        }
-                    ]
-                },
-                description: {
-                    foodItems: [
-                        {
-                            food: 'Baked beans',
-                            quantity: 15,
-                            unit: 'lb'  // Enums.FoodUnit
-                        },
-                        {
-                            food: 'Bread',
-                            quantity: 4,
-                            unit: 'loaves'  // Enums.FoodUnit
-                        }
-                    ],
-                    updatedBy: 'dhA03LwTp3cibXVUcb3nQqO34wj1'  // uid-key of a donating-agency-member
-                },
-                notes: 'Enter through the back door.'
+                description: {},
+                notes: ''
             },
             receivingAgency :{
-                agency: 'Seattle Union Gospel Shelter',
-                primaryContact: {
-                    name: 'Billy Jones',
-                    position: 'Manager',
-                    email: 'billy@jones.com',
-                    phone: '324-321-7665'
-                },
-                notes: 'Only enter if there is a wizard at the front door.',
-                address: {
-                    street1: '318 2nd Ave Extension South',
-                    street2: '',
-                    city: 'Seattle',
-                    state: 'WA',
-                    zipcode: 98104,
-                    officeNo: ''
-                }
+                agency: '',
+                primaryContact: {},
+                notes: '',
+                address: {},
             },
             donatingAgency :{
-                agency: 'Local Point',
-                primaryContact: {
-                    name: 'Amanda Hernandez',
-                    position: 'Head Cook',
-                    email: 'amanda@lp.com',
-                    phone: '205-385-3312'
-                },
-                address: {
-                    street1: '1245 NE Campus Pkwy',
-                    street2: '',
-                    city: 'Seattle',
-                    state: 'WA',
-                    zipcode: 98105,
-                    officeNo: ''
-                }
+                agency: '',
+                primaryContact: {},
+                address: {},
             },
 
             // TODO: add these fields to deliveryObject
@@ -134,14 +72,98 @@ class MobileController extends React.Component {
         db.ref(deliveryDbRefPath).on('value', (snapshot) => {
             let deliveryData = snapshot.val();
             console.log(deliveryData);
-
-
+            this.aggrDelivery(deliveryData);
         });
     }
 
     componentWillUnmount() {
         //detach listener
         db.ref(this.state.deliveryDbRefPath).off();
+    }
+
+    async aggrDelivery(deliveryData) {
+        this.fetchDa(deliveryData.donatingAgency);
+        this.fetchRa(deliveryData.receivingAgency);
+        
+        // get delivererGroup name
+        let dgObj = await db.ref(`accounts/${deliveryData.delivererGroup.group}`).once('value');
+        deliveryData.delivererGroup.group = dgObj.name;
+        
+        this.setState({ deliveryObj: this.aggrDeliveryObj(deliveryData)});
+    }
+    
+    aggrDeliveryObj(rawDelivery) {
+        let deliveryObj = ( // pick entries from rawDelivery
+            ({ description, delivererGroup, notes, isEmergency }) => ({ description, delivererGroup, notes, isEmergency })
+        )(rawDelivery);
+        let startTimeObj = new Date(rawDelivery.startTimestamp * 1000);
+        let endTimeObj = new Date(rawDelivery.endTimestamp * 1000);
+
+        // 2018-02-17
+        deliveryObj.date = `${ startTimeObj.getFullYear() }-${ this.addZero(startTimeObj.getMonth()) }-${ this.addZero(startTimeObj.getDate()) }`;
+        // 9:00
+        deliveryObj.startTime = `${ this.addZero(startTimeObj.getHours()) }:${ this.addZero(startTimeObj.getMinutes()) }`;
+        // 17:00
+        deliveryObj.endTime = `${ this.addZero(endTimeObj.getHours()) }:${ this.addZero(endTimeObj.getMinutes()) }`;
+        return deliveryObj;
+    }
+
+    addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+
+    async fetchDa(rawDa) {
+        let daPromise = new Promise( async (resolve, reject) => {
+            let daSnapshot = await db.ref(`donating_agencies/${rawDa.agency}`).once('value');
+            resolve(daSnapshot.val())
+        });
+
+        let daMemberPromise = new Promise( async (resolve, reject) => {
+            let daMemberSnapshot = await db.ref(`accounts/${rawDa.primaryContact}`).once('value');
+            resolve(daMemberSnapshot.val())
+        });
+
+        let daData = await Promise.all([daPromise, daMemberPromise])
+        this.aggrDa(daData[0], daData[1]);
+    }
+
+    aggrDa(daData, daMemberData) {
+        let pickedPrimaryContact = (
+            ({ position, name, email, phone }) => ({ position, name, email, phone })
+        )(daMemberData);
+        
+        let daObj = {
+            primaryContact: pickedPrimaryContact,
+            agency: daData.name,
+            address: this.aggrAddress(daData.address),
+        };
+        this.setState({ donatingAgency: daObj});
+    }
+
+    async fetchRa(rawRa) {
+        let raSnapshot = await db.ref(`accounts/${rawRa.agency}`).once('value');
+        this.aggrRa(raSnapshot.val(), rawRa.primaryContact);
+    }
+
+    aggrRa(raMeta, raPrimaryContact) {
+        let raObj = {
+            primaryContact: raPrimaryContact,
+            agency: raMeta.name,
+            notes: raMeta.deliveryNotes,
+            address: this.aggrAddress(raMeta.address),
+        };
+        this.setState({ receivingAgency: raObj});
+    }
+
+    aggrAddress(rawAddress) {
+        let address = rawAddress;
+        // street2 and officeNo fallback
+        address.street2 = rawAddress.street2 ? rawAddress.street2 : '';
+        address.officeNo = rawAddress.officeNumber ? rawAddress.officeNumber : '';
+        return address;
     }
 
     showStart(){

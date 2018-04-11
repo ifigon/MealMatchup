@@ -265,7 +265,8 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 			primaryContact: {
 				name: "Bob",
 				email: "bob@uniongospel.org",
-				phone: "098-765-4321"
+				phone: "098-765-4321",
+				position: "Manager"
 			}
 		},
 		// delivererGroup is null if isEmergency=true
