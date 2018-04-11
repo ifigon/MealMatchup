@@ -39,7 +39,16 @@ class DescriptionContent extends Component {
             <div className="wrapper">
                 <img className="content-icon" src={phone} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
-                    <h1 className="section-header">Donation Description</h1>
+                    {this.props.accountType === AccountType.RECEIVING_AGENCY ? (
+                        <h1 className="section-header">
+                            Primary Contact for Delivery
+                        </h1>
+                    ) : this.props.accountType ===
+                    AccountType.DONATING_AGENCY_MEMBER ? (
+                            <h1 className="section-header">
+                            Primary Contact Pick Up
+                            </h1>
+                        ) : null}
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
                             <p className="content-details contact-content">
