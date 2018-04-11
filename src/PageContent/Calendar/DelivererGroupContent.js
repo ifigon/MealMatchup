@@ -9,12 +9,12 @@ class DelivererGroupContent extends Component {
         this.state = {
             edit: false,
             delivererGroup: this.props.delivererGroup,
-            deliverer1: this.props.deliverer1,
-            deliverer2: this.props.deliverer2,
-            phone1: this.props.phone1,
-            phone2: this.props.phone2,
-            email1: this.props.email1,
-            email2: this.props.email2
+            deliverer1: this.props.delivery.delivererGroup.deliverers[0].name,
+            deliverer2: this.props.delivery.delivererGroup.deliverers[1].name,
+            phone1: this.props.delivery.delivererGroup.deliverers[0].phone,
+            phone2: this.props.delivery.delivererGroup.deliverers[1].phone,
+            email1: this.props.delivery.delivererGroup.deliverers[0].email,
+            email2: this.props.delivery.delivererGroup.deliverers[1].email
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,14 +27,7 @@ class DelivererGroupContent extends Component {
 
     handleChange(e) {
         e.preventDefault();
-        // pass these in from firebase
-        let values = {
-            delivererGroup: 'Green Greeks',
-            deliverer1: e.target.deliverer1.value,
-            phone1: e.target.phone1.value,
-            deliverer2: e.target.deliverer2.value,
-            phone2: e.target.phone2.value
-        };
+
         this.setState({
             edit: false,
             deliverer1: e.target.deliverer1.value,
