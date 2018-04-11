@@ -57,7 +57,9 @@ class PageContainer extends Component {
                 }.bind(this)
             );
         }
+    }
 
+    componentWillMount() {
         // TODO move this dummy data mocking to calendar
         let delivery = {
             eventType: DeliveryType.RECURRING,
