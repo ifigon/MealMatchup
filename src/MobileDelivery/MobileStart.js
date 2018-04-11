@@ -1,6 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import './Mobile.css';
+import { DeliveryStatus } from '../Enums';
+
+import firebase from '../FirebaseConfig';
+const db = firebase.database();
 
 class MobileStart extends React.Component {
     constructor(props) {
@@ -9,10 +13,16 @@ class MobileStart extends React.Component {
         this.state = {
             day: moment(date).format('dddd'),
             date: moment(date).format('l'),
-            deliverers: this.props.deliveryObj.delivererGroup.deliverers,
-            receivingAgency: this.props.deliveryObj.receivingAgency.agency
+            deliverers: this.props.da.agency,
+            receivingAgency: this.props.ra.agency,
         };
     }
+
+    handleStart(e) {
+        e.preventDefault();
+        db.ref(`${this.props.dbRef}`).update({ status: DeliveryStatus.IP});
+    }
+
     render() { 
         return (
             <div className="mobile-delivery">
@@ -63,7 +73,7 @@ class MobileStart extends React.Component {
                         </div>
                     </div>
                     
-                    <input type="submit" value="Start" id="start-delivery-btn" onClick={this.props.showStart}/> 
+                    <input type="submit" value="Start" id="start-delivery-btn" onClick={this.handleStart.bind(this)}/> 
                 </div>
             </div>
         );

@@ -53,7 +53,7 @@ class MobileComplete extends React.Component {
                         </div>
                     </div>
                     
-                    <input value="Completed" id="mobile-completed-btn"/> 
+                    <input defaultValue="Completed" id="mobile-completed-btn"/> 
                 </div>
             </div>
         );

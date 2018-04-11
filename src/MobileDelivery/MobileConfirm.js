@@ -1,20 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 import './Mobile.css';
+import { DeliveryStatus } from '../Enums';
+
+import firebase from '../FirebaseConfig';
+const db = firebase.database();
 
 class MobileConfirm extends React.Component {
-    onSubmit(e){
+    onDone(e){
         e.preventDefault();
-        var data = {
-            raSignature: e.target.signature.value,
-            raPrintName: e.target.print.value,
-            timeCompleted: moment().format()
-        };
-        this.props.nextStep();
-        this.props.saveValues(data);
-    }
-
-    componentDidMount(){
+        db.ref(`${this.props.dbRef}`).update({status: DeliveryStatus.COMPLETED});
     }
 
     render() {
@@ -23,7 +18,7 @@ class MobileConfirm extends React.Component {
                 <div className="mobile-confirm-card">
                     <div className="mobile-card-line"></div>
                     <p className="ms-header">Completion Summary</p>
-                    <p id="confirm-time">{moment(this.props.currentDelivery.timeDelivered).calendar()}</p>
+                    <p id="confirm-time">{moment.unix(this.props.deliveredInfo.timestamp).calendar()}</p>
                     <div className="ms-confirm">
                         <div className="ms-confirm-content" id="ms-confirm-da">
                             <p className="ms-confirm-header">Donating Agency</p>
@@ -31,8 +26,8 @@ class MobileConfirm extends React.Component {
                                 <a href={'tel:' + this.props.da.primaryContact.phone}>{this.props.da.primaryContact.phone}</a>
                             </p>
                             <p className="ms-confirm-details">Signed by: {this.props.da.primaryContact.name}</p>
-                            <p className="ms-confirm-details">Timestamp: {moment(this.props.currentDelivery.timePickedUp, 'HH:mm').format('LT')}</p>
-                            <p className="ms-confirm-details">Freezer Temperature: {this.props.currentDelivery.temp}&deg;F</p>
+                            <p className="ms-confirm-details">Timestamp: {moment.unix(this.props.deliveryObj.pickedUpInfo.timestamp).format('LT')}</p>
+                            <p className="ms-confirm-details">Freezer Temperature: {this.props.deliveryObj.pickedUpInfo.temperature}&deg;F</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-ra">
                             <p className="ms-confirm-header">Receiving Agency</p>
@@ -40,7 +35,7 @@ class MobileConfirm extends React.Component {
                                 <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                             </p>
                             <p className="ms-confirm-details">Signed by: {this.props.ra.primaryContact.name}</p>
-                            <p className="ms-confirm-details">Timestamp: {moment(this.props.currentDelivery.timeCompleted, 'HH:mm').format('LT')}</p>
+                            <p className="ms-confirm-details">Timestamp: {moment.unix(this.props.deliveredInfo.timestamp).format('LT')}</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-dg">
                             <p className="ms-confirm-header">Deliverers</p>
@@ -69,7 +64,7 @@ class MobileConfirm extends React.Component {
                                 })
                             }
                         </div>
-                        <input type="submit" value="Done" id="ms-confirm-btn" onClick={this.props.nextStep}/> 
+                        <input defaultValue="Done" id="ms-confirm-btn" onClick={this.onDone.bind(this)}/> 
                     </div>
                 </div>
             </div>

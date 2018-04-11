@@ -5,6 +5,9 @@ import moment from 'moment';
 import './Mobile.css';
 import MobileConfirm from './MobileConfirm';
 
+import firebase from '../FirebaseConfig';
+const db = firebase.database();
+
 class MobileDelivery extends React.Component {
     constructor(props){
         super(props);
@@ -12,20 +15,22 @@ class MobileDelivery extends React.Component {
         this.state  = {
             lat: '', 
             long: '',
-            fullAddress: ''
+            fullAddress: '',
+            submitPressed: false
         };
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     onSubmit(e){
         e.preventDefault();
-        var data = {
-            raSignature: e.target.signature.value,
-            raPrintName: e.target.print.value,
-            timeCompleted: moment().format(),
-            deliveryCompleted: true
+        var deliveredInfo = {
+            signature: e.target.signature.value,
+            printtName: e.target.print.value,
+            timestamp: moment().unix(),
         };
-        this.props.saveValues(data);
+        // this.props.saveValues(data);
+        db.ref(`${this.props.dbRef}`).update({deliveredInfo: deliveredInfo});
+        this.setState({submitPressed:true, deliveredInfo: deliveredInfo});
     }
 
     componentDidMount(){
@@ -53,7 +58,7 @@ class MobileDelivery extends React.Component {
                 <div className="mobile-card">
                     <div className="mobile-card-line"></div>
                     <p className="ms-header">{this.props.ra.agency}</p>
-                    <p className="ms-pickup-time">Deliver by {moment(this.props.currentDelivery.timePickedUp, 'HH:mm').add(3, 'hours').format('LT')}
+                    <p className="ms-pickup-time">Deliver by {moment.unix(this.props.deliveryObj.pickedUpInfo.timestamp).add(3, 'hours').format('LT')}
                     </p>
                     <Map marginTop="10px" marginLeft="20px" height="90px" width="90%" address={this.props.ra.address}/>
                     {/* Prompts user to open maps on their phone */}
@@ -82,12 +87,12 @@ class MobileDelivery extends React.Component {
                         <input type="submit" value="Next" id="ms-next-btn"/> 
                     </form>
                 </div>
-                {this.props.currentDelivery.deliveryCompleted &&
+                {this.state.submitPressed &&
                     <MobileConfirm 
-                        nextStep={this.props.nextStep} 
-                        currentDelivery={this.props.currentDelivery}
+                        deliveredInfo={this.state.deliveredInfo}
                         da={this.props.da}
                         ra={this.props.ra}
+                        dbRef={this.props.dbRef}
                         deliveryObj={this.props.deliveryObj}/>
                 }
             </div>

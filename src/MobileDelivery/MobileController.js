@@ -4,8 +4,10 @@ import MobileStart from './MobileStart';
 import MobilePickup from './MobilePickup';
 import MobileDelivery from './MobileDelivery';
 import MobileComplete from './MobileComplete';
+import { DeliveryStatus } from '../Enums';
+import moment from 'moment';
 
-import firebase from '../FirebaseConfig.js';
+import firebase from '../FirebaseConfig';
 const db = firebase.database();
 
 class MobileController extends React.Component { 
@@ -40,93 +42,67 @@ class MobileController extends React.Component {
                 primaryContact: {},
                 address: {},
             },
-
-            // TODO: add these fields to deliveryObject
-            // TODO: save signatures as image
-            currentDelivery: {
-                temp: '',
-                daSignature: '',
-                raSignature: '',
-                raPrintName: '',
-                timePickedUp: '',
-                timeCompleted: '',
-                deliveryCompleted: false
-            },
-            step: 0
         };
-        this.showStep = this.showStep.bind(this);
-        this.showStart = this.showStart.bind(this);
-        this.nextStep = this.nextStep.bind(this);
-        this.saveValues = this.saveValues.bind(this);
+        this.renderView = this.renderView.bind(this);
     }
 
     componentDidMount() {
-        let { uId: umbrellaId, dId: deliveryId } = this.props.match.params;
-        let deliveryDbRefPath = `deliveries/${umbrellaId}/${deliveryId}`;
-        this.setState({ 
-            umbrellaId: umbrellaId, 
-            deliveryId: deliveryId,
-            deliveryDbRefPath: deliveryDbRefPath, 
-        });
+        const { uId: umbrellaId, dId: deliveryId} = this.props.match.params;
+        const deliveryDbRefPath = `deliveries/${umbrellaId}/${deliveryId}`;
+        this.setState({ deliveryDbRefPath: deliveryDbRefPath });
 
         db.ref(deliveryDbRefPath).on('value', (snapshot) => {
-            let deliveryData = snapshot.val();
-            console.log(deliveryData);
+            const deliveryData = snapshot.val();
             this.aggrDelivery(deliveryData);
         });
     }
 
     componentWillUnmount() {
-        //detach listener
-        db.ref(this.state.deliveryDbRefPath).off();
+        db.ref(this.state.deliveryDbRefPath).off();  // detach listener
     }
 
     async aggrDelivery(deliveryData) {
         this.fetchDa(deliveryData.donatingAgency);
         this.fetchRa(deliveryData.receivingAgency);
-        
-        // get delivererGroup name
-        let dgObj = await db.ref(`accounts/${deliveryData.delivererGroup.group}`).once('value');
-        deliveryData.delivererGroup.group = dgObj.name;
-        
-        this.setState({ deliveryObj: this.aggrDeliveryObj(deliveryData)});
+
+        if (deliveryData.delivererGroup) { // Non-Emergency Pick Up: deliveryData.delivererGroup != null
+            // get delivererGroup name
+            let dgObj = await db.ref(`accounts/${deliveryData.delivererGroup.group}`).once('value');
+            deliveryData.delivererGroup.group = dgObj.val().name;           
+        } else { // Emergency Pick Up: deliveryData.delivererGroup == null
+            deliveryData.delivererGroup = { group: '', deliverers: []};
+        }
+
+        this.setState({ deliveryObj: this.getDeliveryObj(deliveryData)});
     }
     
-    aggrDeliveryObj(rawDelivery) {
+    getDeliveryObj(rawDelivery) {
         let deliveryObj = ( // pick entries from rawDelivery
-            ({ description, delivererGroup, notes, isEmergency }) => ({ description, delivererGroup, notes, isEmergency })
+            ({ description, delivererGroup, notes, isEmergency, status, pickedUpInfo, deliveredInfo }) => 
+                ({ description, delivererGroup, notes, isEmergency, status, pickedUpInfo, deliveredInfo })
         )(rawDelivery);
-        let startTimeObj = new Date(rawDelivery.startTimestamp * 1000);
-        let endTimeObj = new Date(rawDelivery.endTimestamp * 1000);
 
-        // 2018-02-17
-        deliveryObj.date = `${ startTimeObj.getFullYear() }-${ this.addZero(startTimeObj.getMonth()) }-${ this.addZero(startTimeObj.getDate()) }`;
-        // 9:00
-        deliveryObj.startTime = `${ this.addZero(startTimeObj.getHours()) }:${ this.addZero(startTimeObj.getMinutes()) }`;
-        // 17:00
-        deliveryObj.endTime = `${ this.addZero(endTimeObj.getHours()) }:${ this.addZero(endTimeObj.getMinutes()) }`;
+        let startTimeObj = moment.unix(rawDelivery.startTimestamp);
+        let endTimeObj = moment.unix(rawDelivery.endTimestamp);
+
+        deliveryObj.date = startTimeObj.format('YYYY-MM-DD');
+        deliveryObj.startTime = startTimeObj.format('HH:mm');
+        deliveryObj.endTime = endTimeObj.format('HH:mm');
         return deliveryObj;
-    }
-
-    addZero(i) {
-        if (i < 10) {
-            i = "0" + i;
-        }
-        return i;
     }
 
     async fetchDa(rawDa) {
         let daPromise = new Promise( async (resolve, reject) => {
             let daSnapshot = await db.ref(`donating_agencies/${rawDa.agency}`).once('value');
-            resolve(daSnapshot.val())
+            resolve(daSnapshot.val());
         });
 
         let daMemberPromise = new Promise( async (resolve, reject) => {
             let daMemberSnapshot = await db.ref(`accounts/${rawDa.primaryContact}`).once('value');
-            resolve(daMemberSnapshot.val())
+            resolve(daMemberSnapshot.val());
         });
 
-        let daData = await Promise.all([daPromise, daMemberPromise])
+        let daData = await Promise.all([daPromise, daMemberPromise]);
         this.aggrDa(daData[0], daData[1]);
     }
 
@@ -166,73 +142,50 @@ class MobileController extends React.Component {
         return address;
     }
 
-    showStart(){
-        this.setState({
-            step: 1
-        });
-    }
-
-    nextStep () {
-        this.setState((prevState) => {
-            return { step: prevState.step + 1 };
-        });
-    }
-
-    // TODO: Save completed delivery
-    saveValues(fields) {
-        this.setState({
-            currentDelivery: Object.assign({}, this.state.currentDelivery, fields)
-        });
-    }
-
-    showStep() {
-        switch (this.state.step) {
-        default:
+    renderView() {
+        switch (this.state.deliveryObj.status) {
+        case DeliveryStatus.SCHEDULED:
             return <MobileStart 
                 deliveryObj={this.state.deliveryObj}
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency}
-                showStart={this.showStart}/>;
-        case 1:
+                dbRef={this.state.deliveryDbRefPath}/>;
+        case DeliveryStatus.IP:
             return <MobilePickup 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
-                nextStep={this.nextStep}
-                saveValues={this.saveValues}
+                dbRef={this.state.deliveryDbRefPath}
             />;
-        case 2:
+        case DeliveryStatus.PICKED_UP:
             return <MobileDelivery 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
-                nextStep={this.nextStep}
-                currentDelivery={this.state.currentDelivery}
-                saveValues={this.saveValues}
+                dbRef={this.state.deliveryDbRefPath}
             />;
-        case 3: 
+        case DeliveryStatus.COMPLETED: 
             return <MobileComplete 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
-                currentDelivery={this.state.currentDelivery}
             />;
+        default:
+            return null;
         }
     }
 
     render() {
-        return (
-            <div className="mobile-wrapper">
-                {this.state.deliveryObj.deliveryCompleted ?
-                    <MobileComplete 
-                        deliveryObj={this.state.deliveryObj} 
-                        da={this.state.donatingAgency} 
-                        ra={this.state.receivingAgency}/>
-                    :
-                    this.showStep()
-                }
-            </div>
-        );
+        if (this.state.donatingAgency.agency && 
+            this.state.receivingAgency.agency && 
+            this.state.deliveryObj.delivererGroup) { // return view if all data is back
+            return (
+                <div className="mobile-wrapper">
+                    { this.renderView() } 
+                </div>
+            );
+        }
+        return null;
     }
 }
 

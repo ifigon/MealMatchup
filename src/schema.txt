@@ -319,4 +319,10 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 		}
 	}
 
+-----------------------------------------------------
+Mobile Delivery URL:
+	'/mobile/delivery/{uId}/{dId}'
+	
+	// uId: umbrella_id
+	// dId: deliveryID
 

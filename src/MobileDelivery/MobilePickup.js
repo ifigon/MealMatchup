@@ -3,6 +3,10 @@ import Map from '../Map/Map';
 import Geocode from '../react-geocode';
 import moment from 'moment';
 import './Mobile.css';
+import { DeliveryStatus } from '../Enums';
+
+import firebase from '../FirebaseConfig';
+const db = firebase.database();
 
 class MobilePickup extends React.Component {
     constructor(props){
@@ -18,13 +22,12 @@ class MobilePickup extends React.Component {
 
     onSubmit(e){
         e.preventDefault();
-        var data = {
-            temp: e.target.temp.value,
-            daSignature: e.target.signature.value,
-            timePickedUp: moment().format()
+        var pickedUpInfo = {
+            temperature: e.target.temp.value,
+            signature: e.target.signature.value,
+            timestamp: moment().unix(),
         };
-        this.props.nextStep();
-        this.props.saveValues(data);
+        db.ref(`${this.props.dbRef}`).update({ status: DeliveryStatus.PICKED_UP, pickedUpInfo: pickedUpInfo});
     }
 
     componentDidMount(){
