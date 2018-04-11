@@ -57,6 +57,17 @@ class PageContainer extends Component {
                 }.bind(this)
             );
         }
+
+        // TODO move this dummy data mocking to calendar
+        let delivery = {
+            eventType: DeliveryType.RECURRING,
+            date: '11/14/2017',
+            startTime: '10am',
+            endTime: '12pm'
+        };
+        this.setState({
+            delivery: delivery
+        });
     }
 
     navBarHandler(e) {
@@ -83,11 +94,8 @@ class PageContainer extends Component {
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
-                                eventType={DeliveryType.RECURRING}
                                 accountType={this.props.account.accountType}
-                                date="11/14/2017"
-                                startTime="10am"
-                                endTime="12pm"
+                                delivery={this.state.delivery}
                                 futureEvent={false}
                             />
                         ) : null}
