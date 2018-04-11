@@ -42,7 +42,6 @@ class EditingAccountManager extends Component {
     }
 
     handleSubmit(e) {
-        console.log(e.target.emailNotif.checked);
         e.preventDefault();
         let acc = {
             name: e.target.name.value,
