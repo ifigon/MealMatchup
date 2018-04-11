@@ -101,9 +101,9 @@ class PageContainer extends Component {
                         ) : null}
                         <div onClick={this.openDialog}>
                             <EventCard
-                                eventType={DeliveryType.RECURRING}
-                                startTime="10am"
-                                endTime="12pm"
+                                eventType={this.state.delivery.eventType}
+                                startTime={this.state.delivery.startTime}
+                                endTime={this.state.delivery.endTime}
                                 futureEvent={false}
                             />
                         </div>
