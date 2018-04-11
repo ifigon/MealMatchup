@@ -9,6 +9,7 @@ const db = firebase.database();
 class MobileConfirm extends React.Component {
     onDone(e){
         e.preventDefault();
+        // write status change to db
         db.ref(`${this.props.dbRef}`).update({status: DeliveryStatus.COMPLETED});
     }
 

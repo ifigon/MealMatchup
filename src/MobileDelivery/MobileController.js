@@ -51,7 +51,7 @@ class MobileController extends React.Component {
         const deliveryDbRefPath = `deliveries/${umbrellaId}/${deliveryId}`;
         this.setState({ deliveryDbRefPath: deliveryDbRefPath });
 
-        db.ref(deliveryDbRefPath).on('value', (snapshot) => {
+        db.ref(deliveryDbRefPath).on('value', (snapshot) => {  // listen data onchange
             const deliveryData = snapshot.val();
             this.aggrDelivery(deliveryData);
         });

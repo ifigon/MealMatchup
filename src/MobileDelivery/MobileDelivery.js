@@ -28,7 +28,7 @@ class MobileDelivery extends React.Component {
             printtName: e.target.print.value,
             timestamp: moment().unix(),
         };
-        // this.props.saveValues(data);
+        // write deliveredInfo to db
         db.ref(`${this.props.dbRef}`).update({deliveredInfo: deliveredInfo});
         this.setState({submitPressed:true, deliveredInfo: deliveredInfo});
     }

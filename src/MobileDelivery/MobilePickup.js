@@ -27,6 +27,7 @@ class MobilePickup extends React.Component {
             signature: e.target.signature.value,
             timestamp: moment().unix(),
         };
+        // write pickedUpInfo and status change to db
         db.ref(`${this.props.dbRef}`).update({ status: DeliveryStatus.PICKED_UP, pickedUpInfo: pickedUpInfo});
     }
 
