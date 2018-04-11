@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import DirectoryCard from './DirectoryCard.js';
-import DirectoryFilter from './DirectoryFilter.js';
 import firebase from '../../FirebaseConfig.js';
 import {AccountType, DaysOfWeek} from '../../Enums.js';
 import './Directory.css';
 const db = firebase.database();
+
+// import DirectoryFilter from './DirectoryFilter.js'; // TODO: DirectoryFilter Implementation
 
 // @leon 04/02/2018: No logo data found in database, temporarily use this placeholder
 const logoURL = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
@@ -238,7 +239,8 @@ class DirectoryPage extends Component {
                 {/* TODO: For now, I'll keep the filter component separate
                             but I think I will move it to the Directory Page so that it will be easier
                             to grab the filter query and use it to display the directory cards below */}
-                <DirectoryFilter />
+                {/* <DirectoryFilter /> */}
+                <div style={{'height': '110px'}}></div> {/* add DirectoryFilter placeholder /> */}
                 { orgListView }                 
             </div>
         );
