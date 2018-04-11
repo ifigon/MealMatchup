@@ -28,9 +28,6 @@ class ConfirmationCard extends Component {
                         <h5>Recurring Pickup</h5>
                         <h6>{this.state.date} {this.state.from} - {this.state.to}</h6>
                     </div>
-                    <div className="close-container">
-                        <i className="fas fa-times close-card" onClick={this.props.handleCloseClick} />
-                    </div>
                 </div>
 
                 <div className="details-content">
@@ -39,15 +36,15 @@ class ConfirmationCard extends Component {
                     <div className="delivery-details">
                         <h5>Student Deliverers</h5>
                         <h4>{this.state.studentGroup}</h4>
-                        <h6 className="det">{this.props.s1name} ({this.props.s1phone})</h6>
-                        <h6 className="det">{this.props.s2name} ({this.props.s2phone})</h6>
+                        <h6 className="det">{this.props.deliverer1.name} ({this.props.deliverer1.phone})</h6>
+                        <h6 className="det">{this.props.deliverer2.name} ({this.props.deliverer2.phone})</h6>
                     </div>
                 </div>
                 <div className="details-content">
                     <div className="icon-content">
                     </div>
                     <div className="delivery-details">
-                        <h5>Donor</h5>
+                        <h5>Dining Hall</h5>
                         <h4>{this.state.donatingAgency.agency}</h4>
                         <h6 className="det">{this.state.donatingAgency.address}</h6>
                         <h6 className="det">{this.state.donatingAgency.primaryContact.name} ({this.state.donatingAgency.primaryContact.phone})</h6>
@@ -69,25 +66,21 @@ class ConfirmationCard extends Component {
                         <h5>Donation Description</h5>
                         {
                             this.state.foodItems.map((foodItem, index) => {
-                                return <h4 key={index}>{foodItem.food} {foodItem.quantity}{foodItem.unit}</h4>;
+                                return <h4 key={index}>{foodItem.food} {foodItem.quantity} {foodItem.unit}</h4>;
                             })
                         }
                     </div>
                 </div>
                 <div className="details-content">
                     <div className="edit-button">
-                        <button type="button" className="form-button confirm-button" onClick={this.handleSave.bind(this)}>Save</button>
+                        <button type="button" className="form-button confirm-button confirm-button-confirmation" onClick={this.props.handleCloseClick.bind(this)}>Edit</button>
+                        <button type="button" className="form-button confirm-button confirm-button-confirmation" onClick={this.props.handleCancelClick.bind(this)}>OK</button>
                     </div>
                 </div>
 
             </div>
         );
 
-    }
-
-    handleSave() {
-        // Backend TODO: Write values to DB
-        this.props.handleSave();
     }
 
 }

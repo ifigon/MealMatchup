@@ -5,6 +5,11 @@
     padding: 12px;
 }
 
+.assign-volunteers-container {
+    margin-top: 120px; 
+    margin-left: 250px;
+}
+
 .content-container {
     margin-left: 42px;
 }
@@ -118,12 +123,16 @@
 .confirm-button {
     color: #5DC0F9;
     border: 1px solid #5DC0F9;
-    width: 170px;
+    width: 180px;
 }
 
 .confirm-button-assign {
     background-color: #F77676;
     border-radius: 1px solid #F77676;
     color: white;
-    width: 170px;
+    width: 180px;
+}
+
+.confirm-button-confirmation {
+    width: 100px;
 }

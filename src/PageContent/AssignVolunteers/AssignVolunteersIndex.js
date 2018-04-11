@@ -4,13 +4,6 @@ import AssignOption from './AssignOption';
 
 class AssignVolunteersIndex extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            deliveries: this.props.deliveries
-        };
-    }
-
     render() {
 
         return (
@@ -20,7 +13,7 @@ class AssignVolunteersIndex extends Component {
     }
 
     renderElements() {
-        if(this.state.deliveries.length === 0) {
+        if(this.props.deliveries.length === 0) {
             return <h5>No deliveries scheduled</h5>;
         }
         else {
