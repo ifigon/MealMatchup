@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const enums = require('../../Enums.js');
 
 /*
@@ -111,17 +111,41 @@ function getRASnapPromise(accountsRef, raId) {
 
 // Check if the given RA is available for the pickup request
 function isAvailable(ra, request) {
-    var reqDay = moment(request.startTimestamp).day();
-    // moment queries compare all units, we only care about time
-    var timeFormat = 'HH:mm';
-    var reqStart = moment(moment(request.startTimestamp).format(timeFormat), timeFormat);
-    var reqEnd = moment(moment(request.endTimestamp).format(timeFormat), timeFormat);
+    // get request start/end time in request's original timezone
+    // Eg: Thu 3/1/2018 21:00 (REQ) - Thu 5/3/2018 23:00 (REQ)
+    var reqStartOriginal = moment.tz(request.startTimestamp, request.timezone);
+    var reqEndOriginal = moment.tz(request.endTimestamp, request.timezone);
+    console.info('[isAvailable] Req(' + request.timezone + '): ' +
+        reqStartOriginal.format() + ' - ' + reqEndOriginal.format());
+
+    // get the weekday of request in RA's timezone
+    // Eg: RA(ra_timezone) = REQ(req_timezone) + 5hrs
+    //     "Thu 3/1/2018 21:00 (REQ)" = "Fri 3/2/2018 02:00 (RA)"
+    var reqInRA = moment.tz(request.startTimestamp, ra.timezone);
+    var raDay = ra.availabilities[reqInRA.day()];
+    console.info('[isAvailable] Req in RA(' + ra.timezone + '): ' + reqInRA.format());
 
     // raDay could be null if no available slots for that day
-    var raDay = ra.availabilities[reqDay];
     if (raDay) {
-        var raStart = moment(moment(raDay.startTimestamp).format(timeFormat), timeFormat);
-        var raEnd = moment(moment(raDay.endTimestamp).format(timeFormat), timeFormat);
+        // get RA's availibility time in req_timezone
+        // Eg: "Fri 08:00 to 14:00 (RA)" => "Fri 03:00 to 09:00 (REQ)"
+        var raStartInReq = moment.tz(raDay.startTimestamp, request.timezone);
+        var raEndInReq = moment.tz(raDay.endTimestamp, request.timezone);
+
+        // At this point, we want to compare:
+        //    Request: Thu 21:00 - 23:00 (REQ)
+        //    RA:      Fri 03:00 - 09:00 (REQ)
+        // create new moment object with only weekday and time info so that
+        // all the other units (year, month, etc) match up.
+        var timeFormat = 'HH:mm';
+        var dayTimeFormat = 'e ' + timeFormat;  // '4 21:00' for Thursday 21:00
+        var reqStart = moment(reqStartOriginal.format(dayTimeFormat), dayTimeFormat);
+        // in case the end date selected by users isn't on the same weekday
+        var reqEnd = moment(reqStart.day() + ' ' + reqEndOriginal.format(timeFormat), dayTimeFormat);
+        var raStart = moment(raStartInReq.format(dayTimeFormat), dayTimeFormat);
+        var raEnd = moment(raEndInReq.format(dayTimeFormat), dayTimeFormat);
+        console.info('[isAvailable] Req: ' + reqStart.format() + ' - ' + reqEnd.format());
+        console.info('[isAvailable] RA: ' + raStart.format() + ' - ' + raEnd.format());
 
         if (reqStart.isSameOrAfter(raStart) &&
             reqEnd.isSameOrBefore(raEnd)) {

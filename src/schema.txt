@@ -20,6 +20,7 @@ UMBRELLA ("/accounts/")
 			state: "WA",
 			zipcode: 98105
 		},
+		timezone: "America/Los_Angeles",  // moment.tz.guess()
 		primaryContact: {
 			name: "Irini Spyridakis",
 			email: "irinis@u.washington.edu",
@@ -63,6 +64,7 @@ DONATING AGENCY ("/donating_agencies/") //not an account
 			zipcode: 98105,
 			officeNo: "220"
 		},
+		timezone: "America/Los_Angeles",  // moment.tz.guess()
 		isVerified: true,
 		isActivated: true,
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
@@ -93,7 +95,8 @@ DONATING AGENCY MEMBER ("/accounts/")
 		position: "Manager"
 		isAdmin: true,
 		isVerified: true,  // same as parent agency's
-		isActivated: true  // same as parent agency's
+		isActivated: true,  // same as parent agency's
+		timezone: "America/Los_Angeles",  // same as parent agency's
 	}
 
 
@@ -115,6 +118,7 @@ RECEIVING AGENCY ("/accounts/")
 			zipcode: 98115,
 			officeNo: "110A"
 		},
+		timezone: "America/Los_Angeles",  // moment.tz.guess()
 		isVerified: true,
 		isActivated: true,
 		primaryContact: {
@@ -132,27 +136,27 @@ RECEIVING AGENCY ("/accounts/")
 		availabilities: {
 			// Indices 0-6 represents Sunday - Saturday
 			// Using timestamps for start/end hours to eliminate potential
-			// timezone problems. Only the hour and minute parts of the
-			// timestamp is valid.
+			// timezone problems. Only the day of week, hour, and minute
+			// parts of the timestamp is valid.
 			0: {  // Sunday 10:00 - 14:00
-				startTimestamp: "1523120400000",
-				endTimestamp: "1523134800000"
+				startTimestamp: "1523206800000",
+				endTimestamp: "1523221200000"
 			},
 			2: {  // Tuesday 13:00 - 17:00
-				startTimestamp: "1523131200000",
-				endTimestamp: "1523145600000"
+				startTimestamp: "1523390400000",
+				endTimestamp: "1523404800000"
 			},
 			3: {  // Wednesday 13:00 - 17:00
-				startTimestamp: "1523131200000",
-				endTimestamp: "1523145600000"
+				startTimestamp: "1523476800000",
+				endTimestamp: "1523491200000"
 			},
 			4: {  // Thursday 13:00 - 17:00
-				startTimestamp: "1523131200000",
-				endTimestamp: "1523145600000"
+				startTimestamp: "1523563200000",
+				endTimestamp: "1523577600000"
 			},
 			6: {  // Saturday 10:00 - 14:00
-				startTimestamp: "1523120400000",
-				endTimestamp: "1523134800000"
+				startTimestamp: "1523739600000",
+				endTimestamp: "1523725200000"
 			},
 		},
 		acceptEmergencyPickups: true,
@@ -188,6 +192,7 @@ DELIVERER GROUP ("/accounts/")
 			state: "WA",
 			zipcode: 98115
 		},
+		timezone: "America/Los_Angeles",  // moment.tz.guess()
 		isVerified: true,
 		isActivated: true,
 		numVolunteers: 50,
@@ -216,6 +221,7 @@ DELIVERY REQUEST ("/delivery_requests/RheaQY1WxJT03sTPQICFZ4STpfm1")   //"/deliv
 		status: 'pending',  // Enums.RequestStatus
 		startTimestamp: 1519826400,  // start date + start hour
 		endTimestamp: 1527688800,    // end date + end hour
+		timezone: "America/Los_Angeles",  // moment.tz.guess()
 		endCriteria: {
 			type: "date",  // Enums.RequestEndCriteriaType
 			value: "2018-02-09"  // a date for "date" or a number for "num_occurrences"
@@ -273,6 +279,7 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 		status: "in_progress",  // Enums.DeliveryStatus
 		startTimestamp: 1521295200,
 		endTimestamp: 1521302400,
+		timezone: "America/Los_Angeles",  // same as spawningDeliveryRequest's
 		isEmergency: false,
 		spawningDeliveryRequest: "-L5QoXeC_UrL5tRRED3e",
 		donatingAgency: {

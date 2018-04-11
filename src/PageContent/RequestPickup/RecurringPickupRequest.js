@@ -3,7 +3,7 @@ import firebase, { accountsRef } from '../../FirebaseConfig.js';
 import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus, StringFormat } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 class RecurringPickupRequest extends Component {
 
@@ -130,10 +130,13 @@ class RecurringPickupRequest extends Component {
         return formIsValid;
     }
 
-    handleChange(field, e) {   
-        let fields = this.state.fields;
-        fields[field] = e.target.value; 
-        this.setState({fields});
+    handleChange(field, e) {
+        var val = e.target.value;
+        this.setState((prevState) => {
+            let fields = prevState.fields;
+            fields[field] = val;
+            return {fields: fields};
+        });
     }
 
     toggleModal() {
@@ -148,7 +151,7 @@ class RecurringPickupRequest extends Component {
         if (!this.handleValidation()) {
             alert('Form has errors');
         } else {
-            let dateTimeStringToTimestamp = (dateString, timeString) => Date.parse(dateString + ' ' + timeString);
+            let dateTimeStringToTimestamp = (dateString, timeString) => Date.parse(dateString.replace(/-/g, '/') + ' ' + timeString);
             let startTimestamp = dateTimeStringToTimestamp(event.target.startDate.value, event.target.startTime.value);
 
             // process various fields
@@ -216,6 +219,7 @@ class RecurringPickupRequest extends Component {
                 status: RequestStatus.PENDING,
                 startTimestamp: startTimestamp,
                 endTimestamp: endTimestamp,
+                timezone: moment.tz.guess(),
                 endCriteria:{
                     type: event.target.endCriteria.value,
                     value: durationValue
