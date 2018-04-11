@@ -6,6 +6,8 @@ import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
 import logo from './icons/temp-logo.svg';
 import Directory from './PageContent/Directory/DirectoryPage.js';
+import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
+import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 // The page to load when user is signed in.
@@ -78,9 +80,7 @@ class PageContainer extends Component {
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Assign Volunteers
-                    </div>
+                    <AssignVolunteersController />
                 )}
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&
