@@ -60,10 +60,10 @@ class DelivererGroupContent extends Component {
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
                             <p className="content-details">
-                                {this.state.deliverer1} {this.state.phone1}
+                                {this.state.deliverer1} ({this.state.phone1})
                             </p>
                             <p className="content-details">
-                                {this.state.deliverer2} {this.state.phone2}
+                                {this.state.deliverer2} ({this.state.phone2})
                             </p>
                         </div>
                     ) : (

@@ -3,41 +3,35 @@ import './Dialog.css';
 import Header from './Header';
 import DialogContent from './DialogContent';
 
-let values = {
-    delivererGroup: 'Green Greeks',
-    deliverer1: 'Blake Johnson',
-    phone1: '206-389-2318',
-    deliverer2: 'Erika Zhang',
-    phone2: '206-876-5432'
-};
-
 class Dialog extends Component {
-    saveValues(fields) {
-        return (function() {
-            values = Object.assign({}, values, fields);
-        })();
-    }
     render() {
         return (
             <dialog className="event-dialog" open>
                 <Header
-                    eventType={this.props.eventType}
+                    eventType={this.props.delivery.eventType}
                     closeDialog={this.props.closeDialog}
-                    date={this.props.date}
-                    startTime={this.props.startTime}
-                    endTime={this.props.endTime}
+                    date={this.props.delivery.date}
+                    startTime={this.props.delivery.startTime}
+                    endTime={this.props.delivery.endTime}
                     futureEvent={this.props.futureEvent}
                     accountType={this.props.accountType}
                 />
                 <DialogContent
                     accountType={this.props.accountType}
                     futureEvent={this.props.futureEvent}
-                    delivererGroup={values.delivererGroup}
-                    deliverer1={values.deliverer1}
-                    phone1={values.phone1}
-                    deliverer2={values.deliverer2}
-                    phone2={values.phone2}
-                    saveValues={this.saveValues.bind(this)}
+                    delivererGroup={this.props.delivery.delivererGroup.name}
+                    deliverer1={
+                        this.props.delivery.delivererGroup.deliverers[0].name
+                    }
+                    phone1={
+                        this.props.delivery.delivererGroup.deliverers[0].phone
+                    }
+                    deliverer2={
+                        this.props.delivery.delivererGroup.deliverers[1].name
+                    }
+                    phone2={
+                        this.props.delivery.delivererGroup.deliverers[1].phone
+                    }
                 />
             </dialog>
         );

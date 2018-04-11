@@ -59,6 +59,34 @@ class PageContainer extends Component {
         }
     }
 
+    componentWillMount() {
+        // TODO move this dummy data mocking to calendar
+        let delivery = {
+            eventType: DeliveryType.RECURRING,
+            date: '11/14/2017',
+            startTime: '10am',
+            endTime: '12pm',
+            delivererGroup: {
+                name: 'Green Greeks',
+                deliverers: [
+                    {
+                        name: 'Blake Johnson',
+                        phone: '206-876-5432',
+                        email: 'blake@greengreeks.org'
+                    },
+                    {
+                        name: 'Erika Zhang',
+                        phone: '206-876-5432',
+                        email: 'erika@greengreeks.org'
+                    }
+                ]
+            }
+        };
+        this.setState({
+            delivery: delivery
+        });
+    }
+
     navBarHandler(e) {
         this.setState({
             content: e
@@ -84,19 +112,16 @@ class PageContainer extends Component {
                             <Dialog
                                 closeDialog={this.closeDialog}
                                 accountType={this.props.account.accountType}
-                                eventType={DeliveryType.RECURRING}
-                                date="11/14/2017"
-                                startTime="10am"
-                                endTime="12pm"
-                                futureEvent={true}
+                                delivery={this.state.delivery}
+                                futureEvent={false}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
                             <EventCard
-                                eventType={DeliveryType.RECURRING}
-                                startTime="10am"
-                                endTime="12pm"
-                                futureEvent={true}
+                                eventType={this.state.delivery.eventType}
+                                startTime={this.state.delivery.startTime}
+                                endTime={this.state.delivery.endTime}
+                                futureEvent={false}
                             />
                         </div>
                     </div>
