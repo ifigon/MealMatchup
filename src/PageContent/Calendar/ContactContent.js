@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AccountType } from '../../Enums';
+import { AccountType, StringFormat } from '../../Enums';
 import './Content.css';
 import phone from '../../icons/phone.svg';
 
@@ -9,7 +9,7 @@ class DescriptionContent extends Component {
         this.state = {
             edit: false,
             name: this.props.name,
-            phone: this.convertPhone(this.props.phone)
+            phone: this.props.phone
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -18,18 +18,6 @@ class DescriptionContent extends Component {
         this.setState({
             edit: true
         });
-    }
-    convertPhone(phone) {
-        if (phone !== undefined) {
-            let phoneString = phone.toString();
-            let formattedPhone =
-                phoneString.substr(0, 3) +
-                '-' +
-                phoneString.substr(3, 3) +
-                '-' +
-                phoneString.substr(6);
-            return formattedPhone;
-        }
     }
 
     handleChange(e) {
@@ -77,6 +65,7 @@ class DescriptionContent extends Component {
                                         className="content-details "
                                         defaultValue={this.state.phone}
                                         name="phone"
+                                        pattern={StringFormat.PHONE}
                                     />
                                 </div>
 

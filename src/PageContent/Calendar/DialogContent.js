@@ -8,9 +8,8 @@ class DialogContent extends Component {
                 <ContactContent
                     accountType={this.props.accountType}
                     futureEvent={this.props.futureEvent}
-                    saveValues={this.props.saveValues}
-                    phone={this.props.phone}
-                    name={this.props.name}
+                    phone={this.props.delivery.contact.phone}
+                    name={this.props.delivery.contact.name}
                 />
             </div>
         );
