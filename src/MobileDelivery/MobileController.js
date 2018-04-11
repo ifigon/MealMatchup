@@ -48,7 +48,7 @@ class MobileController extends React.Component {
 
     componentDidMount() {
         const { uId: umbrellaId, dId: deliveryId} = this.props.match.params;
-        const deliveryDbRefPath = `deliveries/${umbrellaId}/${deliveryId}`;
+        const deliveryDbRefPath = `deliveries/${umbrellaId}/${deliveryId }`;
         this.setState({ deliveryDbRefPath: deliveryDbRefPath });
 
         db.ref(deliveryDbRefPath).on('value', (snapshot) => {  // listen data onchange

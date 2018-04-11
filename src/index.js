@@ -12,9 +12,7 @@ ReactDOM.render(
     <Router>
         <div>
             <Route exact path="/" component={App} />
-            {/* TODO: Mobile route 
-                - unique path to a pickup and pass info into MobileDelivery
-            */}
+            {/* Mobile Delivery Route: uId: umbrellaId, dId: deliveryId */}
             <Route exact path="/mobile/delivery/:uId/:dId" component={MobileController} />
             {/* TODO: DA Member Signup route with agency key */}
             <Route exact 

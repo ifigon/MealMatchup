@@ -18,9 +18,10 @@ class MobileStart extends React.Component {
         };
     }
 
-    handleStart(e) {
+    onStart(e) {
         e.preventDefault();
-        db.ref(`${this.props.dbRef}`).update({ status: DeliveryStatus.IP});
+        // write status change to db
+        db.ref(this.props.dbRef).update({ status: DeliveryStatus.IP});
     }
 
     render() { 
@@ -72,7 +73,7 @@ class MobileStart extends React.Component {
                             <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
                     </div>    
-                    <input type="submit" value="Start" id="start-delivery-btn" onClick={this.handleStart.bind(this)}/> 
+                    <input type="submit" value="Start" id="start-delivery-btn" onClick={this.onStart.bind(this)}/> 
                 </div>
             </div>
         );
