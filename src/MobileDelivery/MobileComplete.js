@@ -49,10 +49,10 @@ class MobileComplete extends React.Component {
                             <p className="mobile-content-header">Pick Up From</p>
                             <p id="mobile-name">{this.props.ra.agency}</p>
                             <p id="mobile-org">{this.props.ra.primaryContact.name}</p>
-                            <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
+                            <a href={"tel:" + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                         </div>
                     </div>
-                    <input defaultValue="Completed" id="mobile-completed-btn"> 
+                    <input defaultValue="Completed" id="mobile-completed-btn"/> 
                 </div>
             </div>
         );

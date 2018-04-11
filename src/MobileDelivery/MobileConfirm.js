@@ -64,7 +64,7 @@ class MobileConfirm extends React.Component {
                                 })
                             }
                         </div>
-                        <input defaultValue="Done" id="ms-confirm-btn" onClick={this.onDone.bind(this)}> 
+                        <input defaultValue="Done" id="ms-confirm-btn" onClick={this.onDone.bind(this)}/> 
                     </div>
                 </div>
             </div>
