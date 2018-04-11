@@ -10,37 +10,60 @@ class EditingOrganization extends Component {
                 <div className="scs-0-content scs-1-editing">
                     <h5>Organization Details</h5>
 
-                    <div className="editing-box">
-                        <div className="editing-child-1">
-                            <label className="label-component details">Email</label><br /><br />
-                            <label className="label-component details">Password</label><br /><br />
-                            <div className="scs-spacing" />
-                            <label className="label-component details">Street 1</label><br /><br />
-                            <label className="label-component details">Street 2</label><br /><br />
-                            <label className="label-component details">City</label><br /><br />
-                            <label className="label-component details">State</label><br /><br />
-                            <label className="label-component details">Zip</label>
+                    <form onSubmit={this.handleSubmit.bind(this)}>
+                        <div className="editing-box">
+                            <div className="editing-child-1">
+                                <label className="label-component details">Email</label><br /><br />
+                                <label className="label-component details">Password</label><br /><br />
+                                <div className="scs-spacing" />
+                                <label className="label-component details">Name</label><br /><br />
+                                <label className="label-component details">Street 1</label><br /><br />
+                                <label className="label-component details">Street 2</label><br /><br />
+                                <label className="label-component details">City</label><br /><br />
+                                <label className="label-component details">State</label><br /><br />
+                                <label className="label-component details">Zip</label><br /><br />
+                                <label className="label-component details">Phone</label>
+                            </div>
+                            
+                            <div className="editing-child-2">
+                                <input name="email" type="text" className="form-input" defaultValue={this.props.account.email} /><br /><br />
+                                <input name="password" type="text" className="form-input" defaultValue={this.props.account.password} /><br /><br />
+                                <div className="scs-spacing" />
+                                <input name="name" type="text" className="form-input" defaultValue={this.props.account.name} /><br /><br />
+                                <input name="street1" type="text" className="form-input" defaultValue={this.props.account.address.street1} /><br /><br />
+                                <input name="street2" type="text" className="form-input" defaultValue={this.props.account.address.street2} /><br /><br />
+                                <input name="city" type="text" className="form-input" defaultValue={this.props.account.address.city} /><br /><br />
+                                <input name="state" type="text" className="form-input" defaultValue={this.props.account.address.state} /><br /><br />
+                                <input name="zip" type="text" className="form-input" defaultValue={this.props.account.address.zipcode} /><br /><br />
+                                <input name="phone" type="tel" className="form-input" defaultValue={this.props.account.phone} /><br />
+                            </div>
                         </div>
-                        
-                        <div className="editing-child-2">
-                            <input name="name" type="text" className="form-input" placeholder={this.props.email} /><br /><br />
-                            <input name="name" type="text" className="form-input" placeholder={this.props.password} /><br /><br />
-                            <div className="scs-spacing" />
-                            <input name="name" type="text" className="form-input" placeholder={this.props.address.street1} /><br /><br />
-                            <input name="name" type="text" className="form-input" placeholder={this.props.address.street2} /><br /><br />
-                            <input name="name" type="text" className="form-input" placeholder={this.props.address.city} /><br /><br />
-                            <input name="name" type="text" className="form-input" placeholder={this.props.address.state} /><br /><br />
-                            <input name="name" type="text" className="form-input" placeholder={this.props.address.zip} /><br />
+                        <div className="scs-spacing-lg" />
+                        <div className="amd-edit amd-edit-1">
+                            <button type="submit" className="form-button confirm-button" onSubmit={this.handleSubmit.bind(this)}>Save</button>
                         </div>
-                    </div>
-
-                    <div className="scs-spacing-lg" />
-                    <div className="amd-edit amd-edit-1">
-                        <button type="button" className="form-button confirm-button" onClick={this.props.handleOrgSave}>Save</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         );
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        let org = {
+            email: e.target.email.value,
+            password: e.target.password.value,
+            name: e.target.name.value,
+            address: {
+                street1: e.target.street1.value,
+                street2: e.target.street2.value,
+                city: e.target.city.value,
+                state: e.target.state.value,
+                zipcode: e.target.zip.value
+            },
+            phone: e.target.phone.value
+        };
+        this.props.handleOrgSave(org);
     }
 
 }

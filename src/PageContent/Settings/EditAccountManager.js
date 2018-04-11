@@ -17,8 +17,8 @@ class EditAccountManager extends Component {
                         </div>
                         <div className="amd-details-child">
                             <h6>Recieve Notifications via</h6>
-                            {this.props.smsNotif ? <h6>SMS/Text Message</h6> : <div/>}
-                            {this.props.emailNotif ? <h6>Email</h6> : <div/>}
+                            {this.props.coordinator.smsNotif ? <h6>SMS/Text Message</h6> : <div/>}
+                            {this.props.coordinator.emailNotif ? <h6>Email</h6> : <div/>}
                         </div>
                     </div>
                     <div className="amd-edit amd-edit-1">

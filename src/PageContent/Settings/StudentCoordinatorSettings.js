@@ -9,14 +9,16 @@ class StudentCoordinatorSettings extends Component {
         super(props);
         this.state = {
             account: null,
+            email: 'phisigmaro@uw.edu',
             step: 0
         };
     }
 
+    // Backend TODO: Get data from DB
     componentDidMount() {
         let account  = {
             name: 'Phi Sigma Ro',
-            email: 'phisigmaro@uw.edu',
+            email: this.state.email,
             password: 'password',
             organizationPhone: '209-992-9292',
             address: {
@@ -80,6 +82,8 @@ class StudentCoordinatorSettings extends Component {
                 this.state.account ?
                     <SCSettings1
                         account={this.state.account}
+                        handleOrgSave={this.handleOrgSave}
+                        handleAccSave={this.handleAccSave}
                     />
                     :
                     <div> Loading... </div>

@@ -11,6 +11,20 @@ class SCSettings1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            org: {
+                email: props.account.email,
+                password: props.account.password,
+                address: props.account.address,
+                phone: props.account.organizationPhone
+            },
+            acc: {
+                name: props.account.coordinator.name,
+                position: props.account.coordinator.position,
+                email: props.account.coordinator.email,
+                phone: props.account.coordinator.phone,
+                smsNotif: props.account.smsNotif,
+                emailNotif: props.account.emailNotif
+            },
             isEditingOrg: false,
             isEditingAccManager: false
         };
@@ -24,16 +38,12 @@ class SCSettings1 extends Component {
                 <div className="container">
                     {this.state.isEditingOrg ? 
                         <EditingOrganization 
-                            email={this.props.account.email}
-                            password={this.props.account.password}
-                            address={this.props.account.address}
+                            account={this.state.org}
                             handleOrgSave={this.handleOrgSave.bind(this)}
                         />
                         : 
                         <EditOrganization
-                            email={this.props.account.email}
-                            password={this.props.account.password}
-                            address={this.props.account.address}
+                            account={this.state.org}
                             handleEditOrg={this.handleEditOrg.bind(this)}
                         />
                     }
@@ -42,16 +52,12 @@ class SCSettings1 extends Component {
                 <div className="container">
                     {this.state.isEditingAccManager ?
                         <EditingAccountManager 
-                            coordinator={this.props.account.coordinator}
-                            smsNotif={this.props.account.smsNotif}
-                            emailNotif={this.props.account.emailNotif}
+                            coordinator={this.state.acc}
                             handleAccSave={this.handleAccSave.bind(this)}
                         />
                         :
                         <EditAccountManager
-                            coordinator={this.props.account.coordinator}
-                            smsNotif={this.props.account.smsNotif}
-                            emailNotif={this.props.account.emailNotif}
+                            coordinator={this.state.acc}
                             handleEditAccManager={this.handleEditAccManager.bind(this)}
                         />
                     }
@@ -69,8 +75,10 @@ class SCSettings1 extends Component {
         });
     }
 
-    handleOrgSave() {
+    // Backend TODO: Write data to DB
+    handleOrgSave(org) {
         this.setState({
+            org: org,
             isEditingOrg: false
         });
     }
@@ -81,8 +89,10 @@ class SCSettings1 extends Component {
         });
     }
 
-    handleAccSave() {
+    // Backend TODO: Write data to DB
+    handleAccSave(acc) {
         this.setState({
+            acc: acc,
             isEditingAccManager: false
         });
     }

@@ -14,6 +14,7 @@ class SCSettings0 extends Component {
                     <h6>Password: {this.props.account.password}</h6>
                     <div className="scs-spacing" />
                     <h6>Address: {this.props.account.address.street1}, {this.props.account.address.street2}, {this.props.account.address.city}, {this.props.account.address.state}, {this.props.account.address.zip}</h6>
+                    <h6>Organization Number: {this.props.account.organizationPhone}</h6>
                     <div className="scs-spacing-lg" />
                     <h5>Account Manager Details</h5>
                     <div className="amd-details">
