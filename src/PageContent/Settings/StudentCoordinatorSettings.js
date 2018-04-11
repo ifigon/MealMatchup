@@ -8,12 +8,12 @@ class StudentCoordinatorSettings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            account: {},
+            account: null,
             step: 0
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let account  = {
             name: 'Phi Sigma Ro',
             email: 'phisigmaro@uw.edu',
@@ -67,28 +67,32 @@ class StudentCoordinatorSettings extends Component {
 
         case 0:
             return (
-                <SCSettings0 
-                    account={this.state.account}
-                    handleEditButton={this.handleEditButton.bind(this)}
-                />
+                this.state.account ?
+                    <SCSettings0 
+                        account={this.state.account}
+                        handleEditButton={this.handleEditButton.bind(this)}
+                    />
+                    :
+                    <div> Loading... </div>
             );
         case 1:
             return (
-                <SCSettings1
-                    account={this.state.account}
-                />
+                this.state.account ?
+                    <SCSettings1
+                        account={this.state.account}
+                    />
+                    :
+                    <div> Loading... </div>
             );
         default:
             return (
-                <SCSettings0 
-                    email={this.state.email}
-                    password={this.state.password}
-                    address={this.state.address}
-                    coordinator={this.state.coordinator}
-                    smsNotif={this.state.smsNotif}
-                    emailNotif={this.state.emailNotif}
-                    handleEditButton={this.handleEditButton.bind(this)}
-                />
+                this.state.account ?
+                    <SCSettings0 
+                        account={this.state.account}
+                        handleEditButton={this.handleEditButton.bind(this)}
+                    />
+                    :
+                    <div> Loading </div>
             );
         }
 
