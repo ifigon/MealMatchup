@@ -32,6 +32,12 @@ class Dialog extends Component {
                     phone2={
                         this.props.delivery.delivererGroup.deliverers[1].phone
                     }
+                    email1={
+                        this.props.delivery.delivererGroup.deliverers[0].email
+                    }
+                    email2={
+                        this.props.delivery.delivererGroup.deliverers[1].email
+                    }
                 />
             </dialog>
         );

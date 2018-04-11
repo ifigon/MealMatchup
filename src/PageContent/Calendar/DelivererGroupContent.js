@@ -12,7 +12,9 @@ class DelivererGroupContent extends Component {
             deliverer1: this.props.deliverer1,
             deliverer2: this.props.deliverer2,
             phone1: this.props.phone1,
-            phone2: this.props.phone2
+            phone2: this.props.phone2,
+            email1: this.props.email1,
+            email2: this.props.email2
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -41,7 +43,7 @@ class DelivererGroupContent extends Component {
             phone2: e.target.phone2.value
         });
 
-        this.props.saveValues(values);
+        // TODO: Save values to firebase
     }
 
     render() {
@@ -74,30 +76,40 @@ class DelivererGroupContent extends Component {
                             >
                                 <div className="input-wrapper">
                                     <input
-                                        className="content-details inline-details"
+                                        className="content-details deliverer-group-details"
                                         defaultValue={this.state.deliverer1}
                                         name="deliverer1"
                                         type="text "
                                     />
                                     <input
-                                        className="content-details inline-details"
+                                        className="content-details deliverer-group-details"
                                         defaultValue={this.state.phone1}
                                         name="phone1"
                                         type="tel"
                                         pattern={StringFormat.PHONE}
                                     />
                                     <input
-                                        className="content-details inline-details"
+                                        className="content-details deliverer-group-details"
+                                        defaultValue={this.state.email1}
+                                        type="text"
+                                    />
+                                    <input
+                                        className="content-details deliverer-group-details"
                                         defaultValue={this.state.deliverer2}
                                         type="text"
                                         name="deliverer2"
                                     />
                                     <input
-                                        className="content-details inline-details"
+                                        className="content-details deliverer-group-details"
                                         defaultValue={this.state.phone2}
                                         type="tel"
                                         name="phone2"
                                         pattern={StringFormat.PHONE}
+                                    />
+                                    <input
+                                        className="content-details deliverer-group-details"
+                                        defaultValue={this.state.email2}
+                                        type="text"
                                     />
                                 </div>
 

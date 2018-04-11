@@ -14,7 +14,8 @@ class DialogContent extends Component {
                     phone1={this.props.phone1}
                     deliverer2={this.props.deliverer2}
                     phone2={this.props.phone2}
-                    saveValues={this.props.saveValues}
+                    email1={this.props.email1}
+                    email2={this.props.email2}
                 />
             </div>
         );
