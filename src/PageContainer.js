@@ -59,6 +59,51 @@ class PageContainer extends Component {
         }
     }
 
+    componentWillMount() {
+        // TODO move this dummy data mocking to calendar
+        let delivery = {
+            eventType: DeliveryType.RECURRING,
+            date: '11/14/2017',
+            startTime: '10am',
+            endTime: '12pm',
+            donationDescription: [
+                {
+                    name: 'Baked beans',
+                    amount: 15,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Coleslaw',
+                    amount: 20,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Corn',
+                    amount: 6,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Mashed potatoes',
+                    amount: 8,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Veggie burger patties',
+                    amount: 4,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Bread',
+                    amount: 40,
+                    unit: 'loaves'
+                }
+            ]
+        };
+        this.setState({
+            delivery: delivery
+        });
+    }
+
     navBarHandler(e) {
         this.setState({
             content: e
@@ -83,20 +128,16 @@ class PageContainer extends Component {
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
-                                eventType={DeliveryType.RECURRING}
                                 accountType={this.props.account.accountType}
-                                date="11/14/2017"
-                                startTime="10am"
-                                endTime="12pm"
+                                delivery={this.state.delivery}
                                 futureEvent={true}
-                                accountOwnerName={this.props.account.name}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
                             <EventCard
-                                eventType={DeliveryType.RECURRING}
-                                startTime="10am"
-                                endTime="12pm"
+                                eventType={this.state.delivery.eventType}
+                                startTime={this.state.delivery.startTime}
+                                endTime={this.state.delivery.endTime}
                                 futureEvent={true}
                             />
                         </div>

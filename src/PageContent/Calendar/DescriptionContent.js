@@ -36,7 +36,7 @@ class DescriptionContent extends Component {
 
         this.state = {
             edit: false,
-            donationDescription: foodList
+            donationDescriptionText: foodList
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -78,7 +78,7 @@ class DescriptionContent extends Component {
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
                             <p className="content-details description-content">
-                                {this.state.donationDescription}
+                                {this.state.donationDescriptionText}
                             </p>
                         </div>
                     ) : (
