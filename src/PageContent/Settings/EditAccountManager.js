@@ -22,7 +22,7 @@ class EditAccountManager extends Component {
                         </div>
                     </div>
                     <div className="amd-edit amd-edit-1">
-                        <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleEditAccManager}>Edit</button>
+                        <button type="button" className="form-button confirm-button" onClick={this.props.handleEditAccManager}>Edit</button>
                     </div>
                 </div>
             </div>

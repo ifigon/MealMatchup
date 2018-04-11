@@ -15,7 +15,7 @@ class EditOrganization extends Component {
                     <h6>Address: {this.props.address.street1}, {this.props.address.street2}, {this.props.address.city}, {this.props.address.state}, {this.props.address.zip}</h6>
                     <div className="scs-spacing-lg" />
                     <div className="amd-edit amd-edit-1">
-                        <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleEditOrg}>Edit</button>
+                        <button type="button" className="form-button confirm-button" onClick={this.props.handleEditOrg}>Edit</button>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ class EditingAccountManager extends Component {
                 <div className="scs-0-content scs-1-content">
                     <h5>Account Manager Details</h5>
 
-                     <div className="editing-box">
+                    <div className="editing-box">
                         <div className="editing-child-1">
                             <label className="label-component details">Name</label><br /><br />
                             <label className="label-component details">Title/Position</label><br /><br />
@@ -31,7 +31,7 @@ class EditingAccountManager extends Component {
                     </div>
 
                     <div className="amd-edit amd-edit-1">
-                        <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleAccSave}>Save</button>
+                        <button type="button" className="form-button confirm-button" onClick={this.props.handleAccSave}>Save</button>
                     </div>
 
                 </div>

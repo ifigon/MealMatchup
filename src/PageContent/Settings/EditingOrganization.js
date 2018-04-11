@@ -36,7 +36,7 @@ class EditingOrganization extends Component {
 
                     <div className="scs-spacing-lg" />
                     <div className="amd-edit amd-edit-1">
-                        <button type="button" className="form-button" id="confirm-button" onClick={this.props.handleOrgSave}>Save</button>
+                        <button type="button" className="form-button confirm-button" onClick={this.props.handleOrgSave}>Save</button>
                     </div>
                 </div>
             </div>
