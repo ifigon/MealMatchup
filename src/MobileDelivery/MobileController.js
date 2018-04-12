@@ -22,10 +22,8 @@ class MobileController extends React.Component {
                 isEmergency: null,
                 donatingAgency: {},
                 receivingAgency: {},
-                delivererGroup: { // delivererGroup is null if isEmergency=true
-                    group: '', 
-                    deliverers: [],
-                },
+                delivererGroup: '',  // delivererGroup is null if isEmergency=true
+                deliverers: [],
                 description: {},
                 notes: ''
             },
@@ -67,10 +65,11 @@ class MobileController extends React.Component {
 
         if (deliveryData.delivererGroup) { // Non-Emergency Pick Up: deliveryData.delivererGroup != null
             // get delivererGroup name
-            let dgObj = await db.ref(`accounts/${deliveryData.delivererGroup.group}`).once('value');
-            deliveryData.delivererGroup.group = dgObj.val().name;           
+            let dgObj = await db.ref(`accounts/${deliveryData.delivererGroup}`).once('value');
+            deliveryData.delivererGroup = dgObj.val().name;           
         } else { // Emergency Pick Up: deliveryData.delivererGroup == null
-            deliveryData.delivererGroup = { group: '', deliverers: []};
+            deliveryData.delivererGroup = '';
+            deliveryData.deliverers = [];
         }
 
         this.setState({ deliveryObj: this.getDeliveryObj(deliveryData)});
@@ -78,8 +77,8 @@ class MobileController extends React.Component {
     
     getDeliveryObj(rawDelivery) {
         let deliveryObj = ( // pick entries from rawDelivery
-            ({ description, delivererGroup, notes, isEmergency, status, pickedUpInfo, deliveredInfo }) => 
-                ({ description, delivererGroup, notes, isEmergency, status, pickedUpInfo, deliveredInfo })
+            ({ description, delivererGroup, deliverers, notes, isEmergency, status, pickedUpInfo, deliveredInfo }) => 
+                ({ description, delivererGroup, deliverers, notes, isEmergency, status, pickedUpInfo, deliveredInfo })
         )(rawDelivery);
 
         let startTimeObj = moment.unix(rawDelivery.startTimestamp);
@@ -187,7 +186,7 @@ class MobileController extends React.Component {
     render() {
         if (this.state.donatingAgency.agency && 
             this.state.receivingAgency.agency && 
-            this.state.deliveryObj.delivererGroup) { // return view if all data is back
+            this.state.deliveryObj.delivererGroup !== null) { // return view if all data is back
             return (
                 <div className="mobile-wrapper">
                     { this.renderView() } 

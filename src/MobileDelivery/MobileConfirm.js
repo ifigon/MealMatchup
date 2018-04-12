@@ -32,7 +32,7 @@ class MobileConfirm extends React.Component {
                             <p className="ms-confirm-header">Deliverers</p>
                             <p className="ms-confirm-agency">{this.props.deliveryObj.delivererGroup.group}</p>
                             {
-                                this.props.deliveryObj.delivererGroup.deliverers.map((deliverer, i) => {
+                                this.props.deliveryObj.deliverers.map((deliverer, i) => {
                                     return (
                                         <p className="ms-confirm-details" key={i}>{deliverer.name}
                                             <a href={'tel:' + deliverer.phone}>

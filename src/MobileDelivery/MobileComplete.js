@@ -27,12 +27,12 @@ class MobileComplete extends React.Component {
                     <div className="mobile-deliverers">
                         {
                             // loop through deliverers
-                            this.props.deliveryObj.delivererGroup.deliverers.map((deliverer, i) => {
+                            this.props.deliveryObj.deliverers.map((deliverer, i) => {
                                 return (
                                     <div className="mobile-student-info" id={i} key={i}>
                                         <p id="mobile-name">{deliverer.name}</p>
                                         {/* TODO: Query for DelivererGroup name (currently uid)*/}
-                                        <p id="mobile-org">{this.props.deliveryObj.delivererGroup.group}</p>
+                                        <p id="mobile-org">{this.props.deliveryObj.delivererGroup}</p>
                                         <a href={'tel:' + deliverer.phone}>{deliverer.phone}</a>
                                     </div>
                                 );
