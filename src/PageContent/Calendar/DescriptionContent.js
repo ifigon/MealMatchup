@@ -3,6 +3,7 @@ import moment from 'moment';
 import { AccountType } from '../../Enums';
 import './Content.css';
 import groceries from '../../icons/groceries.svg';
+import plus from '../../icons/plus-button.svg';
 
 class DescriptionContent extends Component {
     constructor(props) {
@@ -13,11 +14,16 @@ class DescriptionContent extends Component {
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.addRow = this.addRow.bind(this);
     }
     edit() {
         this.setState({
             edit: true
         });
+    }
+
+    addRow() {
+        console.log('add row');
     }
 
     stringifyDonation() {
@@ -117,6 +123,12 @@ class DescriptionContent extends Component {
                                     </div>
                                     {editDonation}
                                 </div>
+                                <img
+                                    src={plus}
+                                    alt="plus"
+                                    className="plus"
+                                    onClick={this.addRow}
+                                />
                                 <div className="save-button-wrapper">
                                     <input
                                         type="submit"
