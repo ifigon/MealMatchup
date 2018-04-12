@@ -270,21 +270,19 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 			}
 		},
 		// delivererGroup is null if isEmergency=true
-		delivererGroup: {
-			group: "R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
-			deliverers: [
-				{
-					name: "Alice",
-					email: "alice@uw.edu",
-					phone: "123-789-4560"
-				},
-				{
-					name: "Chris",
-					email: "chris@uw.edu",
-					phone: "456-123-0789"
-				}
-			]
-		},
+		delivererGroup: "R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
+		deliverers: [
+			{
+				name: "Alice",
+				email: "alice@uw.edu",
+				phone: "123-789-4560"
+			},
+			{
+				name: "Chris",
+				email: "chris@uw.edu",
+				phone: "456-123-0789"
+			}
+		],
 		description: {
 			foodItems: [
 				{
