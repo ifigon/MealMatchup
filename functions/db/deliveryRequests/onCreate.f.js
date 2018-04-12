@@ -111,47 +111,64 @@ function getRASnapPromise(accountsRef, raId) {
 
 // Check if the given RA is available for the pickup request
 function isAvailable(ra, request) {
+    // ------- helpers --------
+    var loggingF = 'ddd YYYY-MM-DD HH:mm:ssZ';  // 'Mon 2018-04-09 21:00:00-07:00'
+    var timeF = 'HH:mm';
+    var dateF = 'YYYY-MM-DD';
+    var dateTimeF = dateF + timeF;
+
+    function constructRaTimeInReq(raTimestamp, reqInRA) {
+        // get RA's weekday and time in RA's own timezone first
+        var raTimeOriginal = moment.tz(raTimestamp, ra.timezone);
+        // make ra time's date the same as request's (in RA timezone)
+        var raTime = moment.tz(
+            reqInRA.format(dateF) + raTimeOriginal.format(timeF), dateTimeF, ra.timezone);
+        raTime.tz(request.timezone);
+        return raTime;
+    }
+    // ------- end helpers --------
+
     // get request start/end time in request's original timezone
     // Eg: Thu 3/1/2018 21:00 (REQ) - Thu 5/3/2018 23:00 (REQ)
-    var reqStartOriginal = moment.tz(request.startTimestamp, request.timezone);
+    var reqStart = moment.tz(request.startTimestamp, request.timezone);
     var reqEndOriginal = moment.tz(request.endTimestamp, request.timezone);
     console.info('[isAvailable] Req(' + request.timezone + '): ' +
-        reqStartOriginal.format() + ' - ' + reqEndOriginal.format());
+        reqStart.format(loggingF) + ' - ' + reqEndOriginal.format(loggingF));
 
-    // get the weekday of request in RA's timezone
+    // get the weekday of request in RA's timezone, so that we'd grab the
+    // availability for the right day
     // Eg: RA(ra_timezone) = REQ(req_timezone) + 5hrs
     //     "Thu 3/1/2018 21:00 (REQ)" = "Fri 3/2/2018 02:00 (RA)"
     var reqInRA = moment.tz(request.startTimestamp, ra.timezone);
     var raDay = ra.availabilities[reqInRA.day()];
-    console.info('[isAvailable] Req in RA(' + ra.timezone + '): ' + reqInRA.format());
+    console.info('[isAvailable] Req in RA(' + ra.timezone + '): ' + reqInRA.format(loggingF));
 
     // raDay could be null if no available slots for that day
     if (raDay) {
-        // get RA's availibility time in req_timezone
-        // Eg: "Fri 08:00 to 14:00 (RA)" => "Fri 03:00 to 09:00 (REQ)"
-        var raStartInReq = moment.tz(raDay.startTimestamp, request.timezone);
-        var raEndInReq = moment.tz(raDay.endTimestamp, request.timezone);
-
+        // Compare everything in request's timezone.
+        // Eg: RA's availability: "Fri 08:00 to 14:00 (RA)" 
+        //                     => "Fri 03:00 to 09:00 (REQ)"
         // At this point, we want to compare:
-        //    Request: Thu 21:00 - 23:00 (REQ)
-        //    RA:      Fri 03:00 - 09:00 (REQ)
-        // create new moment object with only weekday and time info so that
-        // all the other units (year, month, etc) match up.
-        var timeFormat = 'HH:mm';
-        var dayTimeFormat = 'e ' + timeFormat;  // '4 21:00' for Thursday 21:00
-        var reqStart = moment(reqStartOriginal.format(dayTimeFormat), dayTimeFormat);
-        // in case the end date selected by users isn't on the same weekday
-        var reqEnd = moment(reqStart.day() + ' ' + reqEndOriginal.format(timeFormat), dayTimeFormat);
-        var raStart = moment(raStartInReq.format(dayTimeFormat), dayTimeFormat);
-        var raEnd = moment(raEndInReq.format(dayTimeFormat), dayTimeFormat);
-        console.info('[isAvailable] Req: ' + reqStart.format() + ' - ' + reqEnd.format());
-        console.info('[isAvailable] RA: ' + raStart.format() + ' - ' + raEnd.format());
+        //    Request: Thu 3/1/2018 21:00 - 23:00 (REQ)
+        //    RA:      Fri 3/2/2018 03:00 - 09:00 (REQ)
+        var reqEnd = moment.tz(
+            reqStart.format(dateF) + reqEndOriginal.format(timeF), dateTimeF, request.timezone);
+        var raStart = constructRaTimeInReq(raDay.startTimestamp, reqInRA);
+        var raEnd = constructRaTimeInReq(raDay.endTimestamp, reqInRA);
+
+        console.info(
+            '[isAvailable] Req: ' + reqStart.format(loggingF) + ' - ' + reqEnd.format(loggingF));
+        console.info(
+            '[isAvailable] RA: ' + raStart.format(loggingF) + ' - ' + raEnd.format(loggingF));
 
         if (reqStart.isSameOrAfter(raStart) &&
             reqEnd.isSameOrBefore(raEnd)) {
             return true;
         }
+    } else {
+        console.info('[isAvailable] RA has no availibility for ' + reqInRA.format('dddd'));
     }
 
     return false;
 }
+
