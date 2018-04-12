@@ -7,36 +7,9 @@ import groceries from '../../icons/groceries.svg';
 class DescriptionContent extends Component {
     constructor(props) {
         super(props);
-        let foodList = '';
-        if (typeof this.props.donationDescription === 'string') {
-            foodList = this.props.donationDescription;
-        } else {
-            if (this.props.donationDescription.length > 0) {
-                foodList +=
-                    this.props.donationDescription[0].name +
-                    ' ' +
-                    this.props.donationDescription[0].amount +
-                    ' ' +
-                    this.props.donationDescription[0].unit;
-                for (
-                    let i = 1;
-                    i < this.props.donationDescription.length;
-                    i++
-                ) {
-                    foodList +=
-                        ', ' +
-                        this.props.donationDescription[i].name +
-                        ' ' +
-                        this.props.donationDescription[i].amount +
-                        ' ' +
-                        this.props.donationDescription[i].unit;
-                }
-            }
-        }
-
         this.state = {
             edit: false,
-            donationDescriptionText: foodList
+            donationDescriptionText: this.stringifyDonation()
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -45,6 +18,28 @@ class DescriptionContent extends Component {
         this.setState({
             edit: true
         });
+    }
+
+    stringifyDonation() {
+        let foodList = '';
+        if (this.props.donationDescription.length > 0) {
+            foodList +=
+                this.props.donationDescription[0].name +
+                ' ' +
+                this.props.donationDescription[0].amount +
+                ' ' +
+                this.props.donationDescription[0].unit;
+            for (let i = 1; i < this.props.donationDescription.length; i++) {
+                foodList +=
+                    ', ' +
+                    this.props.donationDescription[i].name +
+                    ' ' +
+                    this.props.donationDescription[i].amount +
+                    ' ' +
+                    this.props.donationDescription[i].unit;
+            }
+        }
+        return foodList;
     }
 
     handleChange(e) {
@@ -59,7 +54,32 @@ class DescriptionContent extends Component {
     }
 
     render() {
-        console.log('this.state', this.state);
+        let editDonation = this.props.donationDescription.map((item, index) => {
+            return (
+                <div className="donation-edit-wrapper">
+                    <input
+                        type="text"
+                        className="food"
+                        defaultValue={item.name}
+                    />
+                    <div className="weight-unit-wrapper">
+                        <input
+                            type="text"
+                            className="weight"
+                            defaultValue={item.amount}
+                        />
+                        <select
+                            className="description-unit"
+                            defaultValue={item.unit}
+                        >
+                            <option>lbs</option>
+                            <option>loaves</option>
+                            <option>cases</option>
+                        </select>
+                    </div>
+                </div>
+            );
+        });
         return (
             <div className="wrapper">
                 <img className="content-icon" src={groceries} alt="volunteer" />
@@ -85,20 +105,25 @@ class DescriptionContent extends Component {
                                 onSubmit={this.handleChange}
                             >
                                 <div className="input-wrapper">
-                                    <textarea
-                                        className="content-details inline-details description-input"
-                                        defaultValue={
-                                            this.state.donationDescription
-                                        }
-                                        name="donationDescription"
+                                    <div className="food-label">
+                                        Food Item<span className="required">
+                                            *
+                                        </span>
+                                    </div>
+                                    <div className="food-weight-label">
+                                        Weight<span className="required">
+                                            *
+                                        </span>
+                                    </div>
+                                    {editDonation}
+                                </div>
+                                <div className="save-button-wrapper">
+                                    <input
+                                        type="submit"
+                                        className="description-edit-button"
+                                        value="Save"
                                     />
                                 </div>
-
-                                <input
-                                    type="submit"
-                                    className="edit-button"
-                                    value="save"
-                                />
                             </form>
                         </div>
                     )}
