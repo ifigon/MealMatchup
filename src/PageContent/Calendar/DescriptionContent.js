@@ -10,7 +10,8 @@ class DescriptionContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            donationDescriptionText: this.stringifyDonation()
+            donationDescriptionText: this.stringifyDonation(),
+            donationObject: this.props.donationDescription
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -23,7 +24,12 @@ class DescriptionContent extends Component {
     }
 
     addRow() {
-        console.log('add row');
+        let blankRow = { name: '', amount: 0, unit: '' };
+        let currentDonation = this.state.donationObject;
+        currentDonation.push(blankRow);
+        this.setState({
+            donationObject: currentDonation
+        });
     }
 
     stringifyDonation() {
@@ -60,7 +66,8 @@ class DescriptionContent extends Component {
     }
 
     render() {
-        let editDonation = this.props.donationDescription.map((item, index) => {
+        console.log('this.props.donationObject', this.props.donationObject);
+        let editDonation = this.state.donationObject.map((item, index) => {
             return (
                 <div className="donation-edit-wrapper">
                     <input
