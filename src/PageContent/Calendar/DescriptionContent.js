@@ -10,7 +10,6 @@ class DescriptionContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            donationDescriptionText: this.stringifyDonation(),
             donationObject: this.props.donationDescription
         };
         this.edit = this.edit.bind(this);
@@ -32,23 +31,23 @@ class DescriptionContent extends Component {
         });
     }
 
-    stringifyDonation() {
+    stringifyDonation(donation) {
         let foodList = '';
-        if (this.props.donationDescription.length > 0) {
+        if (donation.length > 0) {
             foodList +=
-                this.props.donationDescription[0].name +
+                donation[0].name +
                 ' ' +
-                this.props.donationDescription[0].amount +
+                donation[0].amount +
                 ' ' +
-                this.props.donationDescription[0].unit;
-            for (let i = 1; i < this.props.donationDescription.length; i++) {
+                donation[0].unit;
+            for (let i = 1; i < donation.length; i++) {
                 foodList +=
                     ', ' +
-                    this.props.donationDescription[i].name +
+                    donation[i].name +
                     ' ' +
-                    this.props.donationDescription[i].amount +
+                    donation[i].amount +
                     ' ' +
-                    this.props.donationDescription[i].unit;
+                    donation[i].unit;
             }
         }
         return foodList;
@@ -57,16 +56,26 @@ class DescriptionContent extends Component {
     handleChange(e) {
         e.preventDefault();
         // pass these in from firebase
+        let newDonation = [];
+        for (let i = 0; i < this.state.donationObject.length; i++) {
+            let name = e.target[i + 'name'].value;
+            let amount = e.target[i + 'amount'].value;
+            let unit = e.target[i + 'unit'].value;
+            newDonation.push({ name: name, amount: amount, unit: unit });
+        }
         this.setState({
-            donationDescription: e.target.donationDescription.value,
+            donationObject: newDonation,
             edit: false,
             editedBy: this.props.accountOwnerName,
             editedAt: moment().format('MM/DD h:mma')
         });
+
+        // TODO: push data to firebase
     }
 
     render() {
-        console.log('this.props.donationObject', this.props.donationObject);
+        let donation = this.stringifyDonation(this.state.donationObject);
+
         let editDonation = this.state.donationObject.map((item, index) => {
             return (
                 <div className="donation-edit-wrapper">
@@ -74,16 +83,19 @@ class DescriptionContent extends Component {
                         type="text"
                         className="food"
                         defaultValue={item.name}
+                        name={index + 'name'}
                     />
                     <div className="weight-unit-wrapper">
                         <input
                             type="text"
                             className="weight"
                             defaultValue={item.amount}
+                            name={index + 'amount'}
                         />
                         <select
                             className="description-unit"
                             defaultValue={item.unit}
+                            name={index + 'unit'}
                         >
                             <option>lbs</option>
                             <option>loaves</option>
@@ -108,7 +120,7 @@ class DescriptionContent extends Component {
                     {!this.state.edit ? (
                         <div className="content-details-wrapper">
                             <p className="content-details description-content">
-                                {this.state.donationDescriptionText}
+                                {donation}
                             </p>
                         </div>
                     ) : (
