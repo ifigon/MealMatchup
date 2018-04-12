@@ -14,8 +14,6 @@ class MobileController extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            umbrellaId: '',
-            deliveryId: '',
             deliveryDbRefPath: '',
             deliveryObj: {
                 date: '',
@@ -42,8 +40,10 @@ class MobileController extends React.Component {
                 primaryContact: {},
                 address: {},
             },
+            showSummary: false,
         };
         this.renderView = this.renderView.bind(this);
+        this.toggleShowSummary = this.toggleShowSummary.bind(this);
     }
 
     componentDidMount() {
@@ -142,6 +142,12 @@ class MobileController extends React.Component {
         return address;
     }
 
+    toggleShowSummary() {
+        this.setState(prevState => ({ 
+            showSummary: !prevState.showSummary
+        }));
+    }
+
     renderView() {
         switch (this.state.deliveryObj.status) {
         case DeliveryStatus.SCHEDULED:
@@ -163,12 +169,15 @@ class MobileController extends React.Component {
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
                 dbRef={this.state.deliveryDbRefPath}
+                toggleShowSummary={this.toggleShowSummary}
             />;
         case DeliveryStatus.COMPLETED: 
             return <MobileComplete 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
+                showSummary={this.state.showSummary}
+                toggleShowSummary={this.toggleShowSummary}
             />;
         default:
             return null;

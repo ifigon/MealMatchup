@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import './Mobile.css';
+import MobileConfirm from './MobileConfirm';
 
 class MobileComplete extends React.Component {
     render() { 
@@ -55,6 +56,14 @@ class MobileComplete extends React.Component {
                     
                     <input defaultValue="Completed" id="mobile-completed-btn"/> 
                 </div>
+                {this.props.showSummary && // controlled by controller state
+                    <MobileConfirm 
+                    da={this.props.da}
+                    ra={this.props.ra}
+                    dbRef={this.props.dbRef}
+                    deliveryObj={this.props.deliveryObj}
+                    toggleShowSummary={this.props.toggleShowSummary} />
+                }
             </div>
         );
     }

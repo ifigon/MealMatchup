@@ -3,7 +3,7 @@ import Map from '../Map/Map';
 import Geocode from '../react-geocode';
 import moment from 'moment';
 import './Mobile.css';
-import MobileConfirm from './MobileConfirm';
+import { DeliveryStatus } from '../Enums';
 
 import firebase from '../FirebaseConfig';
 const db = firebase.database();
@@ -16,7 +16,6 @@ class MobileDelivery extends React.Component {
             lat: '', 
             long: '',
             fullAddress: '',
-            submitPressed: false
         };
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -25,12 +24,12 @@ class MobileDelivery extends React.Component {
         e.preventDefault();
         var deliveredInfo = {
             signature: e.target.signature.value,
-            printtName: e.target.print.value,
             timestamp: moment().unix(),
+        // printtName: e.target.print.value, // @Leon 04/11/2018: doesn't yet support hand-writing signiture 
         };
-        // write deliveredInfo to db
-        db.ref(`${this.props.dbRef}`).update({deliveredInfo: deliveredInfo});
-        this.setState({submitPressed:true, deliveredInfo: deliveredInfo});
+        // write deliveredInfo and status change to db
+        db.ref(`${this.props.dbRef}`).update({deliveredInfo: deliveredInfo, status: DeliveryStatus.COMPLETED});
+        this.props.toggleShowSummary(); // notify controller to show summary dialog 
     }
 
     componentDidMount(){
@@ -82,19 +81,15 @@ class MobileDelivery extends React.Component {
                             {this.props.ra.primaryContact.name} at the non profit after you drop-off food items at the destination.</p>
                             {/* TODO: Signature */}
                             <input name="signature" className="ms-signature-delivery" type="text" placeholder="Sign Here" required/>
-                            <input name="print" className="ms-input-delivery" type="text" placeholder="Print Name" required/>
+                            {/*  
+                                TODO: @Leon 04/11/2018: Hide one of the signiture input for now 
+                                since we dont't yet support hand-writing signiture  
+                            */}
+                            {/* <input name="print" className="ms-input-delivery" type="text" placeholder="Print Name" required/> */}
                         </div>
-                        <input type="submit" value="Next" id="ms-next-btn"/> 
+                        <input type="submit" value="Done" id="ms-next-btn"/> 
                     </form>
                 </div>
-                {this.state.submitPressed &&
-                    <MobileConfirm 
-                        deliveredInfo={this.state.deliveredInfo}
-                        da={this.props.da}
-                        ra={this.props.ra}
-                        dbRef={this.props.dbRef}
-                        deliveryObj={this.props.deliveryObj}/>
-                }
             </div>
         );
     }

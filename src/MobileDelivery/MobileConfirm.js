@@ -1,25 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 import './Mobile.css';
-import { DeliveryStatus } from '../Enums';
-
-import firebase from '../FirebaseConfig';
-const db = firebase.database();
 
 class MobileConfirm extends React.Component {
-    onDone(e){
-        e.preventDefault();
-        // write status change to db
-        db.ref(this.props.dbRef).update({status: DeliveryStatus.COMPLETED});
-    }
-
     render() {
         return (
             <div className="mobile-confirmation-container">
                 <div className="mobile-confirm-card">
                     <div className="mobile-card-line"></div>
                     <p className="ms-header">Completion Summary</p>
-                    <p id="confirm-time">{moment.unix(this.props.deliveredInfo.timestamp).calendar()}</p>
+                    <p id="confirm-time">{moment.unix(this.props.deliveryObj.deliveredInfo.timestamp).calendar()}</p>
                     <div className="ms-confirm">
                         <div className="ms-confirm-content" id="ms-confirm-da">
                             <p className="ms-confirm-header">Donating Agency</p>
@@ -36,7 +26,7 @@ class MobileConfirm extends React.Component {
                                 <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                             </p>
                             <p className="ms-confirm-details">Signed by: {this.props.ra.primaryContact.name}</p>
-                            <p className="ms-confirm-details">Timestamp: {moment.unix(this.props.deliveredInfo.timestamp).format('LT')}</p>
+                            <p className="ms-confirm-details">Timestamp: {moment.unix(this.props.deliveryObj.deliveredInfo.timestamp).format('LT')}</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-dg">
                             <p className="ms-confirm-header">Deliverers</p>
@@ -65,7 +55,8 @@ class MobileConfirm extends React.Component {
                                 })
                             }
                         </div>
-                        <input defaultValue="Done" id="ms-confirm-btn" onClick={this.onDone.bind(this)}/> 
+                        {/* notify controller to hide summary dialog */}
+                        <input defaultValue="Ok" id="ms-confirm-btn" onClick={this.props.toggleShowSummary}/> 
                     </div>
                 </div>
             </div>
