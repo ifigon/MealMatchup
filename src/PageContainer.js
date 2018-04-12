@@ -131,6 +131,7 @@ class PageContainer extends Component {
                                 accountType={this.props.account.accountType}
                                 delivery={this.state.delivery}
                                 futureEvent={true}
+                                accountOwnerName={this.props.account.name}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>

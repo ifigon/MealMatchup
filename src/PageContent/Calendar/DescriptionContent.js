@@ -50,19 +50,16 @@ class DescriptionContent extends Component {
     handleChange(e) {
         e.preventDefault();
         // pass these in from firebase
-        let values = {
-            donationDescription: e.target.donationDescription.value
-        };
         this.setState({
             donationDescription: e.target.donationDescription.value,
             edit: false,
             editedBy: this.props.accountOwnerName,
             editedAt: moment().format('MM/DD h:mma')
         });
-        this.props.saveValues(values);
     }
 
     render() {
+        console.log('this.state', this.state);
         return (
             <div className="wrapper">
                 <img className="content-icon" src={groceries} alt="volunteer" />
