@@ -98,16 +98,18 @@
 }
 
 .food-label {
-  display: inline;
+  display: inline-block;
   font-size: 11px;
   color: #828282;
   padding-right: 90px;
+  margin-bottom: 10px;
 }
 
 .food-weight-label {
-  display: inline;
+  display: inline-block;
   color: #828282;
   font-size: 11px;
+  margin-bottom: 10px;
 }
 
 input.food,
