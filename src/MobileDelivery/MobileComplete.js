@@ -58,11 +58,11 @@ class MobileComplete extends React.Component {
                 </div>
                 {this.props.showSummary && // controlled by controller state
                     <MobileConfirm 
-                    da={this.props.da}
-                    ra={this.props.ra}
-                    dbRef={this.props.dbRef}
-                    deliveryObj={this.props.deliveryObj}
-                    toggleShowSummary={this.props.toggleShowSummary} />
+                        da={this.props.da}
+                        ra={this.props.ra}
+                        dbRef={this.props.dbRef}
+                        deliveryObj={this.props.deliveryObj}
+                        toggleShowSummary={this.props.toggleShowSummary} />
                 }
             </div>
         );
