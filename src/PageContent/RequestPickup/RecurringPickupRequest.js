@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus, StringFormat } from '../../Enums.js';
+import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus, InputFormat } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 import moment from 'moment-timezone';
@@ -151,7 +151,8 @@ class RecurringPickupRequest extends Component {
         if (!this.handleValidation()) {
             alert('Form has errors');
         } else {
-            let dateTimeStringToTimestamp = (dateString, timeString) => Date.parse(dateString.replace(/-/g, '/') + ' ' + timeString);
+            let dateTimeStringToTimestamp = (dateString, timeString) => moment(
+                dateString + timeString, InputFormat.DATE + InputFormat.TIME).valueOf();
             let startTimestamp = dateTimeStringToTimestamp(event.target.startDate.value, event.target.startTime.value);
 
             // process various fields
@@ -177,8 +178,8 @@ class RecurringPickupRequest extends Component {
                     endTimestamp = -1;
                 }
             }
-            let pickupTimeDiffMs = (moment(event.target.endTime.value, StringFormat.TIME)
-                    - moment(event.target.startTime.value, StringFormat.TIME))
+            let pickupTimeDiffMs = (moment(event.target.endTime.value, InputFormat.TIME)
+                    - moment(event.target.startTime.value, InputFormat.TIME))
                 .valueOf();
             endTimestamp += pickupTimeDiffMs; //encode endTime
 
