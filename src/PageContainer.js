@@ -8,7 +8,7 @@ import Dialog from './PageContent/Calendar/Dialog.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
-import Settings from './PageContent/Settings/StudentCoordinatorSettings.js';
+import Settings from './PageContent/Settings/Settings.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.

@@ -3,7 +3,7 @@ import './StudentCoordinatorSettings.css';
 import SCSettings0 from './SCSettings0';
 import SCSettings1 from './SCSettings1';
 
-class StudentCoordinatorSettings extends Component {
+class Settings extends Component {
 
     constructor(props) {
         super(props);
@@ -67,7 +67,7 @@ class StudentCoordinatorSettings extends Component {
 
         switch (this.state.step) {
 
-        case 0:
+        case 1:
             return (
                 this.state.account ?
                     <SCSettings0 
@@ -77,7 +77,7 @@ class StudentCoordinatorSettings extends Component {
                     :
                     <div> Loading... </div>
             );
-        case 1:
+        case 0:
             return (
                 this.state.account ?
                     <SCSettings1
@@ -104,4 +104,4 @@ class StudentCoordinatorSettings extends Component {
 
 }
 
-export default StudentCoordinatorSettings;
+export default Settings;
