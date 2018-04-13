@@ -23,7 +23,7 @@ UMBRELLA ("/accounts/")
 		primaryContact: {
 			name: "Irini Spyridakis",
 			email: "irinis@u.washington.edu",
-			phone: 1234567890
+			phone: "123-456-7890"
 		},
 		donatingAgencies: [  
 			"-K9HdKlCLjjk_ka82K0s",  // autogen-key of donating-agency
@@ -89,7 +89,7 @@ DONATING AGENCY MEMBER ("/accounts/")
 		agency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
 		name: "Andrea Benson",
 		email: "bensoa3@uw.edu",
-		phone: 2065436975,
+		phone: "206-543-6975",
 		position: "Manager"
 		isAdmin: true,
 		isVerified: true,  // same as parent agency's
@@ -120,13 +120,13 @@ RECEIVING AGENCY ("/accounts/")
 		primaryContact: {
 			name: "Chris Stack",
 			email: "chrisstack@uniongospel.org",
-			phone: 2065869876,
+			phone: "206-586-9876",
 			position: "Manager"
 		},
 		secondaryContact: {  // could be null
 			name: "Dave Stack",
 			email: "davestack@uniongospel.org",
-			phone: 2065869876,
+			phone: "206-586-9876",
 			position: "Volunteer"
 		},
 		availabilities: {
@@ -141,6 +141,7 @@ RECEIVING AGENCY ("/accounts/")
 			min: 10,  // in lbs
 			max: 100  // in lbs
 		},
+		deliveryNotes: "Park in the lot near the south entrance.",  // add in Settings
 		notifications: [
 			{
 				type: "recurring_pickup_request",  // Enums.NotificationType
@@ -174,7 +175,7 @@ DELIVERER GROUP ("/accounts/")
 		coordinator: {
 			name: "Andy Duncan",
 			email: "andyd@uw.edu",
-			phone: 2064872859,
+			phone: "206-487-2859",
 			position: "President"
 		},
 		notifications: [
@@ -189,24 +190,23 @@ DELIVERER GROUP ("/accounts/")
 
 -----------------------------------------------------
 
-DELIVERY REQUEST ("/delivery_requests/")
+DELIVERY REQUEST ("/delivery_requests/RheaQY1WxJT03sTPQICFZ4STpfm1")   //"/delivery_requests/<umbrella_id>"
 
 	// key = auto generated key by firebase
 	-L5QoXeC_UrL5tRRED3e: {
 		status: 'pending',  // Enums.RequestStatus
-		startDate: "2018-02-28",
-		duration: {
-			type: "date",  // Enums.RequestDurationType
-			value: "2018-05-30"  // a date for "date" or a number for "num_recurrences"
+		startTimestamp: 1519826400,  // start date + start hour
+		endTimestamp: 1527688800,    // end date + end hour
+		endCriteria: {
+			type: "date",  // Enums.RequestEndCriteriaType
+			value: "2018-02-09"  // a date for "date" or a number for "num_occurrences"
 		},
 		repeats: "weekly",	// values in Enums.RequestRepeatType
-		startTime: "14:00",
-		endTime: "17:00",
 		primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		notes: "Enter through the back door.",
 		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a umbrella
 		donatingAgency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
-		requester: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
+		requester: "Andrea Benson",  // name of a donating-agency-member
 		// receivingAgency & delivererGroups:
 		// The donating agency can choose to request specific receiving agency
 		// and/or deliverer group, or not.
@@ -236,7 +236,12 @@ DELIVERY REQUEST ("/delivery_requests/")
 			// OR
 			claimed: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG (once a DG claims)
 		},
-		requestTimeStamp: "1518753363763"
+		requestTimeStamp: 1518753363763,
+		spawnedDeliveries: [
+			// individual deliveries that were created to fulfill this delivery request
+			"-L5RkIS0CSPuXpkewaqA",
+			...
+		]
 	}
 
 
@@ -246,10 +251,11 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 
 	// key = auto generated key by firebase
 	-L5RkIS0CSPuXpkewaqA: {
-		date: "2018-02-28",
-		startTime: "14:00",
-		endTime: "17:00",
+		status: "in_progress",  // Enums.DeliveryStatus
+		startTimestamp: 1521295200,
+		endTimestamp: 1521302400,
 		isEmergency: false,
+		spawningDeliveryRequest: "-L5QoXeC_UrL5tRRED3e",
 		donatingAgency: {
 			agency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
 			primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
@@ -259,25 +265,23 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 			primaryContact: {
 				name: "Bob",
 				email: "bob@uniongospel.org",
-				phone: 0987654321
+				phone: "098-765-4321"
 			}
 		},
 		// delivererGroup is null if isEmergency=true
-		delivererGroup: {
-			group: "R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
-			deliverers: [
-				{
-					name: "Alice",
-					email: "alice@uw.edu",
-					phone: 1237894560
-				},
-				{
-					name: "Chris",
-					email: "chris@uw.edu",
-					phone: 4561230789
-				}
-			]
-		},
+		delivererGroup: "R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
+		deliverers: [
+			{
+				name: "Alice",
+				email: "alice@uw.edu",
+				phone: "123-789-4560"
+			},
+			{
+				name: "Chris",
+				email: "chris@uw.edu",
+				phone: "456-123-0789"
+			}
+		],
 		description: {
 			foodItems: [
 				{
@@ -292,9 +296,24 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 				},
 				...
 			],
-			updatedBy: "dhA03LwTp3cibXVUcb3nQqO34wj1"  // uid-key of a donating-agency-member
+			updatedBy: {
+				// key: timestamp
+				// value: name of a donating-agency-member
+				1523173058189: "Andrea Benson",
+				1523173817016: "Chris Doe",
+				...
+			}
 		},
-		notes: "Enter through the back door."
+		notes: "Enter through the back door.",
+		pickedUpInfo: {
+			temperature: 29,  // in F
+			signature: "John Smith",
+			timestamp: 1523174874685
+		},
+		deliveredInfo: {
+			signature: "Ellen Blake",
+			timestamp: 1523174892769
+		}
 	}
 
 
