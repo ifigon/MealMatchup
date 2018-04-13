@@ -11,7 +11,7 @@ const enums = require('../../Enums.js');
  *     pending list.
  */
 exports = module.exports = functions.database
-    .ref('/delivery_requests/{pushId}')
+    .ref('/delivery_requests/{umbrellaId}/{pushId}')
     .onCreate(event => {
         // TODO: setup Admin SDK in the future? So that we can use absolute path.
         const requestRef = event.data.ref;
