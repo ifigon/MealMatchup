@@ -28,7 +28,7 @@ exports.StringFormat = {
 exports.InputFormat = {
     DATE: 'YYYY-MM-DD',  // '2018-03-14' (default 'date' input value format)
     TIME: 'HH:mm',  // '15:30' (24hr - default 'time' input value format)
-}
+};
 
 exports.AccountType = {
     UMBRELLA: 'umbrella',
