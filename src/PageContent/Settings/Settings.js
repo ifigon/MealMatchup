@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './StudentCoordinatorSettings.css';
-import SCSettings0 from './SCSettings0';
-import SCSettings1 from './SCSettings1';
+import OrganizationDetails from './OrganizationDetails';
+import SCSettings from './SCSettings';
 
 class Settings extends Component {
 
@@ -9,8 +9,8 @@ class Settings extends Component {
         super(props);
         this.state = {
             account: null,
-            email: 'phisigmaro@uw.edu',
-            step: 0
+            isEditingOrg: false,
+            email: 'phisigmaro@uw.edu'
         };
     }
 
@@ -52,54 +52,49 @@ class Settings extends Component {
     render() {
         return (
             <div>
-                {this.showStep()}
+                {this.state.account ?
+
+                    <div> 
+                        <div className="container">
+                            <OrganizationDetails
+                                account={this.state.account}
+                                isEditingOrg={this.state.isEditingOrg}
+                                handleEditOrg={this.handleEditOrg.bind(this)}
+                                handleOrgSave={this.handleOrgSave.bind(this)}
+                            />
+                        </div>
+
+                        <SCSettings
+                            account={this.state.account}
+                            handleOrgSave={this.handleOrgSave}
+                            handleAccSave={this.handleAccSave}
+                        />
+                    </div>
+                    :
+                    <div> Loading... </div>
+                }
             </div>
         );
     }
 
-    handleEditButton() {
+    handleEditOrg() {
         this.setState({
-            step: 1
+            isEditingOrg: true
         });
     }
 
-    showStep() {
-
-        switch (this.state.step) {
-
-        case 1:
-            return (
-                this.state.account ?
-                    <SCSettings0 
-                        account={this.state.account}
-                        handleEditButton={this.handleEditButton.bind(this)}
-                    />
-                    :
-                    <div> Loading... </div>
-            );
-        case 0:
-            return (
-                this.state.account ?
-                    <SCSettings1
-                        account={this.state.account}
-                        handleOrgSave={this.handleOrgSave}
-                        handleAccSave={this.handleAccSave}
-                    />
-                    :
-                    <div> Loading... </div>
-            );
-        default:
-            return (
-                this.state.account ?
-                    <SCSettings0 
-                        account={this.state.account}
-                        handleEditButton={this.handleEditButton.bind(this)}
-                    />
-                    :
-                    <div> Loading </div>
-            );
-        }
-
+    // Backend TODO: Write data to DB
+    handleOrgSave(org) {
+        this.setState({
+            account: {
+                email: org.email,
+                password: org.password,
+                name: org.name,
+                address: org.address,
+                organizationPhone: org.phone
+            },
+            isEditingOrg: false
+        });
     }
 
 }

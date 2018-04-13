@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './SCSettings0.css';
 import './SCSettings1.css';
-import EditOrganization from './EditOrganization';
-import EditingOrganization from './EditingOrganization';
+
 import EditAccountManager from './EditAccountManager';
 import EditingAccountManager from './EditingAccountManager';
 
-class SCSettings1 extends Component {
+class SCSettings extends Component {
 
     constructor(props) {
         super(props);
@@ -35,19 +34,7 @@ class SCSettings1 extends Component {
         return (
             <div>
 
-                <div className="container">
-                    {this.state.isEditingOrg ? 
-                        <EditingOrganization 
-                            account={this.state.org}
-                            handleOrgSave={this.handleOrgSave.bind(this)}
-                        />
-                        : 
-                        <EditOrganization
-                            account={this.state.org}
-                            handleEditOrg={this.handleEditOrg.bind(this)}
-                        />
-                    }
-                </div>
+                
                 <div className="scs-spacing" />
                 <div className="container">
                     {this.state.isEditingAccManager ?
@@ -69,20 +56,6 @@ class SCSettings1 extends Component {
 
     }
 
-    handleEditOrg() {
-        this.setState({
-            isEditingOrg: true
-        });
-    }
-
-    // Backend TODO: Write data to DB
-    handleOrgSave(org) {
-        this.setState({
-            org: org,
-            isEditingOrg: false
-        });
-    }
-
     handleEditAccManager() {
         this.setState({
             isEditingAccManager: true
@@ -99,4 +72,4 @@ class SCSettings1 extends Component {
 
 }
 
-export default SCSettings1;
+export default SCSettings;
