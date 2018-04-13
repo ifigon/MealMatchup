@@ -16,7 +16,7 @@ class OrganizationDetails extends Component {
                         <h6>Password: {this.props.account.password}</h6>
                         <div className="scs-spacing" />
                         <h6>Address: {this.props.account.address.street1}, {this.props.account.address.street2}, {this.props.account.address.city}, {this.props.account.address.state}, {this.props.account.address.zip}</h6>
-                        <h6>Phone: {this.props.account.organizationPhone}</h6>
+                        <h6>Office Number: {this.props.account.organizationPhone}</h6>
                         <div className="scs-spacing-lg" />
                         <div className="amd-edit amd-edit-1">
                             <button type="button" className="form-button confirm-button" onClick={this.props.handleEditOrg}>Edit</button>
@@ -40,7 +40,7 @@ class OrganizationDetails extends Component {
                                     <label className="label-component details">City</label><br /><br />
                                     <label className="label-component details">State</label><br /><br />
                                     <label className="label-component details">Zip</label><br /><br />
-                                    <label className="label-component details">Phone</label>
+                                    <label className="label-component details">Office Number</label>
                                 </div>
                                 
                                 <div className="editing-child-2">
