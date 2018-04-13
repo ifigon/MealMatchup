@@ -9,9 +9,11 @@ exports.UmbrellaId = {
 };
 
 exports.StringFormat = {
-    DATE: 'YYYY-MM-DD', // '2018-03-24'
+    DATE: 'MM/DD/YYYY', // '03/14/2018'
     TIME: 'HH:mm', // '15:30' (24hr),
-    PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}' // '206-345-7890'
+    PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}', // '206-345-7890',
+    WEEKDAY: 'dddd', // 'Wednesday'
+    WEEKDAY_WITH_DATE: 'dddd, MM/DD/YYYY' // 'Wednesday, 03/14/2018'
 };
 
 exports.AccountType = {
@@ -37,9 +39,9 @@ exports.PageContent = {
     SETTINGS: 'Settings'
 };
 
-exports.RequestDurationType = {
+exports.RequestEndCriteriaType = {
     DATE: 'date', // an end date
-    RECUR: 'num_recurrences' // number of recurrences
+    OCCUR: 'num_occurrences' // number of occurrences
 };
 
 exports.RequestRepeatType = {
@@ -104,4 +106,16 @@ exports.NotificationType = {
 exports.DeliveryType = {
     RECURRING: 'recurring',
     EMERGENCY: 'emergency'
+};
+
+exports.DeliveryStatus = {
+    SCHEDULED: 'scheduled',
+    IP: 'in_progress',
+    COMPLETED: 'completed'
+};
+
+exports.FoodUnit = {
+    LB: 'lb',
+    CASES: 'cases',
+    LOAVES: 'loaves'
 };
