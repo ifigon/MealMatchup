@@ -40,7 +40,7 @@ class DescriptionContent extends Component {
 
     stringifyDonation(donation) {
         let foodList = '';
-        if (donation != undefined) {
+        if (donation !== undefined) {
             if (donation.length > 0) {
                 foodList +=
                     donation[0].name +
