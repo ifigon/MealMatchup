@@ -68,7 +68,7 @@
 
 .close {
   float: right;
-  height: 4vh;
+  height: 3vh;
 }
 
 .close:hover {
@@ -82,15 +82,21 @@
 
 .modal-wrapper  h1{
   display: inline;
-  margin-left: 10%;
-
 }
 
 .modal-wrapper  .icon {
   position: absolute;
   margin: 5px auto;
-  width: 4%;
-    height: auto;
+  width: 5%;
+  height: auto;
+}
+
+#modal-step1{
+  margin-left: 13%;
+}
+
+.modal-left-align{
+  margin-left: 15%;
 }
 
 .popup-icon,
@@ -308,4 +314,9 @@ ol li {
 
 .notification-map{
   margin-bottom: 20px;
+}
+
+.modal-grid{
+  position: relative;
+
 }

@@ -9,7 +9,7 @@ class RecurringDeliveryRequest1 extends Component {
             <div className="modal-wrapper">
                 <div className="flex">
                     <img className="icon" src={truck} alt="icon" />
-                    <h1>Reccuring Pickup Requested</h1>
+                    <h1 id="modal-step1">Reccuring Pickup Requested</h1>
                 </div>
                 <div className="pickup-details">
                     <h2>Pickup Details</h2>
