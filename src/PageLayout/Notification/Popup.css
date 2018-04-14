@@ -12,6 +12,18 @@
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
 }
 
+.popup-flex{
+  display: grid;
+  position: fixed;
+  top: 90px;
+  right: 10px;
+}
+.popuptest{
+  height: 300px;
+  border: solid 2px red;
+  width: 500px;
+
+}
 .recurring {
   border-top: solid 20px #37b674;
 }
@@ -142,8 +154,9 @@ map {
   margin-right: 5px;
   top: 90px;
   right: 0px;
-  position: fixed;
+  /* position: fixed; */
   background-color: white;
+  width: 400px;
 }
 
 .hover {

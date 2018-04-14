@@ -23,10 +23,7 @@ class PageContainer extends Component {
             showPopUp: false,
             hover: false,
             // TODO: how to handle multiple notifications
-            notification: {
-                type: 'recurring_pickup_request',  // Enums.NotificationType
-                content: '-L5QoXeC_UrL5tRRED3e'  // key of DeliveryRequest
-            },
+            notifications: [],
             donatingAgency: null
         };
 
@@ -51,6 +48,29 @@ class PageContainer extends Component {
                 }.bind(this)
             );
         }
+
+        //TODO: query db for notifications
+        this.setState({
+            notifications: [
+                {
+                    type: 'recurring_pickup_request',
+                    content: '-L5QoXeC_UrL5tRRED3e',
+
+                },
+                {
+                    type: 'recurring_pickup_confirmed',
+                    content: '-XKSIDLeC_Uksd321e'
+                },
+                {
+                    type: 'recurring_pickup_request',
+                    content: '-XKSIDLeC_Uksd321e'
+                },
+                {
+                    type: 'recurring_pickup_request',
+                    content: '-XKSIDLeC_Uksd321e'
+                }
+            ]
+        });
     }
 
     openPopUp(){
@@ -135,14 +155,19 @@ class PageContainer extends Component {
                         Settings
                     </div>
                 )}
-
-                {/* this only shows notification */}
-                {this.state.hover &&
-                    <NotificationPopup 
-                        notificationType={this.state.notification.type} 
-                        account={this.props.account.accountType}
-                        clickNotification={this.openPopUp.bind(this)}/>
-                }
+                <div className="popup-flex">
+                    {/* this only shows notification */}
+                    {
+                        this.state.notifications.map((notification, i) => {
+                            return(
+                                <NotificationPopup 
+                                    notificationType={notification.type} 
+                                    account={this.props.account.accountType}
+                                    clickNotification={this.openPopUp.bind(this)}/>
+                            );
+                        })
+                    }
+                </div>
             </div>
         );
     }
