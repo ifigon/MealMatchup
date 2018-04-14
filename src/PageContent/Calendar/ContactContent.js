@@ -43,11 +43,6 @@ class DescriptionContent extends Component {
 
     handleChange(e) {
         e.preventDefault();
-        // pass these in from firebase
-        let values = {
-            name: e.target.name.value,
-            phone: e.target.phone.value
-        };
         this.setState({
             name: e.target.name.value,
             phone: e.target.phone.value,
