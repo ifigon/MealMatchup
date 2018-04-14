@@ -10,7 +10,7 @@
   padding: 15px;
   padding-top: 0px;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   border-bottom: #e0e0e0 0.5px solid;
   padding-right: 0px;
   width: 80%;
@@ -32,11 +32,12 @@
 .content-icon {
   display: inline-block;
   padding-right: 10px;
+  margin-top: 5px;
 }
 .content-details-wrapper {
   display: inline-block;
   margin-right: 10px;
-  vertical-align: middle;
+  vertical-align: top;
   width: 80%;
 }
 .content-details {

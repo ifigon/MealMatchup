@@ -6,10 +6,7 @@ import volunteer from '../../icons/volunteer.svg';
 class DelivererGroupContent extends Component {
     constructor(props) {
         super(props);
-        if (
-            this.props.delivery !== undefined &&
-            this.props.delivery.deliveryGroup !== undefined
-        ) {
+        if (this.props.delivery) {
             this.state = {
                 edit: false,
                 delivererGroup: this.props.delivery.delivererGroup.name,
@@ -23,7 +20,9 @@ class DelivererGroupContent extends Component {
                 email2: this.props.delivery.delivererGroup.deliverers[1].email
             };
         } else {
-            this.state = {};
+            this.state = {
+                edit: false
+            };
         }
 
         this.edit = this.edit.bind(this);
@@ -60,9 +59,7 @@ class DelivererGroupContent extends Component {
                         <h1 className="section-header">Picking Up Donation</h1>
                     )}
 
-                    {!this.state.delivererGroup ? (
-                        <div className="tbd">To Be Determined.</div>
-                    ) : (
+                    {this.state.delivererGroup !== undefined ? (
                         <div>
                             <h2 className="organization">
                                 {this.state.delivererGroup}
@@ -156,6 +153,8 @@ class DelivererGroupContent extends Component {
                                     </button>
                                 ) : null}
                         </div>
+                    ) : (
+                        <div>To Be Determined.</div>
                     )}
                 </div>
             </div>
