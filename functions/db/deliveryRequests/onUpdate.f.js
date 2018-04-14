@@ -54,42 +54,50 @@ exports = module.exports = functions.database
         const accountsRef = rootRef.child('accounts');
         const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
 
-        // ---------- Listener 1 triggers ----------
-        // case A
-        if (raClaimed(change)) {
+
+        // ------------- Listener 1 triggers -------------
+        if (raClaimed(change)) {  // case A
             return sendRequestToDGs(accountsRef, requestSnap);
         }
-        // case B
-        if (raRejected(change)) {
+
+        if (raRejected(change)) {  // case B
             console.info('Listener1: all RA rejected -> send notification to DA');
             return utils.notifyRequestUpdate(
                 'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA);
         }
-        // ---------- Listener 1 end ----------
+        // --------------- Listener 1 end ---------------
 
-        // ---------- Listener 2 triggers ----------
-        // case A
-        if (dgClaimed(change)) {
+
+        // ------------- Listener 2 triggers -------------
+        if (dgClaimed(change)) {  // case A
             // make sure the deliveries are created before we notify accounts
             return createDeliveries(rootRef, requestSnap)
                 .then(() => {
+                    console.info('Notifying all parties of the confirmed delivery');
+
+                    let raRef = accountsRef.child(request.receivingAgency.claimed);
+                    let dgRef = accountsRef.child(request.delivererGroup.claimed);
                     let accounts = [
                         {label: 'DA', ref: daRef},
-                        {label: 'RA', ref: accountsRef.child(request.receivingAgency.claimed)},
-                        {label: 'DG', ref: accountsRef.child(request.delivererGroup.claimed)},
+                        {label: 'RA', ref: raRef},
+                        {label: 'DG', ref: dgRef},
                     ];
                     return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_CONFIRMED);
                 });
         }
-        // case B
-        if (dgRejected(change)) {
+
+        if (dgRejected(change)) {  // case B
+            console.info('Listener2: all DGs rejected -> send notifications to DA and RA');
+
+            let raRef = accountsRef.child(request.receivingAgency.claimed);
             let accounts = [
                 {label: 'DA', ref: daRef},
-                {label: 'RA', ref: accountsRef.child(request.receivingAgency.claimed)},
+                {label: 'RA', ref: raRef},
             ];
             return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_DG);
         }
-        // ---------- Listener 2 end ----------
+        // --------------- Listener 2 end ---------------
+
 
         console.info('Nothing was triggered.');
         return null;
@@ -169,7 +177,34 @@ function dgRejected(change) {
 
 // case A handler
 function createDeliveries(rootRef, requestSnap) {
-    // TODO
+    console.info('Listener2: DG claimed -> create delivery objects');
+    let request = requestSnap.val();
+    let dsRef = rootRef.child(`deliveries/${request.umbrella}`);
+
+    let step = -1;  // num days to step by
+    if (request.repeats === enums.RequestRepeatType.WEEKLY) {
+        step = 7;
+    } else if (request.repeats === enums.RequestRepeatType.BIWEEKLY) {
+        step = 14;
+    } else {
+        return Promise.reject(
+            new Error('Repeats other when weekly and biweekly are not supported yet'));
+    }
+
+    // TODO: calc duration and fill out common fields in delivery
+    let duration = moment();
+    let delivery = {};
+
+    let promises = [];
+    let cur = moment(request.startTimestamp);
+    while (cur.valueOf() <= request.endTimestamp) {
+        // TODO update delivery
+
+        promises.push(dsRef.push(delivery));
+
+        cur.add(step, 'days');
+    }
+
     return Promise.resolve();
 }
 // ----------------------- End Listener 2 -----------------------
