@@ -2,6 +2,8 @@ const functions = require('firebase-functions');
 const enums = require('../../Enums.js');
 const utils = require('../../Utils.js');
 
+const nt = enums.NotificationType;
+
 /*
  * Listeners based on changes to recurring pickup requests:
  *
@@ -38,21 +40,22 @@ exports = module.exports = functions.database
         }
 
         // get db refs. TODO: set up Admin SDK
+        let requestSnap = change.after;
         const rootRef = change.after.ref.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
-        const dasRef = rootRef.child('donating_agencies');
-        let requestSnap = change.after;
+        const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
 
-        // Listener 1 triggers
+        // ---------- Listener 1 triggers ----------
+        // case A
         if (raClaimed(change)) {
-            // case A
             return sendRequestToDGs(accountsRef, requestSnap);
-        } else if (raRejected(change)) {
-            // case B
-            let daRef = dasRef.child(requestSnap.val().donatingAgency);
-            return utils.notifyRequestUpdate('DA', daRef, requestSnap.key, 
-                enums.NotificationType.RECURRING_PICKUP_REJECTED_RA);
         }
+        // case B
+        if (raRejected(change)) {
+            return utils.notifyRequestUpdate(
+                'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA);
+        }
+        // ---------- Listener 1 end ----------
 
         // TODO: Listener 2
 
@@ -107,8 +110,8 @@ function sendRequestToDGs(accountsRef, requestSnap) {
     for (let dg in pending) {
         let dgRef = accountsRef.child(pending[dg]);
         promises.push(
-            utils.notifyRequestUpdate('DG', dgRef, requestSnap.key, 
-                enums.NotificationType.RECURRING_PICKUP_REQUEST));
+            utils.notifyRequestUpdate(
+                'DG', dgRef, requestSnap.key, nt.RECURRING_PICKUP_REQUEST));
     }
 
     return Promise.all(promises);
