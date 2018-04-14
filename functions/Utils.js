@@ -1,20 +1,19 @@
-var pushNotification = function (accountRef, notification, label) {
+var pushNotification = function (label, accountRef, notification) {
     let promise = accountRef.child('notifications').push(notification);
     console.info('Notified ' + label + ' "' + accountRef.key + '": '
         + JSON.stringify(notification));
     return promise;
 };
 
-var notifyRequestDA = function (dasRef, requestSnap, notifType) {
+var notifyRequestUpdate = function (label, accountRef, requestKey, notifType) {
     let notification = {
         type: notifType,
-        content: requestSnap.key
+        content: requestKey
     };
-    let daRef = dasRef.child(requestSnap.val().donatingAgency);
-    return pushNotification(daRef, notification, 'DA');
+    return pushNotification(accountRef, notification, label);
 };
 
 module.exports = {
     pushNotification: pushNotification,
-    notifyRequestDA: notifyRequestDA,
+    notifyRequestUpdate: notifyRequestUpdate,
 };

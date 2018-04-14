@@ -26,7 +26,6 @@ exports = module.exports = functions.database
 
 
 
-        console.info(context);
         console.info(change.before.val());
         console.info(change.after.val());
 
@@ -39,17 +38,19 @@ exports = module.exports = functions.database
         }
 
         // get db refs. TODO: set up Admin SDK
-        const requestRef = change.after.ref;
-        const accountsRef = requestRef.parent.parent.parent.child('accounts');
-        const dasRef = accountsRef.parent.child('donating_agencies');
+        const rootRef = change.after.ref.parent.parent.parent;
+        const accountsRef = rootRef.child('accounts');
+        const dasRef = rootRef.child('donating_agencies');
+        let requestSnap = change.after;
 
         // Listener 1 triggers
         if (raClaimed(change)) {
             // case A
-            return sendRequestToDGs(accountsRef, change.after);
+            return sendRequestToDGs(accountsRef, requestSnap);
         } else if (raRejected(change)) {
             // case B
-            return utils.notifyRequestDA(dasRef, change.after, 
+            let daRef = dasRef.child(requestSnap.val().donatingAgency);
+            return utils.notifyRequestUpdate('DA', daRef, requestSnap.key, 
                 enums.NotificationType.RECURRING_PICKUP_REJECTED_RA);
         }
 
@@ -74,7 +75,6 @@ function raRejected(change) {
 
 // case A handler
 function sendRequestToDGs(accountsRef, requestSnap) {
-    let requestKey = requestSnap.key;
     let request = requestSnap.val();
     let dgInfo = request.delivererGroup;
     
@@ -103,18 +103,15 @@ function sendRequestToDGs(accountsRef, requestSnap) {
         console.info('No specific DG requested, ' + pending.length + ' pending DGs');
     }
 
-    let notification = {
-        type: enums.NotificationType.RECURRING_PICKUP_REQUEST,
-        content: requestKey
-    };
     let promises = [];
     for (let dg in pending) {
         let dgRef = accountsRef.child(pending[dg]);
-        promises.push(utils.pushNotification(dgRef, notification, 'DG'));
+        promises.push(
+            utils.notifyRequestUpdate('DG', dgRef, requestSnap.key, 
+                enums.NotificationType.RECURRING_PICKUP_REQUEST));
     }
 
     return Promise.all(promises);
 }
 
-// case B handler: utils.notifyRequestDA
 // ----------------------- End Listener 1 -----------------------
