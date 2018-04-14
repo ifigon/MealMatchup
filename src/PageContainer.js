@@ -23,7 +23,8 @@ class PageContainer extends Component {
             showPopUp: false,
             notificationClicked: false,
             notifications: [],
-            donatingAgency: null
+            donatingAgency: null,
+            notificationCount: 2
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -49,9 +50,6 @@ class PageContainer extends Component {
         }
 
         //TODO: query db for notifications
-    }
-
-    componentWillMount() {
         this.setState({
             notifications: [
                 {
@@ -106,7 +104,12 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader notificationClicked={this.notificationClicked.bind(this)} logo={logo} title={this.props.account.name} />
+                <PageHeader 
+                    notificationClicked={this.notificationClicked.bind(this)} 
+                    logo={logo} 
+                    title={this.props.account.name} 
+                    //TODO: update count when notification gets deleted/viewed/claimed (?)
+                    notificationCount={this.state.notifications.length}/>
 
                 <NavBar
                     content={this.state.content}

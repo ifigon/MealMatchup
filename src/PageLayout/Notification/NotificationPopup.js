@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import truckG from '../../icons/green_truck.svg';
-import { NotificationType, AccountType } from '../../Enums';
+import { NotificationType } from '../../Enums';
 import './Popup.css';
 
 class NotificationPopup extends Component {

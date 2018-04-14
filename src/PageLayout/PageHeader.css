@@ -32,3 +32,7 @@
 .notification-icon{
     margin-right: 80px;
 }
+
+.header-title{
+    display: inherit;
+}
