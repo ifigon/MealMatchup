@@ -77,6 +77,7 @@ class PageContainer extends Component {
     }
 
     openPopUp(){
+        // TODO: backend populate notification popup info
         this.setState({
             showPopUp: true,
             notificationClicked: false
