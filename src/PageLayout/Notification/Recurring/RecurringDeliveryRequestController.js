@@ -40,6 +40,8 @@ class RecurringDeliveryRequestController extends Component {
             />;
         case 2:
             return <RecurringDeliveryRequest2
+                accountType={this.props.account.accountType}
+                details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
                 previousStep={this.previousStep.bind(this)}
                 close={this.props.closePopUp}
@@ -47,6 +49,8 @@ class RecurringDeliveryRequestController extends Component {
 
         case 3:
             return <RecurringDeliveryRequest3
+                accountType={this.props.account.accountType}
+                details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
                 previousStep={this.previousStep.bind(this)}
                 close={this.props.closePopUp}
