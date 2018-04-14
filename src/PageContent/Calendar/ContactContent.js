@@ -6,11 +6,32 @@ import phone from '../../icons/phone.svg';
 class DescriptionContent extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            edit: false,
-            name: this.props.delivery.contact.name,
-            phone: this.props.delivery.contact.phone
-        };
+        if (
+            this.props.delivery.donatingAgency &&
+            this.props.accountType === AccountType.DONATING_AGENCY_MEMBER
+        ) {
+            this.state = {
+                edit: false,
+                name: this.props.delivery.donatingAgency.contact.name,
+                phone: this.props.delivery.donatingAgency.contact.phone,
+                email: this.props.delivery.donatingAgency.contact.email
+            };
+        } else if (
+            this.props.delivery.receivingAgency &&
+            this.props.accountType === AccountType.RECEIVING_AGENCY
+        ) {
+            this.state = {
+                edit: false,
+                name: this.props.delivery.receivingAgency.contact.name,
+                phone: this.props.delivery.receivingAgency.contact.phone,
+                email: this.props.delivery.receivingAgency.contact.email
+            };
+        } else {
+            this.state = {
+                edit: false
+            };
+        }
+
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -75,6 +96,12 @@ class DescriptionContent extends Component {
                                         name="phone"
                                         pattern={StringFormat.PHONE}
                                     />
+                                    <input
+                                        type="email"
+                                        className="content-details "
+                                        defaultValue={this.state.email}
+                                        name="email"
+                                    />
                                 </div>
 
                                 <input
@@ -85,17 +112,15 @@ class DescriptionContent extends Component {
                             </form>
                         </div>
                     )}
-                    {this.props.accountType === AccountType.RECEIVING_AGENCY &&
-                    !this.state.edit &&
-                    this.props.futureEvent ? (
-                            <button
-                                type="button"
-                                className="edit-button"
-                                onClick={this.edit}
-                            >
+                    {!this.state.edit && this.props.futureEvent ? (
+                        <button
+                            type="button"
+                            className="edit-button"
+                            onClick={this.edit}
+                        >
                             Edit
-                            </button>
-                        ) : null}
+                        </button>
+                    ) : null}
                 </div>
             </div>
         );

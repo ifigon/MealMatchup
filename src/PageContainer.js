@@ -67,9 +67,19 @@ class PageContainer extends Component {
             date: '11/14/2017',
             startTime: '10am',
             endTime: '12pm',
-            contact: {
-                name: 'Chris Stack',
-                phone: '206-543-6975'
+            receivingAgency: {
+                contact: {
+                    name: 'Chris Stack',
+                    phone: '206-543-6975',
+                    email: 'chrisstack@uniongospel.org'
+                }
+            },
+            donatingAgency: {
+                contact: {
+                    name: 'Andrea Benson',
+                    phone: '206-543-6975',
+                    email: 'bensoa3@uw.edu'
+                }
             }
         };
         this.setState({
