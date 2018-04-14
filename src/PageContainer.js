@@ -32,7 +32,6 @@ class PageContainer extends Component {
             notificationCount: 4,
             notification: null
         };
-        console.log(this.props.account.accountType);
         this.navBarHandler = this.navBarHandler.bind(this);
     }
 
