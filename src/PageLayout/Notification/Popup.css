@@ -12,6 +12,18 @@
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
 }
 
+.popup-flex{
+  display: grid;
+  position: fixed;
+  top: 90px;
+  right: 10px;
+}
+.popuptest{
+  height: 300px;
+  border: solid 2px red;
+  width: 500px;
+
+}
 .recurring {
   border-top: solid 20px #37b674;
 }
@@ -34,13 +46,13 @@
   margin: 0 auto;
 }
 
-.icon,
+.popup-icon,
 h1 {
   display: inline;
   vertical-align: middle;
 }
 
-.icon {
+.popup-icon {
   height: 5vh;
   padding-right: 10px;
   fill: #37b674;
@@ -91,20 +103,20 @@ p.summary {
   font-size: 0.9rem;
 }
 
-.buttons {
+.notification-buttons {
   margin: 0 auto;
   align-content: center;
   text-align: center;
   margin-top: 30px;
+  float: right;
 }
 
-button {
-  width: 10vw;
-  height: 3vw;
+.notification-wrapper button {
+  width: 7vw;
+  height: 2.5vw;
   border-radius: 3px;
-  margin: 20px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.1vw;
 }
 
 .claim {
@@ -137,14 +149,17 @@ map {
 .notification-wrapper {
   float: right;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
-  padding: 10px;
+  padding: 15px 10px 10px;
   border: solid 1px #e1e1e1;
-  margin-top: -30px;
   margin-right: 5px;
+  top: 90px;
+  right: 0px;
+  background-color: white;
+  width: 100%;
 }
 
 .hover {
-  font-size: 1.2vw;
+  font-size: 1.1vw;
   font-weight: 400;
 }
 

@@ -33,7 +33,6 @@
     margin-right: 80px;
 }
 
-/* @media screen and (max-width: 1090px) {
-    position: fixed;
-    margin-left: 100px
-} */
+.header-title{
+    display: inherit;
+}

@@ -1,3 +1,0 @@
-header/top nav bar
-Main card + form
-Signature
