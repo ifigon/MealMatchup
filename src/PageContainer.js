@@ -21,8 +21,7 @@ class PageContainer extends Component {
         this.state = {
             content: props.content,
             showPopUp: false,
-            hover: false,
-            // TODO: how to handle multiple notifications
+            notificationClicked: false,
             notifications: [],
             donatingAgency: null
         };
@@ -50,24 +49,30 @@ class PageContainer extends Component {
         }
 
         //TODO: query db for notifications
+    }
+
+    componentWillMount() {
         this.setState({
             notifications: [
                 {
                     type: 'recurring_pickup_request',
                     content: '-L5QoXeC_UrL5tRRED3e',
-
+                    claimed: true
                 },
                 {
                     type: 'recurring_pickup_confirmed',
-                    content: '-XKSIDLeC_Uksd321e'
+                    content: '-XKSIDLeC_Uksd321e',
+                    claimed: false
+                },
+                {
+                    type: 'recurring_pickup_confirmed',
+                    content: '-XKSIDLeC_Uksd321e',
+                    claimed: false
                 },
                 {
                     type: 'recurring_pickup_request',
-                    content: '-XKSIDLeC_Uksd321e'
-                },
-                {
-                    type: 'recurring_pickup_request',
-                    content: '-XKSIDLeC_Uksd321e'
+                    content: '-XKSIDLeC_Uksd321e',
+                    claimed: false
                 }
             ]
         });
@@ -76,7 +81,7 @@ class PageContainer extends Component {
     openPopUp(){
         this.setState({
             showPopUp: true,
-            hover: false
+            notificationClicked: false
         });
     }
 
@@ -86,9 +91,9 @@ class PageContainer extends Component {
         });
     }
 
-    hover(){
-        this.setState({
-            hover: true
+    notificationClicked(){
+        this.setState((prevState) => {
+            return {notificationClicked: !prevState.notificationClicked};
         });
     }
 
@@ -101,7 +106,7 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader hover={this.hover.bind(this)} logo={logo} title={this.props.account.name} />
+                <PageHeader notificationClicked={this.notificationClicked.bind(this)} logo={logo} title={this.props.account.name} />
 
                 <NavBar
                     content={this.state.content}
@@ -157,14 +162,13 @@ class PageContainer extends Component {
                 )}
                 <div className="popup-flex">
                     {/* this only shows notification */}
-                    {
+                    {this.state.notificationClicked &&
                         this.state.notifications.map((notification, i) => {
-                            return(
+                            return !notification.claimed && 
                                 <NotificationPopup 
                                     notificationType={notification.type} 
                                     account={this.props.account.accountType}
-                                    clickNotification={this.openPopUp.bind(this)}/>
-                            );
+                                    clickNotification={this.openPopUp.bind(this)}/>;
                         })
                     }
                 </div>
