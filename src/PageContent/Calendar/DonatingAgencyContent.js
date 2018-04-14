@@ -4,36 +4,27 @@ import './Content.css';
 import shelter from '../../icons/shelter.svg';
 
 class DonatingAgencyContent extends Component {
-    convertPhone(phone) {
-        if (phone !== undefined) {
-            let phoneString = phone.toString();
-            let formattedPhone =
-                phoneString.substr(0, 3) +
-                '-' +
-                phoneString.substr(3, 3) +
-                '-' +
-                phoneString.substr(6);
-            return formattedPhone;
-        }
+    constructor(props) {
+        super(props);
+        this.state = {
+            donatingAgency: this.props.delivery.donatingAgency.name,
+            contactName: this.props.delivery.donatingAgency.contact.name,
+            email: this.props.delivery.donatingAgency.contact.email,
+            phone: this.props.delivery.donatingAgency.contact.phone
+        };
     }
     render() {
-        let phone = this.convertPhone(this.props.donatingAgencyContactPhone);
         return (
             <div className="wrapper">
                 <img className="content-icon" src={shelter} alt="volunteer" />
                 <div className="content-wrapper">
-                    {this.props.accountType ===
-                    AccountType.DONATING_AGENCY_MEMBER ? (
-                            <h1 className="section-header">Recipient</h1>
-                        ) : (
-                            <h1 className="section-header">Dining Hall</h1>
-                        )}
+                    <h1 className="section-header">Dining Hall</h1>
                     <h2 className="organization">
-                        {this.props.donatingAgency}
+                        {this.state.donatingAgency}
                     </h2>
                     <div className="content-details-wrapper">
                         <p className="content-details">
-                            {this.props.donatingAgencyContactName} ({phone})
+                            {this.state.contactName} ({this.state.phone})
                         </p>
                     </div>
                 </div>

@@ -17,9 +17,7 @@ class Dialog extends Component {
                     accountType={this.props.accountType}
                 />
                 <DialogContent
-                    donatingAgency={'Local Point'}
-                    donatingAgencyContactName={'Andrea Benson'}
-                    donatingAgencyContactPhone={2065436975}
+                    delivery={this.props.delivery}
                     accountType={this.props.accountType}
                 />
             </dialog>
