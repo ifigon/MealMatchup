@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import truckG from '../../icons/green_truck.svg';
 import { NotificationType } from '../../Enums';
+import { NotificationMap } from './NotificationMap';
 import './Popup.css';
 
-class NotificationPopup extends Component {
+class Notification extends Component {
+    componentDidMount(){
+        let info = NotificationMap[this.props.notificationType];
+    }
     render() {
         return (
             <div>
                 {
-                    this.props.notificationType === NotificationType.RECURRING_PICKUP_REQUEST &&
+                    this.props.notificationType === NotificationType.RECURRING_PICKUP_REQUEST && 
                         <div className="notification-wrapper recurring arrow-up">
                             <img className="popup-icon" src={truckG} alt="icon"/><h1 className="hover">Recurring pickup requested</h1>
                             <div className="notification-buttons notification">
@@ -29,4 +33,4 @@ class NotificationPopup extends Component {
         );
     }
 }
-export default NotificationPopup;
+export default Notification;
