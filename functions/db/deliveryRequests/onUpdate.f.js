@@ -7,7 +7,7 @@ const nt = enums.NotificationType;
 /*
  * Listeners based on changes to recurring pickup requests:
  *
- * Listener 1: handle RA responses for recurring pickup requests
+ * LISTENER 1: handle RA responses for recurring pickup requests
  * Cases:
  *  A) a RA claimed:
  *      Change: 'receivingAgency' changed from requested/pending to claimed
@@ -25,13 +25,9 @@ exports = module.exports = functions.database
     .ref('/delivery_requests/{umbrellaId}/{pushId}')
     .onUpdate((change, context) => {
         console.info('Recurring request changed: ' + context.params.pushId);
-
-
-
-        console.info(change.before.val());
-        console.info(change.after.val());
-
-
+        // TODO remove debug logging
+        console.debug(change.before.val());
+        console.debug(change.after.val());
 
         // once a request is not in pending status, it shouldn't be changed anymore
         if (change.before.val().status !== enums.RequestStatus.PENDING) {
@@ -41,6 +37,7 @@ exports = module.exports = functions.database
 
         // get db refs. TODO: set up Admin SDK
         let requestSnap = change.after;
+        let request = requestSnap.val();
         const rootRef = change.after.ref.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
         const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
@@ -52,6 +49,7 @@ exports = module.exports = functions.database
         }
         // case B
         if (raRejected(change)) {
+            console.info('Listener1: all RA rejected -> send notification to DA');
             return utils.notifyRequestUpdate(
                 'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA);
         }
@@ -81,7 +79,7 @@ function sendRequestToDGs(accountsRef, requestSnap) {
     let request = requestSnap.val();
     let dgInfo = request.delivererGroup;
     
-    console.info('Listener 1 triggered: a RA claimed -> send notifications to DGs');
+    console.info('Listener1: a RA claimed -> send notifications to DGs');
 
     if (request.status !== enums.RequestStatus.PENDING) {
         return Promise.reject(
