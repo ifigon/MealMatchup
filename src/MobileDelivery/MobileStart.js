@@ -13,8 +13,6 @@ class MobileStart extends React.Component {
         this.state = {
             day: moment(date).format('dddd'),
             date: moment(date).format('l'),
-            deliverers: this.props.da.agency,
-            receivingAgency: this.props.ra.agency,
         };
     }
 
