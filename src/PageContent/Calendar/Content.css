@@ -185,3 +185,18 @@ select.description-unit {
 .plus:hover {
   cursor: pointer;
 }
+
+.add-food {
+  background-color: #ea7474;
+  color: white;
+  width: 200px;
+  border: none;
+  border-radius: 4px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-top: 10px;
+}
+
+.add-food:hover {
+  cursor: pointer;
+}
