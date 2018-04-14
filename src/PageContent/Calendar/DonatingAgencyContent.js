@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { AccountType } from '../../Enums';
 import './Content.css';
 import shelter from '../../icons/shelter.svg';
 
