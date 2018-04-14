@@ -173,6 +173,7 @@ class PageContainer extends Component {
                         this.state.notifications.map((notification, i) => {
                             return !notification.claimed && 
                                 <NotificationPopup 
+                                    key={i}
                                     notificationType={notification.type} 
                                     account={this.props.account.accountType}
                                     clickNotification={this.openPopUp.bind(this)}/>;
