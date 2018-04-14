@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { NotificationType } from '../../Enums';
 import { NotificationMap } from './NotificationMap';
 import './Popup.css';
 
