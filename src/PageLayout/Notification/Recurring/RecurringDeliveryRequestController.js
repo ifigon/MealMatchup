@@ -32,6 +32,7 @@ class RecurringDeliveryRequestController extends Component {
         switch (this.state.step) {
         default:
             return <RecurringDeliveryRequest1
+                accountType={this.props.account.accountType}
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
                 previousStep={this.previousStep.bind(this)}

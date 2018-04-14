@@ -12,12 +12,46 @@
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-.popup-flex{
+.notification-flex{
   display: grid;
   position: fixed;
   top: 90px;
   right: 10px;
 }
+
+.popup-flex{
+  display: grid;
+  top: 90px;
+  right: 10px;
+}
+
+.popup-buttons{
+  font-weight: 600;
+  padding-top: 15px;
+  bottom: 0;
+  margin-bottom: 30px;
+  padding-left: 30px;
+  margin: auto;
+}
+
+.popup-buttons .claim {
+  width: 40%;
+  font-size: 1.4vw;
+  background: #5DC0F9;
+  border: 3px solid #5DC0F9;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-right: 20px;
+}
+
+.popup-buttons .reject {
+  width: 40%;
+  border: 3px solid #E0E0E0;
+  box-sizing: border-box;
+  border-radius: 3px;
+  font-size: 1.4vw;
+}
+
 .popuptest{
   height: 300px;
   border: solid 2px red;
@@ -41,9 +75,22 @@
   cursor: pointer;
 }
 
-.wrapper {
+.modal-wrapper {
   display: block;
-  margin: 0 auto;
+  margin-top: 0px;
+}
+
+.modal-wrapper  h1{
+  display: inline;
+  margin-left: 10%;
+
+}
+
+.modal-wrapper  .icon {
+  position: absolute;
+  margin: 5px auto;
+  width: 4%;
+    height: auto;
 }
 
 .popup-icon,
@@ -73,6 +120,10 @@ h1 {
   margin-bottom: 20px;
 }
 
+.pickup-details p {
+  margin: 0px;
+}
+
 h2 {
   font-weight: 600;
   margin-bottom: 0px;
@@ -87,9 +138,6 @@ label {
   display: inline;
 }
 
-.start {
-  margin-bottom: 5px;
-}
 p.summary {
   font-weight: 400;
   margin: 0px;

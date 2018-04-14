@@ -32,7 +32,7 @@ class PageContainer extends Component {
             notificationCount: 4,
             notification: null
         };
-
+        console.log(this.props.account.accountType);
         this.navBarHandler = this.navBarHandler.bind(this);
     }
 
@@ -254,7 +254,7 @@ class PageContainer extends Component {
                         Settings
                     </div>
                 )}
-                <div className="popup-flex">
+                <div className="notification-flex">
                     {/* this only shows notification */}
                     {this.state.notificationClicked &&
                         this.state.notifications.map((notification, i) => {
@@ -266,8 +266,11 @@ class PageContainer extends Component {
                                     clickNotification={this.openPopUp.bind(this)}/>;
                         })
                     }
+                </div>
+                <div className="popup-flex">
                     {this.state.showPopUp ?
-                        <RecurringDeliveryRequestController 
+                        <RecurringDeliveryRequestController
+                            account={this.props.account}
                             details={this.state.notification}
                             closePopUp={this.closePopUp.bind(this)}/>
                         : null    
