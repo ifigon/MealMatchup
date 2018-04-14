@@ -318,5 +318,10 @@ ol li {
 
 .modal-grid{
   position: relative;
+}
 
+#modal-cal{
+  color: #545861;
+  font-weight: 600;
+  font-style: italic;
 }
