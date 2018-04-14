@@ -67,6 +67,9 @@ class PageContainer extends Component {
             date: '11/14/2017',
             startTime: '10am',
             endTime: '12pm',
+            donatingAgency: {
+                name: 'Local Point'
+            },
             donationDescription: [
                 {
                     name: 'Baked beans',
@@ -129,18 +132,18 @@ class PageContainer extends Component {
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
-                                accountType={this.props.account.accountType}
                                 delivery={this.state.delivery}
                                 futureEvent={true}
                                 accountOwnerName={this.props.account.name}
+                                accountType={this.props.account.accountType}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
                             <EventCard
-                                eventType={this.state.delivery.eventType}
                                 startTime={this.state.delivery.startTime}
                                 endTime={this.state.delivery.endTime}
                                 futureEvent={true}
+                                eventType={this.state.delivery.eventType}
                             />
                         </div>
                     </div>

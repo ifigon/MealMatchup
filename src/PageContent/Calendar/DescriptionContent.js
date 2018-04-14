@@ -10,11 +10,13 @@ class DescriptionContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            donationObject: this.props.donationDescription
+            donationObject: this.props.delivery.donationDescription,
+            accountType: this.props.accountType
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addRow = this.addRow.bind(this);
+        console.log('account type', this.props.accountType);
     }
     edit() {
         this.setState({
@@ -158,7 +160,7 @@ class DescriptionContent extends Component {
                             </form>
                         </div>
                     )}
-                    {this.props.accountType ===
+                    {this.state.accountType ===
                         AccountType.DONATING_AGENCY_MEMBER &&
                     !this.state.edit &&
                     this.props.futureEvent ? (

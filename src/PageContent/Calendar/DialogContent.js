@@ -8,9 +8,9 @@ class DialogContent extends Component {
             <div>
                 <DescriptionContent
                     futureEvent={this.props.futureEvent}
-                    accountType={this.props.accountType}
-                    donationDescription={this.props.donationDescription}
+                    delivery={this.props.delivery}
                     accountOwnerName={this.props.accountOwnerName}
+                    accountType={this.props.accountType}
                 />
             </div>
         );
