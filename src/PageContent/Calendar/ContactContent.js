@@ -8,8 +8,8 @@ class DescriptionContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            name: this.props.name,
-            phone: this.props.phone
+            name: this.props.delivery.contact.name,
+            phone: this.props.delivery.contact.phone
         };
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
