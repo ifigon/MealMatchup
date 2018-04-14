@@ -7,7 +7,7 @@ class Notification extends Component {
     constructor(props){
         super(props);
         this.state = {
-            info: NotificationMap[this.props.notificationType.toUpperCase()]
+            info: NotificationMap[this.props.notificationType]
         };
     }
     render() {

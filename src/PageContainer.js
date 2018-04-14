@@ -24,7 +24,11 @@ class PageContainer extends Component {
             notificationClicked: false,
             notifications: [],
             donatingAgency: null,
-            notificationCount: 2
+            //TODO: backend update count when notification gets deleted/viewed/claimed/expired (?)
+            // "They should stay in the notifications drop down until claimed or expired
+            // If they don’t have to do with pickups, I’d give them a week until they 
+            // expire from drop down or are removed"
+            notificationCount: 4
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -55,7 +59,7 @@ class PageContainer extends Component {
                 {
                     type: 'recurring_pickup_request',
                     content: '-L5QoXeC_UrL5tRRED3e',
-                    claimed: true
+                    claimed: false
                 },
                 {
                     type: 'recurring_pickup_confirmed',
@@ -109,8 +113,7 @@ class PageContainer extends Component {
                     notificationClicked={this.notificationClicked.bind(this)} 
                     logo={logo} 
                     title={this.props.account.name} 
-                    //TODO: update count when notification gets deleted/viewed/claimed (?)
-                    notificationCount={this.state.notifications.length}/>
+                    notificationCount={this.state.notificationCount}/>
 
                 <NavBar
                     content={this.state.content}
