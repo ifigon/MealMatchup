@@ -10,7 +10,7 @@ var notifyRequestUpdate = function (label, accountRef, requestKey, notifType) {
         type: notifType,
         content: requestKey
     };
-    return pushNotification(accountRef, notification, label);
+    return pushNotification(label, accountRef, notification);
 };
 
 module.exports = {

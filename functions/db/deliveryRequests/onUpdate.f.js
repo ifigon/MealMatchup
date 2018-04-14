@@ -37,13 +37,9 @@ exports = module.exports = functions.database
     .ref('/delivery_requests/{umbrellaId}/{pushId}')
     .onUpdate((change, context) => {
         console.info('Recurring request changed: ' + context.params.pushId);
-
-
-
-        console.info(change.before.val());
-        console.info(change.after.val());
-
-
+        // TODO remove debug logging
+        console.debug(change.before.val());
+        console.debug(change.after.val());
 
         // once a request is not in pending status, it shouldn't be changed anymore
         if (change.before.val().status !== enums.RequestStatus.PENDING) {
@@ -65,6 +61,7 @@ exports = module.exports = functions.database
         }
         // case B
         if (raRejected(change)) {
+            console.info('Listener1: all RA rejected -> send notification to DA');
             return utils.notifyRequestUpdate(
                 'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA);
         }
@@ -116,7 +113,7 @@ function sendRequestToDGs(accountsRef, requestSnap) {
     let request = requestSnap.val();
     let dgInfo = request.delivererGroup;
     
-    console.info('Listener 1 triggered: a RA claimed -> send notifications to DGs');
+    console.info('Listener1: a RA claimed -> send notifications to DGs');
 
     if (request.status !== enums.RequestStatus.PENDING) {
         return Promise.reject(
