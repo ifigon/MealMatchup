@@ -7,8 +7,8 @@ const nt = enums.NotificationType;
 /*
  * Listeners based on changes to recurring pickup requests:
  *
- * Listener 1: handle RA responses for recurring pickup requests
- * Cases:
+ * LISTENER 1: handle RA responses for recurring pickup requests
+ * Cases
  *  A) a RA claimed:
  *      Change: 'receivingAgency' changed from requested/pending to claimed
  *      Action: send notifications to DGs
@@ -18,8 +18,20 @@ const nt = enums.NotificationType;
  *  C) no RA responded in time:
  *      TODO: to be handled by a different scheduled function
  *
- * Listener 2: handle DG responses for recurring pickup requests
- * TODO
+ * LISTENER 2: handle DG responses for recurring pickup requests
+ * Cases
+ *  A) a DG claimed:
+ *      Changes:
+ *          i. 'delivererGroup' changed from requested/pending to claimed
+ *          ii. 'status' changed from PENDING to CONFIRMED
+ *      Actions:
+ *          i. create delivery objects
+ *          ii. send CONFIRMED notifications to DA, RA, DG
+ *  B) all DGs rejected:
+ *      Change: 'status' changed from PENDING to REJECTED_DG
+ *      Action: send notification back to DA and RA
+ *  C) no DG respondid in time:
+ *      TODO: to be handled by a different scheduled function
  */
 exports = module.exports = functions.database
     .ref('/delivery_requests/{umbrellaId}/{pushId}')
@@ -41,6 +53,7 @@ exports = module.exports = functions.database
 
         // get db refs. TODO: set up Admin SDK
         let requestSnap = change.after;
+        let request = requestSnap.val();
         const rootRef = change.after.ref.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
         const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
@@ -57,7 +70,29 @@ exports = module.exports = functions.database
         }
         // ---------- Listener 1 end ----------
 
-        // TODO: Listener 2
+        // ---------- Listener 2 triggers ----------
+        // case A
+        if (dgClaimed(change)) {
+            // make sure the deliveries are created before we notify accounts
+            return createDeliveries(rootRef, requestSnap)
+                .then(() => {
+                    let accounts = [
+                        {label: 'DA', ref: daRef},
+                        {label: 'RA', ref: accountsRef.child(request.receivingAgency.claimed)},
+                        {label: 'DG', ref: accountsRef.child(request.delivererGroup.claimed)},
+                    ];
+                    return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_CONFIRMED);
+                });
+        }
+        // case B
+        if (dgRejected(change)) {
+            let accounts = [
+                {label: 'DA', ref: daRef},
+                {label: 'RA', ref: accountsRef.child(request.receivingAgency.claimed)},
+            ];
+            return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_DG);
+        }
+        // ---------- Listener 2 end ----------
 
         console.info('Nothing was triggered.');
         return null;
@@ -118,3 +153,35 @@ function sendRequestToDGs(accountsRef, requestSnap) {
 }
 
 // ----------------------- End Listener 1 -----------------------
+
+// ----------------------- Listener 2 funcs -----------------------
+// case A trigger
+function dgClaimed(change) {
+    let claimed = !change.before.child('delivererGroup').hasChild('claimed') && 
+        change.after.child('delivererGroup').hasChild('claimed');
+    let confirmed = change.before.val().status === enums.RequestStatus.PENDING &&
+        change.after.val().status === enums.RequestStatus.CONFIRMED;
+    return claimed && confirmed;
+}
+
+// case B trigger
+function dgRejected(change) {
+    return change.before.val().status === enums.RequestStatus.PENDING &&
+        change.after.val().status === enums.RequestStatus.REJECTED_DG;
+}
+
+// case A handler
+function createDeliveries(rootRef, requestSnap) {
+    // TODO
+    return Promise.resolve();
+}
+// ----------------------- End Listener 2 -----------------------
+
+function multiNotify(accounts, reqKey, notifType) {
+    let promises = [];
+    for (let acc in accounts) {
+        promises.push(
+            utils.notifyRequestUpdate(acc.label, acc.ref, reqKey, notifType));
+    }
+    return Promise.all(promises);
+}
