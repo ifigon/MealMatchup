@@ -69,39 +69,39 @@ class PageContainer extends Component {
             endTime: '12pm',
             donatingAgency: {
                 name: 'Local Point'
-            }
-            // donationDescription: [
-            //     {
-            //         name: 'Baked beans',
-            //         amount: 15,
-            //         unit: 'lbs'
-            //     },
-            //     {
-            //         name: 'Coleslaw',
-            //         amount: 20,
-            //         unit: 'lbs'
-            //     },
-            //     {
-            //         name: 'Corn',
-            //         amount: 6,
-            //         unit: 'lbs'
-            //     },
-            //     {
-            //         name: 'Mashed potatoes',
-            //         amount: 8,
-            //         unit: 'lbs'
-            //     },
-            //     {
-            //         name: 'Veggie burger patties',
-            //         amount: 4,
-            //         unit: 'lbs'
-            //     },
-            //     {
-            //         name: 'Bread',
-            //         amount: 40,
-            //         unit: 'loaves'
-            //     }
-            // ]
+            },
+            donationDescription: [
+                {
+                    name: 'Baked beans',
+                    amount: 15,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Coleslaw',
+                    amount: 20,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Corn',
+                    amount: 6,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Mashed potatoes',
+                    amount: 8,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Veggie burger patties',
+                    amount: 4,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Bread',
+                    amount: 40,
+                    unit: 'loaves'
+                }
+            ]
         };
         this.setState({
             delivery: delivery

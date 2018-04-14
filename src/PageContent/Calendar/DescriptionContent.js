@@ -138,14 +138,17 @@ class DescriptionContent extends Component {
                                         {donation}
                                     </p>
                                 </div>
-                            ) : (
-                                <button
-                                    className="add-food"
-                                    onClick={this.addRow}
-                                >
+                            ) : this.state.accountType ===
+                            AccountType.DONATING_AGENCY_MEMBER ? (
+                                    <button
+                                        className="add-food"
+                                        onClick={this.addRow}
+                                    >
                                     Add Food Items
-                                </button>
-                            )}{' '}
+                                    </button>
+                                ) : (
+                                    <p>To Be Determined</p>
+                                )}{' '}
                         </div>
                     ) : (
                         <div className="content-details-wrapper">
