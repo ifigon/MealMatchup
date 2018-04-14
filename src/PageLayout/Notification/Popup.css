@@ -108,15 +108,15 @@ p.summary {
   align-content: center;
   text-align: center;
   margin-top: 30px;
+  float: right;
 }
 
 .notification-wrapper button {
-  width: 10vw;
-  height: 3vw;
+  width: 7vw;
+  height: 2.5vw;
   border-radius: 3px;
-  margin: 20px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.1vw;
 }
 
 .claim {
@@ -149,18 +149,17 @@ map {
 .notification-wrapper {
   float: right;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
-  padding: 10px;
+  padding: 15px 10px 10px;
   border: solid 1px #e1e1e1;
   margin-right: 5px;
   top: 90px;
   right: 0px;
-  /* position: fixed; */
   background-color: white;
-  width: 400px;
+  width: 100%;
 }
 
 .hover {
-  font-size: 1.2vw;
+  font-size: 1.1vw;
   font-weight: 400;
 }
 

@@ -14,7 +14,6 @@ class PageHeader extends Component {
                         <p className="page-title">{this.props.title}</p>
                     </div>
                     <div style={{height: '0px', marginTop: '40px'}}>
-                    {console.log(this.props.notificationCount)}
                         <NotificationBadge 
                             count={this.props.notificationCount} 
                             effect={Effect.SCALE}
