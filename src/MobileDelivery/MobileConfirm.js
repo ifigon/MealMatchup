@@ -9,7 +9,7 @@ class MobileConfirm extends React.Component {
                 <div className="mobile-confirm-card">
                     <div className="mobile-card-line"></div>
                     <p className="ms-header">Completion Summary</p>
-                    <p id="confirm-time">{moment.unix(this.props.deliveryObj.deliveredInfo.timestamp).calendar()}</p>
+                    <p id="confirm-time">{moment(this.props.deliveryObj.deliveredInfo.timestamp).calendar()}</p>
                     <div className="ms-confirm">
                         <div className="ms-confirm-content" id="ms-confirm-da">
                             <p className="ms-confirm-header">Donating Agency</p>
@@ -17,7 +17,7 @@ class MobileConfirm extends React.Component {
                                 <a href={'tel:' + this.props.da.primaryContact.phone}>{this.props.da.primaryContact.phone}</a>
                             </p>
                             <p className="ms-confirm-details">Signed by: {this.props.da.primaryContact.name}</p>
-                            <p className="ms-confirm-details">Timestamp: {moment.unix(this.props.deliveryObj.pickedUpInfo.timestamp).format('LT')}</p>
+                            <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.pickedUpInfo.timestamp).format('LT')}</p>
                             <p className="ms-confirm-details">Freezer Temperature: {this.props.deliveryObj.pickedUpInfo.temperature}&deg;F</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-ra">
@@ -26,7 +26,7 @@ class MobileConfirm extends React.Component {
                                 <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                             </p>
                             <p className="ms-confirm-details">Signed by: {this.props.ra.primaryContact.name}</p>
-                            <p className="ms-confirm-details">Timestamp: {moment.unix(this.props.deliveryObj.deliveredInfo.timestamp).format('LT')}</p>
+                            <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.deliveredInfo.timestamp).format('LT')}</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-dg">
                             <p className="ms-confirm-header">Deliverers</p>

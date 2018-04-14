@@ -81,8 +81,8 @@ class MobileController extends React.Component {
                 ({ description, delivererGroup, deliverers, notes, isEmergency, status, pickedUpInfo, deliveredInfo })
         )(rawDelivery);
 
-        let startTimeObj = moment.unix(rawDelivery.startTimestamp);
-        let endTimeObj = moment.unix(rawDelivery.endTimestamp);
+        let startTimeObj = moment(rawDelivery.startTimestamp);
+        let endTimeObj = moment(rawDelivery.endTimestamp);
 
         deliveryObj.date = startTimeObj.format('YYYY-MM-DD');
         deliveryObj.startTime = startTimeObj.format('HH:mm');
