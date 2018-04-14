@@ -6,16 +6,26 @@ import volunteer from '../../icons/volunteer.svg';
 class DelivererGroupContent extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            edit: false,
-            delivererGroup: this.props.delivererGroup,
-            deliverer1: this.props.delivery.delivererGroup.deliverers[0].name,
-            deliverer2: this.props.delivery.delivererGroup.deliverers[1].name,
-            phone1: this.props.delivery.delivererGroup.deliverers[0].phone,
-            phone2: this.props.delivery.delivererGroup.deliverers[1].phone,
-            email1: this.props.delivery.delivererGroup.deliverers[0].email,
-            email2: this.props.delivery.delivererGroup.deliverers[1].email
-        };
+        if (
+            this.props.delivery !== undefined &&
+            this.props.delivery.deliveryGroup !== undefined
+        ) {
+            this.state = {
+                edit: false,
+                delivererGroup: this.props.delivery.delivererGroup.name,
+                deliverer1: this.props.delivery.delivererGroup.deliverers[0]
+                    .name,
+                deliverer2: this.props.delivery.delivererGroup.deliverers[1]
+                    .name,
+                phone1: this.props.delivery.delivererGroup.deliverers[0].phone,
+                phone2: this.props.delivery.delivererGroup.deliverers[1].phone,
+                email1: this.props.delivery.delivererGroup.deliverers[0].email,
+                email2: this.props.delivery.delivererGroup.deliverers[1].email
+            };
+        } else {
+            this.state = {};
+        }
+
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -49,82 +59,104 @@ class DelivererGroupContent extends Component {
                     ) : (
                         <h1 className="section-header">Picking Up Donation</h1>
                     )}
-                    <h2 className="organization">
-                        {this.props.delivererGroup}
-                    </h2>
-                    {!this.state.edit ? (
-                        <div className="content-details-wrapper">
-                            <p className="content-details">
-                                {this.state.deliverer1} ({this.state.phone1})
-                            </p>
-                            <p className="content-details">
-                                {this.state.deliverer2} ({this.state.phone2})
-                            </p>
-                        </div>
-                    ) : (
-                        <div className="content-details-wrapper">
-                            <form
-                                className="edit-dg"
-                                onSubmit={this.handleChange}
-                            >
-                                <div className="input-wrapper">
-                                    <input
-                                        className="content-details deliverer-group-details"
-                                        defaultValue={this.state.deliverer1}
-                                        name="deliverer1"
-                                        type="text "
-                                    />
-                                    <input
-                                        className="content-details deliverer-group-details"
-                                        defaultValue={this.state.phone1}
-                                        name="phone1"
-                                        type="tel"
-                                        pattern={StringFormat.PHONE}
-                                    />
-                                    <input
-                                        className="content-details deliverer-group-details"
-                                        defaultValue={this.state.email1}
-                                        type="text"
-                                    />
-                                    <input
-                                        className="content-details deliverer-group-details"
-                                        defaultValue={this.state.deliverer2}
-                                        type="text"
-                                        name="deliverer2"
-                                    />
-                                    <input
-                                        className="content-details deliverer-group-details"
-                                        defaultValue={this.state.phone2}
-                                        type="tel"
-                                        name="phone2"
-                                        pattern={StringFormat.PHONE}
-                                    />
-                                    <input
-                                        className="content-details deliverer-group-details"
-                                        defaultValue={this.state.email2}
-                                        type="text"
-                                    />
-                                </div>
 
-                                <input
-                                    type="submit"
-                                    className="edit-button"
-                                    value="save"
-                                />
-                            </form>
+                    {!this.state.delivererGroup ? (
+                        <div className="tbd">To Be Determined.</div>
+                    ) : (
+                        <div>
+                            <h2 className="organization">
+                                {this.state.delivererGroup}
+                            </h2>
+                            {!this.state.edit ? (
+                                <div className="content-details-wrapper">
+                                    <p className="content-details">
+                                        {this.state.deliverer1} ({
+                                            this.state.phone1
+                                        })
+                                    </p>
+                                    <p className="content-details">
+                                        {this.state.deliverer2} ({
+                                            this.state.phone2
+                                        })
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="content-details-wrapper">
+                                    <form
+                                        className="edit-dg"
+                                        onSubmit={this.handleChange}
+                                    >
+                                        <div className="input-wrapper">
+                                            <input
+                                                className="content-details deliverer-group-details"
+                                                defaultValue={
+                                                    this.state.deliverer1
+                                                }
+                                                name="deliverer1"
+                                                type="text "
+                                                required
+                                            />
+                                            <input
+                                                className="content-details deliverer-group-details"
+                                                defaultValue={this.state.phone1}
+                                                name="phone1"
+                                                type="tel"
+                                                pattern={StringFormat.PHONE}
+                                                required
+                                            />
+                                            <input
+                                                className="content-details deliverer-group-details"
+                                                defaultValue={this.state.email1}
+                                                type="email"
+                                                required
+                                            />
+                                            <input
+                                                className="content-details deliverer-group-details"
+                                                defaultValue={
+                                                    this.state.deliverer2
+                                                }
+                                                type="text"
+                                                name="deliverer2"
+                                                required
+                                            />
+                                            <input
+                                                className="content-details deliverer-group-details"
+                                                defaultValue={this.state.phone2}
+                                                type="tel"
+                                                name="phone2"
+                                                pattern={StringFormat.PHONE}
+                                                required
+                                            />
+                                            <input
+                                                className="content-details deliverer-group-details"
+                                                defaultValue={this.state.email2}
+                                                type="email"
+                                                required
+                                            />
+                                        </div>
+
+                                        <input
+                                            type="submit"
+                                            className="edit-button"
+                                            value="save"
+                                        />
+                                    </form>
+                                </div>
+                            )}
+                            {this.props.accountType ===
+                                AccountType.DELIVERER_GROUP &&
+                            !this.state.edit &&
+                            this.props.futureEvent ? (
+                                    <button
+                                        type="button"
+                                        className="edit-button"
+                                        onClick={this.edit}
+                                    >
+                                    Edit
+                                    </button>
+                                ) : null}
                         </div>
                     )}
-                    {this.props.accountType === AccountType.DELIVERER_GROUP &&
-                    !this.state.edit &&
-                    this.props.futureEvent ? (
-                            <button
-                                type="button"
-                                className="edit-button"
-                                onClick={this.edit}
-                            >
-                            Edit
-                            </button>
-                        ) : null}
                 </div>
             </div>
         );

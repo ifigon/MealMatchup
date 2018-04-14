@@ -37,6 +37,7 @@
   display: inline-block;
   margin-right: 10px;
   vertical-align: middle;
+  width: 80%;
 }
 .content-details {
   font-weight: 400;
@@ -56,6 +57,8 @@
   border-radius: 4px;
   color: #5dc0f9;
   -webkit-appearance: none;
+  display: inline-block;
+  width: 50px;
 }
 .edit-button:hover {
   cursor: pointer;
@@ -74,4 +77,9 @@
 
 .deliverer-group-details {
   width: 200px;
+}
+
+.tbd {
+  color: #243847;
+  font-size: 14px;
 }
