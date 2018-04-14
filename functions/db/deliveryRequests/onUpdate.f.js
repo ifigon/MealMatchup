@@ -25,9 +25,6 @@ exports = module.exports = functions.database
     .ref('/delivery_requests/{umbrellaId}/{pushId}')
     .onUpdate((change, context) => {
         console.info('Recurring request changed: ' + context.params.pushId);
-        // TODO remove debug logging
-        console.debug(change.before.val());
-        console.debug(change.after.val());
 
         // once a request is not in pending status, it shouldn't be changed anymore
         if (change.before.val().status !== enums.RequestStatus.PENDING) {
@@ -35,20 +32,20 @@ exports = module.exports = functions.database
                 new Error('Changes were made to a non-pending pickup request.'));
         }
 
-        // get db refs. TODO: set up Admin SDK
         let requestSnap = change.after;
         let request = requestSnap.val();
+
+        // get db refs. TODO: set up Admin SDK
         const rootRef = change.after.ref.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
         const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
 
         // ---------- Listener 1 triggers ----------
-        // case A
-        if (raClaimed(change)) {
+        if (raClaimed(change)) {  // case A
             return sendRequestToDGs(accountsRef, requestSnap);
         }
-        // case B
-        if (raRejected(change)) {
+
+        if (raRejected(change)) {  // case B
             console.info('Listener1: all RA rejected -> send notification to DA');
             return utils.notifyRequestUpdate(
                 'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA);
