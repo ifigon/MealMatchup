@@ -27,11 +27,11 @@ class Settings extends Component {
             password: 'password',
             organizationPhone: '209-992-9292',
             address: {
-                street1: '124 Sesame St.',
+                street1: '4138 Brooklyn Ave NE',
                 street2: '',
                 city: 'Seattle',
                 state: 'WA',
-                zipcode: 98115
+                zipcode: 98105
             },
             isVerified: true,
             isActivated: true,
@@ -54,10 +54,12 @@ class Settings extends Component {
         this.setState({
             account: account,
             org: {
-                email: account.email,
-                password: account.password,
+                name: account.name,
                 address: account.address,
-                organizationPhone: account.organizationPhone
+                organizationPhone: account.organizationPhone,
+                numVolunteers: account.numVolunteers || null,
+                notes: account.notes || null,
+                emergencypickup: account.emergencypickup || null
             },
             coordinator: {
                 details: account.coordinator,
