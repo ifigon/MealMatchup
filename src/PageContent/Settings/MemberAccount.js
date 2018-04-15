@@ -53,7 +53,7 @@ class MemberAccount extends Component {
                     </div>
 
                     <div className="amd-edit amd-edit-1 amd-row">
-                        <button type="button" className="form-button confirm-button" onClick={this.handleAdd.bind(this)}>{this.state.comingSoon ? "Coming Soon..." : "Add Member"}</button>
+                        <button type="button" className="form-button confirm-button" onClick={this.handleAdd.bind(this)}>{this.state.comingSoon ? 'Coming Soon...' : 'Add Member'}</button>
                     </div>
 
                 </div>
