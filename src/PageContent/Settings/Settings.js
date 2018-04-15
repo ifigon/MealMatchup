@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './StudentCoordinatorSettings.css';
 import OrganizationDetails from './OrganizationDetails';
 import AccountManager from './AccountManager';
+import MemberAccount from './MemberAccount';
 import './SCSettings0.css';
 import './SCSettings1.css';
 
@@ -16,6 +17,7 @@ class Settings extends Component {
             secondaryContact: null,
             isEditingOrg: false,
             isEditingAcc: false,
+            isEditingMem: false,
             email: 'phisigmaro@uw.edu'
         };
     }
@@ -50,6 +52,20 @@ class Settings extends Component {
                 phone: '206-487-2992',
                 position: 'Vice President'
             },
+            memberAccounts: [
+                {
+                    name: 'Andy Duncan',
+                    email: 'andyd@uw.edu',
+                    phone: '206-487-2859',
+                    position: 'President'
+                },
+                {
+                    name: 'Jennifer Marly',
+                    email: 'jmarly@uw.edu',
+                    phone: '206-487-2992',
+                    position: 'Vice President'
+                }
+            ],
             notifications: [
                 {
                     type: 'recurring_pickup_request',  // Enums.NotificationType
@@ -72,7 +88,8 @@ class Settings extends Component {
             coordinator: {
                 details: account.coordinator
             },
-            secondaryContact: account.secondaryContact || null
+            secondaryContact: account.secondaryContact || null,
+            memberAccounts: account.memberAccounts || null
         });
     }
 
@@ -104,6 +121,20 @@ class Settings extends Component {
                                 handleAccSave={this.handleAccSave.bind(this)}
                             />
                         </div>
+
+                        <div className="scs-spacing" />
+
+                        <div className="container">
+                            <MemberAccount
+                                account={this.state.coordinator}
+                                memberAccounts={this.state.memberAccounts}
+                                isAdmin={this.state.account.user_type}
+                                isEditingMem={this.state.isEditingMem}
+                                handleEditMem={this.handleEditMem.bind(this)}
+                                handleMemSave={this.handleMemSave.bind(this)}
+                            />
+                        </div>
+
                     </div>
 
                     :
@@ -140,6 +171,19 @@ class Settings extends Component {
             coordinator: newDetails,
             secondaryContact: secondaryContact,
             isEditingAcc: false
+        });
+    }
+
+    handleEditMem() {
+        this.setState({
+            isEditingMem: true
+        });
+    }
+
+    // Backend TODO: Write data to DB
+    handleMemSave(newDetails) {
+        this.setState({
+            isEditingMem: false
         });
     }
 
