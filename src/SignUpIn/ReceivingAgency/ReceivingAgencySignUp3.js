@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment-timezone';
 import truck from '../../icons/truck.svg';
 
 class ReceivingAgencySignUp3 extends Component {
@@ -82,12 +83,15 @@ class ReceivingAgencySignUp3 extends Component {
 
             // only add availability if checkbox was checked
             if (e.target[checkboxName].checked) {
-                var startName = day + 'Start';
-                var endName = day + 'End';
+                var startStr = e.target[day + 'Start'].value; // eg "10:00"
+                var endStr = e.target[day + 'End'].value; // eg "17:00"
+                var dayTimeFormat = 'e HH:mm';  // eg "3 10:00" for Wed 10AM
+                var startTimestamp = moment(i + ' ' + startStr, dayTimeFormat);
+                var endTimestamp = moment(i + ' ' + endStr, dayTimeFormat);
 
                 availabilities[i] = {
-                    startTime: e.target[startName].value,
-                    endTime: e.target[endName].value
+                    startTimestamp: startTimestamp.valueOf(),
+                    endTimestamp: endTimestamp.valueOf()
                 };
             }
         }

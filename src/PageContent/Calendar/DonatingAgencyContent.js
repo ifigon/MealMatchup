@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import './Content.css';
-import shelter from '../../icons/shelter.svg';
+import vitamins from '../../icons/vitamins.svg';
 
-class ReceivingAgencyContent extends Component {
+class DonatingAgencyContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            donatingAgency: this.props.delivery.receivingAgency.name,
-            contactName: this.props.delivery.receivingAgency.contact.name,
-            phone: this.props.delivery.receivingAgency.contact.phone
+            donatingAgency: this.props.delivery.donatingAgency.name,
+            contactName: this.props.delivery.donatingAgency.contact.name,
+            phone: this.props.delivery.donatingAgency.contact.phone
         };
     }
     render() {
         return (
             <div className="wrapper">
-                <img className="content-icon" src={shelter} alt="volunteer" />
+                <img className="content-icon" src={vitamins} alt="volunteer" />
                 <div className="content-wrapper">
-                    <h1 className="section-header">Receipient</h1>
+                    <h1 className="section-header">Dining Hall</h1>
                     <h2 className="organization">
-                        {this.state.receivingAgency}
+                        {this.state.donatingAgency}
                     </h2>
                     <div className="content-details-wrapper">
                         <p className="content-details">
@@ -30,4 +30,4 @@ class ReceivingAgencyContent extends Component {
         );
     }
 }
-export default ReceivingAgencyContent;
+export default DonatingAgencyContent;

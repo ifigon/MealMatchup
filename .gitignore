@@ -20,4 +20,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
 .vscode*
+=======
+.vscode
+*.log*
+
+>>>>>>> 53a1c8d6daf98bcba2f388cbe9297f89afa3372e
