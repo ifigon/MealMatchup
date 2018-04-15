@@ -3,37 +3,24 @@ import { AccountType, StringFormat } from '../../Enums';
 import './Content.css';
 import phone from '../../icons/phone.svg';
 
-class DescriptionContent extends Component {
+class ContactContent extends Component {
     constructor(props) {
         super(props);
-        if (
-            this.props.delivery.donatingAgency &&
-            this.props.accountType === AccountType.DONATING_AGENCY_MEMBER
-        ) {
-            this.state = {
-                edit: false,
-                name: this.props.delivery.donatingAgency.contact.name,
-                phone: this.props.delivery.donatingAgency.contact.phone,
-                email: this.props.delivery.donatingAgency.contact.email
-            };
-        } else if (
-            this.props.delivery.receivingAgency &&
-            this.props.accountType === AccountType.RECEIVING_AGENCY
-        ) {
-            this.state = {
-                edit: false,
-                name: this.props.delivery.receivingAgency.contact.name,
-                phone: this.props.delivery.receivingAgency.contact.phone,
-                email: this.props.delivery.receivingAgency.contact.email
-            };
-        } else {
-            this.state = {
-                edit: false
-            };
+        this.state = {
+            edit: false,
+            contact: {},
+            memberList: []
+        };
+        if (this.props.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            this.state.contact = this.props.delivery.donatingAgency.contact;
+            this.state.memberList = this.props.delivery.donatingAgency.contact.memberList;
+        } else if (this.props.accountType === AccountType.RECEIVING_AGENCY) {
+            this.state.contact = this.props.delivery.receivingAgency.contact;
         }
 
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeDA = this.handleChangeDA.bind(this);
     }
     edit() {
         this.setState({
@@ -50,6 +37,18 @@ class DescriptionContent extends Component {
         });
     }
 
+    handleChangeDA(e) {
+        e.preventDefault();
+        let index = e.target.member.value;
+        let memberName = this.state.memberList[index].name;
+        let memberPhone = this.state.memberList[index].phone;
+        this.setState({
+            name: memberName,
+            phone: memberPhone,
+            edit: false
+        });
+    }
+
     render() {
         return (
             <div className="wrapper">
@@ -62,51 +61,92 @@ class DescriptionContent extends Component {
                     ) : this.props.accountType ===
                     AccountType.DONATING_AGENCY_MEMBER ? (
                             <h1 className="section-header">
-                            Primary Contact Pick Up
+                            Primary Contact for Pick Up
                             </h1>
                         ) : null}
                     {!this.state.edit ? (
-                        <div className="content-details-wrapper">
-                            <p className="content-details contact-content">
-                                {this.state.name} ({this.state.phone})
-                            </p>
-                        </div>
-                    ) : (
-                        <div className="content-details-wrapper">
-                            <form
-                                className="edit-dg"
-                                onSubmit={this.handleChange}
-                            >
-                                <div className="input-wrapper contact-wrapper">
-                                    <input
-                                        type="text"
-                                        className="content-details "
-                                        defaultValue={this.state.name}
-                                        name="name"
-                                    />
-                                    <input
-                                        type="tel"
-                                        className="content-details "
-                                        defaultValue={this.state.phone}
-                                        name="phone"
-                                        pattern={StringFormat.PHONE}
-                                    />
-                                    <input
-                                        type="email"
-                                        className="content-details "
-                                        defaultValue={this.state.email}
-                                        name="email"
-                                    />
+                        <div>
+                            {!this.state.name ? (
+                                <div className="content-details-wrapper">
+                                    <p className="content-details contact-content">
+                                        {this.state.contact.name} ({
+                                            this.state.contact.phone
+                                        })
+                                    </p>
                                 </div>
-
-                                <input
-                                    type="submit"
-                                    className="edit-button"
-                                    value="save"
-                                />
-                            </form>
+                            ) : (
+                                <div className="content-details-wrapper">
+                                    <p className="content-details contact-content">
+                                        {this.state.name} ({this.state.phone})
+                                    </p>
+                                </div>
+                            )}
                         </div>
-                    )}
+                    ) : this.state.accountType ===
+                    AccountType.RECEIVING_AGENCY ? (
+                            <div className="content-details-wrapper">
+                                <form
+                                    className="edit-dg"
+                                    onSubmit={this.handleChange}
+                                >
+                                    <div className="input-wrapper contact-wrapper">
+                                        <input
+                                            type="text"
+                                            className="content-details "
+                                            defaultValue={this.state.contact.name}
+                                            name="name"
+                                        />
+                                        <input
+                                            type="tel"
+                                            className="content-details "
+                                            defaultValue={this.state.contact.phone}
+                                            name="phone"
+                                            pattern={StringFormat.PHONE}
+                                        />
+                                        <input
+                                            type="email"
+                                            className="content-details "
+                                            defaultValue={this.state.contact.email}
+                                            name="email"
+                                        />
+                                    </div>
+
+                                    <input
+                                        type="submit"
+                                        className="edit-button"
+                                        value="save"
+                                    />
+                                </form>
+                            </div>
+                        ) : this.props.accountType ===
+                    AccountType.DONATING_AGENCY_MEMBER ? (
+                                <div>
+                                    <form onSubmit={this.handleChangeDA}>
+                                        <select
+                                            name="primaryContact"
+                                            defaultValue=""
+                                            name="member"
+                                            required
+                                        >
+                                            <option value="" disabled>
+                                        Select
+                                            </option>
+                                            {this.state.memberList.map((member, i) => {
+                                                return (
+                                                    <option key={i} value={i}>
+                                                        {member.name}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                        <input
+                                            type="submit"
+                                            value="save"
+                                            className="edit-button"
+                                        />
+                                    </form>
+                                </div>
+                            ) : null}
                     {!this.state.edit && this.props.futureEvent ? (
                         <button
                             type="button"
@@ -121,4 +161,4 @@ class DescriptionContent extends Component {
         );
     }
 }
-export default DescriptionContent;
+export default ContactContent;

@@ -76,9 +76,24 @@ class PageContainer extends Component {
             },
             donatingAgency: {
                 contact: {
+                    uid: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
                     name: 'Andrea Benson',
                     phone: '206-543-6975',
-                    email: 'bensoa3@uw.edu'
+                    email: 'bensoa3@uw.edu',
+                    memberList: [
+                        {
+                            uid: 'uid1',
+                            name: 'member1',
+                            phone: '111-111-1111',
+                            email: 'member1@test.com'
+                        },
+                        {
+                            uid: 'uid2',
+                            name: 'member2',
+                            phone: '222-222-2222',
+                            email: 'member2@test.com'
+                        }
+                    ]
                 }
             }
         };
