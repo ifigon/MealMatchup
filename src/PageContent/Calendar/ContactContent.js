@@ -50,6 +50,9 @@ class ContactContent extends Component {
     }
 
     render() {
+        console.log('this.state', this.state);
+        console.log('this.props', this.props);
+
         return (
             <div className="wrapper">
                 <img className="content-icon" src={phone} alt="volunteer" />
@@ -82,66 +85,66 @@ class ContactContent extends Component {
                                 </div>
                             )}
                         </div>
-                    ) : this.state.accountType ===
-                    AccountType.RECEIVING_AGENCY ? (
-                            <div className="content-details-wrapper">
-                                <form
-                                    className="edit-dg"
-                                    onSubmit={this.handleChange}
-                                >
-                                    <div className="input-wrapper contact-wrapper">
-                                        <input
-                                            type="text"
-                                            className="content-details "
-                                            defaultValue={this.state.contact.name}
-                                            name="name"
-                                        />
-                                        <input
-                                            type="tel"
-                                            className="content-details "
-                                            defaultValue={this.state.contact.phone}
-                                            name="phone"
-                                            pattern={StringFormat.PHONE}
-                                        />
-                                        <input
-                                            type="email"
-                                            className="content-details "
-                                            defaultValue={this.state.contact.email}
-                                            name="email"
-                                        />
-                                    </div>
-
+                    ) : this.props.accountType ===
+                    AccountType.DONATING_AGENCY_MEMBER ? (
+                            <div>
+                                <form onSubmit={this.handleChangeDA}>
+                                    <select
+                                        name="primaryContact"
+                                        defaultValue=""
+                                        required
+                                    >
+                                        <option value="" disabled>
+                                        Select
+                                        </option>
+                                        {this.state.memberList.map((member, i) => {
+                                            return (
+                                                <option key={i} value={i}>
+                                                    {member.name}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
                                     <input
                                         type="submit"
-                                        className="edit-button"
                                         value="save"
+                                        className="edit-button"
                                     />
                                 </form>
                             </div>
                         ) : this.props.accountType ===
-                    AccountType.DONATING_AGENCY_MEMBER ? (
-                                <div>
-                                    <form onSubmit={this.handleChangeDA}>
-                                        <select
-                                            name="primaryContact"
-                                            defaultValue=""
-                                            required
-                                        >
-                                            <option value="" disabled>
-                                        Select
-                                            </option>
-                                            {this.state.memberList.map((member, i) => {
-                                                return (
-                                                    <option key={i} value={i}>
-                                                        {member.name}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
+                    AccountType.RECEIVING_AGENCY ? (
+                                <div className="content-details-wrapper">
+                                    <form
+                                        className="edit-dg"
+                                        onSubmit={this.handleChange}
+                                    >
+                                        <div className="input-wrapper contact-wrapper">
+                                            <input
+                                                type="text"
+                                                className="content-details "
+                                                defaultValue={this.state.contact.name}
+                                                name="name"
+                                            />
+                                            <input
+                                                type="tel"
+                                                className="content-details "
+                                                defaultValue={this.state.contact.phone}
+                                                name="phone"
+                                                pattern={StringFormat.PHONE}
+                                            />
+                                            <input
+                                                type="email"
+                                                className="content-details "
+                                                defaultValue={this.state.contact.email}
+                                                name="email"
+                                            />
+                                        </div>
+
                                         <input
                                             type="submit"
-                                            value="save"
                                             className="edit-button"
+                                            value="save"
                                         />
                                     </form>
                                 </div>

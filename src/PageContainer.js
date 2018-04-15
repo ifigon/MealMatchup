@@ -111,10 +111,11 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader 
+                <PageHeader
                     account={this.props.account}
-                    logo={logo} 
-                    title={this.props.account.name} />
+                    logo={logo}
+                    title={this.props.account.name}
+                />
 
                 <NavBar
                     content={this.state.content}
@@ -130,6 +131,7 @@ class PageContainer extends Component {
                             <Dialog
                                 closeDialog={this.closeDialog}
                                 delivery={this.state.delivery}
+                                accountType={this.props.account.accountType}
                                 futureEvent={true}
                             />
                         ) : null}
