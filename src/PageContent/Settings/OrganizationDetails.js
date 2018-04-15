@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Map from '../../Map/Map.js'
+import Map from '../../Map/Map.js';
 
 class OrganizationDetails extends Component {
 
