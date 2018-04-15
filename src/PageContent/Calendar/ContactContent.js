@@ -50,9 +50,6 @@ class ContactContent extends Component {
     }
 
     render() {
-        console.log('this.state', this.state);
-        console.log('this.props', this.props);
-
         return (
             <div className="wrapper">
                 <img className="content-icon" src={phone} alt="volunteer" />
