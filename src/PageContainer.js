@@ -66,7 +66,15 @@ class PageContainer extends Component {
             eventType: DeliveryType.RECURRING,
             date: '11/14/2017',
             startTime: '10am',
-            endTime: '12pm'
+            endTime: '12pm',
+            donatingAgency: {
+                name: 'Local Point',
+                contact: {
+                    name: 'Andrea Benson',
+                    phone: '206-543-6975',
+                    email: 'bensoa3@uw.edu'
+                }
+            }
         };
         this.setState({
             delivery: delivery
@@ -100,9 +108,8 @@ class PageContainer extends Component {
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
-                                accountType={this.props.account.accountType}
                                 delivery={this.state.delivery}
-                                futureEvent={false}
+                                futureEvent={true}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
@@ -110,7 +117,7 @@ class PageContainer extends Component {
                                 eventType={this.state.delivery.eventType}
                                 startTime={this.state.delivery.startTime}
                                 endTime={this.state.delivery.endTime}
-                                futureEvent={false}
+                                futureEvent={true}
                             />
                         </div>
                     </div>
