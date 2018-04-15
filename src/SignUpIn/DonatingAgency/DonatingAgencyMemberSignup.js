@@ -22,7 +22,8 @@ class DonatingAgencyMemberSignup extends Component {
         // might need to deal with db read permissions
         var agency = {
             key: '-L8sSI7-dZU7RtakgVaZ',
-            name: 'DA1 Test Signup'
+            name: 'DA1 Test Signup',
+            timezone: 'America/Los_Angeles'
         };
 
         this.setState({
@@ -52,7 +53,8 @@ class DonatingAgencyMemberSignup extends Component {
                     position: values.position,
                     isAdmin: false,
                     isVerified: true,
-                    isActivated: true
+                    isActivated: true,
+                    timezone: this.state.agency.timezone
                 };
                 accountsRef.child(user.uid).set(postData);
 
