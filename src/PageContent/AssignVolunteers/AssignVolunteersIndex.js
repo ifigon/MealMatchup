@@ -5,15 +5,14 @@ import AssignOption from './AssignOption';
 class AssignVolunteersIndex extends Component {
 
     render() {
-
         return (
             this.renderElements()
         );
-
     }
 
     renderElements() {
-        if(this.props.deliveries.length === 0) {
+        // TODO (jkbach): some kind of loading here would be good.
+        if(Object.keys(this.props.deliveries).length === 0) {
             return <h5>No deliveries scheduled</h5>;
         }
         else {
@@ -33,8 +32,12 @@ class AssignVolunteersIndex extends Component {
                         </div>
                     </div>
                     {
-                        this.props.deliveries.map((delivery, index) => {
-                            return <AssignOption handleEditClick={this.props.handleEditClick} key={index} delivery={delivery} id={index}/>;
+                        Object.keys(this.props.deliveries).map((delivery_id, index) => {
+                            return <AssignOption 
+                                handleEditClick={this.props.handleEditClick} 
+                                key={delivery_id} 
+                                delivery={this.props.deliveries[delivery_id]} 
+                                deliveryId={delivery_id}/>;
                         })
                     }
                     

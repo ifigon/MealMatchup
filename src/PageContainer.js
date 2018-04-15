@@ -69,7 +69,9 @@ class PageContainer extends Component {
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <AssignVolunteersController />
+                    <AssignVolunteersController 
+                        account={this.props.account}
+                    />
                 )}
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&
