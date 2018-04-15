@@ -43,8 +43,8 @@ class PageHeader extends Component {
         });
     }
 
-    openPopUp(){
-        // TODO: backend populate notification popup info
+    openPopUp(index){
+        // TODO: backend populate notification popup info based on index
         this.setState({
             showPopUp: true,
             notificationClicked: false
@@ -86,9 +86,11 @@ class PageHeader extends Component {
                         this.state.notifications.map((notification, i) => {
                             return !notification.claimed && 
                                 <Notification
+                                    key={i}
+                                    index={i}
                                     notificationType={notification.type} 
                                     account={this.props.account.accountType}
-                                    clickNotification={this.openPopUp.bind(this)}/>;
+                                    clickNotification={this.openPopUp}/>;
                         })
                     }
                 </div>
