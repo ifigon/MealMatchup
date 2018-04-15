@@ -42,9 +42,13 @@ class OrganizationDetails extends Component {
                             <span />
                         }
                         <div className="scs-spacing-lg" />
-                        <div className="amd-edit amd-edit-1">
-                            <button type="button" className="form-button confirm-button" onClick={this.props.handleEditOrg}>Edit</button>
-                        </div>
+                        {this.props.account.user_type == 'admin' ?
+                            <div className="amd-edit amd-edit-1">
+                                <button type="button" className="form-button confirm-button" onClick={this.props.handleEditOrg}>Edit</button>
+                            </div>
+                            :
+                            <span />
+                        }
                     </div>
 
                     :

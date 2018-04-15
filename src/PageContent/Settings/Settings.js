@@ -22,6 +22,7 @@ class Settings extends Component {
     // Backend TODO: Get data from DB
     componentDidMount() {
         let account  = {
+            user_type: 'admin',
             name: 'Phi Sigma Ro',
             email: this.state.email,
             password: 'password',
@@ -54,6 +55,7 @@ class Settings extends Component {
         this.setState({
             account: account,
             org: {
+                user_type: account.user_type,
                 name: account.name,
                 address: account.address,
                 organizationPhone: account.organizationPhone,
