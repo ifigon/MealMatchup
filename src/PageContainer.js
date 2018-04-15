@@ -67,6 +67,14 @@ class PageContainer extends Component {
             date: '11/14/2017',
             startTime: '10am',
             endTime: '12pm',
+            receivingAgency: {
+                name: 'Seattle Union Gospel Mission',
+                contact: {
+                    name: 'Chris Stack',
+                    phone: '206-586-9876',
+                    email: 'chrisstack@uniongospel.org'
+                }
+            },
             donatingAgency: {
                 name: 'Local Point',
                 contact: {
@@ -90,10 +98,11 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader 
+                <PageHeader
                     account={this.props.account}
-                    logo={logo} 
-                    title={this.props.account.name} />
+                    logo={logo}
+                    title={this.props.account.name}
+                />
 
                 <NavBar
                     content={this.state.content}
