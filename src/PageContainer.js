@@ -155,7 +155,20 @@ class PageContainer extends Component {
                         'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of all DGs
                     ],
                     // OR
-                    claimed: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43'  // uid-key of a DG (once a DG claims)
+                    claimed: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of a DG (once a DG claims)
+                    // ADDED FOR DUMMY DATA
+                    deliverers: [
+                        // {
+                        //     name: 'Alice',
+                        //     email: 'alice@uw.edu',
+                        //     phone: '123-789-4560'
+                        // },
+                        // {
+                        //     name: 'Chris',
+                        //     email: 'chris@uw.edu',
+                        //     phone: '456-123-0789'
+                        // }
+                    ]
                 },
                 requestTimeStamp: 1518753363763,
                 spawnedDeliveries: [

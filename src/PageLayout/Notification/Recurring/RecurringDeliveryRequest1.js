@@ -56,13 +56,40 @@ class RecurringDeliveryRequest1 extends Component {
                                     marginBottom={'0px'}
                                     marginLeft={'10px'}
                                     className="map"></Map>            
+                            </div> 
+                            <div className="popup-buttons">
+                                <button onClick={this.props.nextStep} className="claim" type="button">Claim</button> 
+                                <button onClick={this.props.close} className="reject" type="button">Reject</button>
                             </div>
                         </div>
                 }
-                <div className="popup-buttons">
-                    <button onClick={this.props.nextStep} className="claim" type="button">Claim</button> 
-                    <button onClick={this.props.close} className="reject" type="button">Reject</button>
-                </div>
+                {
+                    this.props.accountType === AccountType.RECEIVING_AGENCY &&
+                        <div className="receiving-agency">
+                            <h2>Deliverers</h2>
+                            <div className="modal-deliverers">
+                                {
+                                    this.props.details.delivererGroup.deliverers.length === 0 ?
+                                        <p>To be determined</p>
+                                        :
+                                        this.props.details.delivererGroup.deliverers.map((d, i) => {
+                                            return (
+                                                <div className="mobile-student-info" id={i} key={i}>
+                                                    <p id="mobile-name">{d.name}</p>
+                                                    <p id="mobile-org">{d.email}</p>
+                                                    <a href={'tel:' + d.phone}>{d.phone}</a>
+                                                </div>
+                                            );
+                                        })
+                                }
+                            </div>
+                            <div className="popup-buttons">
+                                <button onClick={this.props.enterPrimaryContact} className="claim" type="button">Claim</button> 
+                                <button onClick={this.props.close} className="reject" type="button">Reject</button>
+                            </div>
+                        </div>
+                }
+                
             </div>
         );
     }

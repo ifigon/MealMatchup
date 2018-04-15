@@ -80,6 +80,10 @@
   margin-top: 0px;
 }
 
+.primary-contact{
+  width: 50%;
+}
+
 .modal-wrapper  h1{
   display: inline;
 }
@@ -324,4 +328,8 @@ ol li {
   color: #545861;
   font-weight: 600;
   font-style: italic;
+}
+
+.modal-deliverers{
+  display: flex;
 }
