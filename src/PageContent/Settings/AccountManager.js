@@ -153,7 +153,7 @@ class AccountManager extends Component {
                 position: e.target.sposition.value,
                 email: e.target.semail.value,
                 phone: e.target.sphone.value
-            }
+            };
         }
         this.props.handleAccSave(acc, secondaryContact);   
     }
