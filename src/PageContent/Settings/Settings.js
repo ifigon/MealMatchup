@@ -64,9 +64,7 @@ class Settings extends Component {
                 emergencypickup: account.emergencypickup || null
             },
             coordinator: {
-                details: account.coordinator,
-                smsNotif: account.smsNotif,
-                emailNotif: account.emailNotif
+                details: account.coordinator
             }
         });
     }

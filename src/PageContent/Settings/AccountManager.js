@@ -21,8 +21,9 @@ class AccountManager extends Component {
                                 </div>
                                 <div className="amd-details-child">
                                     <h6>Recieve Notifications via</h6>
-                                    {this.props.account.smsNotif ? <h6>SMS/Text Message</h6> : <div/>}
-                                    {this.props.account.emailNotif ? <h6>Email</h6> : <div/>}
+                                    <h6>Feature coming soon!</h6>
+                                    {/* {this.props.account.smsNotif ? <h6>SMS/Text Message</h6> : <div/>}
+                                    {this.props.account.emailNotif ? <h6>Email</h6> : <div/>} */}
                                 </div>
                             </div>
                             <div className="amd-edit amd-edit-1">
@@ -50,8 +51,9 @@ class AccountManager extends Component {
 
                                 <div className="editing-child-3">
                                     Recieve Notifications via<br />
-                                    <input type="checkbox" name="smsNotif" value="smsNotif" defaultChecked={this.props.account.smsNotif}/><label className="label-component details">SMS/Text Message</label><br />
-                                    <input type="checkbox" name="emailNotif" value="emailNotif" defaultChecked={this.props.account.emailNotif}/><label className="label-component details">Email</label>
+                                    <h6>Feature coming soon!</h6>
+                                    {/* <input type="checkbox" name="smsNotif" value="smsNotif" defaultChecked={this.props.account.smsNotif}/><label className="label-component details">SMS/Text Message</label><br />
+                                    <input type="checkbox" name="emailNotif" value="emailNotif" defaultChecked={this.props.account.emailNotif}/><label className="label-component details">Email</label> */}
                                 </div>
                             </div>
 
