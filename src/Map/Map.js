@@ -19,7 +19,8 @@ class Map extends Component{
         this.state  = {
             center: {lat: 0, lng: 0}, // initial marker state
             zoom: 15,
-            validAddress: true
+            validAddress: true,
+            address: '',
         };
     }
 
@@ -32,7 +33,8 @@ class Map extends Component{
         Geocode.fromAddress(address).then(
             response => {
                 this.setState({
-                    center: response.results[0].geometry.location
+                    center: response.results[0].geometry.location,
+                    address: address,
                 });
             },
             error => {
@@ -70,6 +72,8 @@ class Map extends Component{
                     :
                     <div className="error">Unable to load map</div>
                 }
+                {/* Prompts user to open maps on their phone */}
+                {this.state.validAddress && <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.long} target="_blank">{this.state.address}</a>}
             </div>
         );
     }

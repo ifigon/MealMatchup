@@ -11,12 +11,6 @@ const db = firebase.database();
 class MobilePickup extends React.Component {
     constructor(props){
         super(props); 
-        
-        this.state  = {
-            lat: '',
-            long: '',
-            fullAddress: ''
-        };
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -29,22 +23,6 @@ class MobilePickup extends React.Component {
         };
         // write pickedUpInfo and status change to db
         db.ref(this.props.dbRef).update({ status: DeliveryStatus.PICKED_UP, pickedUpInfo: pickedUpInfo});
-    }
-
-    componentDidMount(){
-        // concatenate address in a specific order
-        var keyOrder = ['street1', 'street2', 'city', 'state', 'zipcode'];
-        var address = keyOrder.map(key => this.props.da.address[key]).join(' ');
-        // Convert address to Lat, Long
-        Geocode.fromAddress(address).then(
-            response => {
-                this.setState({
-                    lat: response.results[0].geometry.location.lat,
-                    long: response.results[0].geometry.location.lng,
-                    fullAddress: address
-                });
-            }
-        );
     }
 
     render() {
@@ -63,10 +41,8 @@ class MobilePickup extends React.Component {
                         width="90%" 
                         marginTop="10px" 
                         marginRight="0px"
-                        marginBottom="0px"
+                        marginBottom="8px"
                         address={this.props.da.address}/>
-                    {/* Prompts user to open maps on their phone */}
-                    <a id="ms-address" href={'geo:' + this.state.lat + ',' + this.state.long} target="_blank">{this.state.fullAddress}</a>
                     <div className="ms-content">
                         <div id="ms-notes">
                             <p className="ms-content-header">Notes</p>
@@ -82,13 +58,13 @@ class MobilePickup extends React.Component {
                     <form onSubmit={this.onSubmit}>
                         <div className="ms-temp">
                             <p className="ms-content-header">Temperature Directions</p>
-                            <p className="ms-notes">Take the initial temperature of the freezer where the food being delivered is stored before deliviering.</p>
+                            <p className="ms-notes">Take the initial temperature of the freezer where the food being delivered is stored before delivering.</p>
                             {/* TODO: validate input in less than 32 degrees */}
                             <input name="temp" className="ms-input" type="number" placeholder="Freezer Temperature" required/>
                         </div>
                         <div id="ms-confirm">
                             <p className="ms-content-header">Confirmation Signature</p>
-                            <p className="ms-notes">Get a confirmation signature from {this.props.da.primaryContact.name} at {this.props.da.agency} after you drop-off food items at the destination.</p>
+                            <p className="ms-notes">Get a confirmation signature from {this.props.da.primaryContact.name} at {this.props.da.agency} after you pick-up food items at the destination.</p>
                             {/* TODO: Signature */}
                             <input name="signature" className="ms-signature" type="text" placeholder="Signature" required/>
                         </div>

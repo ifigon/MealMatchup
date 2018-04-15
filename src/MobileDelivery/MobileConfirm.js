@@ -10,7 +10,7 @@ class MobileConfirm extends React.Component {
                 <div className="mobile-confirm-card">
                     <div className="mobile-card-line"></div>
                     <p className="ms-header">Completion Summary</p>
-                    <p id="confirm-time">{moment(this.props.deliveryObj.deliveredInfo.timestamp).calendar()}</p>
+                    <p id="confirm-time">{moment(this.props.deliveryObj.deliveredInfo.timestamp).format(StringFormat.WEEKDAY_WITH_DATE)}</p>
                     <div className="ms-confirm">
                         <div className="ms-confirm-content" id="ms-confirm-da">
                             <p className="ms-confirm-header">Donating Agency</p>
@@ -31,7 +31,7 @@ class MobileConfirm extends React.Component {
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-dg">
                             <p className="ms-confirm-header">Deliverers</p>
-                            <p className="ms-confirm-agency">{this.props.deliveryObj.delivererGroup.group}</p>
+                            <p className="ms-confirm-agency">{this.props.deliveryObj.delivererGroup}</p>
                             {
                                 this.props.deliveryObj.deliverers.map((deliverer, i) => {
                                     return (

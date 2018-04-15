@@ -112,7 +112,7 @@ class MobileController extends React.Component {
         let daObj = {
             primaryContact: pickedPrimaryContact,
             agency: daData.name,
-            address: this.aggrAddress(daData.address),
+            address: daData.address,
         };
         this.setState({ donatingAgency: daObj});
     }
@@ -127,17 +127,9 @@ class MobileController extends React.Component {
             primaryContact: raPrimaryContact,
             agency: raMeta.name,
             notes: raMeta.deliveryNotes,
-            address: this.aggrAddress(raMeta.address),
+            address: raMeta.address,
         };
         this.setState({ receivingAgency: raObj});
-    }
-
-    aggrAddress(rawAddress) {
-        let address = rawAddress;
-        // street2 and officeNo fallback
-        address.street2 = rawAddress.street2 ? rawAddress.street2 : '';
-        address.officeNo = rawAddress.officeNumber ? rawAddress.officeNumber : '';
-        return address;
     }
 
     toggleShowSummary() {

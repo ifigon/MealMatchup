@@ -11,12 +11,6 @@ const db = firebase.database();
 class MobileDelivery extends React.Component {
     constructor(props){
         super(props);
-        
-        this.state  = {
-            lat: '', 
-            long: '',
-            fullAddress: '',
-        };
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -32,22 +26,6 @@ class MobileDelivery extends React.Component {
         this.props.toggleShowSummary(); // notify controller to show summary dialog 
     }
 
-    componentDidMount(){
-        // concatenate address in a specific order
-        var keyOrder = ['street1', 'street2', 'city', 'state', 'zipcode'];
-        var address = keyOrder.map(key => this.props.ra.address[key]).join(' ');
-        // Convert address to Lat, Long
-        Geocode.fromAddress(address).then(
-            response => {
-                this.setState({
-                    lat: response.results[0].geometry.location.lat,
-                    long: response.results[0].geometry.location.lng,
-                    fullAddress: address
-                });
-            }
-        );
-    }
-
     render() {
         return (
             <div className="mobile-delivery">
@@ -59,9 +37,7 @@ class MobileDelivery extends React.Component {
                     <p className="ms-header">{this.props.ra.agency}</p>
                     <p className="ms-pickup-time">Deliver by {moment(this.props.deliveryObj.pickedUpInfo.timestamp).add(3, 'hours').format(StringFormat.TIME)}
                     </p>
-                    <Map marginTop="10px" marginLeft="20px" height="90px" width="90%" address={this.props.ra.address}/>
-                    {/* Prompts user to open maps on their phone */}
-                    <a id="ms-address" href={'geo:' + this.state.lat + ',' + this.state.long} target="_blank">{this.state.fullAddress}</a>
+                    <Map marginTop="10px" marginLeft="20px" marginBottom="8px" height="90px" width="90%" address={this.props.ra.address}/>
                     <div className="ms-content">
                         <div id="ms-notes">
                             <p className="ms-content-header">Notes</p>
@@ -77,7 +53,7 @@ class MobileDelivery extends React.Component {
                     <form onSubmit={this.onSubmit}>
                         <div id="ms-confirm">
                             <p className="ms-content-header">Confirmation Signature</p>
-                            <p className="ms-notes">Get a confirmation signature and printed name from 
+                            <p className="ms-notes">Get a confirmation signature and printed name from  
                             {this.props.ra.primaryContact.name} at the non profit after you drop-off food items at the destination.</p>
                             {/* TODO: Signature */}
                             <input name="signature" className="ms-signature-delivery" type="text" placeholder="Sign Here" required/>

@@ -55,7 +55,7 @@ class MobileStart extends React.Component {
                             <a href={'tel:' + this.props.da.primaryContact.phone}>{this.props.da.primaryContact.phone}</a>
                         </div>
                         <div id="mobile-ra">
-                            <p className="mobile-content-header">Deliver To From</p>
+                            <p className="mobile-content-header">Deliver To</p>
                             <p id="mobile-name">{this.props.ra.agency}</p>
                             <p id="mobile-org">{this.props.ra.primaryContact.name}</p>
                             <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
