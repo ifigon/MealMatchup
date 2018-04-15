@@ -28,7 +28,8 @@ class EventCard extends Component {
                 <h1 className="event-header">{type}</h1>
                 <img className="truck-icon" src={truck} alt={truckAlt} />
                 <p className="event-time">
-                    {this.props.startTime} - {this.props.endTime}
+                    {this.props.startTime.toString()} -{' '}
+                    {this.props.endTime.toString()}
                 </p>
             </div>
         );

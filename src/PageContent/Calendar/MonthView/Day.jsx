@@ -18,10 +18,10 @@ class Day extends Component {
         super(props);
         this.state = {
             events: {
-                '2018-04-19': {
+                L5RkIS0CSPuXpkewaqA: {
                     status: 'in_progress', // Enums.DeliveryStatus
-                    startTimestamp: 1521295200,
-                    endTimestamp: 1521302400,
+                    startTimestamp: 1524214800,
+                    endTimestamp: 1524214800,
                     isEmergency: false,
                     spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
                     donatingAgency: {
@@ -83,7 +83,7 @@ class Day extends Component {
                         timestamp: 1523174892769
                     }
                 },
-                '2018-04-13': {
+                hb4twSSPuXpkewaqA: {
                     status: 'in_progress', // Enums.DeliveryStatus
                     startTimestamp: 1521295200,
                     endTimestamp: 1521302400,
@@ -153,16 +153,29 @@ class Day extends Component {
     }
 
     render() {
-        // console.log(typeof this.state.events);
         let curClasses = this.props.classes;
         let currentMonthIndex = this.props.currentMonthIndex;
         let date = this.props.date;
-        // console.log('date' + date);
+
         const className = 'react-calendar__month-view__days__day';
         let eventsToday = [];
+        // console.log(moment().unix());
 
         for (var checkEvent in this.state.events) {
-            if (checkEvent === '2018-04-19') {
+            console.log(
+                'untouch:' + this.state.events[checkEvent].startTimestamp
+            );
+
+            console.log(
+                'newdate' +
+                    new Date(this.state.events[checkEvent].startTimestamp)
+            );
+            console.log('today' + date.toString().substring(0, 15));
+            if (
+                new Date(this.state.events[checkEvent].startTimestamp * 1000)
+                    .toString()
+                    .startsWith(date.toString().substring(0, 15))
+            ) {
                 // no dupilcate keys - will have to check against start time?
                 eventsToday.push(this.state.events[checkEvent]);
             }
@@ -171,13 +184,12 @@ class Day extends Component {
         let today = false;
         const curDay = moment().format('ddd MMM DD YYYY');
         if (this.props.date.toString().startsWith(curDay)) {
-            console.log('today!' + this.props.date);
             today = true;
-            
         }
 
         let futureEvent = true;
         if (moment().isAfter(this.props.date)) {
+            //TODO incorporate time of day - today event may have happened
             futureEvent = false;
         }
 

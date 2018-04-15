@@ -3,22 +3,23 @@ import EventCard from './EventCard';
 import DeliveryType from '../../../Enums';
 
 class EventCardSlot extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            events: null
-        };
-    }
-
     render() {
         if (Object.keys(this.props.events).length === 0) {
             return <div />;
         } else {
-            let type = '';
             for (var e in this.props.events) {
-                if (!e.isEmergency) {
+                let type = DeliveryType.EMERGENCY;
+                if (!this.props.events[e].isEmergency) {
                     type = DeliveryType.RECURRING;
                 }
+
+                let startTime = new Date(
+                    this.props.events[e].startTimestamp * 1000
+                );
+                // console.log(e.startTimestamp);
+                let endTime = new Date(
+                    this.props.events[e].endTimeStamp * 1000
+                );
                 // let future = e.startTime
                 //e.startTimestamp to 10am time
                 //e.endTimestamp to 12pm time
@@ -26,9 +27,9 @@ class EventCardSlot extends Component {
                 return (
                     <EventCard
                         eventType={type}
-                        startTime="10am"
-                        endTime="12pm"
-                        futureEvent={this.props.future}
+                        startTime={startTime}
+                        endTime={endTime}
+                        futureEvent={this.props.futureEvent}
                     />
                 );
             }
