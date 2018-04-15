@@ -90,7 +90,10 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader logo={logo} title={this.props.account.name} />
+                <PageHeader 
+                    account={this.props.account}
+                    logo={logo} 
+                    title={this.props.account.name} />
 
                 <NavBar
                     content={this.state.content}
