@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const enums = require('../../Enums.js');
+const moment = require('moment-timezone');
 const utils = require('../../Utils.js');
 
 const nt = enums.NotificationType;
@@ -21,11 +22,10 @@ const nt = enums.NotificationType;
  * LISTENER 2: handle DG responses for recurring pickup requests
  * Cases
  *  A) a DG claimed:
- *      Changes:
- *          i. 'delivererGroup' changed from requested/pending to claimed
- *          ii. 'status' changed from PENDING to CONFIRMED
+ *      Changes: 'delivererGroup' changed from requested/pending to claimed
  *      Actions:
  *          i. create delivery objects
+ *          ii. update request's 'spawnedDeliveries' and 'status'
  *          ii. send CONFIRMED notifications to DA, RA, DG
  *  B) all DGs rejected:
  *      Change: 'status' changed from PENDING to REJECTED_DG
@@ -159,11 +159,8 @@ function sendRequestToDGs(accountsRef, requestSnap) {
 // ----------------------- Listener 2 funcs -----------------------
 // case A trigger
 function dgClaimed(change) {
-    let claimed = !change.before.child('delivererGroup').hasChild('claimed') && 
+    return !change.before.child('delivererGroup').hasChild('claimed') &&
         change.after.child('delivererGroup').hasChild('claimed');
-    let confirmed = change.before.val().status === enums.RequestStatus.PENDING &&
-        change.after.val().status === enums.RequestStatus.CONFIRMED;
-    return claimed && confirmed;
 }
 
 // case B trigger
@@ -174,6 +171,7 @@ function dgRejected(change) {
 
 // case A handler
 function createDeliveries(rootRef, requestSnap) {
+    const TIME = enums.InputFormat.TIME;
     console.info('Listener2: DG claimed -> create delivery objects');
     let request = requestSnap.val();
     let dsRef = rootRef.child(`deliveries/${request.umbrella}`);
@@ -188,27 +186,55 @@ function createDeliveries(rootRef, requestSnap) {
             new Error('Repeats other when weekly and biweekly are not supported yet'));
     }
 
-    // TODO: calc duration and fill out common fields in delivery
-    let duration = moment();
-    let delivery = {};
+    let duration = (
+        moment(moment.tz(request.endTimestamp, request.timezone).format(TIME), TIME)
+        - moment(moment.tz(request.startTimestamp, request.timezone).format(TIME), TIME)
+    ).valueOf();
+
+    let delivery = {
+        status: enums.DeliveryStatus.SCHEDULED,
+        timezone: request.timezone,
+        isEmergency: false,
+        spawningDeliveryRequest: requestSnap.key,
+        donatingAgency: request.donatingAgency,
+        daContact: request.primaryContact,
+        receivingAgency: request.receivingAgency.claimed,
+        raContact: request.raContact,
+        delivererGroup: request.delivererGroup.claimed,
+        notes: request.notes,
+    };
 
     let promises = [];
+    let spawnedDeliveries = [];
     let cur = moment(request.startTimestamp);
     while (cur.valueOf() <= request.endTimestamp) {
-        // TODO update delivery
+        delivery['startTimestamp'] = cur.valueOf();
+        delivery['endTimestamp'] = cur.valueOf() + duration;
 
-        promises.push(dsRef.push(delivery));
+        // push delivery to db
+        let dRef = dsRef.push(delivery);
+        spawnedDeliveries.push(dRef.key);
+        promises.push(dRef);
 
         cur.add(step, 'days');
     }
 
-    return Promise.resolve();
+    // update request
+    let updates = { 
+        status: enums.RequestStatus.CONFIRMED, 
+        spawnedDeliveries: spawnedDeliveries 
+    };
+    promises.push(requestSnap.ref.update(updates));
+
+    console.info('Created ' + spawnedDeliveries.length + ' deliveries');
+    return Promise.all(promises);
 }
 // ----------------------- End Listener 2 -----------------------
 
 function multiNotify(accounts, reqKey, notifType) {
     let promises = [];
-    for (let acc in accounts) {
+    for (let i in accounts) {
+        let acc = accounts[i];
         promises.push(
             utils.notifyRequestUpdate(acc.label, acc.ref, reqKey, notifType));
     }
