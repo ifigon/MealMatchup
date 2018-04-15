@@ -22,7 +22,11 @@ class Tile extends Component {
         let tileContent = this.props.tileContent;
         let tileDisabled = this.props.tileDisabled;
         let view = this.props.view;
-
+        let today = this.props.today;
+        let dateClass = '';
+        if (today) {
+            dateClass = 'today';
+        }
         return (
             <button
                 className={mergeClassNames(
@@ -42,13 +46,16 @@ class Tile extends Component {
                 style={style}
                 type="button"
             >
-                <time dateTime={dateTime}>{children}</time>
+                <time dateTime={dateTime} className={dateClass}>
+                    {children}
+                </time>
                 {typeof tileContent === 'function'
                     ? tileContent({ date, view })
                     : tileContent}
                 <EventCardSlot
                     events={this.props.events}
                     today={this.props.today}
+                    futureEvent={this.props.futureEvent}
                 />
             </button>
         );

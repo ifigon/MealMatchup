@@ -165,17 +165,20 @@ class Day extends Component {
             if (checkEvent === '2018-04-19') {
                 // no dupilcate keys - will have to check against start time?
                 eventsToday.push(this.state.events[checkEvent]);
-                // console.log(Date.parse(checkEvent));
             }
         }
 
         let today = false;
         const curDay = moment().format('ddd MMM DD YYYY');
-        // console.log('curday' + curDay);
-        // console.log(this.props.date.toString());
         if (this.props.date.toString().startsWith(curDay)) {
             console.log('today!' + this.props.date);
             today = true;
+            
+        }
+
+        let futureEvent = true;
+        if (moment().isAfter(this.props.date)) {
+            futureEvent = false;
         }
 
         return (
@@ -195,6 +198,7 @@ class Day extends Component {
                 view="month"
                 events={eventsToday}
                 today={today}
+                futureEvent={futureEvent}
             >
                 {getDay(date)}
             </Tile>

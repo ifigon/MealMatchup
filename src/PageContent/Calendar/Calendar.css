@@ -65,3 +65,24 @@ div.react-calendar__month-view__days > button {
   height: 140px;
   border: 1px #4f4f4f solid;
 }
+
+.react-calendar__tile > time.today{
+    background-color: #5DC0F9;
+    color: #FFFFFF;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+
+}
+
+/* .circle {
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  font-size: 50px;
+  color: #fff;
+  line-height: 500px;
+  text-align: center;
+  background: #000
+} */

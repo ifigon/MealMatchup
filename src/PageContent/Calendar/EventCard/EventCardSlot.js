@@ -28,7 +28,7 @@ class EventCardSlot extends Component {
                         eventType={type}
                         startTime="10am"
                         endTime="12pm"
-                        futureEvent={true}
+                        futureEvent={this.props.future}
                     />
                 );
             }
