@@ -3,6 +3,7 @@ import './StudentCoordinatorSettings.css';
 import OrganizationDetails from './OrganizationDetails';
 import AccountManager from './AccountManager';
 import MemberAccount from './MemberAccount';
+import PersonalAccount from './PersonalAccount';
 import './SCSettings0.css';
 import './SCSettings1.css';
 
@@ -18,6 +19,7 @@ class Settings extends Component {
             isEditingOrg: false,
             isEditingAcc: false,
             isEditingMem: false,
+            isEditingPmem: false,
             email: 'phisigmaro@uw.edu'
         };
     }
@@ -25,7 +27,8 @@ class Settings extends Component {
     // Backend TODO: Get data from DB
     componentDidMount() {
         let account  = {
-            user_type: 'admin',
+            user_type: 'admi',
+            agency: 'donating_agency',
             name: 'Phi Sigma Ro',
             email: this.state.email,
             password: 'password',
@@ -47,6 +50,12 @@ class Settings extends Component {
                 position: 'President'
             },
             secondaryContact: {
+                name: 'Jennifer Marly',
+                email: 'jmarly@uw.edu',
+                phone: '206-487-2992',
+                position: 'Vice President'
+            },
+            personalAccount: {
                 name: 'Jennifer Marly',
                 email: 'jmarly@uw.edu',
                 phone: '206-487-2992',
@@ -89,7 +98,8 @@ class Settings extends Component {
                 details: account.coordinator
             },
             secondaryContact: account.secondaryContact || null,
-            memberAccounts: account.memberAccounts || null
+            memberAccounts: account.memberAccounts || null,
+            personalAccount: account.personalAccount || null
         });
     }
 
@@ -125,14 +135,31 @@ class Settings extends Component {
                         <div className="scs-spacing" />
 
                         <div className="container">
-                            <MemberAccount
-                                account={this.state.coordinator}
-                                memberAccounts={this.state.memberAccounts}
-                                isAdmin={this.state.account.user_type}
-                                isEditingMem={this.state.isEditingMem}
-                                handleEditMem={this.handleEditMem.bind(this)}
-                                handleMemSave={this.handleMemSave.bind(this)}
-                            />
+
+                            {this.state.account.agency === 'donating_agency' ?
+                                <div>
+                                    {this.state.account.user_type === 'admin' ?
+                                        <MemberAccount
+                                            account={this.state.coordinator}
+                                            memberAccounts={this.state.memberAccounts}
+                                            isAdmin={this.state.account.user_type}
+                                            isEditingMem={this.state.isEditingMem}
+                                            handleEditMem={this.handleEditMem.bind(this)}
+                                            handleMemSave={this.handleMemSave.bind(this)}
+                                        />
+                                        :
+                                        <PersonalAccount
+                                            account={this.state.personalAccount}
+                                            isEditingPmem={this.state.isEditingPmem}
+                                            handleEditPmem={this.handleEditPmem.bind(this)}
+                                            handlePmemSave={this.handlePmemSave.bind(this)}
+                                        />
+                                    }
+                                </div>
+                                :
+                                <span />
+                            }
+
                         </div>
 
                     </div>
@@ -184,6 +211,20 @@ class Settings extends Component {
     handleMemSave(newDetails) {
         this.setState({
             isEditingMem: false
+        });
+    }
+
+    handleEditPmem() {
+        this.setState({
+            isEditingPmem: true
+        });
+    }
+
+    // Backend TODO: Write data to DB
+    handlePmemSave(newDetails) {
+        this.setState({
+            isEditingPmem: false,
+            personalAccount: newDetails
         });
     }
 
