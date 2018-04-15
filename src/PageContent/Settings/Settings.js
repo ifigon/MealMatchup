@@ -13,6 +13,7 @@ class Settings extends Component {
             account: null,
             org: null,
             coordinator: null,
+            secondaryContact: null,
             isEditingOrg: false,
             isEditingAcc: false,
             email: 'phisigmaro@uw.edu'
@@ -43,6 +44,12 @@ class Settings extends Component {
                 phone: '206-487-2859',
                 position: 'President'
             },
+            secondaryContact: {
+                name: 'Jennifer Marly',
+                email: 'jmarly@uw.edu',
+                phone: '206-487-2992',
+                position: 'Vice President'
+            },
             notifications: [
                 {
                     type: 'recurring_pickup_request',  // Enums.NotificationType
@@ -55,7 +62,6 @@ class Settings extends Component {
         this.setState({
             account: account,
             org: {
-                user_type: account.user_type,
                 name: account.name,
                 address: account.address,
                 organizationPhone: account.organizationPhone,
@@ -65,7 +71,8 @@ class Settings extends Component {
             },
             coordinator: {
                 details: account.coordinator
-            }
+            },
+            secondaryContact: account.secondaryContact || null
         });
     }
 
@@ -78,6 +85,7 @@ class Settings extends Component {
                         <div className="container">
                             <OrganizationDetails
                                 account={this.state.org}
+                                isAdmin={this.state.account.user_type}
                                 isEditingOrg={this.state.isEditingOrg}
                                 handleEditOrg={this.handleEditOrg.bind(this)}
                                 handleOrgSave={this.handleOrgSave.bind(this)}
@@ -89,6 +97,8 @@ class Settings extends Component {
                         <div className="container">
                             <AccountManager
                                 account={this.state.coordinator}
+                                secondaryContact={this.state.secondaryContact}
+                                isAdmin={this.state.account.user_type}
                                 isEditingAcc={this.state.isEditingAcc}
                                 handleEditAccManager={this.handleEditAccManager.bind(this)}
                                 handleAccSave={this.handleAccSave.bind(this)}
@@ -125,9 +135,10 @@ class Settings extends Component {
     }
 
     // Backend TODO: Write data to DB
-    handleAccSave(newDetails) {
+    handleAccSave(newDetails, secondaryContact) {
         this.setState({
             coordinator: newDetails,
+            secondaryContact: secondaryContact,
             isEditingAcc: false
         });
     }
