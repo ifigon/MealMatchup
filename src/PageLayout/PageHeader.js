@@ -3,8 +3,66 @@ import './PageHeader.css';
 import notification from '../icons/notification.svg';
 import NotificationBadge from 'react-notification-badge';
 import {Effect} from 'react-notification-badge';
+import Notification from './Notification/Notification';
 
 class PageHeader extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showPopUp: false,
+            notificationClicked: false,
+            notifications: []
+        };
+
+        this.notificationClicked = this.notificationClicked.bind(this);
+        this.openPopUp = this.openPopUp.bind(this);
+        this.closePopUp = this.closePopUp.bind(this);
+    }
+    componentDidMount() {
+        //TODO: query db for notifications
+        this.setState({
+            notifications: [
+                {
+                    type: 'recurring_pickup_request',
+                    content: '-L5QoXeC_UrL5tRRED3e'
+                },
+                {
+                    type: 'recurring_pickup_confirmed',
+                    content: '-XKSIDLeC_Uksd321e'
+                },
+                {
+                    type: 'recurring_pickup_confirmed',
+                    content: '-XKSIDLeC_Uksd321e'
+                },
+                {
+                    type: 'recurring_pickup_request',
+                    content: '-XKSIDLeC_Uksd321e'
+                }
+            ]
+        });
+    }
+
+    openPopUp(){
+        // TODO: backend populate notification popup info
+        this.setState({
+            showPopUp: true,
+            notificationClicked: false
+        });
+    }
+
+    closePopUp(){
+        this.setState({
+            showPopUp: false
+        });
+    }
+
+    notificationClicked(){
+        this.setState((prevState) => {
+            return {notificationClicked: !prevState.notificationClicked};
+        });
+    }
+
     render() {
         return(
             <div className="page-container">
@@ -15,14 +73,25 @@ class PageHeader extends Component {
                     </div>
                     <div style={{height: '0px', marginTop: '40px'}}>
                         <NotificationBadge 
-                            count={this.props.notificationCount} 
+                            count={this.state.notifications.length} 
                             effect={Effect.SCALE}
                             frameLength={15.0}
                             style={{position: 'inherit', left: '20px', top: '-10px'}}/>
-                        <img onClick={this.props.notificationClicked} src={notification} className="notification-icon" alt="icon"/>
+                        <img onClick={this.notificationClicked} src={notification} className="notification-icon" alt="icon"/>
                     </div>
                 </div>
-                
+                <div className="popup-flex">
+                    {/* this only shows notification */}
+                    {this.state.notificationClicked &&
+                        this.state.notifications.map((notification, i) => {
+                            return !notification.claimed && 
+                                <Notification
+                                    notificationType={notification.type} 
+                                    account={this.props.account.accountType}
+                                    clickNotification={this.openPopUp.bind(this)}/>;
+                        })
+                    }
+                </div>
             </div>
         );
     }

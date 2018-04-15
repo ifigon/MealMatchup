@@ -20,15 +20,7 @@ class PageContainer extends Component {
 
         this.state = {
             content: props.content,
-            showPopUp: false,
-            notificationClicked: false,
-            notifications: [],
-            donatingAgency: null,
-            //TODO: backend update count when notification gets deleted/viewed/claimed/expired (?)
-            // "They should stay in the notifications drop down until claimed or expired
-            // If they don’t have to do with pickups, I’d give them a week until they 
-            // expire from drop down or are removed"
-            notificationCount: 4
+            donatingAgency: null
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -52,52 +44,6 @@ class PageContainer extends Component {
                 }.bind(this)
             );
         }
-
-        //TODO: query db for notifications
-        this.setState({
-            notifications: [
-                {
-                    type: 'recurring_pickup_request',
-                    content: '-L5QoXeC_UrL5tRRED3e',
-                    claimed: false
-                },
-                {
-                    type: 'recurring_pickup_confirmed',
-                    content: '-XKSIDLeC_Uksd321e',
-                    claimed: false
-                },
-                {
-                    type: 'recurring_pickup_confirmed',
-                    content: '-XKSIDLeC_Uksd321e',
-                    claimed: false
-                },
-                {
-                    type: 'recurring_pickup_request',
-                    content: '-XKSIDLeC_Uksd321e',
-                    claimed: false
-                }
-            ]
-        });
-    }
-
-    openPopUp(){
-        // TODO: backend populate notification popup info
-        this.setState({
-            showPopUp: true,
-            notificationClicked: false
-        });
-    }
-
-    closePopUp(){
-        this.setState({
-            showPopUp: false
-        });
-    }
-
-    notificationClicked(){
-        this.setState((prevState) => {
-            return {notificationClicked: !prevState.notificationClicked};
-        });
     }
 
     navBarHandler(e) {
@@ -110,10 +56,9 @@ class PageContainer extends Component {
         return (
             <div>
                 <PageHeader 
-                    notificationClicked={this.notificationClicked.bind(this)} 
+                    account={this.props.account}
                     logo={logo} 
-                    title={this.props.account.name} 
-                    notificationCount={this.state.notificationCount}/>
+                    title={this.props.account.name} />
 
                 <NavBar
                     content={this.state.content}
@@ -167,18 +112,6 @@ class PageContainer extends Component {
                         Settings
                     </div>
                 )}
-                <div className="popup-flex">
-                    {/* this only shows notification */}
-                    {this.state.notificationClicked &&
-                        this.state.notifications.map((notification, i) => {
-                            return !notification.claimed && 
-                                <NotificationPopup 
-                                    notificationType={notification.type} 
-                                    account={this.props.account.accountType}
-                                    clickNotification={this.openPopUp.bind(this)}/>;
-                        })
-                    }
-                </div>
             </div>
         );
     }
