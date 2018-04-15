@@ -18,6 +18,7 @@
 .env.production.local
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -27,3 +28,11 @@ yarn-error.log*
 =======
 *.log*
 >>>>>>> c60b84df301a16006ef1b2014b3e10d700a9ffaa
+=======
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode
+*.log*
+
+>>>>>>> 53a1c8d6daf98bcba2f388cbe9297f89afa3372e

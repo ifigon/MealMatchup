@@ -131,7 +131,7 @@ class PageContainer extends Component {
                             <Dialog
                                 closeDialog={this.closeDialog}
                                 accountType={this.props.account.accountType}
-                                futureEvent={false}
+                                futureEvent={true}
                                 delivery={this.state.delivery}
                             />
                         ) : null}
@@ -140,7 +140,7 @@ class PageContainer extends Component {
                                 eventType={this.state.delivery.eventType}
                                 startTime={this.state.delivery.startTime}
                                 endTime={this.state.delivery.endTime}
-                                futureEvent={false}
+                                futureEvent={true}
                             />
                         </div>
                     </div>

@@ -13,6 +13,7 @@
   vertical-align: middle;
   border-bottom: #e0e0e0 0.5px solid;
   padding-right: 0px;
+  /* changed */
   padding-left: 0px;
   width: 80%;
 }
@@ -27,6 +28,7 @@
   font-weight: 400;
   font-size: 14px;
   margin: 0px;
+  /* current change */
   margin-bottom: 3px;
 }
 
@@ -72,7 +74,7 @@
 .edit-dg {
   width: 110%;
 }
-
+/* current change */
 .description-input {
   width: 200px;
   color: #243847;
