@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import './Mobile.css';
 import MobileConfirm from './MobileConfirm';
+import { StringFormat } from '../Enums';
 
 class MobileComplete extends React.Component {
     render() { 
@@ -15,12 +16,12 @@ class MobileComplete extends React.Component {
                     <div className="mobile-agenda">
                         <p className="mobile-today">Today's Agenda</p>
                         <p className="mobile-today" id="mobile-day">
-                            {moment(this.props.deliveryObj.date).format('L').replace(new RegExp('[^.]?' + moment(this.props.deliveryObj.date).format('YYYY') + '.?'), '')}
+                            {moment(this.props.deliveryObj.startTime).format(StringFormat.DATE_SHORT)}
                         </p>
                     </div>
                     <div className="mobile-time">
                         <span className="gray-dot"></span>
-                        <p id="mobile-time">{moment(this.props.deliveryObj.startTime,'HH:mm').format('LT')} &ndash; {moment(this.props.deliveryObj.endTime, 'HH:mm').format('LT')}</p>
+                        <p id="mobile-time">{moment(this.props.deliveryObj.startTime).format(StringFormat.TIME)} &ndash; {moment(this.props.deliveryObj.endTime).format(StringFormat.TIME)}</p>
                     </div>
                     <p id="mobile-completed">Pickup Completed</p>
                     <p className="mobile-content-header">Student Deliverers</p>

@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import './Mobile.css';
+import { StringFormat } from '../Enums';
 
 class MobileConfirm extends React.Component {
     render() {
@@ -17,7 +18,7 @@ class MobileConfirm extends React.Component {
                                 <a href={'tel:' + this.props.da.primaryContact.phone}>{this.props.da.primaryContact.phone}</a>
                             </p>
                             <p className="ms-confirm-details">Signed by: {this.props.da.primaryContact.name}</p>
-                            <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.pickedUpInfo.timestamp).format('LT')}</p>
+                            <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
                             <p className="ms-confirm-details">Freezer Temperature: {this.props.deliveryObj.pickedUpInfo.temperature}&deg;F</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-ra">
@@ -26,7 +27,7 @@ class MobileConfirm extends React.Component {
                                 <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                             </p>
                             <p className="ms-confirm-details">Signed by: {this.props.ra.primaryContact.name}</p>
-                            <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.deliveredInfo.timestamp).format('LT')}</p>
+                            <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-dg">
                             <p className="ms-confirm-header">Deliverers</p>

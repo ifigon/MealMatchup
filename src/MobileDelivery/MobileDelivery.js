@@ -3,7 +3,7 @@ import Map from '../Map/Map';
 import Geocode from '../react-geocode';
 import moment from 'moment';
 import './Mobile.css';
-import { DeliveryStatus } from '../Enums';
+import { DeliveryStatus, StringFormat } from '../Enums';
 
 import firebase from '../FirebaseConfig';
 const db = firebase.database();
@@ -57,7 +57,7 @@ class MobileDelivery extends React.Component {
                 <div className="mobile-card">
                     <div className="mobile-card-line"></div>
                     <p className="ms-header">{this.props.ra.agency}</p>
-                    <p className="ms-pickup-time">Deliver by {moment(this.props.deliveryObj.pickedUpInfo.timestamp).add(3, 'hours').format('LT')}
+                    <p className="ms-pickup-time">Deliver by {moment(this.props.deliveryObj.pickedUpInfo.timestamp).add(3, 'hours').format(StringFormat.TIME)}
                     </p>
                     <Map marginTop="10px" marginLeft="20px" height="90px" width="90%" address={this.props.ra.address}/>
                     {/* Prompts user to open maps on their phone */}
