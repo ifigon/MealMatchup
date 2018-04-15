@@ -276,7 +276,7 @@ DELIVERY ("/deliveries/RheaQY1WxJT03sTPQICFZ4STpfm1/")  // "/deliveries/<umbrell
 
 	// key = auto generated key by firebase
 	-L5RkIS0CSPuXpkewaqA: {
-		status: "in_progress",  // Enums.DeliveryStatus
+		status: "started",  // Enums.DeliveryStatus
 		startTimestamp: 1521295200,
 		endTimestamp: 1521302400,
 		timezone: "America/Los_Angeles",  // same as spawningDeliveryRequest's

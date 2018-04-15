@@ -10,7 +10,7 @@ class MobileStart extends React.Component {
     onStart(e) {
         e.preventDefault();
         // write status change to db
-        db.ref(this.props.dbRef).update({ status: DeliveryStatus.IP});
+        db.ref(this.props.dbRef).update({ status: DeliveryStatus.STARTED});
     }
 
     render() { 

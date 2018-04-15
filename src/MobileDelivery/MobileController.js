@@ -146,7 +146,7 @@ class MobileController extends React.Component {
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency}
                 dbRef={this.state.deliveryDbRefPath}/>;
-        case DeliveryStatus.IP:
+        case DeliveryStatus.STARTED:
             return <MobilePickup 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
