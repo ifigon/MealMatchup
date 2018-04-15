@@ -3,7 +3,6 @@ import firebase from './FirebaseConfig.js';
 import { AccountType, PageContent, DeliveryType } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import NotificationPopup from './PageLayout/Notification/Notification';
 import EventCard from './PageContent/Calendar/EventCard.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
