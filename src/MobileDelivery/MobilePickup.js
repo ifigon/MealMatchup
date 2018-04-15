@@ -1,6 +1,5 @@
 import React from 'react';
 import Map from '../Map/Map';
-import Geocode from '../react-geocode';
 import moment from 'moment';
 import './Mobile.css';
 import { DeliveryStatus, StringFormat } from '../Enums';
