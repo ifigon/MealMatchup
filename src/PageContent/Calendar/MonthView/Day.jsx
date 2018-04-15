@@ -11,13 +11,14 @@ import {
     isWeekend
 } from '../shared/dates';
 import { tileProps } from '../shared/propTypes';
+import moment from 'moment';
 
 class Day extends Component {
     constructor(props) {
         super(props);
         this.state = {
             events: {
-                '2018-04-12': {
+                '2018-04-19': {
                     status: 'in_progress', // Enums.DeliveryStatus
                     startTimestamp: 1521295200,
                     endTimestamp: 1521302400,
@@ -82,7 +83,7 @@ class Day extends Component {
                         timestamp: 1523174892769
                     }
                 },
-                '2018-04-19': {
+                '2018-04-13': {
                     status: 'in_progress', // Enums.DeliveryStatus
                     startTimestamp: 1521295200,
                     endTimestamp: 1521302400,
@@ -156,16 +157,25 @@ class Day extends Component {
         let curClasses = this.props.classes;
         let currentMonthIndex = this.props.currentMonthIndex;
         let date = this.props.date;
-        console.log('date' + date);
-
+        // console.log('date' + date);
         const className = 'react-calendar__month-view__days__day';
-        let eventsToday = null;
+        let eventsToday = [];
 
         for (var checkEvent in this.state.events) {
-            console.log('stateevent' + checkEvent);
             if (checkEvent === '2018-04-19') {
-                eventsToday = this.state.events[eventsToday];
+                // no dupilcate keys - will have to check against start time?
+                eventsToday.push(this.state.events[checkEvent]);
+                // console.log(Date.parse(checkEvent));
             }
+        }
+
+        let today = false;
+        const curDay = moment().format('ddd MMM DD YYYY');
+        // console.log('curday' + curDay);
+        // console.log(this.props.date.toString());
+        if (this.props.date.toString().startsWith(curDay)) {
+            console.log('today!' + this.props.date);
+            today = true;
         }
 
         return (
@@ -184,6 +194,7 @@ class Day extends Component {
                 minDateTransform={getBeginOfDay}
                 view="month"
                 events={eventsToday}
+                today={today}
             >
                 {getDay(date)}
             </Tile>
