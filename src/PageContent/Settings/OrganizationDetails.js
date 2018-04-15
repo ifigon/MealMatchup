@@ -82,7 +82,7 @@ class OrganizationDetails extends Component {
                 state: e.target.state.value,
                 zipcode: e.target.zip.value
             },
-            phone: e.target.phone.value
+            organizationPhone: e.target.phone.value
         };
         this.props.handleOrgSave(org);
     }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './StudentCoordinatorSettings.css';
 import OrganizationDetails from './OrganizationDetails';
-import SCSettings from './SCSettings';
+import AccountManager from './AccountManager';
+import './SCSettings0.css';
+import './SCSettings1.css';
 
 class Settings extends Component {
 
@@ -9,7 +11,10 @@ class Settings extends Component {
         super(props);
         this.state = {
             account: null,
+            org: null,
+            coordinator: null,
             isEditingOrg: false,
+            isEditingAcc: false,
             email: 'phisigmaro@uw.edu'
         };
     }
@@ -46,7 +51,20 @@ class Settings extends Component {
             smsNotif: true,
             emailNotif: true
         };
-        this.setState({account});
+        this.setState({
+            account: account,
+            org: {
+                email: account.email,
+                password: account.password,
+                address: account.address,
+                organizationPhone: account.organizationPhone
+            },
+            coordinator: {
+                details: account.coordinator,
+                smsNotif: account.smsNotif,
+                emailNotif: account.emailNotif
+            }
+        });
     }
 
     render() {
@@ -57,20 +75,27 @@ class Settings extends Component {
                     <div> 
                         <div className="container">
                             <OrganizationDetails
-                                account={this.state.account}
+                                account={this.state.org}
                                 isEditingOrg={this.state.isEditingOrg}
                                 handleEditOrg={this.handleEditOrg.bind(this)}
                                 handleOrgSave={this.handleOrgSave.bind(this)}
                             />
                         </div>
 
-                        <SCSettings
-                            account={this.state.account}
-                            handleOrgSave={this.handleOrgSave}
-                            handleAccSave={this.handleAccSave}
-                        />
+                        <div className="scs-spacing" />
+
+                        <div className="container">
+                            <AccountManager
+                                account={this.state.coordinator}
+                                isEditingAcc={this.state.isEditingAcc}
+                                handleEditAccManager={this.handleEditAccManager.bind(this)}
+                                handleAccSave={this.handleAccSave.bind(this)}
+                            />
+                        </div>
                     </div>
+
                     :
+
                     <div> Loading... </div>
                 }
             </div>
@@ -84,16 +109,24 @@ class Settings extends Component {
     }
 
     // Backend TODO: Write data to DB
-    handleOrgSave(org) {
+    handleOrgSave(newDetails) {
         this.setState({
-            account: {
-                email: org.email,
-                password: org.password,
-                name: org.name,
-                address: org.address,
-                organizationPhone: org.phone
-            },
+            org: newDetails,
             isEditingOrg: false
+        });
+    }
+
+    handleEditAccManager() {
+        this.setState({
+            isEditingAcc: true
+        });
+    }
+
+    // Backend TODO: Write data to DB
+    handleAccSave(newDetails) {
+        this.setState({
+            coordinator: newDetails,
+            isEditingAcc: false
         });
     }
 
