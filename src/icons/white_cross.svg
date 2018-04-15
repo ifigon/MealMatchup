@@ -1,0 +1,19 @@
+<svg width="55" height="55" viewBox="0 0 55 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>white_cross</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(172 203)">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M -172 -203L -117 -203L -117 -148L -172 -148L -172 -203Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="white_cross" clip-path="url(#clip-0)">
+<g id="cancel">
+<g id="Shape">
+<use xlink:href="#path0_fill" transform="matrix(1 0 0 -1 -161.615 -159.653)" fill="#FFFFFF"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" fill-rule="evenodd" d="M 35.0729 4.42361L 30.1627 0L 17.5365 11.375L 4.91021 0L 0 4.42361L 12.6262 15.7986L 0 27.1736L 4.91021 31.5972L 17.5365 20.2222L 30.1627 31.5972L 35.0729 27.1736L 22.4467 15.7986L 35.0729 4.42361L 35.0729 4.42361Z"/>
+</defs>
+</svg>

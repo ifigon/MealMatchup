@@ -1,0 +1,72 @@
+* {
+  font-family: "Open Sans", sans-serif;
+}
+.wrapper {
+  padding: 15px;
+  margin: 0px !important;
+  padding-top: 30px;
+}
+.content-wrapper {
+  padding: 15px;
+  padding-top: 0px;
+  display: inline-block;
+  vertical-align: middle;
+  border-bottom: #e0e0e0 0.5px solid;
+  padding-right: 0px;
+  width: 80%;
+}
+.section-header {
+  font-weight: 600;
+  color: #243847;
+  font-size: 18px;
+  margin: 0px;
+}
+.organization {
+  color: #243847;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0px;
+}
+
+.content-icon {
+  display: inline-block;
+  padding-right: 10px;
+}
+.content-details-wrapper {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.content-details {
+  font-weight: 400;
+  font-size: 14px;
+  color: #828282;
+  margin: 0px;
+}
+.inline-details {
+  width: 100px;
+}
+
+.editing {
+  vertical-align: middle;
+}
+.edit-button {
+  border: #5dc0f9 2px solid;
+  border-radius: 4px;
+  color: #5dc0f9;
+  -webkit-appearance: none;
+}
+.edit-button:hover {
+  cursor: pointer;
+}
+
+.input-wrapper {
+  display: inline-block;
+  width: 79%;
+  margin-left: 0px !important;
+  border: none !important;
+}
+
+.edit-dg {
+  width: 110%;
+}

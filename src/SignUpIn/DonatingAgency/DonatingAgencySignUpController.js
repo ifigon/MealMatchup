@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment-timezone';
 import '../SignUpIn.css';
 import firebase, { accountsRef, auth } from '../../FirebaseConfig';
 import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
@@ -67,6 +68,7 @@ class DonatingAgencySignUpController extends Component {
             .then(user => {
                 let dasRef = firebase.database().ref('donating_agencies');
                 let agencyKey = dasRef.push().key;
+                let timezone = moment.tz.guess();
 
                 let adminPostData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
@@ -77,7 +79,8 @@ class DonatingAgencySignUpController extends Component {
                     position: fieldValues.adminPosition,
                     isAdmin: true,
                     isVerified: false,
-                    isActivated: false
+                    isActivated: false,
+                    timezone: timezone
                 };
 
                 let agencyPostData = {
@@ -93,6 +96,7 @@ class DonatingAgencySignUpController extends Component {
                         zipcode: fieldValues.zip,
                         officeNo: fieldValues.officeNumber
                     },
+                    timezone: timezone,
                     isVerified: false,
                     isActivated: false,
                     primaryContact: user.uid,

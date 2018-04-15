@@ -23,6 +23,12 @@
   display: grid;
   top: 90px;
   right: 10px;
+  position: fixed;
+  z-index: 999;
+}
+
+.modal-flex{
+  position: absolute;
 }
 
 .popup-buttons{
@@ -60,6 +66,7 @@
 }
 .recurring {
   border-top: solid 20px #37b674;
+  background-color: white;
 }
 
 .emergency {
