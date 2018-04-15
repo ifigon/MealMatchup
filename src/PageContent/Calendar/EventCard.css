@@ -3,6 +3,10 @@
   width: 160px;
 }
 
+.event-container:hover {
+  cursor: pointer;
+}
+
 .event-container-future {
   background-color: rgba(46, 204, 113, 0.1);
   border-left: 3.8px solid #2ecc71;

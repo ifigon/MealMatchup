@@ -4,10 +4,11 @@ import { AccountType, PageContent, DeliveryType } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import EventCard from './PageContent/Calendar/EventCard.js';
+import Dialog from './PageContent/Calendar/Dialog.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
-import Settings from './PageContent/Settings/StudentCoordinatorSettings.js';
+import Settings from './PageContent/Settings/Settings.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -20,10 +21,24 @@ class PageContainer extends Component {
 
         this.state = {
             content: props.content,
-            donatingAgency: null
+            donatingAgency: null,
+            dialogOpen: false
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
+        this.openDialog = this.openDialog.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+    }
+
+    openDialog() {
+        this.setState({
+            dialogOpen: true
+        });
+    }
+    closeDialog() {
+        this.setState({
+            dialogOpen: false
+        });
     }
 
     componentDidMount() {
@@ -44,6 +59,19 @@ class PageContainer extends Component {
                 }.bind(this)
             );
         }
+    }
+
+    componentWillMount() {
+        // TODO move this dummy data mocking to calendar
+        let delivery = {
+            eventType: DeliveryType.RECURRING,
+            date: '11/14/2017',
+            startTime: '10am',
+            endTime: '12pm'
+        };
+        this.setState({
+            delivery: delivery
+        });
     }
 
     navBarHandler(e) {
@@ -67,12 +95,22 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         Calendar
-                        <EventCard
-                            eventType={DeliveryType.RECURRING}
-                            startTime="10am"
-                            endTime="12pm"
-                            futureEvent={true}
-                        />
+                        {this.state.dialogOpen ? (
+                            <Dialog
+                                closeDialog={this.closeDialog}
+                                accountType={this.props.account.accountType}
+                                delivery={this.state.delivery}
+                                futureEvent={false}
+                            />
+                        ) : null}
+                        <div onClick={this.openDialog}>
+                            <EventCard
+                                eventType={this.state.delivery.eventType}
+                                startTime={this.state.delivery.startTime}
+                                endTime={this.state.delivery.endTime}
+                                futureEvent={false}
+                            />
+                        </div>
                     </div>
                 )}
 
