@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import moment from 'moment-timezone';
 import '../SignUpIn.css';
 import { accountsRef, auth } from '../../FirebaseConfig.js';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
@@ -94,6 +95,7 @@ class ReceivingAgencySignUpController extends Component {
                         zip: fieldValues.zip,
                         officeNumber: fieldValues.officeNumber
                     },
+                    timezone: moment.tz.guess(),
                     isVerified: false,
                     isActivated: false,
                     primaryContact: {
