@@ -22,16 +22,16 @@ class AssignVolunteersController extends Component {
 
     componentDidMount() {
         //TODO (jkbach): can I get uid from props.account?
-        let genAccountPromise = (deliveryId, accountId) => new Promise(async (resolve, reject) => {
+        let genAccountPromise = (deliveryId, accountId) => (new Promise(async (resolve, reject) => {
             let snap = await firebase.database().ref(`accounts/${accountId}`).once('value');
             resolve({deliveryId: deliveryId,
                      account: snap.val()})
-        });
-        let genDAPromise = (deliveryId, accountId) => new Promise(async (resolve, reject) => {
+        }));
+        let genDAPromise = (deliveryId, accountId) => (new Promise(async (resolve, reject) => {
             let snap = await firebase.database().ref(`donating_agencies/${accountId}`).once('value');
             resolve({deliveryId: deliveryId,
                      agency: snap.val()});
-        });
+        }));
 
         deliveriesRef.child(this.props.account.umbrella).orderByChild('delivererGroup')
             .equalTo(auth.currentUser.uid).on("value", async (snap) => {

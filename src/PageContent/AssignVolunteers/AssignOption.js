@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StringFormat} from '../../Enums.js'
+import {StringFormat} from '../../Enums.js';
 import moment from 'moment';
 
 class AssignOption extends Component {
@@ -8,7 +8,7 @@ class AssignOption extends Component {
             deliverers,
             receivingAgency,
             startTimestamp,
-        } = this.props.delivery
+        } = this.props.delivery;
 
         let startMoment = moment(startTimestamp);
         let startDay = startMoment.format(StringFormat.WEEKDAY);

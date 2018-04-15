@@ -40,14 +40,14 @@ class Edit extends Component {
                                 for (let i = 0; i < 2; i++) {
                                     let present = deliverers && deliverers[i];
                                     volunteerRows.push(
-                                     <div key={i} className="form-child">
-                                        <label className="label-component details">Student {i + 1}</label><br />
-                                        <input name={"name" + (i + 1)} type="text" className="form-input" defaultValue={present ? deliverers[i].name : ''} required/><br />
-                                        <label className="label-component details">Phone</label><br />
-                                        <input name={"phone" + (i + 1)} onChange={this.phoneFormat} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={present ? deliverers[i].phone : ''} required/><br />
-                                        <label className="label-component details">Email</label><br />
-                                        <input name={"email" + (i + 1)} type="email" className="form-input" defaultValue={present ? deliverers[i].email : ''} required/>
-                                    </div>
+                                        <div key={i} className="form-child">
+                                            <label className="label-component details">Student {i + 1}</label><br />
+                                            <input name={`name${(i + 1)}`} type="text" className="form-input" defaultValue={present ? deliverers[i].name : ''} required/><br />
+                                            <label className="label-component details">Phone</label><br />
+                                            <input name={`phone${(i + 1)}`} onChange={this.phoneFormat} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={present ? deliverers[i].phone : ''} required/><br />
+                                            <label className="label-component details">Email</label><br />
+                                            <input name={`email${(i + 1)}`} type="email" className="form-input" defaultValue={present ? deliverers[i].email : ''} required/>
+                                        </div>
                                     );
                                 }
                                 return volunteerRows;
@@ -83,10 +83,10 @@ class Edit extends Component {
 
     phoneFormat(e,f) {
         let val = e.target.value.replace(/\D/g, '').substring(0, 10);
-        let corrected = "";
+        let corrected = '';
         for (let i = 0; i < val.length; i++) {
             if (i === 3 || i === 6) {
-                corrected += "-";
+                corrected += '-';
             }
             corrected += val.charAt(i);
         }
