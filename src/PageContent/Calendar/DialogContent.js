@@ -6,10 +6,7 @@ class DialogContent extends Component {
     render() {
         return (
             <div>
-                <DonatingAgencyContent
-                    delivery={this.props.delivery}
-                    accountType={this.props.accountType}
-                />
+                <DonatingAgencyContent delivery={this.props.delivery} />
             </div>
         );
     }

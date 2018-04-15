@@ -8,7 +8,6 @@ class DonatingAgencyContent extends Component {
         this.state = {
             donatingAgency: this.props.delivery.donatingAgency.name,
             contactName: this.props.delivery.donatingAgency.contact.name,
-            email: this.props.delivery.donatingAgency.contact.email,
             phone: this.props.delivery.donatingAgency.contact.phone
         };
     }

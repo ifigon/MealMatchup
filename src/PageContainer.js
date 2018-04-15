@@ -105,7 +105,6 @@ class PageContainer extends Component {
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
-                                accountType={this.props.account.accountType}
                                 delivery={this.state.delivery}
                                 futureEvent={true}
                             />
