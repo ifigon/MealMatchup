@@ -68,19 +68,19 @@ class PageContainer extends Component {
             startTime: '10am',
             endTime: '12pm',
             delivererGroup: {
-                name: 'Green Greeks',
-                deliverers: [
-                    {
-                        name: 'Blake Johnson',
-                        phone: '206-876-5432',
-                        email: 'blake@greengreeks.org'
-                    },
-                    {
-                        name: 'Erika Zhang',
-                        phone: '206-876-5432',
-                        email: 'erika@greengreeks.org'
-                    }
-                ]
+                name: 'Green Greeks'
+                // deliverers: [
+                //     {
+                //         name: 'Blake Johnson',
+                //         phone: '206-876-5432',
+                //         email: 'blake@greengreeks.org'
+                //     },
+                //     {
+                //         name: 'Erika Zhang',
+                //         phone: '206-876-5432',
+                //         email: 'erika@greengreeks.org'
+                //     }
+                // ]
             }
         };
         this.setState({
