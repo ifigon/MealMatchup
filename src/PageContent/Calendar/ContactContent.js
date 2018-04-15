@@ -39,7 +39,7 @@ class ContactContent extends Component {
 
     handleChangeDA(e) {
         e.preventDefault();
-        let index = e.target.selectedMember.value;
+        let index = e.target.primaryContact.value;
         let memberName = this.state.memberList[index].name;
         let memberPhone = this.state.memberList[index].phone;
         this.setState({
@@ -125,7 +125,6 @@ class ContactContent extends Component {
                                         <select
                                             name="primaryContact"
                                             defaultValue=""
-                                            name="selectedMember"
                                             required
                                         >
                                             <option value="" disabled>
