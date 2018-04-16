@@ -1,16 +1,42 @@
 import React, { Component } from 'react';
 import EventCard from './EventCard';
-import DeliveryType from '../../../Enums';
+// import DeliveryType from '../../../Enums';
+import Dialog from '../Dialog.js';
 
 class EventCardSlot extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dialogOpen: false
+        };
+
+        this.openDialog = this.openDialog.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+    }
+
+    openDialog() {
+        this.setState({
+            dialogOpen: true
+        });
+    }
+
+    closeDialog() {
+        this.setState({
+            dialogOpen: false
+        });
+    }
+
     render() {
         if (Object.keys(this.props.events).length === 0) {
             return <div />;
         } else {
             for (var e in this.props.events) {
-                let type = DeliveryType.EMERGENCY;
+                // console.log(this.props.events[e]);
+                // let type = DeliveryType.EMERGENCY;
+                let type = 'emergency';
                 if (!this.props.events[e].isEmergency) {
-                    type = DeliveryType.RECURRING;
+                    // type = DeliveryType.RECURRING;
+                    type = 'recurring';
                 }
 
                 let startTime = new Date(
@@ -25,12 +51,24 @@ class EventCardSlot extends Component {
                 //e.endTimestamp to 12pm time
                 //futureEvent depends on [after] this.props.today
                 return (
-                    <EventCard
-                        eventType={type}
-                        startTime={startTime}
-                        endTime={endTime}
-                        futureEvent={this.props.futureEvent}
-                    />
+                    <div>
+                        {this.state.dialogOpen ? (
+                            <Dialog
+                                closeDialog={this.closeDialog}
+                                delivery={this.props.events[e]}
+                                futureEvent={this.props.futureEvent}
+                                eventType={type}
+                            />
+                        ) : null}
+                        <div onClick={this.openDialog}>
+                            <EventCard
+                                eventType={type}
+                                startTime={startTime}
+                                endTime={endTime}
+                                futureEvent={this.props.futureEvent}
+                            />
+                        </div>
+                    </div>
                 );
             }
             // });

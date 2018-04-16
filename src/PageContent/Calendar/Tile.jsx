@@ -56,6 +56,7 @@ class Tile extends Component {
                     events={this.props.events}
                     today={this.props.today}
                     futureEvent={this.props.futureEvent}
+                    eventType={this.props.eventType}
                 />
             </button>
         );

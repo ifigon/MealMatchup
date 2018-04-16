@@ -1,0 +1,9 @@
+.event-dialog {
+  border: none;
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
+  padding: 0px;
+  width: 348px;
+  margin: 0 auto;
+  margin-left: 250px;
+  z-index: 9999;
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment-timezone';
 import '../SignUpIn.css';
 import { accountsRef, auth } from '../../FirebaseConfig.js';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
@@ -81,6 +82,7 @@ class DelivererGroupSignUpController extends Component {
                         state: fieldValues.state,
                         zip: fieldValues.zip
                     },
+                    timezone: moment.tz.guess(),
                     coordinator: {
                         name: fieldValues.contactName,
                         email: fieldValues.contactEmail,

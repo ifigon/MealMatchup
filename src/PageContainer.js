@@ -9,6 +9,7 @@ import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar';
+import DeliveryType from './Enums';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -20,7 +21,8 @@ class PageContainer extends Component {
 
         this.state = {
             content: props.content,
-            donatingAgency: null
+            donatingAgency: null,
+            dialogOpen: false
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -46,6 +48,35 @@ class PageContainer extends Component {
         }
     }
 
+    componentWillMount() {
+        // TODO move this dummy data mocking to calendar
+        let delivery = {
+            eventType: DeliveryType.RECURRING,
+            date: '11/14/2017',
+            startTime: '10am',
+            endTime: '12pm',
+            receivingAgency: {
+                name: 'Seattle Union Gospel Mission',
+                contact: {
+                    name: 'Chris Stack',
+                    phone: '206-586-9876',
+                    email: 'chrisstack@uniongospel.org'
+                }
+            },
+            donatingAgency: {
+                name: 'Local Point',
+                contact: {
+                    name: 'Andrea Benson',
+                    phone: '206-543-6975',
+                    email: 'bensoa3@uw.edu'
+                }
+            }
+        };
+        this.setState({
+            delivery: delivery
+        });
+    }
+
     navBarHandler(e) {
         this.setState({
             content: e
@@ -55,7 +86,11 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader logo={logo} title={this.props.account.name} />
+                <PageHeader
+                    account={this.props.account}
+                    logo={logo}
+                    title={this.props.account.name}
+                />
 
                 <NavBar
                     content={this.state.content}
@@ -63,16 +98,9 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         <Calendar />
-                        {/* <EventCard
-                            eventType={DeliveryType.RECURRING}
-                            startTime="10am"
-                            endTime="12pm"
-                            futureEvent={true}
-                        /> */}
                     </div>
                 )}
 

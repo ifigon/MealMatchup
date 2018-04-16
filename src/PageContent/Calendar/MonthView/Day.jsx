@@ -24,16 +24,20 @@ class Day extends Component {
                     endTimestamp: 1524214800,
                     isEmergency: false,
                     spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
-                    donatingAgency: {
-                        agency: '-K9HdKlCLjjk_ka82K0s', // autogen-key of a donating-agency
-                        primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1' // uid-key of a donating-agency-member
-                    },
                     receivingAgency: {
-                        agency: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3', // uid-key of receiving-agency
-                        primaryContact: {
-                            name: 'Bob',
-                            email: 'bob@uniongospel.org',
-                            phone: '098-765-4321'
+                        name: 'Seattle Union Gospel Mission',
+                        contact: {
+                            name: 'Chris Stack',
+                            phone: '206-586-9876',
+                            email: 'chrisstack@uniongospel.org'
+                        }
+                    },
+                    donatingAgency: {
+                        name: 'Local Point',
+                        contact: {
+                            name: 'Andrea Benson',
+                            phone: '206-543-6975',
+                            email: 'bensoa3@uw.edu'
                         }
                     },
                     // delivererGroup is null if isEmergency=true
@@ -89,16 +93,20 @@ class Day extends Component {
                     endTimestamp: 1521302400,
                     isEmergency: false,
                     spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
-                    donatingAgency: {
-                        agency: '-K9HdKlCLjjk_ka82K0s', // autogen-key of a donating-agency
-                        primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1' // uid-key of a donating-agency-member
-                    },
                     receivingAgency: {
-                        agency: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3', // uid-key of receiving-agency
-                        primaryContact: {
-                            name: 'Bob',
-                            email: 'bob@uniongospel.org',
-                            phone: '098-765-4321'
+                        name: 'Seattle Union Gospel Mission',
+                        contact: {
+                            name: 'Chris Stack',
+                            phone: '206-586-9876',
+                            email: 'chrisstack@uniongospel.org'
+                        }
+                    },
+                    donatingAgency: {
+                        name: 'Local Point',
+                        contact: {
+                            name: 'Andrea Benson',
+                            phone: '206-543-6975',
+                            email: 'bensoa3@uw.edu'
                         }
                     },
                     // delivererGroup is null if isEmergency=true
@@ -159,18 +167,8 @@ class Day extends Component {
 
         const className = 'react-calendar__month-view__days__day';
         let eventsToday = [];
-        // console.log(moment().unix());
 
         for (var checkEvent in this.state.events) {
-            console.log(
-                'untouch:' + this.state.events[checkEvent].startTimestamp
-            );
-
-            console.log(
-                'newdate' +
-                    new Date(this.state.events[checkEvent].startTimestamp)
-            );
-            console.log('today' + date.toString().substring(0, 15));
             if (
                 new Date(this.state.events[checkEvent].startTimestamp * 1000)
                     .toString()
