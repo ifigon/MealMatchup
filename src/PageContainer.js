@@ -97,7 +97,7 @@ class PageContainer extends Component {
 
                 {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
+                    <div style={{ marginTop: '120px', marginLeft: '225px' }}>
                         <Calendar />
                     </div>
                 )}
