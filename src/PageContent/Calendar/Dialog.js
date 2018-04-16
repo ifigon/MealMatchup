@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Dialog.css';
-import Header from './Header';
+import Header from './Header.js';
 import DialogContent from './DialogContent';
 
 class Dialog extends Component {
@@ -8,11 +8,12 @@ class Dialog extends Component {
         return (
             <dialog className="event-dialog" open>
                 <Header
-                    eventType={this.props.delivery.eventType}
+                    test="test"
+                    eventType={this.props.eventType}
                     closeDialog={this.props.closeDialog}
                     date={this.props.delivery.date}
-                    startTime={this.props.delivery.startTime}
-                    endTime={this.props.delivery.endTime}
+                    startTime={this.props.delivery.startTimestamp}
+                    endTime={this.props.delivery.endTimestamp}
                     futureEvent={this.props.futureEvent}
                     accountType={this.props.accountType}
                 />

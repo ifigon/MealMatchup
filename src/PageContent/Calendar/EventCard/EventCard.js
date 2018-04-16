@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { DeliveryType } from '../../Enums';
+import { DeliveryType } from '../../../Enums';
 import './EventCard.css';
-import green_truck from '../../icons/green_truck.svg';
-import grey_truck from '../../icons/grey_truck.svg';
+import green_truck from '../../../icons/green_truck.svg';
+import grey_truck from '../../../icons/grey_truck.svg';
 
 class EventCard extends Component {
     render() {
@@ -28,7 +28,8 @@ class EventCard extends Component {
                 <h1 className="event-header">{type}</h1>
                 <img className="truck-icon" src={truck} alt={truckAlt} />
                 <p className="event-time">
-                    {this.props.startTime} - {this.props.endTime}
+                    {this.props.startTime.toString()} -{' '}
+                    {this.props.endTime.toString()}
                 </p>
             </div>
         );

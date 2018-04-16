@@ -5,6 +5,7 @@ import white_cross from '../../icons/white_cross.svg';
 
 class Header extends Component {
     render() {
+        // console.log(this.props);
         let deliveryType = '';
         if (this.props.eventType === DeliveryType.RECURRING) {
             if (this.props.accountType !== AccountType.RECEIVING_AGENCY) {
@@ -29,8 +30,10 @@ class Header extends Component {
                     alt="close"
                 />
                 <p className="header-time">
-                    {this.props.date} {this.props.startTime} -{' '}
-                    {this.props.endTime}
+                    {/* TODO: get date and change time strings to real times */}
+                    {/* {this.props.date.toString()}{' '} */}
+                    {this.props.startTime.toString()} -{' '}
+                    {this.props.endTime.toString()}
                 </p>
             </div>
         );

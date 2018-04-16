@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent, DeliveryType } from './Enums.js';
+import { AccountType, PageContent } from './Enums.js';
+// import { DeliveryType } from './Enums.js'
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import EventCard from './PageContent/Calendar/EventCard.js';
-import Dialog from './PageContent/Calendar/Dialog.js';
+// import EventCard from './PageContent/Calendar/EventCard/EventCard.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
-
+import Calendar from './PageContent/Calendar/Calendar';
+import DeliveryType from './Enums';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -25,19 +26,6 @@ class PageContainer extends Component {
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
-        this.openDialog = this.openDialog.bind(this);
-        this.closeDialog = this.closeDialog.bind(this);
-    }
-
-    openDialog() {
-        this.setState({
-            dialogOpen: true
-        });
-    }
-    closeDialog() {
-        this.setState({
-            dialogOpen: false
-        });
     }
 
     componentDidMount() {
@@ -110,25 +98,9 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Calendar
-                        {this.state.dialogOpen ? (
-                            <Dialog
-                                closeDialog={this.closeDialog}
-                                delivery={this.state.delivery}
-                                futureEvent={true}
-                            />
-                        ) : null}
-                        <div onClick={this.openDialog}>
-                            <EventCard
-                                eventType={this.state.delivery.eventType}
-                                startTime={this.state.delivery.startTime}
-                                endTime={this.state.delivery.endTime}
-                                futureEvent={true}
-                            />
-                        </div>
+                        <Calendar />
                     </div>
                 )}
 
