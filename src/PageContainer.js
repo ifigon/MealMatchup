@@ -68,9 +68,10 @@ class PageContainer extends Component {
             startTime: '10am',
             endTime: '12pm',
             receivingAgency: {
+                name: 'Seattle Union Gospel Mission',
                 contact: {
                     name: 'Chris Stack',
-                    phone: '206-543-6975',
+                    phone: '206-586-9876',
                     email: 'chrisstack@uniongospel.org'
                 }
             },

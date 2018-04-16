@@ -12,10 +12,21 @@ class ContactContent extends Component {
             memberList: []
         };
         if (this.props.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            this.state.contact = this.props.delivery.donatingAgency.contact;
-            this.state.memberList = this.props.delivery.donatingAgency.contact.memberList;
+            this.state = {
+                contact: {
+                    name: this.props.delivery.donatingAgency.contact.name,
+                    phone: this.props.delivery.donatingAgency.contact.phone,
+                    memberList: this.props.delivery.donatingAgency.contact
+                        .memberList
+                }
+            };
         } else if (this.props.accountType === AccountType.RECEIVING_AGENCY) {
-            this.state.contact = this.props.delivery.receivingAgency.contact;
+            this.state = {
+                contact: {
+                    name: this.props.delivery.receivingAgency.contact.name,
+                    phone: this.props.delivery.receivingAgency.contact.phone
+                }
+            };
         }
 
         this.edit = this.edit.bind(this);
@@ -31,20 +42,26 @@ class ContactContent extends Component {
     handleChange(e) {
         e.preventDefault();
         this.setState({
-            name: e.target.name.value,
-            phone: e.target.phone.value,
-            edit: false
+            contact: {
+                name: e.target.name.value,
+                phone: e.target.phone.value,
+                edit: false
+            }
         });
     }
 
     handleChangeDA(e) {
         e.preventDefault();
         let index = e.target.primaryContact.value;
-        let memberName = this.state.memberList[index].name;
-        let memberPhone = this.state.memberList[index].phone;
+        let memberName = this.state.contact.memberList[index].name;
+        let memberPhone = this.state.contact.memberList[index].phone;
+        let memberList = this.state.contact.memberList;
         this.setState({
-            name: memberName,
-            phone: memberPhone,
+            contact: {
+                name: memberName,
+                phone: memberPhone,
+                memberList: memberList
+            },
             edit: false
         });
     }
@@ -77,7 +94,9 @@ class ContactContent extends Component {
                             ) : (
                                 <div className="content-details-wrapper">
                                     <p className="content-details contact-content">
-                                        {this.state.name} ({this.state.phone})
+                                        {this.state.contact.name} ({
+                                            this.state.contact.phone
+                                        })
                                     </p>
                                 </div>
                             )}
@@ -94,13 +113,15 @@ class ContactContent extends Component {
                                         <option value="" disabled>
                                         Select
                                         </option>
-                                        {this.state.memberList.map((member, i) => {
-                                            return (
-                                                <option key={i} value={i}>
-                                                    {member.name}
-                                                </option>
-                                            );
-                                        })}
+                                        {this.state.contact.memberList.map(
+                                            (member, i) => {
+                                                return (
+                                                    <option key={i} value={i}>
+                                                        {member.name}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
                                     </select>
                                     <input
                                         type="submit"
