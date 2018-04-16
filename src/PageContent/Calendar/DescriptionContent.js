@@ -70,7 +70,10 @@ class DescriptionContent extends Component {
             let name = e.target[i + 'name'].value;
             let amount = e.target[i + 'amount'].value;
             let unit = e.target[i + 'unit'].value;
-            newDonation.push({ name: name, amount: amount, unit: unit });
+            if(name !== ""){
+                newDonation.push({ name: name, amount: amount, unit: unit });
+
+            }
         }
         this.setState({
             donationObject: newDonation,
@@ -99,7 +102,7 @@ class DescriptionContent extends Component {
                         />
                         <div className="weight-unit-wrapper">
                             <input
-                                type="text"
+                                type="number"
                                 className="weight"
                                 defaultValue={item.amount}
                                 name={index + 'amount'}
