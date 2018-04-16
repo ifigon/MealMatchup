@@ -6,7 +6,6 @@ import DonatingAgencyContent from './DonatingAgencyContent';
 
 class DialogContent extends Component {
     render() {
-        console.log('this.accounttype', this.props.accountType);
         return (
             <div>
                 {this.props.accountType !== AccountType.RECEIVING_AGENCY ? (
