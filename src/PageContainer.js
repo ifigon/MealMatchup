@@ -3,8 +3,6 @@ import firebase from './FirebaseConfig.js';
 import { AccountType, PageContent, DeliveryType } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import EventCard from './PageContent/Calendar/EventCard/EventCard';
-import Dialog from './PageContent/Calendar/Dialog.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
@@ -25,19 +23,6 @@ class PageContainer extends Component {
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
-        this.openDialog = this.openDialog.bind(this);
-        this.closeDialog = this.closeDialog.bind(this);
-    }
-
-    openDialog() {
-        this.setState({
-            dialogOpen: true
-        });
-    }
-    closeDialog() {
-        this.setState({
-            dialogOpen: false
-        });
     }
 
     componentDidMount() {
@@ -114,21 +99,6 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         <Calendar />
-                        {this.state.dialogOpen ? (
-                            <Dialog
-                                closeDialog={this.closeDialog}
-                                delivery={this.state.delivery}
-                                futureEvent={true}
-                            />
-                        ) : null}
-                        <div onClick={this.openDialog}>
-                            <EventCard
-                                eventType={this.state.delivery.eventType}
-                                startTime={this.state.delivery.startTime}
-                                endTime={this.state.delivery.endTime}
-                                futureEvent={true}
-                            />
-                        </div>
                     </div>
                 )}
 
