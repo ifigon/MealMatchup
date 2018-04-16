@@ -29,15 +29,15 @@ class NavBar extends Component {
                 />
                 {this.props.accountType ===
                     AccountType.DONATING_AGENCY_MEMBER && (
-                    <NavBarItem
-                        highlighted={
-                            this.props.content === PageContent.REQUEST_PICKUP
-                        }
-                        item={PageContent.REQUEST_PICKUP}
-                        icon={truck}
-                        handler={this.props.handler}
-                    />
-                )}
+                        <NavBarItem
+                            highlighted={
+                                this.props.content === PageContent.REQUEST_PICKUP
+                            }
+                            item={PageContent.REQUEST_PICKUP}
+                            icon={truck}
+                            handler={this.props.handler}
+                        />
+                    )}
                 {this.props.accountType === AccountType.DELIVERER_GROUP && (
                     <NavBarItem
                         highlighted={
