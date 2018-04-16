@@ -6,12 +6,8 @@
     "create-react-class": "^15.6.3",
     "firebase": "^4.9.1",
     "google-maps-react": "^1.1.2",
-<<<<<<< HEAD
-    "moment": "^2.22.0",
-=======
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
->>>>>>> 8b7249e79f7c9ca4eb847826c9966edeee57d547
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-geocode": "0.0.7",

@@ -70,9 +70,8 @@ class DescriptionContent extends Component {
             let name = e.target[i + 'name'].value;
             let amount = e.target[i + 'amount'].value;
             let unit = e.target[i + 'unit'].value;
-            if(name !== ""){
+            if (name !== '') {
                 newDonation.push({ name: name, amount: amount, unit: unit });
-
             }
         }
         this.setState({
