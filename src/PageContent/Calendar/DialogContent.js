@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './DialogContent.css';
 import DescriptionContent from './DescriptionContent';
+import ReceivingAgencyContent from './ReceivingAgencyContent';
+import DonatingAgencyContent from './DonatingAgencyContent';
 
 class DialogContent extends Component {
     render() {
@@ -12,6 +13,8 @@ class DialogContent extends Component {
                     accountOwnerName={this.props.accountOwnerName}
                     accountType={this.props.accountType}
                 />
+                <ReceivingAgencyContent delivery={this.props.delivery} />
+                <DonatingAgencyContent delivery={this.props.delivery} />
             </div>
         );
     }

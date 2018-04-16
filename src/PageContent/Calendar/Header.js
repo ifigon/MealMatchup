@@ -21,7 +21,7 @@ class Header extends Component {
         }
         return (
             <div className={headerClass}>
-                <h1 className="header-title">{deliveryType}</h1>
+                <h1 className="pop-up-header-title">{deliveryType}</h1>
                 <img
                     onClick={this.props.closeDialog}
                     className="close"

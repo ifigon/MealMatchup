@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { AccountType } from '../../Enums';
+import { AccountType, FoodUnit } from '../../Enums';
 import './Content.css';
 import groceries from '../../icons/groceries.svg';
 import plus from '../../icons/plus-button.svg';
@@ -109,9 +109,9 @@ class DescriptionContent extends Component {
                                 defaultValue={item.unit}
                                 name={index + 'unit'}
                             >
-                                <option>lbs</option>
-                                <option>loaves</option>
-                                <option>cases</option>
+                                <option>{FoodUnit.LB}</option>
+                                <option>{FoodUnit.LOAVES}</option>
+                                <option>{FoodUnit.CASES}</option>
                             </select>
                         </div>
                     </div>
