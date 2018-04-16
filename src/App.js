@@ -23,7 +23,10 @@ class App extends Component {
     }
 
     componentDidMount() {
-        // auth.signInWithEmailAndPassword('testdonate1member1@test.com', '123456');
+        // auth.signInWithEmailAndPassword(
+        //     'testdonate1member1@test.com',
+        //     '123456'
+        // );
         // check whether user is logged in
         auth.onAuthStateChanged(
             function(user) {
