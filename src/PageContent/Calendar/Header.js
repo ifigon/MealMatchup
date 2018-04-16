@@ -29,8 +29,8 @@ class Header extends Component {
                     alt="close"
                 />
                 <p className="header-time">
-                    {this.props.date} {this.props.startTime} -{' '}
-                    {this.props.endTime}
+                    {this.props.startTime.toString()} - +{' '}
+                    {this.props.endTime.toString()}
                 </p>
             </div>
         );
