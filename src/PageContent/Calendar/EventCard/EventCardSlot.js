@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import EventCard from './EventCard';
-// import DeliveryType from '../../../Enums';
+import { DeliveryType } from '../../../Enums';
 import Dialog from '../Dialog.js';
 
 class EventCardSlot extends Component {
@@ -31,18 +31,13 @@ class EventCardSlot extends Component {
             return <div />;
         } else {
             for (var e in this.props.events) {
-                // console.log(this.props.events[e]);
-                // let type = DeliveryType.EMERGENCY;
-                let type = 'emergency';
+                let type = DeliveryType.EMERGENCY;
                 if (!this.props.events[e].isEmergency) {
-                    // type = DeliveryType.RECURRING;
-                    type = 'recurring';
+                    type = DeliveryType.RECURRING;
                 }
-
                 let startTime = new Date(
                     this.props.events[e].startTimestamp * 1000
                 );
-                // console.log(e.startTimestamp);
                 let endTime = new Date(
                     this.props.events[e].endTimeStamp * 1000
                 );
