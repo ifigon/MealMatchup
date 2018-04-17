@@ -16,8 +16,8 @@ const nt = enums.NotificationType;
  *  B) all RAs rejected:
  *      Change: 'receivingAgency' changed from having requested/pending to nonexistent
  *      Action: 
- *          - set 'status' to REJECTED_RA
- *          - send notification back to DA
+ *          i. set 'status' to REJECTED_RA
+ *          ii. send notification back to DA
  *  C) no RA responded in time:
  *      TODO: to be handled by a different scheduled function
  *
@@ -28,10 +28,12 @@ const nt = enums.NotificationType;
  *      Actions:
  *          i. create delivery objects
  *          ii. update request's 'spawnedDeliveries' and 'status'
- *          ii. send CONFIRMED notifications to DA, RA, DG
+ *          iii. send CONFIRMED notifications to DA, RA, DG
  *  B) all DGs rejected:
- *      Change: 'status' changed from PENDING to REJECTED_DG
- *      Action: send notification back to DA and RA
+ *      Change: 'delivererGroup' changed from having requested/pending to nonexistent
+ *      Action: 
+ *          i. set 'status' to REJECTED_DG
+ *          ii. send notification back to DA and RA
  *  C) no DG respondid in time:
  *      TODO: to be handled by a different scheduled function
  */
@@ -56,43 +58,29 @@ exports = module.exports = functions.database
         const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
 
         // ------------- Listener 1 triggers -------------
-        if (raClaimed(change)) {  // case A
+        if (wasClaimedBy('receivingAgency', change)) {  // case A
             return sendRequestToDGs(accountsRef, requestSnap);
         }
 
-        if (rasRejected(change)) {  // case B
-            return updateAndNotifyRejection(requestSnap, daRef);
+        if (wasRejectedByAll('receivingAgency', change)) {  // case B
+            return handleRejection(
+                enums.RequestStatus.REJECTED_RA, requestSnap, accountsRef, daRef);
         }
         // --------------- Listener 1 end ---------------
 
 
         // ------------- Listener 2 triggers -------------
-        if (dgClaimed(change)) {  // case A
+        if (wasClaimedBy('delivererGroup', change)) {  // case A
             // make sure the deliveries are created before we notify accounts
             return createDeliveries(rootRef, requestSnap)
                 .then(() => {
-                    console.info('Notifying all parties of the confirmed delivery');
-
-                    let raRef = accountsRef.child(request.receivingAgency.claimed);
-                    let dgRef = accountsRef.child(request.delivererGroup.claimed);
-                    let accounts = [
-                        {label: 'DA', ref: daRef},
-                        {label: 'RA', ref: raRef},
-                        {label: 'DG', ref: dgRef},
-                    ];
-                    return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_CONFIRMED);
+                    return notifyConfirmAll(requestSnap, accountsRef, daRef);
                 });
         }
 
-        if (dgRejected(change)) {  // case B
-            console.info('Listener2: all DGs rejected -> send notifications to DA and RA');
-
-            let raRef = accountsRef.child(request.receivingAgency.claimed);
-            let accounts = [
-                {label: 'DA', ref: daRef},
-                {label: 'RA', ref: raRef},
-            ];
-            return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_DG);
+        if (wasRejectedByAll('delivererGroup', change)) {  // case B
+            return handleRejection(
+                enums.RequestStatus.REJECTED_DG, requestSnap, accountsRef, daRef);
         }
         // --------------- Listener 2 end ---------------
 
@@ -101,21 +89,47 @@ exports = module.exports = functions.database
         return null;
     });
 
-// ----------------------- Listener 1 funcs -----------------------
-// case A trigger
-function raClaimed(change) {
-    return !change.before.child('receivingAgency').hasChild('claimed') && 
-        change.after.child('receivingAgency').hasChild('claimed');
+// ----------------------- Common triggers & handlers -----------------------
+// Listener 1 & 2 case A trigger
+function wasClaimedBy(agencyType, change) {
+    return !change.before.child(agencyType).hasChild('claimed') && 
+        change.after.child(agencyType).hasChild('claimed');
 }
 
-// case B trigger
-function rasRejected(change) {
-    return change.before.hasChild('receivingAgency')
-        && (change.before.child('receivingAgency').hasChild('requested')
-            || change.before.child('receivingAgency').hasChild('pending'))
-        && !change.after.hasChild('receivingAgency');
+// Listener 1 & 2 case B trigger
+function wasRejectedByAll(agencyType, change) {
+    return change.before.hasChild(agencyType) &&
+        (change.before.child(agencyType).hasChild('requested') ||
+            change.before.child(agencyType).hasChild('pending')) &&
+        !change.after.hasChild(agencyType);
 }
 
+// Listener 1 & 2 case B handler
+function handleRejection(rejectType, requestSnap, accountsRef, daRef) {
+    let accounts = [ { label: 'DA', ref: daRef } ];
+    let notifType = null;
+
+    if (rejectType === enums.RequestStatus.REJECTED_RA) {
+        console.info('Listener1: all RA rejected -> update status and notify DA');
+
+        notifType = nt.RECURRING_PICKUP_REJECTED_RA;
+    } else {
+        console.info('Listener2: all DGs rejected -> update status and send notify DA and RA');
+
+        let raRef = accountsRef.child(requestSnap.val().receivingAgency.claimed);
+        accounts.push({ label: 'RA', ref: raRef });
+        notifType = nt.RECURRING_PICKUP_REJECTED_DG;
+    }
+
+    let promises = [];
+    promises.push(
+        requestSnap.ref.child('status').set(rejectType));
+    promises.push(multiNotify(accounts, requestSnap.key, notifType));
+    return Promise.all(promises);
+}
+// ----------------------- End Common -----------------------
+
+// ----------------------- Listener 1 handlers -----------------------
 // case A handler
 function sendRequestToDGs(accountsRef, requestSnap) {
     let request = requestSnap.val();
@@ -151,37 +165,10 @@ function sendRequestToDGs(accountsRef, requestSnap) {
             'DG', accountsRef.child(dgId), requestSnap.key, nt.RECURRING_PICKUP_REQUEST);
     }));
 }
-
-// case B handler
-function updateAndNotifyRejection(requestSnap, daRef) {
-    console.info('Listener1: all RA rejected -> update status and notify DA');
-    let promises = [];
-    // update request status
-    promises.push(
-        requestSnap.ref.child('status').set(enums.RequestStatus.REJECTED_RA));
-    // notify DA
-    promises.push(
-        utils.notifyRequestUpdate(
-            'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA));
-    return Promise.all(promises);
-}
-
 // ----------------------- End Listener 1 -----------------------
 
-// ----------------------- Listener 2 funcs -----------------------
-// case A trigger
-function dgClaimed(change) {
-    return !change.before.child('delivererGroup').hasChild('claimed') &&
-        change.after.child('delivererGroup').hasChild('claimed');
-}
-
-// case B trigger
-function dgRejected(change) {
-    return change.before.val().status === enums.RequestStatus.PENDING &&
-        change.after.val().status === enums.RequestStatus.REJECTED_DG;
-}
-
-// case A handler
+// ----------------------- Listener 2 handlers -----------------------
+// case A handler 1
 function createDeliveries(rootRef, requestSnap) {
     const TIME = enums.InputFormat.TIME;
     console.info('Listener2: DG claimed -> create delivery objects');
@@ -241,14 +228,26 @@ function createDeliveries(rootRef, requestSnap) {
     console.info('Created ' + spawnedDeliveries.length + ' deliveries');
     return Promise.all(promises);
 }
+
+// case A handler 2
+function notifyConfirmAll(requestSnap, accountsRef, daRef) {
+    console.info('Notifying all parties of the confirmed delivery');
+
+    let raRef = accountsRef.child(requestSnap.val().receivingAgency.claimed);
+    let dgRef = accountsRef.child(requestSnap.val().delivererGroup.claimed);
+    let accounts = [
+        {label: 'DA', ref: daRef},
+        {label: 'RA', ref: raRef},
+        {label: 'DG', ref: dgRef},
+    ];
+    return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_CONFIRMED);
+}
 // ----------------------- End Listener 2 -----------------------
 
+
+// ----------------------- Utils -----------------------
 function multiNotify(accounts, reqKey, notifType) {
-    let promises = [];
-    for (let i in accounts) {
-        let acc = accounts[i];
-        promises.push(
-            utils.notifyRequestUpdate(acc.label, acc.ref, reqKey, notifType));
-    }
-    return Promise.all(promises);
+    return Promise.all(accounts.map((acct) => {
+        return utils.notifyRequestUpdate(acct.label, acct.ref, reqKey, notifType);
+    }));
 }
