@@ -17,9 +17,10 @@ class Dialog extends Component {
                     accountType={this.props.accountType}
                 />
                 <DialogContent
-                    accountType={this.props.accountType}
                     futureEvent={this.props.futureEvent}
                     delivery={this.props.delivery}
+                    accountOwnerName={this.props.accountOwnerName}
+                    accountType={this.props.accountType}
                 />
             </dialog>
         );
