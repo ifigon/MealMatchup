@@ -52,6 +52,21 @@ class PageContainer extends Component {
             date: '11/14/2017',
             startTime: '10am',
             endTime: '12pm',
+            delivererGroup: {
+                name: 'Green Greeks',
+                deliverers: [
+                    {
+                        name: 'Blake Johnson',
+                        phone: '206-876-5432',
+                        email: 'blake@greengreeks.org'
+                    },
+                    {
+                        name: 'Erika Zhang',
+                        phone: '206-876-5432',
+                        email: 'erika@greengreeks.org'
+                    }
+                ]
+            },
             receivingAgency: {
                 name: 'Seattle Union Gospel Mission',
                 contact: {
