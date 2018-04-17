@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import DescriptionContent from './DescriptionContent';
+import ContactContent from './ContactContent';
+import DelivererGroupContent from './DelivererGroupContent';
 import ReceivingAgencyContent from './ReceivingAgencyContent';
 import DonatingAgencyContent from './DonatingAgencyContent';
 
@@ -8,6 +10,16 @@ class DialogContent extends Component {
         return (
             <div>
                 <DescriptionContent
+                    accountType={this.props.accountType}
+                    futureEvent={this.props.futureEvent}
+                    delivery={this.props.delivery}
+                />
+                <ContactContent
+                    accountType={this.props.accountType}
+                    futureEvent={this.props.futureEvent}
+                    delivery={this.props.delivery}
+                />
+                <DelivererGroupContent
                     futureEvent={this.props.futureEvent}
                     delivery={this.props.delivery}
                     accountOwnerName={this.props.accountOwnerName}
