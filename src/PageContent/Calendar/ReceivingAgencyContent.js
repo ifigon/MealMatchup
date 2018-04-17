@@ -16,7 +16,7 @@ class ReceivingAgencyContent extends Component {
             <div className="wrapper">
                 <img className="content-icon" src={shelter} alt="volunteer" />
                 <div className="content-wrapper">
-                    <h1 className="section-header">Receipient</h1>
+                    <h1 className="section-header">Recipient</h1>
                     <h2 className="organization">
                         {this.state.receivingAgency}
                     </h2>

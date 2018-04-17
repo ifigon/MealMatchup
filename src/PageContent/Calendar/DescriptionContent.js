@@ -88,7 +88,6 @@ class DescriptionContent extends Component {
     }
 
     render() {
-        console.log('this.props', this.props);
         let donation = this.stringifyDonation(this.state.donationObject);
 
         let editDonation = '';
