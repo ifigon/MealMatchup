@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import '../Popup.css';
 
-import RecurringDeliveryRequest1 from './RecurringDeliveryRequest1';
-import RecurringDeliveryRequest2 from './RecurringDeliveryRequest2';
-import RecurringDeliveryRequest3 from './RecurringDeliveryRequest3';
+import RecurringRequestDetails from './RecurringRequestDetails';
+import RecurringRequestDisclaimer from './RecurringRequestDisclaimer';
+import RecurringRequestClaimed from './RecurringRequestClaimed';
 import EnterPrimaryContact from './EnterPrimaryContact';
 import close from '../../../icons/cross-out.svg';
 
-class RecurringDeliveryRequestController extends Component {
+class RecurringRequestController extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,7 +43,7 @@ class RecurringDeliveryRequestController extends Component {
     showStep() {
         switch (this.state.step) {
         default:
-            return <RecurringDeliveryRequest1
+            return <RecurringRequestDetails
                 accountType={this.props.account.accountType}
                 details={this.props.details}
                 enterPrimaryContact={this.enterPrimaryContact.bind(this)}
@@ -52,7 +52,7 @@ class RecurringDeliveryRequestController extends Component {
                 close={this.props.closePopUp}
             />;
         case 2:
-            return <RecurringDeliveryRequest2
+            return <RecurringRequestDisclaimer
                 accountType={this.props.account.accountType}
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
@@ -61,7 +61,7 @@ class RecurringDeliveryRequestController extends Component {
             />;
 
         case 3:
-            return <RecurringDeliveryRequest3
+            return <RecurringRequestClaimed
                 accountType={this.props.account.accountType}
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
@@ -91,4 +91,4 @@ class RecurringDeliveryRequestController extends Component {
     }
 }
 
-export default RecurringDeliveryRequestController;
+export default RecurringRequestController;

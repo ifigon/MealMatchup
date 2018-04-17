@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import truck from '../../../icons/green_truck.svg';
 
-class RecurringDeliveryRequest3 extends Component {
+class RecurringRequestClaimed extends Component {
     // TODO: add pick up to calendar
     render() {
         return (
@@ -25,4 +25,4 @@ class RecurringDeliveryRequest3 extends Component {
         );
     }
 }
-export default RecurringDeliveryRequest3;
+export default RecurringRequestClaimed;

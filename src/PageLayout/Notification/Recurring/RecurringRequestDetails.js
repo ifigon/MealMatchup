@@ -3,7 +3,7 @@ import truck from '../../../icons/green_truck.svg';
 import Map from '../../../Map/Map.js';
 import { AccountType } from '../../../Enums';
 
-class RecurringDeliveryRequest1 extends Component {
+class RecurringRequestDetails extends Component {
     render() {
         return (
             <div className="modal-wrapper">
@@ -94,4 +94,4 @@ class RecurringDeliveryRequest1 extends Component {
         );
     }
 }
-export default RecurringDeliveryRequest1;
+export default RecurringRequestDetails;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import truck from '../../../icons/green_truck.svg';
 
-class RecurringDeliveryRequest2 extends Component {
+class RecurringRequestDisclaimer extends Component {
     render() {
         return (
             <div className="modal-wrapper">
@@ -23,4 +23,4 @@ class RecurringDeliveryRequest2 extends Component {
         );
     } 
 }
-export default RecurringDeliveryRequest2;
+export default RecurringRequestDisclaimer;

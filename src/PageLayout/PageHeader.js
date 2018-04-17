@@ -3,7 +3,7 @@ import './PageHeader.css';
 import notification from '../icons/notification.svg';
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
-import RecurringDeliveryRequestController from '../PageLayout/Notification/Recurring/RecurringDeliveryRequestController';
+import RecurringRequestController from '../PageLayout/Notification/Recurring/RecurringRequestController';
 import Notification from './Notification/Notification';
 
 class PageHeader extends Component {
@@ -213,7 +213,7 @@ class PageHeader extends Component {
                 </div>
                 <div className="modal-flex">
                     {this.state.showPopUp ?
-                        <RecurringDeliveryRequestController
+                        <RecurringRequestController
                             account={this.props.account}
                             details={this.state.notification}
                             closePopUp={this.closePopUp.bind(this)}/>
