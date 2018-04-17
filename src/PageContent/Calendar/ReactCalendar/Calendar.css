@@ -36,7 +36,7 @@ div.react-calendar__month-view__days > button {
 
 .react-calendar__navigation {
   background-color: #fafafa;
-  /* margin-right: 28px; */
+  margin-right: 28px;
 }
 
 .react-calendar__navigation__label {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
 
 import { tileProps } from './shared/propTypes';
-import EventCardSlot from './EventCard/EventCardSlot';
+import EventCardSlot from '../EventCard/EventCardSlot';
 
 class Tile extends Component {
     render() {

@@ -160,6 +160,10 @@ class Day extends Component {
         };
     }
 
+    componentDidMount() {
+        //TODO backend set state to events
+    }
+
     render() {
         let curClasses = this.props.classes;
         let currentMonthIndex = this.props.currentMonthIndex;

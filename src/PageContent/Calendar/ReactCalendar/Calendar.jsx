@@ -9,7 +9,7 @@ import Navigation from './Navigation';
 // import YearView from './YearView';
 import MonthView from './MonthView';
 
-import { getBegin, getEnd, getValueRange } from '../Calendar/shared/dates';
+import { getBegin, getEnd, getValueRange } from './shared/dates';
 import {
     isCalendarType,
     isClassName,
