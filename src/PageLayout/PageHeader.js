@@ -3,7 +3,6 @@ import './PageHeader.css';
 import notification from '../icons/notification.svg';
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
-import RecurringRequestController from '../PageLayout/Notification/Recurring/RecurringRequestController';
 import Notification from './Notification/Notification';
 import NotificationDetailsController from './Notification/NotificationDetailsController';
 

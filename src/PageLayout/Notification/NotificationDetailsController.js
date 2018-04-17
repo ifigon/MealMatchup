@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './Popup.css';
-
+import RecurringRequestController from './Recurring/RecurringRequestController';
 import RecurringRequestDetails from './Recurring/RecurringRequestDetails';
-import RecurringRequestDisclaimer from './Recurring/RecurringRequestDisclaimer';
-import RecurringRequestClaimed from './Recurring/RecurringRequestClaimed';
-import EnterPrimaryContact from './Recurring/EnterPrimaryContact';
 import close from '../../icons/cross-out.svg';
 import { NotificationType } from '../../Enums';
 
@@ -76,7 +73,36 @@ class NotificationDetailsController extends Component {
                         zipcode: 98105,
                         officeNo: '220'
                     }
-                }
+                },
+                delivererGroup: {
+                    // same as receivingAgency above:
+                    requested: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of a DG
+                    // OR
+                    pending: [
+                        'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of all DGs
+                    ],
+                    // OR
+                    claimed: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of a DG (once a DG claims)
+                    // ADDED FOR DUMMY DATA
+                    deliverers: [
+                        // {
+                        //     name: 'Alice',
+                        //     email: 'alice@uw.edu',
+                        //     phone: '123-789-4560'
+                        // },
+                        // {
+                        //     name: 'Chris',
+                        //     email: 'chris@uw.edu',
+                        //     phone: '456-123-0789'
+                        // }
+                    ]
+                },
+                requestTimeStamp: 1518753363763,
+                spawnedDeliveries: [
+                    // individual deliveries that were created to fulfill this delivery request
+                    '-L5RkIS0CSPuXpkewaqA'
+                ]
+            
             }
         };
     }
@@ -91,7 +117,7 @@ class NotificationDetailsController extends Component {
                 <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
                 {
                     this.props.notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
-                    <RecurringRequestDetails
+                    <RecurringRequestController
                         details={this.state.details}
                         closePopUp={this.props.closePopUp.bind(this)}
                         account={this.props.account}/>

@@ -83,8 +83,7 @@ class RecurringRequestController extends Component {
 
     render() {
         return (
-            <div className="popup-wrapper recurring">
-                <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+            <div>
                 {this.showStep()}
             </div>
         );
