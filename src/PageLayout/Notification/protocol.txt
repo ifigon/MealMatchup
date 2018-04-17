@@ -1,0 +1,14 @@
+Notification Client-side Rules
+
+== Recurring Pickup Request ==
+
+RA Actions:
+	a) Claims
+		- use transaction: https://firebase.google.com/docs/database/web/read-and-write#save_data_as_transactions
+		- set `claimed` to raId and remove `requested` or `pending`
+			- if someone else claimed it, display a sorry msg rather than "claimed" msg.
+
+	b) Rejects
+		- remove raId from `requested` or `pending`
+
+	- For both: remove notification from account
