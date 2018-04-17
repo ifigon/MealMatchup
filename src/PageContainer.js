@@ -67,6 +67,38 @@ class PageContainer extends Component {
             date: '11/14/2017',
             startTime: '10am',
             endTime: '12pm',
+            donationDescription: [
+                {
+                    name: 'Baked beans',
+                    amount: 15,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Coleslaw',
+                    amount: 20,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Corn',
+                    amount: 6,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Mashed potatoes',
+                    amount: 8,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Veggie burger patties',
+                    amount: 4,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Bread',
+                    amount: 40,
+                    unit: 'loaves'
+                }
+            ],
             delivererGroup: {
                 name: 'Green Greeks',
                 deliverers: [
@@ -91,11 +123,25 @@ class PageContainer extends Component {
                 }
             },
             donatingAgency: {
-                name: 'Local Point',
                 contact: {
+                    uid: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
                     name: 'Andrea Benson',
                     phone: '206-543-6975',
-                    email: 'bensoa3@uw.edu'
+                    email: 'bensoa3@uw.edu',
+                    memberList: [
+                        {
+                            uid: 'uid1',
+                            name: 'member1',
+                            phone: '111-111-1111',
+                            email: 'member1@test.com'
+                        },
+                        {
+                            uid: 'uid2',
+                            name: 'member2',
+                            phone: '222-222-2222',
+                            email: 'member2@test.com'
+                        }
+                    ]
                 }
             }
         };
@@ -132,17 +178,18 @@ class PageContainer extends Component {
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
-                                delivery={this.state.delivery}
                                 futureEvent={true}
+                                accountOwnerName={this.props.account.name}
                                 accountType={this.props.account.accountType}
+                                delivery={this.state.delivery}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
                             <EventCard
-                                eventType={this.state.delivery.eventType}
                                 startTime={this.state.delivery.startTime}
                                 endTime={this.state.delivery.endTime}
                                 futureEvent={true}
+                                eventType={this.state.delivery.eventType}
                             />
                         </div>
                     </div>
