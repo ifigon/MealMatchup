@@ -104,10 +104,8 @@ function sendRequestToDGs(accountsRef, requestSnap) {
         console.info('No specific DG requested, ' + pending.length + ' pending DGs');
     }
 
-    return Promise.all(pending.map((dgId) => {
-        return utils.notifyRequestUpdate(
-            'DG', accountsRef.child(dgId), requestSnap.key, nt.RECURRING_PICKUP_REQUEST);
-    }));
+    return Promise.all(pending.map(dgId => utils.notifyRequestUpdate(
+        'DG', accountsRef.child(dgId), requestSnap.key, nt.RECURRING_PICKUP_REQUEST)));
 }
 
 // case B handler
