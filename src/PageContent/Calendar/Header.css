@@ -11,12 +11,13 @@
   cursor: pointer;
 }
 
-.header-title {
+.pop-up-header-title {
   display: inline-block;
   font-weight: 300;
   color: white;
   margin-top: 0px;
   margin-bottom: 0px;
+  font-size: 24px;
 }
 
 .header {
