@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Popup.css';
 import RecurringRequestController from './Recurring/RecurringRequestController';
-import RecurringRequestDetails from './Recurring/RecurringRequestDetails';
 import close from '../../icons/cross-out.svg';
 import { NotificationType } from '../../Enums';
 

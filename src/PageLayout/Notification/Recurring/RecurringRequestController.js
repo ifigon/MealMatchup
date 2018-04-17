@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import '../Popup.css';
-
 import RecurringRequestDetails from './RecurringRequestDetails';
 import RecurringRequestDisclaimer from './RecurringRequestDisclaimer';
 import RecurringRequestClaimed from './RecurringRequestClaimed';
 import EnterPrimaryContact from './EnterPrimaryContact';
-import close from '../../../icons/cross-out.svg';
 
 class RecurringRequestController extends Component {
     constructor(props) {
