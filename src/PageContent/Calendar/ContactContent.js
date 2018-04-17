@@ -44,9 +44,9 @@ class ContactContent extends Component {
         this.setState({
             contact: {
                 name: e.target.name.value,
-                phone: e.target.phone.value,
-                edit: false
-            }
+                phone: e.target.phone.value
+            },
+            edit: false
         });
     }
 
@@ -83,23 +83,13 @@ class ContactContent extends Component {
                         ) : null}
                     {!this.state.edit ? (
                         <div>
-                            {!this.state.name ? (
-                                <div className="content-details-wrapper">
-                                    <p className="content-details contact-content">
-                                        {this.state.contact.name} ({
-                                            this.state.contact.phone
-                                        })
-                                    </p>
-                                </div>
-                            ) : (
-                                <div className="content-details-wrapper">
-                                    <p className="content-details contact-content">
-                                        {this.state.contact.name} ({
-                                            this.state.contact.phone
-                                        })
-                                    </p>
-                                </div>
-                            )}
+                            <div className="content-details-wrapper">
+                                <p className="content-details contact-content">
+                                    {this.state.contact.name} ({
+                                        this.state.contact.phone
+                                    })
+                                </p>
+                            </div>
                         </div>
                     ) : this.props.accountType ===
                     AccountType.DONATING_AGENCY_MEMBER ? (
