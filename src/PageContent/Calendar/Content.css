@@ -4,16 +4,15 @@
 .wrapper {
   padding: 15px;
   margin: 0px !important;
-  padding-top: 30px;
+  width: 300px;
 }
 .content-wrapper {
   padding: 15px;
   padding-top: 0px;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   border-bottom: #e0e0e0 0.5px solid;
   padding-right: 0px;
-  /* edit */
   padding-left: 0px;
   width: 80%;
 }
@@ -32,17 +31,19 @@
   font-weight: 400;
   font-size: 14px;
   margin: 0px;
-  /* edit */
   margin-bottom: 3px;
 }
 
 .content-icon {
   display: inline-block;
   padding-right: 10px;
+  margin-top: 5px;
 }
 .content-details-wrapper {
   display: inline-block;
   margin-right: 10px;
+  vertical-align: top;
+  width: 100%;
   vertical-align: middle;
 }
 .content-details {
@@ -63,6 +64,8 @@
   border-radius: 4px;
   color: #5dc0f9;
   -webkit-appearance: none;
+  display: inline-block;
+  width: 50px;
 }
 .edit-button:hover {
   cursor: pointer;
@@ -70,9 +73,10 @@
 
 .input-wrapper {
   display: inline-block;
-  width: 79%;
+  width: 250px;
   margin-left: 0px !important;
   border: none !important;
+  width: 100%;
 }
 
 .edit-dg {
@@ -157,7 +161,7 @@ select.description-unit {
   width: 147px;
   height: 33px;
   border-radius: 4px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .description-edit-button:hover {
@@ -178,13 +182,11 @@ select.description-unit {
   padding-left: 2px;
 }
 
-.plus {
-  vertical-align: bottom;
-  margin-left: -30px;
-  margin-bottom: 10px;
+.plus-button {
+  margin-left: 215px;
 }
 
-.plus:hover {
+.plus-button:hover {
   cursor: pointer;
 }
 

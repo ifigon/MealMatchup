@@ -174,7 +174,7 @@ class DescriptionContent extends Component {
                                 <img
                                     src={plus}
                                     alt="plus"
-                                    className="plus"
+                                    className="plus-button"
                                     onClick={this.addRow}
                                 />
                                 <div className="save-button-wrapper">
