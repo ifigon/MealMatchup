@@ -361,37 +361,6 @@ export default class Calendar extends Component {
             : this.onChange;
 
         switch (view) {
-            // case 'century':
-            //     return (
-            //         <CenturyView
-            //             onClick={mergeFunctions(
-            //                 clickAction,
-            //                 this.props.onClickDecade
-            //             )}
-            //             {...commonProps}
-            //         />
-            //     );
-            // case 'decade':
-            //     return (
-            //         <DecadeView
-            //             onClick={mergeFunctions(
-            //                 clickAction,
-            //                 this.props.onClickYear
-            //             )}
-            //             {...commonProps}
-            //         />
-            //     );
-            // case 'year':
-            //     return (
-            //         <YearView
-            //             formatMonth={this.props.formatMonth}
-            //             onClick={mergeFunctions(
-            //                 clickAction,
-            //                 this.props.onClickMonth
-            //             )}
-            //             {...commonProps}
-            //         />
-            //     );
             case 'month':
                 return (
                     <MonthView
