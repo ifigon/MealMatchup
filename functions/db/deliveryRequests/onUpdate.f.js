@@ -14,8 +14,10 @@ const nt = enums.NotificationType;
  *      Change: 'receivingAgency' changed from requested/pending to claimed
  *      Action: send notifications to DGs
  *  B) all RAs rejected:
- *      Change: 'status' changed from PENDING to REJECTED_RA
- *      Action: send notification back to DA
+ *      Change: 'receivingAgency' changed from having requested/pending to nonexistent
+ *      Action: 
+ *          - set 'status' to REJECTED_RA
+ *          - send notification back to DA
  *  C) no RA responded in time:
  *      TODO: to be handled by a different scheduled function
  *
@@ -39,6 +41,7 @@ exports = module.exports = functions.database
         console.info('Recurring request changed: ' + context.params.pushId);
 
         // once a request is not in pending status, it shouldn't be changed anymore
+        // just a sanity check
         if (change.before.val().status !== enums.RequestStatus.PENDING) {
             return Promise.reject(
                 new Error('Changes were made to a non-pending pickup request.'));
@@ -57,10 +60,8 @@ exports = module.exports = functions.database
             return sendRequestToDGs(accountsRef, requestSnap);
         }
 
-        if (raRejected(change)) {  // case B
-            console.info('Listener1: all RA rejected -> send notification to DA');
-            return utils.notifyRequestUpdate(
-                'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA);
+        if (rasRejected(change)) {  // case B
+            return updateAndNotifyRejection(requestSnap, daRef);
         }
         // --------------- Listener 1 end ---------------
 
@@ -108,9 +109,11 @@ function raClaimed(change) {
 }
 
 // case B trigger
-function raRejected(change) {
-    return change.before.val().status === enums.RequestStatus.PENDING &&
-        change.after.val().status === enums.RequestStatus.REJECTED_RA;
+function rasRejected(change) {
+    return change.before.hasChild('receivingAgency')
+        && (change.before.child('receivingAgency').hasChild('requested')
+            || change.before.child('receivingAgency').hasChild('pending'))
+        && !change.after.hasChild('receivingAgency');
 }
 
 // case A handler
@@ -143,14 +146,23 @@ function sendRequestToDGs(accountsRef, requestSnap) {
         console.info('No specific DG requested, ' + pending.length + ' pending DGs');
     }
 
-    let promises = [];
-    for (let dg in pending) {
-        let dgRef = accountsRef.child(pending[dg]);
-        promises.push(
-            utils.notifyRequestUpdate(
-                'DG', dgRef, requestSnap.key, nt.RECURRING_PICKUP_REQUEST));
-    }
+    return Promise.all(pending.map((dgId) => {
+        return utils.notifyRequestUpdate(
+            'DG', accountsRef.child(dgId), requestSnap.key, nt.RECURRING_PICKUP_REQUEST);
+    }));
+}
 
+// case B handler
+function updateAndNotifyRejection(requestSnap, daRef) {
+    console.info('Listener1: all RA rejected -> update status and notify DA');
+    let promises = [];
+    // update request status
+    promises.push(
+        requestSnap.ref.child('status').set(enums.RequestStatus.REJECTED_RA));
+    // notify DA
+    promises.push(
+        utils.notifyRequestUpdate(
+            'DA', daRef, requestSnap.key, nt.RECURRING_PICKUP_REJECTED_RA));
     return Promise.all(promises);
 }
 
