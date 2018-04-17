@@ -38,7 +38,7 @@ const nt = enums.NotificationType;
  *      TODO: to be handled by a different scheduled function
  */
 exports = module.exports = functions.database
-    .ref('/delivery_requests/{umbrellaId}/{pushId}')
+    .ref('/delivery_requests/{umbrellaId}/{daId}/{pushId}')
     .onUpdate((change, context) => {
         console.info('Recurring request changed: ' + context.params.pushId);
 
@@ -53,7 +53,7 @@ exports = module.exports = functions.database
         let request = requestSnap.val();
 
         // get db refs. TODO: set up Admin SDK
-        const rootRef = change.after.ref.parent.parent.parent;
+        const rootRef = change.after.ref.parent.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
         const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
 

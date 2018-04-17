@@ -14,14 +14,14 @@ const nt = enums.NotificationType;
  *     pending list.
  */
 exports = module.exports = functions.database
-    .ref('/delivery_requests/{umbrellaId}/{pushId}')
+    .ref('/delivery_requests/{umbrellaId}/{daId}/{pushId}')
     .onCreate((snap, context) => {
         var requestKey = context.params.pushId;
         var request = snap.val();
         console.info('New recurring request added: ' + requestKey);
 
         // TODO: setup Admin SDK in the future? So that we can use absolute path.
-        const rootRef = snap.ref.parent.parent.parent;
+        const rootRef = snap.ref.parent.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
         
         if (request.status !== enums.RequestStatus.PENDING) {
