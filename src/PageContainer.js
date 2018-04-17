@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent, DeliveryType } from './Enums.js';
+import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
@@ -18,8 +18,7 @@ class PageContainer extends Component {
 
         this.state = {
             content: props.content,
-            donatingAgency: null,
-            dialogOpen: false
+            donatingAgency: null
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -45,35 +44,6 @@ class PageContainer extends Component {
         }
     }
 
-    componentWillMount() {
-        // TODO move this dummy data mocking to calendar
-        let delivery = {
-            eventType: DeliveryType.RECURRING,
-            date: '11/14/2017',
-            startTime: '10am',
-            endTime: '12pm',
-            receivingAgency: {
-                name: 'Seattle Union Gospel Mission',
-                contact: {
-                    name: 'Chris Stack',
-                    phone: '206-586-9876',
-                    email: 'chrisstack@uniongospel.org'
-                }
-            },
-            donatingAgency: {
-                name: 'Local Point',
-                contact: {
-                    name: 'Andrea Benson',
-                    phone: '206-543-6975',
-                    email: 'bensoa3@uw.edu'
-                }
-            }
-        };
-        this.setState({
-            delivery: delivery
-        });
-    }
-
     navBarHandler(e) {
         this.setState({
             content: e
@@ -95,9 +65,8 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR && (
-                    <div style={{ marginTop: '120px', marginLeft: '225px' }}>
+                    <div id="calendar-container">
                         <Calendar />
                     </div>
                 )}

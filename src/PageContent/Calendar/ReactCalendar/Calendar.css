@@ -1,6 +1,8 @@
 .react-calendar {
   border: none;
   width: auto;
+  margin-top: 120px;
+  margin-left: 225px;
 }
 
 div.react-calendar__month-view__days > button {

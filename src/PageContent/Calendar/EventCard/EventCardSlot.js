@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import EventCard from './EventCard';
-import { DeliveryType } from '../../../Enums';
+import { DeliveryType, StringFormat } from '../../../Enums';
 import Dialog from '../Dialog.js';
+import moment from 'moment';
 
 class EventCardSlot extends Component {
     constructor(props) {
@@ -35,16 +36,13 @@ class EventCardSlot extends Component {
                 if (!this.props.events[e].isEmergency) {
                     type = DeliveryType.RECURRING;
                 }
-                let startTime = new Date(
-                    this.props.events[e].startTimestamp * 1000
+                let startTime = moment(
+                    this.props.events[e].startTimestamp
+                ).format(StringFormat.TIME);
+                let endTime = moment(this.props.events[e].endTimestamp).format(
+                    StringFormat.TIME
                 );
-                let endTime = new Date(
-                    this.props.events[e].endTimeStamp * 1000
-                );
-                // let future = e.startTime
-                //e.startTimestamp to 10am time
-                //e.endTimestamp to 12pm time
-                //futureEvent depends on [after] this.props.today
+
                 return (
                     <div>
                         {this.state.dialogOpen ? (
