@@ -91,11 +91,25 @@ class PageContainer extends Component {
                 }
             },
             donatingAgency: {
-                name: 'Local Point',
                 contact: {
+                    uid: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
                     name: 'Andrea Benson',
                     phone: '206-543-6975',
-                    email: 'bensoa3@uw.edu'
+                    email: 'bensoa3@uw.edu',
+                    memberList: [
+                        {
+                            uid: 'uid1',
+                            name: 'member1',
+                            phone: '111-111-1111',
+                            email: 'member1@test.com'
+                        },
+                        {
+                            uid: 'uid2',
+                            name: 'member2',
+                            phone: '222-222-2222',
+                            email: 'member2@test.com'
+                        }
+                    ]
                 }
             }
         };
@@ -132,9 +146,9 @@ class PageContainer extends Component {
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
-                                delivery={this.state.delivery}
-                                futureEvent={true}
                                 accountType={this.props.account.accountType}
+                                futureEvent={true}
+                                delivery={this.state.delivery}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
