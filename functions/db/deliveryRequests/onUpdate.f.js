@@ -34,7 +34,7 @@ const nt = enums.NotificationType;
  *      Action: 
  *          i. set 'status' to REJECTED_DG
  *          ii. send notification back to DA and RA
- *  C) no DG respondid in time:
+ *  C) no DG responded in time:
  *      TODO: to be handled by a different scheduled function
  */
 exports = module.exports = functions.database
@@ -121,10 +121,10 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef) {
         notifType = nt.RECURRING_PICKUP_REJECTED_DG;
     }
 
-    let promises = [];
-    promises.push(
-        requestSnap.ref.child('status').set(rejectType));
-    promises.push(multiNotify(accounts, requestSnap.key, notifType));
+    let promises = [
+        requestSnap.ref.child('status').set(rejectType),
+        multiNotify(accounts, requestSnap.key, notifType),
+    ];
     return Promise.all(promises);
 }
 // ----------------------- End Common -----------------------
@@ -245,7 +245,6 @@ function notifyConfirmAll(requestSnap, accountsRef, daRef) {
 
 // ----------------------- Utils -----------------------
 function multiNotify(accounts, reqKey, notifType) {
-    return Promise.all(accounts.map((acct) => {
-        return utils.notifyRequestUpdate(acct.label, acct.ref, reqKey, notifType);
-    }));
+    return Promise.all(accounts.map(acct => 
+        utils.notifyRequestUpdate(acct.label, acct.ref, reqKey, notifType)));
 }
