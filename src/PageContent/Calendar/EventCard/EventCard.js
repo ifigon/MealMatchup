@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { DeliveryType } from '../../Enums';
+import { DeliveryType } from '../../../Enums';
 import './EventCard.css';
-import green_truck from '../../icons/green_truck.svg';
-import grey_truck from '../../icons/grey_truck.svg';
+import green_truck from '../../../icons/green_truck.svg';
+import grey_truck from '../../../icons/grey_truck.svg';
 
 class EventCard extends Component {
     render() {
