@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import truck from '../../../icons/green_truck.svg';
 import Map from '../../../Map/Map.js';
 import { AccountType } from '../../../Enums';
+import PickupDetails from '../../../PageContent/Summary/PickupDetails';
 
 class RecurringRequestDetails extends Component {
     render() {
@@ -12,11 +13,7 @@ class RecurringRequestDetails extends Component {
                     <h1 id="modal-step1">Reccuring Pickup Requested</h1>
                 </div>
                 <div className="pickup-details">
-                    <h2>Pickup Details</h2>
-                    {/* TODO: Backend transform timestamp into the following format */}
-                    <div className="start"><label>Start Date:</label> <p className="start-date">Thursday, 11/21/2018</p></div>
-                    <p>10 Pickups requested for every Thursday</p>
-                    <p>Pickup between 10 am - 12 pm</p>
+                    <PickupDetails request={this.props.details} />
                 </div>
                 <div className="flex">
                     <div className="donating-agency">
