@@ -60,6 +60,10 @@ div.react-calendar__month-view__days > button {
   border: 1px #4f4f4f solid;
 }
 
+.react-calendar__tile:focus {
+  outline: none;
+}
+
 .react-calendar__tile > time.today {
   background-color: #5dc0f9;
   color: #ffffff;
