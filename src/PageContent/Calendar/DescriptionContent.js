@@ -64,7 +64,9 @@ class DescriptionContent extends Component {
 
     handleChange(e) {
         e.preventDefault();
+        // TODO
         // pass these in from firebase
+        // validate form: ensure amount is > 0 if name != ""
         let newDonation = [];
         for (let i = 0; i < this.state.donationObject.length; i++) {
             let name = e.target[i + 'name'].value;
@@ -74,6 +76,7 @@ class DescriptionContent extends Component {
                 newDonation.push({ name: name, amount: amount, unit: unit });
             }
         }
+
         this.setState({
             donationObject: newDonation,
             edit: false,
@@ -92,7 +95,7 @@ class DescriptionContent extends Component {
         if (this.state.donationObject.length > 0) {
             editDonation = this.state.donationObject.map((item, index) => {
                 return (
-                    <div className="donation-edit-wrapper">
+                    <div key={index} className="donation-edit-wrapper">
                         <input
                             type="text"
                             className="food"
