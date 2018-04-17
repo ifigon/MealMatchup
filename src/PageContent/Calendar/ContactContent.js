@@ -82,7 +82,7 @@ class ContactContent extends Component {
                     ) : this.props.accountType ===
                     AccountType.DONATING_AGENCY_MEMBER ? (
                             <h1 className="section-header">
-                            Primary Contact for Pick Up
+                            Primary Contact for Pickup
                             </h1>
                         ) : null}
                     {!this.state.edit ? (
