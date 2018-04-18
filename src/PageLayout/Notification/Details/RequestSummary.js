@@ -1,7 +1,6 @@
 import React from 'react';
 import RequestTime from './RequestTime';
 import truck from '../../../icons/green_truck.svg';
-import { AccountType } from '../../../Enums';
 import Map from '../../../Map/Map.js';
 
 class RequestSummary extends React.Component {
