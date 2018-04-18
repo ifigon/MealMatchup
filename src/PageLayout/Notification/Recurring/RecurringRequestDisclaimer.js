@@ -3,6 +3,11 @@ import truck from '../../../icons/green_truck.svg';
 import RequestTime from '../Details/RequestTime';
 
 class RecurringRequestDisclaimer extends Component {
+    claimDelivery(){
+        // TODO: backend handle claim
+
+        this.props.nextStep();
+    }
     render() {
         return (
             <div className="modal-wrapper">
@@ -15,7 +20,7 @@ class RecurringRequestDisclaimer extends Component {
                         <RequestTime request={this.props.details} />
                     </div>
                     <div className="popup-buttons">
-                        <button onClick={this.props.nextStep} className="claim" type="button">Confirm</button> <button onClick={this.props.close} className="reject" type="button">Cancel</button>
+                        <button onClick={this.claimDelivery.bind(this)} className="claim" type="button">Confirm</button> <button onClick={this.props.close} className="reject" type="button">Cancel</button>
                     </div>
                 </div>
             </div>
