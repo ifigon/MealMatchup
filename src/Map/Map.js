@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GoogleMap from 'google-map-react';
 import Geocode from '../react-geocode';
 import './Marker.css';
+import { isMobile } from '../utils/Utils'
 
 const GoogleMap_API_KEY = 'AIzaSyBhUNXr9HGzNW1k0Va7EGeyFsJqUSlkwCU';
 
@@ -72,8 +73,8 @@ class Map extends Component{
                     :
                     <div className="error">Unable to load map</div>
                 }
-                {/* Prompts user to open maps on their phone */}
-                {this.state.validAddress && <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.long} target="_blank">{this.state.address}</a>}
+                {/* Prompts user to open maps on their phone (mobile only) */}
+                {this.state.validAddress && isMobile() && <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.long} target="_blank">{this.state.address}</a>}
             </div>
         );
     }

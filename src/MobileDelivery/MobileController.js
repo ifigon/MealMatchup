@@ -16,7 +16,6 @@ class MobileController extends React.Component {
         this.state = {
             deliveryDbRefPath: '',
             deliveryObj: {
-                date: '',
                 startTime: '',
                 endTime: '',
                 isEmergency: null,

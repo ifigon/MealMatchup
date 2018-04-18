@@ -17,7 +17,7 @@ class MobileConfirm extends React.Component {
                             <p className="ms-confirm-agency">{this.props.da.agency}
                                 <a href={'tel:' + this.props.da.primaryContact.phone}>{this.props.da.primaryContact.phone}</a>
                             </p>
-                            <p className="ms-confirm-details">Signed by: {this.props.da.primaryContact.name}</p>
+                            <p className="ms-confirm-details">Signed by: {this.props.deliveryObj.pickedUpInfo.signature}</p>
                             <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
                             <p className="ms-confirm-details">Freezer Temperature: {this.props.deliveryObj.pickedUpInfo.temperature}&deg;F</p>
                         </div>
@@ -26,7 +26,7 @@ class MobileConfirm extends React.Component {
                             <p className="ms-confirm-agency">{this.props.ra.agency}
                                 <a href={'tel:' + this.props.ra.primaryContact.phone}>{this.props.ra.primaryContact.phone}</a>
                             </p>
-                            <p className="ms-confirm-details">Signed by: {this.props.ra.primaryContact.name}</p>
+                            <p className="ms-confirm-details">Signed by: {this.props.deliveryObj.deliveredInfo.signature}</p>
                             <p className="ms-confirm-details">Timestamp: {moment(this.props.deliveryObj.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-dg">
