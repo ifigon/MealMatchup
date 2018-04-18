@@ -21,6 +21,7 @@ class Settings extends Component {
                     <div> 
                         <div className="container">
                             <OrganizationDetails
+                                accountType={this.props.account}
                                 account={org}
                             />
                         </div>
@@ -29,6 +30,7 @@ class Settings extends Component {
 
                         <div className="container">
                             <AccountManager
+                                accountType={this.props.account}
                                 account={org}
                             />
                         </div>

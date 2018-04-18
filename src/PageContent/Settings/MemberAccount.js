@@ -4,25 +4,29 @@ class MemberAccount extends Component {
 
     constructor(props) {
         super(props);
-        // this.props.members = [id, id, id]
         this.state = {
-            members: props.account.members,
-            comingSoon: false
-            // members: []
+            comingSoon: false,
+            members: []
         };
     }
 
     componentDidMount() {
         // TODO 
-        // let members = [
-        //     {
-        //         name:
-        //         phone:
-        //     },
-        //     {
-
-        //     }
-        // ]
+        let members = [
+            {
+                name: 'Test 1',
+                position: 'Manager',
+                email: 'test1@test.com',
+                phone: '205-434-9933'
+            },
+            {
+                name: 'Test 2',
+                position: 'Assistant Manager',
+                email: 'test2@test.com',
+                phone: '205-434-9922'
+            }
+        ];
+        this.setState({members});
 
     }
 

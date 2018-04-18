@@ -63,7 +63,7 @@ class AccountManager extends Component {
                                 <span />
                             }
 
-                            {this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER && !this.props.account.isAdmin ?
+                            {this.props.accountType.accountType === AccountType.DONATING_AGENCY_MEMBER && !this.props.accountType.isAdmin ?
                                 <span />
                                 :
                                 <div className="amd-edit amd-edit-1">
@@ -149,6 +149,7 @@ class AccountManager extends Component {
 
     }
 
+    // Backend TODO: Uncomment the data!!
     handleSubmit(e) {
         e.preventDefault();
         // let acc = {

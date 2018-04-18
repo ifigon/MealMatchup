@@ -43,7 +43,7 @@ class OrganizationDetails extends Component {
                             <span />
                         }
                         <div className="scs-spacing-lg" />
-                        {this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER && !this.props.account.isAdmin ?
+                        {!this.props.accountType.isAdmin && this.props.accountType.accountType === AccountType.DONATING_AGENCY_MEMBER ?
                             <span />
                             :
                             <div className="amd-edit amd-edit-1">
