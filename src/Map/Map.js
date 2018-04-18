@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import GoogleMap from 'google-map-react';
 import Geocode from '../react-geocode';
 import './Marker.css';
-import { isMobile } from '../utils/Utils'
+import { isMobile } from '../utils/Utils';
 
 const GoogleMap_API_KEY = 'AIzaSyBhUNXr9HGzNW1k0Va7EGeyFsJqUSlkwCU';
 

@@ -13,7 +13,7 @@ ReactDOM.render(
         <div>
             <Route exact path="/" component={App} />
             {/* Mobile Delivery Route: uId: umbrellaId, dId: deliveryId */}
-            <Route exact path="/mobile/delivery/:uId/:dId" component={MobileController} />
+            <Route exact path="/mobile/delivery/:id" component={MobileController} />
             {/* TODO: DA Member Signup route with agency key */}
             <Route exact 
                 path="/signup/donatingagency/member" 

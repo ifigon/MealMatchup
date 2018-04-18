@@ -46,7 +46,7 @@ class MobileConfirm extends React.Component {
                         </div>
                         <div className="ms-confirm-content" id="ms-confirm-food">
                             <p className="ms-confirm-header">Description of Pick Up</p>
-                            {
+                            { this.props.deliveryObj.description ?
                                 this.props.deliveryObj.description.foodItems.map((desc, i) => {
                                     return (
                                         <p className="ms-food" key={i}>{desc.food} &nbsp;
@@ -54,6 +54,10 @@ class MobileConfirm extends React.Component {
                                         </p>
                                     );
                                 })
+                                :
+                                <p className="ms-food">
+                                    <span>No description entered</span>
+                                </p>
                             }
                         </div>
                         {/* notify controller to hide summary dialog */}

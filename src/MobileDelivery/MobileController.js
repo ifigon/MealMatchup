@@ -19,8 +19,10 @@ class MobileController extends React.Component {
                 startTime: '',
                 endTime: '',
                 isEmergency: null,
-                donatingAgency: {},
-                receivingAgency: {},
+                donatingAgency: '',
+                daContact: '',
+                receivingAgency: '',
+                raContact: {},
                 delivererGroup: '',  // delivererGroup is null if isEmergency=true
                 deliverers: [],
                 description: {},
@@ -44,8 +46,8 @@ class MobileController extends React.Component {
     }
 
     componentDidMount() {
-        const { uId: umbrellaId, dId: deliveryId} = this.props.match.params;
-        const deliveryDbRefPath = `deliveries/${umbrellaId}/${deliveryId }`;
+        const { id } = this.props.match.params;
+        const deliveryDbRefPath = `deliveries/${id}`;
         this.setState({ deliveryDbRefPath: deliveryDbRefPath });
 
         db.ref(deliveryDbRefPath).on('value', (snapshot) => {  // listen data onchange
@@ -59,8 +61,8 @@ class MobileController extends React.Component {
     }
 
     async aggrDelivery(deliveryData) {
-        this.fetchDa(deliveryData.donatingAgency);
-        this.fetchRa(deliveryData.receivingAgency);
+        this.fetchDa(deliveryData.donatingAgency, deliveryData.daContact);
+        this.fetchRa(deliveryData.receivingAgency, deliveryData.raContact);
 
         if (deliveryData.delivererGroup) { // Non-Emergency Pick Up: deliveryData.delivererGroup != null
             // get delivererGroup name
@@ -88,14 +90,14 @@ class MobileController extends React.Component {
         return deliveryObj;
     }
 
-    async fetchDa(rawDa) {
+    async fetchDa(daId, daContactId) {
         let daPromise = new Promise( async (resolve, reject) => {
-            let daSnapshot = await db.ref(`donating_agencies/${rawDa.agency}`).once('value');
+            let daSnapshot = await db.ref(`donating_agencies/${daId}`).once('value');
             resolve(daSnapshot.val());
         });
 
         let daMemberPromise = new Promise( async (resolve, reject) => {
-            let daMemberSnapshot = await db.ref(`accounts/${rawDa.primaryContact}`).once('value');
+            let daMemberSnapshot = await db.ref(`accounts/${daContactId}`).once('value');
             resolve(daMemberSnapshot.val());
         });
 
@@ -116,9 +118,9 @@ class MobileController extends React.Component {
         this.setState({ donatingAgency: daObj});
     }
 
-    async fetchRa(rawRa) {
-        let raSnapshot = await db.ref(`accounts/${rawRa.agency}`).once('value');
-        this.aggrRa(raSnapshot.val(), rawRa.primaryContact);
+    async fetchRa(raId, raContact) {
+        let raSnapshot = await db.ref(`accounts/${raId}`).once('value');
+        this.aggrRa(raSnapshot.val(), raContact);
     }
 
     aggrRa(raMeta, raPrimaryContact) {
