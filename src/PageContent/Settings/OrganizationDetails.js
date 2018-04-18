@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import Map from '../../Map/Map.js';
+import { AccountType } from '../../Enums';
 
 class OrganizationDetails extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isEditing: false
+        };
+    }
 
     render() {
         return (
@@ -18,36 +26,24 @@ class OrganizationDetails extends Component {
                     />
                 </div>
 
-                {!this.props.isEditingOrg ?
+                {!this.state.isEditing ?
 
                     <div className="scs-0-content">
                         <h5>Organization Details</h5>
                         <h6>{this.props.account.name}</h6>
                         <div className="scs-spacing" />
-                        <h6>Address: {this.props.account.address.street1} {this.props.account.address.street2} {this.props.account.address.city}, {this.props.account.address.state} {this.props.account.address.zipcode}</h6>
-                        <h6>Office Number: {this.props.account.organizationPhone}</h6>
-                        {this.props.account.numVolunteers ? 
-                            <h6>Volunteers: {this.props.account.numVolunteers}</h6>
-                            :
-                            <span />
-                        }
-                        {this.props.account.notes ? 
-                            <h6>Notes: {this.props.account.notes}</h6>
-                            :
-                            <span />
-                        }
-                        {this.props.account.emergencypickup ? 
-                            <h6>Emergency Pickup Activated: {this.props.account.emergencypickup}</h6>
-                            :
-                            <span />
-                        }
+                        <h6>Address: {this.props.account.address.street1}, {this.props.account.address.street2 ? <span>{this.props.account.address.street2},</span> : <span />} {this.props.account.address.city}, {this.props.account.address.state} - {this.props.account.address.zipcode}</h6>
+                        {this.props.account.phone ? <h6>Office Number: {this.props.account.organizationPhone}</h6> : <span />}
+                        {this.props.account.numVolunteers ? <h6>Volunteers: {this.props.account.numVolunteers}</h6> : <span />}
+                        {this.props.account.notes ? <h6>Notes: {this.props.account.notes}</h6> : <span />}
+                        {this.props.account.emergencypickup ? <h6>Emergency Pickup Activated: {this.props.account.emergencypickup}</h6> : <span />}
                         <div className="scs-spacing-lg" />
-                        {this.props.isAdmin === 'admin' ?
-                            <div className="amd-edit amd-edit-1">
-                                <button type="button" className="form-button confirm-button" onClick={this.props.handleEditOrg}>Edit</button>
-                            </div>
-                            :
+                        {this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER && !this.props.account.isAdmin ?
                             <span />
+                            :
+                            <div className="amd-edit amd-edit-1">
+                                <button type="button" className="form-button confirm-button" onClick={this.handleEdit.bind(this)}>Edit</button>
+                            </div>
                         }
                     </div>
 
@@ -61,12 +57,18 @@ class OrganizationDetails extends Component {
                                 <div className="editing-child-1">
                                     <label className="label-component details">Name</label><br /><br />
                                     <div className="scs-spacing" />
-                                    <label className="label-component details">Street 1</label><br /><br />
-                                    <label className="label-component details">Street 2</label><br /><br />
-                                    <label className="label-component details">City</label><br /><br />
-                                    <label className="label-component details">State</label><br /><br />
-                                    <label className="label-component details">Zip</label><br /><br />
-                                    <label className="label-component details">Office Number</label><br /><br />
+                                    {this.props.account.address ?
+                                        <div>
+                                            <label className="label-component details">Street 1</label><br /><br />
+                                            <label className="label-component details">Street 2</label><br /><br />
+                                            <label className="label-component details">City</label><br /><br />
+                                            <label className="label-component details">State</label><br /><br />
+                                            <label className="label-component details">Zip</label><br /><br />
+                                            <label className="label-component details">Office Number</label><br /><br />
+                                        </div>
+                                        :
+                                        <span />
+                                    }
                                     {this.props.account.numVolunteers ? 
                                         <label className="label-component details">Volunteers</label>
                                         :
@@ -94,7 +96,7 @@ class OrganizationDetails extends Component {
                                     <input name="zip" type="text" className="form-input" defaultValue={this.props.account.address.zipcode} /><br /><br />
                                     <input name="phone" type="tel" className="form-input" defaultValue={this.props.account.organizationPhone} /><br /><br />
                                     {this.props.account.numVolunteers ? 
-                                        <input name="nv" type="text" className="form-input" defaultValue={this.props.account.numVolunteers} />
+                                        <input name="num_vol" type="text" className="form-input" defaultValue={this.props.account.numVolunteers} />
                                         :
                                         <span />
                                     }
@@ -123,32 +125,37 @@ class OrganizationDetails extends Component {
         );
     }
 
+
+    // Backend TODO: Write values to DB
     handleSubmit(e) {
         e.preventDefault();
-        let nv = null;
-        let notes = null;
-        let ep = null;
-        if(e.target.nv)
-            nv = e.target.nv.value;
-        if(e.target.notes)
-            notes = e.target.notes.value;
-        if(e.target.ep)
-            ep = e.target.ep.value;
-        let org = {
-            name: e.target.name.value,
-            address: {
-                street1: e.target.street1.value,
-                street2: e.target.street2.value,
-                city: e.target.city.value,
-                state: e.target.state.value,
-                zipcode: e.target.zip.value
-            },
-            organizationPhone: e.target.phone.value,
-            numVolunteers: nv,
-            notes: notes,
-            emergencypickup: ep
-        };
-        this.props.handleOrgSave(org);
+        // let num_vol = null;
+        // let notes = null;
+        // let ep = null;
+        // if(e.target.num_vol)
+        //     num_vol = e.target.num_vol.value;
+        // if(e.target.notes)
+        //     notes = e.target.notes.value;
+        // if(e.target.ep)
+        //     ep = e.target.ep.value;
+        // let name = e.target.name.value;
+        // let address = {
+        //         street1: e.target.street1.value,
+        //         street2: e.target.street2.value,
+        //         city: e.target.city.value,
+        //         state: e.target.state.value,
+        //         zipcode: e.target.zip.value
+        // };
+        // let phone = e.target.phone.value;
+        this.setState({
+            isEditing: false
+        });
+    }
+
+    handleEdit() {
+        this.setState({
+            isEditing: true
+        });
     }
 
 }

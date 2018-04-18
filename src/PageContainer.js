@@ -154,7 +154,10 @@ class PageContainer extends Component {
 
                 {this.state.content === PageContent.SETTINGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        <Settings />
+                        <Settings 
+                            account={this.props.account}
+                            donatingAgency={this.state.donatingAgency}
+                        />
                     </div>
                 )}
             </div>
