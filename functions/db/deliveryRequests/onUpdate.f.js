@@ -168,12 +168,14 @@ function sendRequestToDGs(accountsRef, requestSnap) {
 // ----------------------- Listener 2 handlers -----------------------
 // case A handler 1
 function createDeliveries(rootRef, requestSnap) {
-    const TIME = enums.InputFormat.TIME;
     console.info('Listener2: DG claimed -> create delivery objects');
-    let request = requestSnap.val();
-    let dsRef = rootRef.child(`deliveries/${request.umbrella}`);
+    const TIME = enums.InputFormat.TIME;
+    const request = requestSnap.val();
+    const dsRef = rootRef.child('deliveries');
+    const indicesRef = rootRef.child(`delivery_indices/${request.umbrella}`);
 
-    let step = -1;  // num days to step by
+    // calculate num days to step by
+    let step = -1;
     if (request.repeats === enums.RequestRepeatType.WEEKLY) {
         step = 7;
     } else if (request.repeats === enums.RequestRepeatType.BIWEEKLY) {
@@ -188,6 +190,7 @@ function createDeliveries(rootRef, requestSnap) {
         - moment(moment.tz(request.startTimestamp, request.timezone).format(TIME), TIME)
     ).valueOf();
 
+    // create delivery obj with common fields
     let delivery = {
         status: enums.DeliveryStatus.SCHEDULED,
         timezone: request.timezone,
@@ -202,7 +205,7 @@ function createDeliveries(rootRef, requestSnap) {
     };
 
     let promises = [];
-    let spawnedDeliveries = [];
+    let deliveries = {};  // {timestamp: pushId}
     let cur = moment(request.startTimestamp);
     while (cur.valueOf() <= request.endTimestamp) {
         delivery['startTimestamp'] = cur.valueOf();
@@ -210,8 +213,8 @@ function createDeliveries(rootRef, requestSnap) {
 
         // push delivery to db
         let dRef = dsRef.push(delivery);
-        spawnedDeliveries.push(dRef.key);
         promises.push(dRef);
+        deliveries[delivery.startTimestamp] = dRef.key;
 
         cur.add(step, 'days');
     }
@@ -219,12 +222,27 @@ function createDeliveries(rootRef, requestSnap) {
     // update request
     let updates = { 
         status: enums.RequestStatus.CONFIRMED, 
-        spawnedDeliveries: spawnedDeliveries 
+        spawnedDeliveries: Object.values(deliveries)
     };
     promises.push(requestSnap.ref.update(updates));
 
+    // update delivery index for each agency
+    promises.push(updateDeliveryIndices(indicesRef, delivery, deliveries));
+
     console.info('Created ' + spawnedDeliveries.length + ' deliveries');
     return Promise.all(promises);
+}
+
+function updateDeliveryIndices(indicesRef, delivery, deliveries) {
+    let agencyTypes = ['donatingAgency', 'receivingAgency', 'delivererGroup'];
+    return Promise.all([].concat.apply([], 
+        // update index for each agency type
+        agencyTypes.map(agencyType => {
+            const indexRef = indicesRef.child(delivery[agencyType]);
+            // append each delivery into index at timestamp
+            return Object.keys(deliveries).map(
+                timestamp => indexRef.child(timestamp).push(deliveries[timestamp]));
+        })));
 }
 
 // case A handler 2

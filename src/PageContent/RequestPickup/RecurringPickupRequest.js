@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus, InputFormat } from '../../Enums.js';
+import { RequestRepeatType, RequestEndCriteriaType, RequestStatus, InputFormat } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 import moment from 'moment-timezone';
