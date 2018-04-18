@@ -138,24 +138,24 @@ class OrganizationDetails extends Component {
     // Backend TODO: Write values to DB
     handleSubmit(e) {
         e.preventDefault();
-        let num_vol = null;
-        let notes = null;
-        let ep = null;
-        if(e.target.num_vol)
-            num_vol = e.target.num_vol.value;
-        if(e.target.notes)
-            notes = e.target.notes.value;
-        if(e.target.ep)
-            ep = e.target.ep.checked;
-        let name = e.target.name.value;
-        let address = {
-            street1: e.target.street1.value,
-            street2: e.target.street2.value,
-            city: e.target.city.value,
-            state: e.target.state.value,
-            zipcode: e.target.zip.value
-        };
-        let phone = e.target.phone.value;
+        // let num_vol = null;
+        // let notes = null;
+        // let ep = null;
+        // if(e.target.num_vol)
+        //     num_vol = e.target.num_vol.value;
+        // if(e.target.notes)
+        //     notes = e.target.notes.value;
+        // if(e.target.ep)
+        //     ep = e.target.ep.checked;
+        // let name = e.target.name.value;
+        // let address = {
+        //     street1: e.target.street1.value,
+        //     street2: e.target.street2.value,
+        //     city: e.target.city.value,
+        //     state: e.target.state.value,
+        //     zipcode: e.target.zip.value
+        // };
+        // let phone = e.target.phone.value;
         this.setState({
             isEditing: false
         });

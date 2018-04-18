@@ -151,23 +151,23 @@ class AccountManager extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let acc = {
-            details: {
-                name: e.target.name.value,
-                position: e.target.position.value,
-                email: e.target.email.value,
-                phone: e.target.phone.value
-            }
-        };
-        let secondaryContact = null;
-        if(e.target.sname) {
-            secondaryContact = {
-                name: e.target.sname.value,
-                position: e.target.sposition.value,
-                email: e.target.semail.value,
-                phone: e.target.sphone.value
-            };
-        }
+        // let acc = {
+        //     details: {
+        //         name: e.target.name.value,
+        //         position: e.target.position.value,
+        //         email: e.target.email.value,
+        //         phone: e.target.phone.value
+        //     }
+        // };
+        // let secondaryContact = null;
+        // if(e.target.sname) {
+        //     secondaryContact = {
+        //         name: e.target.sname.value,
+        //         position: e.target.sposition.value,
+        //         email: e.target.semail.value,
+        //         phone: e.target.sphone.value
+        //     };
+        // };
         this.setState({
             isEditing: false
         });
