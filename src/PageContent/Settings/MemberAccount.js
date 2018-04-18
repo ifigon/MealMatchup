@@ -4,10 +4,26 @@ class MemberAccount extends Component {
 
     constructor(props) {
         super(props);
+        // this.props.members = [id, id, id]
         this.state = {
             members: props.account.members,
             comingSoon: false
+            // members: []
         };
+    }
+
+    componentDidMount() {
+        // TODO 
+        // let members = [
+        //     {
+        //         name:
+        //         phone:
+        //     },
+        //     {
+
+        //     }
+        // ]
+
     }
 
     render() {
@@ -56,6 +72,7 @@ class MemberAccount extends Component {
     }
 
     // Backend TODO: Remove data from database here
+    // For FRONTEND PURPOSES (UPDATING UI) MAYBE CHANGE WHILE WRITING BACKEND
     handleRemove(e) {
         let copy = this.state.members;
         copy.splice(e.target.id, 1);
