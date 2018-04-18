@@ -3,6 +3,9 @@
 }
 .dialog-content-wrapper {
   margin-top: 10px;
+  height: 50vh;
+  overflow: auto;
+  scroll-behavior: auto;
 }
 .wrapper {
   padding: 15px;
