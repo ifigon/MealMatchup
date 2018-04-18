@@ -16,9 +16,9 @@ const nt = enums.NotificationType;
 exports = module.exports = functions.database
     .ref('/delivery_requests/{umbrellaId}/{daId}/{pushId}')
     .onCreate((snap, context) => {
-        var requestKey = context.params.pushId;
+        console.info('New recurring request added: ' + snap.key);
+        const requestPath = context.params.daId + '/' + context.params.pushId;
         var request = snap.val();
-        console.info('New recurring request added: ' + requestKey);
 
         // TODO: setup Admin SDK in the future? So that we can use absolute path.
         const rootRef = snap.ref.parent.parent.parent.parent;
@@ -45,7 +45,7 @@ exports = module.exports = functions.database
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
             return utils.notifyRequestUpdate(
-                'RA', raRef, requestKey, nt.RECURRING_PICKUP_REQUEST);
+                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST);
         }
 
         console.info('No specific RA requested, ' + raInfo.pending.length + 
@@ -71,7 +71,7 @@ exports = module.exports = functions.database
                 if (available) {
                     promises.push(
                         utils.notifyRequestUpdate(
-                            'RA', raSnap.ref, requestKey, nt.RECURRING_PICKUP_REQUEST));
+                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST));
                     rasLeft.push(raSnap.key);
                 }
             }
@@ -87,7 +87,7 @@ exports = module.exports = functions.database
                 var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
                 promises.push(
                     utils.notifyRequestUpdate(
-                        'DA', daRef, requestKey, nt.RECURRING_PICKUP_UNAVAILABLE));
+                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE));
             }
 
             return Promise.all(promises);

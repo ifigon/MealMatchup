@@ -49,6 +49,7 @@ exports = module.exports = functions.database
                 new Error('Changes were made to a non-pending pickup request.'));
         }
 
+        const requestPath = context.params.daId + '/' + context.params.pushId;
         let requestSnap = change.after;
         let request = requestSnap.val();
 
@@ -59,12 +60,12 @@ exports = module.exports = functions.database
 
         // ------------- Listener 1 triggers -------------
         if (wasClaimedBy('receivingAgency', change)) {  // case A
-            return sendRequestToDGs(accountsRef, requestSnap);
+            return sendRequestToDGs(accountsRef, requestSnap, requestPath);
         }
 
         if (wasRejectedByAll('receivingAgency', change)) {  // case B
-            return handleRejection(
-                enums.RequestStatus.REJECTED_RA, requestSnap, accountsRef, daRef);
+            return handleRejection(enums.RequestStatus.REJECTED_RA, 
+                requestSnap, accountsRef, daRef, requestPath);
         }
         // --------------- Listener 1 end ---------------
 
@@ -74,13 +75,13 @@ exports = module.exports = functions.database
             // make sure the deliveries are created before we notify accounts
             return createDeliveries(rootRef, requestSnap)
                 .then(() => {
-                    return notifyConfirmAll(requestSnap, accountsRef, daRef);
+                    return notifyConfirmAll(request, accountsRef, daRef, requestPath);
                 });
         }
 
         if (wasRejectedByAll('delivererGroup', change)) {  // case B
-            return handleRejection(
-                enums.RequestStatus.REJECTED_DG, requestSnap, accountsRef, daRef);
+            return handleRejection(enums.RequestStatus.REJECTED_DG, 
+                requestSnap, accountsRef, daRef, requestPath);
         }
         // --------------- Listener 2 end ---------------
 
@@ -105,7 +106,7 @@ function wasRejectedByAll(agencyType, change) {
 }
 
 // Listener 1 & 2 case B handler
-function handleRejection(rejectType, requestSnap, accountsRef, daRef) {
+function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPath) {
     let accounts = [ { label: 'DA', ref: daRef } ];
     let notifType = null;
 
@@ -123,7 +124,7 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef) {
 
     let promises = [
         requestSnap.ref.child('status').set(rejectType),
-        multiNotify(accounts, requestSnap.key, notifType),
+        multiNotify(accounts, requestPath, notifType),
     ];
     return Promise.all(promises);
 }
@@ -131,7 +132,7 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef) {
 
 // ----------------------- Listener 1 handlers -----------------------
 // case A handler
-function sendRequestToDGs(accountsRef, requestSnap) {
+function sendRequestToDGs(accountsRef, requestSnap, requestPath) {
     let request = requestSnap.val();
     let dgInfo = request.delivererGroup;
     
@@ -161,7 +162,7 @@ function sendRequestToDGs(accountsRef, requestSnap) {
     }
 
     return Promise.all(pending.map(dgId => utils.notifyRequestUpdate(
-        'DG', accountsRef.child(dgId), requestSnap.key, nt.RECURRING_PICKUP_REQUEST)));
+        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUEST)));
 }
 // ----------------------- End Listener 1 -----------------------
 
@@ -205,7 +206,7 @@ function createDeliveries(rootRef, requestSnap) {
     };
 
     let promises = [];
-    let deliveries = {};  // {timestamp: pushId}
+    let deliveries = {};  // {dId: timestamp}
     let cur = moment(request.startTimestamp);
     while (cur.valueOf() <= request.endTimestamp) {
         delivery['startTimestamp'] = cur.valueOf();
@@ -214,7 +215,7 @@ function createDeliveries(rootRef, requestSnap) {
         // push delivery to db
         let dRef = dsRef.push(delivery);
         promises.push(dRef);
-        deliveries[delivery.startTimestamp] = dRef.key;
+        deliveries[dRef.key] = delivery.startTimestamp;
 
         cur.add(step, 'days');
     }
@@ -222,18 +223,19 @@ function createDeliveries(rootRef, requestSnap) {
     // update request
     let updates = { 
         status: enums.RequestStatus.CONFIRMED, 
-        spawnedDeliveries: Object.values(deliveries)
+        spawnedDeliveries: Object.keys(deliveries)
     };
     promises.push(requestSnap.ref.update(updates));
 
     // update delivery index for each agency
     promises.push(updateDeliveryIndices(indicesRef, delivery, deliveries));
 
-    console.info('Created ' + spawnedDeliveries.length + ' deliveries');
+    console.info('Created ' + Object.keys(deliveries).length + ' deliveries');
     return Promise.all(promises);
 }
 
 function updateDeliveryIndices(indicesRef, delivery, deliveries) {
+    console.info('Updating delivery indices');
     let agencyTypes = ['donatingAgency', 'receivingAgency', 'delivererGroup'];
     return Promise.all([].concat.apply([], 
         // update index for each agency type
@@ -241,28 +243,28 @@ function updateDeliveryIndices(indicesRef, delivery, deliveries) {
             const indexRef = indicesRef.child(delivery[agencyType]);
             // append each delivery into index at timestamp
             return Object.keys(deliveries).map(
-                timestamp => indexRef.child(timestamp).push(deliveries[timestamp]));
+                dId => indexRef.child(deliveries[dId]).push(dId));
         })));
 }
 
 // case A handler 2
-function notifyConfirmAll(requestSnap, accountsRef, daRef) {
+function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
     console.info('Notifying all parties of the confirmed delivery');
 
-    let raRef = accountsRef.child(requestSnap.val().receivingAgency.claimed);
-    let dgRef = accountsRef.child(requestSnap.val().delivererGroup.claimed);
+    let raRef = accountsRef.child(request.receivingAgency.claimed);
+    let dgRef = accountsRef.child(request.delivererGroup.claimed);
     let accounts = [
         {label: 'DA', ref: daRef},
         {label: 'RA', ref: raRef},
         {label: 'DG', ref: dgRef},
     ];
-    return multiNotify(accounts, requestSnap.key, nt.RECURRING_PICKUP_CONFIRMED);
+    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED);
 }
 // ----------------------- End Listener 2 -----------------------
 
 
 // ----------------------- Utils -----------------------
-function multiNotify(accounts, reqKey, notifType) {
+function multiNotify(accounts, requestPath, notifType) {
     return Promise.all(accounts.map(acct => 
-        utils.notifyRequestUpdate(acct.label, acct.ref, reqKey, notifType)));
+        utils.notifyRequestUpdate(acct.label, acct.ref, requestPath, notifType)));
 }

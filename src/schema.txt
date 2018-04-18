@@ -75,7 +75,7 @@ DONATING AGENCY ("/donating_agencies/") //not an account
 		notifications: [
 			{
 				type: "recurring_pickup_confirmed",  // Enums.NotificationType
-				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+				content: "-K9HdKlCLjjk_ka82K0s/-L5QoXeC_UrL5tRRED3e"  // {daId}/{deliveryRequestId}
 			},
 			...
 		]
@@ -168,7 +168,7 @@ RECEIVING AGENCY ("/accounts/")
 		notifications: [
 			{
 				type: "recurring_pickup_request",  // Enums.NotificationType
-				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+				content: "-K9HdKlCLjjk_ka82K0s/-L5QoXeC_UrL5tRRED3e"  // {daId}/{deliveryRequestId}
 			},
 			...
 		]
@@ -205,7 +205,7 @@ DELIVERER GROUP ("/accounts/")
 		notifications: [
 			{
 				type: "recurring_pickup_request",  // Enums.NotificationType
-				content: "-L5QoXeC_UrL5tRRED3e"  // key of DeliveryRequest
+				content: "-K9HdKlCLjjk_ka82K0s/-L5QoXeC_UrL5tRRED3e"  // {daId}/{deliveryRequestId}
 			},
 			...
 		]
