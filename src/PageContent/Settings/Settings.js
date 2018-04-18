@@ -35,33 +35,21 @@ class Settings extends Component {
 
                         <div className="scs-spacing" />
 
-                        <div className="container">
-
-                            {this.state.account.agency === 'donating_agency' ?
-                                <div>
-                                    {this.state.account.user_type === 'admin' ?
-                                        <MemberAccount
-                                            account={this.state.coordinator}
-                                            memberAccounts={this.state.memberAccounts}
-                                            isAdmin={this.state.account.user_type}
-                                            isEditingMem={this.state.isEditingMem}
-                                            handleEditMem={this.handleEditMem.bind(this)}
-                                            handleMemSave={this.handleMemSave.bind(this)}
-                                        />
-                                        :
-                                        <PersonalAccount
-                                            account={this.state.personalAccount}
-                                            isEditingPmem={this.state.isEditingPmem}
-                                            handleEditPmem={this.handleEditPmem.bind(this)}
-                                            handlePmemSave={this.handlePmemSave.bind(this)}
-                                        />
-                                    }
-                                </div>
-                                :
-                                <span />
-                            }
-
-                        </div>
+                        {this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER ?
+                            <div className="container">
+                                {this.props.account.isAdmin ?
+                                    <MemberAccount
+                                        account={org}
+                                    />
+                                    :
+                                    <PersonalAccount
+                                        account={org}
+                                    />
+                                }
+                            </div>
+                            :
+                            <span />
+                        }
 
                     </div>
 

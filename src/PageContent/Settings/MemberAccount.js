@@ -5,7 +5,7 @@ class MemberAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            memberAccounts: props.memberAccounts,
+            members: props.account.members,
             comingSoon: false
         };
     }
@@ -19,11 +19,10 @@ class MemberAccount extends Component {
                         
                     <div>
 
-                        {this.state.memberAccounts.map((element, index) => {
+                        {this.state.members.map((element, index) => {
                             return (
                                 <div key={index}>
                                     <div className="amd-row">
-
                                         <div className="amd-details amd-details-1">
                                             <div className="amd-details-child">
                                                 <h6>{element.name}</h6>
@@ -35,16 +34,10 @@ class MemberAccount extends Component {
 
                                     </div>
 
-                                    {this.props.isAdmin === 'admin' ? 
+                                    <div className="amd-edit amd-edit-1">
+                                        <button type="button" id={index} className="form-button confirm-button-assign" onClick={this.handleRemove.bind(this)}>Remove</button>
+                                    </div>
 
-                                        <div className="amd-edit amd-edit-1">
-                                            <button type="button" id={index} className="form-button confirm-button-assign" onClick={this.handleRemove.bind(this)}>Remove</button>
-                                        </div>
-
-                                        :
-
-                                        <span />
-                                    }
                                 </div>
                             );
                         })}
@@ -64,10 +57,10 @@ class MemberAccount extends Component {
 
     // Backend TODO: Remove data from database here
     handleRemove(e) {
-        let copy = this.state.memberAccounts;
+        let copy = this.state.members;
         copy.splice(e.target.id, 1);
         this.setState({
-            memberAccounts: copy
+            state: copy
         });
     }
 

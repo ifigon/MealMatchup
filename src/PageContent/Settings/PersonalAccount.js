@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import { StringFormat } from '../../Enums';
 
 class PersonalAccount extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isEditing: false
+        };
+    }
 
     render() {
 
@@ -9,7 +17,7 @@ class PersonalAccount extends Component {
                 <div className="scs-0-content scs-1-content">
                     <h5>Personal Details</h5>
 
-                    {!this.props.isEditingPmem ? 
+                    {!this.state.isEditing ? 
                         
                         <div>
                            
@@ -25,7 +33,7 @@ class PersonalAccount extends Component {
                             </div>
 
                             <div className="amd-edit amd-edit-1">
-                                <button type="button" className="form-button confirm-button" onClick={this.props.handleEditPmem}>Edit</button>
+                                <button type="button" className="form-button confirm-button" onClick={this.handleEdit.bind(this)}>Edit</button>
                             </div>
 
                         </div>
@@ -45,13 +53,16 @@ class PersonalAccount extends Component {
                                 <div className="editing-child-2 amd-editing-2">
                                     <input name="name" type="text" className="form-input" defaultValue={this.props.account.name} /><br /><br />
                                     <input name="position" type="text" className="form-input" defaultValue={this.props.account.position} /><br /><br />
-                                    <input name="email" type="text" className="form-input" defaultValue={this.props.account.email} /><br /><br />
-                                    <input name="phone" type="tel" className="form-input" defaultValue={this.props.account.phone} /><br /><br />
+                                    <input name="email" type="email" className="form-input" defaultValue={this.props.account.email} /><br /><br />
+                                    <input name="phone" type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={this.props.account.phone} /><br /><br />
                                 </div> 
                             </div>
 
                             <div className="amd-edit amd-edit-1">
                                 <button type="submit" className="form-button confirm-button" onSubmit={this.handleSubmit.bind(this)}>Save</button>
+                            </div>
+                            <div className="amd-edit amd-edit-1">
+                                <button type="button" className="form-button confirm-button" onClick={this.handleCancel.bind(this)}>Cancel</button>
                             </div>
                         </form>
 
@@ -63,15 +74,30 @@ class PersonalAccount extends Component {
 
     }
 
+    // Backend TODO: Write to DB here
     handleSubmit(e) {
         e.preventDefault();
-        let acc = {
-            name: e.target.name.value,
-            position: e.target.position.value,
-            email: e.target.email.value,
-            phone: e.target.phone.value
-        };
-        this.props.handlePmemSave(acc);   
+        // let acc = {
+        //     name: e.target.name.value,
+        //     position: e.target.position.value,
+        //     email: e.target.email.value,
+        //     phone: e.target.phone.value
+        // };
+        this.setState({
+            isEditing: false
+        });
+    }
+
+    handleEdit() {
+        this.setState({
+            isEditing: true
+        });
+    }
+
+    handleCancel() {
+        this.setState({
+            isEditing: false
+        });
     }
 
 }
