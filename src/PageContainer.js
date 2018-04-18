@@ -3,12 +3,12 @@ import firebase from './FirebaseConfig.js';
 import { AccountType, PageContent, DeliveryType } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import EventCard from './PageContent/Calendar/EventCard.js';
+import EventCard from './PageContent/Calendar/EventCard/EventCard';
 import Dialog from './PageContent/Calendar/Dialog.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
-
+import Calendar from './PageContent/Calendar/Calendar';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -66,7 +66,84 @@ class PageContainer extends Component {
             eventType: DeliveryType.RECURRING,
             date: '11/14/2017',
             startTime: '10am',
-            endTime: '12pm'
+            endTime: '12pm',
+            donationDescription: [
+                {
+                    name: 'Baked beans',
+                    amount: 15,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Coleslaw',
+                    amount: 20,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Corn',
+                    amount: 6,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Mashed potatoes',
+                    amount: 8,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Veggie burger patties',
+                    amount: 4,
+                    unit: 'lbs'
+                },
+                {
+                    name: 'Bread',
+                    amount: 40,
+                    unit: 'loaves'
+                }
+            ],
+            delivererGroup: {
+                name: 'Green Greeks',
+                deliverers: [
+                    {
+                        name: 'Blake Johnson',
+                        phone: '206-876-5432',
+                        email: 'blake@greengreeks.org'
+                    },
+                    {
+                        name: 'Erika Zhang',
+                        phone: '206-876-5432',
+                        email: 'erika@greengreeks.org'
+                    }
+                ]
+            },
+            receivingAgency: {
+                name: 'Seattle Union Gospel Mission',
+                contact: {
+                    name: 'Chris Stack',
+                    phone: '206-586-9876',
+                    email: 'chrisstack@uniongospel.org'
+                }
+            },
+            donatingAgency: {
+                contact: {
+                    uid: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
+                    name: 'Andrea Benson',
+                    phone: '206-543-6975',
+                    email: 'bensoa3@uw.edu',
+                    memberList: [
+                        {
+                            uid: 'uid1',
+                            name: 'member1',
+                            phone: '111-111-1111',
+                            email: 'member1@test.com'
+                        },
+                        {
+                            uid: 'uid2',
+                            name: 'member2',
+                            phone: '222-222-2222',
+                            email: 'member2@test.com'
+                        }
+                    ]
+                }
+            }
         };
         this.setState({
             delivery: delivery
@@ -82,7 +159,11 @@ class PageContainer extends Component {
     render() {
         return (
             <div>
-                <PageHeader logo={logo} title={this.props.account.name} />
+                <PageHeader
+                    account={this.props.account}
+                    logo={logo}
+                    title={this.props.account.name}
+                />
 
                 <NavBar
                     content={this.state.content}
@@ -93,21 +174,22 @@ class PageContainer extends Component {
                 {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Calendar
+                        <Calendar />
                         {this.state.dialogOpen ? (
                             <Dialog
                                 closeDialog={this.closeDialog}
+                                futureEvent={true}
+                                accountOwnerName={this.props.account.name}
                                 accountType={this.props.account.accountType}
                                 delivery={this.state.delivery}
-                                futureEvent={false}
                             />
                         ) : null}
                         <div onClick={this.openDialog}>
                             <EventCard
-                                eventType={this.state.delivery.eventType}
                                 startTime={this.state.delivery.startTime}
                                 endTime={this.state.delivery.endTime}
-                                futureEvent={false}
+                                futureEvent={true}
+                                eventType={this.state.delivery.eventType}
                             />
                         </div>
                     </div>
