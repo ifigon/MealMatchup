@@ -16,21 +16,14 @@ class DialogContent extends Component {
                     accountOwnerName={this.props.accountOwnerName}
                     accountType={this.props.accountType}
                 />
-                {this.props.accountType === AccountType.DELIVERER_GROUP ? (
-                    <div>
-                        <DonatingAgencyContent delivery={this.props.delivery} />
-                        <ReceivingAgencyContent
-                            delivery={this.props.delivery}
-                        />
-                    </div>
-                ) : null}
-                {this.props.accountType ===
-                AccountType.DONATING_AGENCY_MEMBER ? (
-                        <ReceivingAgencyContent delivery={this.props.delivery} />
-                    ) : null}
-                {this.props.accountType === AccountType.RECEIVING_AGENCY ? (
+                {this.props.accountType !== AccountType.DONATING_AGENCY_MEMBER ? (
                     <DonatingAgencyContent delivery={this.props.delivery} />
                 ) : null}
+                {this.props.accountType !==
+                AccountType.RECEIVING_AGENCY ? (
+                        <ReceivingAgencyContent delivery={this.props.delivery} />
+                    ) : null}
+
                 <DescriptionContent
                     accountType={this.props.accountType}
                     futureEvent={this.props.futureEvent}
