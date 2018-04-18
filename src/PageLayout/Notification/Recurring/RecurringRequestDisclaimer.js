@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import truck from '../../../icons/green_truck.svg';
-import PickupDetails from '../../../PageContent/Summary/PickupDetails';
 import RequestTime from '../Details/RequestTime';
 
 class RecurringRequestDisclaimer extends Component {

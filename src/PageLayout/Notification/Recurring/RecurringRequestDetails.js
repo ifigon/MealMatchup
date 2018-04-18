@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import truck from '../../../icons/green_truck.svg';
-import Map from '../../../Map/Map.js';
 import { AccountType } from '../../../Enums';
-import RequestTime from '../Details/RequestTime';
 import RequestSummary from '../Details/RequestSummary';
 
 class RecurringRequestDetails extends Component {
