@@ -7,7 +7,6 @@ class OrganizationDetails extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             isEditing: false
         };
