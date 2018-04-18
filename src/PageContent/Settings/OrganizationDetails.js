@@ -62,11 +62,13 @@ class OrganizationDetails extends Component {
                                 <div className="editing-child-1">
                                     <label className="label-component details">Name</label><br /><br />
                                     <div className="scs-spacing" />
+                                    <div className="scs-spacing" />
                                     <label className="label-component details">Street 1</label><br /><br />
                                     <label className="label-component details">Street 2</label><br /><br />
                                     <label className="label-component details">City</label><br /><br />
                                     <label className="label-component details">State</label><br /><br />
                                     <label className="label-component details">Zip</label><br /><br />
+                                    <div className="scs-spacing" />
                                     <label className="label-component details">Phone</label><br /><br />
                                     {this.props.account.numVolunteers ? 
                                         <label className="label-component details">Volunteers</label>
