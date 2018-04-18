@@ -16,6 +16,7 @@ class ContactContent extends Component {
                 contact: {
                     name: this.props.delivery.donatingAgency.contact.name,
                     phone: this.props.delivery.donatingAgency.contact.phone,
+                    email: this.props.delivery.donatingAgency.contact.email,
                     memberList: this.props.delivery.donatingAgency.contact
                         .memberList
                 }
@@ -24,7 +25,8 @@ class ContactContent extends Component {
             this.state = {
                 contact: {
                     name: this.props.delivery.receivingAgency.contact.name,
-                    phone: this.props.delivery.receivingAgency.contact.phone
+                    phone: this.props.delivery.receivingAgency.contact.phone,
+                    email: this.props.delivery.receivingAgency.contact.email
                 }
             };
         }
@@ -44,7 +46,8 @@ class ContactContent extends Component {
         this.setState({
             contact: {
                 name: e.target.name.value,
-                phone: e.target.phone.value
+                phone: e.target.phone.value,
+                email: e.target.email.value
             },
             edit: false
         });
@@ -55,11 +58,13 @@ class ContactContent extends Component {
         let index = e.target.primaryContact.value;
         let memberName = this.state.contact.memberList[index].name;
         let memberPhone = this.state.contact.memberList[index].phone;
+        let memberEmail = this.state.contact.memberList[index].email;
         let memberList = this.state.contact.memberList;
         this.setState({
             contact: {
                 name: memberName,
                 phone: memberPhone,
+                email: memberEmail,
                 memberList: memberList
             },
             edit: false
@@ -69,7 +74,11 @@ class ContactContent extends Component {
     render() {
         return (
             <div className="wrapper">
-                <img className="content-icon" src={phone} alt="volunteer" />
+                <img
+                    className="content-icon phone"
+                    src={phone}
+                    alt="volunteer"
+                />
                 <div className="content-wrapper content-wrapper-description">
                     {this.props.accountType === AccountType.RECEIVING_AGENCY ? (
                         <h1 className="section-header">
@@ -78,7 +87,7 @@ class ContactContent extends Component {
                     ) : this.props.accountType ===
                     AccountType.DONATING_AGENCY_MEMBER ? (
                             <h1 className="section-header">
-                            Primary Contact for Pick Up
+                            Primary Contact for Pickup
                             </h1>
                         ) : null}
                     {!this.state.edit ? (
