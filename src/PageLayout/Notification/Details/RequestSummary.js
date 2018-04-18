@@ -34,8 +34,8 @@ class RequestSummary extends React.Component {
                             className="map"></Map>
                     </div>
                 </div>
-                {
-                    this.props.accountType === AccountType.DELIVERER_GROUP &&
+                { /* View for DG*/
+                    this.props.details.receivingAgency.claimed &&
                         <div className="flex">
                             <div className="receiving-agency">
                                 <h2>Recipient</h2>
@@ -56,8 +56,8 @@ class RequestSummary extends React.Component {
                             </div> 
                         </div>
                 }
-                {
-                    this.props.accountType === AccountType.RECEIVING_AGENCY &&
+                {/* View for RA */
+                    this.props.details.delivererGroup.claimed  &&
                         <div className="receiving-agency">
                             <h2>Deliverers</h2>
                             <div className="modal-deliverers">
