@@ -7,6 +7,7 @@ class OrganizationDetails extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             isEditing: false
         };
@@ -38,7 +39,7 @@ class OrganizationDetails extends Component {
                         {this.props.account.numVolunteers ? <h6>Volunteers: {this.props.account.numVolunteers}</h6> : <span />}
                         {this.props.account.deliveryNotes ? <h6>Notes: {this.props.account.deliveryNotes}</h6> : <span />}
                         {this.props.account.accountType === AccountType.RECEIVING_AGENCY ? 
-                            <h6>Emergency Pickup Activated: {this.props.account.emergencypickup}</h6> 
+                            <h6>Emergency Pickup Activated: {this.props.account.acceptEmergencyPickups ? 'Yes' : 'No'}</h6> 
                             : 
                             <span />
                         }
@@ -75,12 +76,14 @@ class OrganizationDetails extends Component {
                                         :
                                         <span />
                                     }
-                                    {this.props.account.notes ? 
-                                        <label className="label-component details">Notes</label>
+                                    {this.props.account.deliveryNotes ? 
+                                        <div>
+                                            <label className="label-component details">Notes</label><br /><br />
+                                        </div>
                                         :
                                         <span />
                                     }
-                                    {this.props.account.emergencypickup ? 
+                                    {this.props.account.accountType === AccountType.RECEIVING_AGENCY ? 
                                         <label className="label-component details">Emergency Pickup</label>
                                         :
                                         <span />
@@ -101,15 +104,15 @@ class OrganizationDetails extends Component {
                                         :
                                         <span />
                                     }
-                                    {this.props.account.notes ? 
-                                        <input name="notes" type="text" className="form-input" defaultValue={this.props.account.notes} />
+                                    {this.props.account.deliveryNotes ? 
+                                        <div>
+                                            <input name="notes" type="text" className="form-input" defaultValue={this.props.account.deliveryNotes} /><br /><br />
+                                        </div>
                                         :
                                         <span />
                                     }
-                                    {this.props.account.emergencyPickup ? 
-                                        <div>
-                                            <input type="checkbox" name="ep" defaultChecked={this.props.account.emergencyPickup}/><label className="label-component details">Emergency Pickup</label>
-                                        </div>
+                                    {this.props.account.accountType === AccountType.RECEIVING_AGENCY ? 
+                                        <input type="checkbox" name="ep" defaultChecked={this.props.account.emergencyPickup}/>
                                         :
                                         <span />
                                     }
