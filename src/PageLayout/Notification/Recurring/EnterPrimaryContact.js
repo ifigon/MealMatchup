@@ -4,9 +4,13 @@ import { StringFormat } from '../../../Enums.js';
 class EnterPrimaryContact extends Component {
     saveInfo(e){
         e.preventDefault();
-        // TODO: Save data
+        let fields = {
+            name: e.target.primaryName.value,
+            email: e.target.primaryEmail.value,
+            phone: e.target.primaryPhone.value
+        };
 
-        this.props.savePrimaryContact();
+        this.props.savePrimaryContact(fields);
     }
     render() {
         return (

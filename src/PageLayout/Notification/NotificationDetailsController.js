@@ -81,7 +81,7 @@ class NotificationDetailsController extends Component {
                         'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of all DGs
                     ],
                     // OR
-                    // claimed: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of a DG (once a DG claims)
+                    claimed: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of a DG (once a DG claims)
                     // ADDED FOR DUMMY DATA
                     deliverers: [
                         // {

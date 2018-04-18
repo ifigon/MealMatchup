@@ -9,7 +9,8 @@ class RecurringRequestController extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            step: 1
+            step: 1,
+            primaryContact: null
         };
     }
 
@@ -19,10 +20,11 @@ class RecurringRequestController extends Component {
         });
     }
 
-    savePrimaryContact(){
+    savePrimaryContact(fields){
         // TODO: save fields to DB
         this.setState({
-            step: 2
+            step: 2,
+            primaryContact: fields
         });
     }
 
