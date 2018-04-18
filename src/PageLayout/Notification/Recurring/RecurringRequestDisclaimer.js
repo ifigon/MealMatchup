@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import truck from '../../../icons/green_truck.svg';
 import PickupDetails from '../../../PageContent/Summary/PickupDetails';
+import RequestTime from '../Details/RequestTime';
 
 class RecurringRequestDisclaimer extends Component {
     render() {
@@ -12,7 +13,7 @@ class RecurringRequestDisclaimer extends Component {
                     <h2 className="warning">Once a pickup is claimed it cannot be cancelled.</h2>
                     <p><span className="to-from">From:</span> Local Point  </p><span className="to-from">To:</span> Seattle Union Gospel Mission <br/>
                     <div className="pickup-details">
-                        <PickupDetails request={this.props.details} />
+                        <RequestTime request={this.props.details} />
                     </div>
                     <div className="popup-buttons">
                         <button onClick={this.props.nextStep} className="claim" type="button">Confirm</button> <button onClick={this.props.close} className="reject" type="button">Cancel</button>

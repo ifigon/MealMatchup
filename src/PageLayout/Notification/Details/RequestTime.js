@@ -1,8 +1,8 @@
 import React from 'react';
-import { RequestRepeatType, RequestEndCriteriaType, StringFormat, InputFormat } from '../../Enums.js';
+import { RequestRepeatType, RequestEndCriteriaType, StringFormat, InputFormat } from '../../../Enums.js';
 import moment from 'moment';
 
-class PickupDetails extends React.Component {
+class RequestTime extends React.Component {
     render() {
         let dayOfWeek = moment(this.props.request.startTimestamp).format(StringFormat.WEEKDAY);
         var repeatMap = {
@@ -34,4 +34,4 @@ class PickupDetails extends React.Component {
         );
     }
 }
-export default PickupDetails;
+export default RequestTime;

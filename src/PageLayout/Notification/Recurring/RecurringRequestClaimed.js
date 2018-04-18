@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import truck from '../../../icons/green_truck.svg';
-import PickupDetails from '../../../PageContent/Summary/PickupDetails';
+import RequestTime from '../Details/RequestTime';
 
 class RecurringRequestClaimed extends Component {
     // TODO: add pick up to calendar
@@ -14,7 +14,7 @@ class RecurringRequestClaimed extends Component {
                     <p><span className="to-from">From:</span> Local Point      
                     <span className="right to-from">To:</span> Seattle Union Gospel Mission <br/></p>
                     <div className="pickup-details">
-                        <PickupDetails request={this.props.details} />
+                        <RequestTime request={this.props.details} />
                     </div>
                     <p id="modal-cal">The delivery is now on your calendar</p>
                     <div className="popup-buttons">
