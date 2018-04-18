@@ -42,6 +42,7 @@ class AccountManager extends Component {
 
                             {this.props.secondaryContact ?
                                 <div className="amd-row">
+                                    <h6>Secondary Contact</h6>
                                     <div className="amd-details amd-details-1">
                                         <div className="amd-details-child">
                                             <h6>{this.props.secondaryContact.name}</h6>
