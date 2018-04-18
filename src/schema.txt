@@ -250,6 +250,11 @@ DELIVERY REQUEST ("/delivery_requests/RheaQY1WxJT03sTPQICFZ4STpfm1")   //"/deliv
 			// OR
 			claimed: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // uid-key of a RA (once a RA claims)
 		},
+		raContact: {  // this is filled out when an RA claims the delivery
+			name: "Bob",
+			email: "bob@uniongospel.org",
+			phone: "098-765-4321"
+		},
 		delivererGroup: {
 			// same as receivingAgency above:
 			requested: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG
