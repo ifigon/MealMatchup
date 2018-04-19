@@ -39,7 +39,7 @@ class NotificationDetailsController extends Component {
                         'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of all RAs
                     ],
                     // OR
-                    claimed: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of a RA (once a RA claims)
+                    // claimed: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of a RA (once a RA claims)
                     // ADDED FOR DUMMY DATA
                     name: 'Seattle Gospel Union Mission',
                     address: {

@@ -65,7 +65,9 @@
   color: #8d97b0;
   outline: none;
 }
-
+button{
+  outline: none;
+}
 .popup-buttons .reject {
   width: 40%;
   border: 3px solid #E0E0E0;
