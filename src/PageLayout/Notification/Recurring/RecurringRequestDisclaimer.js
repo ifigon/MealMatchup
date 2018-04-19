@@ -15,7 +15,7 @@ class RecurringRequestDisclaimer extends Component {
                 <div className="modal-left-align">
                     <h1>Are you sure you want to claim this pickup?</h1>
                     <h2 className="warning">Once a pickup is claimed it cannot be cancelled.</h2>
-                    <p><span className="to-from">From:</span> {this.props.details.donatingAgencyDetails.name}   </p><span className="to-from">To:</span> {this.props.details.receivingAgency.name}  <br/>
+                    <p><span className="to-from">From:</span> {this.props.details.daInfo.name}   </p><span className="to-from">To:</span> {this.props.details.raInfo.name}  <br/>
                     <div className="pickup-details">
                         <RequestTime request={this.props.details} />
                     </div>

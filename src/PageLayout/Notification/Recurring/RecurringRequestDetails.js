@@ -3,20 +3,20 @@ import { AccountType } from '../../../Enums';
 import RequestSummary from '../Details/RequestSummary';
 
 class RecurringRequestDetails extends Component {
-    componentDidMount(){
-        // console.log(this.props.accountType)
-    }
     reject(){
         //TODO: backend handle removing notification from account
         this.props.close();
     }
     render() {
+        let title = 'Recurring Pickup Requested';
+        if (this.props.accountType === AccountType.RECEIVING_AGENCY) {
+            title = 'Recurring Delivery Requested';
+        }
         return (
             <div>
                 <RequestSummary 
-                    title="Recurring Pickup Requested" 
-                    details={this.props.details}
-                    accountType={this.props.accountType} />
+                    title={title}
+                    details={this.props.details} />
                 {
                     this.props.accountType === AccountType.DELIVERER_GROUP &&
                     <div className="popup-buttons">

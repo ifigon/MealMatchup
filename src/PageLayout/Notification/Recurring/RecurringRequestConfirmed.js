@@ -9,8 +9,7 @@ class RecurringRequestConfirmed extends Component {
             <div className="modal-wrapper">
                 <RequestSummary 
                     title="Recurring Pickup Requested" 
-                    details={this.props.details}
-                    accountType={this.props.accountType} />
+                    details={this.props.details}/>
                 <p>You can now see these 
                     {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER ? 
                         <span> pickups </span> 

@@ -12,84 +12,49 @@ class NotificationDetailsController extends Component {
         super(props);
         this.state = {
             details: {
-                status: 'pending',  // Enums.RequestStatus
-                startTimestamp: 1519826400,  // start date + start hour
-                endTimestamp: 1527688800,    // end date + end hour
+                status: '',  // Enums.RequestStatus
+                startTimestamp: '',  // start date + start hour
+                endTimestamp: '',    // end date + end hour
                 endCriteria: {
-                    type: 'date',  // Enums.RequestEndCriteriaType
-                    value: '2018-02-09'  // a date for "date" or a number for "num_occurrences"
                 },
-                repeats: 'weekly',	// values in Enums.RequestRepeatType
-                primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1',  // uid-key of a donating-agency-member
-                notes: 'Enter through the back door.',
-                umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1',  // uid-key of a umbrella
-                donatingAgency: '-K9HdKlCLjjk_ka82K0s',  // autogen-key of a donating-agency
-                requester: 'Andrea Benson',  // name of a donating-agency-member
+                repeats: '',	// values in Enums.RequestRepeatType
+                primaryContact: '',  // uid-key of a donating-agency-member
+                notes: '',
+                umbrella: '',  // uid-key of a umbrella
+                donatingAgency: '',  // autogen-key of a donating-agency
+                requester: '',  // name of a donating-agency-member
                 receivingAgency: {
-                    // Depending on the status of the request, this
-                    // map will have 1 out of the 3 possible fields:
-                    // "requested", "pending" (list), "claimed"
-                    requested: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of a RA
-                    // OR
-                    pending: [  
-                        'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of all RAs
-                    ],
-                    // OR
-                    // claimed: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of a RA (once a RA claims)
                 },
                 // ADDED FOR DUMMY DATA
-                donatingAgencyDetails: {
-                    name: 'Local Point',
-                    primaryContact: { // primaryContact of the request not the DA
-                        name: 'Andrea Benson',
-                        email: 'AndreaIsCool@uw.edu',
-                        phone: '206-586-9876',
-                        position: 'Manager'
+                daInfo: {
+                    name: '',
+                    primaryContact: { 
                     },
                     address: {
-                        street1: '1201 NE Campus Pkwy',
+                        street1: '',
                         street2: '',
-                        city: 'Seattle',
-                        state: 'WA',
-                        zipcode: 98105,
-                        officeNo: '220'
+                        city: '',
+                        state: '',
+                        zipcode: '',
+                        officeNo: ''
                     }
                 },
-                receivingAgencyDetails: {
+                raInfo: {
                     // ADDED FOR DUMMY DATA
-                    name: 'Seattle Gospel Union Mission',
+                    name: '',
                     address: {
-                        street1: '3802 South Othello Street',
-                        street2: '',
-                        city: 'Seattle',
-                        state: 'WA',
-                        zipcode: 98118,
-                        officeNo: ''
                     },
                     primaryContact: {
-                        name: 'Amy Powell',
-                        email: 'amy.powell@uw.edu',
-                        phone: '206-333-2343',
-                        position: 'Manager'
                     }
                 },
                 delivererGroup: {
-                    claimed: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of a DG (once a DG claims)
-                    // ADDED FOR DUMMY DATA
+                    claimed: '',  // uid-key of a DG (once a DG claims)
+                },
+                dgInfo:{
                     deliverers: [
-                        // {
-                        //     name: 'Alice',
-                        //     email: 'alice@uw.edu',
-                        //     phone: '123-789-4560'
-                        // },
-                        // {
-                        //     name: 'Chris',
-                        //     email: 'chris@uw.edu',
-                        //     phone: '456-123-0789'
-                        // }
                     ]
                 },
-                requestTimeStamp: 1518753363763,
+                requestTimeStamp: '',
                 spawnedDeliveries: [
                     // individual deliveries that were created to fulfill this delivery request
                     '-L5RkIS0CSPuXpkewaqA'
@@ -131,7 +96,7 @@ class NotificationDetailsController extends Component {
                     // claimed: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of a RA (once a RA claims)
                 },
                 // ADDED FOR DUMMY DATA
-                donatingAgencyDetails: {
+                daInfo: {
                     name: 'Local Point',
                     primaryContact: { // primaryContact of the request not the DA
                         name: 'Andrea Benson',
@@ -148,7 +113,7 @@ class NotificationDetailsController extends Component {
                         officeNo: '220'
                     }
                 },
-                receivingAgencyDetails: {
+                raInfo: {
                     // ADDED FOR DUMMY DATA
                     name: 'Seattle Gospel Union Mission',
                     address: {
@@ -180,6 +145,20 @@ class NotificationDetailsController extends Component {
                         //     email: 'chris@uw.edu',
                         //     phone: '456-123-0789'
                         // }
+                    ]
+                },
+                dgInfo:{
+                    deliverers: [
+                        {
+                            name: 'Alice',
+                            email: 'alice@uw.edu',
+                            phone: '123-789-4560'
+                        },
+                        {
+                            name: 'Chris',
+                            email: 'chris@uw.edu',
+                            phone: '456-123-0789'
+                        }
                     ]
                 },
                 requestTimeStamp: 1518753363763,
