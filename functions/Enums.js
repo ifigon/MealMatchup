@@ -89,31 +89,38 @@ exports.NotificationType = {
     NEW_ACCOUNT: 'new_account',
     /* When: a DA requests a new recurring pick
        Receiver: RA, DG
-       Action: View -> Claim/Reject */
+       Action: View -> Claim/Reject
+       Content: '{daId}/{deliveryRequestId}' */
     RECURRING_PICKUP_REQUEST: 'recurring_pickup_request',
     /* When: a recurring pick has been claimed by both RA and DG
        Receiver: DA
-       Action: View -> View on Calendar */
+       Action: View -> View on Calendar
+       Content: '{daId}/{deliveryRequestId}' */
     RECURRING_PICKUP_CONFIRMED: 'recurring_pickup_confirmed',
     /* When: no RA claims the pickup request within the deadline
        Receiver: DA
-       Action: View? */
+       Action: View?
+       Content: '{daId}/{deliveryRequestId}' */
     RECURRING_PICKUP_EXPIRED_RA: 'recurring_pickup_expired_ra',
     /* When: no DG claims the pickup request within the deadline
        Receiver: DA
-       Action: View? */
+       Action: View?
+       Content: '{daId}/{deliveryRequestId}' */
     RECURRING_PICKUP_EXPIRED_DG: 'recurring_pickup_expired_dg',
     /* When: all RAs rejected the pickup request
        Receiver: DA
-       Action: View? */
+       Action: View?
+       Content: '{daId}/{deliveryRequestId}' */
     RECURRING_PICKUP_REJECTED_RA: 'recurring_pickup_rejected_ra',
     /* When: all DGs rejected the pickup request
        Receiver: DA
-       Action: View? */
+       Action: View?
+       Content: '{daId}/{deliveryRequestId}' */
     RECURRING_PICKUP_REJECTED_DG: 'recurring_pickup_rejected_dg',
     /* When: no available RAs to send to
        Receiver: DA
-       Action: View? */
+       Action: View?
+       Content: '{daId}/{deliveryRequestId}' */
     RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable'
 };
 

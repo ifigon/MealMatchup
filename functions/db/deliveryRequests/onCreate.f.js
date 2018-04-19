@@ -14,14 +14,14 @@ const nt = enums.NotificationType;
  *     pending list.
  */
 exports = module.exports = functions.database
-    .ref('/delivery_requests/{umbrellaId}/{pushId}')
+    .ref('/delivery_requests/{umbrellaId}/{daId}/{pushId}')
     .onCreate((snap, context) => {
-        var requestKey = context.params.pushId;
+        console.info('New recurring request added: ' + snap.key);
+        const requestPath = context.params.daId + '/' + context.params.pushId;
         var request = snap.val();
-        console.info('New recurring request added: ' + requestKey);
 
         // TODO: setup Admin SDK in the future? So that we can use absolute path.
-        const rootRef = snap.ref.parent.parent.parent;
+        const rootRef = snap.ref.parent.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
         
         if (request.status !== enums.RequestStatus.PENDING) {
@@ -45,7 +45,7 @@ exports = module.exports = functions.database
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
             return utils.notifyRequestUpdate(
-                'RA', raRef, requestKey, nt.RECURRING_PICKUP_REQUEST);
+                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST);
         }
 
         console.info('No specific RA requested, ' + raInfo.pending.length + 
@@ -71,24 +71,29 @@ exports = module.exports = functions.database
                 if (available) {
                     promises.push(
                         utils.notifyRequestUpdate(
-                            'RA', raSnap.ref, requestKey, nt.RECURRING_PICKUP_REQUEST));
+                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST));
                     rasLeft.push(raSnap.key);
                 }
             }
             // update the ra pending list
-            promises.push(snap.ref.child('receivingAgency/pending').set(rasLeft));
+            let reqUpdates = { ['receivingAgency/pending']: rasLeft };
 
             // no available RA, send notification back to DA
             if (rasLeft.length === 0) {
                 // update status of the request
-                promises.push(snap.ref.child('status').set(enums.RequestStatus.UNAVAILABLE));
-                console.info('No RA available, updated request status');
+                reqUpdates['status'] = enums.RequestStatus.UNAVAILABLE;
 
+                console.info('No RA available, notifying DA.');
                 var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
                 promises.push(
                     utils.notifyRequestUpdate(
-                        'DA', daRef, requestKey, nt.RECURRING_PICKUP_UNAVAILABLE));
+                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE));
             }
+
+            // need to update RA pending list and status at the same time, otherwise
+            // deliveryRequests.onUpdate.Listener1 will trigger RAs-rejected
+            promises.push(snap.ref.update(reqUpdates));
+            console.info('Updated request status and pending list accordingly');
 
             return Promise.all(promises);
         });
