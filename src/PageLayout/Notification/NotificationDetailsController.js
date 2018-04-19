@@ -193,39 +193,43 @@ class NotificationDetailsController extends Component {
         
     }
 
+    showDetail(){
+        switch(NotificationMap[this.props.notification.type].color){
+        // default color is green
+        default:
+            return <div className="popup-wrapper recurring">
+                <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+                {
+                    this.props.notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
+                <RecurringRequestController
+                    details={this.state.details}
+                    closePopUp={this.props.closePopUp.bind(this)}
+                    account={this.props.account}/>
+                }
+                {
+                    this.props.notification.type === NotificationType.RECURRING_PICKUP_CONFIRMED &&
+                <RecurringRequestConfirmed
+                    details={this.state.details}
+                    closePopUp={this.props.closePopUp.bind(this)}
+                    account={this.props.account}/>
+                }
+            </div>;
+        
+        case 'grey':
+            return <div className="popup-wrapper recurring-canceled">
+                <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+                <RecurringRequestCancelled
+                    notification={this.props.notification}
+                    details={this.state.details}
+                    closePopUp={this.props.closePopUp.bind(this)}/>
+            </div>;
+        }
+    }
+
     render() {
         return (
             <div>
-                {
-                    NotificationMap[this.props.notification.type].color === 'green' &&
-                    <div className="popup-wrapper recurring">
-                        <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
-                        {
-                            this.props.notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
-                            <RecurringRequestController
-                                details={this.state.details}
-                                closePopUp={this.props.closePopUp.bind(this)}
-                                account={this.props.account}/>
-                        }
-                        {
-                            this.props.notification.type === NotificationType.RECURRING_PICKUP_CONFIRMED &&
-                            <RecurringRequestConfirmed
-                                details={this.state.details}
-                                closePopUp={this.props.closePopUp.bind(this)}
-                                account={this.props.account}/>
-                        }
-                    </div>
-                }
-                {
-                    NotificationMap[this.props.notification.type].color === 'grey' &&
-                    <div className="popup-wrapper recurring-canceled">
-                        <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
-                        <RecurringRequestCancelled
-                            notification={this.props.notification}
-                            details={this.state.details}
-                            closePopUp={this.props.closePopUp.bind(this)}/>
-                    </div>
-                }
+                {this.showDetail()}
             </div>
         );
     }
