@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
-
+import { getDay, getISOLocalDate } from './shared/dates';
 import { tileProps } from './shared/propTypes';
 import EventCardSlot from '../EventCard/EventCardSlot';
-
+import moment from 'moment';
 class Tile extends Component {
     render() {
         let children = this.props.children;
@@ -22,11 +22,8 @@ class Tile extends Component {
         let tileContent = this.props.tileContent;
         let tileDisabled = this.props.tileDisabled;
         let view = this.props.view;
-        let today = this.props.today;
-        let dateClass = '';
-        if (today) {
-            dateClass = 'today';
-        }
+        // let today = this.props.today;
+        // let events = this.props.events;
         return (
             <button
                 className={mergeClassNames(
@@ -46,8 +43,8 @@ class Tile extends Component {
                 style={style}
                 type="button"
             >
-                <time dateTime={dateTime} className={dateClass}>
-                    {children}
+                <time dateTime={dateTime} className={this.props.dateClass}>
+                    {date.getDate()}
                 </time>
                 {typeof tileContent === 'function'
                     ? tileContent({ date, view })
