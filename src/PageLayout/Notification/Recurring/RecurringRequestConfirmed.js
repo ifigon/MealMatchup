@@ -12,7 +12,7 @@ class RecurringRequestConfirmed extends Component {
                     details={this.props.details}
                     accountType={this.props.accountType} />
                 <p>You can now see these 
-                    {this.props.account.type === AccountType.DONATING_AGENCY_MEMBER ? 
+                    {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER ? 
                         <span> pickups </span> 
                         : 
                         <span> deliveries </span>}

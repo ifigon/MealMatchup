@@ -3,9 +3,11 @@ import { AccountType } from '../../../Enums';
 import RequestSummary from '../Details/RequestSummary';
 
 class RecurringRequestDetails extends Component {
+    componentDidMount(){
+        // console.log(this.props.accountType)
+    }
     reject(){
         //TODO: backend handle removing notification from account
-        
         this.props.close();
     }
     render() {

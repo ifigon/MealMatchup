@@ -204,14 +204,14 @@ class NotificationDetailsController extends Component {
                 <RecurringRequestController
                     details={this.state.details}
                     closePopUp={this.props.closePopUp.bind(this)}
-                    account={this.props.account}/>
+                    accountType={this.props.account.accountType}/>
                 }
                 {
                     this.props.notification.type === NotificationType.RECURRING_PICKUP_CONFIRMED &&
                 <RecurringRequestConfirmed
                     details={this.state.details}
                     closePopUp={this.props.closePopUp.bind(this)}
-                    account={this.props.account}/>
+                    accountType={this.props.account.accountType}/>
                 }
             </div>;
         

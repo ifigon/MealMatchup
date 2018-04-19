@@ -38,7 +38,7 @@ class RecurringRequestController extends Component {
         switch (this.state.step) {
         default:
             return <RecurringRequestDetails
-                accountType={this.props.account.accountType} 
+                accountType={this.props.accountType} 
                 details={this.props.details}
                 enterPrimaryContact={this.enterPrimaryContact.bind(this)}
                 nextStep={this.nextStep.bind(this)}
@@ -46,7 +46,7 @@ class RecurringRequestController extends Component {
             />;
         case 2:
             return <RecurringRequestDisclaimer
-                accountType={this.props.account.accountType}
+                accountType={this.props.accountType}
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
                 close={this.props.closePopUp}
@@ -54,7 +54,7 @@ class RecurringRequestController extends Component {
 
         case 3:
             return <RecurringRequestClaimed
-                accountType={this.props.account.accountType}
+                accountType={this.props.accountType}
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
                 close={this.props.closePopUp}
@@ -62,7 +62,7 @@ class RecurringRequestController extends Component {
         
         case 4:
             return <EnterPrimaryContact
-                accountType={this.props.account.accountType}
+                accountType={this.props.accountType}
                 details={this.props.details}
                 savePrimaryContact={this.savePrimaryContact.bind(this)}
                 nextStep={this.nextStep.bind(this)}
