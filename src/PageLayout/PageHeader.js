@@ -34,11 +34,15 @@ class PageHeader extends Component {
                     content: '-XKSIDLeC_Uksd321e'
                 },
                 {
-                    type: 'recurring_pickup_confirmed',
+                    type: 'recurring_pickup_rejected_dg',
                     content: '-XKSIDLeC_Uksd321e'
                 },
                 {
-                    type: 'recurring_pickup_request',
+                    type: 'recurring_pickup_rejected_ra',
+                    content: '-XKSIDLeC_Uksd321e'
+                },
+                {
+                    type: 'recurring_pickup_unavailable',
                     content: '-XKSIDLeC_Uksd321e'
                 }
             ] 

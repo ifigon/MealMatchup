@@ -3,6 +3,8 @@ import './Popup.css';
 import RecurringRequestController from './Recurring/RecurringRequestController';
 import close from '../../icons/cross-out.svg';
 import { NotificationType } from '../../Enums';
+import RecurringRequestCancelled from './Recurring/RecurringRequestCanceled';
+import { NotificationMap } from './NotificationMap';
 
 class NotificationDetailsController extends Component {
     constructor(props) {
@@ -111,18 +113,33 @@ class NotificationDetailsController extends Component {
 
     render() {
         return (
-            <div className="popup-wrapper recurring">
-                <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+            <div>
                 {
-                    this.props.notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
-                    <RecurringRequestController
-                        details={this.state.details}
-                        closePopUp={this.props.closePopUp.bind(this)}
-                        account={this.props.account}/>
+                    NotificationMap[this.props.notification.type].color === 'green' &&
+                    <div className="popup-wrapper recurring">
+                        <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+                        {
+                            this.props.notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
+                            <RecurringRequestController
+                                details={this.state.details}
+                                closePopUp={this.props.closePopUp.bind(this)}
+                                account={this.props.account}/>
+                        }
+                        {
+                            this.props.notification.type === NotificationType.RECURRING_PICKUP_CONFIRMED &&
+                            <h1>Recurring pickup: {this.props.notification.content} is confirmed.</h1>
+                        }
+                    </div>
                 }
                 {
-                    this.props.notification.type === NotificationType.RECURRING_PICKUP_CONFIRMED &&
-                    <h1>Recurring pickup: {this.props.notification.content} is confirmed.</h1>
+                    NotificationMap[this.props.notification.type].color === 'grey' &&
+                    <div className="popup-wrapper recurring-canceled">
+                        <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+                        <RecurringRequestCancelled
+                            notification={this.props.notification}
+                            details={this.state.details}
+                            closePopUp={this.props.closePopUp.bind(this)}/>
+                    </div>
                 }
             </div>
         );

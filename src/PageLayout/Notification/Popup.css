@@ -19,6 +19,11 @@
   right: 10px;
 }
 
+.recurring-canceled{
+  border-top: solid 20px #8D97B0;
+  background-color: white;
+}
+
 .popup-flex{
   display: grid;
   top: 90px;
@@ -48,6 +53,17 @@
   box-sizing: border-box;
   border-radius: 3px;
   margin-right: 20px;
+}
+
+.popup-buttons .cancel {
+  width: 40%;
+  font-size: 1.4vw;
+  border: 3px solid #8d97b0;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-right: 20px;
+  color: #8d97b0;
+  outline: none;
 }
 
 .popup-buttons .reject {
