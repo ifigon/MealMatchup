@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import truck from '../../../icons/green_truck.svg';
 import RequestSummary from '../Details/RequestSummary';
 import { AccountType } from '../../../Enums';
 
