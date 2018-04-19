@@ -34,21 +34,14 @@ class RecurringRequestController extends Component {
         });
     }
 
-    previousStep() {
-        this.setState((prevState) => {
-            return { step: prevState.step + 1 };
-        });
-    }
-
     showStep() {
         switch (this.state.step) {
         default:
             return <RecurringRequestDetails
-                accountType={this.props.account.accountType}
+                accountType={this.props.account.accountType} 
                 details={this.props.details}
                 enterPrimaryContact={this.enterPrimaryContact.bind(this)}
                 nextStep={this.nextStep.bind(this)}
-                previousStep={this.previousStep.bind(this)}
                 close={this.props.closePopUp}
             />;
         case 2:
@@ -56,7 +49,6 @@ class RecurringRequestController extends Component {
                 accountType={this.props.account.accountType}
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
-                previousStep={this.previousStep.bind(this)}
                 close={this.props.closePopUp}
             />;
 
@@ -65,7 +57,6 @@ class RecurringRequestController extends Component {
                 accountType={this.props.account.accountType}
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
-                previousStep={this.previousStep.bind(this)}
                 close={this.props.closePopUp}
             />;
         
@@ -75,7 +66,6 @@ class RecurringRequestController extends Component {
                 details={this.props.details}
                 savePrimaryContact={this.savePrimaryContact.bind(this)}
                 nextStep={this.nextStep.bind(this)}
-                previousStep={this.previousStep.bind(this)}
                 close={this.props.closePopUp}
             />;
         }

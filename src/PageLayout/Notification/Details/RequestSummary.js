@@ -24,6 +24,7 @@ class RequestSummary extends React.Component {
                     <div className="notification-map">
                         <Map 
                             address={this.props.details.donatingAgencyDetails.address} 
+                            // address={'1233 sdfe'} 
                             height={'150px'}
                             width={'350px'}
                             marginRight={'30px'}
@@ -38,9 +39,9 @@ class RequestSummary extends React.Component {
                         <div className="flex">
                             <div className="receiving-agency">
                                 <h2>Recipient</h2>
-                                <p className="donating-recieving" id="receivingContactName">{this.props.details.receivingAgency.primaryContact.name}</p>
-                                <p className="donating-recieving" id="receivingContactPhone">{this.props.details.receivingAgency.primaryContact.phone}</p>
-                                <p className="donating-recieving" id="receivingContactEmail">{this.props.details.receivingAgency.primaryContact.email}</p>
+                                <p className="donating-recieving" id="receivingContactName">{this.props.details.receivingAgencyDetails.primaryContact.name}</p>
+                                <p className="donating-recieving" id="receivingContactPhone">{this.props.details.receivingAgencyDetails.primaryContact.phone}</p>
+                                <p className="donating-recieving" id="receivingContactEmail">{this.props.details.receivingAgencyDetails.primaryContact.email}</p>
                             </div>
                             <div className="notification-map">
                                 <Map 

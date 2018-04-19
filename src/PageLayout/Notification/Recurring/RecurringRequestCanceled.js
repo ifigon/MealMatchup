@@ -15,7 +15,7 @@ class RecurringRequestCancelled extends Component {
                         <RequestTime request={this.props.details} />
                     </div>
                     <div className="popup-buttons">
-                        <button onClick={this.props.closePopUp} className="cancel" type="button">Okay</button>
+                        <button onClick={this.props.closePopUp} className="cancel" type="button">OK</button>
                     </div>
                 </div>
             </div>
