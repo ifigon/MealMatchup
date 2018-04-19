@@ -76,19 +76,24 @@ exports = module.exports = functions.database
                 }
             }
             // update the ra pending list
-            promises.push(snap.ref.child('receivingAgency/pending').set(rasLeft));
+            let reqUpdates = { ['receivingAgency/pending']: rasLeft };
 
             // no available RA, send notification back to DA
             if (rasLeft.length === 0) {
                 // update status of the request
-                promises.push(snap.ref.child('status').set(enums.RequestStatus.UNAVAILABLE));
-                console.info('No RA available, updated request status');
+                reqUpdates['status'] = enums.RequestStatus.UNAVAILABLE;
 
+                console.info('No RA available, notifying DA.');
                 var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
                 promises.push(
                     utils.notifyRequestUpdate(
                         'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE));
             }
+
+            // need to update RA pending list and status at the same time, otherwise
+            // deliveryRequests.onUpdate.Listener1 will trigger RAs-rejected
+            promises.push(snap.ref.update(reqUpdates));
+            console.info('Updated request status and pending list accordingly');
 
             return Promise.all(promises);
         });

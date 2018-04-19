@@ -102,7 +102,9 @@ function wasRejectedByAll(agencyType, change) {
     return change.before.hasChild(agencyType) &&
         (change.before.child(agencyType).hasChild('requested') ||
             change.before.child(agencyType).hasChild('pending')) &&
-        !change.after.hasChild(agencyType);
+        !change.after.hasChild(agencyType) &&
+        // make sure it's a result of client's change, not our own server's
+        change.after.child('status').val() === enums.RequestStatus.PENDING;
 }
 
 // Listener 1 & 2 case B handler
@@ -173,7 +175,7 @@ function createDeliveries(rootRef, requestSnap) {
     const TIME = enums.InputFormat.TIME;
     const request = requestSnap.val();
     const dsRef = rootRef.child('deliveries');
-    const indicesRef = rootRef.child(`delivery_indices/${request.umbrella}`);
+    const dIndicesRef = rootRef.child(`delivery_indices/${request.umbrella}`);
 
     // calculate num days to step by
     let step = -1;
@@ -192,7 +194,7 @@ function createDeliveries(rootRef, requestSnap) {
     ).valueOf();
 
     // create delivery obj with common fields
-    let delivery = {
+    let dTemplate = {
         status: enums.DeliveryStatus.SCHEDULED,
         timezone: request.timezone,
         isEmergency: false,
@@ -206,44 +208,45 @@ function createDeliveries(rootRef, requestSnap) {
     };
 
     let promises = [];
-    let deliveries = {};  // {dId: timestamp}
+    let dIds = {};  // {dId: timestamp}
     let cur = moment(request.startTimestamp);
     while (cur.valueOf() <= request.endTimestamp) {
-        delivery['startTimestamp'] = cur.valueOf();
-        delivery['endTimestamp'] = cur.valueOf() + duration;
+        dTemplate['startTimestamp'] = cur.valueOf();
+        dTemplate['endTimestamp'] = cur.valueOf() + duration;
 
         // push delivery to db
-        let dRef = dsRef.push(delivery);
+        let dRef = dsRef.push(dTemplate);
         promises.push(dRef);
-        deliveries[dRef.key] = delivery.startTimestamp;
+        dIds[dRef.key] = dTemplate.startTimestamp;
 
         cur.add(step, 'days');
     }
 
     // update request
-    let updates = { 
+    let reqUpdates = { 
         status: enums.RequestStatus.CONFIRMED, 
-        spawnedDeliveries: Object.keys(deliveries)
+        spawnedDeliveries: Object.keys(dIds)
     };
-    promises.push(requestSnap.ref.update(updates));
+    promises.push(requestSnap.ref.update(reqUpdates));
 
     // update delivery index for each agency
-    promises.push(updateDeliveryIndices(indicesRef, delivery, deliveries));
+    promises.push(updateDeliveryIndices(dIndicesRef, dTemplate, dIds));
 
-    console.info('Created ' + Object.keys(deliveries).length + ' deliveries');
+    console.info('Created ' + Object.keys(dIds).length + ' deliveries');
     return Promise.all(promises);
 }
 
-function updateDeliveryIndices(indicesRef, delivery, deliveries) {
+function updateDeliveryIndices(dIndicesRef, dTemplate, dIds) {
     console.info('Updating delivery indices');
+
     let agencyTypes = ['donatingAgency', 'receivingAgency', 'delivererGroup'];
     return Promise.all([].concat.apply([], 
         // update index for each agency type
         agencyTypes.map(agencyType => {
-            const indexRef = indicesRef.child(delivery[agencyType]);
+            const indexRef = dIndicesRef.child(dTemplate[agencyType]);
             // append each delivery into index at timestamp
-            return Object.keys(deliveries).map(
-                dId => indexRef.child(deliveries[dId]).push(dId));
+            return Object.keys(dIds).map(
+                dId => indexRef.child(dIds[dId]).child(dId).set(true));
         })));
 }
 
