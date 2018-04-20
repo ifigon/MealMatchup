@@ -18,7 +18,7 @@ class Settings extends Component {
             <div>
                 {this.props.account ?
 
-                    <div> 
+                    <div className="settings-container"> 
                         <div className="container">
                             <OrganizationDetails
                                 accountType={this.props.account}
