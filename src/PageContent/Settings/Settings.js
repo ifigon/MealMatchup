@@ -10,6 +10,30 @@ import './SCSettings1.css';
 
 class Settings extends Component {
 
+    constructor(props) {
+        super(props);
+        console.log(props);
+        this.state = {
+            manager: null
+        };
+    }
+
+    componentDidMount() {
+        let manager = this.props.account;
+        if (manager.accountType === AccountType.DONATING_AGENCY_MEMBER && !manager.isAdmin) {
+            // backend TODO: fetch DA primary contact data for AccountManager
+            manager = {
+                accountType: AccountType.DONATING_AGENCY_MEMBER,
+                name: 'something',
+                email: 'something',
+                phone: 'something',
+                position: 'something',
+            };
+        }
+        console.log(manager);
+        this.setState({manager: manager});
+    }
+
     render() {
         let org = this.props.account;
         if(org.accountType === AccountType.DONATING_AGENCY_MEMBER)
@@ -21,18 +45,21 @@ class Settings extends Component {
                     <div className="settings-container"> 
                         <div className="container">
                             <OrganizationDetails
-                                accountType={this.props.account}
-                                account={org}
+                                daAccount={this.props.account}
+                                org={org}
                             />
                         </div>
 
                         <div className="scs-spacing" />
 
                         <div className="container">
-                            <AccountManager
-                                accountType={this.props.account}
-                                account={org}
-                            />
+                            {this.state.manager ?
+                                <AccountManager
+                                    account={this.state.manager}
+                                />
+                                :
+                                <div>Loading...</div>
+                            }
                         </div>
 
                         <div className="scs-spacing" />
@@ -45,7 +72,7 @@ class Settings extends Component {
                                     />
                                     :
                                     <PersonalAccount
-                                        account={org}
+                                        account={this.props.account}
                                     />
                                 }
                             </div>

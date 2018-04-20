@@ -23,7 +23,7 @@ class OrganizationDetails extends Component {
                         marginTop="10px" 
                         marginRight="0px"
                         marginBottom="0px"
-                        address={this.props.account.address}
+                        address={this.props.org.address}
                     />
                 </div>
 
@@ -31,23 +31,23 @@ class OrganizationDetails extends Component {
 
                     <div className="scs-0-content">
                         <h5>Organization Details</h5>
-                        <h6>{this.props.account.name}</h6>
+                        <h6>{this.props.org.name}</h6>
                         <div className="scs-spacing" />
-                        <h6>Address: {this.props.account.address.street1}, {this.props.account.address.street2 ? <span>{this.props.account.address.street2},</span> : <span />} {this.props.account.address.city}, {this.props.account.address.state} - {this.props.account.address.zipcode}</h6>
-                        {this.props.account.address.officeNo ?
-                            <h6>Office Number: {this.props.account.address.officeNo}</h6>
+                        <h6>Address: {this.props.org.address.street1}, {this.props.org.address.street2 ? <span>{this.props.org.address.street2},</span> : <span />} {this.props.org.address.city}, {this.props.org.address.state} - {this.props.org.address.zipcode}</h6>
+                        {this.props.org.address.officeNo ?
+                            <h6>Office Number: {this.props.org.address.officeNo}</h6>
                             :
                             <span />
                         }
-                        {this.props.account.numVolunteers ? <h6>Volunteers: {this.props.account.numVolunteers}</h6> : <span />}
-                        {this.props.account.deliveryNotes ? <h6>Delivery Notes: {this.props.account.deliveryNotes}</h6> : <span />}
-                        {this.props.account.accountType === AccountType.RECEIVING_AGENCY ? 
-                            <h6>Emergency Pickup Activated: {this.props.account.acceptEmergencyPickups ? 'Yes' : 'No'}</h6> 
+                        {this.props.org.numVolunteers ? <h6>Volunteers: {this.props.org.numVolunteers}</h6> : <span />}
+                        {this.props.org.deliveryNotes ? <h6>Delivery Notes: {this.props.org.deliveryNotes}</h6> : <span />}
+                        {this.props.org.accountType === AccountType.RECEIVING_AGENCY ? 
+                            <h6>Emergency Pickup Activated: {this.props.org.acceptEmergencyPickups ? 'Yes' : 'No'}</h6> 
                             : 
                             <span />
                         }
                         <div className="scs-spacing-lg" />
-                        {!this.props.accountType.isAdmin && this.props.accountType.accountType === AccountType.DONATING_AGENCY_MEMBER ?
+                        {!this.props.daAccount.isAdmin && this.props.daAccount.accountType === AccountType.DONATING_AGENCY_MEMBER ?
                             <span />
                             :
                             <div className="amd-edit amd-edit-1">
@@ -74,19 +74,19 @@ class OrganizationDetails extends Component {
                                     <label className="label-component details">Zip</label><br /><br />
                                     <label className="label-component details">Office Number</label><br /><br />
                                     <div className="scs-spacing" />
-                                    {this.props.account.numVolunteers ? 
+                                    {this.props.org.numVolunteers ? 
                                         <label className="label-component details">Volunteers</label>
                                         :
                                         <span />
                                     }
-                                    {this.props.account.deliveryNotes ? 
+                                    {this.props.org.deliveryNotes ? 
                                         <div>
                                             <label className="label-component details">Delivery Notes</label><br /><br />
                                         </div>
                                         :
                                         <span />
                                     }
-                                    {this.props.account.accountType === AccountType.RECEIVING_AGENCY ? 
+                                    {this.props.org.accountType === AccountType.RECEIVING_AGENCY ? 
                                         <label className="label-component details">Emergency Pickup</label>
                                         :
                                         <span />
@@ -94,28 +94,28 @@ class OrganizationDetails extends Component {
                                 </div>
                                 
                                 <div className="editing-child-2">
-                                    <input name="name" type="text" className="form-input" defaultValue={this.props.account.name} /><br /><br />
+                                    <input name="name" type="text" className="form-input" defaultValue={this.props.org.name} /><br /><br />
                                     <div className="scs-spacing" />
-                                    <input name="street1" type="text" className="form-input" defaultValue={this.props.account.address.street1} /><br /><br />
-                                    <input name="street2" type="text" className="form-input" defaultValue={this.props.account.address.street2} /><br /><br />
-                                    <input name="city" type="text" className="form-input" defaultValue={this.props.account.address.city} /><br /><br />
-                                    <input name="state" type="text" className="form-input" defaultValue={this.props.account.address.state} /><br /><br />
-                                    <input name="zip" type="text" className="form-input" defaultValue={this.props.account.address.zipcode} /><br /><br />
-                                    <input name="officeNo" type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={this.props.account.organizationPhone} /><br /><br />
-                                    {this.props.account.numVolunteers ? 
-                                        <input name="num_vol" type="number" className="form-input" defaultValue={this.props.account.numVolunteers} />
+                                    <input name="street1" type="text" className="form-input" defaultValue={this.props.org.address.street1} /><br /><br />
+                                    <input name="street2" type="text" className="form-input" defaultValue={this.props.org.address.street2} /><br /><br />
+                                    <input name="city" type="text" className="form-input" defaultValue={this.props.org.address.city} /><br /><br />
+                                    <input name="state" type="text" className="form-input" defaultValue={this.props.org.address.state} /><br /><br />
+                                    <input name="zip" type="text" className="form-input" defaultValue={this.props.org.address.zipcode} /><br /><br />
+                                    <input name="officeNo" type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={this.props.org.organizationPhone} /><br /><br />
+                                    {this.props.org.numVolunteers ? 
+                                        <input name="num_vol" type="number" className="form-input" defaultValue={this.props.org.numVolunteers} />
                                         :
                                         <span />
                                     }
-                                    {this.props.account.deliveryNotes ? 
+                                    {this.props.org.deliveryNotes ? 
                                         <div>
-                                            <input name="notes" type="text" className="form-input" defaultValue={this.props.account.deliveryNotes} /><br /><br />
+                                            <input name="notes" type="text" className="form-input" defaultValue={this.props.org.deliveryNotes} /><br /><br />
                                         </div>
                                         :
                                         <span />
                                     }
-                                    {this.props.account.accountType === AccountType.RECEIVING_AGENCY ? 
-                                        <input type="checkbox" name="ep" defaultChecked={this.props.account.emergencyPickup}/>
+                                    {this.props.org.accountType === AccountType.RECEIVING_AGENCY ? 
+                                        <input type="checkbox" name="ep" defaultChecked={this.props.org.emergencyPickup}/>
                                         :
                                         <span />
                                     }

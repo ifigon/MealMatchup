@@ -63,8 +63,8 @@ class AccountManager extends Component {
                                 <span />
                             }
 
-                            {this.props.accountType.accountType === AccountType.DONATING_AGENCY_MEMBER && !this.props.accountType.isAdmin ?
-                                <span />
+                            {(this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER && this.props.account.accountType.isAdmin === false) ?
+                                <span>{console.log('here')}</span>
                                 :
                                 <div className="amd-edit amd-edit-1">
                                     <button type="button" className="form-button confirm-button" onClick={this.handleEdit.bind(this)}>Edit</button>
