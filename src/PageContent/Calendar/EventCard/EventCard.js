@@ -63,7 +63,6 @@ class EventCard extends Component {
         if (this.props.eventClass === 'multiple-events') {
             multiple = true;
         }
-        console.log(multiple);
         return (
             <div className={this.props.eventClass}>
                 {this.state.dialogOpen ? (

@@ -5,7 +5,6 @@ import DialogContent from './DialogContent';
 
 class Dialog extends Component {
     render() {
-        console.log(this.props.delivery);
         return (
             <dialog className="event-dialog" open>
                 <Header
