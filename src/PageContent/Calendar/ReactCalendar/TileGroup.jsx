@@ -242,7 +242,7 @@ class TileGroup extends Component {
         let offset = this.props.offset;
         let start = this.props.start;
         let step = this.props.step;
-        let tile = this.props.tile;
+        // let tile = this.props.tile;
         let value = this.props.value;
         let valueType = this.props.valueType;
         const tiles = [];

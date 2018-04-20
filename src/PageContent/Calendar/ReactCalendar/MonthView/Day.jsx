@@ -11,7 +11,7 @@ import {
     isWeekend
 } from '../shared/dates';
 import { tileProps } from '../shared/propTypes';
-import moment from 'moment';
+// import moment from 'moment';
 
 class Day extends Component {
     render() {

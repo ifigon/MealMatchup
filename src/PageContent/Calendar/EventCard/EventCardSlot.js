@@ -57,6 +57,7 @@ class EventCardSlot extends Component {
                             <EventCard
                                 eventType={type}
                                 startTime={startTime}
+                                delivery={this.props.events[e]}
                                 endTime={endTime}
                                 futureEvent={this.props.futureEvent}
                             />

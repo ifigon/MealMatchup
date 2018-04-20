@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
-import { getDay, getISOLocalDate } from './shared/dates';
+// import { getDay, getISOLocalDate } from './shared/dates';
 import { tileProps } from './shared/propTypes';
 import EventCardSlot from '../EventCard/EventCardSlot';
-import moment from 'moment';
+// import moment from 'moment';
 class Tile extends Component {
     render() {
-        let children = this.props.children;
+        // let children = this.props.children;
         let classes = this.props.classes;
         let date = this.props.date;
         let dateTime = this.props.dateTime;

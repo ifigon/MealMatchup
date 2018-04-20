@@ -20,6 +20,9 @@ class Header extends Component {
         } else {
             headerClass = 'header past-header';
         }
+        console.log(
+            moment(this.props.startTime * 1000).format(StringFormat.DATE_FULL)
+        );
         return (
             <div className={headerClass}>
                 <h1 className="pop-up-header-title">{deliveryType}</h1>
@@ -30,14 +33,16 @@ class Header extends Component {
                     alt="close"
                 />
                 <p className="header-time">
-                    {moment(this.props.startTimestamp).format(
+                    {moment(this.props.startTime * 1000).format(
                         StringFormat.DATE_FULL
                     )}{' '}
-                    {moment(this.props.startTimestamp).format(
+                    {moment(this.props.startTime * 1000).format(
                         StringFormat.TIME
                     )}{' '}
                     -{' '}
-                    {moment(this.props.endTimestamp).format(StringFormat.TIME)}
+                    {moment(this.props.endTime * 1000).format(
+                        StringFormat.TIME
+                    )}
                 </p>
             </div>
         );

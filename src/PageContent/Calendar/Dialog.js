@@ -10,8 +10,8 @@ class Dialog extends Component {
                 <Header
                     eventType={this.props.eventType}
                     closeDialog={this.props.closeDialog}
-                    startTime={this.props.delivery.startTimestamp}
-                    endTime={this.props.delivery.endTimestamp}
+                    startTime={this.props.delivery[0].startTimestamp}
+                    endTime={this.props.delivery[0].endTimestamp}
                     futureEvent={this.props.futureEvent}
                     accountType={this.props.accountType}
                 />
