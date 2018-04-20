@@ -5,11 +5,10 @@ import shelter from '../../icons/shelter.svg';
 class ReceivingAgencyContent extends Component {
     constructor(props) {
         super(props);
-        this.state = 
+        this.state = {
             donatingAgency: this.props.delivery[0].receivingAgency.name,
             contactName: this.props.delivery[0].receivingAgency.contact.name,
             phone: this.props.delivery[0].receivingAgency.contact.phone
-
         };
     }
     render() {
