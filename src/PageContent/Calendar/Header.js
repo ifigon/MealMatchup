@@ -20,9 +20,6 @@ class Header extends Component {
         } else {
             headerClass = 'header past-header';
         }
-        console.log(
-            moment(this.props.startTime * 1000).format(StringFormat.DATE_FULL)
-        );
         return (
             <div className={headerClass}>
                 <h1 className="pop-up-header-title">{deliveryType}</h1>

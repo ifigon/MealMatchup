@@ -65,7 +65,6 @@ class EventCardSlot extends Component {
                     </div>
                 );
             }
-            // });
         }
     }
 }

@@ -11,7 +11,6 @@ import {
     isWeekend
 } from '../shared/dates';
 import { tileProps } from '../shared/propTypes';
-// import moment from 'moment';
 
 class Day extends Component {
     render() {
@@ -20,21 +19,6 @@ class Day extends Component {
         let date = this.props.date;
 
         const className = 'react-calendar__month-view__days__day';
-        // let eventsToday = [];
-
-        // for (var checkEvent in this.state.events) {
-        //     if (
-        //         new Date(this.state.events[checkEvent].startTimestamp * 1000)
-        //             .toString()
-        //             .startsWith(date.toString().substring(0, 15))
-        //     ) {
-        //         // no dupilcate keys - will have to check against start time?
-        //         eventsToday.push(this.state.events[checkEvent]);
-        //     }
-        // }
-
-        console.log(date);
-        console.log(getISOLocalDate(date).toString());
         return (
             <Tile
                 classes={[
@@ -50,9 +34,6 @@ class Day extends Component {
                 maxDateTransform={getEndOfDay}
                 minDateTransform={getBeginOfDay}
                 view="month"
-                // events={eventsToday}
-                // today={today}
-                // futureEvent={futureEvent}
             >
                 {getDay(date)}
             </Tile>
