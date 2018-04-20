@@ -104,9 +104,9 @@ class PickupSummary extends React.Component {
                                     <div>
                                         <p id="name">{this.props.dgRequested.name}</p>
                                         <div className="contact">
-                                            <p>{this.props.dgRequested.coordinator.name}</p>
-                                            <p>{this.props.dgRequested.coordinator.phone}</p>
-                                            <p>{this.props.dgRequested.coordinator.email}</p>
+                                            <p>{this.props.dgRequested.primaryContact.name}</p>
+                                            <p>{this.props.dgRequested.primaryContact.phone}</p>
+                                            <p>{this.props.dgRequested.primaryContact.email}</p>
                                             <p>Confirmation pending.</p>
                                         </div>
                                     </div>

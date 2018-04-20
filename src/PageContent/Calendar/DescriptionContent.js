@@ -125,7 +125,11 @@ class DescriptionContent extends Component {
         }
         return (
             <div className="wrapper">
-                <img className="content-icon" src={groceries} alt="volunteer" />
+                <img
+                    className="content-icon groceries"
+                    src={groceries}
+                    alt="volunteer"
+                />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
                     {this.state.editedBy ? (

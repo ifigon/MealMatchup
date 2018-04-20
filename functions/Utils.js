@@ -7,10 +7,10 @@ var pushNotification = function (label, acctRef, notification) {
 
 // Create a notification obj for the given pickup request and notification
 // type and pushes it to the account
-var notifyRequestUpdate = function (label, acctRef, requestKey, notifType) {
+var notifyRequestUpdate = function (label, acctRef, requestPath, notifType) {
     let notification = {
         type: notifType,
-        content: requestKey
+        content: requestPath
     };
     return pushNotification(label, acctRef, notification);
 };
