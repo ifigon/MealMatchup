@@ -53,10 +53,8 @@ class MemberAccount extends Component {
                                         </div>
 
                                     </div>
-
-                                    <div className="amd-edit amd-edit-1">
-                                        <button type="button" id={index} className="form-button confirm-button-assign" onClick={this.handleRemove.bind(this)}>Remove</button>
-                                    </div>
+                                    
+                                    <button type="button" id={index} className="form-button confirm-button-assign settings-remove-button" onClick={this.handleRemove.bind(this)}>Remove</button>
 
                                 </div>
                             );

@@ -65,15 +65,14 @@ class OrganizationDetails extends Component {
                             <div className="editing-box">
                                 <div className="editing-child-1">
                                     <label className="label-component details">Name</label><br /><br />
-                                    <div className="scs-spacing" />
-                                    <div className="scs-spacing" />
+                                    <div className="scs-spacing-2" />
                                     <label className="label-component details">Street 1</label><br /><br />
                                     <label className="label-component details">Street 2</label><br /><br />
                                     <label className="label-component details">City</label><br /><br />
                                     <label className="label-component details">State</label><br /><br />
                                     <label className="label-component details">Zip</label><br /><br />
-                                    <label className="label-component details">Office Number</label><br /><br />
                                     <div className="scs-spacing" />
+                                    <label className="label-component details">Phone</label><br /><br />
                                     {this.props.org.numVolunteers ? 
                                         <label className="label-component details">Volunteers</label>
                                         :
@@ -81,7 +80,7 @@ class OrganizationDetails extends Component {
                                     }
                                     {this.props.org.deliveryNotes ? 
                                         <div>
-                                            <label className="label-component details">Delivery Notes</label><br /><br />
+                                            <label className="label-component details">Notes</label><br /><br />
                                         </div>
                                         :
                                         <span />
@@ -95,7 +94,6 @@ class OrganizationDetails extends Component {
                                 
                                 <div className="editing-child-2">
                                     <input name="name" type="text" className="form-input" defaultValue={this.props.org.name} /><br /><br />
-                                    <div className="scs-spacing" />
                                     <input name="street1" type="text" className="form-input" defaultValue={this.props.org.address.street1} /><br /><br />
                                     <input name="street2" type="text" className="form-input" defaultValue={this.props.org.address.street2} /><br /><br />
                                     <input name="city" type="text" className="form-input" defaultValue={this.props.org.address.city} /><br /><br />
@@ -122,11 +120,13 @@ class OrganizationDetails extends Component {
                                 </div>
                             </div>
                             <div className="scs-spacing-lg" />
-                            <div className="amd-edit amd-edit-1">
-                                <button type="submit" className="form-button confirm-button" onSubmit={this.handleSubmit.bind(this)}>Save</button>
-                            </div>
-                            <div className="amd-edit amd-edit-1">
-                                <button type="button" className="form-button confirm-button" onClick={this.handleCancel.bind(this)}>Cancel</button>
+                            <div className="">
+                                <div className="amd-edit amd-edit-1">
+                                    <button type="submit" className="form-button confirm-button settings-edit" onSubmit={this.handleSubmit.bind(this)}>Save</button>
+                                </div>
+                                <div className="amd-edit amd-edit-1">
+                                    <button type="button" className="form-button confirm-button settings-edit" onClick={this.handleCancel.bind(this)}>Cancel</button>
+                                </div>
                             </div>
                         </form>
                     </div>

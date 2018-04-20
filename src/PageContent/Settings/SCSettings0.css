@@ -30,6 +30,10 @@
     height: 12px;
 }
 
+.scs-spacing-2 {
+    height: 8px;
+}
+
 .scs-spacing-lg {
     height: 24px;
 }
@@ -47,4 +51,10 @@
     width: 500px;
     display: flex;
     justify-content: flex-end;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }

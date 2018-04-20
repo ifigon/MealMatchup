@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './StudentCoordinatorSettings.css';
 import OrganizationDetails from './OrganizationDetails';
 import AccountManager from './AccountManager';
 import { AccountType } from '../../Enums';
@@ -12,16 +11,15 @@ class Settings extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             manager: null
         };
     }
 
+    // Backend TODO: Fetch DA primary contact data for AccountManager
     componentDidMount() {
         let manager = this.props.account;
         if (manager.accountType === AccountType.DONATING_AGENCY_MEMBER && !manager.isAdmin) {
-            // backend TODO: fetch DA primary contact data for AccountManager
             manager = {
                 accountType: AccountType.DONATING_AGENCY_MEMBER,
                 name: 'something',
@@ -29,8 +27,7 @@ class Settings extends Component {
                 phone: 'something',
                 position: 'something',
             };
-        }
-        console.log(manager);
+        };
         this.setState({manager: manager});
     }
 

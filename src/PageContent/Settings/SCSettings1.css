@@ -44,3 +44,11 @@
     margin-top: 32px;
     flex-direction: row;
 }
+
+.settings-remove-button {
+    display: flex;
+    width: 68px;
+    font-size: 8px;
+    justify-content: flex-start;
+    margin-top: 12px;
+}
