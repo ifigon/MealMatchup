@@ -16,8 +16,8 @@ class TileGroup extends Component {
                 '2018-04-20': [
                     {
                         status: 'in_progress', // Enums.DeliveryStatus
-                        startTimestamp: 1524214800,
-                        endTimestamp: 1524214800,
+                        startTimestamp: 1524873600,
+                        endTimestamp: 1524873600,
                         isEmergency: false,
                         spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
                         receivingAgency: {
@@ -85,8 +85,8 @@ class TileGroup extends Component {
                     },
                     {
                         status: 'in_progress', // Enums.DeliveryStatus
-                        startTimestamp: 1524214800,
-                        endTimestamp: 1524214800,
+                        startTimestamp: 1524873600,
+                        endTimestamp: 1524873600,
                         isEmergency: false,
                         spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
                         receivingAgency: {

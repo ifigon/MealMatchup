@@ -59,8 +59,13 @@ class EventCard extends Component {
             StringFormat.TIME
         );
 
+        let multiple = false;
+        if (this.props.eventClass === 'multiple-events') {
+            multiple = true;
+        }
+        console.log(multiple);
         return (
-            <div>
+            <div className={this.props.eventClass}>
                 {this.state.dialogOpen ? (
                     <Dialog
                         closeDialog={this.closeDialog}
@@ -71,13 +76,28 @@ class EventCard extends Component {
                         endTime={this.props.delivery.endTimestamp}
                     />
                 ) : null}
-                <div className={style} onClick={this.openDialog}>
-                    <h1 className="event-header">{typeHeader}</h1>
-                    <img className="truck-icon" src={truck} alt={truckAlt} />
-                    <p className="event-time">
-                        {startTime} - {endTime}
-                    </p>
-                </div>
+                {multiple ? (
+                    <div className={style} onClick={this.openDialog}>
+                        <h1 className="event-header">{typeHeader}</h1>
+                        <img
+                            className="truck-icon"
+                            src={truck}
+                            alt={truckAlt}
+                        />
+                    </div>
+                ) : (
+                    <div className={style} onClick={this.openDialog}>
+                        <h1 className="event-header">{typeHeader}</h1>
+                        <img
+                            className="truck-icon"
+                            src={truck}
+                            alt={truckAlt}
+                        />
+                        <p className="event-time">
+                            {startTime} - {endTime}
+                        </p>
+                    </div>
+                )}
             </div>
         );
     }

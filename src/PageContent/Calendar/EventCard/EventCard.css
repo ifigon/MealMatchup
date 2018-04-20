@@ -38,6 +38,6 @@
   margin-bottom: 0px;
 }
 
-.individual-event {
-  display: inline-flex;
+.multiple-events {
+  margin: 4px;
 }

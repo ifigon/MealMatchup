@@ -3,20 +3,31 @@ import EventCard from './EventCard';
 
 class EventCardSlot extends Component {
     render() {
-        if (Object.keys(this.props.events).length === 0) {
-            return <div />;
-        } else {
-            for (var e in this.props.events[0]) {
-                return (
-                    <div className="individual-event">
-                        <EventCard
-                            delivery={this.props.events[0][e]}
-                            futureEvent={this.props.futureEvent}
-                        />
-                    </div>
-                );
+        let eventCard = [];
+        let eventCardSlotClass = '';
+        let size = 0;
+        if (Object.keys(this.props.events).length > 0) {
+            this.props.events[0].map((item, i) => {
+                size++;
+            });
+            if (size > 1) {
+                eventCardSlotClass = 'multiple-events';
             }
+            eventCard.push(
+                this.props.events[0].map((item, i) => {
+                    return (
+                        <EventCard
+                            key={i}
+                            delivery={item}
+                            eventClass={eventCardSlotClass}
+                            // futureEvent={this.props.futureEvent}
+                        />
+                    );
+                })
+            );
         }
+
+        return <div>{eventCard}</div>;
     }
 }
 
