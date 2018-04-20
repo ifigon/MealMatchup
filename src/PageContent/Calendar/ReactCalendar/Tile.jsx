@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import mergeClassNames from 'merge-class-names';
 import { tileProps } from './shared/propTypes';
 import EventCardSlot from '../EventCard/EventCardSlot';
@@ -55,11 +55,11 @@ class Tile extends Component {
 }
 
 Tile.propTypes = {
-    ...tileProps,
-    children: PropTypes.node.isRequired,
-    dateTime: PropTypes.string.isRequired,
-    maxDateTransform: PropTypes.func.isRequired,
-    minDateTransform: PropTypes.func.isRequired
+    ...tileProps
+    // children: PropTypes.node.isRequired,
+    // dateTime: PropTypes.string.isRequired,
+    // maxDateTransform: PropTypes.func.isRequired,
+    // minDateTransform: PropTypes.func.isRequired
 };
 
 export default Tile;

@@ -480,7 +480,7 @@ export default class Calendar extends Component {
 
 Calendar.defaultProps = {
     maxDetail: 'month',
-    minDetail: 'century',
+    minDetail: 'month',
     returnValue: 'start',
     showNavigation: true,
     showNeighboringMonth: true,

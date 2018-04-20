@@ -42,7 +42,7 @@ class EventCardSlot extends Component {
                 let endTime = moment(this.props.events[e].endTimestamp).format(
                     StringFormat.TIME
                 );
-
+                console.log('hi');
                 return (
                     <div>
                         {this.state.dialogOpen ? (
