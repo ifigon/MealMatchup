@@ -5,8 +5,8 @@
   color: #243847;
 }
 .popup-wrapper {
-  width: 45vw;
-  margin-left: 30vw;
+  width: 35vw;
+  margin: auto 80%;
   padding: 40px;
   padding-top: 20px;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
@@ -53,11 +53,12 @@
   padding-left: 30px;
   margin: auto;
   position: sticky;
+  width: 100%;
 }
 
 .popup-buttons .claim {
   width: 40%;
-  font-size: 1.4vw;
+  font-size: 1.2vw;
   background: #5DC0F9;
   border: 3px solid #5DC0F9;
   box-sizing: border-box;
@@ -67,7 +68,7 @@
 
 .popup-buttons .cancel {
   width: 40%;
-  font-size: 1.4vw;
+  font-size: 1.2vw;
   border: 3px solid #8d97b0;
   box-sizing: border-box;
   border-radius: 3px;
@@ -133,8 +134,13 @@ button{
   width: 50%;
 }
 
-.modal-wrapper  h1{
+.modal-wrapper  h1, .modal-wrapper-contact h1{
   display: inline;
+  font-size: 1.5vw;
+}
+
+.details-scroll h2{
+  font-size: 1.1vw;
 }
 
 .modal-wrapper  .icon {
@@ -159,7 +165,7 @@ h1 {
 }
 
 .popup-icon {
-  height: 5vh;
+  height: 3.5vh;
   padding-right: 10px;
   fill: #37b674;
 }
@@ -177,6 +183,10 @@ h1 {
 
 .pickup-details {
   margin-bottom: 20px;
+}
+
+.pickup-details h2 {
+  font-size: 1.4vw;
 }
 
 .pickup-details p {
@@ -207,7 +217,7 @@ p.summary {
 .donating-recieving {
   color: #828282;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .notification-buttons {
@@ -219,11 +229,11 @@ p.summary {
 }
 
 .notification-wrapper button {
-  width: 7vw;
-  height: 2.5vw;
+  width: 4vw;
+  height: 2.0vw;
   border-radius: 3px;
   font-weight: 600;
-  font-size: 1.1vw;
+  font-size: .8vw;
 }
 
 .claim {
@@ -266,7 +276,7 @@ map {
 }
 
 .hover {
-  font-size: 1.1vw;
+  font-size: .8vw;
   font-weight: 400;
 }
 
@@ -279,6 +289,7 @@ map {
 
 .warning {
   color: #f77676;
+  font-size: 1.2vw;
   padding-bottom: 5px;
 }
 

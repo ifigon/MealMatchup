@@ -27,8 +27,8 @@ class RequestSummary extends React.Component {
                             <Map 
                                 address={this.props.details.daInfo.address} 
                                 height={'150px'}
-                                width={'350px'}
-                                marginRight={'30px'}
+                                width={'300px'}
+                                marginRight={'20px'}
                                 marginTop={'0px'}
                                 marginBottom={'0px'}
                                 marginLeft={'10px'}
@@ -49,8 +49,8 @@ class RequestSummary extends React.Component {
                                 <Map 
                                     address={this.props.details.raInfo.address} 
                                     height={'150px'}
-                                    width={'350px'}
-                                    marginRight={'30px'}
+                                    width={'300px'}
+                                    marginRight={'20px'}
                                     marginTop={'0px'}
                                     marginBottom={'0px'}
                                     marginLeft={'10px'}
