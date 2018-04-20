@@ -66,9 +66,7 @@ class PageContainer extends Component {
                 />
 
                 {this.state.content === PageContent.CALENDAR && (
-                    <div id="calendar-container">
-                        <Calendar />
-                    </div>
+                    <Calendar id="calendar-container" />
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (

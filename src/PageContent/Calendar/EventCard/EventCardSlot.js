@@ -7,8 +7,9 @@ class EventCardSlot extends Component {
         let eventCardSlotClass = '';
         let size = 0;
         if (Object.keys(this.props.events).length > 0) {
-            this.props.events[0].map((item, i) => {
+            this.props.events[0].map(function(item, i) {
                 size++;
+                return <div />;
             });
             if (size > 1) {
                 eventCardSlotClass = 'multiple-events';
@@ -20,7 +21,6 @@ class EventCardSlot extends Component {
                             key={i}
                             delivery={item}
                             eventClass={eventCardSlotClass}
-                            // futureEvent={this.props.futureEvent}
                         />
                     );
                 })

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import Flex from './Flex';
-
 import { getTileClasses } from './shared/utils';
 import { tileGroupProps } from './shared/propTypes';
 import Tile from './Tile';
@@ -271,7 +269,6 @@ class TileGroup extends Component {
                     events.push(this.state.events[deliveryDate]);
                 }
                 if (moment().isAfter(date)) {
-                    //TODO incorporate time of day - today event may have happened
                     futureEvent = false;
                 }
             }
