@@ -1,6 +1,9 @@
 const functions = require('firebase-functions');
 const moment = require('moment-timezone');
 const enums = require('../../Enums.js');
+const utils = require('../../Utils.js');
+
+const nt = enums.NotificationType;
 
 /*
  * When a delivery request is created, send notifications to 
@@ -11,22 +14,22 @@ const enums = require('../../Enums.js');
  *     pending list.
  */
 exports = module.exports = functions.database
-    .ref('/delivery_requests/{umbrellaId}/{pushId}')
+    .ref('/delivery_requests/{umbrellaId}/{daId}/{pushId}')
     .onCreate((snap, context) => {
-        // TODO: setup Admin SDK in the future? So that we can use absolute path.
-        const requestRef = snap.ref;
-        const accountsRef = requestRef.parent.parent.parent.child('accounts');
-        const dasRef = accountsRef.parent.child('donating_agencies');
-
-        var requestKey = context.params.pushId;
+        console.info('New recurring request added: ' + snap.key);
+        const requestPath = context.params.daId + '/' + context.params.pushId;
         var request = snap.val();
-        var raInfo = request.receivingAgency;
-        console.info('New recurring request added: ' + requestKey);
+
+        // TODO: setup Admin SDK in the future? So that we can use absolute path.
+        const rootRef = snap.ref.parent.parent.parent.parent;
+        const accountsRef = rootRef.child('accounts');
         
         if (request.status !== enums.RequestStatus.PENDING) {
             return Promise.reject(
                 new Error('Request should have pending status upon request.'));
         }
+
+        var raInfo = request.receivingAgency;
 
         if (raInfo.claimed) {
             return Promise.reject(
@@ -37,18 +40,12 @@ exports = module.exports = functions.database
             return Promise.reject(new Error('No RAs in the request to notify.'));
         }
 
-        // create pickup request notification
-        var notification = {
-            type: enums.NotificationType.RECURRING_PICKUP_REQUEST,
-            content: requestKey
-        };
-
         // If a specific RA was requested, force push notification
         if (raInfo.requested) {
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
-
-            return pushNotification(raRef, notification, 'RA');
+            return utils.notifyRequestUpdate(
+                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST);
         }
 
         console.info('No specific RA requested, ' + raInfo.pending.length + 
@@ -64,6 +61,7 @@ exports = module.exports = functions.database
         return Promise.all(raSnapPromises).then((results) => {
             var promises = [];
 
+            var rasLeft = [];
             for (let i in results) {
                 var raSnap = results[i];
                 var available = isAvailable(raSnap.val(), request);
@@ -71,35 +69,35 @@ exports = module.exports = functions.database
                 console.info('RA "' + raSnap.key + '": available=' + available);
 
                 if (available) {
-                    promises.push(pushNotification(raSnap.ref, notification, 'RA'));
+                    promises.push(
+                        utils.notifyRequestUpdate(
+                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST));
+                    rasLeft.push(raSnap.key);
                 }
             }
+            // update the ra pending list
+            let reqUpdates = { ['receivingAgency/pending']: rasLeft };
 
             // no available RA, send notification back to DA
-            if (promises.length === 0) {
+            if (rasLeft.length === 0) {
                 // update status of the request
-                promises.push(requestRef.child('status').set(enums.RequestStatus.UNAVAILABLE));
-                console.info('No RA available, updated request status');
+                reqUpdates['status'] = enums.RequestStatus.UNAVAILABLE;
 
-                // create pickup unavailable notification
-                notification = {
-                    type: enums.NotificationType.RECURRING_PICKUP_UNAVAILABLE,
-                    content: requestKey
-                };
-                var daRef = dasRef.child(request.donatingAgency);
-                promises.push(pushNotification(daRef, notification, 'DA'));
+                console.info('No RA available, notifying DA.');
+                var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
+                promises.push(
+                    utils.notifyRequestUpdate(
+                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE));
             }
+
+            // need to update RA pending list and status at the same time, otherwise
+            // deliveryRequests.onUpdate.Listener1 will trigger RAs-rejected
+            promises.push(snap.ref.update(reqUpdates));
+            console.info('Updated request status and pending list accordingly');
 
             return Promise.all(promises);
         });
     });
-
-function pushNotification(accountRef, notification, label) {
-    var promise = accountRef.child('notifications').push(notification);
-    console.info('Notified ' + label + ' "' + accountRef.key + '": '
-        + JSON.stringify(notification));
-    return promise;
-}
 
 // Firebase calls are asynchronous, return promises in order to execute
 // in sequence as we need to.

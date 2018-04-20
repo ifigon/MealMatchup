@@ -5,10 +5,11 @@ import shelter from '../../icons/shelter.svg';
 class ReceivingAgencyContent extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = 
             donatingAgency: this.props.delivery[0].receivingAgency.name,
             contactName: this.props.delivery[0].receivingAgency.contact.name,
             phone: this.props.delivery[0].receivingAgency.contact.phone
+
         };
     }
     render() {
@@ -16,7 +17,7 @@ class ReceivingAgencyContent extends Component {
             <div className="wrapper">
                 <img className="content-icon" src={shelter} alt="volunteer" />
                 <div className="content-wrapper">
-                    <h1 className="section-header">Receipient</h1>
+                    <h1 className="section-header">Recipient</h1>
                     <h2 className="organization">
                         {this.state.receivingAgency}
                     </h2>
