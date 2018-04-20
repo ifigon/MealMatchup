@@ -30,4 +30,5 @@ class ReceivingAgencyContent extends Component {
         );
     }
 }
+
 export default ReceivingAgencyContent;
