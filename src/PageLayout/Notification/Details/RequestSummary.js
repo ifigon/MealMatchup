@@ -58,26 +58,14 @@ class RequestSummary extends React.Component {
                             </div> 
                         </div>
                     }
-                    {/* View for RA */
+                    {
                         this.props.details.delivererGroup.claimed  &&
                         <div className="receiving-agency">
-                            <h2>Deliverers</h2>
-                            <div className="modal-deliverers">
-                                {
-                                    this.props.details.dgInfo.deliverers.length === 0 ?
-                                        <p>To be determined</p>
-                                        :
-                                        this.props.details.dgInfo.deliverers.map((d, i) => {
-                                            return (
-                                                <div className="mobile-student-info" id={i} key={i}>
-                                                    <p id="mobile-name">{d.name}</p>
-                                                    <p id="mobile-org">{d.email}</p>
-                                                    <p id="mobile-org">{d.phone}</p>
-                                                </div>
-                                            );
-                                        })
-                                }
-                            </div>
+                            <h2>Student Group</h2>
+                            <p className="donating-recieving" id="donatingAgency">{this.props.details.dgInfo.name}</p>
+                            <p className="donating-recieving" id="receivingContactName">{this.props.details.dgInfo.primaryContact.name}</p>
+                            <p className="donating-recieving" id="receivingContactPhone">{this.props.details.dgInfo.primaryContact.phone}</p>
+                            <p className="donating-recieving" id="receivingContactEmail">{this.props.details.dgInfo.primaryContact.email}</p>
                         </div>
                     }
                 </div>

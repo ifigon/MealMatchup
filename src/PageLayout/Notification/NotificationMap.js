@@ -12,7 +12,6 @@ export const NotificationMap = {
     [NotificationType.RECURRING_PICKUP_CONFIRMED]: {
         iconSrc: truckGreen,
         msg: 'A recurring pickup has been confirmed and scheduled',
-        detailMsg: 'sdsf',
         color: 'green',
         category: NotificationCategory.RECURRING_PICKUP
     },

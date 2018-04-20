@@ -51,8 +51,6 @@ class NotificationDetailsController extends Component {
                     claimed: '',  // uid-key of a DG (once a DG claims)
                 },
                 dgInfo:{
-                    deliverers: [
-                    ]
                 },
                 requestTimeStamp: '',
                 spawnedDeliveries: [
@@ -67,9 +65,10 @@ class NotificationDetailsController extends Component {
     componentDidMount(){
         //TODO: Query for notification based on {this.props.notifcation.content}
         let category = NotificationMap[this.props.notification.type].category;
+        var details = {};
         if (category === NotificationCategory.RECURRING_PICKUP) {
             // backend TODO: fetch notification detail content
-            let details = {
+            details = {
                 status: 'pending',  // Enums.RequestStatus
                 startTimestamp: 1519826400,  // start date + start hour
                 endTimestamp: 1527688800,    // end date + end hour
@@ -133,33 +132,23 @@ class NotificationDetailsController extends Component {
                 },
                 delivererGroup: {
                     claimed: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43',  // uid-key of a DG (once a DG claims)
-                    // ADDED FOR DUMMY DATA
-                    deliverers: [
-                        // {
-                        //     name: 'Alice',
-                        //     email: 'alice@uw.edu',
-                        //     phone: '123-789-4560'
-                        // },
-                        // {
-                        //     name: 'Chris',
-                        //     email: 'chris@uw.edu',
-                        //     phone: '456-123-0789'
-                        // }
-                    ]
                 },
                 dgInfo:{
-                    deliverers: [
-                        {
-                            name: 'Alice',
-                            email: 'alice@uw.edu',
-                            phone: '123-789-4560'
-                        },
-                        {
-                            name: 'Chris',
-                            email: 'chris@uw.edu',
-                            phone: '456-123-0789'
-                        }
-                    ]
+                    name: 'Green Greeks',
+                    address: {
+                        street1: '1410 NE Campus Parkway',
+                        street2: '',
+                        city: 'Seattle',
+                        state: 'WA',
+                        zipcode: 98195,
+                        officeNo: ''
+                    },
+                    primaryContact: {
+                        name: 'Johnny Appleseed',
+                        email: 'greengreeks@uw.edu',
+                        phone: '206-420-6666',
+                        position: 'Manager'
+                    }
                 },
                 requestTimeStamp: 1518753363763,
                 spawnedDeliveries: [
@@ -167,9 +156,8 @@ class NotificationDetailsController extends Component {
                     '-L5RkIS0CSPuXpkewaqA'
                 ]
             };
-            this.setState({details: details});
         }
-        
+        this.setState({details: details});
     }
 
     showDetail(){
