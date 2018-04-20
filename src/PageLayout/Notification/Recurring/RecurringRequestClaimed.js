@@ -6,7 +6,7 @@ class RecurringRequestClaimed extends Component {
     render() {
         return (
             <div className="modal-wrapper">
-                <img className="icon" src={truck} alt="icon" />
+                <img className="icon" id="disclaimer-icon" src={truck} alt="icon" />
                 <div className="modal-left-align">
                     <h1> Recurring pickup is claimed</h1>
                     <p>We will notify you when 

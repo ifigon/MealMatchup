@@ -11,7 +11,7 @@ class RecurringRequestDisclaimer extends Component {
     render() {
         return (
             <div className="modal-wrapper">
-                <img className="icon" src={truck} alt="icon" />
+                <img className="icon" src={truck} id="disclaimer-icon" alt="icon" />
                 <div className="modal-left-align">
                     <h1>Are you sure you want to claim this pickup?</h1>
                     <h2 className="warning">Once a pickup is claimed it cannot be cancelled.</h2>
