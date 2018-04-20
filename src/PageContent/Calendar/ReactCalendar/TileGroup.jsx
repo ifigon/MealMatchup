@@ -38,7 +38,7 @@ class TileGroup extends Component {
                         },
                         // delivererGroup is null if isEmergency=true
                         delivererGroup: {
-                            group: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43', // uid-key of deliverer-group
+                            group: 'Green Greeks3', // uid-key of deliverer-group
                             deliverers: [
                                 {
                                     name: 'Alice',
@@ -107,7 +107,7 @@ class TileGroup extends Component {
                         },
                         // delivererGroup is null if isEmergency=true
                         delivererGroup: {
-                            group: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43', // uid-key of deliverer-group
+                            group: 'Green Greeks', // uid-key of deliverer-group
                             deliverers: [
                                 {
                                     name: 'Alice',
@@ -178,7 +178,7 @@ class TileGroup extends Component {
                         },
                         // delivererGroup is null if isEmergency=true
                         delivererGroup: {
-                            group: 'R8BAHrxdkfQoAmfWvGa1OJmjQP43', // uid-key of deliverer-group
+                            group: 'Green Greeks2', // uid-key of deliverer-group
                             deliverers: [
                                 {
                                     name: 'Alice',

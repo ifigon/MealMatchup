@@ -6,9 +6,9 @@ class ReceivingAgencyContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            donatingAgency: this.props.delivery.receivingAgency.name,
-            contactName: this.props.delivery.receivingAgency.contact.name,
-            phone: this.props.delivery.receivingAgency.contact.phone
+            donatingAgency: this.props.delivery[0].receivingAgency.name,
+            contactName: this.props.delivery[0].receivingAgency.contact.name,
+            phone: this.props.delivery[0].receivingAgency.contact.phone
         };
     }
     render() {

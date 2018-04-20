@@ -33,11 +33,6 @@ class Day extends Component {
         //     }
         // }
 
-        let futureEvent = true;
-        if (moment().isAfter(this.props.date)) {
-            //TODO incorporate time of day - today event may have happened
-            futureEvent = false;
-        }
         console.log(date);
         console.log(getISOLocalDate(date).toString());
         return (
@@ -57,7 +52,7 @@ class Day extends Component {
                 view="month"
                 // events={eventsToday}
                 // today={today}
-                futureEvent={futureEvent}
+                // futureEvent={futureEvent}
             >
                 {getDay(date)}
             </Tile>
