@@ -6,8 +6,6 @@ import grey_truck from '../../../icons/grey_truck.svg';
 import moment from 'moment';
 import { StringFormat } from '../../../Enums';
 import Dialog from '../Dialog.js';
-// import { start } from 'repl';
-// import { start } from 'repl';
 
 class EventCard extends Component {
     constructor(props) {
@@ -33,7 +31,6 @@ class EventCard extends Component {
     }
 
     render() {
-        console.log(this.props.delivery);
         let eventType = DeliveryType.RECURRING;
         if (this.props.delivery.isEmergency) {
             eventType = DeliveryType.EMERGENCY;
@@ -54,8 +51,6 @@ class EventCard extends Component {
             truckAlt = 'grey truck';
             style = 'event-container event-container-past';
         }
-        // let startTime = this.props.delivery[0].startTimestamp;
-        // let endTime = this.props.delivery[0].endTimestamp;
 
         let startTime = moment(this.props.delivery.startTimestamp).format(
             StringFormat.TIME
@@ -63,9 +58,6 @@ class EventCard extends Component {
         let endTime = moment(this.props.delivery.endTimestamp).format(
             StringFormat.TIME
         );
-        console.log(this.props.delivery);
-        console.log(startTime);
-        // console.log(this.props.events[0][e]);
 
         return (
             <div>
@@ -84,8 +76,6 @@ class EventCard extends Component {
                     <img className="truck-icon" src={truck} alt={truckAlt} />
                     <p className="event-time">
                         {startTime} - {endTime}
-                        {/* {moment(startTime * 1000).format(StringFormat.TIME)} -{' '}
-                        {moment(endTime * 1000).format(StringFormat.TIME)} */}
                     </p>
                 </div>
             </div>

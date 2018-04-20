@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import EventCard from './EventCard';
-import { DeliveryType, StringFormat } from '../../../Enums';
-import moment from 'moment';
 
 class EventCardSlot extends Component {
     render() {
