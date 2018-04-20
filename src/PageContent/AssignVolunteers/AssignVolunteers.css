@@ -133,6 +133,10 @@
     width: 180px;
 }
 
+.already-completed-button {
+    color: black;
+}
+
 .confirm-button-confirmation {
     width: 100px;
 }

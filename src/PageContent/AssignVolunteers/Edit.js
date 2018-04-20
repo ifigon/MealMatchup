@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { StringFormat } from '../../Enums';
+import { formatPhone } from '../../Utils';
 
 class Edit extends Component {
     render() {
@@ -14,15 +15,14 @@ class Edit extends Component {
 
         let startMoment =  moment(startTimestamp);
         let startTime = startMoment.format(StringFormat.TIME);
-        let day = startMoment.format(StringFormat.WEEKDAY);
-        let date = startMoment.format(StringFormat.DATE_FULL);
+        let date = startMoment.format(StringFormat.WEEKDAY_WITH_DATE);
         let endMoment = moment(endTimestamp);
         let endTime = endMoment.format(StringFormat.TIME);
 
         return (
             <div>
                 <div className="date-container">
-                    {day}, {date} - Pick-up between {startTime} - {endTime}
+                    {date} - Pick-up between {startTime} - {endTime}
                 </div>
                 <div className="content-container">
                     <h5 className="location" id="top"><i className="fas fa-circle circle-marker" /><span className="spacing" />{donatingAgency.name}</h5>
@@ -44,7 +44,7 @@ class Edit extends Component {
                                             <label className="label-component details">Student {i + 1}</label><br />
                                             <input name={`name${(i + 1)}`} type="text" className="form-input" defaultValue={present ? deliverers[i].name : ''} required/><br />
                                             <label className="label-component details">Phone</label><br />
-                                            <input name={`phone${(i + 1)}`} onChange={this.phoneFormat} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={present ? deliverers[i].phone : ''} required/><br />
+                                            <input name={`phone${(i + 1)}`} onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" className="form-input" defaultValue={present ? deliverers[i].phone : ''} required/><br />
                                             <label className="label-component details">Email</label><br />
                                             <input name={`email${(i + 1)}`} type="email" className="form-input" defaultValue={present ? deliverers[i].email : ''} required/>
                                         </div>
@@ -79,18 +79,6 @@ class Edit extends Component {
             email: e.target.email2.value
         };
         this.props.handleConfirmClick(d1, d2);
-    }
-
-    phoneFormat(e,f) {
-        let val = e.target.value.replace(/\D/g, '').substring(0, 10);
-        let corrected = '';
-        for (let i = 0; i < val.length; i++) {
-            if (i === 3 || i === 6) {
-                corrected += '-';
-            }
-            corrected += val.charAt(i);
-        }
-        e.target.value = corrected;
     }
 }
 

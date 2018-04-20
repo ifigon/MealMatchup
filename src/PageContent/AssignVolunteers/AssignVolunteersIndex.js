@@ -5,17 +5,15 @@ import AssignOption from './AssignOption';
 class AssignVolunteersIndex extends Component {
 
     render() {
-        return (
-            this.renderElements()
-        );
-    }
+        const {
+            deliveries,
+            deliveriesExist,
+            handleEditClick,
+        } = this.props;
 
-    renderElements() {
-        // TODO (jkbach): some kind of loading here would be good.
-        if(Object.keys(this.props.deliveries).length === 0) {
+        if(!deliveriesExist) {
             return <h5>No deliveries scheduled</h5>;
-        }
-        else {
+        } else {
             return (
                 <div className="avi-container">  
                     <div className="avi-row">
@@ -32,20 +30,20 @@ class AssignVolunteersIndex extends Component {
                         </div>
                     </div>
                     {
-                        Object.keys(this.props.deliveries).map((delivery_id, index) => {
-                            return <AssignOption 
-                                handleEditClick={this.props.handleEditClick} 
-                                key={delivery_id} 
-                                delivery={this.props.deliveries[delivery_id]} 
-                                deliveryId={delivery_id}/>;
-                        })
-                    }
-                    
+                        Object.keys(deliveries)
+                            .sort((dId1, dId2) => deliveries[dId1].startTimestamp - deliveries[dId2].startTimestamp)
+                            .map(deliveryId => 
+                                <AssignOption 
+                                    handleEditClick={handleEditClick} 
+                                    key={deliveryId} 
+                                    delivery={deliveries[deliveryId]} 
+                                    deliveryId={deliveryId}/>)
+                            
+                    } 
                 </div>
             );
         }
     }
-
 }
 
 export default AssignVolunteersIndex;
