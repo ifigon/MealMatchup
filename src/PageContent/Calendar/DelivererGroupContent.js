@@ -8,8 +8,8 @@ class DelivererGroupContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            delivererGroup: this.props.delivery[0].delivererGroup.group,
-            deliverers: this.props.delivery[0].delivererGroup.deliverers
+            delivererGroup: this.props.delivery.delivererGroup.group,
+            deliverers: this.props.delivery.delivererGroup.deliverers
         };
 
         this.edit = this.edit.bind(this);
@@ -54,14 +54,12 @@ class DelivererGroupContent extends Component {
             this.state.deliverers !== undefined &&
             this.state.deliverer1 === undefined
         ) {
-            deliverer1 = this.props.delivery[0].delivererGroup.deliverers[0]
-                .name;
-            deliverer2 = this.props.delivery[0].delivererGroup.deliverers[1]
-                .name;
-            phone1 = this.props.delivery[0].delivererGroup.deliverers[0].phone;
-            phone2 = this.props.delivery[0].delivererGroup.deliverers[1].phone;
-            email1 = this.props.delivery[0].delivererGroup.deliverers[0].email;
-            email2 = this.props.delivery[0].delivererGroup.deliverers[1].email;
+            deliverer1 = this.props.delivery.delivererGroup.deliverers[0].name;
+            deliverer2 = this.props.delivery.delivererGroup.deliverers[1].name;
+            phone1 = this.props.delivery.delivererGroup.deliverers[0].phone;
+            phone2 = this.props.delivery.delivererGroup.deliverers[1].phone;
+            email1 = this.props.delivery.delivererGroup.deliverers[0].email;
+            email2 = this.props.delivery.delivererGroup.deliverers[1].email;
         } else if (this.state.deliverer1 !== undefined) {
             deliverer1 = this.state.deliverer1;
             deliverer2 = this.state.deliverer2;

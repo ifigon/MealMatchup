@@ -5,13 +5,14 @@ import DialogContent from './DialogContent';
 
 class Dialog extends Component {
     render() {
+        console.log(this.props.delivery);
         return (
             <dialog className="event-dialog" open>
                 <Header
                     eventType={this.props.eventType}
                     closeDialog={this.props.closeDialog}
-                    startTime={this.props.delivery[0].startTimestamp}
-                    endTime={this.props.delivery[0].endTimestamp}
+                    startTime={this.props.startTime}
+                    endTime={this.props.endTime}
                     futureEvent={this.props.futureEvent}
                     accountType={this.props.accountType}
                 />

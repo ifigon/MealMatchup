@@ -37,3 +37,7 @@
   margin-top: 5px;
   margin-bottom: 0px;
 }
+
+.individual-event {
+  display: inline-flex;
+}
