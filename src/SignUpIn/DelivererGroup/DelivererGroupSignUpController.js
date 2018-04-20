@@ -83,7 +83,7 @@ class DelivererGroupSignUpController extends Component {
                         zip: fieldValues.zip
                     },
                     timezone: moment.tz.guess(),
-                    coordinator: {
+                    primaryContact: {
                         name: fieldValues.contactName,
                         email: fieldValues.contactEmail,
                         phone: fieldValues.contactNumber,

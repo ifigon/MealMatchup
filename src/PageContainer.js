@@ -123,6 +123,7 @@ class PageContainer extends Component {
                 }
             },
             donatingAgency: {
+                name: 'Local Point',
                 contact: {
                     uid: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
                     name: 'Andrea Benson',
