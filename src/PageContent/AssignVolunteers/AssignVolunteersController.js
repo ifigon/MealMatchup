@@ -27,8 +27,9 @@ class AssignVolunteersController extends Component {
         let genAccountPromise = (deliveryId, accountId) => (new Promise(async (resolve, reject) => {
             let snap = await db.ref(`accounts/${accountId}`).once('value');
             resolve({deliveryId: deliveryId,
-                     account: snap.val()})
+                     account: snap.val()});
         }));
+
         let genSupplementaryPromise = (pathPrefix, deliveryId, accountId) => (new Promise(async (resolve, reject) =>
             resolve((await db.ref(`${pathPrefix}/${accountId}`).once('value')).val())));
         

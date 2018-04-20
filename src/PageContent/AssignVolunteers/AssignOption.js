@@ -6,11 +6,11 @@ import moment from 'moment';
 class AssignOption extends Component {
     getButton(status, deliverers) {
         if (status === DeliveryStatus.COMPLETED) {
-            return (<button disabled className="form-button already-completed-button" id={this.props.deliveryId}>Completed</button>)
+            return (<button disabled className="form-button already-completed-button" id={this.props.deliveryId}>Completed</button>);
         } else if (!deliverers || deliverers.length === 0) {
-            return (<button type="button" className="form-button confirm-button-assign" id={this.props.deliveryId} onClick={this.props.handleEditClick}>Assign Volunteers</button>)
+            return (<button type="button" className="form-button confirm-button-assign" id={this.props.deliveryId} onClick={this.props.handleEditClick}>Assign Volunteers</button>);
         } else {
-            return (<button type="button" className="form-button confirm-button" id={this.props.deliveryId} onClick={this.props.handleEditClick}>Edit</button>)
+            return (<button type="button" className="form-button confirm-button" id={this.props.deliveryId} onClick={this.props.handleEditClick}>Edit</button>);
         }
     }
 
