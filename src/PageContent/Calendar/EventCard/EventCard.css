@@ -41,3 +41,7 @@
 .multiple-events {
   margin: 4px;
 }
+
+.multiple-events > .event-container {
+  padding: 0;
+}
