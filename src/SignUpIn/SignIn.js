@@ -67,9 +67,12 @@ class SignIn extends Component {
                         <p className="sign-in-error">Unable to log in.</p>
                     )}
                     <div className="login-button-wrapper">
-                        <button type="submit" className="login-button">
-                            login
-                        </button>
+                        <Link to={'/calendar'}>
+                            {' '}
+                            <button type="submit" className="login-button">
+                                login
+                            </button>
+                        </Link>
                     </div>
                     <div className="forgot">
                         {/* TODO: Add functionality to reset username and password */}
