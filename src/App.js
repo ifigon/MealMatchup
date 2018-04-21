@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { auth, accountsRef } from './FirebaseConfig.js';
-import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
