@@ -11,6 +11,7 @@ class NotificationDetailsController extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            // TODO: change -> details:{}
             details: {
                 status: '',  // Enums.RequestStatus
                 startTimestamp: '',  // start date + start hour
@@ -168,17 +169,17 @@ class NotificationDetailsController extends Component {
                 <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
                 {
                     this.props.notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
-                <RecurringRequestController
-                    details={this.state.details}
-                    closePopUp={this.props.closePopUp.bind(this)}
-                    accountType={this.props.account.accountType}/>
+                    <RecurringRequestController
+                        details={this.state.details}
+                        closePopUp={this.props.closePopUp.bind(this)}
+                        accountType={this.props.account.accountType}/>
                 }
                 {
                     this.props.notification.type === NotificationType.RECURRING_PICKUP_CONFIRMED &&
-                <RecurringRequestConfirmed
-                    details={this.state.details}
-                    closePopUp={this.props.closePopUp.bind(this)}
-                    accountType={this.props.account.accountType}/>
+                    <RecurringRequestConfirmed
+                        details={this.state.details}
+                        closePopUp={this.props.closePopUp.bind(this)}
+                        accountType={this.props.account.accountType}/>
                 }
             </div>;
         

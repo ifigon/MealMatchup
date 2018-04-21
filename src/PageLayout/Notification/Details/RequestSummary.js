@@ -35,7 +35,7 @@ class RequestSummary extends React.Component {
                                 className="map"></Map>
                         </div>
                     </div>
-                    { /* View for DG*/
+                    { 
                         this.props.details.receivingAgency.claimed &&
                         <div className="flex">
                             <div className="receiving-agency">
