@@ -86,7 +86,6 @@ export default class Days extends PureComponent {
                 offset={this.offset}
                 start={this.start}
                 tile={Day}
-                // Tile props
                 currentMonthIndex={monthIndex}
             />
         );

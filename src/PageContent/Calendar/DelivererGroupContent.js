@@ -8,13 +8,14 @@ class DelivererGroupContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            delivererGroup: this.props.delivery.delivererGroup.name,
+            delivererGroup: this.props.delivery.delivererGroup.group,
             deliverers: this.props.delivery.delivererGroup.deliverers
         };
 
         this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+
     edit() {
         this.setState({
             edit: true
