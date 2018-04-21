@@ -23,7 +23,6 @@ class PageContainer extends Component {
             donatingAgency: null,
             dialogOpen: false
         };
-
         this.navBarHandler = this.navBarHandler.bind(this);
         this.openDialog = this.openDialog.bind(this);
         this.closeDialog = this.closeDialog.bind(this);

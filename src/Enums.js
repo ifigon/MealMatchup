@@ -135,3 +135,8 @@ exports.FoodUnit = {
     CASES: 'cases',
     LOAVES: 'loaves'
 };
+
+exports.NotificationCategory = {
+    RECURRING_PICKUP: 'recurring_pickup',
+    ACCOUNT: 'account',
+};
