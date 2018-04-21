@@ -17,11 +17,13 @@
   color: white;
   margin-top: 0px;
   margin-bottom: 0px;
+  font-size: 24px;
 }
 
 .header {
   margin: 0px;
   padding: 15px;
+  padding-left: 30px;
 }
 .past-header {
   background-color: #8c97b2;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Content.css';
-import shelter from '../../icons/shelter.svg';
+import vitamins from '../../icons/vitamins.svg';
 
 class DonatingAgencyContent extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class DonatingAgencyContent extends Component {
     render() {
         return (
             <div className="wrapper">
-                <img className="content-icon" src={shelter} alt="volunteer" />
+                <img className="content-icon" src={vitamins} alt="volunteer" />
                 <div className="content-wrapper">
                     <h1 className="section-header">Dining Hall</h1>
                     <h2 className="organization">
