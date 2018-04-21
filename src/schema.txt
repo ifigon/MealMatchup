@@ -360,23 +360,24 @@ delivery_indices: {
 	RheaQY1WxJT03sTPQICFZ4STpfm1: {  // umbrellaId
 
 		-K9HdKlCLjjk_ka82K0s: {  // daId
-			1521295200000: [  // startTimestamp of deliveries
-				-L5RkIS0CSPuXpkewaqA,  // deliveryId
+			1521295200000: {  // startTimestamp of deliveries
+				-L5RkIS0CSPuXpkewaqA: true,  // deliveryId
 				...
 				// each timestamp-key has a list of deliveries in case there are
 				// multiple deliveries at the same time
-			],
-			1524600000000: [ -LA7TA614pbftvI2yZJu ],
+				// list values are inverted so that deliveryId is a key in the path
+			},
+			1524600000000: { -LA7TA614pbftvI2yZJu: true },
 			...
 		},
 		uGOFJ8NqHjbZhKAYzSZFRs1dSKD3: {  // raId
-			1521295200000: [ -L5RkIS0CSPuXpkewaqA ],
-			1518645600000: [ -LAHPTtkoFBM83AqODqs, ... ],
+			1521295200000: { -L5RkIS0CSPuXpkewaqA: true },
+			1518645600000: { -LAHPTtkoFBM83AqODqs: true, ... },
 			...
 		},
 		R8BAHrxdkfQoAmfWvGa1OJmjQP43: {  // dgId
-			1521295200000: [ -L5RkIS0CSPuXpkewaqA ],
-			1519855200000: [ -LAHPTtnGSFW3ctlBaMu, ... ],
+			1521295200000: { -L5RkIS0CSPuXpkewaqA: true },
+			1519855200000: { -LAHPTtnGSFW3ctlBaMu: true, ... },
 			...
 		},
 		...
