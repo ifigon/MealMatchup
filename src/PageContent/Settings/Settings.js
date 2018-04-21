@@ -27,7 +27,7 @@ class Settings extends Component {
                 phone: 'something',
                 position: 'something',
             };
-        };
+        }
         this.setState({manager: manager});
     }
 
