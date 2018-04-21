@@ -13,7 +13,7 @@ import SignUpInController from './SignUpIn/SignUpInController';
 ReactDOM.render(
     <Router>
         <Switch>
-            <Route exact path="/" component={SignUpInController} />
+            <Route exact path="/" component={App} />
             {/* TODO: Mobile route 
                 - unique path to a pickup and pass info into MobileDelivery
             */}

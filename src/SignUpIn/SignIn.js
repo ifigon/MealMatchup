@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { auth } from '../FirebaseConfig';
-import { Link } from 'react-router-dom';
 
 class SignIn extends Component {
     constructor(props) {
@@ -64,15 +63,14 @@ class SignIn extends Component {
                     )}
                     {this.state.error && (
                         /* TODO: give better error msg */
-                        <p className="sign-in-error">Unable to log in.</p>
+                        <p className="sign-in-error">
+                            Unable to log in. {this.state.error}
+                        </p>
                     )}
                     <div className="login-button-wrapper">
-                        <Link to={'/calendar'}>
-                            {' '}
-                            <button type="submit" className="login-button">
-                                login
-                            </button>
-                        </Link>
+                        <button type="submit" className="login-button">
+                            login
+                        </button>
                     </div>
                     <div className="forgot">
                         {/* TODO: Add functionality to reset username and password */}
