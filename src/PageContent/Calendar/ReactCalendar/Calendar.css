@@ -56,7 +56,7 @@ div.react-calendar__month-view__days > button {
 }
 
 .react-calendar__tile {
-  padding: 10px;
+  padding: 1px;
   width: 192px;
   height: 114px;
   border: 1px #4f4f4f solid;
@@ -73,6 +73,7 @@ div.react-calendar__month-view__days > button {
   height: 20px;
   border-radius: 50%;
   text-align: center;
+  display: inline-block;
 }
 
 .react-calendar__month-view__weekdays__weekday {

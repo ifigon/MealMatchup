@@ -105,6 +105,75 @@ class TileGroup extends Component {
                         },
                         // delivererGroup is null if isEmergency=true
                         delivererGroup: {
+                            group: 'Green Greeks3', // uid-key of deliverer-group
+                            deliverers: [
+                                {
+                                    name: 'Alice',
+                                    email: 'alice@uw.edu',
+                                    phone: '123-789-4560'
+                                },
+                                {
+                                    name: 'Chris',
+                                    email: 'chris@uw.edu',
+                                    phone: '456-123-0789'
+                                }
+                            ]
+                        },
+                        description: {
+                            foodItems: [
+                                {
+                                    food: 'Baked beans',
+                                    quantity: 15,
+                                    unit: 'lb' // Enums.FoodUnit
+                                },
+                                {
+                                    food: 'Bread',
+                                    quantity: 4,
+                                    unit: 'loaves' // Enums.FoodUnit
+                                }
+                            ],
+                            updatedBy: {
+                                // key: timestamp
+                                // value: name of a donating-agency-member
+                                1523173058189: 'Andrea Benson',
+                                1523173817016: 'Chris Doe'
+                            }
+                        },
+                        notes: 'Enter through the back door.',
+                        pickedUpInfo: {
+                            temperature: 29, // in F
+                            signature: 'John Smith',
+                            timestamp: 1523174874685
+                        },
+                        deliveredInfo: {
+                            signature: 'Ellen Blake',
+                            timestamp: 1523174892769
+                        }
+                    },
+                    {
+                        status: 'in_progress', // Enums.DeliveryStatus
+                        startTimestamp: 1524873600,
+                        endTimestamp: 1524873600,
+                        isEmergency: false,
+                        spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
+                        receivingAgency: {
+                            name: 'Seattle Union Gospel Mission',
+                            contact: {
+                                name: 'Chris Stack',
+                                phone: '206-586-9876',
+                                email: 'chrisstack@uniongospel.org'
+                            }
+                        },
+                        donatingAgency: {
+                            name: 'Local Point',
+                            contact: {
+                                name: 'Andrea Benson',
+                                phone: '206-543-6975',
+                                email: 'bensoa3@uw.edu'
+                            }
+                        },
+                        // delivererGroup is null if isEmergency=true
+                        delivererGroup: {
                             group: 'Green Greeks', // uid-key of deliverer-group
                             deliverers: [
                                 {
