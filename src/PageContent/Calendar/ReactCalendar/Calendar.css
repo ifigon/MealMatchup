@@ -1,8 +1,9 @@
 .react-calendar {
   border: none;
   width: auto;
-  margin-top: 120px;
-  margin-left: 225px;
+  margin-top: 110px;
+  margin-left: 210px;
+  margin-right: 10px;
 }
 
 div.react-calendar__month-view__days > button {
@@ -38,7 +39,6 @@ div.react-calendar__month-view__days > button {
 
 .react-calendar__navigation {
   background-color: #fafafa;
-  margin-right: 28px;
 }
 
 .react-calendar__navigation__label {
@@ -58,7 +58,7 @@ div.react-calendar__month-view__days > button {
 .react-calendar__tile {
   padding: 10px;
   width: 192px;
-  height: 140px;
+  height: 114px;
   border: 1px #4f4f4f solid;
 }
 
