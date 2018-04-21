@@ -10,10 +10,10 @@ class RecurringRequestConfirmed extends Component {
                     title="Recurring Pickup Confirmed" 
                     details={this.props.details}/>
                 <p>You can now see these 
-                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER ? 
-                    <span> pickups </span> 
-                    : 
-                    <span> deliveries </span>}
+                    {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER ? 
+                        <span> pickups </span> 
+                        : 
+                        <span> deliveries </span>}
                 on your calendar.</p>
                 <div className="popup-buttons">
                     <button onClick={this.props.closePopUp} className="okay-green" type="button">OK</button>
