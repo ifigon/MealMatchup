@@ -107,3 +107,18 @@
     }
 }
 
+a[href] {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: #5DC0F9;;
+    text-decoration: none;
+    margin-left: 20px;
+    word-wrap: break-word;
+}
+
+#ms-address{
+    font-size: 3.5vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 0;
+}

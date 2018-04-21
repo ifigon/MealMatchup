@@ -125,7 +125,8 @@ exports.DeliveryType = {
 
 exports.DeliveryStatus = {
     SCHEDULED: 'scheduled',
-    IP: 'in_progress',
+    STARTED: 'started',
+    PICKED_UP: 'picked_up',
     COMPLETED: 'completed'
 };
 
@@ -133,4 +134,9 @@ exports.FoodUnit = {
     LB: 'lb',
     CASES: 'cases',
     LOAVES: 'loaves'
+};
+
+exports.NotificationCategory = {
+    RECURRING_PICKUP: 'recurring_pickup',
+    ACCOUNT: 'account',
 };

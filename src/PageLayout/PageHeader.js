@@ -4,6 +4,7 @@ import notification from '../icons/notification.svg';
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
 import Notification from './Notification/Notification';
+import NotificationDetailsController from './Notification/NotificationDetailsController';
 
 class PageHeader extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class PageHeader extends Component {
         this.state = {
             showPopUp: false,
             notificationClicked: false,
-            notifications: []
+            notifications: [],
+            notifcationIndex: 0
         };
 
         this.notificationClicked = this.notificationClicked.bind(this);
@@ -32,14 +34,18 @@ class PageHeader extends Component {
                     content: '-XKSIDLeC_Uksd321e'
                 },
                 {
-                    type: 'recurring_pickup_confirmed',
+                    type: 'recurring_pickup_rejected_dg',
                     content: '-XKSIDLeC_Uksd321e'
                 },
                 {
-                    type: 'recurring_pickup_request',
+                    type: 'recurring_pickup_rejected_ra',
+                    content: '-XKSIDLeC_Uksd321e'
+                },
+                {
+                    type: 'recurring_pickup_unavailable',
                     content: '-XKSIDLeC_Uksd321e'
                 }
-            ]
+            ] 
         });
     }
 
@@ -47,7 +53,8 @@ class PageHeader extends Component {
         // TODO: backend populate notification popup info based on index
         this.setState({
             showPopUp: true,
-            notificationClicked: false
+            notificationClicked: false,
+            notifcationIndex: index
         });
     }
 
@@ -99,17 +106,24 @@ class PageHeader extends Component {
                     {this.state.notificationClicked &&
                         this.state.notifications.map((notification, i) => {
                             return (
-                                !notification.claimed && (
-                                    <Notification
-                                        key={i}
-                                        index={i}
-                                        notificationType={notification.type}
-                                        account={this.props.account.accountType}
-                                        clickNotification={this.openPopUp}
-                                    />
-                                )
+                                <Notification
+                                    key={i}
+                                    index={i}
+                                    notificationType={notification.type}
+                                    clickNotification={this.openPopUp}
+                                />
+                                
                             );
                         })}
+                </div>
+                <div className="modal-flex">
+                    {this.state.showPopUp ?
+                        <NotificationDetailsController
+                            account={this.props.account}
+                            notification={this.state.notifications[this.state.notifcationIndex]}
+                            closePopUp={this.closePopUp.bind(this)}/>
+                        : null    
+                    }
                 </div>
             </div>
         );

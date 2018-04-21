@@ -20,7 +20,6 @@ class PageContainer extends Component {
             content: props.content,
             donatingAgency: null
         };
-
         this.navBarHandler = this.navBarHandler.bind(this);
     }
 
