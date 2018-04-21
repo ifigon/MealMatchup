@@ -67,7 +67,7 @@ class App extends Component {
                         /* Show Calendar page if user is logged in */
                         <PageContainer
                             account={this.state.account}
-                            content={PageContent.CALENDAR}
+                            content={this.props.content}
                         />
                     ) : (
                         <SignUpInController

@@ -19,7 +19,7 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: props.content,
+            content: this.props.content,
             donatingAgency: null,
             dialogOpen: false
         };
@@ -58,6 +58,12 @@ class PageContainer extends Component {
                 }.bind(this)
             );
         }
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({
+            content: props.content
+        });
     }
 
     componentWillMount() {
