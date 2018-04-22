@@ -2,8 +2,6 @@
 import './SignUpIn.css';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import SignIn from './SignIn';
-import UserTypeController from './UserTypeController';
 
 class SignUpIn extends Component {
     render() {
