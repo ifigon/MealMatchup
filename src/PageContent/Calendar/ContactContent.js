@@ -10,12 +10,12 @@ class ContactContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            daMemberList: [],
-            // Saving contact to state so that we can display the updated
-            // contact info when 'Save' is clicked and before the updated
-            // info gets propagated down. This state will be updated when
-            // new props are received.
-            contact: this.getContact(props),
+            // 'waiting' is true after 'Saved' is clicked and before changes
+            // from db is propagated down. While it is true, input fields are
+            // disabled
+            waiting: false,
+            savedTimestamp: null,
+            daMemberMap: {},
         };
 
         this.edit = this.edit.bind(this);
@@ -24,46 +24,40 @@ class ContactContent extends Component {
 
     // update this.state.contact when we receive a new prop
     static getDerivedStateFromProps(nextProps, prevState) {
-        return { contact: this.getContact(nextProps) };
-    }
-
-    getContact(props) {
-        const { account, delivery } = props;
-        let contact = {};
-        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            contact = delivery.daContact;
-        } else if (account.accountType === AccountType.RECEIVING_AGENCY) {
-            contact = delivery.raContact;
+        // update state to reflect values properly saved if we were waiting
+        // on the update and the update happened after we wrote to db.
+        if (prevState.waiting && nextProps.delivery.updatedTimesamp > prevState.savedTimestamp) {
+            return { waiting: false, edit: false };
         }
-        return contact;
+        return null;
     }
 
     componentDidMount() {
         const account = this.props.account;
+        // fetch DA member list for dropdown
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            donatingAgenciesRef.child(account.agency).once('value').then((daSnap) => {
-                return daSnap.val().members;
-            }).then((members) => {
-                this.fetchMembersInfo(members);
-            });
+            donatingAgenciesRef.child(account.agency).once('value')
+                .then(daSnap => daSnap.val().members)
+                .then(members => this.fetchMembersInfo(members));
         }
     }
 
     async fetchMembersInfo(members) {
         let daMemberList = await Promise.all(
-            Object.keys(members).map(i => accountsRef.child(members[i])
-                .once('value').then((snap) => {
-                    return { 
+            Object.keys(members).map(i => accountsRef.child(members[i]).once('value')
+                .then(snap => {
+                    return {
                         id: snap.key,
-                        contact: {
-                            name: snap.val().name,
-                            phone: snap.val().phone,
-                            email: snap.val().email,
-                        },
+                        name: snap.val().name,
                     };
-                })
-            ));
-        this.setState({ daMemberList: daMemberList });
+                })));
+
+        let daMemberMap = daMemberList.reduce((result, item) => {
+            result[item.id] = item.name;
+            return result;
+        }, {});
+
+        this.setState({ daMemberMap: daMemberMap });
     }
 
     edit() {
@@ -79,8 +73,10 @@ class ContactContent extends Component {
         let contact;
         // let updates = {}; TODO
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            let member = this.state.daMemberList[e.target.primaryContact.value];
-            contact = member.contact;
+            contact = {
+                id: e.target.primaryContact.value,
+                name: this.state.daMemberMap[e.target.primaryContact.value]
+            };
         } else {
             contact = {
                 name: e.target.name.value,
@@ -90,17 +86,31 @@ class ContactContent extends Component {
         }
 
         // TODO write to db
+        console.log(contact);
 
         this.setState({
-            edit: false,
-            contact: contact,
+            waiting: true,
+            // savedTimestamp: ,
         });
+    }
+
+    // get the right contact based on account type
+    getContact() {
+        const { account, delivery } = this.props;
+
+        let contact = {};
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            contact = delivery.daContact;
+        } else if (account.accountType === AccountType.RECEIVING_AGENCY) {
+            contact = delivery.raContact;
+        }
+        return contact;
     }
 
     render() {
         const { account, futureEvent } = this.props;
         const accountType = account.accountType;
-        const contact = this.state.contact;
+        const contact = this.getContact();
 
         let title = 'Primary Contact for ';
         if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
@@ -130,53 +140,64 @@ class ContactContent extends Component {
                     ) : accountType === AccountType.DONATING_AGENCY_MEMBER ? (
                         <div>
                             <form onSubmit={this.saveContact}>
-                                <select name="primaryContact" defaultValue="" required>
-                                    <option value="" disabled>Select</option>
-                                    {this.state.daMemberList.map(
-                                        (member, i) => {
-                                            return (
-                                                <option key={i} value={i}>
-                                                    {member.contact.name}
-                                                </option>
-                                            );
-                                        }
-                                    )}
-                                </select>
-                                <input type="submit" value="save" className="edit-button"/>
+                                <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                    <select name="primaryContact" defaultValue={contact.id} required>
+                                        {Object.keys(this.state.daMemberMap).map(
+                                            (mId, i) => {
+                                                return (
+                                                    <option key={i} value={mId}>
+                                                        {this.state.daMemberMap[mId]}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                    <input 
+                                        type="submit" 
+                                        className="edit-button"
+                                        value={this.state.waiting ? 'saving...' : 'save'}
+                                    />
+                                </fieldset>
                             </form>
                         </div>
                     ) : accountType === AccountType.RECEIVING_AGENCY ? (
                         <div className="content-details-wrapper">
                             <form className="edit-dg" onSubmit={this.saveContact}>
-                                <div className="input-wrapper contact-wrapper">
-                                    <input
-                                        type="text"
-                                        className="content-details "
-                                        defaultValue={contact.name}
-                                        name="name"
-                                        placeholder="name"
-                                        required
+                                <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                    <div className="input-wrapper contact-wrapper">
+                                        <input
+                                            type="text"
+                                            className="content-details "
+                                            defaultValue={contact.name}
+                                            name="name"
+                                            placeholder="name"
+                                            required
+                                        />
+                                        <input
+                                            type="tel"
+                                            className="content-details "
+                                            defaultValue={contact.phone}
+                                            name="phone"
+                                            pattern={StringFormat.PHONE}
+                                            onChange={formatPhone}
+                                            placeholder="xxx-xxx-xxxx"
+                                            required
+                                        />
+                                        <input
+                                            type="email"
+                                            className="content-details "
+                                            defaultValue={contact.email}
+                                            name="email"
+                                            placeholder="email"
+                                            required
+                                        />
+                                    </div>
+                                    <input 
+                                        type="submit" 
+                                        className="edit-button"
+                                        value={this.state.waiting ? 'saving...' : 'save'}
                                     />
-                                    <input
-                                        type="tel"
-                                        className="content-details "
-                                        defaultValue={contact.phone}
-                                        name="phone"
-                                        pattern={StringFormat.PHONE}
-                                        onChange={formatPhone}
-                                        placeholder="xxx-xxx-xxxx"
-                                        required
-                                    />
-                                    <input
-                                        type="email"
-                                        className="content-details "
-                                        defaultValue={contact.email}
-                                        name="email"
-                                        placeholder="email"
-                                        required
-                                    />
-                                </div>
-                                <input type="submit" className="edit-button" value="save"/>
+                                </fieldset>
                             </form>
                         </div>
                     ) : null}

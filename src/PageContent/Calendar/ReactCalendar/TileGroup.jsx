@@ -296,6 +296,7 @@ class TileGroup extends Component {
                         endTimestamp: 1524772800000,
                         donatingAgency: 'Local Point',
                         daContact: {
+                            id: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
                             name: 'Andrea Benson',
                             phone: '206-543-6975',
                             email: 'bensoa3@uw.edu'
@@ -306,22 +307,19 @@ class TileGroup extends Component {
                             phone: '206-586-9876',
                             email: 'chrisstack@uniongospel.org'
                         },
-                        // delivererGroup is null if isEmergency=true
-                        delivererGroup: {
-                            group: 'Green Greeks2', // uid-key of deliverer-group
-                            deliverers: [
-                                {
-                                    name: 'Alice',
-                                    email: 'alice@uw.edu',
-                                    phone: '123-789-4560'
-                                },
-                                {
-                                    name: 'Chris',
-                                    email: 'chris@uw.edu',
-                                    phone: '456-123-0789'
-                                }
-                            ]
-                        },
+                        delivererGroup: 'Green Greeks2',
+                        deliverers: [
+                            {
+                                name: 'Alice',
+                                email: 'alice@uw.edu',
+                                phone: '123-789-4560'
+                            },
+                            {
+                                name: 'Chris',
+                                email: 'chris@uw.edu',
+                                phone: '456-123-0789'
+                            }
+                        ],
                         description: {
                             foodItems: [
                                 {
@@ -341,16 +339,6 @@ class TileGroup extends Component {
                                 1523173058189: 'Andrea Benson',
                                 1523173817016: 'Chris Doe'
                             }
-                        },
-                        notes: 'Enter through the back door.',
-                        pickedUpInfo: {
-                            temperature: 29, // in F
-                            signature: 'John Smith',
-                            timestamp: 1523174874685
-                        },
-                        deliveredInfo: {
-                            signature: 'Ellen Blake',
-                            timestamp: 1523174892769
                         }
                     }
                 ]

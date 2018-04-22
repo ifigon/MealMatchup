@@ -91,6 +91,13 @@
   cursor: pointer;
 }
 
+.fieldset-wrapper {
+  display: inline-block;
+  margin: 0px !important;
+  padding: 0px !important;
+  border: none !important;
+}
+
 .input-wrapper {
   display: inline-block;
   width: 250px;
