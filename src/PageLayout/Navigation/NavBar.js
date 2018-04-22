@@ -90,13 +90,11 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                <Link to={''}>
-                    <NavBarItem
-                        item={'signout'}
-                        icon={signout}
-                        handler={this.signOut.bind(this)}
-                    />
-                </Link>
+                <NavBarItem
+                    item={'signout'}
+                    icon={signout}
+                    handler={this.signOut.bind(this)}
+                />
             </div>
         );
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { auth, accountsRef } from './FirebaseConfig.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
@@ -64,14 +65,20 @@ class App extends Component {
                 {this.state.authenticated ? (
                     this.state.account ? (
                         /* Show Calendar page if user is logged in */
-                        <PageContainer
-                            account={this.state.account}
-                            content={this.props.content}
-                        />
+                        <div>
+                            <PageContainer
+                                account={this.state.account}
+                                content={this.props.content}
+                            />
+                            <Redirect to={'/calendar'} />
+                        </div>
                     ) : (
-                        <SignUpInController
-                            signInDenied={this.state.signInDenied}
-                        />
+                        <div>
+                            <SignUpInController
+                                signInDenied={this.state.signInDenied}
+                            />
+                            <Redirect to={'/'} />
+                        </div>
                     )
                 ) : (
                     /* Show blank page if initial authentication hasn't finished */
