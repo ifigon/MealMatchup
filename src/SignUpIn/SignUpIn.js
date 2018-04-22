@@ -1,7 +1,7 @@
 // No log in functionality yet
 import './SignUpIn.css';
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SignIn from './SignIn';
 import UserTypeController from './UserTypeController';
 
