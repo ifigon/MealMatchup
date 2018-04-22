@@ -7,7 +7,6 @@ import registerServiceWorker from './registerServiceWorker';
 import MobileController from './MobileDelivery/MobileController';
 import App from './App';
 import DonatingAgencyMemberSignup from './SignUpIn/DonatingAgency/DonatingAgencyMemberSignup.js';
-import { PageContent } from './Enums';
 // import UserTypeController from './SignUpIn/UserTypeController';
 // import SignIn from './SignUpIn/SignIn';
 
