@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import EventCard from './EventCard';
 
 class EventCardSlot extends Component {
-    render() {
-        let eventCard = [];
+    getEventCards() {
+        let eventCards = [];
         let eventCardSlotClass = '';
         let size = 0;
         if (Object.keys(this.props.events).length > 0) {
@@ -14,7 +14,7 @@ class EventCardSlot extends Component {
             if (size > 1) {
                 eventCardSlotClass = 'multiple-events';
             }
-            eventCard.push(
+            eventCards.push(
                 this.props.events[0].map((item, i) => {
                     return (
                         <EventCard
@@ -26,8 +26,16 @@ class EventCardSlot extends Component {
                 })
             );
         }
+        return eventCards;
+    }
 
-        return <div>{eventCard}</div>;
+    render() {
+
+        return (
+            <div class="slot-container">
+                {this.getEventCards()}
+            </div>
+        );
     }
 }
 
