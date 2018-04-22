@@ -1,8 +1,5 @@
-// No log in functionality yet
 import './SignUpIn.css';
 import React, { Component } from 'react';
-import SignIn from './SignIn';
-import UserTypeController from './UserTypeController';
 
 class SignUpIn extends Component {
     constructor(props) {
