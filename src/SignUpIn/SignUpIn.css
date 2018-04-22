@@ -491,3 +491,15 @@ form {
 .ra3-spacing {
     padding: 0px 8px 0px 8px;
 }
+
+.ra3-buttons {
+    position: relative;
+    margin-bottom: 0;
+    padding-left: 0;
+    text-align: center;
+}
+
+.ra3-form-block {
+    height: 510px;
+    overflow: scroll;
+}

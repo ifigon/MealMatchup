@@ -44,7 +44,7 @@ class ReceivingAgencySignUp3 extends Component {
         return (
             <form onSubmit={this.nextStep}>
                 <div className="signup-content">
-                    <div className="form-block">
+                    <div className="form-block ra3-form-block">
                         <label className="form-component delivery">Delivery Days</label>
                         {this.dayNames.map((day, i) => {
                             return this.dayRow(i, day);
@@ -65,7 +65,7 @@ class ReceivingAgencySignUp3 extends Component {
                         </div>
                     </div>
 
-                    <div className="buttons">
+                    <div className="buttons ra3-buttons">
                         <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                         <input type="submit" className="next" value="NEXT"></input>
                     </div>
