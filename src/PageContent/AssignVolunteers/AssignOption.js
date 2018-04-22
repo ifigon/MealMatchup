@@ -31,7 +31,7 @@ class AssignOption extends Component {
                         {date} Pick-up 
                     </div>
                     <div className="avi-detail">
-                        {receivingAgency}
+                        {receivingAgency.name}
                     </div>
                     <div className="avi-detail avi-volunteers">
                         {

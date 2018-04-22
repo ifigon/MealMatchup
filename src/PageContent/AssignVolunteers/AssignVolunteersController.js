@@ -24,13 +24,7 @@ class AssignVolunteersController extends Component {
     // TODO: Add the month navigation header bar
 
     componentDidMount() {
-        let genAccountPromise = (deliveryId, accountId) => (new Promise(async (resolve, reject) => {
-            let snap = await db.ref(`accounts/${accountId}`).once('value');
-            resolve({deliveryId: deliveryId,
-                     account: snap.val()});
-        }));
-
-        let genSupplementaryPromise = (pathPrefix, deliveryId, accountId) => (new Promise(async (resolve, reject) =>
+        let genSupplementaryPromise = (pathPrefix, accountId) => (new Promise(async (resolve, reject) =>
             resolve((await db.ref(`${pathPrefix}/${accountId}`).once('value')).val())));
         
         let genDeliveryListener = (deliveryId) => {
@@ -38,35 +32,43 @@ class AssignVolunteersController extends Component {
                 let delivery = snap.val();
 
                 // kick all promises off
-                let donatingAgencyPromise = genSupplementaryPromise('donating_agencies', deliveryId, delivery.donatingAgency);
-                let donatingAgencyContactPromise = genAccountPromise(deliveryId, delivery.daContact);
-                let receivingAgencyPromise = genAccountPromise(deliveryId, delivery.receivingAgency);
+                let donatingAgencyPromise = genSupplementaryPromise('donating_agencies', delivery.donatingAgency);
+                let donatingAgencyContactPromise = genSupplementaryPromise('accounts', delivery.daContact);
+                let receivingAgencyPromise = genSupplementaryPromise('accounts', delivery.receivingAgency);
                 // collect them
                 let donatingAgency = await donatingAgencyPromise;
                 let donatingAgencyContact = await donatingAgencyContactPromise;
                 let receivingAgency = await receivingAgencyPromise;
 
                 delivery.donatingAgency = donatingAgency;
-                delivery.daContact = donatingAgencyContact.account;
-                delivery.receivingAgency =  receivingAgency.account.name;
+                delivery.daContact = donatingAgencyContact;
+                delivery.receivingAgency =  receivingAgency;
                 delivery.updatedTime = moment().valueOf();
 
-                let updater = {}
-                updater[deliveryId] = {$set: delivery};
-                this.setState(prevState => ({deliveries: update(prevState.deliveries, updater)})); // does this handle async setState?
+                this.setState(prevState => {
+                    let deliveries = prevState.deliveries;
+                    deliveries[deliveryId] = delivery;
+                    return {deliveries: deliveries};
+                });
             });
         };
 
-        db.ref(`delivery_indices/${this.props.account.umbrella}/${this.props.account.uid}`)
-                .orderByKey().startAt(`${moment().valueOf()}`).on('value', async (snap) => {
-            let deliveryIndices = snap.val();
-            this.setState({deliveriesExist: Object.keys(deliveryIndices).length > 0});
-            for (let timestamp in deliveryIndices) {
-                for (let deliveryIndex of Object.keys(deliveryIndices[timestamp])) {
-                    genDeliveryListener(deliveryIndex);
+        // add listeners for the indices
+        let myDeliveriesRef = db.ref(`delivery_indices/${this.props.account.umbrella}/${this.props.account.uid}`)
+                .orderByKey().startAt(`${moment().valueOf()}`);
+
+        let processTimestampIndex = (timestampIndex) => {
+            for (let deliveryId of Object.keys(timestampIndex)) {
+                if (!this.state.deliveries[deliveryId]) {
+                    if (!this.state.deliveriesExist) {
+                        this.setState({deliveriesExist: true});
+                    }
+                    genDeliveryListener(deliveryId);
                 }
             }
-        });
+        };
+        myDeliveriesRef.on('child_added', async (snap) => processTimestampIndex(snap.val()));
+        myDeliveriesRef.on('child_changed', async (snap) => processTimestampIndex(snap.val()));
     }
 
     componentWillUnmount() {
@@ -81,6 +83,9 @@ class AssignVolunteersController extends Component {
         return (
             <div className="container assign-volunteers-container">
                 {this.showStep()}
+                {/* Only show the confirmation card once the database has been updated. The time check 
+                    prevents the confirmation card from being displayed until the database triggers a 
+                    'value' event and updates our local view of the delivery. */}
                 {this.state.onConfirm && this.state.deliveries[this.state.selectedDeliveryId].deliverers 
                     && this.state.hitUpdateTime < this.state.deliveries[this.state.selectedDeliveryId].updatedTime ?
                     <ConfirmationCard

@@ -29,7 +29,7 @@ class Edit extends Component {
                     <i className="fas fa-circle ellipses" />
                     <i className="fas fa-circle ellipses" />
                     <i className="fas fa-circle ellipses" />
-                    <h5 className="location" id="bottom"><i className="fas fa-map-marker-alt map-marker" /><span className="spacing" />{receivingAgency}</h5>
+                    <h5 className="location" id="bottom"><i className="fas fa-map-marker-alt map-marker" /><span className="spacing" />{receivingAgency.name}</h5>
                 </div>
                 <div className="form-container">
                     <form onSubmit={this.handleConfirmClick.bind(this)}>

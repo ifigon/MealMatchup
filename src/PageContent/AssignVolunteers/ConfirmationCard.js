@@ -54,8 +54,10 @@ class ConfirmationCard extends Component {
                         </div>
                         <div className="delivery-details">
                             <h5>Recipient</h5>
-                            <h4>{receivingAgency}</h4>
+                            <h4>{receivingAgency.name}</h4>
                             <h6 className="det">{raContact.name} ({raContact.phone})</h6>
+                            <h6 className="det">{receivingAgency.address.street1}</h6>
+                            <h6 className="det">{`${receivingAgency.address.city}, ${receivingAgency.address.state} ${receivingAgency.address.zipcode}`}</h6>
                         </div>
                     </div>
                     <div className="details-content">
