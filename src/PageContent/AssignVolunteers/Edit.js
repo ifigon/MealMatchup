@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { StringFormat } from '../../Enums';
-import { formatPhone } from '../../Utils';
+import { formatPhone } from '../../utils/Utils';
 
 class Edit extends Component {
     render() {

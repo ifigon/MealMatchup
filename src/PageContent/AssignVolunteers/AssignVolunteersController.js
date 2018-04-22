@@ -5,7 +5,6 @@ import Edit from './Edit';
 import ConfirmationCard from './ConfirmationCard';
 import AssignVolunteersIndex from './AssignVolunteersIndex';
 import moment from 'moment';
-import update from 'immutability-helper';
 const db = firebase.database();
 
 class AssignVolunteersController extends Component {
@@ -55,7 +54,7 @@ class AssignVolunteersController extends Component {
 
         // add listeners for the indices
         let myDeliveriesRef = db.ref(`delivery_indices/${this.props.account.umbrella}/${this.props.account.uid}`)
-                .orderByKey().startAt(`${moment().valueOf()}`);
+            .orderByKey().startAt(`${moment().valueOf()}`);
 
         let processTimestampIndex = (timestampIndex) => {
             for (let deliveryId of Object.keys(timestampIndex)) {
@@ -104,20 +103,21 @@ class AssignVolunteersController extends Component {
     handleConfirmClick(d1, d2) {
         let updatedTime = moment().valueOf();
         let deliverers = [d1, d2];
-        if (this.deliverersAreEqual(deliverers,
-                this.state.deliveries[this.state.selectedDeliveryId].deliverers)) {
+        if (this.deliverersAreEqual(deliverers, this.state.deliveries[this.state.selectedDeliveryId].deliverers)) {
             // There was no change. I shouldn't send an update request,
             // I should simply say that this delivery is up to date.
-            let updater = {};
-            updater[this.state.selectedDeliveryId] = {updatedTime: {$set: updatedTime + 1}}; // indicate that it is up to date
-            this.setState(prevState => ({
-                    deliveries: update(prevState.deliveries, updater),
+            this.setState(prevState => {
+                let deliveries = prevState.deliveries;
+                deliveries[this.state.selectedDeliveryId].updatedTime = updatedTime + 1;
+                return {
+                    deliveries: deliveries,  // indicate that it is up to date, despite not triggering a db event
                     onConfirm: true,
                     hitUpdateTime: updatedTime,
-            }));
+                };
+            });
         } else {
             let path = `/${this.state.selectedDeliveryId}/deliverers`;
-            let update = {}
+            let update = {};
             update[path] = deliverers;
             deliveriesRef.update(update).then(() => {
                 this.setState({
@@ -174,29 +174,28 @@ class AssignVolunteersController extends Component {
 
     showStep() {
         switch(this.state.step) {
-            case 0:
-                return (
-                    <AssignVolunteersIndex 
-                        handleEditClick={this.handleEditClick.bind(this)}
-                        deliveries={this.state.deliveries}
-                        deliveriesExist={this.state.deliveriesExist}
-                    />
-                );
+        case 0:
+            return (
+                <AssignVolunteersIndex 
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    deliveries={this.state.deliveries}
+                    deliveriesExist={this.state.deliveriesExist}
+                />
+            );
 
-            case 1:
-                return (
-                    <Edit
-                        delivery={this.state.deliveries[this.state.selectedDeliveryId]}
-                        handleConfirmClick={this.handleConfirmClick.bind(this)}
-                        handleCancelClick={this.handleCancelClick.bind(this)}
-                    />
-                );
-            default:
-                return (
-                    <div />
-                );
+        case 1:
+            return (
+                <Edit
+                    delivery={this.state.deliveries[this.state.selectedDeliveryId]}
+                    handleConfirmClick={this.handleConfirmClick.bind(this)}
+                    handleCancelClick={this.handleCancelClick.bind(this)}
+                />
+            );
+        default:
+            return (
+                <div />
+            );
         }
-
     }
 }
 
