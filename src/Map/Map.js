@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import GoogleMap from 'google-map-react';
 import Geocode from '../react-geocode';
 import './Marker.css';
+import { isMobile } from '../utils/Utils';
+
+const GoogleMap_API_KEY = 'AIzaSyBhUNXr9HGzNW1k0Va7EGeyFsJqUSlkwCU';
 
 const Marker = ({ text }) => (
     <div>
@@ -15,9 +18,10 @@ class Map extends Component{
         super(props);
         
         this.state  = {
-            center: {},
+            center: {lat: 0, lng: 0}, // initial marker state
             zoom: 15,
-            validAddress: true
+            validAddress: true,
+            address: '',
         };
     }
 
@@ -30,7 +34,8 @@ class Map extends Component{
         Geocode.fromAddress(address).then(
             response => {
                 this.setState({
-                    center: response.results[0].geometry.location
+                    center: response.results[0].geometry.location,
+                    address: address,
                 });
             },
             error => {
@@ -54,6 +59,9 @@ class Map extends Component{
             <div className='google-map' style={style}>
                 {this.state.validAddress ?
                     <GoogleMap
+                        bootstrapURLKeys={{
+                            key: GoogleMap_API_KEY,
+                        }}
                         center={ this.state.center }
                         zoom={ this.state.zoom }>
                         <Marker
@@ -65,6 +73,8 @@ class Map extends Component{
                     :
                     <div className="error">Unable to load map</div>
                 }
+                {/* Prompts user to open maps on their phone (mobile only) */}
+                {this.state.validAddress && isMobile() && <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.long} target="_blank">{this.state.address}</a>}
             </div>
         );
     }

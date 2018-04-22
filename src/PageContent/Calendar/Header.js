@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { AccountType, DeliveryType } from '../../Enums';
+import { AccountType, DeliveryType, StringFormat } from '../../Enums';
 import './Header.css';
 import white_cross from '../../icons/white_cross.svg';
+import moment from 'moment';
 
 class Header extends Component {
     render() {
@@ -29,8 +30,16 @@ class Header extends Component {
                     alt="close"
                 />
                 <p className="header-time">
-                    {this.props.date} {this.props.startTime} -{' '}
-                    {this.props.endTime}
+                    {moment(this.props.startTime * 1000).format(
+                        StringFormat.DATE_FULL
+                    )}{' '}
+                    {moment(this.props.startTime * 1000).format(
+                        StringFormat.TIME
+                    )}{' '}
+                    -{' '}
+                    {moment(this.props.endTime * 1000).format(
+                        StringFormat.TIME
+                    )}
                 </p>
             </div>
         );

@@ -4,9 +4,12 @@ import { polyfill } from 'react-lifecycles-compat';
 import mergeClassNames from 'merge-class-names';
 
 import Navigation from './Navigation';
+/* [Original source code]
 import CenturyView from './CenturyView';
 import DecadeView from './DecadeView';
 import YearView from './YearView';
+*/
+
 import MonthView from './MonthView';
 
 import { getBegin, getEnd, getValueRange } from './shared/dates';
@@ -18,8 +21,13 @@ import {
     isValue
 } from './shared/propTypes';
 import { between, callIfDefined, mergeFunctions } from './shared/utils';
+/* [Original Source Code]
+    const allViews = ['century', 'decade', 'year', 'month'];
+*/
 
-const allViews = ['century', 'decade', 'year', 'month'];
+/* [Custom code] */
+const allViews = ['month'];
+
 const allValueTypes = [...allViews.slice(1), 'day'];
 
 const datesAreDifferent = (date1, date2) =>
@@ -360,6 +368,7 @@ export default class Calendar extends Component {
             : this.onChange;
 
         switch (view) {
+            /* [Original Source Code -> show different calendar views]
             case 'century':
                 return (
                     <CenturyView
@@ -391,6 +400,8 @@ export default class Calendar extends Component {
                         {...commonProps}
                     />
                 );
+            */
+
             case 'month':
                 return (
                     <MonthView
@@ -469,7 +480,7 @@ export default class Calendar extends Component {
 
 Calendar.defaultProps = {
     maxDetail: 'month',
-    minDetail: 'century',
+    minDetail: 'month',
     returnValue: 'start',
     showNavigation: true,
     showNeighboringMonth: true,

@@ -127,3 +127,17 @@ exports.FoodUnit = {
     CASES: 'cases',
     LOAVES: 'loaves'
 };
+
+exports.Routes = {
+    ASSIGN_VOLUNTEERS: 'assign-volunteers',
+    CALENDAR: 'calendar',
+    DIRECTORY: 'directory',
+    FOOD_LOGS: 'food-logs',
+    REQUEST_PICKUP: 'request-pickup',
+    SETTINGS: 'settings'
+};
+
+exports.NotificationCategory = {
+    RECURRING_PICKUP: 'recurring_pickup',
+    ACCOUNT: 'account'
+};

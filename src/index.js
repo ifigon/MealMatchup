@@ -15,10 +15,12 @@ ReactDOM.render(
     <Router>
         <Switch>
             <Route exact path="/" component={App} />
-            {/* TODO: Mobile route 
-                - unique path to a pickup and pass info into MobileDelivery
-            */}
-            <Route exact path="/mobile" component={MobileController} />
+            {/* Mobile Delivery Route: uId: umbrellaId, dId: deliveryId */}
+            <Route
+                exact
+                path="/mobile/delivery/:id"
+                component={MobileController}
+            />
             {/* TODO: DA Member Signup route with agency key */}
             <Route
                 exact
@@ -31,42 +33,12 @@ ReactDOM.render(
 
             <Route path="/login" component={SignIn} /> */}
 
-            <Route
-                path="/calendar"
-                render={props => (
-                    <App content={PageContent.CALENDAR} {...props} />
-                )}
-            />
-            <Route
-                path="/directory"
-                render={props => (
-                    <App content={PageContent.DIRECTORY} {...props} />
-                )}
-            />
-            <Route
-                path="/assign-volunteers"
-                render={props => (
-                    <App content={PageContent.ASSIGN_VOLUNTEERS} {...props} />
-                )}
-            />
-            <Route
-                path="/food-logs"
-                render={props => (
-                    <App content={PageContent.FOOD_LOGS} {...props} />
-                )}
-            />
-            <Route
-                path="/settings"
-                render={props => (
-                    <App content={PageContent.SETTINGS} {...props} />
-                )}
-            />
-            <Route
-                path="/request-pickup"
-                render={props => (
-                    <App content={PageContent.REQUEST_PICKUP} {...props} />
-                )}
-            />
+            <Route path="/calendar" component={App} />
+            <Route path="/directory" component={App} />
+            <Route path="/assign-volunteers" component={App} />
+            <Route path="/food-logs" component={App} />
+            <Route path="/settings" component={App} />
+            <Route path="/request-pickup" component={App} />
         </Switch>
     </Router>,
     document.getElementById('root')

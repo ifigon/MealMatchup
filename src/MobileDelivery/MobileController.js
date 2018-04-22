@@ -4,184 +4,188 @@ import MobileStart from './MobileStart';
 import MobilePickup from './MobilePickup';
 import MobileDelivery from './MobileDelivery';
 import MobileComplete from './MobileComplete';
+import { DeliveryStatus } from '../Enums';
+import moment from 'moment';
+
+import firebase from '../FirebaseConfig';
+const db = firebase.database();
 
 class MobileController extends React.Component { 
     constructor(props) {
         super(props);
         this.state = {
+            deliveryDbRefPath: '',
             deliveryObj: {
-                date: '2018-02-28',
-                startTime: '14:00',
-                endTime: '17:00',
-                isEmergency: false,
-                donatingAgency: {
-                    agency: '-K9HdKlCLjjk_ka82K0s',  // autogen-key of a donating-agency
-                    primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1',  // uid-key of a donating-agency-member
-                },
-                receivingAgency: {
-                    agency: 'uGOFJ8NqHjbZhKAYzSZFRs1dSKD3',  // uid-key of receiving-agency
-                    primaryContact: {
-                        name: 'Bob',
-                        email: 'bob@uniongospel.org',
-                        phone: '098-765-4321'
-                    }
-                },
-                // delivererGroup is null if isEmergency=true
-                delivererGroup: {
-                    // TODO: Get group name with UID. Replaced UID here with name for frontend
-                    group: 'Green Greeks',  // uid-key of deliverer-group
-                    deliverers: [
-                        {
-                            name: 'Alice',
-                            email: 'alice@uw.edu',
-                            phone: '123-789-4560'
-                        },
-                        {
-                            name: 'Chris',
-                            email: 'chris@uw.edu',
-                            phone: '456-123-0789'
-                        }
-                    ]
-                },
-                description: {
-                    foodItems: [
-                        {
-                            food: 'Baked beans',
-                            quantity: 15,
-                            unit: 'lb'  // Enums.FoodUnit
-                        },
-                        {
-                            food: 'Bread',
-                            quantity: 4,
-                            unit: 'loaves'  // Enums.FoodUnit
-                        }
-                    ],
-                    updatedBy: 'dhA03LwTp3cibXVUcb3nQqO34wj1'  // uid-key of a donating-agency-member
-                },
-                notes: 'Enter through the back door.'
+                startTime: '',
+                endTime: '',
+                isEmergency: null,
+                donatingAgency: '',
+                daContact: '',
+                receivingAgency: '',
+                raContact: {},
+                delivererGroup: '',  // delivererGroup is null if isEmergency=true
+                deliverers: [],
+                description: {},
+                notes: ''
             },
             receivingAgency :{
-                agency: 'Seattle Union Gospel Shelter',
-                primaryContact: {
-                    name: 'Billy Jones',
-                    position: 'Manager',
-                    email: 'billy@jones.com',
-                    phone: '324-321-7665'
-                },
-                notes: 'Only enter if there is a wizard at the front door.',
-                address: {
-                    street1: '318 2nd Ave Extension South',
-                    street2: '',
-                    city: 'Seattle',
-                    state: 'WA',
-                    zipcode: 98104,
-                    officeNo: ''
-                }
+                agency: '',
+                primaryContact: {},
+                notes: '',
+                address: {},
             },
             donatingAgency :{
-                agency: 'Local Point',
-                primaryContact: {
-                    name: 'Amanda Hernandez',
-                    position: 'Head Cook',
-                    email: 'amanda@lp.com',
-                    phone: '205-385-3312'
-                },
-                address: {
-                    street1: '1245 NE Campus Pkwy',
-                    street2: '',
-                    city: 'Seattle',
-                    state: 'WA',
-                    zipcode: 98105,
-                    officeNo: ''
-                }
+                agency: '',
+                primaryContact: {},
+                address: {},
             },
-
-            // TODO: add these fields to deliveryObject
-            // TODO: save signatures as image
-            currentDelivery: {
-                temp: '',
-                daSignature: '',
-                raSignature: '',
-                raPrintName: '',
-                timePickedUp: '',
-                timeCompleted: '',
-                deliveryCompleted: false
-            },
-            step: 0
+            showSummary: false,
         };
-        this.showStep = this.showStep.bind(this);
-        this.showStart = this.showStart.bind(this);
-        this.nextStep = this.nextStep.bind(this);
-        this.saveValues = this.saveValues.bind(this);
+        this.renderView = this.renderView.bind(this);
+        this.toggleShowSummary = this.toggleShowSummary.bind(this);
     }
 
-    showStart(){
-        this.setState({
-            step: 1
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        const deliveryDbRefPath = `deliveries/${id}`;
+        this.setState({ deliveryDbRefPath: deliveryDbRefPath });
+
+        db.ref(deliveryDbRefPath).on('value', (snapshot) => {  // listen data onchange
+            const deliveryData = snapshot.val();
+            this.aggrDelivery(deliveryData);
         });
     }
 
-    nextStep () {
-        this.setState((prevState) => {
-            return { step: prevState.step + 1 };
-        });
+    componentWillUnmount() {
+        db.ref(this.state.deliveryDbRefPath).off();  // detach listener
     }
 
-    // TODO: Save completed delivery
-    saveValues(fields) {
-        this.setState({
-            currentDelivery: Object.assign({}, this.state.currentDelivery, fields)
-        });
+    async aggrDelivery(deliveryData) {
+        this.fetchDa(deliveryData.donatingAgency, deliveryData.daContact);
+        this.fetchRa(deliveryData.receivingAgency, deliveryData.raContact);
+
+        if (deliveryData.delivererGroup) { // Non-Emergency Pick Up: deliveryData.delivererGroup != null
+            // get delivererGroup name
+            let dgObj = await db.ref(`accounts/${deliveryData.delivererGroup}`).once('value');
+            deliveryData.delivererGroup = dgObj.val().name;           
+        } else { // Emergency Pick Up: deliveryData.delivererGroup == null
+            deliveryData.delivererGroup = '';
+            deliveryData.deliverers = [];
+        }
+
+        this.setState({ deliveryObj: this.getDeliveryObj(deliveryData)});
+    }
+    
+    getDeliveryObj(rawDelivery) {
+        let deliveryObj = ( // pick entries from rawDelivery
+            ({ description, delivererGroup, deliverers, notes, isEmergency, status, pickedUpInfo, deliveredInfo }) => 
+                ({ description, delivererGroup, deliverers, notes, isEmergency, status, pickedUpInfo, deliveredInfo })
+        )(rawDelivery);
+
+        let startTimeObj = moment(rawDelivery.startTimestamp);
+        let endTimeObj = moment(rawDelivery.endTimestamp);
+
+        deliveryObj.startTime = startTimeObj;
+        deliveryObj.endTime = endTimeObj;
+        return deliveryObj;
     }
 
-    showStep() {
-        switch (this.state.step) {
-        default:
+    async fetchDa(daId, daContactId) {
+        let daPromise = new Promise( async (resolve, reject) => {
+            let daSnapshot = await db.ref(`donating_agencies/${daId}`).once('value');
+            resolve(daSnapshot.val());
+        });
+
+        let daMemberPromise = new Promise( async (resolve, reject) => {
+            let daMemberSnapshot = await db.ref(`accounts/${daContactId}`).once('value');
+            resolve(daMemberSnapshot.val());
+        });
+
+        let daData = await Promise.all([daPromise, daMemberPromise]);
+        this.aggrDa(daData[0], daData[1]);
+    }
+
+    aggrDa(daData, daMemberData) {
+        let pickedPrimaryContact = (
+            ({ position, name, email, phone }) => ({ position, name, email, phone })
+        )(daMemberData);
+        
+        let daObj = {
+            primaryContact: pickedPrimaryContact,
+            agency: daData.name,
+            address: daData.address,
+        };
+        this.setState({ donatingAgency: daObj});
+    }
+
+    async fetchRa(raId, raContact) {
+        let raSnapshot = await db.ref(`accounts/${raId}`).once('value');
+        this.aggrRa(raSnapshot.val(), raContact);
+    }
+
+    aggrRa(raMeta, raPrimaryContact) {
+        let raObj = {
+            primaryContact: raPrimaryContact,
+            agency: raMeta.name,
+            notes: raMeta.deliveryNotes,
+            address: raMeta.address,
+        };
+        this.setState({ receivingAgency: raObj});
+    }
+
+    toggleShowSummary() {
+        this.setState(prevState => ({ 
+            showSummary: !prevState.showSummary
+        }));
+    }
+
+    renderView() {
+        switch (this.state.deliveryObj.status) {
+        case DeliveryStatus.SCHEDULED:
             return <MobileStart 
                 deliveryObj={this.state.deliveryObj}
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency}
-                showStart={this.showStart}/>;
-        case 1:
+                dbRef={this.state.deliveryDbRefPath}/>;
+        case DeliveryStatus.STARTED:
             return <MobilePickup 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
-                nextStep={this.nextStep}
-                saveValues={this.saveValues}
+                dbRef={this.state.deliveryDbRefPath}
             />;
-        case 2:
+        case DeliveryStatus.PICKED_UP:
             return <MobileDelivery 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
-                nextStep={this.nextStep}
-                currentDelivery={this.state.currentDelivery}
-                saveValues={this.saveValues}
+                dbRef={this.state.deliveryDbRefPath}
+                toggleShowSummary={this.toggleShowSummary}
             />;
-        case 3: 
+        case DeliveryStatus.COMPLETED: 
             return <MobileComplete 
                 deliveryObj={this.state.deliveryObj} 
                 da={this.state.donatingAgency} 
                 ra={this.state.receivingAgency} 
-                currentDelivery={this.state.currentDelivery}
+                showSummary={this.state.showSummary}
+                toggleShowSummary={this.toggleShowSummary}
             />;
+        default:
+            return null;
         }
     }
 
     render() {
-        return (
-            <div className="mobile-wrapper">
-                {this.state.deliveryObj.deliveryCompleted ?
-                    <MobileComplete 
-                        deliveryObj={this.state.deliveryObj} 
-                        da={this.state.donatingAgency} 
-                        ra={this.state.receivingAgency}/>
-                    :
-                    this.showStep()
-                }
-            </div>
-        );
+        if (this.state.donatingAgency.agency && 
+            this.state.receivingAgency.agency && 
+            this.state.deliveryObj.delivererGroup !== null) { // return view if all data is back
+            return (
+                <div className="mobile-wrapper">
+                    { this.renderView() } 
+                </div>
+            );
+        }
+        return null;
     }
 }
 

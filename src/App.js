@@ -4,6 +4,8 @@ import { auth, accountsRef } from './FirebaseConfig.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
+import { Routes, PageContent } from './Enums';
+import { WSAVERNOTSUPPORTED } from 'constants';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -34,6 +36,7 @@ class App extends Component {
                         .then(
                             function(snapshot) {
                                 var account = snapshot.val();
+                                account.uid = user.uid;
                                 if (account.isVerified && account.isActivated) {
                                     this.setState({
                                         authenticated: true,
@@ -60,6 +63,28 @@ class App extends Component {
     }
 
     render() {
+        let path = window.location.href.split('/')[3];
+        let content = '';
+        switch (path) {
+        case Routes.ASSIGN_VOLUNTEERS:
+            content = PageContent.ASSIGN_VOLUNTEERS;
+            break;
+        case Routes.DIRECTORY:
+            content = PageContent.DIRECTORY;
+            break;
+        case Routes.FOOD_LOGS:
+            content = PageContent.FOOD_LOGS;
+            break;
+        case Routes.REQUEST_PICKUP:
+            content = PageContent.REQUEST_PICKUP;
+            break;
+        case Routes.SETTINGS:
+            content = PageContent.SETTINGS;
+            break;
+        default:
+            content = PageContent.CALENDAR;
+            break;
+        }
         return (
             <div className="">
                 {this.state.authenticated ? (
@@ -68,9 +93,9 @@ class App extends Component {
                         <div>
                             <PageContainer
                                 account={this.state.account}
-                                content={this.props.content}
+                                content={content}
                             />
-                            <Redirect to={'/calendar'} />
+                            {!path ? <Redirect to={'/calendar'} /> : null}
                         </div>
                     ) : (
                         <div>
