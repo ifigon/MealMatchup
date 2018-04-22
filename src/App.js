@@ -34,6 +34,7 @@ class App extends Component {
                         .then(
                             function(snapshot) {
                                 var account = snapshot.val();
+                                account.uid = user.uid;
                                 if (account.isVerified && account.isActivated) {
                                     this.setState({
                                         authenticated: true,

@@ -13,4 +13,6 @@ firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 export const accountsRef = firebase.database().ref('accounts');
+export const deliveriesRef = firebase.database().ref('deliveries');
+export const donatingAgenciesRef = firebase.database().ref('donating_agencies');
 export default firebase;
