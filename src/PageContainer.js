@@ -17,7 +17,7 @@ class PageContainer extends Component {
     constructor(props) {
         // Props: content, account
         super(props);
-        let route = window.location.href.split('/')[3];
+
         this.state = {
             content: this.props.content,
             donatingAgency: null,
@@ -164,6 +164,7 @@ class PageContainer extends Component {
     }
 
     render() {
+        console.log('this.state', this.state);
         return (
             <div>
                 <PageHeader

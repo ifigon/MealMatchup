@@ -8,9 +8,8 @@ import MobileController from './MobileDelivery/MobileController';
 import App from './App';
 import DonatingAgencyMemberSignup from './SignUpIn/DonatingAgency/DonatingAgencyMemberSignup.js';
 import { PageContent } from './Enums';
-import UserTypeController from './SignUpIn/UserTypeController';
-import SignIn from './SignUpIn/SignIn';
-// import SignUpInController from './SignUpIn/SignUpInController';
+// import UserTypeController from './SignUpIn/UserTypeController';
+// import SignIn from './SignUpIn/SignIn';
 
 ReactDOM.render(
     <Router>
@@ -27,9 +26,10 @@ ReactDOM.render(
                 component={DonatingAgencyMemberSignup}
             />
 
-            <Route path="/signup" component={UserTypeController} />
+            {/* TODO: Get login functionality back with these routes */}
+            {/* <Route path="/signup" component={UserTypeController} />
 
-            <Route path="/login" component={SignIn} />
+            <Route path="/login" component={SignIn} /> */}
 
             <Route
                 path="/calendar"
