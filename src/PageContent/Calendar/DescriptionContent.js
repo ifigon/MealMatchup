@@ -80,18 +80,15 @@ class DescriptionContent extends Component {
         this.setState({
             donationObject: newDonation,
             edit: false,
-            editedBy: this.props.accountOwnerName,
+            editedBy: this.props.account.name,
             editedAt: moment().format('MM/DD h:mma')
         });
 
         // TODO: push data to firebase
     }
 
-    render() {
-        let donation = this.stringifyDonation(this.state.donationObject);
-
+    getEditDonation() {
         let editDonation = '';
-
         if (this.state.donationObject.length > 0) {
             editDonation = this.state.donationObject.map((item, index) => {
                 return (
@@ -123,6 +120,14 @@ class DescriptionContent extends Component {
                 );
             });
         }
+        return editDonation;
+    }
+
+    render() {
+        let accountType = this.props.account.accountType;
+        let donation = this.stringifyDonation(this.state.donationObject);
+        let editDonation = this.getEditDonation();
+        
         return (
             <div className="wrapper">
                 <img
@@ -147,17 +152,16 @@ class DescriptionContent extends Component {
                                         {donation}
                                     </p>
                                 </div>
-                            ) : this.state.accountType ===
-                            AccountType.DONATING_AGENCY_MEMBER ? (
-                                    <button
-                                        className="add-food"
-                                        onClick={this.addRow}
-                                    >
-                                    Add Food Items
-                                    </button>
-                                ) : (
-                                    <p>To Be Determined</p>
-                                )}{' '}
+                            ) : accountType === AccountType.DONATING_AGENCY_MEMBER ? (
+                                <button
+                                    className="add-food"
+                                    onClick={this.addRow}
+                                >
+                                Add Food Items
+                                </button>
+                            ) : (
+                                <p>To Be Determined</p>
+                            )}{' '}
                         </div>
                     ) : (
                         <div className="content-details-wrapper">
@@ -194,11 +198,10 @@ class DescriptionContent extends Component {
                             </form>
                         </div>
                     )}
-                    {this.state.accountType ===
-                        AccountType.DONATING_AGENCY_MEMBER &&
-                    !this.state.edit &&
-                    this.props.futureEvent &&
-                    this.state.donationObject.length > 0 ? (
+                    {accountType === AccountType.DONATING_AGENCY_MEMBER &&
+                        !this.state.edit &&
+                        this.props.futureEvent &&
+                        this.state.donationObject.length > 0 ? (
                             <button
                                 type="button"
                                 className="edit-button"

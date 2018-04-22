@@ -65,7 +65,10 @@ class PageContainer extends Component {
                 />
 
                 {this.state.content === PageContent.CALENDAR && (
-                    <Calendar id="calendar-container" />
+                    <Calendar 
+                        id="calendar-container" 
+                        account={this.props.account}
+                    />
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (

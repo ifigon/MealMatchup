@@ -87,6 +87,8 @@ export default class Days extends PureComponent {
                 start={this.start}
                 tile={Day}
                 currentMonthIndex={monthIndex}
+
+                account={this.props.account}
             />
         );
     }
