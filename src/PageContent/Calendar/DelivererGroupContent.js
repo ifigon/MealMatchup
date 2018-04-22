@@ -37,6 +37,7 @@ class DelivererGroupContent extends Component {
 
     saveVolunteers(e) {
         e.preventDefault();
+
         let deliverers = [];
         for (let i = 0; i < 2; i++) {
             deliverers.push({
