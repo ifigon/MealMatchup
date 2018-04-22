@@ -338,9 +338,8 @@ input.week{
 }
 
 .day {
-    display: inline;
-    margin-right: 20px;
-    margin-left: 5px;
+    display: inline-block;
+    width: 45px;
 }
 
 .checkbox:checked:after{
@@ -483,4 +482,12 @@ form{
 
 form {
     padding-top: 0px;
+}
+
+.ra3-inputBox {
+    width: 65px !important;
+}
+
+.ra3-spacing {
+    padding: 0px 8px 0px 8px;
 }

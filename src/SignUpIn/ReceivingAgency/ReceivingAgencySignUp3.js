@@ -33,9 +33,9 @@ class ReceivingAgencySignUp3 extends Component {
                 <input type="checkbox" name={checkboxName} defaultChecked={checked} />
                 <div className="day">{day}</div>
                 {/* TODO: AM/PM UI */}
-                <input type="time" name={startName} defaultValue={startTime} />
-                to
-                <input type="time" name={endName} defaultValue={endTime} />
+                <input type="time" name={startName} defaultValue={startTime} className="ra3-inputBox" />
+                <span className="ra3-spacing">to</span>
+                <input type="time" name={endName} defaultValue={endTime} className="ra3-inputBox" />
             </div>
         );
     }
