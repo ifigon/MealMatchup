@@ -74,10 +74,10 @@ class App extends Component {
                         </div>
                     ) : (
                         <div>
+                            <Redirect to={'/'} />
                             <SignUpInController
                                 signInDenied={this.state.signInDenied}
                             />
-                            <Redirect to={'/'} />
                         </div>
                     )
                 ) : (

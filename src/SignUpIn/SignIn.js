@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { auth } from '../FirebaseConfig';
 import './SignUpIn.css';
 
@@ -82,7 +82,8 @@ class SignIn extends Component {
                             {/* <p className="forgot">forgot username?</p> */}
                         </div>
                         <div className="signup-reroute">
-                            <Link to={'/signup'}>Create Account</Link>
+                            {/* TODO: Link straight to signup when login routing is ready */}
+                            {/* <Link to={'/signup'}>Create Account</Link> */}
                         </div>
                     </div>
                 </form>

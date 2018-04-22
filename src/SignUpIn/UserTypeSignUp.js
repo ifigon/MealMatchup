@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import volunteer from '../icons/volunteer.svg';
 import shelter from '../icons/shelter.svg';
 import vitamins from '../icons/vitamins.svg';
@@ -52,9 +52,10 @@ class UserTypeSignUp extends Component {
                         />{' '}
                         Donating Agency
                     </div>
-                    <div className="user-type login-reroute">
+                    {/* TODO add routing to Login */}
+                    {/* <div className="user-type login-reroute">
                         <Link to={'/login'}>Login</Link>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         );
