@@ -22,7 +22,7 @@ class NavBar extends Component {
     render() {
         return (
             <div className="navbar">
-                <Link to={'/calendar'}>
+                <Link to={'/calendar'} className="nav-link">
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.CALENDAR
@@ -32,21 +32,22 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER && (
-                    <Link to={'/request-pickup'}>
-                        <NavBarItem
-                            highlighted={
-                                this.props.content ===
+                {this.props.accountType ===
+                    AccountType.DONATING_AGENCY_MEMBER && (
+                        <Link to={'/request-pickup'} className="nav-link">
+                            <NavBarItem
+                                highlighted={
+                                    this.props.content ===
                                 PageContent.REQUEST_PICKUP
-                            }
-                            item={PageContent.REQUEST_PICKUP}
-                            icon={truck}
-                            handler={this.props.handler}
-                        />
-                    </Link>
-                )}
+                                }
+                                item={PageContent.REQUEST_PICKUP}
+                                icon={truck}
+                                handler={this.props.handler}
+                            />
+                        </Link>
+                    )}
                 {this.props.accountType === AccountType.DELIVERER_GROUP && (
-                    <Link to={'/assign-volunteers'}>
+                    <Link to={'/assign-volunteers'} className="nav-link">
                         {' '}
                         <NavBarItem
                             highlighted={
@@ -59,7 +60,7 @@ class NavBar extends Component {
                         />
                     </Link>
                 )}
-                <Link to={'/food-logs'}>
+                <Link to={'/food-logs'} className="nav-link">
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.FOOD_LOGS
@@ -69,7 +70,7 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                <Link to={'/directory'}>
+                <Link to={'/directory'} className="nav-link">
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.DIRECTORY
@@ -79,7 +80,7 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                <Link to={'/settings'}>
+                <Link to={'/settings'} className="nav-link">
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.SETTINGS
