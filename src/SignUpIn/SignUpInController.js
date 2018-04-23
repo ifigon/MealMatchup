@@ -23,6 +23,13 @@ class SignUpInController extends Component {
             step: 2
         });
     }
+
+    back() {
+        this.setState({
+            step: 0
+        });
+    }
+
     showStep() {
         switch (this.state.step) {
         default:
@@ -33,10 +40,15 @@ class SignUpInController extends Component {
                 />
             );
         case 1:
-            return <SignIn signInDenied={this.props.signInDenied} />; //(
+            return (
+                <SignIn
+                    signInDenied={this.props.signInDenied}
+                    back={this.back.bind(this)}
+                />
+            ); //(
 
         case 2:
-            return <UserTypeController />;
+            return <UserTypeController back={this.back.bind(this)} />;
         }
     }
     render() {

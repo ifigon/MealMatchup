@@ -84,6 +84,9 @@ class SignIn extends Component {
                         <div className="signup-reroute">
                             {/* TODO: Link straight to signup when login routing is ready */}
                             {/* <Link to={'/signup'}>Create Account</Link> */}
+                            <div className="back" onClick={this.props.back}>
+                                Back
+                            </div>
                         </div>
                     </div>
                 </form>
