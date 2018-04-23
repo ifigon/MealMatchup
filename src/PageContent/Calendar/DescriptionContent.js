@@ -143,12 +143,14 @@ class DescriptionContent extends Component {
     }
 
     render() {
-        const { account, delivery } = this.props;
+        const { account, delivery, futureEvent } = this.props;
         const accountType = account.accountType;
         const description = delivery.description;
 
         let lastEdited = null;
-        if (description && description.updatedBy) {
+        if (accountType === AccountType.DONATING_AGENCY_MEMBER &&
+            description && description.updatedBy) {
+            // find the latest edit
             let latest = Math.max(...Object.keys(description.updatedBy));
             lastEdited = {
                 name: description.updatedBy[latest],
@@ -157,7 +159,7 @@ class DescriptionContent extends Component {
         }
 
         let editable = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.edit && this.props.futureEvent);
+            !this.state.edit && futureEvent);
 
         return (
             <div className="wrapper">
@@ -194,8 +196,10 @@ class DescriptionContent extends Component {
                                 <button className="add-food" onClick={this.addRow}>
                                     Add Food Items
                                 </button>
-                            ) : (
+                            ) : futureEvent ? (
                                 <p>To Be Determined</p>
+                            ) : (
+                                <p>Left empty</p>
                             )}{' '}
                         </div>
                     ) : (

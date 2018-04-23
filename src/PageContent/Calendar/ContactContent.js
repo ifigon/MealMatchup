@@ -148,7 +148,7 @@ class ContactContent extends Component {
                         <div>
                             <form onSubmit={this.saveContact}>
                                 <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
-                                    <select name="primaryContact" defaultValue={contact.id} required>
+                                    <select className="contact-select" name="primaryContact" defaultValue={contact.id} required>
                                         {Object.keys(this.state.daMemberMap).map(
                                             (mId, i) => {
                                                 return (
