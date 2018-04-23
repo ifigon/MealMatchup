@@ -77,12 +77,13 @@ class EventCard extends Component {
                 ) : null}
                 {multiple ? (
                     <div className={style} onClick={this.openDialog}>
-                        {startTime} - {endTime}
-                        <img
-                            className="truck-icon"
-                            src={truck}
-                            alt={truckAlt}
-                        />
+                        <div className={'text'}>{startTime} - {endTime}
+                            <img
+                                className="truck-icon"
+                                src={truck}
+                                alt={truckAlt}
+                            />
+                        </div>
                     </div>
                 ) : (
                     <div className={style} onClick={this.openDialog}>
