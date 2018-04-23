@@ -17,7 +17,7 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: props.content,
+            content: this.props.content,
             donatingAgency: null
         };
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -49,6 +49,11 @@ class PageContainer extends Component {
         });
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({
+            content: props.content
+        });
+    }
     render() {
         return (
             <div>
@@ -69,7 +74,7 @@ class PageContainer extends Component {
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <AssignVolunteersController />
+                    <AssignVolunteersController account={this.props.account} />
                 )}
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&
