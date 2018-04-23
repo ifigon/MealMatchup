@@ -76,7 +76,7 @@ class PageHeader extends Component {
                 <div className="flex">
                     <div className="header-title">
                         {/* TODO: replace with account logo */}
-                        <img src={''} className="page-logo" />
+                        <img src={''} className="page-logo" alt="" />
                         <p className="page-title">{this.props.title}</p>
                     </div>
                     <div style={{ height: '0px', marginTop: '40px' }}>
