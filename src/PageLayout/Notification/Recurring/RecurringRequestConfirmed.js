@@ -21,13 +21,7 @@ class RecurringRequestConfirmed extends Component {
                     on your calendar.
                 </p>
                 <div className="popup-buttons">
-                    <button
-                        onClick={this.props.closePopUp}
-                        className="okay-green"
-                        type="button"
-                    >
-                        OK
-                    </button>
+                    <button onClick={this.props.notificationAddressed} className="okay-green" type="button">OK</button>
                 </div>
             </div>
         );

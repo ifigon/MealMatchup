@@ -5,9 +5,9 @@ import RequestTime from '../Details/RequestTime';
 class RecurringRequestDisclaimer extends Component {
     claimDelivery(){
         // TODO: backend handle claim
-
-        this.props.nextStep();
+        this.props.claimRequest();
     }
+
     render() {
         return (
             <div className="modal-wrapper">

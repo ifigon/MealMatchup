@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { StringFormat } from '../../../Enums.js';
+<<<<<<< HEAD
 import { formatPhone } from '../../../utils/Utils';
+=======
+import { formatPhone } from '../../../utils/Utils.js';
+>>>>>>> notification backend first pass
 
 class EnterPrimaryContact extends Component {
     saveInfo(e){
@@ -20,7 +24,7 @@ class EnterPrimaryContact extends Component {
                 <form className="primary-contact" onSubmit={this.saveInfo.bind(this)}>
                     <input name="primaryName" type="text" id="primaryName" className="form-component" placeholder="Name" required />
                     <input name="primaryEmail" type="email" id="primaryEmail" className="form-component" placeholder="Email" required/>
-                    <input name="primaryPhone" type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="555-555-5555" id="primaryPhone" onChange={formatPhone} required />
+                    <input name="primaryPhone" onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="555-555-5555" id="primaryPhone" required />
                     <div className="popup-buttons">
                         <button className="claim" type="submit">Save</button>
                     </div>
