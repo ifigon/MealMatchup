@@ -23,13 +23,11 @@ class PageHeader extends Component {
         this.closePopUp = this.closePopUp.bind(this);
     }
     componentDidMount() {
-        //TODO: query db for notifications
         accountsRef.child(`${this.props.account.uid}/notifications`).on('value', 
             (snap) => this.setState({notifications: snap.val()}));
     }
 
     openPopUp(index) {
-        // TODO: backend populate notification popup info based on index
         this.setState({
             showPopUp: true,
             notificationClicked: false,
