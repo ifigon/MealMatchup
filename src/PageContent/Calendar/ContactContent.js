@@ -114,9 +114,9 @@ class ContactContent extends Component {
 
         let title = 'Primary Contact for ';
         if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            title += 'Delivery';
-        } else if (accountType === AccountType.RECEIVING_AGENCY) {
             title += 'Pickup';
+        } else if (accountType === AccountType.RECEIVING_AGENCY) {
+            title += 'Delivery';
         }
 
         return (

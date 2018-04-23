@@ -6,13 +6,14 @@ import { tileGroupProps } from './shared/propTypes';
 import Tile from './Tile';
 import moment from 'moment';
 import { AccountType, InputFormat } from '../../../Enums';
-import { deliveryIndicesRef } from '../../../FirebaseConfig';
+import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../../FirebaseConfig';
 
 class TileGroup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            events: {},
+            deliveries: {},  // {dId: {deliveryObj}}
+            eventsByDate: {},  // {'YYYY-MM-DD': [dId, dId, ...]}
         };
 
         if (props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
@@ -32,18 +33,71 @@ class TileGroup extends Component {
         // add listeners on this agency's delivery index and each delivery
         let myDsRef = deliveryIndicesRef.child(this.indexPath)
             .orderByKey().startAt(`${start.valueOf()}`).endAt(`${end.valueOf()}`);
-            
         myDsRef.on('child_added', (snap) => this.processDeliveries(snap.val()));
         myDsRef.on('child_changed', (snap) => this.processDeliveries(snap.val()));
     }
 
     processDeliveries(deliveryIds) {
         for (let dId in deliveryIds) {
-            console.log(dId);
+            // add listener if we don't have one for this delivery already
+            if (!this.state.deliveries[dId]) {
+                this.addDeliveryListener(dId);
+            }
         }
     }
 
+    addDeliveryListener(dId) {
+        deliveriesRef.child(dId).on('value', async (snap) => {
+            let delivery = snap.val();
+            delivery.id = dId;
+
+            let daPromise = this.genAgencyPromise(donatingAgenciesRef, delivery.donatingAgency);
+            let daContactPromise = this.genContactPromise(delivery.daContact);
+            let raPromise = this.genAgencyPromise(accountsRef, delivery.receivingAgency);
+            let dgPromise = this.genAgencyPromise(accountsRef, delivery.delivererGroup);
+
+            delivery.donatingAgency = await daPromise;
+            delivery.daContact = await daContactPromise;
+            delivery.receivingAgency = await raPromise;
+            delivery.delivererGroup = await dgPromise;
+            delivery.updatedTime = moment().valueOf();
+
+            this.setState(prevState => {
+                let deliveries = prevState.deliveries;
+                deliveries[dId] = delivery;
+
+                let eventsByDate = prevState.eventsByDate;
+                let dateKey = moment(delivery.startTimestamp).format(InputFormat.DATE);
+                if (!eventsByDate[dateKey]) {
+                    eventsByDate[dateKey] = [];
+                }
+                eventsByDate[dateKey].push(dId);
+
+                return { deliveries: deliveries, eventsByDate: eventsByDate };
+            })
+        })
+    }
+
+    genAgencyPromise(ref, id) {
+        return ref.child(id).once('value').then(snap => snap.val().name);
+    }
+
+    genContactPromise(id) {
+        return accountsRef.child(id).once('value').then(snap => {
+            let acc = snap.val();
+            return {
+                id: id,
+                name: acc.name,
+                phone: acc.phone,
+                email: acc.email,
+            };
+        });
+    }
+
     componentWillUnmount() {
+        for (let dId in this.state.deliveries) {
+            deliveriesRef.child(dId).off();
+        }
         deliveryIndicesRef.child(this.indexPath).off();
     }
 
@@ -66,8 +120,9 @@ class TileGroup extends Component {
         // loop over each day point
         for (let point = start; point <= end; point += step) {
             const date = dateTransform(point);
-
             let dateMoment = moment(date);
+
+            // rendering related
             let dateClass = '';
             let classes = getTileClasses({ value, valueType, date, dateType, hover });
             if (dateMoment.isSame(moment(), 'day')) {
@@ -77,7 +132,12 @@ class TileGroup extends Component {
                 classes.push('not-this-month');
             }
 
-            let deliveries = this.state.events[moment(date).format(InputFormat.DATE)];
+            // get deliveries for this day
+            let dIds = this.state.eventsByDate[dateMoment.format(InputFormat.DATE)];
+            let deliveries;
+            if (dIds) {
+                deliveries = dIds.map(dId => this.state.deliveries[dId]);
+            }
 
             tiles.push(
                 <Tile

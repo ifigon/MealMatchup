@@ -163,7 +163,7 @@ class DescriptionContent extends Component {
                                         </button>
                                     }
                                 </div>
-                            ) : accountType === AccountType.DONATING_AGENCY_MEMBER ? (
+                            ) : editable ? (
                                 <button className="add-food" onClick={this.addRow}>
                                     Add Food Items
                                 </button>
