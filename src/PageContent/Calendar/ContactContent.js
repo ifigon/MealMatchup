@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AccountType, StringFormat } from '../../Enums';
 import './Content.css';
 import phone from '../../icons/phone.svg';
+import { formatPhone } from '../../utils/Utils';
 
 class ContactContent extends Component {
     constructor(props) {
@@ -145,6 +146,7 @@ class ContactContent extends Component {
                                             />
                                             <input
                                                 type="tel"
+                                                onChange={formatPhone}
                                                 className="content-details "
                                                 defaultValue={this.state.contact.phone}
                                                 name="phone"

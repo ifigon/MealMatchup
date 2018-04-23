@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StringFormat } from '../../Enums.js';
+import { formatPhone } from '../../utils/Utils.js';
 
 class DelivererGroupSignUp2 extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class DelivererGroupSignUp2 extends Component {
                         <input name="contactName" type="text" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.contactName} required /><br />
                         <input name="contactPosition" type="text" className="form-component" placeholder="Position" defaultValue={this.props.fieldValues.contactPosition} required /><br />
                         <input name="contactEmail" type="email" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.contactEmail} required /><br />
-                        <input name="contactNumber" type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="123-456-7890" defaultValue={this.props.fieldValues.contactNumber} required /><br />
+                        <input name="contactNumber" onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="123-456-7890" defaultValue={this.props.fieldValues.contactNumber} required /><br />
                     </div>
 
                     {this.props.error &&
