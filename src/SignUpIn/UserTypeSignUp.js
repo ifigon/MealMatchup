@@ -56,12 +56,9 @@ class UserTypeSignUp extends Component {
                     {/* <div className="user-type login-reroute">
                         <Link to={'/login'}>Login</Link>
                     </div> */}
-                    <div
-                        className="user-typ login-reroute"
-                        onClick={this.props.back}
-                    >
-                        Back
-                    </div>
+                    <a className="temp-link" href={' '}>
+                        <div className="user-type login-reroute">Back</div>
+                    </a>
                 </div>
             </div>
         );
