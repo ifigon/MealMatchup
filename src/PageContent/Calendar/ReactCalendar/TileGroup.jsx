@@ -24,11 +24,15 @@ class TileGroup extends Component {
     }
 
     componentDidMount() {
+        this.addCurMonthDeliveryListeners(this.props);
+    }
+
+    addCurMonthDeliveryListeners(props) {
         // start at 00:00 of the first day of the month view
         // end at 23:59 of the last day of the month view
-        let dateTransform = this.props.dateTransform;
-        let start = moment(dateTransform(this.props.start));
-        let end = moment(dateTransform(this.props.end)).add({ hours: 23, minutes: 59 });
+        let dateTransform = props.dateTransform;
+        let start = moment(dateTransform(props.start));
+        let end = moment(dateTransform(props.end)).add({ hours: 23, minutes: 59 });
 
         // add listeners on this agency's delivery index and each delivery
         let myDsRef = deliveryIndicesRef.child(this.indexPath)
@@ -95,10 +99,28 @@ class TileGroup extends Component {
     }
 
     componentWillUnmount() {
+        this.detachCurrentListeners();
+    }
+
+    detachCurrentListeners() {
         for (let dId in this.state.deliveries) {
             deliveriesRef.child(dId).off();
         }
         deliveryIndicesRef.child(this.indexPath).off();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentMonthIndex === this.props.currentMonthIndex) {
+            return null;
+        }
+
+        // refresh the listeners and deliveries data for the new month view
+        this.detachCurrentListeners();
+        this.setState({
+            deliveries: {},
+            eventsByDate: {},
+        });
+        this.addCurMonthDeliveryListeners(nextProps);
     }
 
     render() {
