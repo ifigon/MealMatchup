@@ -196,7 +196,7 @@ option {
   cursor: pointer;
 }
 
-label.signup-complete-label {
+label.signup-complete-label, a.ok-button {
   margin-bottom: 10px;
   font-size: 1.7vw;
 }
@@ -511,4 +511,8 @@ form {
 
 .temp-link {
   margin: 0px !important;
+}
+
+a .ok-button{
+
 }
