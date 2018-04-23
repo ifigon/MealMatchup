@@ -91,19 +91,19 @@ class PageContainer extends Component {
 
                 {this.state.content === PageContent.FOOD_LOGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Food Logs
+                        Feature coming soon!
                     </div>
                 )}
 
                 {this.state.content === PageContent.DIRECTORY && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Directory
+                        Feature coming soon!
                     </div>
                 )}
 
                 {this.state.content === PageContent.SETTINGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Settings
+                        Feature coming soon!
                     </div>
                 )}
             </div>
