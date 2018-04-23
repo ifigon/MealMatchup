@@ -6,7 +6,7 @@ import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UmbrellaId } from '../../Enums';
+import { AccountType, UMBRELLA_ID } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -72,7 +72,7 @@ class DelivererGroupSignUpController extends Component {
                     accountType: AccountType.DELIVERER_GROUP,
                     // TODO: Manually setting this for now. In future, users should
                     // choose which umbrella they are signing up under.
-                    umbrella: UmbrellaId.TEST,
+                    umbrella: UMBRELLA_ID,
                     name: fieldValues.organizationName,
                     email: fieldValues.email,
                     address: {
@@ -98,7 +98,7 @@ class DelivererGroupSignUpController extends Component {
                 accountsRef.child(user.uid).set(postData);
 
                 // add account to umbrella
-                accountsRef.child(UmbrellaId.TEST).child('delivererGroups')
+                accountsRef.child(UMBRELLA_ID).child('delivererGroups')
                     .push(user.uid);
 
                 // firebase's create account automatically signs the user in

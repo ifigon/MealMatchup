@@ -8,7 +8,7 @@ import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UmbrellaId } from '../../Enums';
+import { AccountType, UMBRELLA_ID } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -84,7 +84,7 @@ class ReceivingAgencySignUpController extends Component {
                     accountType: AccountType.RECEIVING_AGENCY,
                     // TODO: Manually setting this for now. In future, users should
                     // choose which umbrella they are signing up under.
-                    umbrella: UmbrellaId.TEST,
+                    umbrella: UMBRELLA_ID,
                     name: fieldValues.organizationName,
                     email: fieldValues.email,
                     address: {
@@ -123,7 +123,7 @@ class ReceivingAgencySignUpController extends Component {
                 accountsRef.child(user.uid).set(postData);
 
                 // add agency to umbrella
-                accountsRef.child(UmbrellaId.TEST).child('receivingAgencies')
+                accountsRef.child(UMBRELLA_ID).child('receivingAgencies')
                     .push(user.uid);
 
                 // firebase's create account automatically signs the user in
