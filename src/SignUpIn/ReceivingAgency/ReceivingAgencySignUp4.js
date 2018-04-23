@@ -27,6 +27,11 @@ class ReceivingAgencySignUp4 extends Component {
                     <div className="disclaimer">
                         All fields are required unless specified
                     </div>
+
+                    {this.props.error &&
+                        <p className="sign-in-error">{this.props.error}</p>
+                    }
+
                     <div className="buttons">
                         <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                         <input className="next" type="submit" value="DONE"></input>

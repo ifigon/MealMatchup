@@ -43,7 +43,8 @@ class ReceivingAgencySignUpController extends Component {
         super(props);
 
         this.state = {
-            step: 1
+            step: 1,
+            error: '',
         };
 
         this.saveValues = this.saveValues.bind(this);
@@ -130,13 +131,12 @@ class ReceivingAgencySignUpController extends Component {
                 // we need to keep the user signed out since the account hasn't
                 // been approved yet
                 auth.signOut();
+
+                this.nextStep();
             })
             .catch(error => {
-                // TODO: Add UI to handle the error
-                return error;
+                this.setState({ error: error.message });
             });
-
-        this.nextStep();
     }
 
     showStep() {
@@ -182,7 +182,8 @@ class ReceivingAgencySignUpController extends Component {
                     nextStep={this.nextStep}
                     previousStep={this.previousStep}
                     submitRegistration={this.submitRegistration}
-                    saveValues={this.saveValues} /></div>;
+                    saveValues={this.saveValues}
+                    error={this.state.error} /></div>;
 
         case 5:
             return <SignUpComplete fieldValues={fieldValues} />;

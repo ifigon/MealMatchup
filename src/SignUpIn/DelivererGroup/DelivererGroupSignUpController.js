@@ -30,7 +30,8 @@ class DelivererGroupSignUpController extends Component {
         super(props);
 
         this.state = {
-            step: 1
+            step: 1,
+            error: '',
         };
 
         this.saveValues = this.saveValues.bind(this);
@@ -106,12 +107,11 @@ class DelivererGroupSignUpController extends Component {
                 // been approved yet
                 auth.signOut();
 
+                this.nextStep();
             }).catch(error => {
-                // TODO: Add UI to handle the error.
-                return error;
+                this.setState({ error: error.message });
             });
 
-        this.nextStep();
     }
 
     showStep() {
@@ -135,7 +135,8 @@ class DelivererGroupSignUpController extends Component {
                     nextStep={this.nextStep}
                     previousStep={this.previousStep}
                     submitRegistration={this.submitRegistration}
-                    saveValues={this.saveValues} /></div>;
+                    saveValues={this.saveValues}
+                    error={this.state.error} /></div>;
         case 3:
             return <SignUpComplete fieldValues={fieldValues} />;
         default:
