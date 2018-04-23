@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import truck from '../../../icons/grey_truck.svg';
-import RequestTime from '../Details/RequestTime';
-import { NotificationMap } from '../NotificationMap';
 
 class SucksToSuck extends Component {
     render() {

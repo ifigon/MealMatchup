@@ -5,8 +5,7 @@ import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
 import Notification from './Notification/Notification';
 import NotificationDetailsController from './Notification/NotificationDetailsController';
-import firebase, { accountsRef } from '../FirebaseConfig.js';
-const db = firebase.database();
+import { accountsRef } from '../FirebaseConfig.js';
 
 class PageHeader extends Component {
     constructor(props) {

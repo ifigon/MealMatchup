@@ -68,7 +68,6 @@ class NotificationDetailsController extends Component {
 
     componentDidMount(){
         let category = NotificationMap[this.state.notification.type].category;
-        var details = {};
         if (category === NotificationCategory.RECURRING_PICKUP) {
             let genSupplementaryPromise = (pathPrefix, accountId) => (new Promise(async (resolve, reject) =>
                 resolve((await db.ref(`${pathPrefix}/${accountId}`).once('value')).val())));
