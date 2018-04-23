@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { AccountType, FoodUnit, StringFormat } from '../../Enums';
+import { deliveriesRef } from '../../FirebaseConfig';
+import { objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
 import groceries from '../../icons/groceries.svg';
 import plus from '../../icons/plus-button.svg';
@@ -93,6 +95,9 @@ class DescriptionContent extends Component {
     saveFoodItems(e) {
         e.preventDefault();
 
+        // disable input fields first
+        this.setState({ waiting: true });
+
         let newFoodItems = [];
         for (let i = 0; i < this.state.foodRows.length; i++) {
             let food = e.target['food' + i].value;
@@ -103,15 +108,38 @@ class DescriptionContent extends Component {
             }
         }
 
-        // TODO write to db
-        console.log(newFoodItems);
-        // push {timestamp: name} to updatedBy
+        if (this.foodItemsChanged(newFoodItems)) {
+            let updates = {};
+            updates['description/foodItems'] = newFoodItems;
+            updates[`description/updatedBy/${moment().valueOf()}`] = this.props.account.name;
+            deliveriesRef.child(this.props.delivery.id).update(updates).then(() => {
+                // record timestamp of when the write was done
+                this.setState({ savedTimestamp: moment().valueOf() });
+            });
+        } else {
+            // nothing changed
+            this.setState({ waiting: false, edit: false });
+        }
+    }
 
+    foodItemsChanged(newFoodItems) {
+        const description = this.props.delivery.description;
+        if (!description || !description.foodItems) {
+            return newFoodItems.length > 0;
+        }
 
-        this.setState({
-            waiting: true,
-            // savedTimestamp: ,
-        });
+        const foodItems = description.foodItems;
+        if (foodItems.length !== newFoodItems.length) {
+            return true;
+        }
+
+        for (let i = 0; i < foodItems.length; i++) {
+            if (!objectsAreEqual(foodItems[i], newFoodItems[i])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     render() {
