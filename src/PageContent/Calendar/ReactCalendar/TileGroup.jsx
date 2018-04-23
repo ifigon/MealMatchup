@@ -5,349 +5,46 @@ import { getTileClasses } from './shared/utils';
 import { tileGroupProps } from './shared/propTypes';
 import Tile from './Tile';
 import moment from 'moment';
-import { InputFormat } from '../../../Enums.js';
+import { AccountType, InputFormat } from '../../../Enums';
+import { deliveryIndicesRef } from '../../../FirebaseConfig';
 
 class TileGroup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            events: {
-                '2018-04-20': [
-                    {
-                        startTimestamp: 1524243600000,
-                        endTimestamp: 1524250800000,
-                        receivingAgency: {
-                            name: 'Seattle Union Gospel Mission',
-                            contact: {
-                                name: 'Chris Stack',
-                                phone: '206-586-9876',
-                                email: 'chrisstack@uniongospel.org'
-                            }
-                        },
-                        donatingAgency: {
-                            name: 'Local Point',
-                            contact: {
-                                name: 'Andrea Benson',
-                                phone: '206-543-6975',
-                                email: 'bensoa3@uw.edu'
-                            }
-                        },
-                        // delivererGroup is null if isEmergency=true
-                        delivererGroup: {
-                            group: 'Green Greeks3', // uid-key of deliverer-group
-                            deliverers: [
-                                {
-                                    name: 'Alice',
-                                    email: 'alice@uw.edu',
-                                    phone: '123-789-4560'
-                                },
-                                {
-                                    name: 'Chris',
-                                    email: 'chris@uw.edu',
-                                    phone: '456-123-0789'
-                                }
-                            ]
-                        },
-                        description: {
-                            foodItems: [
-                                {
-                                    food: 'Baked beans',
-                                    quantity: 15,
-                                    unit: 'lb' // Enums.FoodUnit
-                                },
-                                {
-                                    food: 'Bread',
-                                    quantity: 4,
-                                    unit: 'loaves' // Enums.FoodUnit
-                                }
-                            ],
-                            updatedBy: {
-                                // key: timestamp
-                                // value: name of a donating-agency-member
-                                1523173058189: 'Andrea Benson',
-                                1523173817016: 'Chris Doe'
-                            }
-                        },
-                        notes: 'Enter through the back door.',
-                        pickedUpInfo: {
-                            temperature: 29, // in F
-                            signature: 'John Smith',
-                            timestamp: 1523174874685
-                        },
-                        deliveredInfo: {
-                            signature: 'Ellen Blake',
-                            timestamp: 1523174892769
-                        }
-                    },
-                    {
-                        status: 'in_progress', // Enums.DeliveryStatus
-                        startTimestamp: 1524243600000,
-                        endTimestamp: 1524250800000,
-                        isEmergency: false,
-                        spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
-                        receivingAgency: {
-                            name: 'Seattle Union Gospel Mission',
-                            contact: {
-                                name: 'Chris Stack',
-                                phone: '206-586-9876',
-                                email: 'chrisstack@uniongospel.org'
-                            }
-                        },
-                        donatingAgency: {
-                            name: 'Local Point',
-                            contact: {
-                                name: 'Andrea Benson',
-                                phone: '206-543-6975',
-                                email: 'bensoa3@uw.edu'
-                            }
-                        },
-                        // delivererGroup is null if isEmergency=true
-                        delivererGroup: {
-                            group: 'Green Greeks3', // uid-key of deliverer-group
-                            deliverers: [
-                                {
-                                    name: 'Alice',
-                                    email: 'alice@uw.edu',
-                                    phone: '123-789-4560'
-                                },
-                                {
-                                    name: 'Chris',
-                                    email: 'chris@uw.edu',
-                                    phone: '456-123-0789'
-                                }
-                            ]
-                        },
-                        description: {
-                            foodItems: [
-                                {
-                                    food: 'Baked beans',
-                                    quantity: 15,
-                                    unit: 'lb' // Enums.FoodUnit
-                                },
-                                {
-                                    food: 'Bread',
-                                    quantity: 4,
-                                    unit: 'loaves' // Enums.FoodUnit
-                                }
-                            ],
-                            updatedBy: {
-                                // key: timestamp
-                                // value: name of a donating-agency-member
-                                1523173058189: 'Andrea Benson',
-                                1523173817016: 'Chris Doe'
-                            }
-                        },
-                        notes: 'Enter through the back door.',
-                        pickedUpInfo: {
-                            temperature: 29, // in F
-                            signature: 'John Smith',
-                            timestamp: 1523174874685
-                        },
-                        deliveredInfo: {
-                            signature: 'Ellen Blake',
-                            timestamp: 1523174892769
-                        }
-                    },
-                    {
-                        status: 'in_progress', // Enums.DeliveryStatus
-                        startTimestamp: 1524243600000,
-                        endTimestamp: 1524250800000,
-                        isEmergency: false,
-                        spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
-                        receivingAgency: {
-                            name: 'Seattle Union Gospel Mission',
-                            contact: {
-                                name: 'Chris Stack',
-                                phone: '206-586-9876',
-                                email: 'chrisstack@uniongospel.org'
-                            }
-                        },
-                        donatingAgency: {
-                            name: 'Local Point',
-                            contact: {
-                                name: 'Andrea Benson',
-                                phone: '206-543-6975',
-                                email: 'bensoa3@uw.edu'
-                            }
-                        },
-                        // delivererGroup is null if isEmergency=true
-                        delivererGroup: {
-                            group: 'Green Greeks', // uid-key of deliverer-group
-                            deliverers: [
-                                {
-                                    name: 'Alice',
-                                    email: 'alice@uw.edu',
-                                    phone: '123-789-4560'
-                                },
-                                {
-                                    name: 'Chris',
-                                    email: 'chris@uw.edu',
-                                    phone: '456-123-0789'
-                                }
-                            ]
-                        },
-                        description: {
-                            foodItems: [
-                                {
-                                    food: 'Baked beans',
-                                    quantity: 15,
-                                    unit: 'lb' // Enums.FoodUnit
-                                },
-                                {
-                                    food: 'Bread',
-                                    quantity: 4,
-                                    unit: 'loaves' // Enums.FoodUnit
-                                }
-                            ],
-                            updatedBy: {
-                                // key: timestamp
-                                // value: name of a donating-agency-member
-                                1523173058189: 'Andrea Benson',
-                                1523173817016: 'Chris Doe'
-                            }
-                        },
-                        notes: 'Enter through the back door.',
-                        pickedUpInfo: {
-                            temperature: 29, // in F
-                            signature: 'John Smith',
-                            timestamp: 1523174874685
-                        },
-                        deliveredInfo: {
-                            signature: 'Ellen Blake',
-                            timestamp: 1523174892769
-                        }
-                    }
-                ],
-                '2018-03-17': [
-                    {
-                        status: 'in_progress', // Enums.DeliveryStatus
-                        startTimestamp: 1521295200000,
-                        endTimestamp: 1521302400000,
-                        isEmergency: false,
-                        spawningDeliveryRequest: '-L5QoXeC_UrL5tRRED3e',
-                        receivingAgency: {
-                            name: 'Seattle Union Gospel Mission',
-                            contact: {
-                                name: 'Chris Stack',
-                                phone: '206-586-9876',
-                                email: 'chrisstack@uniongospel.org'
-                            }
-                        },
-                        donatingAgency: {
-                            name: 'Local Point',
-                            contact: {
-                                name: 'Andrea Benson',
-                                phone: '206-543-6975',
-                                email: 'bensoa3@uw.edu'
-                            }
-                        },
-                        // delivererGroup is null if isEmergency=true
-                        delivererGroup: {
-                            group: 'Green Greeks2', // uid-key of deliverer-group
-                            deliverers: [
-                                {
-                                    name: 'Alice',
-                                    email: 'alice@uw.edu',
-                                    phone: '123-789-4560'
-                                },
-                                {
-                                    name: 'Chris',
-                                    email: 'chris@uw.edu',
-                                    phone: '456-123-0789'
-                                }
-                            ]
-                        },
-                        description: {
-                            foodItems: [
-                                {
-                                    food: 'Baked beans',
-                                    quantity: 15,
-                                    unit: 'lb' // Enums.FoodUnit
-                                },
-                                {
-                                    food: 'Bread',
-                                    quantity: 4,
-                                    unit: 'loaves' // Enums.FoodUnit
-                                }
-                            ],
-                            updatedBy: {
-                                // key: timestamp
-                                // value: name of a donating-agency-member
-                                1523173058189: 'Andrea Benson',
-                                1523173817016: 'Chris Doe'
-                            }
-                        },
-                        notes: 'Enter through the back door.',
-                        pickedUpInfo: {
-                            temperature: 29, // in F
-                            signature: 'John Smith',
-                            timestamp: 1523174874685
-                        },
-                        deliveredInfo: {
-                            signature: 'Ellen Blake',
-                            timestamp: 1523174892769
-                        }
-                    }
-                ],
-                '2018-04-26': [
-                    {
-                        id: 'ABCD1234',
-                        startTimestamp: 1524762000000,
-                        endTimestamp: 1524772800000,
-                        donatingAgency: 'Local Point',
-                        daContact: {
-                            id: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
-                            name: 'Andrea Benson',
-                            phone: '206-543-6975',
-                            email: 'bensoa3@uw.edu'
-                        },
-                        receivingAgency: 'Seattle Union Gospel Mission',
-                        raContact: {
-                            name: 'Chris Stack',
-                            phone: '206-586-9876',
-                            email: 'chrisstack@uniongospel.org'
-                        },
-                        delivererGroup: 'Green Greeks2',
-                        deliverers: [
-                            {
-                                name: 'Alice',
-                                email: 'alice@uw.edu',
-                                phone: '123-789-4560'
-                            },
-                            {
-                                name: 'Chris',
-                                email: 'chris@uw.edu',
-                                phone: '456-123-0789'
-                            }
-                        ],
-                        description: {
-                            foodItems: [
-                                {
-                                    food: 'Baked beans',
-                                    quantity: 15,
-                                    unit: 'lb' // Enums.FoodUnit
-                                },
-                                {
-                                    food: 'Bread',
-                                    quantity: 4,
-                                    unit: 'loaves' // Enums.FoodUnit
-                                }
-                            ],
-                            updatedBy: {
-                                // key: timestamp
-                                // value: name of a donating-agency-member
-                                1523173058189: 'Andrea Benson',
-                                1523173817016: 'Chris Doe'
-                            }
-                        }
-                    }
-                ]
-            }
+            events: {},
         };
+
+        if (props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            this.indexPath = `${props.donatingAgency.umbrella}/${props.account.agency}`;
+        } else {
+            this.indexPath = `${props.account.umbrella}/${props.account.uid}`;
+        }
     }
 
     componentDidMount() {
-        //TODO backend set state to events
+        // start at 00:00 of the first day of the month view
+        // end at 23:59 of the last day of the month view
+        let dateTransform = this.props.dateTransform;
+        let start = moment(dateTransform(this.props.start));
+        let end = moment(dateTransform(this.props.end)).add({ hours: 23, minutes: 59 });
+
+        // add listeners on this agency's delivery index and each delivery
+        let myDsRef = deliveryIndicesRef.child(this.indexPath)
+            .orderByKey().startAt(`${start.valueOf()}`).endAt(`${end.valueOf()}`);
+            
+        myDsRef.on('child_added', (snap) => this.processDeliveries(snap.val()));
+        myDsRef.on('child_changed', (snap) => this.processDeliveries(snap.val()));
+    }
+
+    processDeliveries(deliveryIds) {
+        for (let dId in deliveryIds) {
+            console.log(dId);
+        }
+    }
+
+    componentWillUnmount() {
+        deliveryIndicesRef.child(this.indexPath).off();
     }
 
     render() {
@@ -364,27 +61,27 @@ class TileGroup extends Component {
         let value = this.props.value;
         let valueType = this.props.valueType;
         const tiles = [];
+        let currentMonthIndex = this.props.currentMonthIndex;
 
         // loop over each day point
         for (let point = start; point <= end; point += step) {
             const date = dateTransform(point);
 
+            let dateMoment = moment(date);
             let dateClass = '';
-            if (moment(date).isSame(moment(), 'day')) {
+            let classes = getTileClasses({ value, valueType, date, dateType, hover });
+            if (dateMoment.isSame(moment(), 'day')) {
                 dateClass = 'today';
+            }
+            if (dateMoment.month() !== currentMonthIndex) {
+                classes.push('not-this-month');
             }
 
             let deliveries = this.state.events[moment(date).format(InputFormat.DATE)];
 
             tiles.push(
                 <Tile
-                    classes={getTileClasses({
-                        value,
-                        valueType,
-                        date,
-                        dateType,
-                        hover
-                    })}
+                    classes={classes}
                     date={date}
                     point={point}
                     key={date.getTime()}

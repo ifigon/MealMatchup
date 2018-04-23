@@ -50,6 +50,9 @@ class PageContainer extends Component {
     }
 
     render() {
+        // for the components that might need donating agency info
+        let ready = (this.props.account.accountType !== AccountType.DONATING_AGENCY_MEMBER ||
+            this.state.donatingAgency);
         return (
             <div>
                 <PageHeader
@@ -64,12 +67,13 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {this.state.content === PageContent.CALENDAR && (
+                {this.state.content === PageContent.CALENDAR && ready &&
                     <Calendar 
                         id="calendar-container" 
                         account={this.props.account}
+                        donatingAgency={this.state.donatingAgency}
                     />
-                )}
+                }
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
                     <AssignVolunteersController 

@@ -64,6 +64,7 @@ export default class MonthView extends PureComponent {
                 {...childProps}
 
                 account={this.props.account}
+                donatingAgency={this.props.donatingAgency}
             />);
     }
 

@@ -89,6 +89,7 @@ export default class Days extends PureComponent {
                 currentMonthIndex={monthIndex}
 
                 account={this.props.account}
+                donatingAgency={this.props.donatingAgency}
             />
         );
     }

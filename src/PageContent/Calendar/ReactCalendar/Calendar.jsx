@@ -417,6 +417,7 @@ export default class Calendar extends Component {
                         {...commonProps}
 
                         account={this.props.account}
+                        donatingAgency={this.props.donatingAgency}
                     />
                 );
             default:

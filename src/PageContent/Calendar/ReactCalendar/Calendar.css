@@ -82,6 +82,14 @@ div.react-calendar__month-view__days > button {
   border-radius: 50%;
 }
 
+.not-this-month {
+  background-color: #efefef;
+}
+
+.not-this-month > time {
+  color: #999999;
+}
+
 .react-calendar__month-view__weekdays__weekday {
   flex-basis: 160px;
   max-width: 14.2857%;
