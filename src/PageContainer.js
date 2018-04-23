@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent, DeliveryType } from './Enums.js';
+import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import EventCard from './PageContent/Calendar/EventCard/EventCard';
-import Dialog from './PageContent/Calendar/Dialog.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
@@ -20,25 +18,10 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: props.content,
-            donatingAgency: null,
-            dialogOpen: false
+            content: this.props.content,
+            donatingAgency: null
         };
-
         this.navBarHandler = this.navBarHandler.bind(this);
-        this.openDialog = this.openDialog.bind(this);
-        this.closeDialog = this.closeDialog.bind(this);
-    }
-
-    openDialog() {
-        this.setState({
-            dialogOpen: true
-        });
-    }
-    closeDialog() {
-        this.setState({
-            dialogOpen: false
-        });
     }
 
     componentDidMount() {
@@ -61,103 +44,17 @@ class PageContainer extends Component {
         }
     }
 
-    componentWillMount() {
-        // TODO move this dummy data mocking to calendar
-        let delivery = {
-            eventType: DeliveryType.RECURRING,
-            date: '11/14/2017',
-            startTime: '10am',
-            endTime: '12pm',
-            donationDescription: [
-                {
-                    name: 'Baked beans',
-                    amount: 15,
-                    unit: 'lbs'
-                },
-                {
-                    name: 'Coleslaw',
-                    amount: 20,
-                    unit: 'lbs'
-                },
-                {
-                    name: 'Corn',
-                    amount: 6,
-                    unit: 'lbs'
-                },
-                {
-                    name: 'Mashed potatoes',
-                    amount: 8,
-                    unit: 'lbs'
-                },
-                {
-                    name: 'Veggie burger patties',
-                    amount: 4,
-                    unit: 'lbs'
-                },
-                {
-                    name: 'Bread',
-                    amount: 40,
-                    unit: 'loaves'
-                }
-            ],
-            delivererGroup: {
-                name: 'Green Greeks',
-                deliverers: [
-                    {
-                        name: 'Blake Johnson',
-                        phone: '206-876-5432',
-                        email: 'blake@greengreeks.org'
-                    },
-                    {
-                        name: 'Erika Zhang',
-                        phone: '206-876-5432',
-                        email: 'erika@greengreeks.org'
-                    }
-                ]
-            },
-            receivingAgency: {
-                name: 'Seattle Union Gospel Mission',
-                contact: {
-                    name: 'Chris Stack',
-                    phone: '206-586-9876',
-                    email: 'chrisstack@uniongospel.org'
-                }
-            },
-            donatingAgency: {
-                name: 'Local Point',
-                contact: {
-                    uid: 'dhA03LwTp3cibXVUcb3nQqO34wj1',
-                    name: 'Andrea Benson',
-                    phone: '206-543-6975',
-                    email: 'bensoa3@uw.edu',
-                    memberList: [
-                        {
-                            uid: 'uid1',
-                            name: 'member1',
-                            phone: '111-111-1111',
-                            email: 'member1@test.com'
-                        },
-                        {
-                            uid: 'uid2',
-                            name: 'member2',
-                            phone: '222-222-2222',
-                            email: 'member2@test.com'
-                        }
-                    ]
-                }
-            }
-        };
-        this.setState({
-            delivery: delivery
-        });
-    }
-
     navBarHandler(e) {
         this.setState({
             content: e
         });
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({
+            content: props.content
+        });
+    }
     render() {
         return (
             <div>
@@ -173,32 +70,12 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        <Calendar />
-                        {this.state.dialogOpen ? (
-                            <Dialog
-                                closeDialog={this.closeDialog}
-                                futureEvent={true}
-                                accountOwnerName={this.props.account.name}
-                                accountType={this.props.account.accountType}
-                                delivery={this.state.delivery}
-                            />
-                        ) : null}
-                        <div onClick={this.openDialog}>
-                            <EventCard
-                                startTime={this.state.delivery.startTime}
-                                endTime={this.state.delivery.endTime}
-                                futureEvent={true}
-                                eventType={this.state.delivery.eventType}
-                            />
-                        </div>
-                    </div>
+                    <Calendar id="calendar-container" />
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <AssignVolunteersController />
+                    <AssignVolunteersController account={this.props.account} />
                 )}
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&

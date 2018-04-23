@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { auth, accountsRef } from './FirebaseConfig.js';
-import { PageContent } from './Enums.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
+import { Routes, PageContent } from './Enums';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -34,6 +35,7 @@ class App extends Component {
                         .then(
                             function(snapshot) {
                                 var account = snapshot.val();
+                                account.uid = user.uid;
                                 if (account.isVerified && account.isActivated) {
                                     this.setState({
                                         authenticated: true,
@@ -60,19 +62,47 @@ class App extends Component {
     }
 
     render() {
+        let path = window.location.href.split('/')[3];
+        let content = '';
+        switch (path) {
+        case Routes.ASSIGN_VOLUNTEERS:
+            content = PageContent.ASSIGN_VOLUNTEERS;
+            break;
+        case Routes.DIRECTORY:
+            content = PageContent.DIRECTORY;
+            break;
+        case Routes.FOOD_LOGS:
+            content = PageContent.FOOD_LOGS;
+            break;
+        case Routes.REQUEST_PICKUP:
+            content = PageContent.REQUEST_PICKUP;
+            break;
+        case Routes.SETTINGS:
+            content = PageContent.SETTINGS;
+            break;
+        default:
+            content = PageContent.CALENDAR;
+            break;
+        }
         return (
             <div className="">
                 {this.state.authenticated ? (
                     this.state.account ? (
                         /* Show Calendar page if user is logged in */
-                        <PageContainer
-                            account={this.state.account}
-                            content={PageContent.CALENDAR}
-                        />
+                        <div>
+                            <PageContainer
+                                account={this.state.account}
+                                content={content}
+                            />
+                            {!path ? <Redirect to={'/calendar'} /> : null}
+                        </div>
                     ) : (
-                        <SignUpInController
-                            signInDenied={this.state.signInDenied}
-                        />
+                        <div>
+                            <Redirect to={'/'} />
+                            <SignUpInController
+                                signInDenied={this.state.signInDenied}
+                            />
+                        </div>
                     )
                 ) : (
                     /* Show blank page if initial authentication hasn't finished */

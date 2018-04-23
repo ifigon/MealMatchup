@@ -1,43 +1,48 @@
 import React, { Component } from 'react';
+import {DeliveryStatus} from '../../Enums.js';
+import {StringFormat} from '../../Enums.js';
 import moment from 'moment';
 
 class AssignOption extends Component {
-
-    constructor(props) {
-        super(props);
-        let date = new Date(this.props.delivery.date);
-        this.state = {
-            day: moment(date).format('MM/DD'),
-            date: moment(date).format('l'),
-            deliverers: this.props.delivery.delivererGroup.deliverers,
-            receivingAgency: this.props.delivery.receivingAgency.agency
-        };
+    getButton(status, deliverers) {
+        if (status === DeliveryStatus.COMPLETED) {
+            return (<button disabled className="form-button already-completed-button" id={this.props.deliveryId}>Completed</button>);
+        } else if (!deliverers || deliverers.length === 0) {
+            return (<button type="button" className="form-button confirm-button-assign" id={this.props.deliveryId} onClick={this.props.handleEditClick}>Assign Volunteers</button>);
+        } else {
+            return (<button type="button" className="form-button confirm-button" id={this.props.deliveryId} onClick={this.props.handleEditClick}>Edit</button>);
+        }
     }
 
     render() {
+        const {
+            deliverers,
+            receivingAgency,
+            startTimestamp,
+            status,
+        } = this.props.delivery;
+
+        let startMoment = moment(startTimestamp);
+        let date = startMoment.format(StringFormat.WEEKDAY_WITH_DATE);
         return (
-
-            // TODO: Need backend code to generate this information dynamically and then UI code to render that.
-
             <div className="avi-row">
                 <div className="container avi-details-container">
                     <div className="avi-detail">
-                        {this.state.day} {this.state.date} Pick-up 
+                        {date} Pick-up 
                     </div>
                     <div className="avi-detail">
-                        {this.state.receivingAgency}
+                        {receivingAgency.name}
                     </div>
                     <div className="avi-detail avi-volunteers">
                         {
-                            this.state.deliverers.map((deliverer, index) => {
+                            (deliverers && deliverers.map((deliverer, index) => {
                                 return <h5 key={index}>{deliverer.name}</h5>;
-                            })
+                            }))
                         }
                     </div>
                     <div className="avi-detail avi-volunteers">
-                        {this.state.deliverers.length === 0 ? <button type="button" className="form-button confirm-button-assign" id={this.props.id} onClick={this.props.handleEditClick}>Assign Volunteers</button>
-                            : <button type="button" className="form-button confirm-button" id={this.props.id} onClick={this.props.handleEditClick}>Edit</button>
-                        }
+                        {this.getButton(status, deliverers)}
+                        
                     </div>
                 </div>
             </div>

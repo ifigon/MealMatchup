@@ -6,7 +6,7 @@ class ReceivingAgencyContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            receivingAgency: this.props.delivery.receivingAgency.name,
+            donatingAgency: this.props.delivery.receivingAgency.name,
             contactName: this.props.delivery.receivingAgency.contact.name,
             phone: this.props.delivery.receivingAgency.contact.phone
         };
@@ -30,4 +30,5 @@ class ReceivingAgencyContent extends Component {
         );
     }
 }
+
 export default ReceivingAgencyContent;

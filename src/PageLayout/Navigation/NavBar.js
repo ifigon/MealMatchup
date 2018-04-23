@@ -1,7 +1,7 @@
 // NavBar.js
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { auth } from '../../FirebaseConfig.js';
-import { AccountType, PageContent }from '../../Enums.js';
+import { AccountType, PageContent } from '../../Enums.js';
 import NavBarItem from './NavBarItem';
 import './NavBar.css';
 import calendar from '../../icons/calendar.svg';
@@ -11,6 +11,7 @@ import settings from '../../icons/settings.svg';
 import truck from '../../icons/truck.svg';
 import assign_volunteer from '../../icons/assign_volunteer.svg';
 import signout from '../../icons/logout.svg';
+import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
     signOut(event) {
@@ -21,20 +22,80 @@ class NavBar extends Component {
     render() {
         return (
             <div className="navbar">
-                <NavBarItem highlighted={this.props.content === PageContent.CALENDAR} item={PageContent.CALENDAR} 
-                    icon={calendar} handler={this.props.handler}></NavBarItem>
-                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER &&
-                    <NavBarItem highlighted={this.props.content === PageContent.REQUEST_PICKUP} item={PageContent.REQUEST_PICKUP} icon={truck} handler={this.props.handler}></NavBarItem>
-                }
-                {this.props.accountType === AccountType.DELIVERER_GROUP &&
-                    <NavBarItem highlighted={this.props.content === PageContent.ASSIGN_VOLUNTEERS} item={PageContent.ASSIGN_VOLUNTEERS} icon={assign_volunteer} handler={this.props.handler}></NavBarItem>
-                }
-                <NavBarItem highlighted={this.props.content === PageContent.FOOD_LOGS} item={PageContent.FOOD_LOGS} icon={foodLog} handler={this.props.handler}></NavBarItem>
-                <NavBarItem highlighted={this.props.content === PageContent.DIRECTORY} item={PageContent.DIRECTORY} icon={directory} handler={this.props.handler}></NavBarItem>
-                <NavBarItem highlighted={this.props.content === PageContent.SETTINGS} item={PageContent.SETTINGS} icon={settings} handler={this.props.handler}></NavBarItem>
-                <NavBarItem item={'signout'} icon={signout} handler={this.signOut.bind(this)}></NavBarItem>
+                <Link to={'/calendar'} className="nav-link">
+                    <NavBarItem
+                        highlighted={
+                            this.props.content === PageContent.CALENDAR
+                        }
+                        item={PageContent.CALENDAR}
+                        icon={calendar}
+                        handler={this.props.handler}
+                    />
+                </Link>
+                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER && (
+                    <Link to={'/request-pickup'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content ===
+                                PageContent.REQUEST_PICKUP
+                            }
+                            item={PageContent.REQUEST_PICKUP}
+                            icon={truck}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+                {this.props.accountType === AccountType.DELIVERER_GROUP && (
+                    <Link to={'/assign-volunteers'} className="nav-link">
+                        {' '}
+                        <NavBarItem
+                            highlighted={
+                                this.props.content ===
+                                PageContent.ASSIGN_VOLUNTEERS
+                            }
+                            item={PageContent.ASSIGN_VOLUNTEERS}
+                            icon={assign_volunteer}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+                <Link to={'/food-logs'} className="nav-link">
+                    <NavBarItem
+                        highlighted={
+                            this.props.content === PageContent.FOOD_LOGS
+                        }
+                        item={PageContent.FOOD_LOGS}
+                        icon={foodLog}
+                        handler={this.props.handler}
+                    />
+                </Link>
+                <Link to={'/directory'} className="nav-link">
+                    <NavBarItem
+                        highlighted={
+                            this.props.content === PageContent.DIRECTORY
+                        }
+                        item={PageContent.DIRECTORY}
+                        icon={directory}
+                        handler={this.props.handler}
+                    />
+                </Link>
+                <Link to={'/settings'} className="nav-link">
+                    <NavBarItem
+                        highlighted={
+                            this.props.content === PageContent.SETTINGS
+                        }
+                        item={PageContent.SETTINGS}
+                        icon={settings}
+                        handler={this.props.handler}
+                    />
+                </Link>
+                <NavBarItem
+                    item={'signout'}
+                    icon={signout}
+                    handler={this.signOut.bind(this)}
+                />
             </div>
-        ); 
+        );
     }
 }
 

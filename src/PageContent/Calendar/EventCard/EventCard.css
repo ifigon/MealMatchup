@@ -27,7 +27,7 @@
 .event-header {
   color: #4f4f4f;
   font-size: 12px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .event-time {
@@ -36,4 +36,12 @@
   font-weight: 400;
   margin-top: 5px;
   margin-bottom: 0px;
+}
+
+.multiple-events {
+  margin: 4px;
+}
+
+.multiple-events > .event-container {
+  padding: 0;
 }
