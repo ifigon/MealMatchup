@@ -32,20 +32,19 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                {this.props.accountType ===
-                    AccountType.DONATING_AGENCY_MEMBER && (
-                        <Link to={'/request-pickup'} className="nav-link">
-                            <NavBarItem
-                                highlighted={
-                                    this.props.content ===
+                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER && (
+                    <Link to={'/request-pickup'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content ===
                                 PageContent.REQUEST_PICKUP
-                                }
-                                item={PageContent.REQUEST_PICKUP}
-                                icon={truck}
-                                handler={this.props.handler}
-                            />
-                        </Link>
-                    )}
+                            }
+                            item={PageContent.REQUEST_PICKUP}
+                            icon={truck}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
                 {this.props.accountType === AccountType.DELIVERER_GROUP && (
                     <Link to={'/assign-volunteers'} className="nav-link">
                         {' '}
