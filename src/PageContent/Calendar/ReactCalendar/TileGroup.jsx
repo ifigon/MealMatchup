@@ -64,20 +64,27 @@ class TileGroup extends Component {
             delivery.daContact = await daContactPromise;
             delivery.receivingAgency = await raPromise;
             delivery.delivererGroup = await dgPromise;
-            delivery.updatedTime = moment().valueOf();
+            delivery.updatedTimestamp = moment().valueOf();
 
             this.setState(prevState => {
                 let deliveries = prevState.deliveries;
-                deliveries[dId] = delivery;
+                let newState = {};
 
-                let eventsByDate = prevState.eventsByDate;
-                let dateKey = moment(delivery.startTimestamp).format(InputFormat.DATE);
-                if (!eventsByDate[dateKey]) {
-                    eventsByDate[dateKey] = [];
+                // add to the events list for this day if it's a new delivery
+                if (!deliveries[dId]) {
+                    let eventsByDate = prevState.eventsByDate;
+                    let dateKey = moment(delivery.startTimestamp).format(InputFormat.DATE);
+                    if (!eventsByDate[dateKey]) {
+                        eventsByDate[dateKey] = [];
+                    }
+                    eventsByDate[dateKey].push(dId);
+                    newState.eventsByDate = eventsByDate;
                 }
-                eventsByDate[dateKey].push(dId);
 
-                return { deliveries: deliveries, eventsByDate: eventsByDate };
+                deliveries[dId] = delivery;
+                newState.deliveries = deliveries;
+
+                return newState;
             })
         })
     }

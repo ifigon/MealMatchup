@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { accountsRef, deliveriesRef, donatingAgenciesRef } from '../../FirebaseConfig';
 import { AccountType, StringFormat } from '../../Enums';
 import './Content.css';
 import phone from '../../icons/phone.svg';
-import { formatPhone } from '../../utils/Utils';
+import { formatPhone, objectsAreEqual } from '../../utils/Utils';
 
 class ContactContent extends Component {
     constructor(props) {
@@ -23,13 +24,12 @@ class ContactContent extends Component {
     }
 
     // update this.state.contact when we receive a new prop
-    static getDerivedStateFromProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps) {
         // update state to reflect values properly saved if we were waiting
         // on the update and the update happened after we wrote to db.
-        if (prevState.waiting && nextProps.delivery.updatedTimesamp > prevState.savedTimestamp) {
-            return { waiting: false, edit: false };
+        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ waiting: false, edit: false });
         }
-        return null;
     }
 
     componentDidMount() {
@@ -70,28 +70,36 @@ class ContactContent extends Component {
         e.preventDefault();
         const { account, delivery } = this.props;
 
-        let contact;
-        // let updates = {}; TODO
+        // disable input fields first
+        this.setState({ waiting: true });
+
+        let updates = {};
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            contact = {
-                id: e.target.primaryContact.value,
-                name: this.state.daMemberMap[e.target.primaryContact.value]
-            };
+            let newContact = e.target.primaryContact.value;
+            if (newContact !== delivery.daContact.id) {
+                updates['daContact'] = newContact;
+            }
         } else {
-            contact = {
+            let newContact = {
                 name: e.target.name.value,
                 phone: e.target.phone.value,
                 email: e.target.email.value,
             };
+            if (!objectsAreEqual(newContact, delivery.raContact)) {
+                updates['raContact'] = newContact;
+            }
         }
 
-        // TODO write to db
-        console.log(contact);
-
-        this.setState({
-            waiting: true,
-            // savedTimestamp: ,
-        });
+        if (Object.keys(updates).length > 0) {
+            // only update if there are changes
+            deliveriesRef.child(delivery.id).update(updates).then(() => {
+                // record timestamp of when the write was done
+                this.setState({ savedTimestamp: moment().valueOf() });
+            });
+        } else {
+            // nothing changed
+            this.setState({ waiting: false, edit: false });
+        }
     }
 
     // get the right contact based on account type
