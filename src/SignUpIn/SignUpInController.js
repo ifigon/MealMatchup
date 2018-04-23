@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { Redirect } from 'react-router-dom';
 import './SignUpIn.css';
 import UserTypeController from './UserTypeController';
 import SignUpIn from './SignUpIn';
@@ -28,20 +29,18 @@ class SignUpInController extends Component {
             return (
                 <SignUpIn
                     signIn={this.signIn.bind(this)}
-                    createAccount={this.createAccount.bind(this)} />
+                    createAccount={this.createAccount.bind(this)}
+                />
             );
         case 1:
-            return <SignIn signInDenied={this.props.signInDenied} />;
+            return <SignIn signInDenied={this.props.signInDenied} />; //(
+
         case 2:
             return <UserTypeController />;
         }
     }
     render() {
-        return (
-            <div className="signup-wrapper">
-                {this.showStep()}
-            </div>
-        );
+        return <div className="signup-wrapper">{this.showStep()}</div>;
     }
 }
 export default SignUpInController;

@@ -12,7 +12,7 @@ exports.UmbrellaId = {
 exports.StringFormat = {
     PHONE: '[0-9]{3}-[0-9]{3}-[0-9]{4}', // '206-345-7890',
     DATE_FULL: 'MM/DD/YYYY', // '03/14/2018'
-    DATE_SHORT: 'M/D',  // '1/3', '11/2', '10/23'
+    DATE_SHORT: 'M/D', // '1/3', '11/2', '10/23'
     TIME: 'h:mma', // '3:30PM' (12hr),
     WEEKDAY: 'dddd', // 'Wednesday'
     WEEKDAY_WITH_DATE: 'dddd, MM/DD/YYYY' // 'Wednesday, 03/14/2018'
@@ -20,8 +20,8 @@ exports.StringFormat = {
 
 // For parsing input purposes
 exports.InputFormat = {
-    DATE: 'YYYY-MM-DD',  // '2018-03-14' (default 'date' input value format)
-    TIME: 'HH:mm',  // '15:30' (24hr - default 'time' input value format)
+    DATE: 'YYYY-MM-DD', // '2018-03-14' (default 'date' input value format)
+    TIME: 'HH:mm' // '15:30' (24hr - default 'time' input value format)
 };
 
 exports.AccountType = {
@@ -83,38 +83,31 @@ exports.NotificationType = {
     NEW_ACCOUNT: 'new_account',
     /* When: a DA requests a new recurring pick
        Receiver: RA, DG
-       Action: View -> Claim/Reject
-       Content: '{daId}/{deliveryRequestId}' */
+       Action: View -> Claim/Reject */
     RECURRING_PICKUP_REQUEST: 'recurring_pickup_request',
     /* When: a recurring pick has been claimed by both RA and DG
        Receiver: DA
-       Action: View -> View on Calendar
-       Content: '{daId}/{deliveryRequestId}' */
+       Action: View -> View on Calendar */
     RECURRING_PICKUP_CONFIRMED: 'recurring_pickup_confirmed',
     /* When: no RA claims the pickup request within the deadline
        Receiver: DA
-       Action: View?
-       Content: '{daId}/{deliveryRequestId}' */
+       Action: View? */
     RECURRING_PICKUP_EXPIRED_RA: 'recurring_pickup_expired_ra',
     /* When: no DG claims the pickup request within the deadline
        Receiver: DA
-       Action: View?
-       Content: '{daId}/{deliveryRequestId}' */
+       Action: View? */
     RECURRING_PICKUP_EXPIRED_DG: 'recurring_pickup_expired_dg',
     /* When: all RAs rejected the pickup request
        Receiver: DA
-       Action: View?
-       Content: '{daId}/{deliveryRequestId}' */
+       Action: View? */
     RECURRING_PICKUP_REJECTED_RA: 'recurring_pickup_rejected_ra',
     /* When: all DGs rejected the pickup request
        Receiver: DA
-       Action: View?
-       Content: '{daId}/{deliveryRequestId}' */
+       Action: View? */
     RECURRING_PICKUP_REJECTED_DG: 'recurring_pickup_rejected_dg',
     /* When: no available RAs to send to
        Receiver: DA
-       Action: View?
-       Content: '{daId}/{deliveryRequestId}' */
+       Action: View? */
     RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable'
 };
 
@@ -125,8 +118,7 @@ exports.DeliveryType = {
 
 exports.DeliveryStatus = {
     SCHEDULED: 'scheduled',
-    STARTED: 'started',
-    PICKED_UP: 'picked_up',
+    IP: 'in_progress',
     COMPLETED: 'completed'
 };
 
@@ -136,7 +128,16 @@ exports.FoodUnit = {
     LOAVES: 'loaves'
 };
 
+exports.Routes = {
+    ASSIGN_VOLUNTEERS: 'assign-volunteers',
+    CALENDAR: 'calendar',
+    DIRECTORY: 'directory',
+    FOOD_LOGS: 'food-logs',
+    REQUEST_PICKUP: 'request-pickup',
+    SETTINGS: 'settings'
+};
+
 exports.NotificationCategory = {
     RECURRING_PICKUP: 'recurring_pickup',
-    ACCOUNT: 'account',
+    ACCOUNT: 'account'
 };
