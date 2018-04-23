@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase, { auth, accountsRef } from '../../FirebaseConfig';
 import { AccountType, StringFormat } from '../../Enums';
 import '../SignUpIn.css';
+import { formatPhone } from '../../utils/Utils';
 
 class DonatingAgencyMemberSignup extends Component {
     // This component is for DA members to sign up under an existing DA.
@@ -98,7 +99,7 @@ class DonatingAgencyMemberSignup extends Component {
                                 <label className="form-component">New Member Account</label><br />
                                 <input name="memberName" type="text" className="form-component" placeholder="Name" id="memberName" required />
                                 <input name="memberPosition" type="text" className="form-component" placeholder="Position" id="memberPosition" required />
-                                <input name="memberPhone" type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="123-456-7890" id="memberPhone" required />
+                                <input name="memberPhone" onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="123-456-7890" id="memberPhone" required />
                                 <div className="gap">
                                     <input type="email" name="memberEmail" id="memberEmail" className="form-component" placeholder="Email" required />
                                     <input type="password" id="memberPassword" name="memberPassword" className="form-component" placeholder="Create Password" required />
