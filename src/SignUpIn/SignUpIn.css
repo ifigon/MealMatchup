@@ -500,6 +500,6 @@ form {
 }
 
 .ra3-form-block {
-    height: 510px;
+    height: 100%;
     overflow: scroll;
 }
