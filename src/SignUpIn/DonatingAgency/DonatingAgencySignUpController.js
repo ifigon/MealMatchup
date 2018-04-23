@@ -6,7 +6,7 @@ import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UmbrellaId } from '../../Enums';
+import { AccountType, UMBRELLA_ID } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -87,7 +87,7 @@ class DonatingAgencySignUpController extends Component {
                 let agencyPostData = {
                     // TODO: Manually setting this for now. In future, users should
                     // choose which umbrella they are signing up under.
-                    umbrella: UmbrellaId.TEST,
+                    umbrella: UMBRELLA_ID,
                     name: fieldValues.organizationName,
                     address: {
                         street1: fieldValues.address1,
@@ -109,7 +109,7 @@ class DonatingAgencySignUpController extends Component {
                 dasRef.child(agencyKey).set(agencyPostData);
 
                 // add agency to umbrella
-                accountsRef.child(UmbrellaId.TEST).child('donatingAgencies')
+                accountsRef.child(UMBRELLA_ID).child('donatingAgencies')
                     .push(agencyKey);
 
                 // firebase's create account automatically signs the user in
