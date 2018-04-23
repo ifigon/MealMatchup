@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { AccountType, StringFormat } from '../../Enums';
-import { formatPhone } from '../../utils/Utils';
+import { deliveriesRef } from '../../FirebaseConfig';
+import { formatPhone, objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
 import volunteer from '../../icons/volunteer.svg';
 
@@ -20,13 +22,12 @@ class DelivererGroupContent extends Component {
         this.saveVolunteers = this.saveVolunteers.bind(this);
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps) {
         // update state to reflect values properly saved if we were waiting
         // on the update and the update happened after we wrote to db.
-        if (prevState.waiting && nextProps.delivery.updatedTimesamp > prevState.savedTimestamp) {
-            return { waiting: false, edit: false };
+        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ waiting: false, edit: false });
         }
-        return null;
     }
 
     edit() {
@@ -37,24 +38,33 @@ class DelivererGroupContent extends Component {
 
     saveVolunteers(e) {
         e.preventDefault();
+        const delivery = this.props.delivery;
+        const { deliverers } = delivery;
 
-        let deliverers = [];
+        // disable input fields first
+        this.setState({ waiting: true });
+
+        let newDeliverers = [];
         for (let i = 0; i < 2; i++) {
-            deliverers.push({
+            newDeliverers.push({
                 name: e.target['name' + i].value,
                 phone: e.target['phone' + i].value,
                 email: e.target['email' + i].value,
             });
         }
-        
-        // TODO: write to db
-        console.log(deliverers);
 
-        this.setState({
-            waiting: true,
-            // savedTimestamp: ,
-        });
-
+        if (!objectsAreEqual(newDeliverers[0], deliverers[0]) ||
+            !objectsAreEqual(newDeliverers[1], deliverers[1])) {
+            // only update if there are changes
+            deliveriesRef.child(delivery.id).child('deliverers').set(newDeliverers)
+                .then(() => {
+                    // record timestamp of when the write was done
+                    this.setState({ savedTimestamp: moment().valueOf() });
+                });
+        } else {
+            // nothing changed
+            this.setState({ waiting: false, edit: false });
+        }
     }
 
     renderDelivererInputs(deliverers) {

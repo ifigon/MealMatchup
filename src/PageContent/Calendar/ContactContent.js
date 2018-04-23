@@ -23,7 +23,6 @@ class ContactContent extends Component {
         this.saveContact = this.saveContact.bind(this);
     }
 
-    // update this.state.contact when we receive a new prop
     componentWillReceiveProps(nextProps) {
         // update state to reflect values properly saved if we were waiting
         // on the update and the update happened after we wrote to db.

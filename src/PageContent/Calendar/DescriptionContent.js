@@ -23,13 +23,12 @@ class DescriptionContent extends Component {
         this.addRow = this.addRow.bind(this);
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps) {
         // update state to reflect values properly saved if we were waiting
         // on the update and the update happened after we wrote to db.
-        if (prevState.waiting && nextProps.delivery.updatedTimesamp > prevState.savedTimestamp) {
-            return { waiting: false, edit: false, foodRows: null };
+        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ waiting: false, edit: false, foodRows: null });
         }
-        return null;
     }
 
     edit() {
