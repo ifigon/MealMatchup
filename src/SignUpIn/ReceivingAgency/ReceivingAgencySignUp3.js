@@ -33,9 +33,9 @@ class ReceivingAgencySignUp3 extends Component {
                 <input type="checkbox" name={checkboxName} defaultChecked={checked} />
                 <div className="day">{day}</div>
                 {/* TODO: AM/PM UI */}
-                <input type="time" name={startName} defaultValue={startTime} />
-                to
-                <input type="time" name={endName} defaultValue={endTime} />
+                <input type="time" name={startName} defaultValue={startTime} className="ra3-inputBox" />
+                <span className="ra3-spacing">to</span>
+                <input type="time" name={endName} defaultValue={endTime} className="ra3-inputBox" />
             </div>
         );
     }
@@ -44,7 +44,7 @@ class ReceivingAgencySignUp3 extends Component {
         return (
             <form onSubmit={this.nextStep}>
                 <div className="signup-content">
-                    <div className="form-block">
+                    <div className="form-block ra3-form-block">
                         <label className="form-component delivery">Delivery Days</label>
                         {this.dayNames.map((day, i) => {
                             return this.dayRow(i, day);
@@ -65,7 +65,7 @@ class ReceivingAgencySignUp3 extends Component {
                         </div>
                     </div>
 
-                    <div className="buttons">
+                    <div className="buttons ra3-buttons">
                         <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                         <input type="submit" className="next" value="NEXT"></input>
                     </div>
