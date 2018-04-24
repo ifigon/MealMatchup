@@ -6,7 +6,8 @@ import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UMBRELLA_ID } from '../../Enums';
+import { AccountType } from '../../Enums';
+import UMBRELLA_ID from '../../UmbrellaConfig';
 
 let fieldValues = {
     organizationName: null,
