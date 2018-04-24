@@ -89,6 +89,7 @@ DONATING AGENCY MEMBER ("/accounts/")
 	dhA03LwTp3cibXVUcb3nQqO34wj1: {
 		accountType: "donating_agency_member",
 		agency: "-K9HdKlCLjjk_ka82K0s",  // autogen-key of a donating-agency
+		umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // same as agency's
 		name: "Andrea Benson",
 		email: "bensoa3@uw.edu",
 		phone: "206-543-6975",
