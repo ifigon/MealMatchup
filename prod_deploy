@@ -1,0 +1,12 @@
+#!/bin/bash
+# Usage: ./prod_deploy
+# Note: make sure to run it at the root of the project
+
+#1. copies prodConfigs/*
+cp ./prodConfigs/.firebaserc ./
+cp ./prodConfigs/FirebaseConfig.js ./src/
+cp ./prodConfigs/UmbrellaConfig.js ./src/
+cp ./prodConfigs/favicon.ico ./public/
+
+#3. deploy
+firebase deploy
