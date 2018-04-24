@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import firebase from './FirebaseConfig.js';
-import { AccountType, PageContent, DeliveryType } from './Enums.js';
+import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
-import EventCard from './PageContent/Calendar/EventCard.js';
 import logo from './icons/temp-logo.svg';
 import Directory from './PageContent/Directory/DirectoryPage.js';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
-
+import Calendar from './PageContent/Calendar/Calendar.js';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -24,7 +23,6 @@ class PageContainer extends Component {
             userId: props.userId,
             donatingAgency: null
         };
-
         this.navBarHandler = this.navBarHandler.bind(this);
     }
 
@@ -54,10 +52,19 @@ class PageContainer extends Component {
         });
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({
+            content: props.content
+        });
+    }
     render() {
         return (
             <div>
-                <PageHeader logo={logo} title={this.props.account.name} />
+                <PageHeader
+                    account={this.props.account}
+                    logo={logo}
+                    title={this.props.account.name}
+                />
 
                 <NavBar
                     content={this.state.content}
@@ -65,21 +72,12 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {/* TODO: replace placeholder text with real components */}
                 {this.state.content === PageContent.CALENDAR && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Calendar
-                        <EventCard
-                            eventType={DeliveryType.RECURRING}
-                            startTime="10am"
-                            endTime="12pm"
-                            futureEvent={true}
-                        />
-                    </div>
+                    <Calendar id="calendar-container" />
                 )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <AssignVolunteersController />
+                    <AssignVolunteersController account={this.props.account} />
                 )}
 
                 {this.state.content === PageContent.REQUEST_PICKUP &&
@@ -96,7 +94,7 @@ class PageContainer extends Component {
 
                 {this.state.content === PageContent.FOOD_LOGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Food Logs
+                        Feature coming soon!
                     </div>
                 )}
 
@@ -106,7 +104,7 @@ class PageContainer extends Component {
 
                 {this.state.content === PageContent.SETTINGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Settings
+                        Feature coming soon!
                     </div>
                 )}
             </div>

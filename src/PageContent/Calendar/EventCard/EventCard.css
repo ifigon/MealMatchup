@@ -3,6 +3,10 @@
   width: 160px;
 }
 
+.event-container:hover {
+  cursor: pointer;
+}
+
 .event-container-future {
   background-color: rgba(46, 204, 113, 0.1);
   border-left: 3.8px solid #2ecc71;
@@ -23,7 +27,7 @@
 .event-header {
   color: #4f4f4f;
   font-size: 12px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .event-time {
@@ -32,4 +36,12 @@
   font-weight: 400;
   margin-top: 5px;
   margin-bottom: 0px;
+}
+
+.multiple-events {
+  margin: 4px;
+}
+
+.multiple-events > .event-container {
+  padding: 0;
 }

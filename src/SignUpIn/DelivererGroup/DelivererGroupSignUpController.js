@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import moment from 'moment-timezone';
 import '../SignUpIn.css';
 import { accountsRef, auth } from '../../FirebaseConfig.js';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UmbrellaId } from '../../Enums';
+import { AccountType, UMBRELLA_ID } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -29,7 +30,8 @@ class DelivererGroupSignUpController extends Component {
         super(props);
 
         this.state = {
-            step: 1
+            step: 1,
+            error: '',
         };
 
         this.saveValues = this.saveValues.bind(this);
@@ -71,7 +73,7 @@ class DelivererGroupSignUpController extends Component {
                     accountType: AccountType.DELIVERER_GROUP,
                     // TODO: Manually setting this for now. In future, users should
                     // choose which umbrella they are signing up under.
-                    umbrella: UmbrellaId.TEST,
+                    umbrella: UMBRELLA_ID,
                     name: fieldValues.organizationName,
                     email: fieldValues.email,
                     address: {
@@ -81,7 +83,8 @@ class DelivererGroupSignUpController extends Component {
                         state: fieldValues.state,
                         zip: fieldValues.zip
                     },
-                    coordinator: {
+                    timezone: moment.tz.guess(),
+                    primaryContact: {
                         name: fieldValues.contactName,
                         email: fieldValues.contactEmail,
                         phone: fieldValues.contactNumber,
@@ -96,7 +99,7 @@ class DelivererGroupSignUpController extends Component {
                 accountsRef.child(user.uid).set(postData);
 
                 // add account to umbrella
-                accountsRef.child(UmbrellaId.TEST).child('delivererGroups')
+                accountsRef.child(UMBRELLA_ID).child('delivererGroups')
                     .push(user.uid);
 
                 // firebase's create account automatically signs the user in
@@ -104,12 +107,11 @@ class DelivererGroupSignUpController extends Component {
                 // been approved yet
                 auth.signOut();
 
+                this.nextStep();
             }).catch(error => {
-                // TODO: Add UI to handle the error.
-                return error;
+                this.setState({ error: error.message });
             });
 
-        this.nextStep();
     }
 
     showStep() {
@@ -133,7 +135,8 @@ class DelivererGroupSignUpController extends Component {
                     nextStep={this.nextStep}
                     previousStep={this.previousStep}
                     submitRegistration={this.submitRegistration}
-                    saveValues={this.saveValues} /></div>;
+                    saveValues={this.saveValues}
+                    error={this.state.error} /></div>;
         case 3:
             return <SignUpComplete fieldValues={fieldValues} />;
         default:

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { AccountType, RequestRepeatType, RequestEndCriteriaType, RequestStatus, StringFormat } from '../../Enums.js';
+import { RequestRepeatType, RequestEndCriteriaType, RequestStatus, InputFormat } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 class RecurringPickupRequest extends Component {
 
@@ -73,11 +73,7 @@ class RecurringPickupRequest extends Component {
                     entry['email'] = snapVal.email;
                 } else {
                     entry['address'] = snapVal.address;
-                    if (snapVal.accountType === AccountType.RECEIVING_AGENCY) {
-                        entry['primaryContact'] = snapVal.primaryContact;
-                    } else if (snapVal.accountType === AccountType.DELIVERER_GROUP) {
-                        entry['coordinator'] = snapVal.coordinator;
-                    }
+                    entry['primaryContact'] = snapVal.primaryContact;
                 }
 
                 // append entry into state
@@ -130,10 +126,13 @@ class RecurringPickupRequest extends Component {
         return formIsValid;
     }
 
-    handleChange(field, e) {   
-        let fields = this.state.fields;
-        fields[field] = e.target.value; 
-        this.setState({fields});
+    handleChange(field, e) {
+        var val = e.target.value;
+        this.setState((prevState) => {
+            let fields = prevState.fields;
+            fields[field] = val;
+            return {fields: fields};
+        });
     }
 
     toggleModal() {
@@ -148,12 +147,13 @@ class RecurringPickupRequest extends Component {
         if (!this.handleValidation()) {
             alert('Form has errors');
         } else {
-            let dateTimeStringToTimestamp = (dateString, timeString) => Date.parse(dateString + ' ' + timeString);
+            // force request's timezone to be the same as DA's
+            let reqTimezone = this.props.donatingAgency.timezone;
+            let dateTimeStringToTimestamp = (dateString, timeString) => moment.tz(
+                dateString + timeString, InputFormat.DATE + InputFormat.TIME, reqTimezone).valueOf();
             let startTimestamp = dateTimeStringToTimestamp(event.target.startDate.value, event.target.startTime.value);
 
-            // process various fields
-            var durationValue = null;
-
+            let durationValue;
             // compute ending Timestamp
             let endTimestamp;
             if (event.target.endCriteria.value === RequestEndCriteriaType.DATE) {
@@ -162,20 +162,19 @@ class RecurringPickupRequest extends Component {
             } else {
                 durationValue = event.target.numOccurrences.value;
                 let freq = event.target.repeats.value;
-                let endDate = new Date(startTimestamp);
                 if (freq === RequestRepeatType.WEEKLY) {
-                    endDate.setDate(endDate.getDate() + (durationValue - 1) * 7);
-                    endTimestamp = endDate.getTime();
+                    endTimestamp = moment.tz(startTimestamp, reqTimezone)
+                        .add((durationValue - 1) * 7, 'days').valueOf();
                 } else if (freq === RequestRepeatType.BIWEEKLY) {
-                    endDate.setDate(endDate.getDate() + (durationValue - 1) * 14);
-                    endTimestamp = endDate.getTime();
+                    endTimestamp = moment.tz(startTimestamp, reqTimezone)
+                        .add((durationValue - 1) * 14, 'days').valueOf();
                 } else {
                     // TODO (jkbach): handle monthly
                     endTimestamp = -1;
                 }
             }
-            let pickupTimeDiffMs = (moment(event.target.endTime.value, StringFormat.TIME)
-                    - moment(event.target.startTime.value, StringFormat.TIME))
+            let pickupTimeDiffMs = (moment(event.target.endTime.value, InputFormat.TIME)
+                    - moment(event.target.startTime.value, InputFormat.TIME))
                 .valueOf();
             endTimestamp += pickupTimeDiffMs; //encode endTime
 
@@ -187,11 +186,7 @@ class RecurringPickupRequest extends Component {
                 raInfo['requested'] = raRequested.id;
             } else {
                 // if no specific RA requested, add all RAs to pending list
-                let pending = [];
-                for (let ra in this.state.receivingAgencies) {
-                    pending.push(this.state.receivingAgencies[ra].id);
-                }
-                raInfo['pending'] = pending;
+                raInfo['pending'] = this.state.receivingAgencies.map(ra => ra.id);
             }
             
             var dgInfo = {};
@@ -202,11 +197,7 @@ class RecurringPickupRequest extends Component {
                 dgInfo['requested'] = dgRequested.id;
             } else {
                 // if no specific DG requested, add all DGs to pending list
-                let pending = [];
-                for (let dg in this.state.delivererGroups) {
-                    pending.push(this.state.delivererGroups[dg].id);
-                }
-                dgInfo['pending'] = pending;
+                dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
             }
 
             var primaryContact = this.state.memberList[event.target.primaryContact.value];
@@ -216,6 +207,7 @@ class RecurringPickupRequest extends Component {
                 status: RequestStatus.PENDING,
                 startTimestamp: startTimestamp,
                 endTimestamp: endTimestamp,
+                timezone: reqTimezone,
                 endCriteria:{
                     type: event.target.endCriteria.value,
                     value: durationValue
@@ -245,7 +237,10 @@ class RecurringPickupRequest extends Component {
     // when "Confirm" is clicked on the summary popup
     submitRequest() {
         // write to firebase
-        firebase.database().ref('delivery_requests').child(this.props.donatingAgency.umbrella).push(this.state.request);
+        firebase.database().ref('delivery_requests')
+            .child(this.props.donatingAgency.umbrella)
+            .child(this.props.account.agency)
+            .push(this.state.request);
 
         // hide popup and clear form
         this.toggleModal();

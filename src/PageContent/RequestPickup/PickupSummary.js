@@ -2,7 +2,7 @@ import React from 'react';
 import './PickupSummary.css';
 import truck from '../../icons/green-truck.svg';
 import Map from '../../Map/Map.js';
-import { RequestRepeatType, RequestEndCriteriaType, StringFormat } from '../../Enums.js';
+import { RequestRepeatType, RequestEndCriteriaType, StringFormat, InputFormat } from '../../Enums.js';
 import moment from 'moment';
 
 class PickupSummary extends React.Component {
@@ -20,7 +20,8 @@ class PickupSummary extends React.Component {
         if (this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR) {
             durationText = this.props.request.endCriteria.value + ' pickups requested';
         } else {
-            durationText = 'Ending ' + this.props.request.endCriteria.value;
+            durationText = 'Ending ' + moment(this.props.request.endCriteria.value, 
+                InputFormat.DATE).format(StringFormat.DATE_FULL);
         }
         durationText += ' for ' + repeatMap[this.props.request.repeats];
 
@@ -103,9 +104,9 @@ class PickupSummary extends React.Component {
                                     <div>
                                         <p id="name">{this.props.dgRequested.name}</p>
                                         <div className="contact">
-                                            <p>{this.props.dgRequested.coordinator.name}</p>
-                                            <p>{this.props.dgRequested.coordinator.phone}</p>
-                                            <p>{this.props.dgRequested.coordinator.email}</p>
+                                            <p>{this.props.dgRequested.primaryContact.name}</p>
+                                            <p>{this.props.dgRequested.primaryContact.phone}</p>
+                                            <p>{this.props.dgRequested.primaryContact.email}</p>
                                             <p>Confirmation pending.</p>
                                         </div>
                                     </div>

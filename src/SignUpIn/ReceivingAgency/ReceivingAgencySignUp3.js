@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment-timezone';
 import truck from '../../icons/truck.svg';
 
 class ReceivingAgencySignUp3 extends Component {
@@ -32,9 +33,9 @@ class ReceivingAgencySignUp3 extends Component {
                 <input type="checkbox" name={checkboxName} defaultChecked={checked} />
                 <div className="day">{day}</div>
                 {/* TODO: AM/PM UI */}
-                <input type="time" name={startName} defaultValue={startTime} />
-                to
-                <input type="time" name={endName} defaultValue={endTime} />
+                <input type="time" name={startName} defaultValue={startTime} className="ra3-inputBox" />
+                <span className="ra3-spacing">to</span>
+                <input type="time" name={endName} defaultValue={endTime} className="ra3-inputBox" />
             </div>
         );
     }
@@ -43,7 +44,7 @@ class ReceivingAgencySignUp3 extends Component {
         return (
             <form onSubmit={this.nextStep}>
                 <div className="signup-content">
-                    <div className="form-block">
+                    <div className="form-block ra3-form-block">
                         <label className="form-component delivery">Delivery Days</label>
                         {this.dayNames.map((day, i) => {
                             return this.dayRow(i, day);
@@ -64,7 +65,7 @@ class ReceivingAgencySignUp3 extends Component {
                         </div>
                     </div>
 
-                    <div className="buttons">
+                    <div className="buttons ra3-buttons">
                         <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                         <input type="submit" className="next" value="NEXT"></input>
                     </div>
@@ -82,12 +83,15 @@ class ReceivingAgencySignUp3 extends Component {
 
             // only add availability if checkbox was checked
             if (e.target[checkboxName].checked) {
-                var startName = day + 'Start';
-                var endName = day + 'End';
+                var startStr = e.target[day + 'Start'].value; // eg "10:00"
+                var endStr = e.target[day + 'End'].value; // eg "17:00"
+                var dayTimeFormat = 'e HH:mm';  // eg "3 10:00" for Wed 10AM
+                var startTimestamp = moment(i + ' ' + startStr, dayTimeFormat);
+                var endTimestamp = moment(i + ' ' + endStr, dayTimeFormat);
 
                 availabilities[i] = {
-                    startTime: e.target[startName].value,
-                    endTime: e.target[endName].value
+                    startTimestamp: startTimestamp.valueOf(),
+                    endTimestamp: endTimestamp.valueOf()
                 };
             }
         }

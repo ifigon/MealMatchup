@@ -5,18 +5,15 @@ import AssignOption from './AssignOption';
 class AssignVolunteersIndex extends Component {
 
     render() {
+        const {
+            deliveries,
+            deliveriesExist,
+            handleEditClick,
+        } = this.props;
 
-        return (
-            this.renderElements()
-        );
-
-    }
-
-    renderElements() {
-        if(this.props.deliveries.length === 0) {
+        if(!deliveriesExist) {
             return <h5>No deliveries scheduled</h5>;
-        }
-        else {
+        } else {
             return (
                 <div className="avi-container">  
                     <div className="avi-row">
@@ -33,16 +30,20 @@ class AssignVolunteersIndex extends Component {
                         </div>
                     </div>
                     {
-                        this.props.deliveries.map((delivery, index) => {
-                            return <AssignOption handleEditClick={this.props.handleEditClick} key={index} delivery={delivery} id={index}/>;
-                        })
-                    }
-                    
+                        Object.keys(deliveries)
+                            .sort((dId1, dId2) => deliveries[dId1].startTimestamp - deliveries[dId2].startTimestamp)
+                            .map(deliveryId => 
+                                <AssignOption 
+                                    handleEditClick={handleEditClick} 
+                                    key={deliveryId} 
+                                    delivery={deliveries[deliveryId]} 
+                                    deliveryId={deliveryId}/>)
+                            
+                    } 
                 </div>
             );
         }
     }
-
 }
 
 export default AssignVolunteersIndex;

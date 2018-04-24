@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import moment from 'moment-timezone';
 import '../SignUpIn.css';
 import { accountsRef, auth } from '../../FirebaseConfig.js';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
@@ -7,7 +8,7 @@ import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UmbrellaId } from '../../Enums';
+import { AccountType, UMBRELLA_ID } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
@@ -42,7 +43,8 @@ class ReceivingAgencySignUpController extends Component {
         super(props);
 
         this.state = {
-            step: 1
+            step: 1,
+            error: '',
         };
 
         this.saveValues = this.saveValues.bind(this);
@@ -83,7 +85,7 @@ class ReceivingAgencySignUpController extends Component {
                     accountType: AccountType.RECEIVING_AGENCY,
                     // TODO: Manually setting this for now. In future, users should
                     // choose which umbrella they are signing up under.
-                    umbrella: UmbrellaId.TEST,
+                    umbrella: UMBRELLA_ID,
                     name: fieldValues.organizationName,
                     email: fieldValues.email,
                     address: {
@@ -94,6 +96,7 @@ class ReceivingAgencySignUpController extends Component {
                         zip: fieldValues.zip,
                         officeNumber: fieldValues.officeNumber
                     },
+                    timezone: moment.tz.guess(),
                     isVerified: false,
                     isActivated: false,
                     primaryContact: {
@@ -121,20 +124,19 @@ class ReceivingAgencySignUpController extends Component {
                 accountsRef.child(user.uid).set(postData);
 
                 // add agency to umbrella
-                accountsRef.child(UmbrellaId.TEST).child('receivingAgencies')
+                accountsRef.child(UMBRELLA_ID).child('receivingAgencies')
                     .push(user.uid);
 
                 // firebase's create account automatically signs the user in
                 // we need to keep the user signed out since the account hasn't
                 // been approved yet
                 auth.signOut();
+
+                this.nextStep();
             })
             .catch(error => {
-                // TODO: Add UI to handle the error
-                return error;
+                this.setState({ error: error.message });
             });
-
-        this.nextStep();
     }
 
     showStep() {
@@ -180,7 +182,8 @@ class ReceivingAgencySignUpController extends Component {
                     nextStep={this.nextStep}
                     previousStep={this.previousStep}
                     submitRegistration={this.submitRegistration}
-                    saveValues={this.saveValues} /></div>;
+                    saveValues={this.saveValues}
+                    error={this.state.error} /></div>;
 
         case 5:
             return <SignUpComplete fieldValues={fieldValues} />;

@@ -2,15 +2,17 @@ import firebase from 'firebase';
 
 // Firebase Config
 var config = {
-    apiKey: 'AIzaSyD3Xc6UzuD85FqkgStaJL72yb_WDQCIv0Y',
-    authDomain: 'uw-foodwaste.firebaseapp.com',
-    databaseURL: 'https://uw-foodwaste.firebaseio.com',
-    projectId: 'uw-foodwaste',
-    storageBucket: 'uw-foodwaste.appspot.com',
-    messagingSenderId: '432006812093'
+    apiKey: 'AIzaSyDkGr1MbN9tyX9ATW5gX-8_7mk2lCcuPTc',
+    authDomain: 'foodwaste-dev.firebaseapp.com',
+    databaseURL: 'https://foodwaste-dev.firebaseio.com',
+    projectId: 'foodwaste-dev',
+    storageBucket: 'foodwaste-dev.appspot.com',
+    messagingSenderId: '63358892458'
 };
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 export const accountsRef = firebase.database().ref('accounts');
+export const deliveriesRef = firebase.database().ref('deliveries');
+export const donatingAgenciesRef = firebase.database().ref('donating_agencies');
 export default firebase;

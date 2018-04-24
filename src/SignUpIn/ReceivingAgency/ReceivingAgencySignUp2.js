@@ -13,7 +13,7 @@ class ReceivingAgencySignUp2 extends Component {
                     <div className="form-block">
                         <label className="form-component">Account Details</label><br />
                         <input name="email" type="email" id="organization" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} required /><br />
-                        <input name="password" type="password" id="password" className="form-component" placeholder="Password" required />
+                        <input name="password" type="password" onChange={this.comparePasswords} id="password" className="form-component" placeholder="Password" required />
                         <input type="password" id="confirmPassword" onChange={this.comparePasswords} className="form-component" placeholder="Confirm Password" required />
                     </div>
                     <div className="buttons">
@@ -28,7 +28,7 @@ class ReceivingAgencySignUp2 extends Component {
     comparePasswords(e) {
         var password = document.getElementById('password');
         var confirmPassword = document.getElementById('confirmPassword');
-        if (e.target.value !== password.value) {
+        if (confirmPassword.value !== password.value) {
             confirmPassword.setCustomValidity('Passwords Don\'t Match');
         } else {
             confirmPassword.setCustomValidity('');
