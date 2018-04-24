@@ -38,7 +38,7 @@ class PickupSummary extends React.Component {
                         <img src={truck} alt="truck"></img>
                         <p id="title">{this.props.title}</p>
                     </div>
-                    <div className="wrapper grid">
+                    <div className="summary-wrapper grid">
                         <div className="details grid">
                             <p id="subheading">Pickup Details</p>
                             <p>Start Date: {start_date_with_weekday} </p>
