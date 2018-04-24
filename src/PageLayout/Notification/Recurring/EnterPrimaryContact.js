@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { StringFormat } from '../../../Enums.js';
-<<<<<<< HEAD
 import { formatPhone } from '../../../utils/Utils';
-=======
-import { formatPhone } from '../../../utils/Utils.js';
->>>>>>> notification backend first pass
 
 class EnterPrimaryContact extends Component {
     saveInfo(e){
