@@ -21,3 +21,10 @@ yarn-debug.log*
 yarn-error.log*
 .vscode*
 *.log*
+
+# configs
+.firebaserc
+firebase.json
+.travis.yml
+.gitignore
+/src/FirebaseConfig.js
