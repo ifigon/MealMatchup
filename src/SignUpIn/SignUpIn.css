@@ -330,6 +330,7 @@ input.week {
 .day {
     display: inline-block;
     width: 45px;
+    margin-left: 5%;
 }
 
 .checkbox:checked:after {
@@ -473,7 +474,7 @@ form {
 }
 
 .ra3-inputBox {
-    width: 65px !important;
+    width: 25% !important;
 }
 
 .ra3-spacing {
