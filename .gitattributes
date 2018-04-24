@@ -1,0 +1,5 @@
+/.firebaserc merge=ours
+/firebase.json merge=ours
+/.travis.yml merge=ours
+/.gitignore merge=ours
+/src/FirebaseConfig.js merge=ours
