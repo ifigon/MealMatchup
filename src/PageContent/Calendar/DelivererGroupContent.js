@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AccountType, StringFormat } from '../../Enums';
 import './Content.css';
 import volunteer from '../../icons/volunteer.svg';
+import { formatPhone } from '../../utils/Utils';
 
 class DelivererGroupContent extends Component {
     constructor(props) {
@@ -112,6 +113,7 @@ class DelivererGroupContent extends Component {
                                                     defaultValue={phone1}
                                                     name="phone1"
                                                     type="tel"
+                                                    onChange={formatPhone}
                                                     pattern={StringFormat.PHONE}
                                                     required
                                                 />
@@ -133,6 +135,7 @@ class DelivererGroupContent extends Component {
                                                     className="content-details deliverer-group-details"
                                                     defaultValue={phone2}
                                                     type="tel"
+                                                    onChange={formatPhone}
                                                     name="phone2"
                                                     pattern={StringFormat.PHONE}
                                                     required

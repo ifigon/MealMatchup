@@ -4,9 +4,10 @@
 
 // TODO: temporary for pilot, manually setting a fixed umbrella
 exports.UmbrellaId = {
-    TEST: 'PrE7oCZajNcRAOXNAFwRQizQQcJ3'
-    // TODO: create a real umbrella for UW
+    TEST: 'PrE7oCZajNcRAOXNAFwRQizQQcJ3',
+    UW: 'bfwL94u7XYZyhZpDByXLeWb5ivA3',
 };
+exports.UMBRELLA_ID = exports.UmbrellaId.UW;
 
 // For display purposes
 exports.StringFormat = {

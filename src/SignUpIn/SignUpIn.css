@@ -196,7 +196,7 @@ option {
   cursor: pointer;
 }
 
-label.signup-complete-label {
+label.signup-complete-label, a.ok-button {
   margin-bottom: 10px;
   font-size: 1.7vw;
 }
@@ -328,9 +328,8 @@ input.week {
 }
 
 .day {
-  display: inline;
-  margin-right: 20px;
-  margin-left: 5px;
+    display: inline-block;
+    width: 45px;
 }
 
 .checkbox:checked:after {
@@ -470,7 +469,27 @@ form {
 }
 
 form {
-  padding-top: 0px;
+    padding-top: 0px;
+}
+
+.ra3-inputBox {
+    width: 65px !important;
+}
+
+.ra3-spacing {
+    padding: 0px 8px 0px 8px;
+}
+
+.ra3-buttons {
+    position: relative;
+    margin-bottom: 0;
+    padding-left: 0;
+    text-align: center;
+}
+
+.ra3-form-block {
+    height: 100%;
+    overflow: scroll;
 }
 
 .login-reroute {
@@ -492,4 +511,8 @@ form {
 
 .temp-link {
   margin: 0px !important;
+}
+
+a .ok-button{
+
 }

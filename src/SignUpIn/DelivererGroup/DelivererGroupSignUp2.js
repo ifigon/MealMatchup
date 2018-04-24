@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StringFormat } from '../../Enums.js';
+import { formatPhone } from '../../utils/Utils.js';
 
 class DelivererGroupSignUp2 extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class DelivererGroupSignUp2 extends Component {
                     <div className="form-block">
                         <label className="form-component">Account Details</label><br />
                         <input type="email" name="email" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.email} required /><br />
-                        <input type="password" id="password" name="password" className="form-component" placeholder="Password" defaultValue={this.props.fieldValues.password} required />
+                        <input type="password" id="password" onChange={this.comparePasswords} name="password" className="form-component" placeholder="Password" defaultValue={this.props.fieldValues.password} required />
                         <input type="password" id="confirmPassword" onChange={this.comparePasswords} name="confirmPw" className="form-component" placeholder="Confirm Password" defaultValue={this.props.fieldValues.password} required />
                     </div>
                     <div className="form-block">
@@ -21,8 +22,12 @@ class DelivererGroupSignUp2 extends Component {
                         <input name="contactName" type="text" className="form-component" placeholder="Name" defaultValue={this.props.fieldValues.contactName} required /><br />
                         <input name="contactPosition" type="text" className="form-component" placeholder="Position" defaultValue={this.props.fieldValues.contactPosition} required /><br />
                         <input name="contactEmail" type="email" className="form-component" placeholder="Email" defaultValue={this.props.fieldValues.contactEmail} required /><br />
-                        <input name="contactNumber" type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="123-456-7890" defaultValue={this.props.fieldValues.contactNumber} required /><br />
+                        <input name="contactNumber" onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-component" placeholder="123-456-7890" defaultValue={this.props.fieldValues.contactNumber} required /><br />
                     </div>
+
+                    {this.props.error &&
+                        <p className="sign-in-error">{this.props.error}</p>
+                    }
 
                     <div className="buttons">
                         <span className="cancel" onClick={this.props.previousStep}>BACK</span>
@@ -36,7 +41,7 @@ class DelivererGroupSignUp2 extends Component {
     comparePasswords(e) {
         var password = document.getElementById('password');
         var confirmPassword = document.getElementById('confirmPassword');
-        if (e.target.value !== password.value) {
+        if (confirmPassword.value !== password.value) {
             confirmPassword.setCustomValidity('Passwords Don\'t Match');
         } else {
             confirmPassword.setCustomValidity('');
