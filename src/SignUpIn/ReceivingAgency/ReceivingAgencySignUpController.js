@@ -1,39 +1,29 @@
 import React, {Component} from 'react';
+import moment from 'moment-timezone';
 import '../SignUpIn.css';
+import { accountsRef, auth } from '../../FirebaseConfig.js';
 import ReceivingAgencySignUp1 from './ReceivingAgencySignUp1';
 import ReceivingAgencySignUp2 from './ReceivingAgencySignUp2';
 import ReceivingAgencySignUp3 from './ReceivingAgencySignUp3';
 import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
+import { AccountType, UMBRELLA_ID } from '../../Enums';
 
 let fieldValues = {
     organizationName: null,
     address1: null,
     address2: null,
     city: null,
-    state: null,
+    state: '',
     zip: null,
     officeNumber: null,
 
     email: null,
     password: null,
 
-    monStart: null,
-    monEnd: null,
-    tueStart: null,
-    tueEnd: null,
-    wedStart: null,
-    wedEnd: null,
-    thurStart: null,
-    thurEnd: null,
-    friStart: null,
-    friEnd: null,
-    satStart: null,
-    satEnd: null,
-    sunStart: null,
-    sunEnd: null,
-    emergencyAvailable: null,
+    availabilities: null,
+    emergencyAvailable: false,
     startLbs: null,
     endLbs: null,
 
@@ -48,12 +38,19 @@ let fieldValues = {
 
 };
 
-class SignUpShelterController extends Component {
+class ReceivingAgencySignUpController extends Component {
     constructor(props){
         super(props);
+
         this.state = {
-            step: 1
+            step: 1,
+            error: '',
         };
+
+        this.saveValues = this.saveValues.bind(this);
+        this.nextStep = this.nextStep.bind(this);
+        this.previousStep = this.previousStep.bind(this);
+        this.submitRegistration = this.submitRegistration.bind(this);
     }
 
     saveValues(fields) {
@@ -62,7 +59,7 @@ class SignUpShelterController extends Component {
             // to and overriding keys in `fieldValues` with the `fields` with Object.assign
             // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
             fieldValues = Object.assign({}, fieldValues, fields);
-        };
+        }();
     }
 
     nextStep () {
@@ -77,6 +74,71 @@ class SignUpShelterController extends Component {
         });
     }
 
+    submitRegistration() {
+        // Handle via ajax submitting the user data, upon
+        // success return this.nextStop(). If it fails,
+        // show the user the error but don't advance
+
+        auth.createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
+            .then(user => {   
+                let postData = {
+                    accountType: AccountType.RECEIVING_AGENCY,
+                    // TODO: Manually setting this for now. In future, users should
+                    // choose which umbrella they are signing up under.
+                    umbrella: UMBRELLA_ID,
+                    name: fieldValues.organizationName,
+                    email: fieldValues.email,
+                    address: {
+                        street1: fieldValues.address1,
+                        street2: fieldValues.address2,
+                        city: fieldValues.city,
+                        state: fieldValues.state,
+                        zip: fieldValues.zip,
+                        officeNumber: fieldValues.officeNumber
+                    },
+                    timezone: moment.tz.guess(),
+                    isVerified: false,
+                    isActivated: false,
+                    primaryContact: {
+                        name: fieldValues.primaryName,
+                        email: fieldValues.primaryEmail,
+                        phone: fieldValues.primaryPhone,
+                        position: fieldValues.primaryPosition
+                    },
+                    secondaryContact: {
+                        name: fieldValues.secondaryName,
+                        email: fieldValues.secondaryEmail,
+                        phone: fieldValues.secondaryPhone,
+                        position: fieldValues.secondaryPosition
+                    },
+                    // TODO: Use a loop here instead
+                    availabilities: fieldValues.availabilities,
+                    acceptEmergencyPickups: fieldValues.emergencyAvailable,
+                    emergencyQuantity: {
+                        min: fieldValues.startLbs,
+                        max: fieldValues.endLbs
+                    }
+                };
+
+                // write account to db
+                accountsRef.child(user.uid).set(postData);
+
+                // add agency to umbrella
+                accountsRef.child(UMBRELLA_ID).child('receivingAgencies')
+                    .push(user.uid);
+
+                // firebase's create account automatically signs the user in
+                // we need to keep the user signed out since the account hasn't
+                // been approved yet
+                auth.signOut();
+
+                this.nextStep();
+            })
+            .catch(error => {
+                this.setState({ error: error.message });
+            });
+    }
+
     showStep() {
         switch (this.state.step) {
         default:
@@ -87,9 +149,9 @@ class SignUpShelterController extends Component {
                     <div className="circle"></div><div className="circle open"></div><div className="circle open"></div><div className="circle open"></div>
                 </div>
                 <ReceivingAgencySignUp1 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} />
+                    nextStep={this.nextStep}
+                    previousStep={this.previousStep}
+                    saveValues={this.saveValues} />
             </div>;
         case 2:
             return <div className="signup">
@@ -97,9 +159,9 @@ class SignUpShelterController extends Component {
                     <div className="circle open"></div><div className="circle"></div><div className="circle open"></div><div className="circle open"></div>
                 </div>
                 <ReceivingAgencySignUp2 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
+                    nextStep={this.nextStep}
+                    previousStep={this.previousStep}
+                    saveValues={this.saveValues} /></div>;
 
         case 3:
             return <div className="signup">
@@ -107,9 +169,9 @@ class SignUpShelterController extends Component {
                     <div className="circle open"></div><div className="circle open"></div><div className="circle"></div><div className="circle open"></div>
                 </div>
                 <ReceivingAgencySignUp3 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
+                    nextStep={this.nextStep}
+                    previousStep={this.previousStep}
+                    saveValues={this.saveValues} /></div>;
 
         case 4:
             return <div className="signup">
@@ -117,9 +179,11 @@ class SignUpShelterController extends Component {
                     <div className="circle open"></div><div className="circle open"></div><div className="circle open"></div><div className="circle"></div>
                 </div>
                 <ReceivingAgencySignUp4 fieldValues={fieldValues}
-                    nextStep={this.nextStep.bind(this)}
-                    previousStep={this.previousStep.bind(this)}
-                    saveValues={this.saveValues.bind(this)} /></div>;
+                    nextStep={this.nextStep}
+                    previousStep={this.previousStep}
+                    submitRegistration={this.submitRegistration}
+                    saveValues={this.saveValues}
+                    error={this.state.error} /></div>;
 
         case 5:
             return <SignUpComplete fieldValues={fieldValues} />;
@@ -134,4 +198,4 @@ class SignUpShelterController extends Component {
         );
     }
 }
-export default SignUpShelterController;
+export default ReceivingAgencySignUpController;

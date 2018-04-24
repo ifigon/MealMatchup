@@ -1,0 +1,21 @@
+<svg width="32" height="32" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>cross-out</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(439 238)">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M -439 -238L -407 -238L -407 -206L -439 -206L -439 -238Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="cross-out" clip-path="url(#clip-0)">
+<g id="cross-out">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(-437 -236)" fill="#010002"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 27 0.841465L 26.1598 0L 13.5 12.6584L 0.841021 0L -1.34408e-11 0.841465L 12.659 13.4998L -1.34408e-11 26.1582L 0.841021 27L 13.5 14.3399L 26.1598 27L 27 26.1582L 14.341 13.4998L 27 0.841465Z"/>
+</defs>
+</svg>

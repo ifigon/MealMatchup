@@ -1,183 +1,71 @@
 import React, { Component } from 'react';
+import moment from 'moment-timezone';
 import truck from '../../icons/truck.svg';
 
 class ReceivingAgencySignUp3 extends Component {
     constructor(props) {
         super(props);
+
+        this.dayNames = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+
         this.nextStep = this.nextStep.bind(this);
+        this.dayRow = this.dayRow.bind(this);
+    }
+
+    dayRow(i, day) {
+        var checkboxName = day + 'Check';
+        var startName = day + 'Start';
+        var endName = day + 'End';
+
+        // populate default values if exists
+        var checked = false;
+        var startTime = '';
+        var endTime = '';
+        var availabilities = this.props.fieldValues.availabilities;
+        if (availabilities && availabilities[i]) {
+            checked = true;
+            startTime = availabilities[i].startTime;
+            endTime = availabilities[i].endTime;
+        }
+
+        return (
+            <div className="row" key={day}> 
+                <input type="checkbox" name={checkboxName} defaultChecked={checked} />
+                <div className="day">{day}</div>
+                {/* TODO: AM/PM UI */}
+                <input type="time" name={startName} defaultValue={startTime} className="ra3-inputBox" />
+                <span className="ra3-spacing">to</span>
+                <input type="time" name={endName} defaultValue={endTime} className="ra3-inputBox" />
+            </div>
+        );
     }
 
     render() {
         return (
             <form onSubmit={this.nextStep}>
                 <div className="signup-content">
-                    <div className="form-block">
+                    <div className="form-block ra3-form-block">
                         <label className="form-component delivery">Delivery Days</label>
-                        <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Mon</div>
-                            <div className="time-input-wrapper">
-                                <div className="input-wrapper">
-                                    <input name="monStart" className="week" type="text" />
-                                    <div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                                to
-                                <div className="input-wrapper">
-                                    <input name="monEnd" type="text" className="week" /><div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div className="row"> <input name="tueStart" className="checkbox" type="checkbox" /><div className="day">Tue</div>
-                            <div className="time-input-wrapper">
-                                <div className="input-wrapper">
-                                    <input className="week" type="text" />
-                                    <div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                                to
-                                <div className="input-wrapper">
-                                    <input name="tueEnd" type="text" className="week" /><div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Wed</div>
-                            <div className="time-input-wrapper">
-                                <div className="input-wrapper">
-                                    <input name="wedStart" className="week" type="text" />
-                                    <div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                                to
-                                <div className="input-wrapper">
-                                    <input name="wedEnd" type="text" className="week" /><div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Thur</div>
-                            <div className="time-input-wrapper">
-                                <div className="input-wrapper">
-                                    <input name="thurStart" className="week" type="text" />
-                                    <div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                                to
-                                <div className="input-wrapper">
-                                    <input name="thurEnd" type="text" className="week" /><div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Fri</div>
-                            <div className="time-input-wrapper">
-                                <div className="input-wrapper">
-                                    <input name="friStart" className="week" type="text" />
-                                    <div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                                to
-                                <div className="input-wrapper">
-                                    <input name="friEnd" type="text" className="week" /><div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sat</div>
-                            <div className="time-input-wrapper">
-                                <div className="input-wrapper">
-                                    <input name="satStart" className="week" type="text" />
-                                    <div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                                to
-                                <div className="input-wrapper">
-                                    <input name="satEnd" type="text" className="week" /><div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div className="row"> <input className="checkbox" type="checkbox" /><div className="day">Sun</div>
-                            <div className="time-input-wrapper">
-                                <div className="input-wrapper">
-                                    <input name="sunStart" className="week" type="text" />
-                                    <div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                                to
-                                <div className="input-wrapper">
-                                    <input name="sunEnd" type="text" className="week" /><div className="am-pm">
-                                        <span className="am">AM</span>
-                                        /
-                                        <span className="PM">PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-
+                        {this.dayNames.map((day, i) => {
+                            return this.dayRow(i, day);
+                        })}
                         <div className="emergency-pickup">
                             <label className="emergency-pickup-label">Emergency Pick Up Available</label><img alt="icon" className="icon" src={truck} type="image/svg+xml" /><br />
-                            <input type="checkbox" className="checkbox" /><p className="pickup-p">Pick up food from donating agency, if notified, in cases of emergency.</p>
+                            <input type="checkbox" name="acceptEmergency" defaultChecked={this.props.fieldValues.emergencyAvailable} />
+                            <p className="pickup-p">Pick up food from donating agency, if notified, in cases of emergency.</p>
                         </div>
                         <div className="food-weight">
-                            Amount of food pnameerred: <br /><div className="lbs-wrapper lbs-wrapper1">
-                                <input type="text" className="lbs" name="startLbs" /> <i>lbs</i></div> to <div className="lbs-wrapper lbs-wrapper2"><input name="endLbs" type="text" className="lbs" /> <i>lbs</i></div>
+                            Amount of food preferred: <br />
+                            <div className="lbs-wrapper lbs-wrapper1">
+                                <input type="number" className="lbs" name="startLbs" defaultValue={this.props.fieldValues.startLbs} /> <i>lbs</i>
+                            </div> to 
+                            <div className="lbs-wrapper lbs-wrapper2">
+                                <input type="number" className="lbs" name="endLbs" defaultValue={this.props.fieldValues.endLbs} /> <i>lbs</i>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="buttons">
+                    <div className="buttons ra3-buttons">
                         <span className="cancel" onClick={this.props.previousStep}>BACK</span>
                         <input type="submit" className="next" value="NEXT"></input>
                     </div>
@@ -187,22 +75,30 @@ class ReceivingAgencySignUp3 extends Component {
     }
     nextStep(e) {
         e.preventDefault();
-        var data = {
-            monStart: e.target.monStart.value,
-            monEnd: e.target.monEnd.value,
-            tueStart: e.target.tueStart.value,
-            tueEnd: e.target.tueEnd.value,
-            wedStart: e.target.wedStart.value,
-            wedEnd: e.target.wedEnd.value,
-            thurStart: e.target.thurStart.value,
-            thurEnd: e.target.thurEnd.value,
-            friStart: e.target.friStart.value,
-            friEnd: e.target.friEnd.value,
-            satStart: e.target.satStart.value,
-            satEnd: e.target.satEnd.value,
-            sunStart: e.target.sunStart.value,
-            sunEnd: e.target.sunEnd.value,
 
+        var availabilities = {};
+        for (let i in this.dayNames) {
+            var day = this.dayNames[i];
+            var checkboxName = day + 'Check';
+
+            // only add availability if checkbox was checked
+            if (e.target[checkboxName].checked) {
+                var startStr = e.target[day + 'Start'].value; // eg "10:00"
+                var endStr = e.target[day + 'End'].value; // eg "17:00"
+                var dayTimeFormat = 'e HH:mm';  // eg "3 10:00" for Wed 10AM
+                var startTimestamp = moment(i + ' ' + startStr, dayTimeFormat);
+                var endTimestamp = moment(i + ' ' + endStr, dayTimeFormat);
+
+                availabilities[i] = {
+                    startTimestamp: startTimestamp.valueOf(),
+                    endTimestamp: endTimestamp.valueOf()
+                };
+            }
+        }
+
+        var data = {
+            availabilities: availabilities,
+            emergencyAvailable: e.target.acceptEmergency.checked,
             startLbs: e.target.startLbs.value,
             endLbs: e.target.endLbs.value,
         };
