@@ -24,14 +24,25 @@ class PageHeader extends Component {
         this.openPopUp = this.openPopUp.bind(this);
         this.closePopUp = this.closePopUp.bind(this);
     }
+
     componentDidMount() {
         let ref;
         if (this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            ref = db.ref(`donating_agencies/${this.props.account.agency}/notifications`)
+            ref = db.ref(`donating_agencies/${this.props.account.agency}/notifications`);
         } else {
             ref = accountsRef.child(`${this.props.account.uid}/notifications`);
         }   
         ref.on('value', (snap) => this.setState({notifications: snap.val() ? snap.val() : []}));
+    }
+
+    componentWillUnmount() {
+        let ref;
+        if (this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            ref = db.ref(`donating_agencies/${this.props.account.agency}/notifications`);
+        } else {
+            ref = accountsRef.child(`${this.props.account.uid}/notifications`);
+        }
+        ref.off();
     }
 
     openPopUp(index) {
