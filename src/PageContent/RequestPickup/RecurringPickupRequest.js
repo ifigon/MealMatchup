@@ -267,11 +267,11 @@ class RecurringPickupRequest extends Component {
                             </span>
                             <span className="grid">
                                 <label> End Criteria <span className="red">*</span></label><br/>
-                                <label className="container smaller">
+                                <label className="container-smaller">
                                     <input type="radio" name="endCriteria" value={RequestEndCriteriaType.OCCUR} onChange={this.handleChange.bind(this, 'endCriteria')} required/>
                                     <span className="checkmark"></span>After <input type="number" name="numOccurrences" onChange={this.handleChange.bind(this, 'occurTimes')} /> times<br/>
                                 </label >
-                                <label className="container smaller">
+                                <label className="container-smaller">
                                     <input type="radio" name="endCriteria" value={RequestEndCriteriaType.DATE} onChange={this.handleChange.bind(this, 'endCriteria')}/>
                                     <span className="checkmark"></span>End on
                                     <input type="date" name="endDate" onChange={this.handleChange.bind(this, 'endDate')} />
