@@ -5,7 +5,6 @@ import { deliveriesRef } from '../../FirebaseConfig';
 import { formatPhone, objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
 import volunteer from '../../icons/volunteer.svg';
-import { formatPhone } from '../../utils/Utils';
 
 class DelivererGroupContent extends Component {
     constructor(props) {
