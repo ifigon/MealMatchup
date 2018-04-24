@@ -7,7 +7,7 @@ class SignUpComplete extends Component {
                 <div className="signup-complete">
                     <label className="signup-complete-label">Account created successfully!</label>
                     <p>Before this account is activated, it will need to be approved. This agency will receive an email when this account is approved and activated.</p>
-                    <div className="ok-button">OK</div>
+                    <a href={' '} className="ok-button">OK</a>
                 </div>
             </div>
         );

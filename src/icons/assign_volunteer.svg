@@ -1,48 +1,10 @@
 <svg width="30" height="20" viewBox="0 0 30 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>Volunteer Icon</title>
-<desc>Created using Figma</desc>
-<g id="Canvas" transform="translate(2356 2942)">
-<rect x="-2356" y="-2942" width="30" height="20" fill="#E5E5E5"/>
-<clipPath id="clip-0" clip-rule="evenodd">
-<path d="M -2384 -3161L -944 -3161L -944 -2137L -2384 -2137L -2384 -3161Z" fill="#FFFFFF"/>
-</clipPath>
-<g id="Calendar" clip-path="url(#clip-0)">
-<path d="M -2384 -3161L -944 -3161L -944 -2137L -2384 -2137L -2384 -3161Z" fill="#FFFFFF"/>
-<g id="Student Cordinator Navigation">
-<g id="dining hall navigation">
-<clipPath id="clip-1" clip-rule="evenodd">
-<path d="M -2384 -3161L -2124 -3161L -2124 -2137L -2384 -2137L -2384 -3161Z" fill="#FFFFFF"/>
-</clipPath>
-<g id="Frame" clip-path="url(#clip-1)">
-<path d="M -2384 -3161L -2124 -3161L -2124 -2137L -2384 -2137L -2384 -3161Z" fill="#FFFFFF"/>
-<g id="Rectangle" filter="url(#filter0_i)">
-<use xlink:href="#path0_fill" transform="translate(-2384 -3161)" fill="#FFFFFF"/>
-</g>
-<g id="Assign Volunteers">
-<g id="Inactive">
-<g id="Volunteer Icon">
-<g id="Vector">
-<use xlink:href="#path1_fill" transform="translate(-2355.67 -2941.33)" fill="#687178"/>
+<g data-name="Canvas" fill="none">
+<g data-name="Volunteer Icon">
+<g data-name="Vector">
+<path d="M 20 8C 22.2133 8 23.9867 6.21333 23.9867 4C 23.9867 1.78667 22.2133 0 20 0C 17.7867 0 16 1.78667 16 4C 16 6.21333 17.7867 8 20 8ZM 9.33333 8C 11.5467 8 13.32 6.21333 13.32 4C 13.32 1.78667 11.5467 0 9.33333 0C 7.12 0 5.33333 1.78667 5.33333 4C 5.33333 6.21333 7.12 8 9.33333 8ZM 9.33333 10.6667C 6.22667 10.6667 0 12.2267 0 15.3333L 0 18.6667L 18.6667 18.6667L 18.6667 15.3333C 18.6667 12.2267 12.44 10.6667 9.33333 10.6667ZM 20 10.6667C 19.6133 10.6667 19.1733 10.6933 18.7067 10.7333C 20.2533 11.8533 21.3333 13.36 21.3333 15.3333L 21.3333 18.6667L 29.3333 18.6667L 29.3333 15.3333C 29.3333 12.2267 23.1067 10.6667 20 10.6667Z" transform="translate(0.333252 0.666748)" fill="#687178"/>
 </g>
 </g>
 </g>
-</g>
-</g>
-</g>
-</g>
-</g>
-</g>
-<defs>
-<filter id="filter0_i" filterUnits="userSpaceOnUse" x="-2384" y="-3161" width="260" height="1024" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0" result="hardAlpha"/>
-<feOffset dx="-1" dy="0"/>
-<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.866667 0 0 0 0 0.866667 0 0 0 0 0.866667 0 0 0 1 0"/>
-<feBlend mode="normal" in2="shape" result="effect1_innerShadow"/>
-</filter>
-<path id="path0_fill" fill-rule="evenodd" d="M 0 0L 260 0L 260 1024L 0 1024L 0 0Z"/>
-<path id="path1_fill" d="M 20 8C 22.2133 8 23.9867 6.21333 23.9867 4C 23.9867 1.78667 22.2133 0 20 0C 17.7867 0 16 1.78667 16 4C 16 6.21333 17.7867 8 20 8ZM 9.33333 8C 11.5467 8 13.32 6.21333 13.32 4C 13.32 1.78667 11.5467 0 9.33333 0C 7.12 0 5.33333 1.78667 5.33333 4C 5.33333 6.21333 7.12 8 9.33333 8ZM 9.33333 10.6667C 6.22667 10.6667 0 12.2267 0 15.3333L 0 18.6667L 18.6667 18.6667L 18.6667 15.3333C 18.6667 12.2267 12.44 10.6667 9.33333 10.6667ZM 20 10.6667C 19.6133 10.6667 19.1733 10.6933 18.7067 10.7333C 20.2533 11.8533 21.3333 13.36 21.3333 15.3333L 21.3333 18.6667L 29.3333 18.6667L 29.3333 15.3333C 29.3333 12.2267 23.1067 10.6667 20 10.6667Z"/>
-</defs>
 </svg>
+
