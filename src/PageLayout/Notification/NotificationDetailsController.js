@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Popup.css';
 import RecurringRequestController from './Recurring/RecurringRequestController';
 import close from '../../icons/cross-out.svg';
-import { NotificationType, NotificationCategory } from '../../Enums';
+import { AccountType, NotificationType, NotificationCategory } from '../../Enums';
 import RecurringRequestCancelled from './Recurring/RecurringRequestCanceled';
 import { NotificationMap } from './NotificationMap';
 import RecurringRequestConfirmed from './Recurring/RecurringRequestConfirmed';
@@ -114,7 +114,11 @@ class NotificationDetailsController extends Component {
         } = this.state;
 
         let removeNotification = () => {
-            db.ref(`accounts/${account.uid}/notifications/${notificationId}`).remove();
+            if (this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+                db.ref(`donating_agencies/${account.agency}/notifications/${notificationId}`).remove();
+            } else {
+                db.ref(`accounts/${account.uid}/notifications/${notificationId}`).remove();
+            }
         };
 
         let addressAndClose = () => {
@@ -153,7 +157,7 @@ class NotificationDetailsController extends Component {
                     notification={notification}
                     details={this.state.details}
                     closePopUp={closePopUp.bind(this)}
-                    notificationAddressed={removeNotification}
+                    notificationAddressed={addressAndClose}
                 />
             </div>;
         }

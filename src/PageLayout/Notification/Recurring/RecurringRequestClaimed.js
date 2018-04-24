@@ -12,7 +12,9 @@ class RecurringRequestClaimed extends Component {
                     <p>We will notify you when 
                         it is confirmed by all parties and scheduled.</p>
                     <p><span className="to-from">From:</span> {this.props.details.daInfo.name}     
-                        <span className="right to-from">To:</span> {this.props.details.raInfo.name} <br/></p>
+                        <span className="right to-from">To:</span> 
+                        { this.props.details.raInfo ? this.props.details.raInfo.name : this.props.raPrimaryContact.name } <br/>
+                    </p>
                     <div className="pickup-details">
                         <RequestTime request={this.props.details} />
                     </div>

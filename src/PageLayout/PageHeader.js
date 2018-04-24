@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import './PageHeader.css';
 import notification from '../icons/notification.svg';
 import NotificationBadge from 'react-notification-badge';
+import { AccountType } from '../Enums.js';
 import { Effect } from 'react-notification-badge';
 import Notification from './Notification/Notification';
 import NotificationDetailsController from './Notification/NotificationDetailsController';
-import { accountsRef } from '../FirebaseConfig.js';
+import firebase, { accountsRef } from '../FirebaseConfig.js';
+const db = firebase.database();
 
 class PageHeader extends Component {
     constructor(props) {
@@ -23,8 +25,13 @@ class PageHeader extends Component {
         this.closePopUp = this.closePopUp.bind(this);
     }
     componentDidMount() {
-        accountsRef.child(`${this.props.account.uid}/notifications`).on('value', 
-            (snap) => this.setState({notifications: snap.val()}));
+        let ref;
+        if (this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            ref = db.ref(`donating_agencies/${this.props.account.agency}/notifications`)
+        } else {
+            ref = accountsRef.child(`${this.props.account.uid}/notifications`);
+        }   
+        ref.on('value', (snap) => this.setState({notifications: snap.val() ? snap.val() : []}));
     }
 
     openPopUp(index) {

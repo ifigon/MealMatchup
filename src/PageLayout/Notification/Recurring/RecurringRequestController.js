@@ -19,7 +19,7 @@ class RecurringRequestController extends Component {
         super(props);
         this.state = {
             step: 1,
-            primaryContact: null
+            raPrimaryContact: null
         };
     }
 
@@ -47,26 +47,27 @@ class RecurringRequestController extends Component {
         let claimTransaction = ((childField) => {
             deliveryRequestRef.transaction((deliveryRequest) => {
                 if (deliveryRequest) {
-                    if (deliveryRequest[childField].claimed
+                    if (!(deliveryRequest[childField]
+                        && (deliveryRequest[childField].claimed
                         || deliveryRequest[childField].requested !== this.props.account.uid
                         || (deliveryRequest[childField].pending 
-                            && !deliveryRequest[childField].pending[this.props.account.uid])) {
-                        this.setState({step: 4});
-                    } else {
+                            && !deliveryRequest[childField].pending[this.props.account.uid])))) {
                         // I'm allowed to take this
                         if (this.state.raPrimaryContact) {
                             deliveryRequest['raContact'] = this.state.raPrimaryContact;
                         }
                         deliveryRequest[childField] = {claimed: this.props.account.uid};
-                        this.setState({step: 3});
                     }
                 }
                 return deliveryRequest;
             },
-            (err, committed) => {
-                if (committed) {
-                    this.props.notificationAddressed(); // remove from my list of notifications when transaction completes
-                } 
+            (err, committed, finalSnap) => {
+                if (committed && finalSnap.val()[childField].claimed === this.props.account.uid) {
+                    this.setState({step: 3});
+                } else {
+                    this.setState({step: 4});
+                }
+                this.props.notificationAddressed(); // remove from my list of notifications when transaction completes
             });
         });
         claimTransaction(accountTypeToDeliveryRequestField[this.props.account.accountType]);
@@ -91,7 +92,7 @@ class RecurringRequestController extends Component {
             }
             return pendingOrRequested;
         },
-        this.addressAndClose);
+        this.addressAndClose.bind(this));
     }
 
     showStep() {
@@ -112,12 +113,14 @@ class RecurringRequestController extends Component {
                 details={this.props.details}
                 nextStep={this.nextStep.bind(this)}
                 close={this.props.closePopUp}
+                raPrimaryContact={this.state.raPrimaryContact}
             />;
 
         case 3:
             return <RecurringRequestClaimed
                 accountType={this.props.account.accountType}
                 details={this.props.details}
+                raPrimaryContact={this.state.raPrimaryContact}
                 nextStep={this.nextStep.bind(this)}
             />;
         case 4:
