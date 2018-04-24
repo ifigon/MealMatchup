@@ -6,7 +6,7 @@ import NavBarItem from './NavBarItem';
 import './NavBar.css';
 import calendar from '../../icons/calendar.svg';
 import directory from '../../icons/directory.svg';
-import foodLog from '../../icons/food_log.svg';
+import foodLog from '../../icons/food_logs.svg';
 import settings from '../../icons/settings.svg';
 import truck from '../../icons/truck.svg';
 import assign_volunteer from '../../icons/assign_volunteer.svg';
