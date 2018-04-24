@@ -75,6 +75,7 @@ class DonatingAgencySignUpController extends Component {
                 let adminPostData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
                     agency: agencyKey,
+                    umbrella: UMBRELLA_ID,
                     name: fieldValues.adminName,
                     email: fieldValues.adminEmail,
                     phone: fieldValues.adminPhone,
