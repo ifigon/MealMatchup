@@ -6,3 +6,5 @@ New Agency Sign Up:
     
     - set `isVerified` and `isActivated` to `true`
     - if is a DA sign up, also set Member's `isVerified` and `isActivated` to `true`
+
+    adding test
