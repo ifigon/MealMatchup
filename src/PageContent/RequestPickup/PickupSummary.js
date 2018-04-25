@@ -38,7 +38,7 @@ class PickupSummary extends React.Component {
                         <img src={truck} alt="truck"></img>
                         <p id="title">{this.props.title}</p>
                     </div>
-                    <div className="wrapper grid">
+                    <div className="summary-wrapper grid">
                         <div className="details grid">
                             <p id="subheading">Pickup Details</p>
                             <p>Start Date: {start_date_with_weekday} </p>
@@ -91,7 +91,7 @@ class PickupSummary extends React.Component {
                                     height={'150px'}
                                     width={'350px'}
                                     marginRight={'30px'}
-                                    marginTop={'0px'}
+                                    marginTop={'30px'}
                                     marginBottom={'0px'}
                                     marginLeft={'10px'}
                                 />
@@ -126,10 +126,11 @@ class PickupSummary extends React.Component {
                             :
                             <br/>
                         }
-                        <div className="footer">
-                            <input type="submit" value="Confirm" onClick={this.props.onConfirm}/> 
-                            <input type="submit" value="Cancel" onClick={this.props.onClose}/>
-                        </div>
+                        
+                    </div>
+                    <div className="footer">
+                        <input type="submit" value="Confirm" onClick={this.props.onConfirm}/> 
+                        <input type="submit" value="Cancel" onClick={this.props.onClose}/>
                     </div>
                 </div>
             </div>
