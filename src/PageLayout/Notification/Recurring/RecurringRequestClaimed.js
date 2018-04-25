@@ -18,6 +18,9 @@ class RecurringRequestClaimed extends Component {
                     <div className="pickup-details">
                         <RequestTime request={this.props.details} />
                     </div>
+                    <div className="popup-buttons">
+                        <button onClick={this.props.close} className="claim" type="button">Ok</button>
+                    </div>
                 </div>
             </div>
         );

@@ -14,6 +14,14 @@ const accountTypeToDeliveryRequestField = {
     [AccountType.DELIVERER_GROUP]: 'delivererGroup', 
 };
 
+function unableToClaim(deliveryRequest, childField, myAccountId) {
+    return deliveryRequest[childField]
+        && (deliveryRequest[childField].claimed !== myAccountId // someone's already claimed this event
+        || deliveryRequest[childField].requested !== myAccountId // someone else was requested
+        || (deliveryRequest[childField].pending  // I'm not in the pending list
+            && !deliveryRequest[childField].pending[myAccountId]));
+}
+
 class RecurringRequestController extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +33,7 @@ class RecurringRequestController extends Component {
 
     enterPrimaryContact(){
         this.setState({
-            step: 5
+            step: 3
         });
     }
 
@@ -47,12 +55,8 @@ class RecurringRequestController extends Component {
         let claimTransaction = ((childField) => {
             deliveryRequestRef.transaction((deliveryRequest) => {
                 if (deliveryRequest) {
-                    if (!(deliveryRequest[childField]
-                        && (deliveryRequest[childField].claimed
-                        || deliveryRequest[childField].requested !== this.props.account.uid
-                        || (deliveryRequest[childField].pending 
-                            && !deliveryRequest[childField].pending[this.props.account.uid])))) {
-                        // I'm allowed to take this
+                    if (!unableToClaim(deliveryRequest, childField, this.props.account.uid)) {
+                        // If none of the above are true, I can take this
                         if (this.state.raPrimaryContact) {
                             deliveryRequest['raContact'] = this.state.raPrimaryContact;
                         }
@@ -60,22 +64,9 @@ class RecurringRequestController extends Component {
                     }
                 }
                 return deliveryRequest;
-            },
-            (err, committed, finalSnap) => {
-                if (committed && finalSnap.val()[childField].claimed === this.props.account.uid) {
-                    this.setState({step: 3});
-                } else {
-                    this.setState({step: 4});
-                }
-                this.props.notificationAddressed(); // remove from my list of notifications when transaction completes
             });
         });
         claimTransaction(accountTypeToDeliveryRequestField[this.props.account.accountType]);
-    }
-
-    addressAndClose() {
-        this.props.notificationAddressed();
-        this.props.closePopUp();
     }
 
     rejectRequest() {
@@ -92,48 +83,52 @@ class RecurringRequestController extends Component {
             }
             return pendingOrRequested;
         },
-        this.addressAndClose.bind(this));
+        this.props.addressNotificationAndClose());
     }
 
     showStep() {
-        switch (this.state.step) {
-        default:
-            return <RecurringRequestDetails
-                accountType={this.props.account.accountType} 
-                details={this.props.details}
-                enterPrimaryContact={this.enterPrimaryContact.bind(this)}
-                nextStep={this.nextStep.bind(this)}
-                close={this.props.closePopUp}
-                onReject={this.rejectRequest.bind(this)}
-            />;
-        case 2:
-            return <RecurringRequestDisclaimer
-                accountType={this.props.account.accountType}
-                claimRequest={this.claimRequest.bind(this)}
-                details={this.props.details}
-                nextStep={this.nextStep.bind(this)}
-                close={this.props.closePopUp}
-                raPrimaryContact={this.state.raPrimaryContact}
-            />;
+        let deliveryChildField = accountTypeToDeliveryRequestField[this.props.account.accountType];
+        let deliveryRequest = this.props.details;
 
-        case 3:
+        if (deliveryRequest[deliveryChildField] &&
+            deliveryRequest[deliveryChildField].claimed === this.props.account.uid) {
+            // I've successfully claimed this request
             return <RecurringRequestClaimed
-                accountType={this.props.account.accountType}
+                close={this.props.addressNotificationAndClose}
                 details={this.props.details}
-                raPrimaryContact={this.state.raPrimaryContact}
-                nextStep={this.nextStep.bind(this)}
             />;
-        case 4:
+        } else if (unableToClaim(deliveryRequest, deliveryChildField, this.props.account.uid)) {
+            // someone has already claimed this event
             return <SucksToSuck 
-                close={this.props.closePopUp}
+                close={this.props.addressNotificationAndClose}
             />;
-        case 5:
-            return <EnterPrimaryContact
-                accountType={this.props.account.accountType}
-                details={this.props.details}
-                savePrimaryContact={this.savePrimaryContact.bind(this)}
-                close={this.props.closePopUp}
-            />;
+        } else {
+            switch (this.state.step) {
+            default:
+                return <RecurringRequestDetails
+                    accountType={this.props.account.accountType}
+                    details={this.props.details}
+                    enterPrimaryContact={this.enterPrimaryContact.bind(this)}
+                    nextStep={this.nextStep.bind(this)}
+                    close={this.props.closePopUp}
+                    onReject={this.rejectRequest.bind(this)}
+                />;
+            case 2:
+                return <RecurringRequestDisclaimer
+                    accountType={this.props.account.accountType}
+                    claimRequest={this.claimRequest.bind(this)}
+                    details={this.props.details}
+                    close={this.props.closePopUp}
+                    raPrimaryContact={this.state.raPrimaryContact}
+                />;
+            case 3:
+                return <EnterPrimaryContact
+                    accountType={this.props.account.accountType}
+                    details={this.props.details}
+                    savePrimaryContact={this.savePrimaryContact.bind(this)}
+                    close={this.props.closePopUp}
+                />;
+            }
         }
     }
 

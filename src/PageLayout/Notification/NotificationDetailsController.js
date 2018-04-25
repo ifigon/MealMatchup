@@ -13,55 +13,7 @@ class NotificationDetailsController extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // TODO: change -> details:{}
-            details: {
-                status: '',  // Enums.RequestStatus
-                startTimestamp: '',  // start date + start hour
-                endTimestamp: '',    // end date + end hour
-                endCriteria: {
-                },
-                repeats: '',	// values in Enums.RequestRepeatType
-                primaryContact: '',  // uid-key of a donating-agency-member
-                notes: '',
-                umbrella: '',  // uid-key of a umbrella
-                donatingAgency: '',  // autogen-key of a donating-agency
-                requester: '',  // name of a donating-agency-member
-                receivingAgency: {
-                },
-                // ADDED FOR DUMMY DATA
-                daInfo: {
-                    name: '',
-                    primaryContact: { 
-                    },
-                    address: {
-                        street1: '',
-                        street2: '',
-                        city: '',
-                        state: '',
-                        zipcode: '',
-                        officeNo: ''
-                    }
-                },
-                raInfo: {
-                    // ADDED FOR DUMMY DATA
-                    name: '',
-                    address: {
-                    },
-                    primaryContact: {
-                    }
-                },
-                delivererGroup: {
-                    claimed: '',  // uid-key of a DG (once a DG claims)
-                },
-                dgInfo:{
-                },
-                requestTimeStamp: '',
-                spawnedDeliveries: [
-                    // individual deliveries that were created to fulfill this delivery request
-                    '-L5RkIS0CSPuXpkewaqA'
-                ]
-            
-            },
+            details: null,
             notification: this.props.notification, // HACK to prevent rerendering after we remove the notification
         };
     }
@@ -73,7 +25,7 @@ class NotificationDetailsController extends Component {
                 resolve((await db.ref(`${pathPrefix}/${accountId}`).once('value')).val())));
 
             db.ref(`delivery_requests/${this.props.account.umbrella}/${this.state.notification.content}`)
-                .once('value', async (snap) => {
+                .on('value', async (snap) => {
                     let deliveryRequest = snap.val();
                     // kick all promises off
                     let donatingAgencyPromise = genSupplementaryPromise('donating_agencies', deliveryRequest.donatingAgency);
@@ -103,6 +55,10 @@ class NotificationDetailsController extends Component {
         }
     }
 
+    componentWillUnmount() {
+        db.ref(`delivery_requests/${this.props.account.umbrella}/${this.state.notification.content}`).off();
+    }
+
     showDetail() {
         const {
             account,
@@ -126,6 +82,10 @@ class NotificationDetailsController extends Component {
             closePopUp();
         };
 
+        if (!this.state.details) { // TODO: fill this with loading gif
+            return <div className="popup-wrapper"></div>;
+        }
+
         switch(NotificationMap[this.state.notification.type].color){
         // default color is green
         default:
@@ -137,7 +97,7 @@ class NotificationDetailsController extends Component {
                         account={account}
                         closePopUp={closePopUp.bind(this)}
                         details={this.state.details}
-                        notificationAddressed={removeNotification}
+                        addressNotificationAndClose={addressAndClose}
                     />
                 }
                 {
@@ -145,7 +105,7 @@ class NotificationDetailsController extends Component {
                     <RecurringRequestConfirmed
                         details={this.state.details}
                         accountType={account.accountType}
-                        notificationAddressed={addressAndClose}
+                        addressNotificationAndClose={addressAndClose}
                     />
                 }
             </div>;
@@ -157,7 +117,7 @@ class NotificationDetailsController extends Component {
                     notification={notification}
                     details={this.state.details}
                     closePopUp={closePopUp.bind(this)}
-                    notificationAddressed={addressAndClose}
+                    addressNotificationAndClose={addressAndClose}
                 />
             </div>;
         }

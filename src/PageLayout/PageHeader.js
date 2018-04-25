@@ -17,7 +17,8 @@ class PageHeader extends Component {
             showPopUp: false,
             notificationClicked: false,
             notifications: [],
-            notificationIndex: 0
+            notificationIndex: 0,
+            notificationsRef: null,
         };
 
         this.notificationClicked = this.notificationClicked.bind(this);
@@ -31,18 +32,13 @@ class PageHeader extends Component {
             ref = db.ref(`donating_agencies/${this.props.account.agency}/notifications`);
         } else {
             ref = accountsRef.child(`${this.props.account.uid}/notifications`);
-        }   
+        }
         ref.on('value', (snap) => this.setState({notifications: snap.val() ? snap.val() : []}));
+        this.setState({notificationsRef: ref});
     }
 
     componentWillUnmount() {
-        let ref;
-        if (this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            ref = db.ref(`donating_agencies/${this.props.account.agency}/notifications`);
-        } else {
-            ref = accountsRef.child(`${this.props.account.uid}/notifications`);
-        }
-        ref.off();
+        this.state.notificationsRef.off();
     }
 
     openPopUp(index) {
