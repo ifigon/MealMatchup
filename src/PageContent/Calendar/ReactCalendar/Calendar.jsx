@@ -415,6 +415,9 @@ export default class Calendar extends Component {
                         showNeighboringMonth={this.props.showNeighboringMonth}
                         showWeekNumbers={this.props.showWeekNumbers}
                         {...commonProps}
+
+                        account={this.props.account}
+                        donatingAgency={this.props.donatingAgency}
                     />
                 );
             default:

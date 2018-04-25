@@ -35,7 +35,8 @@
 .header-time {
   padding: 0px;
   color: white;
+  font-size: 15px;
   font-weight: 300;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 2px;
+  margin-bottom: 3px;
 }
