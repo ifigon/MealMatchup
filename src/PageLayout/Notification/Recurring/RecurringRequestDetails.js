@@ -3,10 +3,6 @@ import { AccountType } from '../../../Enums';
 import RequestSummary from '../Details/RequestSummary';
 
 class RecurringRequestDetails extends Component {
-    reject(){
-        //TODO: backend handle removing notification from account
-        this.props.close();
-    }
     render() {
         let title = 'Recurring Pickup Requested';
         if (this.props.accountType === AccountType.RECEIVING_AGENCY) {
@@ -21,14 +17,14 @@ class RecurringRequestDetails extends Component {
                     this.props.accountType === AccountType.DELIVERER_GROUP &&
                     <div className="popup-buttons">
                         <button onClick={this.props.nextStep} className="claim" type="button">Claim</button> 
-                        <button onClick={this.reject.bind(this)} className="reject" type="button">Reject</button>
+                        <button onClick={this.props.onReject.bind(this)} className="reject" type="button">Reject</button>
                     </div>
                 }
                 {
                     this.props.accountType === AccountType.RECEIVING_AGENCY &&
                     <div className="popup-buttons">
                         <button onClick={this.props.enterPrimaryContact} className="claim" type="button">Claim</button> 
-                        <button onClick={this.reject.bind(this)} className="reject" type="button">Reject</button>
+                        <button onClick={this.props.onReject} className="reject" type="button">Reject</button>
                     </div>
                 }
                 
