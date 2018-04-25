@@ -29,7 +29,7 @@ class SignIn extends Component {
             })
             .catch(error => {
                 this.setState({
-                    error: error
+                    error: error.message
                 });
             });
     }
@@ -68,7 +68,7 @@ class SignIn extends Component {
                         {this.state.error && (
                             /* TODO: give better error msg */
                             <p className="sign-in-error">
-                                Unable to log in. {this.state.error}
+                                Unable to log in.
                             </p>
                         )}
                         <div className="login-button-wrapper">
