@@ -14,8 +14,10 @@ class RecurringRequestDisclaimer extends Component {
             daInfo,
             raInfo,
         } = this.props.details;
-        if (!raInfo && this.props.accountType === AccountType.RECEIVING_AGENCY) {
-            raInfo = this.props.raPrimaryContact;
+
+        if (!raInfo && this.props.account.accountType === AccountType.RECEIVING_AGENCY) {
+            // at RA claim step, there is no raInfo in delivery_request
+            raInfo = this.props.account;
         }
         return (
             <div className="modal-wrapper">

@@ -16,10 +16,10 @@ const accountTypeToDeliveryRequestField = {
 
 function unableToClaim(deliveryRequest, childField, myAccountId) {
     return deliveryRequest[childField]
-        && (deliveryRequest[childField].claimed !== myAccountId // someone's already claimed this event
-        || deliveryRequest[childField].requested !== myAccountId // someone else was requested
-        || (deliveryRequest[childField].pending  // I'm not in the pending list
-            && !deliveryRequest[childField].pending[myAccountId]));
+        && ((deliveryRequest[childField].claimed 
+            && deliveryRequest[childField].claimed !== myAccountId) // someone's already claimed this event
+        || (deliveryRequest[childField].requested
+            &&deliveryRequest[childField].requested !== myAccountId)); // someone else was requested
 }
 
 class RecurringRequestController extends Component {
@@ -115,7 +115,7 @@ class RecurringRequestController extends Component {
                 />;
             case 2:
                 return <RecurringRequestDisclaimer
-                    accountType={this.props.account.accountType}
+                    account={this.props.account}
                     claimRequest={this.claimRequest.bind(this)}
                     details={this.props.details}
                     close={this.props.closePopUp}
