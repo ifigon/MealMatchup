@@ -42,7 +42,7 @@ div.react-calendar__month-view__days > button {
 }
 
 .react-calendar__navigation__label {
-  font-size: 24px;
+  font-size: 20px;
   font-family: "Open Sans";
   font-weight: 200;
 }
@@ -66,18 +66,37 @@ div.react-calendar__month-view__days > button {
   outline: none;
 }
 
+.react-calendar__tile > time {
+  margin: 3px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 .react-calendar__tile > time.today {
   background-color: #5dc0f9;
   color: #ffffff;
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
-  text-align: center;
-  display: inline-block;
+}
+
+.not-this-month {
+  background-color: #efefef;
+}
+
+.not-this-month > time {
+  color: #999999;
 }
 
 .react-calendar__month-view__weekdays__weekday {
   flex-basis: 160px;
   max-width: 14.2857%;
   overflow: hidden;
+  text-align: center;
+}
+
+.slot-container {
+  height: 88px;
 }

@@ -1,20 +1,33 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { AccountType, StringFormat } from '../../Enums';
+import { deliveriesRef } from '../../FirebaseConfig';
+import { formatPhone, objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
 import volunteer from '../../icons/volunteer.svg';
-import { formatPhone } from '../../utils/Utils';
 
 class DelivererGroupContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             edit: false,
-            delivererGroup: this.props.delivery.delivererGroup.group,
-            deliverers: this.props.delivery.delivererGroup.deliverers
+            // 'waiting' is true after 'Saved' is clicked and before changes
+            // from db is propagated down. While it is true, input fields are
+            // disabled
+            waiting: false,
+            savedTimestamp: null,
         };
 
         this.edit = this.edit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.saveVolunteers = this.saveVolunteers.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // update state to reflect values properly saved if we were waiting
+        // on the update and the update happened after we wrote to db.
+        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ waiting: false, edit: false });
+        }
     }
 
     edit() {
@@ -23,152 +36,128 @@ class DelivererGroupContent extends Component {
         });
     }
 
-    handleChange(e) {
+    saveVolunteers(e) {
         e.preventDefault();
+        const delivery = this.props.delivery;
+        const { deliverers } = delivery;
 
-        this.setState({
-            edit: false,
-            deliverer1: e.target.deliverer1.value,
-            phone1: e.target.phone1.value,
-            deliverer2: e.target.deliverer2.value,
-            phone2: e.target.phone2.value,
-            email1: e.target.email1.value,
-            email2: e.target.email2.value
-        });
+        // disable input fields first
+        this.setState({ waiting: true });
 
-        // TODO: Save values to firebase
+        let newDeliverers = [];
+        for (let i = 0; i < 2; i++) {
+            newDeliverers.push({
+                name: e.target['name' + i].value,
+                phone: e.target['phone' + i].value,
+                email: e.target['email' + i].value,
+            });
+        }
+
+        if (!objectsAreEqual(newDeliverers[0], deliverers[0]) ||
+            !objectsAreEqual(newDeliverers[1], deliverers[1])) {
+            // only update if there are changes
+            deliveriesRef.child(delivery.id).child('deliverers').set(newDeliverers)
+                .then(() => {
+                    // record timestamp of when the write was done
+                    this.setState({ savedTimestamp: moment().valueOf() });
+                });
+        } else {
+            // nothing changed
+            this.setState({ waiting: false, edit: false });
+        }
+    }
+
+    renderDelivererInputs(deliverers) {
+        let inputs = [];
+        for (let i = 0; i < 2; i++) {
+            inputs.push((
+                <div key={i}>
+                    <input
+                        className="content-details deliverer-group-details"
+                        defaultValue={deliverers ? deliverers[i].name : ''}
+                        placeholder="name"
+                        name={'name' + i}
+                        type="text"
+                        required
+                    />
+                    <input
+                        className="content-details deliverer-group-details"
+                        defaultValue={deliverers ? deliverers[i].phone : ''}
+                        placeholder="xxx-xxx-xxxx"
+                        name={'phone' + i}
+                        type="tel"
+                        pattern={StringFormat.PHONE}
+                        onChange={formatPhone}
+                        required
+                    />
+                    <input
+                        className="content-details deliverer-group-details"
+                        defaultValue={deliverers ? deliverers[i].email : ''}
+                        placeholder="email"
+                        name={'email' + i}
+                        type="email"
+                        required
+                    />
+                </div>
+            ));
+        }
+        return inputs;
     }
 
     render() {
-        let deliverer1 = '';
-        let deliverer2 = '';
-        let phone1 = '';
-        let phone2 = '';
-        let email1 = '';
-        let email2 = '';
+        const { accountType, delivery } = this.props;
+        const { delivererGroup, deliverers } = delivery;
 
-        // First check if deliverers exist. Then arbitrarily check if
-        // deliverer group details exist using first deliverer name
-        // if state has not been set, get data from props
-        // if state is set, get data from state
-        if (
-            this.state.deliverers !== undefined &&
-            this.state.deliverer1 === undefined
-        ) {
-            deliverer1 = this.props.delivery.delivererGroup.deliverers[0].name;
-            deliverer2 = this.props.delivery.delivererGroup.deliverers[1].name;
-            phone1 = this.props.delivery.delivererGroup.deliverers[0].phone;
-            phone2 = this.props.delivery.delivererGroup.deliverers[1].phone;
-            email1 = this.props.delivery.delivererGroup.deliverers[0].email;
-            email2 = this.props.delivery.delivererGroup.deliverers[1].email;
-        } else if (this.state.deliverer1 !== undefined) {
-            deliverer1 = this.state.deliverer1;
-            deliverer2 = this.state.deliverer2;
-            phone1 = this.state.phone1;
-            phone2 = this.state.phone2;
-            email1 = this.state.email1;
-            email2 = this.state.email2;
+        let title = 'Picking Up Donation';
+        if (accountType === AccountType.DELIVERER_GROUP) {
+            title = 'Student Deliverers';
         }
+
+        let editable = (accountType === AccountType.DELIVERER_GROUP && 
+            !this.state.edit && this.props.futureEvent);
+
         return (
             <div className="wrapper">
                 <img className="content-icon" src={volunteer} alt="volunteer" />
                 <div className="content-wrapper">
-                    {this.props.accountType === AccountType.DELIVERER_GROUP ? (
-                        <h1 className="section-header">Student Deliverers</h1>
-                    ) : (
-                        <h1 className="section-header">Picking Up Donation</h1>
-                    )}
-
+                    <h1 className="section-header">{title}</h1>
                     <div>
                         <h2 className="organization">
-                            {this.state.delivererGroup}
+                            {delivererGroup}
                         </h2>
-                        {this.state.deliverers !== undefined ? (
+                        {deliverers ? (
                             <div>
                                 {!this.state.edit ? (
                                     <div className="content-details-wrapper">
                                         <p className="content-details">
-                                            {deliverer1} ({phone1})
+                                            {deliverers[0].name} ({deliverers[0].phone})
                                         </p>
                                         <p className="content-details">
-                                            {deliverer2} ({phone2})
+                                            {deliverers[1].name} ({deliverers[1].phone})
                                         </p>
                                     </div>
                                 ) : (
                                     <div className="content-details-wrapper">
-                                        <form
-                                            className="edit-dg"
-                                            onSubmit={this.handleChange}
-                                        >
-                                            <div className="input-wrapper">
-                                                <input
-                                                    className="content-details deliverer-group-details"
-                                                    defaultValue={deliverer1}
-                                                    name="deliverer1"
-                                                    type="text "
-                                                    required
+                                        <form className="edit-dg" onSubmit={this.saveVolunteers}>
+                                            <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                                <div className="input-wrapper">
+                                                    {this.renderDelivererInputs(deliverers)}
+                                                </div>
+                                                <input 
+                                                    type="submit" 
+                                                    className="edit-button" 
+                                                    value={this.state.waiting ? 'saving...' : 'save'}
                                                 />
-                                                <input
-                                                    className="content-details deliverer-group-details"
-                                                    defaultValue={phone1}
-                                                    name="phone1"
-                                                    type="tel"
-                                                    onChange={formatPhone}
-                                                    pattern={StringFormat.PHONE}
-                                                    required
-                                                />
-                                                <input
-                                                    className="content-details deliverer-group-details"
-                                                    defaultValue={email1}
-                                                    name="email1"
-                                                    type="email"
-                                                    required
-                                                />
-                                                <input
-                                                    className="content-details deliverer-group-details"
-                                                    defaultValue={deliverer2}
-                                                    type="text"
-                                                    name="deliverer2"
-                                                    required
-                                                />
-                                                <input
-                                                    className="content-details deliverer-group-details"
-                                                    defaultValue={phone2}
-                                                    type="tel"
-                                                    onChange={formatPhone}
-                                                    name="phone2"
-                                                    pattern={StringFormat.PHONE}
-                                                    required
-                                                />
-                                                <input
-                                                    className="content-details deliverer-group-details"
-                                                    defaultValue={email2}
-                                                    name="email2"
-                                                    type="email"
-                                                    required
-                                                />
-                                            </div>
-
-                                            <input
-                                                type="submit"
-                                                className="edit-button"
-                                                value="save"
-                                            />
+                                            </fieldset>
                                         </form>
                                     </div>
                                 )}
-                                {this.props.accountType ===
-                                    AccountType.DELIVERER_GROUP &&
-                                !this.state.edit &&
-                                this.props.futureEvent ? (
-                                        <button
-                                            type="button"
-                                            className="edit-button"
-                                            onClick={this.edit}
-                                        >
-                                        Edit
-                                        </button>
-                                    ) : null}
+
+                                {editable &&
+                                    <button type="button" className="edit-button" onClick={this.edit}>
+                                    Edit
+                                    </button>
+                                }
                             </div>
                         ) : (
                             <div className="unassigned">

@@ -111,6 +111,7 @@ export default class Navigation extends Component {
 
         return (
             <div className={className} style={{ display: 'flex' }}>
+                { /* [Original Source Code]
                 {view !== 'century' && (
                     <button
                         className={`${className}__arrow ${className}__prev2-button`}
@@ -121,6 +122,7 @@ export default class Navigation extends Component {
                         {this.props.prev2Label}
                     </button>
                 )}
+                */}
                 <button
                     className={`${className}__arrow ${className}__prev-button`}
                     disabled={this.prevButtonDisabled}
@@ -148,6 +150,7 @@ export default class Navigation extends Component {
                 >
                     {this.props.nextLabel}
                 </button>
+                { /* [Original Source Code]
                 {view !== 'century' && (
                     <button
                         className={`${className}__arrow ${className}__next2-button`}
@@ -158,6 +161,7 @@ export default class Navigation extends Component {
                         {this.props.next2Label}
                     </button>
                 )}
+                */}
             </div>
         );
     }

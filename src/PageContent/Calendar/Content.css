@@ -91,6 +91,14 @@
   cursor: pointer;
 }
 
+.fieldset-wrapper {
+  display: inline-block;
+  margin: 0px !important;
+  padding: 0px !important;
+  border: none !important;
+  width: 100%;
+}
+
 .input-wrapper {
   display: inline-block;
   width: 250px;
@@ -129,6 +137,11 @@
 
 .contact-wrapper {
   width: 160px;
+}
+
+.contact-select {
+  width: 60%;
+  margin-right: 10px;
 }
 
 .description-input {

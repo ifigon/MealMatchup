@@ -58,7 +58,14 @@ export default class MonthView extends PureComponent {
     renderDays() {
         const { calendarType, showWeekNumbers, ...childProps } = this.props;
 
-        return <Days calendarType={this.calendarType} {...childProps} />;
+        return (
+            <Days 
+                calendarType={this.calendarType} 
+                {...childProps}
+
+                account={this.props.account}
+                donatingAgency={this.props.donatingAgency}
+            />);
     }
 
     render() {

@@ -3,26 +3,19 @@ import './Content.css';
 import vitamins from '../../icons/vitamins.svg';
 
 class DonatingAgencyContent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            donatingAgency: this.props.delivery.donatingAgency.name,
-            contactName: this.props.delivery.donatingAgency.contact.name,
-            phone: this.props.delivery.donatingAgency.contact.phone
-        };
-    }
     render() {
+        const { donatingAgency, daContact } = this.props.delivery;
         return (
             <div className="wrapper">
                 <img className="content-icon" src={vitamins} alt="volunteer" />
                 <div className="content-wrapper">
                     <h1 className="section-header">Dining Hall</h1>
                     <h2 className="organization">
-                        {this.state.donatingAgency}
+                        {donatingAgency}
                     </h2>
                     <div className="content-details-wrapper">
                         <p className="content-details">
-                            {this.state.contactName} ({this.state.phone})
+                            {daContact.name} ({daContact.phone})
                         </p>
                     </div>
                 </div>
