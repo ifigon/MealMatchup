@@ -45,9 +45,9 @@ class RequestSummary extends React.Component {
                             <div className="receiving-agency">
                                 <h2>Recipient</h2>
                                 <p className="donating-recieving" id="donatingAgency">{details.raInfo.name}</p>
-                                <p className="donating-recieving" id="receivingContactName">{details.raInfo.primaryContact.name}</p>
-                                <p className="donating-recieving" id="receivingContactPhone">{details.raInfo.primaryContact.phone}</p>
-                                <p className="donating-recieving" id="receivingContactEmail">{details.raInfo.primaryContact.email}</p>
+                                <p className="donating-recieving" id="receivingContactName">{details.raContact.name}</p>
+                                <p className="donating-recieving" id="receivingContactPhone">{details.raContact.phone}</p>
+                                <p className="donating-recieving" id="receivingContactEmail">{details.raContact.email}</p>
                             </div>
                             <div className="notification-map">
                                 <Map 
