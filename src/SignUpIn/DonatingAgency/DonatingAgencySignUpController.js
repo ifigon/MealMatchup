@@ -6,7 +6,8 @@ import DonatingAgencySignUp1 from './DonatingAgencySignUp1';
 import DonatingAgencySignUp2 from './DonatingAgencySignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UMBRELLA_ID } from '../../Enums';
+import { AccountType } from '../../Enums';
+import UMBRELLA_ID from '../../UmbrellaConfig';
 
 let fieldValues = {
     organizationName: null,
@@ -74,6 +75,7 @@ class DonatingAgencySignUpController extends Component {
                 let adminPostData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
                     agency: agencyKey,
+                    umbrella: UMBRELLA_ID,
                     name: fieldValues.adminName,
                     email: fieldValues.adminEmail,
                     phone: fieldValues.adminPhone,
