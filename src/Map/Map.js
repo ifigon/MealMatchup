@@ -67,14 +67,14 @@ class Map extends Component{
                         <Marker
                             latLng={this.state.center}
                             lat={this.state.center.lat}
-                            lng={this.state.center.long}
+                            lng={this.state.center.lng}
                         />
                     </GoogleMap>
                     :
                     <div className="error">Unable to load map</div>
                 }
                 {/* Prompts user to open maps on their phone (mobile only) */}
-                {this.state.validAddress && isMobile() && <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.long} target="_blank">{this.state.address}</a>}
+                {this.state.validAddress && isMobile() && <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>}
             </div>
         );
     }
