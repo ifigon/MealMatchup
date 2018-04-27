@@ -76,9 +76,9 @@ class Map extends Component{
                 {/* Prompts user to open maps on their phone or shows link to Google Maps */}
                 {
                     isMobile() ?
-                        <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
+                        <a id="ms-address" href={'http://maps.apple.com/?q=' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
                         :
-                        <a id="ms-address" href={'http://maps.google.com/maps?saddr=' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
+                        <a id="ms-address-desktop" href={'http://maps.google.com/maps?saddr=' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
                 }
             </div>
         );
