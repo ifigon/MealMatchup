@@ -27,7 +27,7 @@ if [ -z "$(git status --porcelain)" ] && [ -z "$(git diff origin/development..HE
 
 else
 	# there are uncommitted local changes, abort!
-	echo "> There are uncommited local changes, aborting!"
-	echo "> Make sure your working directory is clean AND you are"
-	echo "> on development, AND it is up-to-date."
+	echo "> There are local changes, ABORTING!"
+	echo "> Make sure your working directory is clean (no uncommitted local changes or"
+	echo "> unpushed local commits) AND you are on development, AND it is up-to-date."
 fi
