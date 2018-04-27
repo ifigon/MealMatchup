@@ -1,0 +1,33 @@
+#!/bin/bash
+# Usage: $ ./dev_deploy
+# IMPORTANT: do not rely on the script to switch to development branch,
+# please make sure that your local is clean and up to date before running
+# this script. 
+
+if [ -z "$(git status --porcelain)" ] && [ -z "$(git diff origin/development..HEAD)" ]; then
+	# check uncommitted changes as well as potential unpushed commits
+	# working directory is clean, we can continue
+
+	# Make sure it's on development branch and up to date
+	echo "> 1. Double checking you are on development and it is up-to-date..." &&
+	echo "> \$ git checkout development" &&
+	git checkout development &&
+	echo "> \$ git pull" &&
+	git pull &&
+
+	echo "> 2. Building..." &&
+	echo "> \$ npm run build" &&
+	npm run build &&
+
+	echo "> 3. Deploying..." &&
+	echo "> \$ firebase deploy" &&
+	firebase deploy &&
+
+	echo "Done."
+
+else
+	# there are uncommitted local changes, abort!
+	echo "> There are local changes, ABORTING!"
+	echo "> Make sure your working directory is clean (no uncommitted local changes or"
+	echo "> unpushed local commits) AND you are on development, AND it is up-to-date."
+fi
