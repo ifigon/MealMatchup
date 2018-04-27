@@ -73,8 +73,13 @@ class Map extends Component{
                     :
                     <div className="error">Unable to load map</div>
                 }
-                {/* Prompts user to open maps on their phone (mobile only) */}
-                {this.state.validAddress && isMobile() && <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>}
+                {/* Prompts user to open maps on their phone or shows link to Google Maps */}
+                {
+                    isMobile() ?
+                        <a id="ms-address" href={'geo:' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
+                        :
+                        <a id="ms-address" href={'http://maps.google.com/maps?saddr=' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
+                }
             </div>
         );
     }
