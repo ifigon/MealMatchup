@@ -1,0 +1,40 @@
+.truck-icon-confirmation {
+  width: 50px;
+  display: inline-block;
+  margin-left: 30px;
+  vertical-align: middle;
+}
+
+.confirmation-content-wrapper {
+  padding: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.confirmation-header {
+  margin-top: 30px;
+  font-weight: 600;
+  line-height: normal;
+  font-size: 25px;
+  margin: 50px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  margin-right: 0px;
+  display: inline-block;
+  width: 560px;
+  color: #243847;
+}
+
+.cross-out-icon {
+  float: right;
+  width: 30px;
+  margin-top: 30px;
+  margin-right: 10px;
+}
+.cross-out-icon:hover {
+  cursor: pointer;
+}
+
+.confirmation-modal {
+  height: 70%;
+}
