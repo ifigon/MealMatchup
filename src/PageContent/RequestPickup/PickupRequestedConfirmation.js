@@ -1,13 +1,13 @@
 import React from 'react';
-import RequestTime from '../../PageLayout/Notification/Details/RequestTime';
+import ConfirmationRequestTime from './ConfirmationRequestTime';
 import './PickupSummary.css';
 import './Confirmation.css';
 import truck from '../../icons/green_truck.svg';
 import close from '../../icons/cross-out.svg';
 class PickupRequestedConfirmation extends React.Component {
     render() {
-        console.log('props', this.props);
-
+        let da = this.props.donatingAgency.name;
+        let ra = this.props.raRequested.name;
         return (
             <div className="backdrop ">
                 <div className="modal confirmation-modal">
@@ -29,7 +29,15 @@ class PickupRequestedConfirmation extends React.Component {
                         it is confirmed by all parties and scheduled.
                     </h1>
                     <div className="confirmation-content-wrapper">
-                        <RequestTime request={this.props.request} />
+                        <div className="to-from-wrapper">
+                            <div className="confirm-from confirmation-time-p">
+                                <b>From:</b> {da}
+                            </div>
+                            <div className="confirm-to confirmation-time-p">
+                                <b>To:</b> {ra}
+                            </div>
+                        </div>
+                        <ConfirmationRequestTime request={this.props.request} />
                     </div>
                 </div>
             </div>
