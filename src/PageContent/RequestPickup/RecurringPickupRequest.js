@@ -525,13 +525,10 @@ class RecurringPickupRequest extends Component {
                 )}
                 {this.state.showConfirmation && (
                     <PickupRequestedConfirmation
-                        // title={'Request Recurring Pickup'}
                         request={this.state.request}
                         closeConfirm={this.closeConfirm}
-                        // donatingAgency={this.props.donatingAgency}
-                        // primaryContact={this.state.primaryContact}
-                        // raRequested={this.state.raRequested}
-                        // dgRequested={this.state.dgRequested}
+                        donatingAgency={this.props.donatingAgency}
+                        raRequested={this.state.raRequested}
                     />
                 )}
             </div>
