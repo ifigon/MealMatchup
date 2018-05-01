@@ -4,7 +4,7 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
-import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
+import RequestPickupWrapper from './PageContent/RequestPickup/RequestPickupWrapper.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
 // The page to load when user is signed in.
@@ -56,8 +56,9 @@ class PageContainer extends Component {
     }
     render() {
         // for the components that might need donating agency info
-        let ready = (this.props.account.accountType !== AccountType.DONATING_AGENCY_MEMBER ||
-            this.state.donatingAgency);
+        let ready =
+            this.props.account.accountType !==
+                AccountType.DONATING_AGENCY_MEMBER || this.state.donatingAgency;
         return (
             <div>
                 <PageHeader
@@ -72,13 +73,14 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {this.state.content === PageContent.CALENDAR && ready &&
-                    <Calendar 
-                        id="calendar-container" 
+                {this.state.content === PageContent.CALENDAR &&
+                    ready && (
+                    <Calendar
+                        id="calendar-container"
                         account={this.props.account}
                         donatingAgency={this.state.donatingAgency}
                     />
-                }
+                )}
 
                 {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
                     <AssignVolunteersController account={this.props.account} />
@@ -87,7 +89,7 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.REQUEST_PICKUP &&
                     (this.state.donatingAgency ? (
                         /* Wait for donating agency to be fetched */
-                        <RecurringPickupRequest
+                        <RequestPickupWrapper
                             account={this.props.account}
                             donatingAgency={this.state.donatingAgency}
                         />
