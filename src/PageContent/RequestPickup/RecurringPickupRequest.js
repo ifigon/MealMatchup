@@ -8,7 +8,6 @@ import {
 } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
-import RequestTypeToggle from './RequestTypeToggle.js';
 import moment from 'moment-timezone';
 
 class RecurringPickupRequest extends Component {

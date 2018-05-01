@@ -9,11 +9,6 @@
   overflow: hidden;
 }
 
-.toggle {
-  width: 300px;
-  margin: 140px 250px 30px auto;
-}
-
 .flex {
   justify-content: space-between;
 }

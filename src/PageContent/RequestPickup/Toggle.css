@@ -1,0 +1,11 @@
+.toggle {
+  width: 300px;
+  margin: 140px 250px 30px auto;
+}
+
+.emergency {
+  color: red;
+}
+.recurring {
+  color: green;
+}
