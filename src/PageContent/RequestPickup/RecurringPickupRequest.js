@@ -26,7 +26,8 @@ class RecurringPickupRequest extends Component {
             request: {},
             primaryContact: {},
             raRequested: null,
-            dgRequested: null
+            dgRequested: null,
+            submissionError: null
         };
 
         this.formId = 'recurringRequestForm';
@@ -295,12 +296,16 @@ class RecurringPickupRequest extends Component {
             .ref('delivery_requests')
             .child(this.props.donatingAgency.umbrella)
             .child(this.props.account.agency)
-            .push(this.state.request);
-
-        // hide popup and clear form
-        this.toggleModal();
-        document.getElementById(this.formId).reset();
-        this.setState({ showConfirmation: true });
+            .push(this.state.request)
+            .then(() => {
+                // hide popup and clear form
+                this.toggleModal();
+                document.getElementById(this.formId).reset();
+                this.setState({ showConfirmation: true });
+            })
+            .catch(error => {
+                this.setState({ submissionError: error });
+            });
     }
 
     render() {
@@ -521,6 +526,7 @@ class RecurringPickupRequest extends Component {
                         dgRequested={this.state.dgRequested}
                         onClose={this.toggleModal}
                         onConfirm={this.submitRequest}
+                        submissionError={this.state.submissionError}
                     />
                 )}
                 {this.state.showConfirmation && (
