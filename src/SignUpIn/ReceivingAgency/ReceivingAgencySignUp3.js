@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment-timezone';
 import truck from '../../icons/truck.svg';
-import { isArray } from 'util';
-import { O_NONBLOCK } from 'constants';
 
 class ReceivingAgencySignUp3 extends Component {
     constructor(props) {
