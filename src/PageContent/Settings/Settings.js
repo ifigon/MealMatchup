@@ -15,10 +15,10 @@ class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            manager: {},
-            org: {},
+            org : null,
+            manager: null,
             memberAccounts: [],
-            personal: {},
+            personal: null,
         };
     }
 
@@ -50,6 +50,7 @@ class Settings extends Component {
             }
 
         } else {
+            console.log(pick(this.props.account, SettingsFields.ORGANIZATION))
             this.setState({
                 org : pick(this.props.account, SettingsFields.ORGANIZATION),
                 manager: pick(this.props.account, SettingsFields.MANAGER),
@@ -64,9 +65,13 @@ class Settings extends Component {
 
                     <div className="settings-container"> 
                         <div className="container">
-                            <OrganizationDetails
-                                org={this.state.org}
-                            />
+                            {this.state.org ? 
+                                <OrganizationDetails
+                                    org={this.state.org}
+                                />
+                                :
+                                <div>Loading...</div>  
+                            }
                         </div>
 
                         <div className="scs-spacing" />
@@ -87,11 +92,11 @@ class Settings extends Component {
                             <div className="container">
                                 {this.props.account.isAdmin ?
                                     <MemberAccount
-                                        account={org}
+                                        account={this.state.memberAccounts}
                                     />
                                     :
                                     <PersonalAccount
-                                        account={this.props.account}
+                                        account={this.state.personal}
                                     />
                                 }
                             </div>

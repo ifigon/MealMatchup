@@ -6,28 +6,7 @@ class MemberAccount extends Component {
         super(props);
         this.state = {
             comingSoon: false,
-            members: []
         };
-    }
-
-    componentDidMount() {
-        // TODO 
-        let members = [
-            {
-                name: 'Test 1',
-                position: 'Manager',
-                email: 'test1@test.com',
-                phone: '205-434-9933'
-            },
-            {
-                name: 'Test 2',
-                position: 'Assistant Manager',
-                email: 'test2@test.com',
-                phone: '205-434-9922'
-            }
-        ];
-        this.setState({members});
-
     }
 
     render() {
@@ -39,7 +18,7 @@ class MemberAccount extends Component {
                         
                     <div>
 
-                        {this.state.members.map((element, index) => {
+                        {this.props.members.map((element, index) => {
                             return (
                                 <div key={index}>
                                     <div className="amd-row">
@@ -76,7 +55,7 @@ class MemberAccount extends Component {
     // Backend TODO: Remove data from database here
     // For FRONTEND PURPOSES (UPDATING UI) MAYBE CHANGE WHILE WRITING BACKEND
     handleRemove(e) {
-        let copy = this.state.members;
+        let copy = this.props.members;
         copy.splice(e.target.id, 1);
         this.setState({
             state: copy
