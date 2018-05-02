@@ -41,6 +41,29 @@ class ReceivingAgencySignUp4 extends Component {
             </form>
         );
     }
+
+    checkSecondaryContact() {
+        let name = document.getElementById("secondaryName").value.length;
+        let email = document.getElementById("secondaryEmail").value.length;
+        let phone = document.getElementById("secondaryPhone").value.length;
+        let position = document.getElementById("secondaryPosition").value.length;
+        if(name > 0 || email > 0 || phone > 0 || position > 0) {
+            if(name === 0) {
+                return false;
+            }
+            else if(email === 0) {
+                return false;
+            }
+            else if(phone === 0) {
+                return false;
+            }
+            else if(position === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     nextStep(e) {
         e.preventDefault();
         var data = {
@@ -55,8 +78,10 @@ class ReceivingAgencySignUp4 extends Component {
             secondaryPosition: e.target.secondaryPosition.value,
         };
 
-        this.props.saveValues(data);
-        this.props.submitRegistration();
+        if(this.checkSecondaryContact()) {
+            this.props.saveValues(data);
+            this.props.submitRegistration();
+        }
     }
 }
 export default ReceivingAgencySignUp4;
