@@ -7,7 +7,10 @@ import close from '../../icons/cross-out.svg';
 class PickupRequestedConfirmation extends React.Component {
     render() {
         let da = this.props.donatingAgency.name;
-        let ra = this.props.raRequested.name;
+        let ra = 'TBD';
+        if (this.props.raRequested) {
+            ra = this.props.raRequested.name;
+        }
         return (
             <div className="backdrop ">
                 <div className="modal confirmation-modal">
