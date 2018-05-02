@@ -49,8 +49,12 @@ class ReceivingAgencySignUp3 extends Component {
                 let dayCheck = daysTimeList[key].childNodes[0].checked;
                 let startTime =  daysTimeList[key].childNodes[2].value.length;
                 let endTime = daysTimeList[key].childNodes[4].value.length;
-                if((dayCheck && (startTime === 0 || endTime === 0)))
+                if((dayCheck && (startTime === 0 || endTime === 0)) || 
+                (startTime > 0 && endTime === 0) || 
+                (startTime === 0 && endTime > 0) || 
+                (startTime > 0 && endTime > 0 && !dayCheck)) {
                     return false;
+                }
             }
         }
         return true;
