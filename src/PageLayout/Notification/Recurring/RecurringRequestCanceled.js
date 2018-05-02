@@ -23,6 +23,7 @@ class RecurringRequestCancelled extends Component {
                     </p>
                     <div className="pickup-details">
                         <RequestTime
+                            title={true}
                             request={this.props.details}
                             title={true}
                         />
