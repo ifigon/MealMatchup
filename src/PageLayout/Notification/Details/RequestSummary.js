@@ -3,7 +3,6 @@ import RequestTime from './RequestTime';
 import truck from '../../../icons/green_truck.svg';
 import Map from '../../../Map/Map.js';
 
-// fix lint
 class RequestSummary extends React.Component {
     render() {
         const { details, title } = this.props;
