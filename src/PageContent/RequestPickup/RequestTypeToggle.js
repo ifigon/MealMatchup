@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { DeliveryType } from '../../Enums';
 import './Toggle.css';
+import info from '../../icons/info.svg';
 
 class RequestTypeToggle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: 'recurring'
+            type: DeliveryType.RECURRING
         };
 
         // this.toggle = this.toggle.bind(this);
@@ -28,9 +29,20 @@ class RequestTypeToggle extends Component {
         // }
 
         return (
-            <div className="toggle" onClick={this.toggle.bind(this)}>
-                <span className={this.state.type}>toggle</span>
-                <span className="more-info">?</span>
+            <div className="toggle-wrapper" onClick={this.toggle.bind(this)}>
+                <div className="toggle-container">
+                    {this.state.type === DeliveryType.RECURRING ? (
+                        <div className="recurring-toggle toggle">
+                            Schedule Recurring Pickup
+                        </div>
+                    ) : (
+                        <div className="emergency-toggle toggle">
+                            Schedule Emergency Pickup
+                        </div>
+                    )}
+
+                    <img src={info} alt="info" className="toggle-info" />
+                </div>
             </div>
         );
     }

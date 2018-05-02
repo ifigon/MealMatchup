@@ -1,11 +1,33 @@
-.toggle {
-  width: 300px;
-  margin: 140px 250px 30px auto;
+.toggle-wrapper {
+  width: 243px;
+  margin: 140px 550px 30px auto;
 }
 
-.emergency {
-  color: red;
+.toggle {
+  color: white;
+  /* display: inline-block; */
+  border-radius: 4px;
+  /* height: 40px; */
+  text-align: center;
+  line-height: 20px;
+  padding: 10px;
+  margin-right: 20px;
+  width: 210px;
 }
-.recurring {
-  color: green;
+
+.emergency-toggle {
+  background-color: #eb5757;
+}
+.recurring-toggle {
+  background-color: #2ecc71;
+}
+
+.toggle-info {
+  display: inline-block;
+}
+
+.toggle-container {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
 }
