@@ -34,17 +34,16 @@ class SignIn extends Component {
             });
     }
 
+    // TODO: Add UI
     handleForgotPassword() {
         let email = document.getElementById('email').value;
         auth
             .sendPasswordResetEmail(email)
             .then(() => {
                 alert('Add UI!');
-                {/* Add UI to show that password reset email has been sent*/}
             })
             .catch(error => {
-                alert(error);
-                {/* Add UI to show the error*/}
+                alert('Add UI!');
             });
     }
 
