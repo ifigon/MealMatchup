@@ -25,7 +25,6 @@ class RecurringRequestCancelled extends Component {
                         <RequestTime
                             title={true}
                             request={this.props.details}
-                            title={true}
                         />
                     </div>
                     <div className="popup-buttons">
