@@ -39,9 +39,11 @@ class SignIn extends Component {
         auth
             .sendPasswordResetEmail(email)
             .then(() => {
+                alert('Add UI!');
                 {/* Add UI to show that password reset email has been sent*/}
             })
             .catch(error => {
+                alert(error);
                 {/* Add UI to show the error*/}
             });
     }
