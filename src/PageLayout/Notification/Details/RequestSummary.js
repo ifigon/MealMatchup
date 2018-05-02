@@ -100,36 +100,35 @@ class RequestSummary extends React.Component {
                             </div>
                         </div>
                     )}
-                    {details.delivererGroup &&
-                        details.delivererGroup.claimed && (
-                            <div className="receiving-agency">
-                                <h2>Student Group</h2>
-                                <p
-                                    className="donating-recieving"
-                                    id="donatingAgency"
-                                >
-                                    {details.dgInfo.name}
-                                </p>
-                                <p
-                                    className="donating-recieving"
-                                    id="receivingContactName"
-                                >
-                                    {details.dgInfo.primaryContact.name}
-                                </p>
-                                <p
-                                    className="donating-recieving"
-                                    id="receivingContactPhone"
-                                >
-                                    {details.dgInfo.primaryContact.phone}
-                                </p>
-                                <p
-                                    className="donating-recieving"
-                                    id="receivingContactEmail"
-                                >
-                                    {details.dgInfo.primaryContact.email}
-                                </p>
-                            </div>
-                        )}
+                    {details.delivererGroup && details.delivererGroup.claimed && (
+                        <div className="receiving-agency">
+                            <h2>Student Group</h2>
+                            <p
+                                className="donating-recieving"
+                                id="donatingAgency"
+                            >
+                                {details.dgInfo.name}
+                            </p>
+                            <p
+                                className="donating-recieving"
+                                id="receivingContactName"
+                            >
+                                {details.dgInfo.primaryContact.name}
+                            </p>
+                            <p
+                                className="donating-recieving"
+                                id="receivingContactPhone"
+                            >
+                                {details.dgInfo.primaryContact.phone}
+                            </p>
+                            <p
+                                className="donating-recieving"
+                                id="receivingContactEmail"
+                            >
+                                {details.dgInfo.primaryContact.email}
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         );
