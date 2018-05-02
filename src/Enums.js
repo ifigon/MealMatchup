@@ -150,15 +150,12 @@ exports.SettingsFields = {
         'numVolunteers', 
         'deliveryNotes', 
         'acceptEmergencyPickups', 
-        'accountType',
-        'isAdmin',
         'uid',
     ],
     MANAGER: [
         'primaryContact', 
         'secondaryContact',
-        'accountType',
-        'isAdmin',
+        'uid',
     ],
     MEMBER: [
         'email',

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Map from '../../Map/Map.js';
 import { AccountType } from '../../Enums';
-import { StringFormat } from '../../Enums';
-
-import { accountsRef } from '../../FirebaseConfig.js';
+import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig.js';
 
 class OrganizationDetails extends Component {
 
@@ -43,13 +41,13 @@ class OrganizationDetails extends Component {
                         }
                         {this.props.org.numVolunteers ? <h6>Volunteers: {this.props.org.numVolunteers}</h6> : <span />}
                         {this.props.org.deliveryNotes ? <h6>Delivery Notes: {this.props.org.deliveryNotes}</h6> : <span />}
-                        {this.props.org.accountType === AccountType.RECEIVING_AGENCY ? 
+                        {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
                             <h6>Emergency Pickup Activated: {this.props.org.acceptEmergencyPickups ? 'Yes' : 'No'}</h6> 
                             : 
                             <span />
                         }
                         <div className="scs-spacing-lg" />
-                        {!this.props.org.isAdmin && this.props.org.accountType === AccountType.DONATING_AGENCY_MEMBER ?
+                        {!this.props.isAdmin && this.props.accountType === AccountType.DONATING_AGENCY_MEMBER ?
                             <span />
                             :
                             <div className="amd-edit amd-edit-1">
@@ -74,20 +72,20 @@ class OrganizationDetails extends Component {
                                     <label className="label-component details">State</label><br /><br />
                                     <label className="label-component details">Zip</label><br /><br />
                                     <div className="scs-spacing" />
-                                    <label className="label-component details">Phone</label><br /><br />
-                                    {this.props.org.numVolunteers ? 
+                                    <label className="label-component details">Office Number</label><br /><br />
+                                    {this.props.accountType === AccountType.DELIVERER_GROUP ?  
                                         <label className="label-component details">Volunteers</label>
                                         :
                                         <span />
                                     }
-                                    {this.props.org.deliveryNotes ? 
+                                    {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
                                         <div>
-                                            <label className="label-component details">Notes</label><br /><br />
+                                            <label className="label-component details">Delivery Notes</label><br /><br />
                                         </div>
                                         :
                                         <span />
                                     }
-                                    {this.props.org.accountType === AccountType.RECEIVING_AGENCY ? 
+                                    {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
                                         <label className="label-component details">Emergency Pickup</label>
                                         :
                                         <span />
@@ -101,21 +99,21 @@ class OrganizationDetails extends Component {
                                     <input name="city" type="text" className="form-input" defaultValue={this.props.org.address.city} /><br /><br />
                                     <input name="state" type="text" className="form-input" defaultValue={this.props.org.address.state} /><br /><br />
                                     <input name="zip" type="text" className="form-input" defaultValue={this.props.org.address.zipcode} /><br /><br />
-                                    <input name="officeNo" type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={this.props.org.organizationPhone} /><br /><br />
-                                    {this.props.org.numVolunteers ? 
+                                    <input name="officeNo" type='text' className="form-input" defaultValue={this.props.org.address.officeNo} /><br /><br />
+                                    {this.props.accountType === AccountType.DELIVERER_GROUP ? 
                                         <input name="num_vol" type="number" className="form-input" defaultValue={this.props.org.numVolunteers} />
                                         :
                                         <span />
                                     }
-                                    {this.props.org.deliveryNotes ? 
+                                    {this.props.accountType === AccountType.RECEIVING_AGENCY ?  
                                         <div>
                                             <input name="notes" type="text" className="form-input" defaultValue={this.props.org.deliveryNotes} /><br /><br />
                                         </div>
                                         :
                                         <span />
                                     }
-                                    {this.props.org.accountType === AccountType.RECEIVING_AGENCY ? 
-                                        <input type="checkbox" name="ep" defaultChecked={this.props.org.emergencyPickup}/>
+                                    {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
+                                        <input type="checkbox" name="ep" defaultChecked={this.props.org.acceptEmergencyPickups}/>
                                         :
                                         <span />
                                     }
@@ -139,11 +137,9 @@ class OrganizationDetails extends Component {
         );
     }
 
-
-    // Write values to DB
     handleSubmit(e) {
         e.preventDefault();
-        const { org } = this.props;
+        const { org, accountType } = this.props;
 
         let name = e.target.name.value;
         let address = {
@@ -167,8 +163,9 @@ class OrganizationDetails extends Component {
         if (e.target.ep)
             updates['acceptEmergencyPickups'] = e.target.ep.checked;
 
-        if (org.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-
+        // write values to DB
+        if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            donatingAgenciesRef.child(org.uid).update(updates, this.setState({isEditing: false}))
         } else {
             accountsRef.child(org.uid).update(updates, this.setState({isEditing: false}));
         }

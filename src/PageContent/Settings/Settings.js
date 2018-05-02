@@ -23,7 +23,13 @@ class Settings extends Component {
     }
 
     componentDidMount() {
-        this.getAccountInfo(this.props.account);
+        const { account } = this.props;
+        this.getAccountInfo(account);
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) { // Add listener
+            donatingAgenciesRef.child(account.agency).on('value', () => {
+                this.getAccountInfo(account);
+            })
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,15 +38,29 @@ class Settings extends Component {
         }
     }
 
+    componentWillUnmount() {
+        const { account } = this.props;
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            donatingAgenciesRef.child(account.agency).off();
+        }
+    }
+
     async getAccountInfo(account) {
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            const snapshot = await donatingAgenciesRef.child(account.agency).once('value')
-            const daAgency = snapshot.val();
+            const daSnapshot = await donatingAgenciesRef.child(account.agency).once('value');
+            const daAgency = daSnapshot.val();
             let org = pick(daAgency, SettingsFields.ORGANIZATION);
             org.uid = account.agency;
+
+
+            const daContactSnapshot = await accountsRef.child(daAgency.primaryContact).once('value');
+            let manager = {};
+            manager.primaryContact = pick(daContactSnapshot.val(), SettingsFields.MEMBER);
+            manager.uid = daAgency.primaryContact;
+
             this.setState({
                 org : org,
-                manager: pick(daAgency, SettingsFields.MANAGER),
+                manager: manager,
             });
 
             if (account.isAdmin) {
@@ -52,14 +72,14 @@ class Settings extends Component {
                         }
                     )                   
                 );
-                const daMembers = await Promise.all(daMemberPromises)
-                    .map((member, index) => {
-                        let result = pick(member, SettingsFields.MEMBER)
-                        result.uid = daAgency.members[index];
-                        return result;
-                    });
+                const daMembers = await Promise.all(daMemberPromises);
+                const members = daMembers.map((member, index) => {
+                    let result = pick(member, SettingsFields.MEMBER)
+                    result.uid = daAgency.members[index];
+                    return result;
+                });
                 
-                this.setState({ memberAccounts: daMembers });
+                this.setState({ memberAccounts: members });
             } else {
                 this.setState({ personal: pick(account, SettingsFields.MEMBER) });
             }
@@ -81,6 +101,8 @@ class Settings extends Component {
                             {this.state.org ? 
                                 <OrganizationDetails
                                     org={this.state.org}
+                                    accountType={this.props.account.accountType}
+                                    isAdmin={this.props.account.isAdmin}
                                 />
                                 :
                                 <div>Loading...</div>  
@@ -93,6 +115,8 @@ class Settings extends Component {
                             {this.state.manager ?
                                 <AccountManager
                                     account={this.state.manager}
+                                    accountType={this.props.account.accountType}
+                                    isAdmin={this.props.account.isAdmin}
                                 />
                                 :
                                 <div>Loading...</div>
@@ -103,11 +127,12 @@ class Settings extends Component {
 
                         {this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER ?
                             <div className="container">
-                                {this.props.account.isAdmin ?
+                                {this.props.account.isAdmin &&
                                     <MemberAccount
-                                        account={this.state.memberAccounts}
+                                        members={this.state.memberAccounts}
                                     />
-                                    :
+                                }
+                                {(!this.props.account.isAdmin && this.state.personal) &&    
                                     <PersonalAccount
                                         account={this.state.personal}
                                     />

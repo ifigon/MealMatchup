@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { StringFormat } from '../../Enums';
+import { accountsRef } from '../../FirebaseConfig.js';
+import { formatPhone } from '../../utils/Utils';
 
 class PersonalAccount extends Component {
 
@@ -54,7 +56,7 @@ class PersonalAccount extends Component {
                                     <input name="name" type="text" className="form-input" defaultValue={this.props.account.name} /><br /><br />
                                     <input name="position" type="text" className="form-input" defaultValue={this.props.account.position} /><br /><br />
                                     <input name="email" type="email" className="form-input" defaultValue={this.props.account.email} /><br /><br />
-                                    <input name="phone" type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={this.props.account.phone} /><br /><br />
+                                    <input name="phone" type="tel" pattern={StringFormat.PHONE} onChange={formatPhone} className="form-input" defaultValue={this.props.account.phone} /><br /><br />
                                 </div> 
                             </div>
 
@@ -74,18 +76,17 @@ class PersonalAccount extends Component {
 
     }
 
-    // Backend TODO: Write to DB here
     handleSubmit(e) {
         e.preventDefault();
-        // let acc = {
-        //     name: e.target.name.value,
-        //     position: e.target.position.value,
-        //     email: e.target.email.value,
-        //     phone: e.target.phone.value
-        // };
-        this.setState({
-            isEditing: false
-        });
+        const { account } = this.props;
+        const updates = {
+            name: e.target.name.value,
+            position: e.target.position.value,
+            email: e.target.email.value,
+            phone: e.target.phone.value
+        };
+
+        accountsRef.child(account.uid).update(updates, this.setState({isEditing: false}));
     }
 
     handleEdit() {
