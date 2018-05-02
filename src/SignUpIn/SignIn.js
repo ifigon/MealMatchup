@@ -35,7 +35,7 @@ class SignIn extends Component {
     }
 
     handleForgotPassword() {
-        let email = document.getElementById("email").value;
+        let email = document.getElementById('email').value;
         auth
             .sendPasswordResetEmail(email)
             .then(() => {

@@ -41,7 +41,7 @@ class ReceivingAgencySignUp3 extends Component {
     }
 
     checkDaysTime() {
-        let daysTimeList = document.getElementsByClassName("row");
+        let daysTimeList = document.getElementsByClassName('row');
         for(let key in daysTimeList) {
             if(daysTimeList[key].childNodes) {
                 let dayCheck = daysTimeList[key].childNodes[0].checked;

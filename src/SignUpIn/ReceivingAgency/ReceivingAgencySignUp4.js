@@ -43,10 +43,10 @@ class ReceivingAgencySignUp4 extends Component {
     }
 
     checkSecondaryContact() {
-        let name = document.getElementById("secondaryName").value.length;
-        let email = document.getElementById("secondaryEmail").value.length;
-        let phone = document.getElementById("secondaryPhone").value.length;
-        let position = document.getElementById("secondaryPosition").value.length;
+        let name = document.getElementById('secondaryName').value.length;
+        let email = document.getElementById('secondaryEmail').value.length;
+        let phone = document.getElementById('secondaryPhone').value.length;
+        let position = document.getElementById('secondaryPosition').value.length;
         if(name > 0 || email > 0 || phone > 0 || position > 0) {
             if(name === 0) {
                 return false;
