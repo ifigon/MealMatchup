@@ -22,13 +22,24 @@ class Settings extends Component {
         };
     }
 
-    async componentDidMount() {
-        const { account } = this.props;
+    componentDidMount() {
+        this.getAccountInfo(this.props.account);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.account !== nextProps.account) {
+            this.getAccountInfo(nextProps.account);
+        }
+    }
+
+    async getAccountInfo(account) {
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            const snapshot = await donatingAgenciesRef.child(this.props.account.agency).once('value')
+            const snapshot = await donatingAgenciesRef.child(account.agency).once('value')
             const daAgency = snapshot.val();
+            let org = pick(daAgency, SettingsFields.ORGANIZATION);
+            org.uid = account.agency;
             this.setState({
-                org : pick(daAgency, SettingsFields.ORGANIZATION),
+                org : org,
                 manager: pick(daAgency, SettingsFields.MANAGER),
             });
 
@@ -42,7 +53,11 @@ class Settings extends Component {
                     )                   
                 );
                 const daMembers = await Promise.all(daMemberPromises)
-                    .map(member => pick(member, SettingsFields.MEMBER));
+                    .map((member, index) => {
+                        let result = pick(member, SettingsFields.MEMBER)
+                        result.uid = daAgency.members[index];
+                        return result;
+                    });
                 
                 this.setState({ memberAccounts: daMembers });
             } else {
@@ -50,10 +65,9 @@ class Settings extends Component {
             }
 
         } else {
-            console.log(pick(this.props.account, SettingsFields.ORGANIZATION))
             this.setState({
-                org : pick(this.props.account, SettingsFields.ORGANIZATION),
-                manager: pick(this.props.account, SettingsFields.MANAGER),
+                org : pick(account, SettingsFields.ORGANIZATION),
+                manager: pick(account, SettingsFields.MANAGER),
             });
         }
     }
@@ -62,7 +76,6 @@ class Settings extends Component {
         return (
             <div>
                 {this.props.account ?
-
                     <div className="settings-container"> 
                         <div className="container">
                             {this.state.org ? 

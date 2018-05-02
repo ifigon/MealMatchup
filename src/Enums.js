@@ -152,6 +152,7 @@ exports.SettingsFields = {
         'acceptEmergencyPickups', 
         'accountType',
         'isAdmin',
+        'uid',
     ],
     MANAGER: [
         'primaryContact', 
@@ -164,5 +165,6 @@ exports.SettingsFields = {
         'name',
         'phone',
         'position',
+        'uid',
     ],
 };

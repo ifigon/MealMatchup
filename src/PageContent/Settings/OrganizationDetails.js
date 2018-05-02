@@ -3,6 +3,8 @@ import Map from '../../Map/Map.js';
 import { AccountType } from '../../Enums';
 import { StringFormat } from '../../Enums';
 
+import { accountsRef } from '../../FirebaseConfig.js';
+
 class OrganizationDetails extends Component {
 
     constructor(props) {
@@ -138,30 +140,38 @@ class OrganizationDetails extends Component {
     }
 
 
-    // Backend TODO: Write values to DB
+    // Write values to DB
     handleSubmit(e) {
         e.preventDefault();
-        // let num_vol = null;
-        // let notes = null;
-        // let ep = null;
-        // if(e.target.num_vol)
-        //     num_vol = e.target.num_vol.value;
-        // if(e.target.notes)
-        //     notes = e.target.notes.value;
-        // if(e.target.ep)
-        //     ep = e.target.ep.checked;
-        // let name = e.target.name.value;
-        // let address = {
-        //     street1: e.target.street1.value,
-        //     street2: e.target.street2.value,
-        //     city: e.target.city.value,
-        //     state: e.target.state.value,
-        //     zipcode: e.target.zip.value,
-        //     officeNo: e.target.officeNo.value
-        // };
-        this.setState({
-            isEditing: false
-        });
+        const { org } = this.props;
+
+        let name = e.target.name.value;
+        let address = {
+            street1: e.target.street1.value,
+            street2: e.target.street2.value,
+            city: e.target.city.value,
+            state: e.target.state.value,
+            zipcode: e.target.zip.value,
+            officeNo: e.target.officeNo.value
+        };
+
+        let updates = {
+            address: address,
+            name: name,
+        }
+
+        if (e.target.num_vol)
+            updates['numVolunteers'] = e.target.num_vol.value;
+        if (e.target.notes)
+            updates['deliveryNotes'] = e.target.notes.value;
+        if (e.target.ep)
+            updates['acceptEmergencyPickups'] = e.target.ep.checked;
+
+        if (org.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+
+        } else {
+            accountsRef.child(org.uid).update(updates, this.setState({isEditing: false}));
+        }
     }
 
     handleEdit() {

@@ -112,7 +112,6 @@ class PageContainer extends Component {
                 {this.state.content === PageContent.SETTINGS && (
                     <Settings 
                         account={this.props.account}
-                        donatingAgency={this.state.donatingAgency}
                     />
                 )}
             </div>
