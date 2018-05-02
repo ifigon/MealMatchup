@@ -7,21 +7,17 @@ class RequestTypeToggle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: DeliveryType.RECURRING
+            type: ''
         };
     }
 
-    toggle() {
-        if (this.state.type === DeliveryType.RECURRING) {
-            this.setState({ type: DeliveryType.EMERGENCY });
-        } else {
-            this.setState({ type: DeliveryType.RECURRING });
-        }
+    componentWillReceiveProps() {
+        this.setState({ type: this.props.type });
     }
 
     render() {
         return (
-            <div className="toggle-wrapper" onClick={this.toggle.bind(this)}>
+            <div className="toggle-wrapper" onClick={this.props.toggle}>
                 <div className="toggle-container">
                     {this.state.type === DeliveryType.RECURRING ? (
                         <div className="recurring-toggle toggle">

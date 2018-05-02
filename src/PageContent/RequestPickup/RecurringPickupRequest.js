@@ -25,7 +25,8 @@ class RecurringPickupRequest extends Component {
             request: {},
             primaryContact: {},
             raRequested: null,
-            dgRequested: null
+            dgRequested: null,
+            type: this.props.type
         };
 
         this.formId = 'recurringRequestForm';
