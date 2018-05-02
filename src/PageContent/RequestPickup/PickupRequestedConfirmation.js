@@ -1,9 +1,10 @@
 import React from 'react';
-import ConfirmationRequestTime from './ConfirmationRequestTime';
+import RequestTime from '../../PageLayout/Notification/Details/RequestTime';
 import './PickupSummary.css';
 import './Confirmation.css';
 import truck from '../../icons/green_truck.svg';
 import close from '../../icons/cross-out.svg';
+
 class PickupRequestedConfirmation extends React.Component {
     render() {
         let da = this.props.donatingAgency.name;
@@ -40,7 +41,10 @@ class PickupRequestedConfirmation extends React.Component {
                                 <b>To:</b> {ra}
                             </div>
                         </div>
-                        <ConfirmationRequestTime request={this.props.request} />
+                        <RequestTime
+                            request={this.props.request}
+                            title={false}
+                        />
                     </div>
                 </div>
             </div>
