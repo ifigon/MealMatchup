@@ -61,7 +61,9 @@ class App extends Component {
     }
 
     componentWillUnmount() {
-        accountsRef.child(this.state.account.uid).off();
+        if (this.state.account) {
+            accountsRef.child(this.state.account.uid).off();
+        }
     }
 
     render() {
