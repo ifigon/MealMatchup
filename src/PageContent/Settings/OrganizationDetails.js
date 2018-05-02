@@ -154,7 +154,7 @@ class OrganizationDetails extends Component {
         let updates = {
             address: address,
             name: name,
-        }
+        };
 
         if (e.target.num_vol)
             updates['numVolunteers'] = e.target.num_vol.value;
@@ -165,7 +165,7 @@ class OrganizationDetails extends Component {
 
         // write values to DB
         if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            donatingAgenciesRef.child(org.uid).update(updates, this.setState({isEditing: false}))
+            donatingAgenciesRef.child(org.uid).update(updates, this.setState({isEditing: false}));
         } else {
             accountsRef.child(org.uid).update(updates, this.setState({isEditing: false}));
         }

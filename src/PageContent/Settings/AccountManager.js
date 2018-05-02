@@ -178,7 +178,7 @@ class AccountManager extends Component {
                 email: e.target.semail.value,
                 phone: e.target.sphone.value
             };
-        };
+        }
 
         if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
             accountsRef.child(account.uid).update(updates.primaryContact, this.setState({isEditing: false}));

@@ -8,7 +8,7 @@ import './SCSettings0.css';
 import './SCSettings1.css';
 
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig.js';
-const pick = require('lodash.pick');
+import pick from 'lodash.pick';
 
 class Settings extends Component {
 
@@ -28,7 +28,7 @@ class Settings extends Component {
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) { // Add listener
             donatingAgenciesRef.child(account.agency).on('value', () => {
                 this.getAccountInfo(account);
-            })
+            });
         }
     }
 
@@ -67,14 +67,13 @@ class Settings extends Component {
                 // fetch all daMembers
                 const daMemberPromises = daAgency.members.map((damId) =>
                     new Promise(async (resolve, reject) => {
-                            let snapshot = await accountsRef.child(damId).once('value');
-                            resolve(snapshot.val());                            
-                        }
-                    )                   
+                        let snapshot = await accountsRef.child(damId).once('value');
+                        resolve(snapshot.val());                            
+                    })                   
                 );
                 const daMembers = await Promise.all(daMemberPromises);
                 const members = daMembers.map((member, index) => {
-                    let result = pick(member, SettingsFields.MEMBER)
+                    let result = pick(member, SettingsFields.MEMBER);
                     result.uid = daAgency.members[index];
                     return result;
                 });
