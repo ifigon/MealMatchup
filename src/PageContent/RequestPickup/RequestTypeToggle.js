@@ -9,8 +9,6 @@ class RequestTypeToggle extends Component {
         this.state = {
             type: DeliveryType.RECURRING
         };
-
-        // this.toggle = this.toggle.bind(this);
     }
 
     toggle() {
@@ -22,12 +20,6 @@ class RequestTypeToggle extends Component {
     }
 
     render() {
-        // if (this.state.type === DeliveryType.RECURRING) {
-
-        // } else {
-        //     this.setState({ type: DeliveryType.EMERGENCY });
-        // }
-
         return (
             <div className="toggle-wrapper" onClick={this.toggle.bind(this)}>
                 <div className="toggle-container">

@@ -5,9 +5,7 @@
 
 .toggle {
   color: white;
-  /* display: inline-block; */
   border-radius: 4px;
-  /* height: 40px; */
   text-align: center;
   line-height: 20px;
   padding: 10px;
@@ -28,6 +26,6 @@
 
 .toggle-container {
   display: flex;
-  width: 300px;
+  width: 280px;
   justify-content: space-between;
 }
