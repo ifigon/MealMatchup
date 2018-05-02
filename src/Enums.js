@@ -142,3 +142,27 @@ exports.NotificationCategory = {
     RECURRING_PICKUP: 'recurring_pickup',
     ACCOUNT: 'account'
 };
+
+exports.SettingsFields = {
+    ORGANIZATION: [
+        'address', 
+        'name', 
+        'numVolunteers', 
+        'deliveryNotes', 
+        'acceptEmergencyPickups', 
+        'accountType',
+        'isAdmin',
+    ],
+    MANAGER: [
+        'primaryContact', 
+        'secondaryContact',
+        'accountType',
+        'isAdmin',
+    ],
+    MEMBER: [
+        'email',
+        'name',
+        'phone',
+        'position',
+    ],
+};
