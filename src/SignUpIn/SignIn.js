@@ -34,6 +34,18 @@ class SignIn extends Component {
             });
     }
 
+    handleForgotPassword() {
+        let email = document.getElementById("email").value;
+        auth
+            .sendPasswordResetEmail(email)
+            .then(() => {
+                {/* Add UI to show that password reset email has been sent*/}
+            })
+            .catch(error => {
+                {/* Add UI to show the error*/}
+            });
+    }
+
     render() {
         return (
             <div className="signup-wrapper">
@@ -78,7 +90,7 @@ class SignIn extends Component {
                         </div>
                         <div className="forgot">
                             {/* TODO: Add functionality to reset username and password */}
-                            {/* <p className="forgot">forgot password?</p> */}
+                            <p className="forgot" onClick={this.handleForgotPassword.bind(this)}>forgot password?</p>
                             {/* <p className="forgot">forgot username?</p> */}
                         </div>
                         <div className="signup-reroute">
