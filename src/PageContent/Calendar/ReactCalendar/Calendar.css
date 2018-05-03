@@ -6,7 +6,7 @@
   margin-right: 10px;
 }
 
-div.react-calendar__month-view__days > button {
+div.react-calendar__month-view__days > div {
   text-align: right;
   border: 1px #e5e5e5 solid;
 }
