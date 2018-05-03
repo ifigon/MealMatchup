@@ -75,7 +75,7 @@ class DelivererGroupContent extends Component {
                     <input
                         className="content-details deliverer-group-details"
                         defaultValue={deliverers ? deliverers[i].name : ''}
-                        placeholder="name"
+                        placeholder={'name ' + (i + 1)}
                         name={'name' + i}
                         type="text"
                         required
@@ -83,7 +83,7 @@ class DelivererGroupContent extends Component {
                     <input
                         className="content-details deliverer-group-details"
                         defaultValue={deliverers ? deliverers[i].phone : ''}
-                        placeholder="xxx-xxx-xxxx"
+                        placeholder={'phone ' + (i + 1)}
                         name={'phone' + i}
                         type="tel"
                         pattern={StringFormat.PHONE}
@@ -93,7 +93,7 @@ class DelivererGroupContent extends Component {
                     <input
                         className="content-details deliverer-group-details"
                         defaultValue={deliverers ? deliverers[i].email : ''}
-                        placeholder="email"
+                        placeholder={'email ' + (i + 1)}
                         name={'email' + i}
                         type="email"
                         required
@@ -160,7 +160,7 @@ class DelivererGroupContent extends Component {
                                 }
                             </div>
                         ) : (
-                            <div className="unassigned">
+                            <div className={accountType === AccountType.DELIVERER_GROUP ? 'unassigned-red' : ''}>
                                 Volunteers not yet assigned.
                             </div>
                         )}
