@@ -55,60 +55,69 @@ class PageContainer extends Component {
         });
     }
     render() {
-        // for the components that might need donating agency info
+        // wait for all data to come through
         let ready = (this.props.account.accountType !== AccountType.DONATING_AGENCY_MEMBER ||
             this.state.donatingAgency);
+        if (!ready) {
+            return null;
+        }
+
+        const { account } = this.props;
+        const { content, donatingAgency } = this.state;
+
+        let pageTitle;
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            pageTitle = donatingAgency.name;
+        } else {
+            pageTitle = account.name;
+        }
+
         return (
             <div>
                 <PageHeader
-                    account={this.props.account}
+                    account={account}
                     logo={logo}
-                    title={this.props.account.name}
+                    title={pageTitle}
                 />
 
                 <NavBar
-                    content={this.state.content}
-                    accountType={this.props.account.accountType}
+                    content={content}
+                    accountType={account.accountType}
                     handler={this.navBarHandler}
                 />
 
-                {this.state.content === PageContent.CALENDAR && ready &&
+                {content === PageContent.CALENDAR &&
                     <Calendar 
                         id="calendar-container" 
-                        account={this.props.account}
-                        donatingAgency={this.state.donatingAgency}
+                        account={account}
+                        donatingAgency={donatingAgency}
                     />
                 }
 
-                {this.state.content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <AssignVolunteersController account={this.props.account} />
+                {content === PageContent.ASSIGN_VOLUNTEERS && (
+                    <AssignVolunteersController account={account} />
                 )}
 
-                {this.state.content === PageContent.REQUEST_PICKUP &&
-                    (this.state.donatingAgency ? (
-                        /* Wait for donating agency to be fetched */
-                        <RecurringPickupRequest
-                            account={this.props.account}
-                            donatingAgency={this.state.donatingAgency}
-                        />
-                    ) : (
-                        /* TODO: add loading UI? */
-                        <div />
-                    ))}
+                {content === PageContent.REQUEST_PICKUP &&
+                    <RecurringPickupRequest
+                        account={account}
+                        donatingAgency={donatingAgency}
+                    />
+                }
 
-                {this.state.content === PageContent.FOOD_LOGS && (
+                {content === PageContent.FOOD_LOGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         Feature coming soon!
                     </div>
                 )}
 
-                {this.state.content === PageContent.DIRECTORY && (
+                {content === PageContent.DIRECTORY && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         Feature coming soon!
                     </div>
                 )}
 
-                {this.state.content === PageContent.SETTINGS && (
+                {content === PageContent.SETTINGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
                         Feature coming soon!
                     </div>
