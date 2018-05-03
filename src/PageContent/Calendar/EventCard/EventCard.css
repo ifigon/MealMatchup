@@ -46,6 +46,7 @@
   padding: 0;
 }
 .event-container .text{
+    font-size: 12px;
     width: fit-content;
     margin-left: 5%;
     display: flex;
