@@ -8,7 +8,9 @@ class SignIn extends Component {
         super(props);
 
         this.state = {
-            error: null
+            error: null,
+            onForgot: false,
+            emailSent: false
         };
 
         this.signIn = this.signIn.bind(this);
@@ -40,11 +42,19 @@ class SignIn extends Component {
         auth
             .sendPasswordResetEmail(email)
             .then(() => {
-                alert('Add UI!');
+                this.setState({
+                    emailSent: true
+                })
             })
             .catch(error => {
-                alert('Add UI!');
+                error: error.message
             });
+    }
+
+    handleForgotClick() {
+        this.setState({
+            onForgot: true
+        });
     }
 
     render() {
@@ -53,23 +63,38 @@ class SignIn extends Component {
                 <form onSubmit={this.signIn}>
                     <div className="login-wrapper">
                         <div className="login-input-wrapper">
-                            <input
-                                name="email"
-                                type="email"
-                                id="email"
-                                className="login-input form-component"
-                                placeholder="Email"
-                                required
-                            />
+                            {this.state.onForgot && !this.state.emailSent ? <p className="forgot">Enter email to send reset password link</p> : <span />}
+                            {!this.state.emailSent ?
+                                <input
+                                    name="email"
+                                    type="email"
+                                    id="email"
+                                    className="login-input form-component"
+                                    placeholder="Email"
+                                    required
+                                />
+                                :
+                                <span>
+                                    {this.state.error ?
+                                        <p className="forgot">{this.state.error}</p>
+                                        :
+                                        <p className="forgot">Email Sent!</p>
+                                    }
+                                </span>
+                            }
                             <br />
-                            <input
-                                name="password"
-                                type="password"
-                                id="password"
-                                className="login-input form-component"
-                                placeholder="Password"
-                                required
-                            />
+                            {!this.state.onForgot ?
+                                <input
+                                    name="password"
+                                    type="password"
+                                    id="password"
+                                    className="login-input form-component"
+                                    placeholder="Password"
+                                    required
+                                />
+                                :
+                                <span />
+                            }
                             <br />
                         </div>
                         {this.props.signInDenied && (
@@ -85,14 +110,27 @@ class SignIn extends Component {
                             </p>
                         )}
                         <div className="login-button-wrapper">
-                            <button type="submit" className="login-button">
-                                login
-                            </button>
+                            {!this.state.onForgot ?
+                                <button type="submit" className="login-button">
+                                    login
+                                </button>
+                                :
+                                <span />
+                            }
                         </div>
                         <div className="forgot">
                             {/* TODO: Add functionality to reset username and password */}
-                            <p className="forgot" onClick={this.handleForgotPassword.bind(this)}>forgot password?</p>
-                            {/* <p className="forgot">forgot username?</p> */}
+                            {!this.state.onForgot ?
+                                <p className="forgot" onClick={this.handleForgotClick.bind(this)}>forgot password?</p>
+                                :
+                                <span>
+                                    {!this.state.emailSent ? 
+                                        <p className="forgot" onClick={this.handleForgotPassword.bind(this)}>Send Link</p> 
+                                        : 
+                                        <span />
+                                    }
+                                </span>
+                            }
                         </div>
                         <div className="signup-reroute">
                             {/* TODO: Link straight to signup when login routing is ready */}
