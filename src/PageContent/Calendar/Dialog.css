@@ -1,13 +1,31 @@
-.event-dialog {
+.dialog-wrapper {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+}
+
+.dialog-overlay{
+  cursor: auto;
+  position: absolute; 
+  z-index: 998; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+}
+
+.event-dialog {  
+  position: absolute; 
+  align-self: center;
+  z-index: 999; 
   border: none;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.12);
+  top: 25%;
   padding: 0px;
   width: 348px;
-  margin-top: 0;
-  margin-left: 50%;
-  margin-bottom: 50%;
-  top: 25%;
-  right: auto;
   text-align: left;
-  position: fixed;
 }
