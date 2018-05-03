@@ -19,8 +19,11 @@ class Tile extends Component {
         let tileContent = this.props.tileContent;
         let tileDisabled = this.props.tileDisabled;
         let view = this.props.view;
+
+        // // add custom className
+        // classes.push('event-card-slot');
         return (
-            <button
+            <div
                 className={mergeClassNames(
                     classes,
                     tileClassName instanceof Function
@@ -36,7 +39,6 @@ class Tile extends Component {
                 onMouseOver={onMouseOver && (() => onMouseOver(date))}
                 onFocus={onMouseOver && (() => onMouseOver(date))}
                 style={style}
-                type="button"
             >
                 <time dateTime={dateTime} className={this.props.dateClass}>
                     {date.getDate()}
@@ -50,7 +52,7 @@ class Tile extends Component {
                     account={this.props.account}
                     deliveries={this.props.deliveries}
                 />
-            </button>
+            </div>
         );
     }
 }
