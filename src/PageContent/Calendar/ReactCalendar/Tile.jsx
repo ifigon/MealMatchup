@@ -19,9 +19,6 @@ class Tile extends Component {
         let tileContent = this.props.tileContent;
         let tileDisabled = this.props.tileDisabled;
         let view = this.props.view;
-
-        // // add custom className
-        // classes.push('event-card-slot');
         return (
             <div
                 className={mergeClassNames(
