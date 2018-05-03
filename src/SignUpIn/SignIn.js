@@ -44,7 +44,7 @@ class SignIn extends Component {
             .then(() => {
                 this.setState({
                     emailSent: true
-                })
+                });
             })
             .catch(error => {
                 this.setState({
