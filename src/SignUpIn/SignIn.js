@@ -47,7 +47,9 @@ class SignIn extends Component {
                 })
             })
             .catch(error => {
-                error: error.message
+                this.setState({
+                    error: error.message
+                });
             });
     }
 
