@@ -5,7 +5,7 @@
   height: 100%; 
 }
 
-.dialog-overlay{
+.dialog-overlay {
   position: absolute; 
   z-index: 998; 
   left: 0;
