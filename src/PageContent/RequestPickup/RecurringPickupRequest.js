@@ -1,12 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
-import { RequestRepeatType, RequestEndCriteriaType, RequestStatus, InputFormat } from '../../Enums.js';
+import {
+    RequestRepeatType,
+    RequestEndCriteriaType,
+    RequestStatus,
+    InputFormat
+} from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
+import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
 
 class RecurringPickupRequest extends Component {
-
     constructor(props) {
         // Props: account, donatingAgency
         super(props);
@@ -21,7 +26,8 @@ class RecurringPickupRequest extends Component {
             request: {},
             primaryContact: {},
             raRequested: null,
-            dgRequested: null
+            dgRequested: null,
+            submissionError: null
         };
 
         this.formId = 'recurringRequestForm';
@@ -30,57 +36,71 @@ class RecurringPickupRequest extends Component {
         this.createRequest = this.createRequest.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.addListToState = this.addListToState.bind(this);
+        this.closeConfirm = this.closeConfirm.bind(this);
     }
 
     // Query DB to populate lists in this.state
-    componentDidMount(){
+    componentDidMount() {
         // add members in this donating agency to state.memberList
         var members = this.props.donatingAgency.members;
         this.addListToState(members, 'memberList', true);
 
         var umbrella = this.props.donatingAgency.umbrella;
-        accountsRef.child(umbrella).once('value').then(function (umbrellaSnap) {
-            // add receiving agencies in the same umbrella to state.receivingAgencies
-            var ras = umbrellaSnap.val().receivingAgencies;
-            this.addListToState(ras, 'receivingAgencies', false);
+        accountsRef
+            .child(umbrella)
+            .once('value')
+            .then(
+                function(umbrellaSnap) {
+                    // add receiving agencies in the same umbrella to state.receivingAgencies
+                    var ras = umbrellaSnap.val().receivingAgencies;
+                    this.addListToState(ras, 'receivingAgencies', false);
 
-            // add deliverer groups in the same umbrella to state.delivererGroups
-            var dgs = umbrellaSnap.val().delivererGroups;
-            this.addListToState(dgs, 'delivererGroups', false);
-        }.bind(this));
+                    // add deliverer groups in the same umbrella to state.delivererGroups
+                    var dgs = umbrellaSnap.val().delivererGroups;
+                    this.addListToState(dgs, 'delivererGroups', false);
+                }.bind(this)
+            );
     }
 
     // Helper function: append {id, name} for each entry in the list to
     // the given field in this.state
     addListToState(list, field, isMember) {
         for (let key in list) {
-            accountsRef.child(list[key]).once('value').then(function (snap) {
-                var snapVal = snap.val();
+            accountsRef
+                .child(list[key])
+                .once('value')
+                .then(
+                    function(snap) {
+                        var snapVal = snap.val();
 
-                // if adding agencies, only add verified and activated ones
-                if (!isMember && (!snapVal.isVerified || !snapVal.isActivated)) {
-                    return;
-                }
+                        // if adding agencies, only add verified and activated ones
+                        if (
+                            !isMember &&
+                            (!snapVal.isVerified || !snapVal.isActivated)
+                        ) {
+                            return;
+                        }
 
-                var entry = {
-                    id: snap.key, 
-                    name: snapVal.name
-                };
+                        var entry = {
+                            id: snap.key,
+                            name: snapVal.name
+                        };
 
-                // also grab the phone and email for DA Members
-                if (isMember) {
-                    entry['phone'] = snapVal.phone;
-                    entry['email'] = snapVal.email;
-                } else {
-                    entry['address'] = snapVal.address;
-                    entry['primaryContact'] = snapVal.primaryContact;
-                }
+                        // also grab the phone and email for DA Members
+                        if (isMember) {
+                            entry['phone'] = snapVal.phone;
+                            entry['email'] = snapVal.email;
+                        } else {
+                            entry['address'] = snapVal.address;
+                            entry['primaryContact'] = snapVal.primaryContact;
+                        }
 
-                // append entry into state
-                this.setState((prevState) => {
-                    return {[field]: prevState[field].concat(entry)};
-                });
-            }.bind(this));
+                        // append entry into state
+                        this.setState(prevState => {
+                            return { [field]: prevState[field].concat(entry) };
+                        });
+                    }.bind(this)
+                );
         }
     }
 
@@ -104,12 +124,17 @@ class RecurringPickupRequest extends Component {
             // perform all endDate related checks
             if (fields['endDate'] < fields['startDate']) {
                 formIsValid = false;
-                errors['endBeforeStart'] = 'End date cannot be before start date';
-            } else if(fields['endDate'] === '' || !fields['endDate']) {
+                errors['endBeforeStart'] =
+                    'End date cannot be before start date';
+            } else if (fields['endDate'] === '' || !fields['endDate']) {
                 formIsValid = false;
                 errors['endBeforeStart'] = 'Enter an end date';
             }
-        } else if(fields['occurTimes'] === '' || !fields['occurTimes'] || fields['occurTimes'] < 2) {
+        } else if (
+            fields['occurTimes'] === '' ||
+            !fields['occurTimes'] ||
+            fields['occurTimes'] < 2
+        ) {
             formIsValid = false;
             errors['invalidOccurTimes'] = 'Pickup must recur at least once';
         }
@@ -118,7 +143,7 @@ class RecurringPickupRequest extends Component {
         if (fields['endTime'] < fields['startTime']) {
             formIsValid = false;
             errors['time'] = 'Invalid time range';
-        }    
+        }
 
         this.setState({
             errors: errors
@@ -128,16 +153,22 @@ class RecurringPickupRequest extends Component {
 
     handleChange(field, e) {
         var val = e.target.value;
-        this.setState((prevState) => {
+        this.setState(prevState => {
             let fields = prevState.fields;
             fields[field] = val;
-            return {fields: fields};
+            return { fields: fields };
         });
     }
 
     toggleModal() {
-        this.setState((prevState) => {
-            return {showPopup: !prevState.showPopup};
+        this.setState(prevState => {
+            return { showPopup: !prevState.showPopup };
+        });
+    }
+
+    closeConfirm() {
+        this.setState({
+            showConfirmation: false
         });
     }
 
@@ -149,33 +180,52 @@ class RecurringPickupRequest extends Component {
         } else {
             // force request's timezone to be the same as DA's
             let reqTimezone = this.props.donatingAgency.timezone;
-            let dateTimeStringToTimestamp = (dateString, timeString) => moment.tz(
-                dateString + timeString, InputFormat.DATE + InputFormat.TIME, reqTimezone).valueOf();
-            let startTimestamp = dateTimeStringToTimestamp(event.target.startDate.value, event.target.startTime.value);
+            let dateTimeStringToTimestamp = (dateString, timeString) =>
+                moment
+                    .tz(
+                        dateString + timeString,
+                        InputFormat.DATE + InputFormat.TIME,
+                        reqTimezone
+                    )
+                    .valueOf();
+            let startTimestamp = dateTimeStringToTimestamp(
+                event.target.startDate.value,
+                event.target.startTime.value
+            );
 
             let durationValue;
             // compute ending Timestamp
             let endTimestamp;
-            if (event.target.endCriteria.value === RequestEndCriteriaType.DATE) {
+            if (
+                event.target.endCriteria.value === RequestEndCriteriaType.DATE
+            ) {
                 durationValue = event.target.endDate.value;
-                endTimestamp = dateTimeStringToTimestamp(durationValue, event.target.startTime.value);
+                endTimestamp = dateTimeStringToTimestamp(
+                    durationValue,
+                    event.target.startTime.value
+                );
             } else {
                 durationValue = event.target.numOccurrences.value;
                 let freq = event.target.repeats.value;
                 if (freq === RequestRepeatType.WEEKLY) {
-                    endTimestamp = moment.tz(startTimestamp, reqTimezone)
-                        .add((durationValue - 1) * 7, 'days').valueOf();
+                    endTimestamp = moment
+                        .tz(startTimestamp, reqTimezone)
+                        .add((durationValue - 1) * 7, 'days')
+                        .valueOf();
                 } else if (freq === RequestRepeatType.BIWEEKLY) {
-                    endTimestamp = moment.tz(startTimestamp, reqTimezone)
-                        .add((durationValue - 1) * 14, 'days').valueOf();
+                    endTimestamp = moment
+                        .tz(startTimestamp, reqTimezone)
+                        .add((durationValue - 1) * 14, 'days')
+                        .valueOf();
                 } else {
                     // TODO (jkbach): handle monthly
                     endTimestamp = -1;
                 }
             }
-            let pickupTimeDiffMs = (moment(event.target.endTime.value, InputFormat.TIME)
-                    - moment(event.target.startTime.value, InputFormat.TIME))
-                .valueOf();
+            let pickupTimeDiffMs = (
+                moment(event.target.endTime.value, InputFormat.TIME) -
+                moment(event.target.startTime.value, InputFormat.TIME)
+            ).valueOf();
             endTimestamp += pickupTimeDiffMs; //encode endTime
 
             var raInfo = {};
@@ -186,9 +236,11 @@ class RecurringPickupRequest extends Component {
                 raInfo['requested'] = raRequested.id;
             } else {
                 // if no specific RA requested, add all RAs to pending list
-                raInfo['pending'] = this.state.receivingAgencies.map(ra => ra.id);
+                raInfo['pending'] = this.state.receivingAgencies.map(
+                    ra => ra.id
+                );
             }
-            
+
             var dgInfo = {};
             var dgRequested = null;
             var dgIndex = event.target.delivererGroup.value;
@@ -200,15 +252,17 @@ class RecurringPickupRequest extends Component {
                 dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
             }
 
-            var primaryContact = this.state.memberList[event.target.primaryContact.value];
-            
+            var primaryContact = this.state.memberList[
+                event.target.primaryContact.value
+            ];
+
             // create DeliveryRequest object
             var deliveryRequest = {
                 status: RequestStatus.PENDING,
                 startTimestamp: startTimestamp,
                 endTimestamp: endTimestamp,
                 timezone: reqTimezone,
-                endCriteria:{
+                endCriteria: {
                     type: event.target.endCriteria.value,
                     value: durationValue
                 },
@@ -229,7 +283,7 @@ class RecurringPickupRequest extends Component {
                 raRequested: raRequested,
                 dgRequested: dgRequested
             });
-            
+
             this.toggleModal();
         }
     }
@@ -237,14 +291,21 @@ class RecurringPickupRequest extends Component {
     // when "Confirm" is clicked on the summary popup
     submitRequest() {
         // write to firebase
-        firebase.database().ref('delivery_requests')
+        firebase
+            .database()
+            .ref('delivery_requests')
             .child(this.props.donatingAgency.umbrella)
             .child(this.props.account.agency)
-            .push(this.state.request);
-
-        // hide popup and clear form
-        this.toggleModal();
-        document.getElementById(this.formId).reset();
+            .push(this.state.request)
+            .then(() => {
+                // hide popup and clear form
+                this.toggleModal();
+                document.getElementById(this.formId).reset();
+                this.setState({ showConfirmation: true });
+            })
+            .catch(error => {
+                this.setState({ submissionError: error });
+            });
     }
 
     render() {
@@ -253,105 +314,209 @@ class RecurringPickupRequest extends Component {
                 <form id={this.formId} onSubmit={this.createRequest}>
                     <div className="info">
                         <p id="form-heading">Schedule Recurring Pickup</p>
-                        {
-                            Object.keys(this.state.errors).map((error, i) => {
-                                return (
-                                    <p className="error" key={i}>{this.state.errors[error]}</p>
-                                );
-                            })
-                        }
+                        {Object.keys(this.state.errors).map((error, i) => {
+                            return (
+                                <p className="error" key={i}>
+                                    {this.state.errors[error]}
+                                </p>
+                            );
+                        })}
                         <span className="flex">
                             <span className="grid">
-                                <label>Start Date  <span className="red">*</span></label><br/>
-                                <input type="date" name="startDate" onChange={this.handleChange.bind(this, 'startDate')} required/><br/>
+                                <label>
+                                    Start Date <span className="red">*</span>
+                                </label>
+                                <br />
+                                <input
+                                    type="date"
+                                    name="startDate"
+                                    onChange={this.handleChange.bind(
+                                        this,
+                                        'startDate'
+                                    )}
+                                    required
+                                />
+                                <br />
                             </span>
                             <span className="grid">
-                                <label> End Criteria <span className="red">*</span></label><br/>
-                                <label className="container-smaller">
-                                    <input type="radio" name="endCriteria" value={RequestEndCriteriaType.OCCUR} onChange={this.handleChange.bind(this, 'endCriteria')} required/>
-                                    <span className="checkmark"></span>After <input type="number" name="numOccurrences" onChange={this.handleChange.bind(this, 'occurTimes')} /> times<br/>
-                                </label >
-                                <label className="container-smaller">
-                                    <input type="radio" name="endCriteria" value={RequestEndCriteriaType.DATE} onChange={this.handleChange.bind(this, 'endCriteria')}/>
-                                    <span className="checkmark"></span>End on
-                                    <input type="date" name="endDate" onChange={this.handleChange.bind(this, 'endDate')} />
+                                <label>
+                                    {' '}
+                                    End Criteria <span className="red">*</span>
                                 </label>
-                                <br/>
+                                <br />
+                                <label className="container-smaller">
+                                    <input
+                                        type="radio"
+                                        name="endCriteria"
+                                        value={RequestEndCriteriaType.OCCUR}
+                                        onChange={this.handleChange.bind(
+                                            this,
+                                            'endCriteria'
+                                        )}
+                                        required
+                                    />
+                                    <span className="checkmark" />After{' '}
+                                    <input
+                                        type="number"
+                                        name="numOccurrences"
+                                        onChange={this.handleChange.bind(
+                                            this,
+                                            'occurTimes'
+                                        )}
+                                    />{' '}
+                                    times<br />
+                                </label>
+                                <label className="container-smaller">
+                                    <input
+                                        type="radio"
+                                        name="endCriteria"
+                                        value={RequestEndCriteriaType.DATE}
+                                        onChange={this.handleChange.bind(
+                                            this,
+                                            'endCriteria'
+                                        )}
+                                    />
+                                    <span className="checkmark" />End on
+                                    <input
+                                        type="date"
+                                        name="endDate"
+                                        onChange={this.handleChange.bind(
+                                            this,
+                                            'endDate'
+                                        )}
+                                    />
+                                </label>
+                                <br />
                             </span>
                         </span>
                         <span className="flex">
                             <span className="grid">
-                                <label>Repeats <span className="red">*</span></label><br/>
+                                <label>
+                                    Repeats <span className="red">*</span>
+                                </label>
+                                <br />
                                 <select name="repeats" defaultValue="" required>
-                                    <option value="" disabled>Select</option>
-                                    <option value={RequestRepeatType.WEEKLY}>Weekly</option>
-                                    <option value={RequestRepeatType.BIWEEKLY}>Every other week</option>
+                                    <option value="" disabled>
+                                        Select
+                                    </option>
+                                    <option value={RequestRepeatType.WEEKLY}>
+                                        Weekly
+                                    </option>
+                                    <option value={RequestRepeatType.BIWEEKLY}>
+                                        Every other week
+                                    </option>
                                     {/* TODO warning if not every month in the range has this date */}
                                     {/* <option value={RequestRepeatType.MONTHLY}>Monthly</option> */}
                                     {/* (TODO SPR18) Nth Weekday of Month */}
                                     {/* <option value={RequestRepeatType.??}>Monthly, on the ith of X</option> */}
-                                </select><br/>
+                                </select>
+                                <br />
                             </span>
                             <span className="grid">
-                                <label>Primary Contact <span className="red">*</span></label><br/>
-                                <select name="primaryContact" defaultValue="" required>
-                                    <option value="" disabled>Select</option>
-                                    {this.state.memberList.map((member,i) => {
+                                <label>
+                                    Primary Contact{' '}
+                                    <span className="red">*</span>
+                                </label>
+                                <br />
+                                <select
+                                    name="primaryContact"
+                                    defaultValue=""
+                                    required
+                                >
+                                    <option value="" disabled>
+                                        Select
+                                    </option>
+                                    {this.state.memberList.map((member, i) => {
                                         return (
-                                            <option key={i} value={i}>{member.name}</option>
+                                            <option key={i} value={i}>
+                                                {member.name}
+                                            </option>
                                         );
                                     })}
-                                </select><br/>
+                                </select>
+                                <br />
                             </span>
-                        </span> 
+                        </span>
                         <span className="flex">
                             <span className="grid">
-                                <label>Start Time  <span className="red">*</span></label><br/>
-                                <input type="time" name="startTime" onChange={this.handleChange.bind(this, 'startTime')} required/>
+                                <label>
+                                    Start Time <span className="red">*</span>
+                                </label>
+                                <br />
+                                <input
+                                    type="time"
+                                    name="startTime"
+                                    onChange={this.handleChange.bind(
+                                        this,
+                                        'startTime'
+                                    )}
+                                    required
+                                />
                             </span>
                             <span className="grid">
-                                <label>End Time  <span className="red">*</span></label><br/>
-                                <input type="time" name="endTime" onChange={this.handleChange.bind(this, 'endTime')} required/>
+                                <label>
+                                    End Time <span className="red">*</span>
+                                </label>
+                                <br />
+                                <input
+                                    type="time"
+                                    name="endTime"
+                                    onChange={this.handleChange.bind(
+                                        this,
+                                        'endTime'
+                                    )}
+                                    required
+                                />
                             </span>
                         </span>
                         <span className="grid">
                             <p id="form-heading">Notes for Pickup</p>
-                            <textarea name="notes" 
-                                placeholder="Ex: Use the underground parking garage upon entrance. Key card access required after 3:00pm."/>
+                            <textarea
+                                name="notes"
+                                placeholder="Ex: Use the underground parking garage upon entrance. Key card access required after 3:00pm."
+                            />
                         </span>
                         <p id="form-heading">Agencies involved</p>
                         <span className="flex">
                             <span className="grid">
-                                <label>Student Group</label><br/>
+                                <label>Student Group</label>
+                                <br />
                                 <select name="delivererGroup" defaultValue="">
                                     <option value="">Select</option>
-                                    {this.state.delivererGroups.map((dg,i) => {
+                                    {this.state.delivererGroups.map((dg, i) => {
                                         return (
-                                            <option key={i} value={i}>{dg.name}</option>
+                                            <option key={i} value={i}>
+                                                {dg.name}
+                                            </option>
                                         );
                                     })}
                                 </select>
                             </span>
                             <span className="grid">
-                                <label>Shelter</label><br/>
+                                <label>Shelter</label>
+                                <br />
                                 <select name="receivingAgency" defaultValue="">
                                     <option value="">Select</option>
-                                    {this.state.receivingAgencies.map((ra, i) => {
-                                        return (
-                                            <option key={i} value={i}>{ra.name}</option>
-                                        );
-                                    })}
+                                    {this.state.receivingAgencies.map(
+                                        (ra, i) => {
+                                            return (
+                                                <option key={i} value={i}>
+                                                    {ra.name}
+                                                </option>
+                                            );
+                                        }
+                                    )}
                                 </select>
                             </span>
                         </span>
                         <div className="buttons-form">
-                            <input type="submit" value="Done" /> 
+                            <input type="submit" value="Done" />
                             <input type="reset" value="Cancel" />
                         </div>
                     </div>
                 </form>
 
-                {this.state.showPopup &&
+                {this.state.showPopup && (
                     <PickupSummary
                         title={'Request Recurring Pickup'}
                         request={this.state.request}
@@ -360,9 +525,18 @@ class RecurringPickupRequest extends Component {
                         raRequested={this.state.raRequested}
                         dgRequested={this.state.dgRequested}
                         onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}>
-                    </PickupSummary>
-                }
+                        onConfirm={this.submitRequest}
+                        submissionError={this.state.submissionError}
+                    />
+                )}
+                {this.state.showConfirmation && (
+                    <PickupRequestedConfirmation
+                        request={this.state.request}
+                        closeConfirm={this.closeConfirm}
+                        donatingAgency={this.props.donatingAgency}
+                        raRequested={this.state.raRequested}
+                    />
+                )}
             </div>
         );
     }
