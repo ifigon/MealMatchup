@@ -1,0 +1,31 @@
+.toggle-wrapper {
+  width: 243px;
+  margin: 140px 550px 30px auto;
+}
+
+.toggle {
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 20px;
+  padding: 10px;
+  margin-right: 20px;
+  width: 210px;
+}
+
+.emergency-toggle {
+  background-color: #eb5757;
+}
+.recurring-toggle {
+  background-color: #2ecc71;
+}
+
+.toggle-info {
+  display: inline-block;
+}
+
+.toggle-container {
+  display: flex;
+  width: 280px;
+  justify-content: space-between;
+}

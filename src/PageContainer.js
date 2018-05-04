@@ -4,7 +4,7 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
-import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
+import RequestPickupWrapper from './PageContent/RequestPickup/RequestPickupWrapper.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
 // The page to load when user is signed in.
@@ -56,8 +56,9 @@ class PageContainer extends Component {
     }
     render() {
         // wait for all data to come through
-        let ready = (this.props.account.accountType !== AccountType.DONATING_AGENCY_MEMBER ||
-            this.state.donatingAgency);
+        let ready =
+            this.props.account.accountType !==
+                AccountType.DONATING_AGENCY_MEMBER || this.state.donatingAgency;
         if (!ready) {
             return null;
         }
@@ -74,11 +75,7 @@ class PageContainer extends Component {
 
         return (
             <div>
-                <PageHeader
-                    account={account}
-                    logo={logo}
-                    title={pageTitle}
-                />
+                <PageHeader account={account} logo={logo} title={pageTitle} />
 
                 <NavBar
                     content={content}
@@ -86,24 +83,24 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {content === PageContent.CALENDAR &&
-                    <Calendar 
-                        id="calendar-container" 
+                {content === PageContent.CALENDAR && (
+                    <Calendar
+                        id="calendar-container"
                         account={account}
                         donatingAgency={donatingAgency}
                     />
-                }
+                )}
 
                 {content === PageContent.ASSIGN_VOLUNTEERS && (
                     <AssignVolunteersController account={account} />
                 )}
 
-                {content === PageContent.REQUEST_PICKUP &&
-                    <RecurringPickupRequest
-                        account={account}
-                        donatingAgency={donatingAgency}
+                {content === PageContent.REQUEST_PICKUP && (
+                    <RequestPickupWrapper
+                        account={this.props.account}
+                        donatingAgency={this.state.donatingAgency}
                     />
-                }
+                )}
 
                 {content === PageContent.FOOD_LOGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
