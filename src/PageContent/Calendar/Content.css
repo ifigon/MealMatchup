@@ -260,3 +260,8 @@ select.description-unit {
 .add-food:hover {
   cursor: pointer;
 }
+
+.unassigned-red {
+  color: #f77676;
+  font-weight: bold;
+}
