@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import add from '../../icons/plus-button-blue.svg';
+import './Toggle.css';
 
 class FoodItem extends Component {
     constructor(props) {
@@ -36,32 +37,35 @@ class FoodItem extends Component {
                             onChange={this.changeName.bind(this)}
                         />
                     </span>
-                    <span className="grid">
-                        <label>Weight</label>
-                        <br />
-                        <div>
-                            <input
-                                name="foodWeight"
-                                defaultValue=""
-                                required
-                                onChange={this.changeWeight.bind(this)}
+                    <div className="toggle-container">
+                        <span className="grid">
+                            <label>Weight</label>
+                            <br />
+                            <div>
+                                <input
+                                    name="foodWeight"
+                                    placeholder="lbs"
+                                    defaultValue=""
+                                    required
+                                    onChange={this.changeWeight.bind(this)}
+                                />
+                            </div>
+                        </span>
+                        {this.props.active && (
+                            <img
+                                className="add-food-item"
+                                src={add}
+                                alt="add item"
+                                onClick={() => {
+                                    this.props.addFood(
+                                        this.state.foodName,
+                                        this.state.foodWeight
+                                    );
+                                }}
                             />
-                        </div>
-                    </span>
+                        )}
+                    </div>
                 </span>
-                {this.props.active && (
-                    <img
-                        className="add-food-item"
-                        src={add}
-                        alt="add item"
-                        onClick={() => {
-                            this.props.addFood(
-                                this.state.foodName,
-                                this.state.foodWeight
-                            );
-                        }}
-                    />
-                )}
             </div>
         );
     }

@@ -60,7 +60,6 @@ class RecurringPickupRequest extends Component {
                     this.addListToState(dgs, 'delivererGroups', false);
                 }.bind(this)
             );
-
     }
 
     // Helper function: append {id, name} for each entry in the list to
@@ -174,6 +173,16 @@ class RecurringPickupRequest extends Component {
             alert('Form has errors');
         } else {
             var deliveryRequest;
+            var raInfo = {};
+            var raRequested = null;
+            var raIndex = event.target.receivingAgency.value;
+            var dgInfo = {};
+            var dgRequested = null;
+            var dgIndex = event.target.delivererGroup.value;
+            var primaryContact = this.state.memberList[
+                event.target.primaryContact.value
+            ];
+
             if (this.props.type === DeliveryType.RECURRING) {
                 // force request's timezone to be the same as DA's
                 let reqTimezone = this.props.donatingAgency.timezone;
@@ -226,9 +235,6 @@ class RecurringPickupRequest extends Component {
                 ).valueOf();
                 endTimestamp += pickupTimeDiffMs; //encode endTime
 
-                var raInfo = {};
-                var raRequested = null;
-                var raIndex = event.target.receivingAgency.value;
                 if (raIndex) {
                     raRequested = this.state.receivingAgencies[raIndex];
                     raInfo['requested'] = raRequested.id;
@@ -239,9 +245,6 @@ class RecurringPickupRequest extends Component {
                     );
                 }
 
-                var dgInfo = {};
-                var dgRequested = null;
-                var dgIndex = event.target.delivererGroup.value;
                 if (dgIndex) {
                     dgRequested = this.state.delivererGroups[dgIndex];
                     dgInfo['requested'] = dgRequested.id;
@@ -251,10 +254,6 @@ class RecurringPickupRequest extends Component {
                         dg => dg.id
                     );
                 }
-
-                var primaryContact = this.state.memberList[
-                    event.target.primaryContact.value
-                ];
 
                 // DeliveryRequest object
                 deliveryRequest = {
@@ -336,9 +335,6 @@ class RecurringPickupRequest extends Component {
                 ).valueOf();
                 endTimestamp += pickupTimeDiffMs; //encode endTime
 
-                var raInfo = {};
-                var raRequested = null;
-                var raIndex = event.target.receivingAgency.value;
                 if (raIndex) {
                     raRequested = this.state.receivingAgencies[raIndex];
                     raInfo['requested'] = raRequested.id;
@@ -349,9 +345,6 @@ class RecurringPickupRequest extends Component {
                     );
                 }
 
-                var dgInfo = {};
-                var dgRequested = null;
-                var dgIndex = event.target.delivererGroup.value;
                 if (dgIndex) {
                     dgRequested = this.state.delivererGroups[dgIndex];
                     dgInfo['requested'] = dgRequested.id;
@@ -361,10 +354,6 @@ class RecurringPickupRequest extends Component {
                         dg => dg.id
                     );
                 }
-
-                var primaryContact = this.state.memberList[
-                    event.target.primaryContact.value
-                ];
 
                 // create DeliveryRequest object
                 deliveryRequest = {
@@ -415,8 +404,6 @@ class RecurringPickupRequest extends Component {
     }
 
     addFood(name, weight, event) {
-        console.log(name, weight, this.state);
-        console.log(this.state.foodRows);
         var newElement = { foodName: name, foodWeight: weight };
         this.setState({ foodRows: [...this.state.foodRows, newElement] });
     }
