@@ -6,20 +6,20 @@ import info from '../../icons/info.svg';
 class RequestTypeToggle extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            type: ''
-        };
+        // this.state = {
+        //     type: ''
+        // };
     }
 
-    componentWillReceiveProps() {
-        this.setState({ type: this.props.type });
-    }
+    // componentWillReceiveProps() {
+    //     this.setState({ type: this.props.type });
+    // }
 
     render() {
         return (
             <div className="toggle-wrapper" onClick={this.props.toggle}>
                 <div className="toggle-container">
-                    {this.state.type === DeliveryType.RECURRING ? (
+                    {this.props.type === DeliveryType.RECURRING ? (
                         <div className="recurring-toggle toggle">
                             Schedule Recurring Pickup
                         </div>

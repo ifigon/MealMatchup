@@ -28,7 +28,6 @@ class RecurringPickupRequest extends Component {
             primaryContact: {},
             raRequested: null,
             dgRequested: null,
-            type: '',
             foodRows: [{ foodName: '', foodWeight: '' }]
         };
 
@@ -62,12 +61,8 @@ class RecurringPickupRequest extends Component {
                 }.bind(this)
             );
 
-        // this.setState({ type: this.props.type });
     }
 
-    componentWillReceiveProps() {
-        this.setState({ type: this.props.type });
-    }
     // Helper function: append {id, name} for each entry in the list to
     // the given field in this.state
     addListToState(list, field, isMember) {
@@ -179,7 +174,7 @@ class RecurringPickupRequest extends Component {
             alert('Form has errors');
         } else {
             var deliveryRequest;
-            if (this.state.type === DeliveryType.RECURRING) {
+            if (this.props.type === DeliveryType.RECURRING) {
                 // force request's timezone to be the same as DA's
                 let reqTimezone = this.props.donatingAgency.timezone;
                 let dateTimeStringToTimestamp = (dateString, timeString) =>
@@ -371,8 +366,6 @@ class RecurringPickupRequest extends Component {
                     event.target.primaryContact.value
                 ];
 
-                // var foodItems = [];
-
                 // create DeliveryRequest object
                 deliveryRequest = {
                     status: RequestStatus.PENDING,
@@ -424,20 +417,14 @@ class RecurringPickupRequest extends Component {
     addFood(name, weight, event) {
         console.log(name, weight, this.state);
         console.log(this.state.foodRows);
-        // event.preventDefault();
         var newElement = { foodName: name, foodWeight: weight };
-        // var newElement = ['a', 'b'];
         this.setState({ foodRows: [...this.state.foodRows, newElement] });
-        // this.setState(prevState => ({
-        //    foodRows: [...prevState.foodRows, newElement]
-        // }));
-        //console.log(this.state.foodRows);
     }
 
     render() {
         return (
             <div className="form">
-                {this.state.type === DeliveryType.EMERGENCY ? (
+                {this.props.type === DeliveryType.EMERGENCY ? (
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
                             <p id="form-heading">Schedule Recurring Pickup</p>
