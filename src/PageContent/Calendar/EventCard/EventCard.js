@@ -81,15 +81,12 @@ class EventCard extends Component {
         return (
             <div className={this.props.eventClass}>
                 {this.state.dialogOpen ? (
-                    <div>
-                        <div className="dialog-background-cover" onClick={this.closeDialog}></div>
-                        <Dialog
-                            closeDialog={this.closeDialog}
-                            account={account}
-                            delivery={delivery}
-                            futureEvent={futureEvent}
-                        />
-                    </div>
+                    <Dialog
+                        closeDialog={this.closeDialog}
+                        account={account}
+                        delivery={delivery}
+                        futureEvent={futureEvent}
+                    />
                 ) : null}
 
                 {multiple ? (
