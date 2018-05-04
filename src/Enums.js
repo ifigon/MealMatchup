@@ -4,10 +4,9 @@
 
 // TODO: temporary for pilot, manually setting a fixed umbrella
 exports.UmbrellaId = {
-    TEST: 'PrE7oCZajNcRAOXNAFwRQizQQcJ3',
+    TEST: 'NLRZo1xfPHOI8rGpzSKiEJVOOUt2',
     UW: 'bfwL94u7XYZyhZpDByXLeWb5ivA3',
 };
-exports.UMBRELLA_ID = exports.UmbrellaId.UW;
 
 // For display purposes
 exports.StringFormat = {
@@ -119,7 +118,8 @@ exports.DeliveryType = {
 
 exports.DeliveryStatus = {
     SCHEDULED: 'scheduled',
-    IP: 'in_progress',
+    STARTED: 'started',
+    PICKED_UP: 'picked_up',
     COMPLETED: 'completed'
 };
 

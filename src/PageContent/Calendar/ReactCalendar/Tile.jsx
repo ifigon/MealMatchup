@@ -41,13 +41,14 @@ class Tile extends Component {
                 <time dateTime={dateTime} className={this.props.dateClass}>
                     {date.getDate()}
                 </time>
+
                 {typeof tileContent === 'function'
                     ? tileContent({ date, view })
                     : tileContent}
+
                 <EventCardSlot
-                    events={this.props.events}
-                    today={this.props.today}
-                    futureEvent={this.props.futureEvent}
+                    account={this.props.account}
+                    deliveries={this.props.deliveries}
                 />
             </button>
         );

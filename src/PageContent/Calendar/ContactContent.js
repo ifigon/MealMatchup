@@ -1,78 +1,131 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+import { accountsRef, deliveriesRef, donatingAgenciesRef } from '../../FirebaseConfig';
 import { AccountType, StringFormat } from '../../Enums';
 import './Content.css';
 import phone from '../../icons/phone.svg';
-import { formatPhone } from '../../utils/Utils';
+import { formatPhone, objectsAreEqual } from '../../utils/Utils';
 
 class ContactContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             edit: false,
-            contact: {},
-            memberList: []
+            // 'waiting' is true after 'Saved' is clicked and before changes
+            // from db is propagated down. While it is true, input fields are
+            // disabled
+            waiting: false,
+            savedTimestamp: null,
+            daMemberMap: {},
         };
-        if (this.props.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            this.state = {
-                contact: {
-                    name: this.props.delivery.donatingAgency.contact.name,
-                    phone: this.props.delivery.donatingAgency.contact.phone,
-                    email: this.props.delivery.donatingAgency.contact.email,
-                    memberList: this.props.delivery.donatingAgency.contact
-                        .memberList
-                }
-            };
-        } else if (this.props.accountType === AccountType.RECEIVING_AGENCY) {
-            this.state = {
-                contact: {
-                    name: this.props.delivery.receivingAgency.contact.name,
-                    phone: this.props.delivery.receivingAgency.contact.phone,
-                    email: this.props.delivery.receivingAgency.contact.email
-                }
-            };
-        }
 
         this.edit = this.edit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChangeDA = this.handleChangeDA.bind(this);
+        this.saveContact = this.saveContact.bind(this);
     }
+
+    componentWillReceiveProps(nextProps) {
+        // update state to reflect values properly saved if we were waiting
+        // on the update and the update happened after we wrote to db.
+        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ waiting: false, edit: false });
+        }
+    }
+
+    componentDidMount() {
+        const account = this.props.account;
+        // fetch DA member list for dropdown
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            donatingAgenciesRef.child(account.agency).once('value')
+                .then(daSnap => daSnap.val().members)
+                .then(members => this.fetchMembersInfo(members));
+        }
+    }
+
+    async fetchMembersInfo(members) {
+        let daMemberList = await Promise.all(
+            Object.keys(members).map(i => accountsRef.child(members[i]).once('value')
+                .then(snap => {
+                    return {
+                        id: snap.key,
+                        name: snap.val().name,
+                    };
+                })));
+
+        let daMemberMap = daMemberList.reduce((result, item) => {
+            result[item.id] = item.name;
+            return result;
+        }, {});
+
+        this.setState({ daMemberMap: daMemberMap });
+    }
+
     edit() {
         this.setState({
             edit: true
         });
     }
 
-    handleChange(e) {
+    saveContact(e) {
         e.preventDefault();
-        this.setState({
-            contact: {
+        const { account, delivery } = this.props;
+
+        // disable input fields first
+        this.setState({ waiting: true });
+
+        let updates = {};
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            let newContact = e.target.primaryContact.value;
+            if (newContact !== delivery.daContact.id) {
+                updates['daContact'] = newContact;
+            }
+        } else {
+            let newContact = {
                 name: e.target.name.value,
                 phone: e.target.phone.value,
-                email: e.target.email.value
-            },
-            edit: false
-        });
+                email: e.target.email.value,
+            };
+            if (!objectsAreEqual(newContact, delivery.raContact)) {
+                updates['raContact'] = newContact;
+            }
+        }
+
+        if (Object.keys(updates).length > 0) {
+            // only update if there are changes
+            deliveriesRef.child(delivery.id).update(updates).then(() => {
+                // record timestamp of when the write was done
+                this.setState({ savedTimestamp: moment().valueOf() });
+            });
+        } else {
+            // nothing changed
+            this.setState({ waiting: false, edit: false });
+        }
     }
 
-    handleChangeDA(e) {
-        e.preventDefault();
-        let index = e.target.primaryContact.value;
-        let memberName = this.state.contact.memberList[index].name;
-        let memberPhone = this.state.contact.memberList[index].phone;
-        let memberEmail = this.state.contact.memberList[index].email;
-        let memberList = this.state.contact.memberList;
-        this.setState({
-            contact: {
-                name: memberName,
-                phone: memberPhone,
-                email: memberEmail,
-                memberList: memberList
-            },
-            edit: false
-        });
+    // get the right contact based on account type
+    getContact() {
+        const { account, delivery } = this.props;
+
+        let contact = {};
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            contact = delivery.daContact;
+        } else if (account.accountType === AccountType.RECEIVING_AGENCY) {
+            contact = delivery.raContact;
+        }
+        return contact;
     }
 
     render() {
+        const { account, futureEvent } = this.props;
+        const accountType = account.accountType;
+        const contact = this.getContact();
+
+        let title = 'Primary Contact for ';
+        if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            title += 'Pickup';
+        } else if (accountType === AccountType.RECEIVING_AGENCY) {
+            title += 'Delivery';
+        }
+
         return (
             <div className="wrapper">
                 <img
@@ -81,94 +134,82 @@ class ContactContent extends Component {
                     alt="volunteer"
                 />
                 <div className="content-wrapper content-wrapper-description">
-                    {this.props.accountType === AccountType.RECEIVING_AGENCY ? (
-                        <h1 className="section-header">
-                            Primary Contact for Delivery
-                        </h1>
-                    ) : this.props.accountType ===
-                    AccountType.DONATING_AGENCY_MEMBER ? (
-                            <h1 className="section-header">
-                            Primary Contact for Pickup
-                            </h1>
-                        ) : null}
+                    <h1 className="section-header">{title}</h1>
+
                     {!this.state.edit ? (
                         <div>
                             <div className="content-details-wrapper">
                                 <p className="content-details contact-content">
-                                    {this.state.contact.name} ({
-                                        this.state.contact.phone
-                                    })
+                                    {contact.name} ({contact.phone})
                                 </p>
                             </div>
                         </div>
-                    ) : this.props.accountType ===
-                    AccountType.DONATING_AGENCY_MEMBER ? (
-                            <div>
-                                <form onSubmit={this.handleChangeDA}>
-                                    <select
-                                        name="primaryContact"
-                                        defaultValue=""
-                                        required
-                                    >
-                                        <option value="" disabled>
-                                        Select
-                                        </option>
-                                        {this.state.contact.memberList.map(
-                                            (member, i) => {
+                    ) : accountType === AccountType.DONATING_AGENCY_MEMBER ? (
+                        <div>
+                            <form onSubmit={this.saveContact}>
+                                <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                    <select className="contact-select" name="primaryContact" defaultValue={contact.id} required>
+                                        {Object.keys(this.state.daMemberMap).map(
+                                            (mId, i) => {
                                                 return (
-                                                    <option key={i} value={i}>
-                                                        {member.name}
+                                                    <option key={i} value={mId}>
+                                                        {this.state.daMemberMap[mId]}
                                                     </option>
                                                 );
                                             }
                                         )}
                                     </select>
-                                    <input
-                                        type="submit"
-                                        value="save"
+                                    <input 
+                                        type="submit" 
                                         className="edit-button"
+                                        value={this.state.waiting ? 'saving...' : 'save'}
                                     />
-                                </form>
-                            </div>
-                        ) : this.props.accountType ===
-                    AccountType.RECEIVING_AGENCY ? (
-                                <div className="content-details-wrapper">
-                                    <form
-                                        className="edit-dg"
-                                        onSubmit={this.handleChange}
-                                    >
-                                        <div className="input-wrapper contact-wrapper">
-                                            <input
-                                                type="text"
-                                                className="content-details "
-                                                defaultValue={this.state.contact.name}
-                                                name="name"
-                                            />
-                                            <input
-                                                type="tel"
-                                                onChange={formatPhone}
-                                                className="content-details "
-                                                defaultValue={this.state.contact.phone}
-                                                name="phone"
-                                                pattern={StringFormat.PHONE}
-                                            />
-                                            <input
-                                                type="email"
-                                                className="content-details "
-                                                defaultValue={this.state.contact.email}
-                                                name="email"
-                                            />
-                                        </div>
-
+                                </fieldset>
+                            </form>
+                        </div>
+                    ) : accountType === AccountType.RECEIVING_AGENCY ? (
+                        <div className="content-details-wrapper">
+                            <form className="edit-dg" onSubmit={this.saveContact}>
+                                <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                    <div className="input-wrapper contact-wrapper">
                                         <input
-                                            type="submit"
-                                            className="edit-button"
-                                            value="save"
+                                            type="text"
+                                            className="content-details "
+                                            defaultValue={contact.name}
+                                            name="name"
+                                            placeholder="name"
+                                            required
                                         />
-                                    </form>
-                                </div>
-                            ) : null}
-                    {!this.state.edit && this.props.futureEvent ? (
+                                        <input
+                                            type="tel"
+                                            className="content-details "
+                                            defaultValue={contact.phone}
+                                            name="phone"
+                                            pattern={StringFormat.PHONE}
+                                            onChange={formatPhone}
+                                            placeholder="xxx-xxx-xxxx"
+                                            required
+                                        />
+                                        <input
+                                            type="email"
+                                            className="content-details "
+                                            defaultValue={contact.email}
+                                            name="email"
+                                            placeholder="email"
+                                            required
+                                        />
+                                    </div>
+                                    <input 
+                                        type="submit" 
+                                        className="edit-button"
+                                        value={this.state.waiting ? 'saving...' : 'save'}
+                                    />
+                                </fieldset>
+                            </form>
+                        </div>
+                    ) : null}
+
+                    {!this.state.edit && futureEvent &&
                         <button
                             type="button"
                             className="edit-button"
@@ -176,7 +217,7 @@ class ContactContent extends Component {
                         >
                             Edit
                         </button>
-                    ) : null}
+                    }
                 </div>
             </div>
         );

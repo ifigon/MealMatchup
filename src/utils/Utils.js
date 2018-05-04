@@ -24,7 +24,7 @@ export {
 
 /**
  * Formats phone numbers as you type. Include in inputs components like so:
- *    `<input onChange={this.phoneFormat} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" />`
+ *    `<input onChange={phoneFormat} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" />`
 **/
 export function formatPhone(e,f) {
     let val = e.target.value.replace(/\D/g, '').substring(0, 10);
@@ -36,4 +36,21 @@ export function formatPhone(e,f) {
         corrected += val.charAt(i);
     }
     e.target.value = corrected;
+}
+
+
+export function objectsAreEqual(obj1, obj2) {
+    if (!obj1 && !obj2) {
+        return true; // nothing equals nothing
+    } else if ((obj1 && !obj2) || (obj2 && !obj1) 
+            || Object.keys(obj1).length !== Object.keys(obj2).length) {
+        return false;
+    }
+
+    for (let key in obj1) {
+        if (obj1[key] !== obj2[key]) {
+            return false;
+        }
+    }
+    return true;
 }

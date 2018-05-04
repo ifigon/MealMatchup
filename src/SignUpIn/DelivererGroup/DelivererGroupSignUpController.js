@@ -6,7 +6,8 @@ import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
-import { AccountType, UMBRELLA_ID } from '../../Enums';
+import { AccountType } from '../../Enums';
+import UMBRELLA_ID from '../../UmbrellaConfig';
 
 let fieldValues = {
     organizationName: null,

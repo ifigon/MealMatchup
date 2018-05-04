@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { AccountType, FoodUnit } from '../../Enums';
+import { AccountType, FoodUnit, StringFormat } from '../../Enums';
+import { deliveriesRef } from '../../FirebaseConfig';
+import { objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
 import groceries from '../../icons/groceries.svg';
 import plus from '../../icons/plus-button.svg';
@@ -8,205 +10,230 @@ import plus from '../../icons/plus-button.svg';
 class DescriptionContent extends Component {
     constructor(props) {
         super(props);
-        let donation = [];
-        if (this.props.delivery.donationDescription) {
-            donation = this.props.delivery.donationDescription;
-        }
         this.state = {
             edit: false,
-            donationObject: donation,
-            accountType: this.props.accountType
+            // 'waiting' is true after 'Saved' is clicked and before changes
+            // from db is propagated down. While it is true, input fields are
+            // disabled
+            waiting: false,
+            savedTimestamp: null,
+            foodRows: null, // for rendering editable rows only
         };
 
         this.edit = this.edit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.saveFoodItems = this.saveFoodItems.bind(this);
         this.addRow = this.addRow.bind(this);
     }
+
+    componentWillReceiveProps(nextProps) {
+        // update state to reflect values properly saved if we were waiting
+        // on the update and the update happened after we wrote to db.
+        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ waiting: false, edit: false, foodRows: null });
+        }
+    }
+
     edit() {
+        const description = this.props.delivery.description;
+
+        // copy current food items into state for editing purposes
+        let foodRows = [];
+        if (description && description.foodItems) {
+            foodRows = description.foodItems.slice();
+        }
+
         this.setState({
-            edit: true
+            edit: true,
+            foodRows: foodRows,
         });
     }
 
     addRow() {
-        this.edit();
-        let blankRow = { name: '', amount: 0, unit: '' };
-        let currentDonation = this.state.donationObject;
-        currentDonation.push(blankRow);
-        this.setState({
-            donationObject: currentDonation
+        if (!this.state.edit) {
+            this.edit();
+        }
+
+        this.setState(prevState => {
+            let foodRows = prevState.foodRows;
+            foodRows.push({ food: '', quantity: 0, unit: '' });
+            return { foodRows: foodRows };
         });
     }
 
-    stringifyDonation(donation) {
-        let foodList = '';
-        if (donation !== undefined) {
-            if (donation.length > 0) {
-                foodList +=
-                    donation[0].name +
-                    ' ' +
-                    donation[0].amount +
-                    ' ' +
-                    donation[0].unit;
-                for (let i = 1; i < donation.length; i++) {
-                    foodList +=
-                        ', ' +
-                        donation[i].name +
-                        ' ' +
-                        donation[i].amount +
-                        ' ' +
-                        donation[i].unit;
-                }
-            }
-        }
-        return foodList;
+    getEditDonation() {
+        return this.state.foodRows.map((item, index) => {
+            return (
+                <div key={index} className="donation-edit-wrapper">
+                    <input
+                        type="text"
+                        className="food"
+                        defaultValue={item.food}
+                        name={'food' + index}
+                    />
+                    <div className="weight-unit-wrapper">
+                        <input
+                            type="number"
+                            className="weight"
+                            defaultValue={item.quantity}
+                            name={'quantity' + index}
+                        />
+                        <select
+                            className="description-unit"
+                            defaultValue={item.unit}
+                            name={'unit' + index}
+                        >
+                            {Object.keys(FoodUnit).map((unit, i) => {
+                                return <option key={unit}>{FoodUnit[unit]}</option>;
+                            })}
+                        </select>
+                    </div>
+                </div>
+            );
+        });
     }
 
-    handleChange(e) {
+    saveFoodItems(e) {
         e.preventDefault();
-        // TODO
-        // pass these in from firebase
-        // validate form: ensure amount is > 0 if name != ""
-        let newDonation = [];
-        for (let i = 0; i < this.state.donationObject.length; i++) {
-            let name = e.target[i + 'name'].value;
-            let amount = e.target[i + 'amount'].value;
-            let unit = e.target[i + 'unit'].value;
-            if (name !== '') {
-                newDonation.push({ name: name, amount: amount, unit: unit });
+
+        // disable input fields first
+        this.setState({ waiting: true });
+
+        let newFoodItems = [];
+        for (let i = 0; i < this.state.foodRows.length; i++) {
+            let food = e.target['food' + i].value;
+            let quantity = e.target['quantity' + i].value;
+            let unit = e.target['unit' + i].value;
+            if (food) {
+                newFoodItems.push({ food: food, quantity: quantity, unit: unit });
             }
         }
 
-        this.setState({
-            donationObject: newDonation,
-            edit: false,
-            editedBy: this.props.accountOwnerName,
-            editedAt: moment().format('MM/DD h:mma')
-        });
+        if (this.foodItemsChanged(newFoodItems)) {
+            let updates = {};
+            updates['description/foodItems'] = newFoodItems;
+            updates[`description/updatedBy/${moment().valueOf()}`] = this.props.account.name;
+            deliveriesRef.child(this.props.delivery.id).update(updates).then(() => {
+                // record timestamp of when the write was done
+                this.setState({ savedTimestamp: moment().valueOf() });
+            });
+        } else {
+            // nothing changed
+            this.setState({ waiting: false, edit: false });
+        }
+    }
 
-        // TODO: push data to firebase
+    foodItemsChanged(newFoodItems) {
+        const description = this.props.delivery.description;
+        if (!description || !description.foodItems) {
+            return newFoodItems.length > 0;
+        }
+
+        const foodItems = description.foodItems;
+        if (foodItems.length !== newFoodItems.length) {
+            return true;
+        }
+
+        for (let i = 0; i < foodItems.length; i++) {
+            if (!objectsAreEqual(foodItems[i], newFoodItems[i])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     render() {
-        let donation = this.stringifyDonation(this.state.donationObject);
+        const { account, delivery, futureEvent } = this.props;
+        const accountType = account.accountType;
+        const description = delivery.description;
 
-        let editDonation = '';
-
-        if (this.state.donationObject.length > 0) {
-            editDonation = this.state.donationObject.map((item, index) => {
-                return (
-                    <div key={index} className="donation-edit-wrapper">
-                        <input
-                            type="text"
-                            className="food"
-                            defaultValue={item.name}
-                            name={index + 'name'}
-                        />
-                        <div className="weight-unit-wrapper">
-                            <input
-                                type="number"
-                                className="weight"
-                                defaultValue={item.amount}
-                                name={index + 'amount'}
-                            />
-                            <select
-                                className="description-unit"
-                                defaultValue={item.unit}
-                                name={index + 'unit'}
-                            >
-                                <option>{FoodUnit.LB}</option>
-                                <option>{FoodUnit.LOAVES}</option>
-                                <option>{FoodUnit.CASES}</option>
-                            </select>
-                        </div>
-                    </div>
-                );
-            });
+        let lastEdited = null;
+        if (accountType === AccountType.DONATING_AGENCY_MEMBER &&
+            description && description.updatedBy) {
+            // find the latest edit
+            let latest = Math.max(...Object.keys(description.updatedBy));
+            lastEdited = {
+                name: description.updatedBy[latest],
+                time: moment(latest).format(StringFormat.DATE_SHORT + ' ' + StringFormat.TIME),
+            };
         }
+
+        let editable = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
+            !this.state.edit && futureEvent);
+
         return (
             <div className="wrapper">
-                <img
-                    className="content-icon groceries"
-                    src={groceries}
-                    alt="volunteer"
-                />
+                <img className="content-icon groceries" src={groceries} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
-                    {this.state.editedBy ? (
+
+                    {lastEdited &&
                         <p className="edited">
-                            {' '}
-                            Edited by {this.state.editedBy},{' '}
-                            {this.state.editedAt}
+                            {' '}Last edited by {lastEdited.name},{' '}{lastEdited.time}
                         </p>
-                    ) : null}
+                    }
+
                     {!this.state.edit ? (
                         <div>
-                            {this.state.donationObject.length > 0 ? (
-                                <div className="content-details-wrapper">
-                                    <p className="content-details description-content">
-                                        {donation}
-                                    </p>
+                            {description && description.foodItems ? (
+                                <div>
+                                    <div className="content-details-wrapper">
+                                        <p className="content-details description-content">
+                                            {
+                                                description.foodItems
+                                                    .map(item => item.food + ' ' + item.quantity + ' ' + item.unit)
+                                                    .join(', ')
+                                            }
+                                        </p>
+                                    </div>
+                                    {editable &&
+                                        <button type="button" className="edit-button" onClick={this.edit}>
+                                            Edit
+                                        </button>
+                                    }
                                 </div>
-                            ) : this.state.accountType ===
-                            AccountType.DONATING_AGENCY_MEMBER ? (
-                                    <button
-                                        className="add-food"
-                                        onClick={this.addRow}
-                                    >
+                            ) : editable ? (
+                                <button className="add-food" onClick={this.addRow}>
                                     Add Food Items
-                                    </button>
-                                ) : (
-                                    <p>To Be Determined</p>
-                                )}{' '}
+                                </button>
+                            ) : futureEvent ? (
+                                <p>To Be Determined</p>
+                            ) : (
+                                <p>Left empty</p>
+                            )}{' '}
                         </div>
                     ) : (
                         <div className="content-details-wrapper">
-                            <form
-                                className="edit-dg"
-                                onSubmit={this.handleChange}
-                            >
-                                <div className="input-wrapper">
-                                    <div className="food-label">
-                                        Food Item<span className="required">
-                                            *
-                                        </span>
+                            <form className="edit-dg" onSubmit={this.saveFoodItems}>
+                                <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                    <div className="input-wrapper">
+                                        <div className="food-label">
+                                            Food Item<span className="required">*</span>
+                                        </div>
+                                        <div className="food-weight-label">
+                                            Weight<span className="required">*</span>
+                                        </div>
+                                        {this.getEditDonation()}
                                     </div>
-                                    <div className="food-weight-label">
-                                        Weight<span className="required">
-                                            *
-                                        </span>
+                                    {!this.state.waiting &&
+                                        <img
+                                            src={plus}
+                                            alt="plus"
+                                            className="plus-button"
+                                            onClick={this.addRow}
+                                        />
+                                    }
+                                    <div className="save-button-wrapper">
+                                        <input
+                                            type="submit"
+                                            className="description-edit-button"
+                                            value={this.state.waiting ? 'saving...' : 'save'}
+                                        />
                                     </div>
-                                    {editDonation}
-                                </div>
-                                <img
-                                    src={plus}
-                                    alt="plus"
-                                    className="plus-button"
-                                    onClick={this.addRow}
-                                />
-                                <div className="save-button-wrapper">
-                                    <input
-                                        type="submit"
-                                        className="description-edit-button"
-                                        value="Save"
-                                    />
-                                </div>
+                                </fieldset>
                             </form>
                         </div>
                     )}
-                    {this.state.accountType ===
-                        AccountType.DONATING_AGENCY_MEMBER &&
-                    !this.state.edit &&
-                    this.props.futureEvent &&
-                    this.state.donationObject.length > 0 ? (
-                            <button
-                                type="button"
-                                className="edit-button"
-                                onClick={this.edit}
-                            >
-                            Edit
-                            </button>
-                        ) : null}
                 </div>
             </div>
         );

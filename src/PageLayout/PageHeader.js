@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import './PageHeader.css';
 import notification from '../icons/notification.svg';
 import NotificationBadge from 'react-notification-badge';
+import { AccountType } from '../Enums.js';
 import { Effect } from 'react-notification-badge';
 import Notification from './Notification/Notification';
 import NotificationDetailsController from './Notification/NotificationDetailsController';
+import firebase, { accountsRef } from '../FirebaseConfig.js';
+const db = firebase.database();
 
 class PageHeader extends Component {
     constructor(props) {
@@ -14,47 +17,35 @@ class PageHeader extends Component {
             showPopUp: false,
             notificationClicked: false,
             notifications: [],
-            notifcationIndex: 0
+            notificationIndex: 0,
+            notificationsRef: null,
         };
 
         this.notificationClicked = this.notificationClicked.bind(this);
         this.openPopUp = this.openPopUp.bind(this);
         this.closePopUp = this.closePopUp.bind(this);
     }
+
     componentDidMount() {
-        //TODO: query db for notifications
-        this.setState({
-            notifications: [
-                {
-                    type: 'recurring_pickup_request',
-                    content: '-L5QoXeC_UrL5tRRED3e'
-                },
-                {
-                    type: 'recurring_pickup_confirmed',
-                    content: '-XKSIDLeC_Uksd321e'
-                },
-                {
-                    type: 'recurring_pickup_rejected_dg',
-                    content: '-XKSIDLeC_Uksd321e'
-                },
-                {
-                    type: 'recurring_pickup_rejected_ra',
-                    content: '-XKSIDLeC_Uksd321e'
-                },
-                {
-                    type: 'recurring_pickup_unavailable',
-                    content: '-XKSIDLeC_Uksd321e'
-                }
-            ] 
-        });
+        let ref;
+        if (this.props.account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            ref = db.ref(`donating_agencies/${this.props.account.agency}/notifications`);
+        } else {
+            ref = accountsRef.child(`${this.props.account.uid}/notifications`);
+        }
+        ref.on('value', (snap) => this.setState({notifications: snap.val() ? snap.val() : []}));
+        this.setState({notificationsRef: ref});
+    }
+
+    componentWillUnmount() {
+        this.state.notificationsRef.off();
     }
 
     openPopUp(index) {
-        // TODO: backend populate notification popup info based on index
         this.setState({
             showPopUp: true,
             notificationClicked: false,
-            notifcationIndex: index
+            notificationIndex: index
         });
     }
 
@@ -81,7 +72,7 @@ class PageHeader extends Component {
                     </div>
                     <div style={{ height: '0px', marginTop: '40px' }}>
                         <NotificationBadge
-                            count={this.state.notifications.length}
+                            count={Object.keys(this.state.notifications).length}
                             effect={Effect.SCALE}
                             frameLength={15.0}
                             style={{
@@ -101,12 +92,12 @@ class PageHeader extends Component {
                 <div className="popup-flex">
                     {/* this only shows notification */}
                     {this.state.notificationClicked &&
-                        this.state.notifications.map((notification, i) => {
+                        Object.keys(this.state.notifications).map((notificationKey) => {
                             return (
                                 <Notification
-                                    key={i}
-                                    index={i}
-                                    notificationType={notification.type}
+                                    key={notificationKey}
+                                    index={notificationKey}
+                                    notificationType={this.state.notifications[notificationKey].type}
                                     clickNotification={this.openPopUp}
                                 />
                                 
@@ -117,7 +108,8 @@ class PageHeader extends Component {
                     {this.state.showPopUp ?
                         <NotificationDetailsController
                             account={this.props.account}
-                            notification={this.state.notifications[this.state.notifcationIndex]}
+                            notificationId={this.state.notificationIndex}
+                            notification={this.state.notifications[this.state.notificationIndex]}
                             closePopUp={this.closePopUp.bind(this)}/>
                         : null    
                     }

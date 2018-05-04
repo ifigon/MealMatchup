@@ -1,6 +1,6 @@
 .event-container {
   padding: 10px;
-  width: 160px;
+  text-align: left;
 }
 
 .event-container:hover {
@@ -39,9 +39,15 @@
 }
 
 .multiple-events {
-  margin: 4px;
+  margin: 3px;
 }
 
 .multiple-events > .event-container {
   padding: 0;
 }
+.event-container .text{
+    width: fit-content;
+    margin-left: 5%;
+    display: flex;
+    align-items: center;
+} 
