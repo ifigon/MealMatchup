@@ -1,0 +1,25 @@
+<svg width="28" height="28" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Canvas" fill="none">
+<g id="plus-button" clip-path="url(#clip0)">
+<rect width="28" height="28" fill="white"/>
+<g id="ADD">
+<g id="action item">
+<g id="Ellipse">
+<circle cx="11" cy="11" r="11" transform="translate(3 3)" fill="#5DC0F9"/>
+</g>
+</g>
+<g id="Vector">
+<path d="M 11.3488 5.16278L 6.83719 5.16278L 6.83719 0.651164C 6.83719 0.445641 6.55811 0 5.99998 0C 5.44184 0 5.16276 0.445665 5.16276 0.651164L 5.16276 5.16281L 0.651161 5.16281C 0.445663 5.16278 0 5.44186 0 5.99998C 0 6.55809 0.445663 6.83719 0.651161 6.83719L 5.16279 6.83719L 5.16279 11.3488C 5.16279 11.5543 5.44184 12 6 12C 6.55816 12 6.83721 11.5543 6.83721 11.3488L 6.83721 6.83719L 11.3488 6.83719C 11.5543 6.83719 12 6.55814 12 5.99998C 12 5.44181 11.5543 5.16278 11.3488 5.16278Z" transform="translate(8 8)" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+
+<clipPath id="clip0">
+<rect width="28" height="28" fill="white"/>
+</clipPath>
+
+</defs>
+</svg>
+

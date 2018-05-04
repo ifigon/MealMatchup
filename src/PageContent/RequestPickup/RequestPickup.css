@@ -223,3 +223,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     overflow: hidden;
   }
 }
+
+/* .add-food-item {
+  color: black;
+} */
