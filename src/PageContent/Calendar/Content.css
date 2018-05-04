@@ -264,4 +264,5 @@ select.description-unit {
 .unassigned-red {
   color: #f77676;
   font-weight: bold;
+  font-size: 12px;
 }
