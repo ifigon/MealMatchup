@@ -85,7 +85,7 @@ class PersonalAccount extends Component {
             email: e.target.email.value,
             phone: e.target.phone.value
         };
-
+        // write updates to db
         accountsRef.child(account.uid).update(updates, this.setState({isEditing: false}));
     }
 

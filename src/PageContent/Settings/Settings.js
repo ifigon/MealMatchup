@@ -17,15 +17,16 @@ class Settings extends Component {
         this.state = {
             org : null,
             manager: null,
-            memberAccounts: [],
-            personal: null,
+            personal: null, // da member personal account
+            memberAccounts: [], // da memebrs
         };
     }
 
     componentDidMount() {
         const { account } = this.props;
         this.getAccountInfo(account);
-        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) { // Add listener
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) { 
+            // add listener to listen on /donatingAgencies/ db updates
             donatingAgenciesRef.child(account.agency).on('value', () => {
                 this.getAccountInfo(account);
             });
@@ -34,6 +35,7 @@ class Settings extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.account !== nextProps.account) {
+            // remove listener
             this.getAccountInfo(nextProps.account);
         }
     }
@@ -45,49 +47,51 @@ class Settings extends Component {
         }
     }
 
-    async getAccountInfo(account) {
-        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-            const daSnapshot = await donatingAgenciesRef.child(account.agency).once('value');
-            const daAgency = daSnapshot.val();
-            let org = pick(daAgency, SettingsFields.ORGANIZATION);
-            org.uid = account.agency;
-
-
-            const daContactSnapshot = await accountsRef.child(daAgency.primaryContact).once('value');
-            let manager = {};
-            manager.primaryContact = pick(daContactSnapshot.val(), SettingsFields.MEMBER);
-            manager.uid = daAgency.primaryContact;
-
-            this.setState({
-                org : org,
-                manager: manager,
-            });
-
-            if (account.isAdmin) {
-                // fetch all daMembers
-                const daMemberPromises = daAgency.members.map((damId) =>
-                    new Promise(async (resolve, reject) => {
-                        let snapshot = await accountsRef.child(damId).once('value');
-                        resolve(snapshot.val());                            
-                    })                   
-                );
-                const daMembers = await Promise.all(daMemberPromises);
-                const members = daMembers.map((member, index) => {
-                    let result = pick(member, SettingsFields.MEMBER);
-                    result.uid = daAgency.members[index];
-                    return result;
-                });
-                
-                this.setState({ memberAccounts: members });
-            } else {
-                this.setState({ personal: pick(account, SettingsFields.MEMBER) });
-            }
-
-        } else {
+    getAccountInfo(account) {
+        if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) { // da member
+            this.getDaInfo(account);
+        } else { // all other account types
             this.setState({
                 org : pick(account, SettingsFields.ORGANIZATION),
                 manager: pick(account, SettingsFields.MANAGER),
             });
+        }
+    }
+
+    async getDaInfo(account) {
+        // get da org info
+        const daSnapshot = await donatingAgenciesRef.child(account.agency).once('value');
+        const daAgency = daSnapshot.val();
+        let org = pick(daAgency, SettingsFields.ORGANIZATION);
+        org.uid = account.agency;
+
+        // get da primaryContact info
+        const daContactSnapshot = await accountsRef.child(daAgency.primaryContact).once('value');
+        let manager = {};
+        manager.primaryContact = pick(daContactSnapshot.val(), SettingsFields.MEMBER);
+        manager.uid = daAgency.primaryContact;
+
+        //set org and manager states
+        this.setState({org : org, manager: manager});
+
+        // get da member info
+        if (account.isAdmin) { // da admin 
+            // get all da member info
+            const daMemberPromises = daAgency.members.map((damId) =>
+                new Promise(async (resolve, reject) => {
+                    let snapshot = await accountsRef.child(damId).once('value');
+                    resolve(snapshot.val());                            
+                })                   
+            );
+            const daMembers = await Promise.all(daMemberPromises);
+            const members = daMembers.map((member, index) => {
+                let result = pick(member, SettingsFields.MEMBER);
+                result.uid = daAgency.members[index]; // add member uid
+                return result;
+            });
+            this.setState({ memberAccounts: members });
+        } else { // regular da member
+            this.setState({ personal: pick(account, SettingsFields.MEMBER) });
         }
     }
 

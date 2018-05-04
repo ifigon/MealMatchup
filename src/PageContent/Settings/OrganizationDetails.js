@@ -163,10 +163,10 @@ class OrganizationDetails extends Component {
         if (e.target.ep)
             updates['acceptEmergencyPickups'] = e.target.ep.checked;
 
-        // write values to DB
-        if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
+        // write updates to db
+        if (accountType === AccountType.DONATING_AGENCY_MEMBER) { // write to /donatingAgencies/
             donatingAgenciesRef.child(org.uid).update(updates, this.setState({isEditing: false}));
-        } else {
+        } else { // write to /accounts/
             accountsRef.child(org.uid).update(updates, this.setState({isEditing: false}));
         }
     }

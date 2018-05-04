@@ -180,9 +180,10 @@ class AccountManager extends Component {
             };
         }
 
-        if (accountType === AccountType.DONATING_AGENCY_MEMBER) {
+        // write updates to db
+        if (accountType === AccountType.DONATING_AGENCY_MEMBER) { // write to /donatingAgencies/
             accountsRef.child(account.uid).update(updates.primaryContact, this.setState({isEditing: false}));
-        } else {
+        } else { // write to /accounts/
             accountsRef.child(account.uid).update(updates, this.setState({isEditing: false}));
         }
     }
