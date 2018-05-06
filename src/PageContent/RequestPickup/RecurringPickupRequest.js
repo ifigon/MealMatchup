@@ -420,8 +420,10 @@ class RecurringPickupRequest extends Component {
     }
 
     addFood(name, weight, event) {
-        var newElement = { foodName: name, foodWeight: weight };
-        this.setState({ foodRows: [...this.state.foodRows, newElement] });
+        if (name != '' && weight != '') {
+            var newElement = { foodName: name, foodWeight: weight };
+            this.setState({ foodRows: [...this.state.foodRows, newElement] });
+        }
     }
 
     render() {

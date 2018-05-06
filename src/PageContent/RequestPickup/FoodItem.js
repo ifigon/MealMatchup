@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import add from '../../icons/plus-button-blue.svg';
+import { FoodUnit } from '../../Enums';
 import './Toggle.css';
 
 class FoodItem extends Component {
@@ -44,10 +45,11 @@ class FoodItem extends Component {
                             <div>
                                 <input
                                     name="foodWeight"
-                                    placeholder="lbs"
-                                    defaultValue=""
-                                    required
+                                    placeholder={FoodUnit.LB}
                                     onChange={this.changeWeight.bind(this)}
+                                    type="number"
+                                    min="0"
+                                    required
                                 />
                             </div>
                         </span>
