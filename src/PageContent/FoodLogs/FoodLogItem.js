@@ -3,12 +3,56 @@ import moment from 'moment';
 import './FoodLogItem.css';
 
 class FoodLogItem extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            currentPage: 1,
+            foodPerPage: 4
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick(event){
+        this.setState({
+            currentPage: Number(event.target.id)
+        });
+    }
     render(){
+        const { currentPage, foodPerPage } = this.state;
+        const foodItems = this.props.delivery.description.foodItems;
+
+        // Logic for displaying current foods
+        const indexOfLastFood = currentPage * foodPerPage;
+        const indexOfFirstFood = indexOfLastFood - foodPerPage;
+        const currentFoods = foodItems.slice(indexOfFirstFood, indexOfLastFood);
+
+        const renderFood = currentFoods.map((food, i) => {
+            return(
+                <div className="food" key={i}>
+                    <p className="info-detail donationItem">{food.food} &nbsp;</p>
+                    <p className="info-detail donationWeight">{food.quantity} {food.unit}</p>
+                </div>
+            );
+        });
+
+        // Logic for displaying page numbers
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(foodItems.length / foodPerPage); i++) {
+            pageNumbers.push(i);
+        }
+        let renderPageNumbers = null;
+        if(pageNumbers.length > 1) {
+            renderPageNumbers = pageNumbers.map(number => {
+                return (
+                    <p className={number === this.state.currentPage ? 'circle': 'circle open' } key={number} id={number} onClick={this.handleClick}>
+                    </p>
+                );
+            });
+        }
         return(
             <div className="item">
                 <div className="heading">
                     <p className="delivery">Delivery Complete &nbsp;</p> 
-                    <p className="date"> &nbsp; &nbsp; on &nbsp; &nbsp; {moment(this.props.delivery.deliveredInfo.timestamp).format('LLL')}</p>
+                    <p className="date"> &nbsp; on &nbsp; {moment(this.props.delivery.deliveredInfo.timestamp).format('LLL')}</p>
                 </div>
                 <div className="flex">
                     <div className="info ">
@@ -30,18 +74,8 @@ class FoodLogItem extends Component{
                     <div className="info">
                         <div className="subitem">
                             <p className="info-title">Donation Description</p>
-                            {   
-                                //TODO: pagination
-                                this.props.delivery.description.foodItems.map((item, i) => {
-                                    return(
-                                        <div className="food">
-                                            <p className="info-detail donationItem">{item.food} &nbsp;</p>
-                                            <p className="info-detail donationWeight">{item.quantity} {item.unit}</p>
-                                        </div>
-                                    );
-                                })
-                            }
-                            
+                            { renderFood }
+                            <div className="page-numbers">{ renderPageNumbers }</div>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Initial Freezer Temperature</p>
