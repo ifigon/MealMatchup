@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import './FoodLogItem.css';
 
 class FoodLogItem extends Component{
@@ -7,65 +8,73 @@ class FoodLogItem extends Component{
             <div className="item">
                 <div className="heading">
                     <p className="delivery">Delivery Complete &nbsp;</p> 
-                    <p className="date"> &nbsp; &nbsp; on &nbsp; &nbsp; {this.props.date} &nbsp; &nbsp; {this.props.time}</p>
-                    
+                    <p className="date"> &nbsp; &nbsp; on &nbsp; &nbsp; {moment(this.props.delivery.deliveredInfo.timestamp).format('LLL')}</p>
                 </div>
                 <div className="flex">
                     <div className="info ">
                         <div className="subitem">
                             <p className="info-title">Donating Agency</p>
-                            <p className="info-subtitle">{this.props.daName} ({this.props.daPhone})</p>
-                            <p className="info-detail">{this.props.daManager}</p>
-                            <p className="info-detail">Signed at {this.props.daSigned}</p>
-                            <p className="info-detail">{this.props.daEmail}</p>
+                            <p className="info-subtitle">{this.props.delivery.donatingAgency.name} ({this.props.delivery.daContact.phone})</p>
+                            <p className="info-detail">{this.props.delivery.daContact.name}</p>
+                            <p className="info-detail">Signed at {moment(this.props.delivery.pickedUpInfo.timestamp).format('LT')}</p>
+                            <p className="info-detail">{this.props.delivery.daContact.email}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
-                            <p className="info-subtitle">{this.props.raName} ({this.props.raPhone})</p>
-                            <p className="info-detail">{this.props.raSigned}</p>
-                            <p className="info-detail">Signed: {this.props.raTime}</p>
-                            <p className="info-detail">{this.props.raEmail}</p>
+                            <p className="info-subtitle">{this.props.delivery.receivingAgency.name} ({this.props.delivery.raContact.phone})</p>
+                            <p className="info-detail">Signed by: {this.props.delivery.deliveredInfo.signature}</p>
+                            <p className="info-detail">Timestamp: {moment(this.props.delivery.deliveredInfo.timestamp).format('LT')}</p>
+                            <p className="info-detail">Email: {this.props.delivery.raContact.email}</p>
                         </div>
                     </div>
                     <div className="info">
                         <div className="subitem">
                             <p className="info-title">Donation Description</p>
-                            <div className="food">
-                                    <p className="info-detail donationItem">{this.props.donationItem} &nbsp;</p>
-                                    <p className="info-detail donationWeight">{this.props.donationWeight}</p>
-                            </div>
+                            {   
+                                //TODO: pagination
+                                this.props.delivery.description.foodItems.map((item, i) => {
+                                    return(
+                                        <div className="food">
+                                            <p className="info-detail donationItem">{item.food} &nbsp;</p>
+                                            <p className="info-detail donationWeight">{item.quantity} {item.unit}</p>
+                                        </div>
+                                    );
+                                })
+                            }
+                            
                         </div>
                         <div className="subitem">
                             <p className="info-title">Initial Freezer Temperature</p>
-                            <p className="info-detail">Freezer: {this.props.freezerTemp}</p>
-                            <p className="info-detail">Timestamp: {this.props.freezerTime}</p>
+                            <p className="info-detail">Freezer: {this.props.delivery.pickedUpInfo.temperature}&#8457;</p>
+                            <p className="info-detail">Timestamp: {moment(this.props.delivery.pickedUpInfo.timestamp).format('LT')}</p>
                         </div>
                     </div>
                     <div className="info">
                         <div className="subitem">
                             <p className="info-title">Notes</p>
-                            <p className="info-detail notes">{this.props.notes}</p>
+                            <p className="info-detail notes">{this.props.delivery.notes}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Picked Up Donation</p>
-                            <p className="info-subtitle">{this.props.pickedUpName}</p>
+                            <p className="info-subtitle">{this.props.delivery.delivererGroup.name}</p>
                             <div className="flex">
-                                <div className="stu1">
-                                    <p className="info-detail">{this.props.stuName1}</p>
-                                    <p className="info-detail">{this.props.stuPhone1}</p>
-                                    <p className="info-detail">{this.props.stuEmail1}</p>
-                                </div>
-                                <div className="stu2">
-                                    <p className="info-detail">{this.props.stuName2}</p>
-                                    <p className="info-detail">{this.props.stuPhone2}</p>
-                                    <p className="info-detail">{this.props.stuEmail2}</p>
-                                </div>
+                                {
+                                    this.props.delivery.deliverers.map((deliverer, i) => {
+                                        return(
+                                            <div className={'stu'+i}>
+                                                <p className="info-detail">{deliverer.name}</p>
+                                                <p className="info-detail">{deliverer.email}</p>
+                                                <p className="info-detail">{deliverer.phone}</p>
+                                            </div>
+                                        );
+                                    })
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
