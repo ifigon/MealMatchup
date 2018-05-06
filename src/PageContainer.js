@@ -7,7 +7,6 @@ import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
-import FoodLogsContainer from './PageContent/FoodLogs/FoodLogsContainer.js';
 import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
 
 // The page to load when user is signed in.
@@ -109,7 +108,7 @@ class PageContainer extends Component {
                 }
 
                 {content === PageContent.FOOD_LOGS && (
-                    <FoodLogsContainer account={account} />
+                    <FoodLogs account={account} />
                 )}
 
                 {content === PageContent.DIRECTORY && (

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './FoodLogsContainer.css';
 import FoodLogItem from './FoodLogItem';
-import arrow from '../../icons/filter_arrow.svg';
 
 class FoodLogsContainer extends Component {
     constructor(props){
