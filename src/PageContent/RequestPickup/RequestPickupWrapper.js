@@ -7,7 +7,7 @@ class RequestPickupWrapper extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: DeliveryType.RECURRING
+            type: DeliveryType.EMERGENCY
         };
     }
 

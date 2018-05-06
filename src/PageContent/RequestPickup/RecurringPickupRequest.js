@@ -420,7 +420,7 @@ class RecurringPickupRequest extends Component {
     }
 
     addFood(name, weight, event) {
-        if (name != '' && weight != '') {
+        if (name !== '' && weight !== '') {
             var newElement = { foodName: name, foodWeight: weight };
             this.setState({ foodRows: [...this.state.foodRows, newElement] });
         }
@@ -658,7 +658,10 @@ class RecurringPickupRequest extends Component {
                 ) : (
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
-                            <p id="form-heading">Schedule Emergency Pickup</p>
+                            <p id="form-heading">
+                                Schedule <span className="red">Emergency</span>{' '}
+                                Pickup
+                            </p>
                             {Object.keys(this.state.errors).map((error, i) => {
                                 return (
                                     <p className="error" key={i}>
