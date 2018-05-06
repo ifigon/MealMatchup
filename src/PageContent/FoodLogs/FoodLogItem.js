@@ -16,7 +16,6 @@ class FoodLogItem extends Component{
         });
     }
     render(){
-<<<<<<< HEAD
         const { currentPage, foodPerPage } = this.state;
         const foodItems = this.props.delivery.description.foodItems;
 
@@ -49,9 +48,6 @@ class FoodLogItem extends Component{
             });
         }
         return(
-=======
-        return( 
->>>>>>> added support for multiple food items
             <div className="item">
                 <div className="heading">
                     <p className="delivery">Delivery Complete &nbsp;</p> 
