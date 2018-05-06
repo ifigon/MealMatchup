@@ -90,7 +90,7 @@ class FoodLogItem extends Component{
                         <div className="subitem">
                             <p className="info-title">Picked Up Donation</p>
                             <p className="info-subtitle">{this.props.delivery.delivererGroup.name}</p>
-                            <div className="flex">
+                            <div className="foodlog-deliverers flex">
                                 {
                                     this.props.delivery.deliverers.map((deliverer, i) => {
                                         return(
