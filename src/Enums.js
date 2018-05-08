@@ -5,7 +5,7 @@
 // TODO: temporary for pilot, manually setting a fixed umbrella
 exports.UmbrellaId = {
     TEST: 'NLRZo1xfPHOI8rGpzSKiEJVOOUt2',
-    UW: 'bfwL94u7XYZyhZpDByXLeWb5ivA3',
+    UW: 'bfwL94u7XYZyhZpDByXLeWb5ivA3'
 };
 
 // For display purposes
@@ -108,7 +108,28 @@ exports.NotificationType = {
     /* When: no available RAs to send to
        Receiver: DA
        Action: View? */
-    RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable'
+    RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable',
+
+    /* When: a DA requests a new emergency pick
+       Receiver: RA
+       Action: View -> Claim/Reject */
+    EMERGENCY_PICKUP_REQUEST: 'recurring_pickup_request',
+    /* When: a recurring pick has been claimed by RA 
+          Receiver: DA
+          Action: View -> View on Calendar */
+    EMERGENCY_PICKUP_CONFIRMED: 'recurring_pickup_confirmed',
+    /* When: no RA claims the emergency pickup request within the deadline
+          Receiver: DA
+          Action: View? */
+    EMERGENCY_PICKUP_EXPIRED_RA: 'recurring_pickup_expired_ra',
+    /* When: all RAs rejected the pickup request
+          Receiver: DA
+          Action: View? */
+    EMERGENCY_PICKUP_REJECTED_RA: 'recurring_pickup_rejected_ra',
+    /* When: no available RAs to send to
+          Receiver: DA
+          Action: View? */
+    EMERGENCY_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable'
 };
 
 exports.DeliveryType = {
@@ -140,5 +161,6 @@ exports.Routes = {
 
 exports.NotificationCategory = {
     RECURRING_PICKUP: 'recurring_pickup',
+    EMERGENCY_PICKUP: 'emergency_pickup',
     ACCOUNT: 'account'
 };
