@@ -46,8 +46,10 @@ class FoodLogItem extends Component{
         }
     }
     render(){
+        // TODO: Pagination for deliveries (foodlog cards)
         const { currentPage, foodPerPage } = this.state;
-        const foodItems = this.props.delivery.description.foodItems;
+        const { delivery } = this.props;
+        const foodItems = delivery.description.foodItems;
 
         // Logic for displaying current foods
         const indexOfLastFood = currentPage * foodPerPage;
@@ -81,23 +83,23 @@ class FoodLogItem extends Component{
             <div className="item">
                 <div className="heading">
                     <p className="delivery">Delivery Complete &nbsp;</p> 
-                    <p className="date"> &nbsp; on &nbsp; {moment(this.props.delivery.deliveredInfo.timestamp).format('LLL')}</p>
+                    <p className="date"> &nbsp; on &nbsp; {moment(delivery.deliveredInfo.timestamp).format('LLL')}</p>
                 </div>
                 <div className="flex">
                     <div className="info ">
                         <div className="subitem">
                             <p className="info-title">Donating Agency</p>
-                            <p className="info-subtitle">{this.props.delivery.donatingAgency.name} ({this.props.delivery.daContact.phone})</p>
-                            <p className="info-detail">{this.props.delivery.daContact.name}</p>
-                            <p className="info-detail">Signed at {moment(this.props.delivery.pickedUpInfo.timestamp).format('LT')}</p>
-                            <p className="info-detail">{this.props.delivery.daContact.email}</p>
+                            <p className="info-subtitle">{delivery.donatingAgency.name} ({delivery.daContact.phone})</p>
+                            <p className="info-detail">{delivery.daContact.name}</p>
+                            <p className="info-detail">Signed at {moment(delivery.pickedUpInfo.timestamp).format('LT')}</p>
+                            <p className="info-detail">{delivery.daContact.email}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
-                            <p className="info-subtitle">{this.props.delivery.receivingAgency.name} ({this.props.delivery.raContact.phone})</p>
-                            <p className="info-detail">Signed by: {this.props.delivery.deliveredInfo.signature}</p>
-                            <p className="info-detail">Timestamp: {moment(this.props.delivery.deliveredInfo.timestamp).format('LT')}</p>
-                            <p className="info-detail">Email: {this.props.delivery.raContact.email}</p>
+                            <p className="info-subtitle">{delivery.receivingAgency.name} ({delivery.raContact.phone})</p>
+                            <p className="info-detail">Signed by: {delivery.deliveredInfo.signature}</p>
+                            <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format('LT')}</p>
+                            <p className="info-detail">Email: {delivery.raContact.email}</p>
                         </div>
                     </div>
                     <div className="info">
@@ -114,21 +116,21 @@ class FoodLogItem extends Component{
                         </div>
                         <div className="subitem">
                             <p className="info-title">Initial Freezer Temperature</p>
-                            <p className="info-detail">Freezer: {this.props.delivery.pickedUpInfo.temperature}&#8457;</p>
-                            <p className="info-detail">Timestamp: {moment(this.props.delivery.pickedUpInfo.timestamp).format('LT')}</p>
+                            <p className="info-detail">Freezer: {delivery.pickedUpInfo.temperature}&#8457;</p>
+                            <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format('LT')}</p>
                         </div>
                     </div>
                     <div className="info">
                         <div className="subitem">
                             <p className="info-title">Notes</p>
-                            <p className="info-detail notes">{this.props.delivery.notes}</p>
+                            <p className="info-detail notes">{delivery.notes}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Picked Up Donation</p>
-                            <p className="info-subtitle">{this.props.delivery.delivererGroup.name}</p>
+                            <p className="info-subtitle">{delivery.delivererGroup.name}</p>
                             <div className="foodlog-deliverers flex">
                                 {
-                                    this.props.delivery.deliverers.map((deliverer, i) => {
+                                    delivery.deliverers.map((deliverer, i) => {
                                         return(
                                             <div className={'stu'+i}>
                                                 <p className="info-detail">{deliverer.name}</p>
