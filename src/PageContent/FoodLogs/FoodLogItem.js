@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import './FoodLogItem.css';
+import { StringFormat } from '../../Enums';
 class FoodLogItem extends Component{
     constructor(props){
         super(props);
@@ -90,15 +91,15 @@ class FoodLogItem extends Component{
                         <div className="subitem">
                             <p className="info-title">Donating Agency</p>
                             <p className="info-subtitle">{delivery.donatingAgency.name} ({delivery.daContact.phone})</p>
-                            <p className="info-detail">{delivery.daContact.name}</p>
-                            <p className="info-detail">Signed at {moment(delivery.pickedUpInfo.timestamp).format('LT')}</p>
-                            <p className="info-detail">{delivery.daContact.email}</p>
+                            <p className="info-detail">Signed by: {delivery.pickedUpInfo.signature}</p>
+                            <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
+                            <p className="info-detail">Email: {delivery.daContact.email}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
                             <p className="info-subtitle">{delivery.receivingAgency.name} ({delivery.raContact.phone})</p>
                             <p className="info-detail">Signed by: {delivery.deliveredInfo.signature}</p>
-                            <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format('LT')}</p>
+                            <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
                             <p className="info-detail">Email: {delivery.raContact.email}</p>
                         </div>
                     </div>
@@ -117,7 +118,7 @@ class FoodLogItem extends Component{
                         <div className="subitem">
                             <p className="info-title">Initial Freezer Temperature</p>
                             <p className="info-detail">Freezer: {delivery.pickedUpInfo.temperature}&#8457;</p>
-                            <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format('LT')}</p>
+                            <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
                     </div>
                     <div className="info">
