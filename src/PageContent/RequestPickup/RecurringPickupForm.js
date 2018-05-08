@@ -16,8 +16,7 @@ class RecurringPickupForm extends Component {
             primaryContact: {},
             raRequested: null,
             dgRequested: null,
-            submissionError: null,
-            foodRows: [{ foodName: '', foodWeight: '' }]
+            submissionError: null
         };
     }
 

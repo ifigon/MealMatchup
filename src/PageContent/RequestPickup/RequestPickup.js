@@ -208,53 +208,19 @@ class RecurringPickupRequest extends Component {
                             reqTimezone
                         )
                         .valueOf();
-                // console.log(event.target);
                 let dateTimestamp = dateTimeStringToTimestamp(
                     event.target.Date.value
                 );
                 let startTimestamp = dateTimeStringToTimestamp(
+                    event.target.Date.value,
                     event.target.startTime.value
                 );
+
+                //TODO: end time is not displayed same as user input
                 let endTimestamp = dateTimeStringToTimestamp(
+                    event.target.Date.value,
                     event.target.endTime.value
                 );
-
-                // let dateTimestamp = moment(
-                //     event.target.date.value,
-                //     InputFormat.DATE
-                // );
-
-                // let durationValue;
-                // // compute ending Timestamp
-                // let endTimestamp, startTimestamp;
-
-                // if (
-                //     event.target.endCriteria.value ===
-                //     RequestEndCriteriaType.DATE
-                // ) {
-                //     durationValue = event.target.endDate.value;
-                //     endTimestamp = dateTimeStringToTimestamp(
-                //         durationValue,
-                //         event.target.startTime.value
-                //     );
-                // } else {
-                //     durationValue = event.target.numOccurrences.value;
-                //     let freq = event.target.repeats.value;
-                //     if (freq === RequestRepeatType.WEEKLY) {
-                //         endTimestamp = moment
-                //             .tz(startTimestamp, reqTimezone)
-                //             .add((durationValue - 1) * 7, 'days')
-                //             .valueOf();
-                //     } else if (freq === RequestRepeatType.BIWEEKLY) {
-                //         endTimestamp = moment
-                //             .tz(startTimestamp, reqTimezone)
-                //             .add((durationValue - 1) * 14, 'days')
-                //             .valueOf();
-                //     } else {
-                //         // TODO (jkbach): handle monthly
-                //         endTimestamp = -1;
-                //     }
-                // }
 
                 let pickupTimeDiffMs = (
                     moment(event.target.endTime.value, InputFormat.TIME) -
@@ -282,7 +248,7 @@ class RecurringPickupRequest extends Component {
                     );
                 }
 
-                // DeliveryRequest object
+                // Emergency DeliveryRequest object
                 deliveryRequest = {
                     status: RequestStatus.PENDING,
                     dateTimestamp: dateTimestamp,
@@ -378,7 +344,7 @@ class RecurringPickupRequest extends Component {
                     );
                 }
 
-                // create DeliveryRequest object
+                // Recurring DeliveryRequest object
                 deliveryRequest = {
                     status: RequestStatus.PENDING,
                     startTimestamp: startTimestamp,

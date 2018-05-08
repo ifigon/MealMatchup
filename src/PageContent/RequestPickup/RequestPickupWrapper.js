@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RecurringPickupRequest from './RecurringPickupRequest';
+import RequestPickup from './RequestPickup';
 import RequestTypeToggle from './RequestTypeToggle';
 import { DeliveryType } from '../../Enums';
 
@@ -26,7 +26,7 @@ class RequestPickupWrapper extends Component {
                     type={this.state.typeUserViewing}
                     toggle={this.toggle.bind(this)}
                 />
-                <RecurringPickupRequest
+                <RequestPickup
                     account={this.props.account}
                     donatingAgency={this.props.donatingAgency}
                     type={this.state.typeUserViewing}

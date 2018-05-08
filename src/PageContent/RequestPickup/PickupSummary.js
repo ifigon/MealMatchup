@@ -13,19 +13,16 @@ import moment from 'moment';
 
 class PickupSummary extends React.Component {
     render() {
-        {
-            /*TODO startime is displayed wrong*/
-        }
         let dayOfWeek = moment(this.props.request.startTimestamp).format(
             StringFormat.WEEKDAY
         );
+
         var repeatMap = {
             [RequestRepeatType.WEEKLY]: 'every ' + dayOfWeek,
             [RequestRepeatType.BIWEEKLY]: 'every other ' + dayOfWeek,
             // TODO: calculate nth day of month
             [RequestRepeatType.MONTHLY]: 'monthly'
         };
-
         if (this.props.title === DeliveryType.RECURRING) {
             var durationText = '';
             if (
