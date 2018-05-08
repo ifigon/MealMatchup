@@ -192,7 +192,7 @@ class RecurringPickupRequest extends Component {
                 event.target.primaryContact.value
             ];
 
-            if (this.props.type === DeliveryType.RECURRING) {
+            if (this.props.type === DeliveryType.EMERGENCY) {
                 // force request's timezone to be the same as DA's
                 let reqTimezone = this.props.donatingAgency.timezone;
                 let dateTimeStringToTimestamp = (dateString, timeString) =>
@@ -429,7 +429,7 @@ class RecurringPickupRequest extends Component {
     render() {
         return (
             <div className="form">
-                {this.props.type === DeliveryType.EMERGENCY ? (
+                {this.props.type === DeliveryType.RECURRING ? (
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
                             <p id="form-heading">Schedule Recurring Pickup</p>
@@ -747,6 +747,7 @@ class RecurringPickupRequest extends Component {
                                 </span>
                             </span>
                             <p id="form-heading">Food Items</p>
+
                             <div id="food-items">
                                 {this.state.foodRows.map((foodItem, i) => {
                                     return (

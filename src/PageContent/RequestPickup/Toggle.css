@@ -29,3 +29,15 @@
   width: 280px;
   justify-content: space-between;
 }
+
+.__react_component_tooltip {
+  z-index: 999;
+}
+
+.__react_component_tooltip.type-dark {
+  background-color: white;
+}
+
+div.__react_component_tooltip.show.place-right.type-dark {
+  border: 1px solid black;
+}
