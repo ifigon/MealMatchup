@@ -6,12 +6,16 @@ import {
     RequestRepeatType,
     RequestEndCriteriaType,
     StringFormat,
-    InputFormat
+    InputFormat,
+    DeliveryType
 } from '../../Enums.js';
 import moment from 'moment';
 
 class PickupSummary extends React.Component {
     render() {
+        {
+            /*TODO startime is displayed wrong*/
+        }
         let dayOfWeek = moment(this.props.request.startTimestamp).format(
             StringFormat.WEEKDAY
         );
@@ -22,21 +26,24 @@ class PickupSummary extends React.Component {
             [RequestRepeatType.MONTHLY]: 'monthly'
         };
 
-        var durationText = '';
-        if (
-            this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
-        ) {
-            durationText =
-                this.props.request.endCriteria.value + ' pickups requested';
-        } else {
-            durationText =
-                'Ending ' +
-                moment(
-                    this.props.request.endCriteria.value,
-                    InputFormat.DATE
-                ).format(StringFormat.DATE_FULL);
+        if (this.props.title === DeliveryType.RECURRING) {
+            var durationText = '';
+            if (
+                this.props.request.endCriteria.type ===
+                RequestEndCriteriaType.OCCUR
+            ) {
+                durationText =
+                    this.props.request.endCriteria.value + ' pickups requested';
+            } else {
+                durationText =
+                    'Ending ' +
+                    moment(
+                        this.props.request.endCriteria.value,
+                        InputFormat.DATE
+                    ).format(StringFormat.DATE_FULL);
+            }
+            durationText += ' for ' + repeatMap[this.props.request.repeats];
         }
-        durationText += ' for ' + repeatMap[this.props.request.repeats];
 
         let start_date_with_weekday = moment(
             this.props.request.startTimestamp
