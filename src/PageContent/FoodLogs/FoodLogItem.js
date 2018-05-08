@@ -6,14 +6,44 @@ class FoodLogItem extends Component{
         super(props);
         this.state = {
             currentPage: 1,
-            foodPerPage: 4
+            foodPerPage: 4,
+            pageNumbers: null,
+            moreThan1Page: false
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleClickPrev = this.handleClickPrev.bind(this);
+        this.handleClickNext = this.handleClickNext.bind(this);
     }
     handleClick(event){
         this.setState({
             currentPage: Number(event.target.id)
         });
+    }
+    handleClickPrev(){
+        if(this.state.currentPage > 1){
+            this.setState({
+                currentPage: this.state.currentPage - 1
+            });
+        }
+    }
+    handleClickNext(){
+        if(this.state.currentPage < this.state.pageNumbers){
+            this.setState({
+                currentPage: this.state.currentPage + 1
+            });
+        }
+    }
+    componentDidMount(){
+        let pageNumbers = Math.ceil(this.props.delivery.description.foodItems.length / this.state.foodPerPage);
+        this.setState({
+            pageNumbers: pageNumbers
+        });
+
+        if(pageNumbers > 1){
+            this.setState({
+                moreThan1Page: true
+            });
+        }
     }
     render(){
         const { currentPage, foodPerPage } = this.state;
@@ -73,7 +103,13 @@ class FoodLogItem extends Component{
                     <div className="info">
                         <div className="subitem">
                             <p className="info-title">Donation Description</p>
-                            { renderFood }
+                            <div className="food-log-pages">
+                                <i className={'fa fa-angle-left ' + (this.state.moreThan1Page ? '' : 'hidden')}onClick={this.handleClickPrev}/>
+                                <div className="food-log-items">
+                                    { renderFood } 
+                                </div>
+                                <i className={'fa fa-angle-right ' + (this.state.moreThan1Page ? '' : 'hidden')} onClick={this.handleClickNext}/>
+                            </div>
                             <div className="page-numbers">{ renderPageNumbers }</div>
                         </div>
                         <div className="subitem">

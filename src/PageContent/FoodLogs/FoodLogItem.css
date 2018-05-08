@@ -85,3 +85,25 @@ p{
 .foodlog-deliverers{
     margin-right: 20%;
 }
+
+.food-log-pages{
+    display: inline-flex;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.food-log-pages i {
+    margin-top: 20px;
+    font-size: 2vw;
+    color: rgb(193, 227, 247);
+}
+
+.food-log-pages i:hover {
+    margin-top: 20px;
+    font-size: 2vw;
+    color: #5DC0F9;
+}
+
+.hidden{
+    display: none;
+}
