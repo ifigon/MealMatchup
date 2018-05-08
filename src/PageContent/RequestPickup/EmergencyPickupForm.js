@@ -28,7 +28,6 @@ class EmergencyPickupForm extends Component {
             fields[field] = val;
             return { fields: fields };
         });
-        console.log();
     }
 
     addFood(name, weight, event) {
