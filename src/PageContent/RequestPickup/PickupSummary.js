@@ -1,6 +1,7 @@
 import React from 'react';
 import './PickupSummary.css';
-import truck from '../../icons/green-truck.svg';
+import greenTruck from '../../icons/green-truck.svg';
+import redTruck from '../../icons/red_truck.svg';
 import Map from '../../Map/Map.js';
 import {
     RequestRepeatType,
@@ -51,16 +52,27 @@ class PickupSummary extends React.Component {
         let endTime = moment(this.props.request.endTimestamp).format(
             StringFormat.TIME
         );
+        let style;
+        if (this.props.type === DeliveryType.RECURRING) {
+            style = 'top-line-recurring';
+        } else {
+            style = 'top-line-emergency';
+        }
         return (
             <div className="backdrop">
                 {/* TODO: fix background opacity. Maybe with iFrame. */}
                 <div className="modal">
-                    <div className="top-line" />
+                    <div className={style} />
                     <p id="exit" onClick={this.props.onClose}>
                         &times;
                     </p>
                     <div className="summary-title flex">
-                        <img src={truck} alt="truck" />
+                        {style === 'top-line-recurring' ? (
+                            <img src={greenTruck} alt="green-truck" />
+                        ) : (
+                            <img src={redTruck} alt="red-truck" />
+                        )}
+
                         <p id="title">{this.props.title}</p>
                     </div>
                     <div className="summary-wrapper grid">
