@@ -36,7 +36,7 @@ class RequestTypeToggle extends Component {
                     </a>
 
                     <ReactTooltip
-                        multiline="true"
+                        multiline={true}
                         place="right"
                         type="dark"
                         effect="solid"

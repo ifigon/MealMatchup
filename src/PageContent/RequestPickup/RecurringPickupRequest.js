@@ -752,6 +752,7 @@ class RecurringPickupRequest extends Component {
                                 {this.state.foodRows.map((foodItem, i) => {
                                     return (
                                         <FoodItem
+                                            key={i}
                                             foodName={foodItem.foodName}
                                             foodWeight={foodItem.foodWeight}
                                             addFood={this.addFood.bind(this)}
