@@ -96,14 +96,12 @@ class FoodLogItem extends Component{
                             <p className="info-subtitle">{delivery.donatingAgency.name} ({delivery.daContact.phone})</p>
                             <p className="info-detail">Signed by: {delivery.pickedUpInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
-                            <p className="info-detail">Email: {delivery.daContact.email}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
                             <p className="info-subtitle">{delivery.receivingAgency.name} ({delivery.raContact.phone})</p>
                             <p className="info-detail">Signed by: {delivery.deliveredInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
-                            <p className="info-detail">Email: {delivery.raContact.email}</p>
                         </div>
                     </div>
                     <div className="info">
