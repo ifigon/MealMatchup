@@ -7,33 +7,33 @@ export const NotificationMap = {
         iconSrc: truckGreen,
         msg: 'Recurring pickup requested',
         color: 'green',
-        category: NotificationContentType.DELIVERY_REQUEST
+        contentType: NotificationContentType.DELIVERY_REQUEST
     },
     [NotificationType.RECURRING_PICKUP_CONFIRMED]: {
         iconSrc: truckGreen,
         msg: 'A recurring pickup has been confirmed and scheduled',
         color: 'green',
-        category: NotificationContentType.DELIVERY_REQUEST
+        contentType: NotificationContentType.DELIVERY_REQUEST
     },
     [NotificationType.RECURRING_PICKUP_REJECTED_RA]: {
         iconSrc: truckGrey,
         msg: 'A recurring pickup was rejected',
         detailMsg: 'Unfortunately, this recurring pickup was rejected by all notified shelters.',
         color: 'grey',
-        category: NotificationContentType.DELIVERY_REQUEST
+        contentType: NotificationContentType.DELIVERY_REQUEST
     },
     [NotificationType.RECURRING_PICKUP_REJECTED_DG]: {
         iconSrc: truckGrey,
         msg: 'A recurring pickup was rejected',
         detailMsg: 'Unfortunately, this recurring pickup was rejected by all participating student groups.',
         color: 'grey',
-        category: NotificationContentType.DELIVERY_REQUEST
+        contentType: NotificationContentType.DELIVERY_REQUEST
     },
     [NotificationType.RECURRING_PICKUP_UNAVAILABLE]: {
         iconSrc: truckGrey,
         msg: 'No available shelters for recurring pickup',
         detailMsg: 'Unfortunately, no participating shelter is available during the requested time.',
         color: 'grey',
-        category: NotificationContentType.DELIVERY_REQUEST
+        contentType: NotificationContentType.DELIVERY_REQUEST
     }
 };

@@ -229,11 +229,13 @@ delivery_requests: {
 				startTimestamp: 1519826400000,  // start date + start hour (ms)
 				endTimestamp: 1527688800000,    // end date + end hour (ms)
 				timezone: "America/Los_Angeles",  // same as DA's timezone
-				endCriteria: {  // null if EMERGENCY
+				// null if EMERGENCY
+				endCriteria: {
 					type: "date",  // Enums.RequestEndCriteriaType
 					value: "2018-02-09"  // a date for "date" or a number for "num_occurrences"
 				},
-				repeats: "weekly",	// values in Enums.RequestRepeatType, null if EMERGENCY
+				// null if EMERGENCY
+				repeats: "weekly",	// values in Enums.RequestRepeatType
 				primaryContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 				notes: "Enter through the back door.",
 				umbrella: "RheaQY1WxJT03sTPQICFZ4STpfm1",  // uid-key of a umbrella
@@ -258,13 +260,22 @@ delivery_requests: {
 					claimed: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3"  // uid-key of a RA (once a RA claims)
 				},
 				raContact: {  // could be null; filled out when an RA claims the delivery
-					// if RECURRING, RA's contact for drop-off
-					// if EMERGENCY, RA's driver for pick-up
+					// RA's contact for drop-off
 					name: "Bob",
 					email: "bob@uniongospel.org",
 					phone: "098-765-4321"
 				},
-				delivererGroup: {  // null if EMERGENCY
+				// null if RECURRING
+				deliverers: [  // filled out when RA claims EMERGENCY pickup
+					// RA's driver for EMERGENCY pickups
+					{
+						name: "Bob",
+						email: "bob@ugm.org",
+						phone: "098-765-4321"
+					}
+				],
+				// null if EMERGENCY
+				delivererGroup: {
 					// same as receivingAgency above:
 					requested: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG
 					// OR
@@ -275,7 +286,8 @@ delivery_requests: {
 					// OR
 					claimed: "R8BAHrxdkfQoAmfWvGa1OJmjQP43"  // uid-key of a DG (once a DG claims)
 				},
-				description: {  // null if RECURRING
+				// null if RECURRING
+				description: {
 					foodItems: [
 						{
 							food: "Baked beans",
@@ -325,15 +337,16 @@ DELIVERY ("/deliveries/")
 		daContact: "dhA03LwTp3cibXVUcb3nQqO34wj1",  // uid-key of a donating-agency-member
 		receivingAgency: "uGOFJ8NqHjbZhKAYzSZFRs1dSKD3",  // uid-key of receiving-agency
 		raContact: {
-			// if RECURRING, RA's contact for drop-off
-			// if EMERGENCY, RA's driver for pick-up
+			// RA's contact for drop-off
 			name: "Bob",
 			email: "bob@uniongospel.org",
 			phone: "098-765-4321"
 		},
 		// delivererGroup is null if isEmergency=true
 		delivererGroup: "R8BAHrxdkfQoAmfWvGa1OJmjQP43",  // uid-key of deliverer-group
-		deliverers: [  // null if EMERGENCY
+		deliverers: [  // could be null if RECURRING and DG Coordinator hasn't assigned volunteers yet
+			// 1 deliverer if EMERGENCY (RA's driver)
+			// 2 deliverers if RECURRING (DG's 2 volunteers)
 			{
 				name: "Alice",
 				email: "alice@uw.edu",
@@ -368,11 +381,13 @@ DELIVERY ("/deliveries/")
 			}
 		},
 		notes: "Enter through the back door.",  // entered by DA member that made the request
+		// only created when delivery has been picked up
 		pickedUpInfo: {
 			temperature: 29,  // in F
 			signature: "John Smith",
 			timestamp: 1523174874685
 		},
+		// only created when delivery has been delivered
 		deliveredInfo: {
 			signature: "Ellen Blake",
 			timestamp: 1523174892769

@@ -19,8 +19,8 @@ class NotificationDetailsController extends Component {
     }
 
     componentDidMount(){
-        let category = NotificationMap[this.state.notification.type].category;
-        if (category === NotificationContentType.DELIVERY_REQUEST) {
+        let contentType = NotificationMap[this.state.notification.type].contentType;
+        if (contentType === NotificationContentType.DELIVERY_REQUEST) {
             let genSupplementaryPromise = (pathPrefix, accountId) => (new Promise(async (resolve, reject) =>
                 resolve((await db.ref(`${pathPrefix}/${accountId}`).once('value')).val())));
 
