@@ -9,7 +9,7 @@ class FoodLogsContainer extends Component {
     constructor(props){
         super(props);
         this.state = {
-            deliveries:[]
+            deliveries: [],
         };
     }
 
@@ -21,22 +21,22 @@ class FoodLogsContainer extends Component {
     async fetchDeliveries() {
         const { account } = this.props; 
         const agencyUid = 
-            account.accountType === AccountType.DONATING_AGENCY_MEMBER ? 
-            account.agency : account.uid; 
-        // get all deliveries' ids of this agency 
-        const deliveiesIdList = [];
+            account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
+        // get all deliveries' id under this agency 
+        const deliveriesIdList = [];
         const deliveriesIdSnapshot = await deliveryIndicesRef.child(`${account.umbrella}/${agencyUid}`).once('value');
         deliveriesIdSnapshot.forEach(dailyDeliveriesIdSnapshot =>
             dailyDeliveriesIdSnapshot.forEach(deliveryId => {
-                deliveiesIdList.push(deliveryId.key);
+                deliveriesIdList.push(deliveryId.key);
             })
         );
         // construct and resolve promises to fetch all deliveries
-        const deliveryPromisesList = deliveiesIdList.map(deliveryId => 
+        const deliveryPromisesList = deliveriesIdList.map(deliveryId => 
             new Promise( async (resolve, reject) => {
                 const rawDelivery = await deliveriesRef.child(deliveryId).once('value');
                 resolve(rawDelivery.val());
-        }));
+            })
+        );
         return Promise.all(deliveryPromisesList);
     }
 
@@ -93,7 +93,7 @@ class FoodLogsContainer extends Component {
             delivery.donatingAgency = daInfo.name;
             delivery.daContact = pick(daContactInfo, ['name', 'phone']);
             return delivery;
-        })
+        });
         this.setState({deliveries: deliveries});
     }
 
