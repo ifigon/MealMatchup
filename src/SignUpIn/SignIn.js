@@ -80,7 +80,9 @@ class SignIn extends Component {
                                     {this.state.error ?
                                         <p className="forgot">{this.state.error}</p>
                                         :
-                                        <p className="forgot">Email Sent!</p>
+                                        <p className="forgot">Email Sent!<br /><br />
+                                            Please use the link sent to your email address to reset your password and then log in again.
+                                        </p>
                                     }
                                 </span>
                             }
