@@ -35,7 +35,9 @@ class FoodLogItem extends Component{
         }
     }
     componentDidMount(){
-        let pageNumbers = Math.ceil(this.props.delivery.description.foodItems.length / this.state.foodPerPage);
+        const { delivery } = this.props;
+        let pageNumbers = delivery.description && delivery.description.foodItems ? 
+            Math.ceil(delivery.description.foodItems.length / this.state.foodPerPage) : 1;
         this.setState({
             pageNumbers: pageNumbers
         });
@@ -50,7 +52,8 @@ class FoodLogItem extends Component{
         // TODO: Pagination for deliveries (foodlog cards)
         const { currentPage, foodPerPage } = this.state;
         const { delivery } = this.props;
-        const foodItems = delivery.description.foodItems;
+        const foodItems = delivery.description && delivery.description.foodItems ? 
+            delivery.description.foodItems : [];
 
         // Logic for displaying current foods
         const indexOfLastFood = currentPage * foodPerPage;
@@ -133,7 +136,7 @@ class FoodLogItem extends Component{
                                 {
                                     delivery.deliverers.map((deliverer, i) => {
                                         return(
-                                            <div className={'stu'+i}>
+                                            <div className={'stu'+i} key={i}>
                                                 <p className="info-detail">{deliverer.name}</p>
                                                 <p className="info-detail">{deliverer.email}</p>
                                                 <p className="info-detail">{deliverer.phone}</p>
