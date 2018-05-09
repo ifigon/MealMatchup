@@ -108,7 +108,7 @@ class FoodLogsContainer extends Component {
                         );
                     })
                     :
-                    (<h3 className="nothing-found-propmt">No Deliveries Found</h3>)
+                    (<h3 className="nothing-found-propmt">No Food Logss Found</h3>)
                 }
             </div>
         );
