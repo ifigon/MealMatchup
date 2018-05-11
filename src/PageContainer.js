@@ -4,6 +4,7 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import Directory from './PageContent/Directory/DirectoryPage.js';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
@@ -17,7 +18,9 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: this.props.content,
+            content: props.content,
+            account: props.account,
+            userId: props.userId,
             donatingAgency: null
         };
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -111,11 +114,9 @@ class PageContainer extends Component {
                     </div>
                 )}
 
-                {content === PageContent.DIRECTORY && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
-                )}
+                {this.state.content === PageContent.DIRECTORY &&
+                    <Directory account={this.state.account} userId={this.state.userId}/>
+                }
 
                 {content === PageContent.SETTINGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
