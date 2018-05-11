@@ -1,6 +1,7 @@
 .event-container {
   padding: 10px;
   text-align: left;
+  height: 48px;
 }
 
 .event-container:hover {
@@ -12,16 +13,34 @@
   border-left: 3.8px solid #2ecc71;
 }
 
+.event-container-future-clicked {
+  background-color: #2ecc71;
+  border-left: 3.8px solid #2ecc71;
+}
+
 .event-container-past {
   background-color: #eef1f7;
   border-left: 3.8px solid #8c97b2;
 }
 
-.truck-icon {
-  width: 30px;
+.event-container-past-clicked {
+  background-color: #8c97b2;
+  border-left: 3.8px solid #8c97b2;
+}
+
+.eventcard-icon {
   vertical-align: middle;
   margin-left: 10px;
   display: inline-block;
+}
+
+.truck-icon {
+  width: 28px;
+}
+
+.eventcard-plus-icon {
+  width: 17px;
+  margin-left: 18px;
 }
 
 .event-header {
@@ -39,15 +58,29 @@
 }
 
 .multiple-events {
-  margin: 3px;
+  margin-bottom: 3px;
+  height: 26px;
+  vertical-align: middle;
+  line-height: 26px;
 }
 
 .multiple-events > .event-container {
   padding: 0;
+  height: 100%;
 }
 .event-container .text{
+    font-size: 12px;
     width: fit-content;
     margin-left: 5%;
     display: flex;
     align-items: center;
 } 
+
+.event-container-future-clicked > .text,
+.event-container-future-clicked > .event-time,
+.event-container-future-clicked > h1,
+.event-container-past-clicked > .text,
+.event-container-past-clicked > .event-time,
+.event-container-past-clicked > h1 {
+  color: white;
+}
