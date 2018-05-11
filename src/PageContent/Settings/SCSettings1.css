@@ -24,11 +24,13 @@
     flex-basis: 10%;
     font-size: 18px;
     flex-direction: row;
+    line-height: 25px;
 }
 
 .editing-child-2 {
     flex-basis: 90%;
     flex-direction: row;
+    line-height: 23px;
 }
 
 .amd-editing-2 {
