@@ -30,9 +30,9 @@ class EmergencyPickupForm extends Component {
         });
     }
 
-    addFood(name, weight, event) {
+    addFood(name, weight, label, event) {
         if (name !== '' && weight !== '') {
-            var newElement = { foodName: name, foodWeight: weight };
+            var newElement = { foodName: name, foodWeight: weight, foodWeightLabel: label };
             this.setState({ foodRows: [...this.state.foodRows, newElement] });
         }
     }
