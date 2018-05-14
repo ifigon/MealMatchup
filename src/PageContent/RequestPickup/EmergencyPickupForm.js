@@ -54,6 +54,7 @@ class EmergencyPickupForm extends Component {
                             </p>
                         );
                     })}
+
                     <span className="flex">
                         <span className="grid">
                             <label>
@@ -92,6 +93,7 @@ class EmergencyPickupForm extends Component {
                             <br />
                         </span>
                     </span>
+
                     <span className="flex">
                         <span className="grid">
                             <label>
@@ -124,8 +126,8 @@ class EmergencyPickupForm extends Component {
                             />
                         </span>
                     </span>
-                    <p id="form-heading">Food Items</p>
 
+                    <p id="form-heading">Food Items</p>
                     <div id="food-items">
                         {this.state.foodRows.map((foodItem, i) => {
                             return (

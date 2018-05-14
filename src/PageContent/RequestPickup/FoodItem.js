@@ -13,7 +13,7 @@ class FoodItem extends Component {
         this.state = {
             foodName: '',
             foodWeight: '',
-	    foodWeightLabel: ''
+            foodWeightLabel: ''
         };
     }
 
@@ -29,65 +29,59 @@ class FoodItem extends Component {
         });
     }
 
- changeWeightLabel(e) {
+    changeWeightLabel(e) {
         this.setState({
             foodWeightLabel: e.target.value
         });
     }
 
     render() {
-        return ( 
-        <div>
-            <span className="flex">
-            <span className="grid">
-                <label>Name</label>
-                <br />
-                <input
-                    name="foodName"
-                    defaultValue=""
-                    required
-                    onChange={this.changeName.bind(this)}
-                />
-            </span>
-            <div className="toggle-container">
+        return (
+            <div className="flex">
+                <span className="grid">
+                    <label>Name</label>
+                    <br />
+                    <input
+                        name="foodName"
+                        defaultValue=""
+                        required
+                        onChange={this.changeName.bind(this)}
+                    />
+                </span>
                 <span className="grid">
                     <label>Weight</label>
                     <br />
-
-                                        <div>
-                                <input
-                                    name="foodWeight"
-                                    
-                                    onChange={this.changeWeightLabel.bind(this)}
-                                    type="number"
-                                    min="0"
-                                    required
-                                />
-                            </div>
-<span className="grid">
-<select
+                    <div>
+                        <input
+                            name="foodWeight"
+                            onChange={this.changeWeightLabel.bind(this)}
+                            type="number"
+                            min="0"
+                            required
+                        />
+                    </div>
+                </span>
+                <span className="grid">
+                    <label>Unit</label>
+                    <br />
+                    <select
+                        className="food-unit"
                         name="foodWeightLabel"
                         onChange={this.changeWeight.bind(this)}
-			defaultValue=""
+                        defaultValue=""
                         required
-
                     >
-                       
-                       <option value="" disabled>
+                        <option value="" disabled>
                             Select
                         </option>
-
                         {Object.keys(FoodUnit).map((type, i) => {
                             return (
                                 <option key={i} value={type}>
                                     {type}
                                 </option>
                             );
-                        })}                       
+                        })}
                     </select>
-</span>
-                    
-
                 </span>
                 {this.props.active && (
                     <img
@@ -98,15 +92,13 @@ class FoodItem extends Component {
                             this.props.addFood(
                                 this.state.foodName,
                                 this.state.foodWeight,
-				this.state.foodWeightLabel
+                                this.state.foodWeightLabel
                             );
                         }}
                     />
                 )}
             </div>
-        </span>
-
-            </div>
+            // </div>
         );
     }
 }
