@@ -31,7 +31,7 @@ class RecurringPickupRequest extends Component {
             raRequested: null,
             dgRequested: null,
             submissionError: null,
-            foodRows: [{ foodName: '', foodWeight: '' }]
+            foodRows: [{ foodName: '', foodWeight: '', foodWeightLabel: '' }]
         };
 
         this.formId = 'recurringRequestForm';
@@ -54,7 +54,7 @@ class RecurringPickupRequest extends Component {
             .child(umbrella)
             .once('value')
             .then(
-                function(umbrellaSnap) {
+                function (umbrellaSnap) {
                     // add receiving agencies in the same umbrella to state.receivingAgencies
                     var ras = umbrellaSnap.val().receivingAgencies;
                     this.addListToState(ras, 'receivingAgencies', false);
@@ -74,7 +74,7 @@ class RecurringPickupRequest extends Component {
                 .child(list[key])
                 .once('value')
                 .then(
-                    function(snap) {
+                    function (snap) {
                         var snapVal = snap.val();
 
                         // if adding agencies, only add verified and activated ones
@@ -397,12 +397,16 @@ class RecurringPickupRequest extends Component {
             });
     }
 
-    addFood(name, weight, event) {
-        if (name !== '' && weight !== '') {
-            var newElement = { foodName: name, foodWeight: weight };
-            this.setState({ foodRows: [...this.state.foodRows, newElement] });
-        }
-    }
+    // addFood(name, weight, label, event) {
+    //     console.log(event)
+
+    //     if (name !== '' && weight !== '' && label !== '') {
+    //         var newElement = { foodName: name, foodWeight: weight, foodWeightLabel: label };
+    //         this.setState({ foodRows: [...this.state.foodRows, newElement] });
+    //     } else {
+    //         alert("Name, weight, and unit fields are required in order to add another food item.")
+    //     }
+    // }
 
     render() {
         return (
@@ -417,43 +421,43 @@ class RecurringPickupRequest extends Component {
                         receivingAgencies={this.state.receivingAgencies}
                     />
                 ) : (
-                    <EmergencyPickupForm
-                        createRequest={this.createRequest}
-                        errors={this.state.errors}
-                        memberList={this.state.memberList}
-                    />
-                )}
+                        <EmergencyPickupForm
+                            createRequest={this.createRequest}
+                            errors={this.state.errors}
+                            memberList={this.state.memberList}
+                        />
+                    )}
 
                 {this.state.showPopup &&
                     this.props.type === DeliveryType.RECURRING && (
-                    <PickupSummary
-                        title={'Request Recurring Pickup'}
-                        request={this.state.request}
-                        donatingAgency={this.props.donatingAgency}
-                        primaryContact={this.state.primaryContact}
-                        raRequested={this.state.raRequested}
-                        dgRequested={this.state.dgRequested}
-                        onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}
-                        submissionError={this.state.submissionError}
-                        type={this.props.type}
-                    />
-                )}
+                        <PickupSummary
+                            title={'Request Recurring Pickup'}
+                            request={this.state.request}
+                            donatingAgency={this.props.donatingAgency}
+                            primaryContact={this.state.primaryContact}
+                            raRequested={this.state.raRequested}
+                            dgRequested={this.state.dgRequested}
+                            onClose={this.toggleModal}
+                            onConfirm={this.submitRequest}
+                            submissionError={this.state.submissionError}
+                            type={this.props.type}
+                        />
+                    )}
                 {this.state.showPopup &&
                     this.props.type === DeliveryType.EMERGENCY && (
-                    <PickupSummary
-                        title={'Request Emergency Pickup'}
-                        request={this.state.request}
-                        donatingAgency={this.props.donatingAgency}
-                        primaryContact={this.state.primaryContact}
-                        raRequested={this.state.raRequested}
-                        dgRequested={this.state.dgRequested}
-                        onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}
-                        submissionError={this.state.submissionError}
-                        type={this.props.type}
-                    />
-                )}
+                        <PickupSummary
+                            title={'Request Emergency Pickup'}
+                            request={this.state.request}
+                            donatingAgency={this.props.donatingAgency}
+                            primaryContact={this.state.primaryContact}
+                            raRequested={this.state.raRequested}
+                            dgRequested={this.state.dgRequested}
+                            onClose={this.toggleModal}
+                            onConfirm={this.submitRequest}
+                            submissionError={this.state.submissionError}
+                            type={this.props.type}
+                        />
+                    )}
                 {this.state.showConfirmation && (
                     <PickupRequestedConfirmation
                         request={this.state.request}

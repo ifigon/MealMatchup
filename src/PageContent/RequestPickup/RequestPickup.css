@@ -129,6 +129,10 @@ input[name="foodName"], input[name="foodWeight"], input[name="foodWeightLabel"]
   
 }
 
+input[type="date"] {
+  margin: 10px 0px 20px 0px;  
+}
+
 .checkmark {
   display: inline-block;
   margin: 7px 5px auto auto;

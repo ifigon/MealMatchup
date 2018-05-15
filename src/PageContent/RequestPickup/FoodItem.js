@@ -77,7 +77,7 @@ class FoodItem extends Component {
                         {Object.keys(FoodUnit).map((type, i) => {
                             return (
                                 <option key={i} value={type}>
-                                    {type}
+                                    {type.toLowerCase()}
                                 </option>
                             );
                         })}
