@@ -129,10 +129,14 @@ class App extends Component {
         case Routes.SETTINGS:
             content = PageContent.SETTINGS;
             break;
+        case Routes.PENDING_ACCOUNTS:
+            content = PageContent.PENDING_ACCOUNTS;
+            break;
         default:
             content = PageContent.CALENDAR;
             break;
         }
+        console.log('content', content);
         return (
             <div className="">
                 {

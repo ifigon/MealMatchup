@@ -1,0 +1,50 @@
+.pending-accounts-wrapper {
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+  width: 900px;
+  margin: 140px auto 30px 260px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  padding: 40px 0px 40px 0px;
+  overflow: hidden;
+}
+
+.label {
+  display: inline;
+  padding: 70px;
+  color: #243847;
+  font-weight: 800;
+}
+
+.group-label {
+  padding-left: 50px;
+}
+
+.value {
+  display: inline;
+  padding: 70px;
+  color: #243847;
+  font-weight: 600;
+}
+
+.group-value {
+  padding-left: 0px;
+}
+
+.pending-accounts-item-wrapper {
+  border: #dddddd 1px solid;
+  border-radius: 4px;
+  margin: 30px;
+  padding: 20px;
+}
+
+.status-button {
+  width: 100px;
+  color: white;
+  background-color: #5dc0f9;
+  border-radius: 3px;
+  display: inline-block;
+  text-align: center;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

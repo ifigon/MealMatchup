@@ -9,6 +9,7 @@ import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVol
 import Calendar from './PageContent/Calendar/Calendar.js';
 import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
 import Settings from './PageContent/Settings/Settings.js';
+import PendingAccounts from './PageContent/PendingAccounts/PendingAccounts';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -51,11 +52,7 @@ class PageContainer extends Component {
 
         return (
             <div>
-                <PageHeader
-                    account={account}
-                    logo={logo}
-                    title={pageTitle}
-                />
+                <PageHeader account={account} logo={logo} title={pageTitle} />
 
                 <NavBar
                     content={content}
@@ -64,24 +61,32 @@ class PageContainer extends Component {
                     signOut={this.props.signOut}
                 />
 
-                {content === PageContent.CALENDAR &&
-                    <Calendar 
-                        id="calendar-container" 
+                {content === PageContent.CALENDAR && (
+                    <Calendar
+                        id="calendar-container"
                         account={account}
                         donatingAgency={donatingAgency}
                     />
-                }
+                )}
+
+                {content === PageContent.PENDING_ACCOUNTS && (
+                    <PendingAccounts
+                        id="calendar-container"
+                        account={account}
+                        donatingAgency={donatingAgency}
+                    />
+                )}
 
                 {content === PageContent.ASSIGN_VOLUNTEERS && (
                     <AssignVolunteersController account={account} />
                 )}
 
-                {content === PageContent.REQUEST_PICKUP &&
+                {content === PageContent.REQUEST_PICKUP && (
                     <RecurringPickupRequest
                         account={account}
                         donatingAgency={donatingAgency}
                     />
-                }
+                )}
 
                 {content === PageContent.FOOD_LOGS && (
                     <FoodLogs account={account} />
