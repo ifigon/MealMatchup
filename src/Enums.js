@@ -5,7 +5,7 @@
 // TODO: temporary for pilot, manually setting a fixed umbrella
 exports.UmbrellaId = {
     TEST: 'NLRZo1xfPHOI8rGpzSKiEJVOOUt2',
-    UW: 'bfwL94u7XYZyhZpDByXLeWb5ivA3',
+    UW: 'bfwL94u7XYZyhZpDByXLeWb5ivA3'
 };
 
 // For display purposes
@@ -44,7 +44,8 @@ exports.PageContent = {
     DIRECTORY: 'Directory',
     FOOD_LOGS: 'Food Logs',
     REQUEST_PICKUP: 'Request Pickup',
-    SETTINGS: 'Settings'
+    SETTINGS: 'Settings',
+    PENDING_ACCOUNTS: 'Pending Accounts'
 };
 
 exports.RequestEndCriteriaType = {
@@ -135,7 +136,8 @@ exports.Routes = {
     DIRECTORY: 'directory',
     FOOD_LOGS: 'food-logs',
     REQUEST_PICKUP: 'request-pickup',
-    SETTINGS: 'settings'
+    SETTINGS: 'settings',
+    PENDING_ACCOUNTS: 'pending-accounts'
 };
 
 exports.NotificationCategory = {

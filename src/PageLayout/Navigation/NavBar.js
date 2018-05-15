@@ -9,6 +9,7 @@ import directory from '../../icons/directory.svg';
 import foodLog from '../../icons/food_logs.svg';
 import settings from '../../icons/settings.svg';
 import truck from '../../icons/truck.svg';
+import pendingAccount from '../../icons/pending-account.svg';
 import assign_volunteer from '../../icons/assign_volunteer.svg';
 import signout from '../../icons/logout.svg';
 import { Link } from 'react-router-dom';
@@ -22,17 +23,33 @@ class NavBar extends Component {
     render() {
         return (
             <div className="navbar">
-                <Link to={'/calendar'} className="nav-link">
-                    <NavBarItem
-                        highlighted={
-                            this.props.content === PageContent.CALENDAR
-                        }
-                        item={PageContent.CALENDAR}
-                        icon={calendar}
-                        handler={this.props.handler}
-                    />
-                </Link>
-                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER && (
+                {this.props.accountType !== AccountType.UMBRELLA && (
+                    <Link to={'/calendar'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content === PageContent.CALENDAR
+                            }
+                            item={PageContent.CALENDAR}
+                            icon={calendar}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+                {this.props.accountType === AccountType.UMBRELLA && (
+                    <Link to={'/pending-accounts'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content ===
+                                PageContent.PENDING_ACCOUNTS
+                            }
+                            item={PageContent.PENDING_ACCOUNTS}
+                            icon={pendingAccount}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+                {this.props.accountType ===
+                    AccountType.DONATING_AGENCY_MEMBER && (
                     <Link to={'/request-pickup'} className="nav-link">
                         <NavBarItem
                             highlighted={
