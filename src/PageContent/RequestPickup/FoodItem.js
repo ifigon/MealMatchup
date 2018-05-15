@@ -17,6 +17,10 @@ class FoodItem extends Component {
         };
     }
 
+    componentDidMount() {
+        // this.props.update(this.state, this.props.key);
+    }
+
     changeName(e) {
         this.setState({
             foodName: e.target.value
@@ -44,7 +48,7 @@ class FoodItem extends Component {
                     <input
                         name="foodName"
                         defaultValue=""
-                        required
+                        required={!this.props.active}
                         onChange={this.changeName.bind(this)}
                     />
                 </span>
@@ -57,7 +61,7 @@ class FoodItem extends Component {
                             onChange={this.changeWeightLabel.bind(this)}
                             type="number"
                             min="0"
-                            required
+                            required={!this.props.active}
                         />
                     </div>
                 </span>
@@ -69,14 +73,14 @@ class FoodItem extends Component {
                         name="foodWeightLabel"
                         onChange={this.changeWeight.bind(this)}
                         defaultValue=""
-                        required
+                        required={!this.props.active}
                     >
                         <option value="" disabled>
                             Select
                         </option>
                         {Object.keys(FoodUnit).map((type, i) => {
                             return (
-                                <option key={i} value={type}>
+                                <option key={i} value={type} required={this.props.active}>
                                     {type.toLowerCase()}
                                 </option>
                             );
@@ -98,7 +102,6 @@ class FoodItem extends Component {
                     />
                 )}
             </div>
-            // </div>
         );
     }
 }

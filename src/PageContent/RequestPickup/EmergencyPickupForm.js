@@ -17,7 +17,8 @@ class EmergencyPickupForm extends Component {
             raRequested: null,
             dgRequested: null,
             submissionError: null,
-            foodRows: [{ foodName: '', foodWeight: '' }]
+            foodRows: [{ foodName: '', foodWeight: '', foodWeightLabel: '' }],
+            waiting: true
         };
     }
 
@@ -30,14 +31,20 @@ class EmergencyPickupForm extends Component {
         });
     }
 
-    addFood(name, weight, label, event) {
-        if (name !== '' && weight !== '') {
-            var newElement = { foodName: name, foodWeight: weight, foodWeightLabel: label };
-            this.setState({ foodRows: [...this.state.foodRows, newElement] });
+    addFood(name, label, weight, event) {
+        if (name !== '' && weight !== '' && label !== '') {
+            this.setState(prevState => {
+                let foodRows = prevState.foodRows;
+                foodRows.push({ foodName: name, foodWeight: weight, foodWeightLabel: label });
+                return { foodRows: foodRows };
+            });
+        } else {
+            alert("To add another row, please fill out the name, weight and unit of each food item.")
         }
     }
 
     render() {
+        console.log(this.state.foodRows.length)
         return (
             <form
                 id={this.formId}
@@ -133,8 +140,6 @@ class EmergencyPickupForm extends Component {
                             return (
                                 <FoodItem
                                     key={i}
-                                    foodName={foodItem.foodName}
-                                    foodWeight={foodItem.foodWeight}
                                     addFood={this.addFood.bind(this)}
                                     active={
                                         i === this.state.foodRows.length - 1
