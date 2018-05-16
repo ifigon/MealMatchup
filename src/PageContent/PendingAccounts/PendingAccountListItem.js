@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './PendingAccounts.css';
 import { AccountType } from '../../Enums';
-import Dialog from '../Calendar/Dialog';
 import VerifyAccount from './VerifyAccount';
 
 class PendingAccountsListItem extends Component {
@@ -39,13 +38,7 @@ class PendingAccountsListItem extends Component {
             accountType = 'Donating Agency';
         }
         let agencyName = agencyObject.name;
-        let primaryContact = '';
-        if (accountType === 'Donating Agency') {
-            // TODO: query for that id number for the contact
-            primaryContact = agencyObject.primaryContact;
-        } else {
-            primaryContact = agencyObject.primaryContact.name;
-        }
+        let primaryContact = agencyObject.primaryContact.name;
 
         let statusStyle = '';
         let statusText = '';
