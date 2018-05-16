@@ -102,14 +102,14 @@ class FoodLogsContainer extends Component {
                 {/* TODO: Filter feature */}
                 {this.state.deliveries !== null ? 
                     this.state.deliveries.length > 0 ?
-                    this.state.deliveries.map((completedDelivery, i) => {
-                        return (
-                            <FoodLogItem delivery={completedDelivery} key={i}/>
-                        );
-                    })
-                    :
-                    (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
-                : null} 
+                        this.state.deliveries.map((completedDelivery, i) => {
+                            return (
+                                <FoodLogItem delivery={completedDelivery} key={i}/>
+                            );
+                        })
+                        :
+                        (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
+                    : null} 
             </div>
         );
     }
