@@ -136,7 +136,6 @@ class App extends Component {
             content = PageContent.CALENDAR;
             break;
         }
-        console.log('content', content);
         return (
             <div className="">
                 {
