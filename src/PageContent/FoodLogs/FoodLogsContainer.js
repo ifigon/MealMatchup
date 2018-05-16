@@ -3,6 +3,7 @@ import './FoodLogsContainer.css';
 import FoodLogItem from './FoodLogItem';
 import { AccountType, DeliveryStatus } from '../../Enums';
 import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../FirebaseConfig';
+import moment from 'moment';
 import pick from 'lodash.pick';
 
 class FoodLogsContainer extends Component {
@@ -24,7 +25,8 @@ class FoodLogsContainer extends Component {
             account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
         // get all deliveries' id under this agency 
         const deliveriesIdList = [];
-        const deliveriesIdSnapshot = await deliveryIndicesRef.child(`${account.umbrella}/${agencyUid}`).once('value');
+        const now = moment().valueOf().toString();
+        const deliveriesIdSnapshot = await deliveryIndicesRef.child(`${account.umbrella}/${agencyUid}`).orderByKey().endAt(now).once('value');
         deliveriesIdSnapshot.forEach(dailyDeliveriesIdSnapshot =>
             dailyDeliveriesIdSnapshot.forEach(deliveryId => {
                 deliveriesIdList.push(deliveryId.key);
@@ -44,7 +46,7 @@ class FoodLogsContainer extends Component {
         const filteredRawDeliveries = rawDeliveries.filter(
             rawDelivery => rawDelivery.status === DeliveryStatus.COMPLETED
         );
-        const agenciesInfoPromisesList = filteredRawDeliveries.map(rawDelivery => {
+        const deliveryPromisesList = filteredRawDeliveries.map(rawDelivery => {
             const agenciesInfoPromise = this.makeAgenciesInfoPromise( 
                 rawDelivery.delivererGroup,
                 rawDelivery.receivingAgency, 
@@ -53,11 +55,12 @@ class FoodLogsContainer extends Component {
             );
             return new Promise( async (resolve, reject) => {
                 const agenciesInfo = await Promise.all(agenciesInfoPromise);
-                resolve(agenciesInfo);
+                const delivery = this.aggrDelivery(rawDelivery, agenciesInfo);
+                resolve(delivery);
             });
         });
-        const agenciesInfoList = await Promise.all(agenciesInfoPromisesList);
-        this.aggrDeliveries(filteredRawDeliveries, agenciesInfoList);
+        const deliveries = await Promise.all(deliveryPromisesList);
+        this.setState({deliveries: deliveries});
     }
 
 
@@ -81,20 +84,16 @@ class FoodLogsContainer extends Component {
         return [dgPromise, raPromise, daPromise, daContactPromise]; 
     }
     
-    aggrDeliveries(rawDeliveries, agenciesInfoList) {
-        const deliveries = rawDeliveries.map((delivery, i) => {
-            const agenciesInfo = agenciesInfoList[i];
-            const dgInfo = agenciesInfo[0];
-            const raInfo = agenciesInfo[1];
-            const daInfo = agenciesInfo[2];
-            const daContactInfo = agenciesInfo[3];
-            delivery.delivererGroup = dgInfo.name;
-            delivery.receivingAgency = raInfo.name;
-            delivery.donatingAgency = daInfo.name;
-            delivery.daContact = pick(daContactInfo, ['name', 'phone']);
-            return delivery;
-        });
-        this.setState({deliveries: deliveries});
+    aggrDelivery(delivery, agenciesInfo) {
+        const dgInfo = agenciesInfo[0];
+        const raInfo = agenciesInfo[1];
+        const daInfo = agenciesInfo[2];
+        const daContactInfo = agenciesInfo[3];
+        delivery.delivererGroup = dgInfo.name;
+        delivery.receivingAgency = raInfo.name;
+        delivery.donatingAgency = daInfo.name;
+        delivery.daContact = pick(daContactInfo, ['name', 'phone']);
+        return delivery;
     }
 
     render(){
