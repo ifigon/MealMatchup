@@ -5,7 +5,7 @@ import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { Routes, PageContent } from './Enums';
-import { connect } from 'tls';
+// import { connect } from 'tls';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -88,7 +88,6 @@ class App extends Component {
             content = PageContent.CALENDAR;
             break;
         }
-        console.log('content', content);
         return (
             <div className="">
                 {this.state.authenticated ? (

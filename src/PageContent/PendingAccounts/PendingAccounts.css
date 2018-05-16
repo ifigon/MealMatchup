@@ -11,7 +11,7 @@
 
 .label {
   display: inline;
-  padding: 70px;
+  padding: 65px;
   color: #243847;
   font-weight: 800;
 }
@@ -21,10 +21,12 @@
 }
 
 .value {
-  display: inline;
-  padding: 70px;
+  display: inline-block;
+  padding: 20px;
   color: #243847;
   font-weight: 600;
+  width: 200px;
+  font-size: 14px;
 }
 
 .group-value {
@@ -47,4 +49,5 @@
   text-align: center;
   padding-top: 3px;
   padding-bottom: 3px;
+  margin-left: -20px;
 }
