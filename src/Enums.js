@@ -29,7 +29,7 @@ exports.AccountType = {
     DONATING_AGENCY_MEMBER: 'donating_agency_member',
     RECEIVING_AGENCY : 'receiving_agency',
     DELIVERER_GROUP: 'deliverer_group',
-    DONATING_AGENCY: 'donating_agency'
+    DONATING_AGENCY: 'donating_agency',
 };
 
 // For now (as of 3/5/2018), the only umbrella
