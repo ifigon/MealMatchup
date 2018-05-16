@@ -37,7 +37,8 @@ class PendingAccounts extends Component {
                         position: 'Volunteer'
                     },
 
-                    acceptEmergencyPickups: true
+                    acceptEmergencyPickups: true,
+                    deliveryNotes: 'Park in the lot near the south entrance.' // add in Settings
                 }
             },
             {

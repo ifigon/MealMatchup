@@ -7,15 +7,16 @@ class VerifyAccount extends Component {
         let address = (
             <div className="address-wrapper">
                 <div className="address">
-                    {this.props.agencyAddressData.street1}{' '}
-                    {this.props.agencyAddressData.street1}{' '}
+                    {this.props.agencyAddressData.street1}
+                    {this.props.agencyAddressData.street2},{' '}
                     {this.props.agencyAddressData.city}{' '}
                     {this.props.agencyAddressData.state}{' '}
                     {this.props.agencyAddressData.zipcode}
                 </div>
                 <div className="officeNo">
-                    {this.props.agencyAddressData.officeNo}
+                    Office: {this.props.agencyAddressData.officeNo}
                 </div>
+                <div className="deliveryNote">{this.props.deliveryNote}</div>
             </div>
         );
         return (
