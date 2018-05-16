@@ -2,12 +2,12 @@
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
   border-radius: 3px;
   width: 900px;
-  margin: 140px auto 30px 260px;
+  margin: 120px auto 30px 260px;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   padding: 40px 0px 40px 0px;
   overflow: scroll;
-  height: 70vh;
+  height: 64vh;
 }
 
 .label {

@@ -37,41 +37,6 @@ class PendingAccounts extends Component {
                         position: 'Volunteer'
                     },
 
-                    acceptEmergencyPickups: true,
-                    deliveryNotes: 'Park in the lot near the south entrance.' // add in Settings
-                }
-            },
-            {
-                uGOFJ8NqHjbZhKAYzSZFRs1dSKD3: {
-                    accountType: 'receiving_agency',
-                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // uid-key of an umbrella
-                    name: 'Seattle Union Gospel Mission',
-                    email: 'seauniongospel@test.org',
-                    address: {
-                        street1: '124 Sesame St.',
-                        street2: '',
-                        city: 'Seattle',
-                        state: 'WA',
-                        zipcode: 98115,
-                        officeNo: '110A'
-                    },
-                    timezone: 'America/Los_Angeles', // moment.tz.guess()
-                    isVerified: false,
-                    isActivated: true,
-                    primaryContact: {
-                        name: 'Chris Stack',
-                        email: 'chrisstack@uniongospel.org',
-                        phone: '206-586-9876',
-                        position: 'Manager'
-                    },
-                    secondaryContact: {
-                        // could be null
-                        name: 'Dave Stack',
-                        email: 'davestack@uniongospel.org',
-                        phone: '206-586-9876',
-                        position: 'Volunteer'
-                    },
-
                     acceptEmergencyPickups: true
                 }
             },
@@ -89,7 +54,7 @@ class PendingAccounts extends Component {
                         zipcode: 98115
                     },
                     timezone: 'America/Los_Angeles', // moment.tz.guess()
-                    isVerified: true,
+                    isVerified: false,
                     isActivated: true,
                     numVolunteers: 50,
                     primaryContact: {
@@ -119,7 +84,7 @@ class PendingAccounts extends Component {
                         officeNo: '220'
                     },
                     timezone: 'America/Los_Angeles', // moment.tz.guess()
-                    isVerified: true,
+                    isVerified: false,
                     isActivated: true,
                     primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1', // uid-key of a donating-agency-member
                     members: [
