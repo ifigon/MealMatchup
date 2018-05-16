@@ -4,7 +4,6 @@ import { AccountType } from '../../Enums';
 
 class PendingAccountsListItem extends Component {
     render() {
-        console.log('this.props.data', this.props.data);
         let keys = Object.keys(this.props.data);
         let agencyObject = this.props.data[keys];
         let accountType = '';
@@ -28,6 +27,7 @@ class PendingAccountsListItem extends Component {
         }
 
         // let statusStyle = ''
+        // switch(agencyObject.isVerified)
         return (
             <div className="pending-accounts-item-wrapper">
                 <div className="group-value value">{accountType}</div>

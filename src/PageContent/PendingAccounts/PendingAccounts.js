@@ -100,7 +100,6 @@ class PendingAccounts extends Component {
                 }
             }
         ];
-        console.log('listItems length', data.length);
         let listItems = data.map((item, index) => {
             return <PendingAccountsListItem data={item} />;
         });
