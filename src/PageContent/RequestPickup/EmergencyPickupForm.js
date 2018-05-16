@@ -39,12 +39,11 @@ class EmergencyPickupForm extends Component {
                 return { foodRows: foodRows };
             });
         } else {
-            alert("To add another row, please fill out the name, weight and unit of each food item.")
+            alert('To add another row, please fill out the name, weight and unit of each food item.');
         }
     }
 
     render() {
-        console.log(this.state.foodRows.length)
         return (
             <form
                 id={this.formId}

@@ -397,17 +397,6 @@ class RecurringPickupRequest extends Component {
             });
     }
 
-    // addFood(name, weight, label, event) {
-    //     console.log(event)
-
-    //     if (name !== '' && weight !== '' && label !== '') {
-    //         var newElement = { foodName: name, foodWeight: weight, foodWeightLabel: label };
-    //         this.setState({ foodRows: [...this.state.foodRows, newElement] });
-    //     } else {
-    //         alert("Name, weight, and unit fields are required in order to add another food item.")
-    //     }
-    // }
-
     render() {
         return (
             <div className="form">
@@ -421,12 +410,14 @@ class RecurringPickupRequest extends Component {
                         receivingAgencies={this.state.receivingAgencies}
                     />
                 ) : (
-                        <EmergencyPickupForm
-                            createRequest={this.createRequest}
-                            errors={this.state.errors}
-                            memberList={this.state.memberList}
-                        />
-                    )}
+                    <EmergencyPickupForm
+                        createRequest={this.createRequest}
+                        errors={this.state.errors}
+                        memberList={this.state.memberList}
+                        handleChange={this.handleChange}
+
+                    />
+                )}
 
                 {this.state.showPopup &&
                     this.props.type === DeliveryType.RECURRING && (

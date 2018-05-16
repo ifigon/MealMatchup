@@ -12,7 +12,7 @@ class RequestTypeToggle extends Component {
                 'A recurring pickup is used in cases where  <br /> regular pickups are needed, i.e.   once/ <br />twice a week, every other  week/month etc.';
         } else {
             infoTooltip =
-                'An emergency pickup is a one  <br /> time donation where a dining hall  <br /> will pickup the food directly.';
+                'An emergency pickup is a one  <br /> time donation where a shelter  <br /> will pickup the food directly.';
         }
         return (
             <div className="toggle-wrapper" onClick={this.props.toggle}>
@@ -25,7 +25,7 @@ class RequestTypeToggle extends Component {
                         <div className="emergency-toggle toggle">
                             Schedule Emergency Pickup
                         </div>
-                    )}
+                        )}
                     <a data-tip={infoTooltip}>
                         {' '}
                         <img

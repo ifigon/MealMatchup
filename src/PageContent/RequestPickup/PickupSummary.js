@@ -1,8 +1,9 @@
 import React from 'react';
 import './PickupSummary.css';
-import greenTruck from '../../icons/green-truck.svg';
+import greenTruck from '../../icons/green_truck.svg';
 import redTruck from '../../icons/red_truck.svg';
 import Map from '../../Map/Map.js';
+
 import {
     RequestRepeatType,
     RequestEndCriteriaType,
@@ -52,11 +53,14 @@ class PickupSummary extends React.Component {
         let endTime = moment(this.props.request.endTimestamp).format(
             StringFormat.TIME
         );
-        let style;
+
+        let style = 'top-line-emergency';
+        let truckSrc = redTruck;
+        let truckAlt = "red truck";
         if (this.props.type === DeliveryType.RECURRING) {
             style = 'top-line-recurring';
-        } else {
-            style = 'top-line-emergency';
+            truckSrc = greenTruck;
+            truckAlt = "green truck";
         }
         return (
             <div className="backdrop">
@@ -67,12 +71,7 @@ class PickupSummary extends React.Component {
                         &times;
                     </p>
                     <div className="summary-title flex">
-                        {style === 'top-line-recurring' ? (
-                            <img src={greenTruck} alt="green-truck" />
-                        ) : (
-                            <img src={redTruck} alt="red-truck" />
-                        )}
-
+                        <img src={truckSrc} alt={truckAlt} />
                         <p id="title">{this.props.title}</p>
                     </div>
                     <div className="summary-wrapper grid">
@@ -137,14 +136,14 @@ class PickupSummary extends React.Component {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="contact">
-                                        <p>
-                                            Request will be sent to all
-                                            participating shelters.
+                                        <div className="contact">
+                                            <p>
+                                                Request will be sent to all
+                                                participating shelters.
                                         </p>
-                                        <p>Confirmation pending.</p>
-                                    </div>
-                                )}
+                                            <p>Confirmation pending.</p>
+                                        </div>
+                                    )}
                             </div>
                             {this.props.raRequested && (
                                 <Map
@@ -189,14 +188,14 @@ class PickupSummary extends React.Component {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="contact">
-                                        <p>
-                                            Request will be sent to all
-                                            participating student groups.
+                                        <div className="contact">
+                                            <p>
+                                                Request will be sent to all
+                                                participating student groups.
                                         </p>
-                                        <p>Confirmation pending.</p>
-                                    </div>
-                                )}
+                                            <p>Confirmation pending.</p>
+                                        </div>
+                                    )}
                             </div>
                         </div>
                         {this.props.request.notes !== '' ? (
@@ -205,8 +204,8 @@ class PickupSummary extends React.Component {
                                 <p>{this.props.request.notes}</p>
                             </div>
                         ) : (
-                            <br />
-                        )}
+                                <br />
+                            )}
                     </div>
                     {this.props.submissionError && (
                         <p>
