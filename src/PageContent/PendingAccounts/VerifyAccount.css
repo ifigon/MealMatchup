@@ -18,31 +18,32 @@
 
 .verify-header {
   color: #243847;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .subheader {
   font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 .address {
   color: #243847;
-  font-size: 16px;
-  padding-top: 20px;
+  font-size: 14px;
 }
 .officeNo {
   color: #243847;
-  font-size: 16px;
-  padding-top: 20px;
+  font-size: 14px;
+  padding-top: 10px;
 }
 
 .deliveryNote {
-  padding-top: 20px;
+  padding-top: 5px;
   color: #828282;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .contact-value {
-  font-size: 16px;
+  font-size: 14px;
   padding-top: 5px;
   color: #243847;
 }
@@ -71,9 +72,8 @@
 }
 
 .emergency-pickup-wrapper {
-  margin-left: 290px;
+  margin-left: 280px;
   position: relative;
-  /* display: inline-block; */
 }
 
 .verify-emergency-pickup-content {
@@ -81,6 +81,5 @@
   display: inline-block;
 }
 .verify-truck-icon {
-  margin-right: 30px;
-  margin-left: 10px;
+  margin-right: 50px;
 }
