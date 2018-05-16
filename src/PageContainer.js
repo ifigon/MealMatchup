@@ -20,7 +20,6 @@ class PageContainer extends Component {
         this.state = {
             content: props.content,
             account: props.account,
-            userId: props.userId,
             donatingAgency: null
         };
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -115,7 +114,7 @@ class PageContainer extends Component {
                 )}
 
                 {this.state.content === PageContent.DIRECTORY &&
-                    <Directory account={this.state.account} userId={this.state.userId}/>
+                    <Directory account={this.props.account} />
                 }
 
                 {content === PageContent.SETTINGS && (
