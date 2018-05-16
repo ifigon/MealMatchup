@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import DirectoryCard from './DirectoryCard.js';
 import firebase from '../../FirebaseConfig.js';
-import {AccountType, DaysOfWeek} from '../../Enums.js';
+import {AccountType, DaysOfWeek, StringFormat} from '../../Enums.js';
+import moment from 'moment';
 import './Directory.css';
 const db = firebase.database();
 
@@ -18,13 +19,13 @@ class DirectoryPage extends Component {
             umbrellaId: '',
             raList: [],
             dgList: [],
-            daList: []
+            daList: [],
         };
     }
 
     async componentDidMount() {
         let umbrellaId = await this.getUmbrellaId();
-        this.setState({umbrellaId: umbrellaId});
+        await this.setState({umbrellaId: umbrellaId});
         this.fetchOrgs();
     }
 
@@ -35,17 +36,19 @@ class DirectoryPage extends Component {
     }
 
     async getUmbrellaId() {
-        let account = this.props.account;
+        const { account }= this.props;
         switch (account.accountType) {
         case AccountType.DONATING_AGENCY_MEMBER: { // get umbrellaId from db.ref(`donating_agencies)
             let daSnapshot = await db.ref(`donating_agencies/${account.agency}`).once('value');
             let { umbrella } = daSnapshot.val();
             return umbrella;
         }
-        case AccountType.RECEIVING_AGENCY || AccountType.DELIVERER_GROUP:
+        case AccountType.RECEIVING_AGENCY:
+            return account.umbrella;
+        case AccountType.DELIVERER_GROUP:
             return account.umbrella;
         case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
-            return this.props.userId;
+            return account.uid;
         default:
             return;
         }
@@ -73,7 +76,7 @@ class DirectoryPage extends Component {
         }
     }
 
-    fetchRaAndDg(orgTypes) { // fetch receiving agencies or dilivery groups
+    fetchRaAndDg(orgTypes) { // fetch receiving agencies or delivery groups
         // keeps listening for real-time database change 
         db.ref('accounts').orderByChild('umbrella').equalTo(this.state.umbrellaId).on('value', (snapshot) => { 
             let accountObjects = snapshot.val();       
@@ -86,10 +89,13 @@ class DirectoryPage extends Component {
                 if (accountObjects.hasOwnProperty(key)  // filter out prototype props
                     && orgTypes.includes(accountItem.accountType)) { // if accountType is in orgTypes 
                     let org = this.aggrRAorDGOrgObj(accountItem);
-                    if (accountItem.accountType === AccountType.RECEIVING_AGENCY)
+                    if (accountItem.accountType === AccountType.RECEIVING_AGENCY) {
                         raList.push(org);
-                    else
+                    }
+                    else { // AccountType.DELIVERER_GROUP
                         dgList.push(org);     
+                    }
+
                 }
             }
             this.setState({raList: raList, dgList: dgList});
@@ -131,7 +137,8 @@ class DirectoryPage extends Component {
         for (let key in obj) {
             if (obj.hasOwnProperty(key)) { // filter out prototype props
                 let item = obj[key];
-                availabilityList.push(`${DaysOfWeek[key]}: ${item.startTime} - ${item.endTime}`);
+                availabilityList.push(`${DaysOfWeek[key]}: 
+                ${moment(item.startTimestamp).format(StringFormat.TIME)} - ${moment(item.endTimestamp).format(StringFormat.TIME)}`);
             }
         }
         return availabilityList;
