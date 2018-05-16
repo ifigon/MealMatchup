@@ -7,31 +7,37 @@ class PendingAccounts extends Component {
         // dummy data
         let data = [
             {
-                K9HdKlCLjjk_ka82K0s: {
+                uGOFJ8NqHjbZhKAYzSZFRs1dSKD3: {
+                    accountType: 'receiving_agency',
                     umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // uid-key of an umbrella
-                    name: 'Local Point',
+                    name: 'Seattle Union Gospel Mission',
+                    email: 'seauniongospel@test.org',
                     address: {
-                        street1: '1201 NE Campus Pkwy',
+                        street1: '124 Sesame St.',
                         street2: '',
                         city: 'Seattle',
                         state: 'WA',
-                        zipcode: 98105,
-                        officeNo: '220'
+                        zipcode: 98115,
+                        officeNo: '110A'
                     },
                     timezone: 'America/Los_Angeles', // moment.tz.guess()
-                    isVerified: true,
+                    isVerified: false,
                     isActivated: true,
-                    primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1', // uid-key of a donating-agency-member
-                    members: [
-                        'dhA03LwTp3cibXVUcb3nQqO34wj1', // uid-key of donating-agency-member
-                        'fbCm3Yrbi4e12WgpVz3gq25VKea2'
-                    ],
-                    notifications: [
-                        {
-                            type: 'recurring_pickup_confirmed', // Enums.NotificationType
-                            content: '-K9HdKlCLjjk_ka82K0s/-L5QoXeC_UrL5tRRED3e' // {daId}/{deliveryRequestId}
-                        }
-                    ]
+                    primaryContact: {
+                        name: 'Chris Stack',
+                        email: 'chrisstack@uniongospel.org',
+                        phone: '206-586-9876',
+                        position: 'Manager'
+                    },
+                    secondaryContact: {
+                        // could be null
+                        name: 'Dave Stack',
+                        email: 'davestack@uniongospel.org',
+                        phone: '206-586-9876',
+                        position: 'Volunteer'
+                    },
+
+                    acceptEmergencyPickups: true
                 }
             },
             {
@@ -49,7 +55,7 @@ class PendingAccounts extends Component {
                         officeNo: '110A'
                     },
                     timezone: 'America/Los_Angeles', // moment.tz.guess()
-                    isVerified: true,
+                    isVerified: false,
                     isActivated: true,
                     primaryContact: {
                         name: 'Chris Stack',
@@ -94,6 +100,34 @@ class PendingAccounts extends Component {
                     notifications: [
                         {
                             type: 'recurring_pickup_request', // Enums.NotificationType
+                            content: '-K9HdKlCLjjk_ka82K0s/-L5QoXeC_UrL5tRRED3e' // {daId}/{deliveryRequestId}
+                        }
+                    ]
+                }
+            },
+            {
+                K9HdKlCLjjk_ka82K0s: {
+                    umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // uid-key of an umbrella
+                    name: 'Local Point',
+                    address: {
+                        street1: '1201 NE Campus Pkwy',
+                        street2: '',
+                        city: 'Seattle',
+                        state: 'WA',
+                        zipcode: 98105,
+                        officeNo: '220'
+                    },
+                    timezone: 'America/Los_Angeles', // moment.tz.guess()
+                    isVerified: true,
+                    isActivated: true,
+                    primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1', // uid-key of a donating-agency-member
+                    members: [
+                        'dhA03LwTp3cibXVUcb3nQqO34wj1', // uid-key of donating-agency-member
+                        'fbCm3Yrbi4e12WgpVz3gq25VKea2'
+                    ],
+                    notifications: [
+                        {
+                            type: 'recurring_pickup_confirmed', // Enums.NotificationType
                             content: '-K9HdKlCLjjk_ka82K0s/-L5QoXeC_UrL5tRRED3e' // {daId}/{deliveryRequestId}
                         }
                     ]

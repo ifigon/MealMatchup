@@ -6,7 +6,8 @@
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   padding: 40px 0px 40px 0px;
-  overflow: hidden;
+  overflow: scroll;
+  height: 70vh;
 }
 
 .label {
@@ -50,4 +51,17 @@
   padding-top: 3px;
   padding-bottom: 3px;
   margin-left: -20px;
+}
+
+.verified {
+  background-color: #85bf4b;
+}
+.verified:hover {
+  cursor: auto;
+}
+.unverified {
+  background-color: #5dc0f9;
+}
+.unverified:hover {
+  cursor: pointer;
 }
