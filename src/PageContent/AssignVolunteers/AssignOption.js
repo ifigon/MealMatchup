@@ -63,7 +63,7 @@ class AssignOption extends Component {
 
     copyLinkToClipboard(e,f) {
         // stolen from https://stackoverflow.com/a/30810322
-        var textArea = document.createElement('textarea');
+        var textArea = document.createElement("textarea");
 
         //
         // *** This styling is an extra step which is likely not required. ***
@@ -111,7 +111,7 @@ class AssignOption extends Component {
         try {
             var successful = document.execCommand('copy');
         } catch (err) {
-            return;
+            console.log('Oops, unable to copy');
         }
 
         document.body.removeChild(textArea);
