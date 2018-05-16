@@ -72,6 +72,7 @@ class PendingAccounts extends Component {
                 }
             },
             {
+                // Donating Agency not an account type
                 K9HdKlCLjjk_ka82K0s: {
                     umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // uid-key of an umbrella
                     name: 'Local Point',
@@ -86,7 +87,18 @@ class PendingAccounts extends Component {
                     timezone: 'America/Los_Angeles', // moment.tz.guess()
                     isVerified: false,
                     isActivated: true,
-                    primaryContact: 'dhA03LwTp3cibXVUcb3nQqO34wj1', // uid-key of a donating-agency-member
+
+                    // TODO: pull this primary contact using the key
+                    primaryContact: {
+                        accountType: 'donating_agency_member',
+                        agency: '-K9HdKlCLjjk_ka82K0s', // autogen-key of a donating-agency
+                        umbrella: 'RheaQY1WxJT03sTPQICFZ4STpfm1', // same as agency's
+                        name: 'Andrea Benson',
+                        email: 'bensoa3@uw.edu',
+                        phone: '206-543-6975',
+                        position: 'Manager'
+                        // isAdmin: true
+                    },
                     members: [
                         'dhA03LwTp3cibXVUcb3nQqO34wj1', // uid-key of donating-agency-member
                         'fbCm3Yrbi4e12WgpVz3gq25VKea2'

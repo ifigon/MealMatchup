@@ -5,7 +5,7 @@
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
   border-radius: 3px;
   width: 759px;
-  margin: -173px auto 0px -50px;
+  margin: 120px auto 0px -49px;
   height: 61vh;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
@@ -15,6 +15,7 @@
   padding: 70px;
   padding-top: 40px;
   overflow: scroll;
+  top: 0px;
 }
 
 .verify-header {
