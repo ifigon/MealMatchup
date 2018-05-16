@@ -118,7 +118,7 @@ exports.NotificationType = {
     /* When: a DA requests a new emergency pickup
        Receiver: RA
        Action: View -> Claim/Reject */
-    EMERGENCY_PICKUP_REQUEST: 'emergency_pickup_request',
+    EMERGENCY_PICKUP_REQUESTED: 'emergency_pickup_requested',
     /* When: a emergency pickup has been claimed by RA
        Receiver: DA, RA
        Action: View */
