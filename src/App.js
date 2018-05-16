@@ -161,7 +161,14 @@ class App extends Component {
                                 content={content}
                                 signOut={this.signOut}
                             />
-                            {!path ? <Redirect to={'/calendar'} /> : null}
+                            {!path ? (
+                                this.state.account.accountType ===
+                                AccountType.UMBRELLA ? (
+                                        <Redirect to={'/pending-accounts'} />
+                                    ) : (
+                                        <Redirect to={'/calendar'} />
+                                    )
+                            ) : null}
                         </div>
                     ) : (
                         <div>
