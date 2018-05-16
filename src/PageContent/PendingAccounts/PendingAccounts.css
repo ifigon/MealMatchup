@@ -65,3 +65,24 @@
 .unverified:hover {
   cursor: pointer;
 }
+
+.emergency-pickup-note {
+  color: #4f4f4f;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.verify-truck-icon {
+  width: 70px;
+  vertical-align: 10px;
+}
+
+.emergency-pickup-content {
+  width: 50%;
+  display: inline-block;
+  margin-left: 40px;
+}
+
+.address-wrapper {
+  display: inline;
+}

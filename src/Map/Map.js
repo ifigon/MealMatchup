@@ -8,20 +8,20 @@ const GoogleMap_API_KEY = 'AIzaSyBhUNXr9HGzNW1k0Va7EGeyFsJqUSlkwCU';
 
 const Marker = ({ text }) => (
     <div>
-        <div className="pin bounce"></div>
-        <div className='pulse'></div>
+        <div className="pin bounce" />
+        <div className="pulse" />
     </div>
 );
 
-class Map extends Component{
-    constructor(props){
+class Map extends Component {
+    constructor(props) {
         super(props);
-        
-        this.state  = {
-            center: {lat: 0, lng: 0}, // initial marker state
+
+        this.state = {
+            center: { lat: 0, lng: 0 }, // initial marker state
             zoom: 15,
             validAddress: true,
-            address: '',
+            address: ''
         };
     }
 
@@ -45,12 +45,12 @@ class Map extends Component{
             response => {
                 this.setState({
                     center: response.results[0].geometry.location,
-                    address: address,
+                    address: address
                 });
             },
             error => {
-                this.setState((prevState) => {
-                    return {validAddress: !prevState.validAddress};
+                this.setState(prevState => {
+                    return { validAddress: !prevState.validAddress };
                 });
             }
         );
@@ -63,33 +63,56 @@ class Map extends Component{
             marginLeft: this.props.marginLeft,
             marginRight: this.props.marginRight,
             marginTop: this.props.marginTop,
-            marginBottom: this.props.marginBottom
+            marginBottom: this.props.marginBottom,
+            display: this.props.display
         };
         return (
-            <div className='google-map' style={style}>
-                {this.state.validAddress ?
+            <div className="google-map" style={style}>
+                {this.state.validAddress ? (
                     <GoogleMap
                         bootstrapURLKeys={{
-                            key: GoogleMap_API_KEY,
+                            key: GoogleMap_API_KEY
                         }}
-                        center={ this.state.center }
-                        zoom={ this.state.zoom }>
+                        center={this.state.center}
+                        zoom={this.state.zoom}
+                    >
                         <Marker
                             latLng={this.state.center}
                             lat={this.state.center.lat}
                             lng={this.state.center.lng}
                         />
                     </GoogleMap>
-                    :
+                ) : (
                     <div className="error">Unable to load map</div>
-                }
+                )}
                 {/* Prompts user to open maps on their phone or shows link to Google Maps */}
-                {
-                    isMobile() ?
-                        <a id="ms-address" href={'http://maps.apple.com/?q=' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
-                        :
-                        <a id="ms-address-desktop" href={'http://maps.google.com/maps?saddr=' + this.state.center.lat + ',' + this.state.center.lng} target="_blank">{this.state.address}</a>
-                }
+                {isMobile() ? (
+                    <a
+                        id="ms-address"
+                        href={
+                            'http://maps.apple.com/?q=' +
+                            this.state.center.lat +
+                            ',' +
+                            this.state.center.lng
+                        }
+                        target="_blank"
+                    >
+                        {this.state.address}
+                    </a>
+                ) : (
+                    <a
+                        id="ms-address-desktop"
+                        href={
+                            'http://maps.google.com/maps?saddr=' +
+                            this.state.center.lat +
+                            ',' +
+                            this.state.center.lng
+                        }
+                        target="_blank"
+                    >
+                        {this.state.address}
+                    </a>
+                )}
             </div>
         );
     }
