@@ -10,7 +10,7 @@ class FoodLogsContainer extends Component {
     constructor(props){
         super(props);
         this.state = {
-            deliveries: [],
+            deliveries: null,
         };
     }
 
@@ -100,7 +100,8 @@ class FoodLogsContainer extends Component {
         return(
             <div className="food-container ">
                 {/* TODO: Filter feature */}
-                {this.state.deliveries.length > 0 ?
+                {this.state.deliveries !== null ? 
+                    this.state.deliveries.length > 0 ?
                     this.state.deliveries.map((completedDelivery, i) => {
                         return (
                             <FoodLogItem delivery={completedDelivery} key={i}/>
@@ -108,7 +109,7 @@ class FoodLogsContainer extends Component {
                     })
                     :
                     (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
-                }
+                : null} 
             </div>
         );
     }
