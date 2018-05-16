@@ -4,7 +4,7 @@ import { auth, accountsRef } from './FirebaseConfig.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
-import { Routes, PageContent } from './Enums';
+import { Routes, PageContent, AccountType } from './Enums';
 // import { connect } from 'tls';
 
 // The main entry page to load when user is not signed in.
@@ -98,7 +98,14 @@ class App extends Component {
                                 account={this.state.account}
                                 content={content}
                             />
-                            {!path ? <Redirect to={'/calendar'} /> : null}
+                            {!path ? (
+                                this.state.account.accountType ===
+                                AccountType.UMBRELLA ? (
+                                        <Redirect to={'/pending-accounts'} />
+                                    ) : (
+                                        <Redirect to={'/calendar'} />
+                                    )
+                            ) : null}
                         </div>
                     ) : (
                         <div>
