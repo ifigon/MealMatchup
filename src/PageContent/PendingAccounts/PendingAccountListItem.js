@@ -71,6 +71,7 @@ class PendingAccountsListItem extends Component {
                         primaryContact={primaryContact}
                         primaryContactData={agencyObject.primaryContact}
                         emergencyPickup={agencyObject.emergencyPickup}
+                        deliveryNote={agencyObject.deliveryNotes}
                     />
                 )}
             </div>
