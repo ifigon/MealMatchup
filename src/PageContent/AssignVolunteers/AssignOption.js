@@ -111,7 +111,7 @@ class AssignOption extends Component {
         try {
             var successful = document.execCommand('copy');
         } catch (err) {
-            return;
+            console.log('Oops, unable to copy');
         }
 
         document.body.removeChild(textArea);
