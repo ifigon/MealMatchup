@@ -11,10 +11,17 @@ class PendingAccountsListItem extends Component {
             dialog: false
         };
         this.openDialog = this.openDialog.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
     }
     openDialog() {
         this.setState({
             dialog: true
+        });
+    }
+
+    closeDialog() {
+        this.setState({
+            dialog: false
         });
     }
     render() {
@@ -57,10 +64,7 @@ class PendingAccountsListItem extends Component {
                 <div className="group-value value">{accountType}</div>
                 <div className="agency-value value">{agencyName}</div>
                 <div className="contact-value value">{primaryContact}</div>
-                <div
-                    onClick={this.openDialog.bind(this)}
-                    className={statusStyle}
-                >
+                <div onClick={this.openDialog} className={statusStyle}>
                     {statusText}
                 </div>
                 {this.state.dialog && (
@@ -72,6 +76,7 @@ class PendingAccountsListItem extends Component {
                         primaryContactData={agencyObject.primaryContact}
                         emergencyPickup={agencyObject.acceptEmergencyPickups}
                         deliveryNote={agencyObject.deliveryNotes}
+                        closeDialog={this.closeDialog}
                     />
                 )}
             </div>

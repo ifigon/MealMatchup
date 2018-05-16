@@ -79,6 +79,20 @@ class VerifyAccount extends Component {
                         </div>
                     </div>
                 )}
+                <div className="verification-buttons">
+                    <div
+                        onClick={this.props.closeDialog}
+                        className="verify-accept verify-button"
+                    >
+                        Accept
+                    </div>
+                    <div
+                        onClick={this.props.closeDialog}
+                        className="verify-reject verify-button"
+                    >
+                        Reject
+                    </div>
+                </div>
             </div>
         );
     }
