@@ -70,7 +70,7 @@ class PendingAccountsListItem extends Component {
                         agencyAddressData={agencyObject.address}
                         primaryContact={primaryContact}
                         primaryContactData={agencyObject.primaryContact}
-                        emergencyPickup={agencyObject.emergencyPickup}
+                        emergencyPickup={agencyObject.acceptEmergencyPickups}
                         deliveryNote={agencyObject.deliveryNotes}
                     />
                 )}

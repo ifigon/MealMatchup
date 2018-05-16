@@ -40,3 +40,47 @@
   color: #828282;
   font-size: 14px;
 }
+
+.contact-value {
+  font-size: 16px;
+  padding-top: 5px;
+  color: #243847;
+}
+.gray-contact {
+  color: #828282;
+  font-size: 14px;
+}
+
+.address-wrapper {
+  margin-top: 30px;
+  margin-left: 400px;
+  display: block;
+}
+
+.verify-map-wrapper {
+  vertical-align: top;
+  position: absolute;
+  float: left;
+  margin-top: 30px;
+}
+
+.agency-wrapper {
+  position: relative;
+  margin-top: 30px;
+  margin-left: 400px;
+}
+
+.emergency-pickup-wrapper {
+  margin-left: 290px;
+  position: relative;
+  /* display: inline-block; */
+}
+
+.verify-emergency-pickup-content {
+  width: 300px;
+  display: inline-block;
+}
+.verify-truck-icon {
+  margin-right: 30px;
+  margin-left: 10px;
+}
