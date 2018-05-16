@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './VerifyAccount.css';
-import PendingAccountsListItem from './PendingAccountListItem';
 import truck from '../../icons/red_truck.svg';
 import Map from '../../Map/Map';
 
