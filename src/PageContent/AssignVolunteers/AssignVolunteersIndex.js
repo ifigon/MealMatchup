@@ -27,6 +27,12 @@ class AssignVolunteersIndex extends Component {
                             <div className="avi-detail">
                                 Volunteers
                             </div>
+                            <div className="avi-detail">
+                                Assign
+                            </div>
+                            <div className="avi-detail">
+                                Send link to volunteers
+                            </div>
                         </div>
                     </div>
                     {
