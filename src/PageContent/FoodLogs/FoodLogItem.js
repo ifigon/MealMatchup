@@ -35,7 +35,9 @@ class FoodLogItem extends Component{
         }
     }
     componentDidMount(){
-        let pageNumbers = Math.ceil(this.props.delivery.description.foodItems.length / this.state.foodPerPage);
+        const { delivery } = this.props;
+        let pageNumbers = delivery.description && delivery.description.foodItems ? 
+            Math.ceil(delivery.description.foodItems.length / this.state.foodPerPage) : 1;
         this.setState({
             pageNumbers: pageNumbers
         });
@@ -50,7 +52,8 @@ class FoodLogItem extends Component{
         // TODO: Pagination for deliveries (foodlog cards)
         const { currentPage, foodPerPage } = this.state;
         const { delivery } = this.props;
-        const foodItems = delivery.description.foodItems;
+        const foodItems = delivery.description && delivery.description.foodItems ? 
+            delivery.description.foodItems : [];
 
         // Logic for displaying current foods
         const indexOfLastFood = currentPage * foodPerPage;
@@ -93,14 +96,12 @@ class FoodLogItem extends Component{
                             <p className="info-subtitle">{delivery.donatingAgency.name} ({delivery.daContact.phone})</p>
                             <p className="info-detail">Signed by: {delivery.pickedUpInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
-                            <p className="info-detail">Email: {delivery.daContact.email}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
                             <p className="info-subtitle">{delivery.receivingAgency.name} ({delivery.raContact.phone})</p>
                             <p className="info-detail">Signed by: {delivery.deliveredInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
-                            <p className="info-detail">Email: {delivery.raContact.email}</p>
                         </div>
                     </div>
                     <div className="info">
@@ -133,7 +134,7 @@ class FoodLogItem extends Component{
                                 {
                                     delivery.deliverers.map((deliverer, i) => {
                                         return(
-                                            <div className={'stu'+i}>
+                                            <div className={'stu'+i} key={i}>
                                                 <p className="info-detail">{deliverer.name}</p>
                                                 <p className="info-detail">{deliverer.email}</p>
                                                 <p className="info-detail">{deliverer.phone}</p>

@@ -89,6 +89,7 @@ p{
     display: inline-flex;
     justify-content: space-between;
     width: 90%;
+    height: 65px;
 }
 
 .food-log-pages i {

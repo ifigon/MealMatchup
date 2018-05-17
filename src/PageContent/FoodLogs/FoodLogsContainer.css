@@ -38,3 +38,9 @@ span{
     color: #5DC0F9;
     font-size: 16px;
 }
+
+.nothing-found-propmt {
+    margin-left: 200px;
+    margin-top: 15%;
+    text-align: center;
+}
