@@ -31,8 +31,7 @@ class App extends Component {
                     // grab user's account object
                     accountsRef
                         .child(user.uid)
-                        .once('value')
-                        .then(
+                        .on('value',  // continually listens changes on this account
                             function(snapshot) {
                                 var account = snapshot.val();
                                 account.uid = user.uid;
@@ -59,6 +58,12 @@ class App extends Component {
                 }
             }.bind(this)
         );
+    }
+
+    componentWillUnmount() {
+        if (this.state.account) {
+            accountsRef.child(this.state.account.uid).off();
+        }
     }
 
     render() {

@@ -24,7 +24,7 @@ export {
 
 /**
  * Formats phone numbers as you type. Include in inputs components like so:
- *    `<input onChange={phoneFormat} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" />`
+ *    `<input onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} placeholder="xxx-xxx-xxxx" />`
 **/
 export function formatPhone(e,f) {
     let val = e.target.value.replace(/\D/g, '').substring(0, 10);

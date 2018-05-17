@@ -8,6 +8,7 @@ import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupR
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
 import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
+import Settings from './PageContent/Settings/Settings.js';
 
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
@@ -117,10 +118,10 @@ class PageContainer extends Component {
                     </div>
                 )}
 
-                {content === PageContent.SETTINGS && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
+                {this.state.content === PageContent.SETTINGS && (
+                    <Settings 
+                        account={this.props.account}
+                    />
                 )}
             </div>
         );
