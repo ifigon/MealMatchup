@@ -1,0 +1,109 @@
+.item{
+    margin-left: 200px ;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-family: Open Sans;
+    padding-bottom: 20px;
+}
+.flex {
+    justify-content: space-between;
+}
+.flex-food{
+    display: inline-table;
+}
+.heading{
+    display: flex;
+    border-bottom: 1px solid #DDDDDD;
+    margin:20px 20px 0px 20px;
+    height: auto;
+}
+
+.info{
+    margin: 0px 20px 0px 20px;
+    justify-content: space-between;
+}
+.info-title{
+    font-size: 16px;
+    font-weight: 600;
+    color: #243847;
+}
+
+.info-subtitle{
+    font-size: 14px;
+    color: #243847;
+    margin: 0px;
+}
+.info-detail{
+    font-size: 12px;
+    color: #828282;
+    margin: 0px;
+}
+
+.date{
+    color: #828282;
+}
+
+.delivery {
+    font-family: Open Sans;
+    font-weight: 600;
+}
+
+p{
+    font-size: 22px;
+    margin-bottom: 0px;
+}
+
+.subitem{
+    height: 42%;
+    width: 100%;
+    position: relative;
+}
+
+.donationItem{
+    color: #243847;
+}
+
+.food{
+    display: flex;
+}
+
+.page-numbers{
+    bottom: -10%;
+    margin: auto;
+    width: fit-content;
+}
+
+.page-number{
+    margin: 0px;
+}
+
+.page-numbers p:hover{
+    cursor: pointer;
+    background-color: #5DC0F9; 
+}
+
+.foodlog-deliverers{
+    margin-right: 20%;
+}
+
+.food-log-pages{
+    display: inline-flex;
+    justify-content: space-between;
+    width: 90%;
+    height: 65px;
+}
+
+.food-log-pages i {
+    margin-top: 20px;
+    font-size: 2vw;
+    color: rgb(193, 227, 247);
+}
+
+.food-log-pages i:hover {
+    margin-top: 20px;
+    font-size: 2vw;
+    color: #5DC0F9;
+}
+
+.hidden{
+    display: none;
+}
