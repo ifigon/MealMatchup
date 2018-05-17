@@ -1,0 +1,60 @@
+.settings-container {
+    margin-top: 120px; 
+    margin-left: 250px;
+}
+
+.scs-0 {
+    display: flex;
+}
+
+.scs-0-image {
+    flex-basis: 20%;
+}
+
+.scs-0-content {
+    flex-basis: 80%;
+}
+
+.scs-0-content > h5 {
+    font-size: 18px;
+    font-weight: 200;
+}
+
+.scs-0-content > h6, .amd-details-child > h6 {
+    font-size: 14px;
+    font-weight: 200;
+    margin: 2px 0px 0px 0px;
+}
+
+.scs-spacing {
+    height: 12px;
+}
+
+.scs-spacing-2 {
+    height: 8px;
+}
+
+.scs-spacing-lg {
+    height: 24px;
+}
+
+.amd-details {
+    display: flex;
+    width: 500px;
+}
+
+.amd-details-child {
+    flex-basis: 50%;
+}
+
+.amd-edit {
+    width: 500px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}

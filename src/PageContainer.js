@@ -6,7 +6,8 @@ import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
-import Calendar from './PageContent/Calendar/Calendar.js';
+import Settings from './PageContent/Settings/Settings.js';
+import Calendar from './PageContent/Calendar/Calendar';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -117,10 +118,10 @@ class PageContainer extends Component {
                     </div>
                 )}
 
-                {content === PageContent.SETTINGS && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
+                {this.state.content === PageContent.SETTINGS && (
+                    <Settings 
+                        account={this.props.account}
+                    />
                 )}
             </div>
         );
