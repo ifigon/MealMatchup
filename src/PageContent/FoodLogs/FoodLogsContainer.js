@@ -41,7 +41,7 @@ class FoodLogsContainer extends Component {
         } else {
             const now = moment().valueOf().toString();
             const deliveriesIdSnapshot = 
-                await deliveryIndicesRef.child(`${account.umbrella}/${agencyUid}`).orderByKey().endAt(now).once('value') 
+                await deliveryIndicesRef.child(`${account.umbrella}/${agencyUid}`).orderByKey().endAt(now).once('value'); 
             deliveriesIdSnapshot.forEach(dailyDeliveriesIdSnapshot =>
                 dailyDeliveriesIdSnapshot.forEach(deliveryId => {
                     deliveriesIdList.push(deliveryId.key);
