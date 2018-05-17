@@ -7,8 +7,10 @@ import logo from './icons/temp-logo.svg';
 import Directory from './PageContent/Directory/DirectoryPage.js';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
+import Calendar from './PageContent/Calendar/Calendar.js';
+import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
 import Settings from './PageContent/Settings/Settings.js';
-import Calendar from './PageContent/Calendar/Calendar';
+
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -108,9 +110,7 @@ class PageContainer extends Component {
                 }
 
                 {content === PageContent.FOOD_LOGS && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
+                    <FoodLogs account={account} />
                 )}
 
                 {this.state.content === PageContent.DIRECTORY &&

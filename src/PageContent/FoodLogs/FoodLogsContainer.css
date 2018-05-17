@@ -1,0 +1,46 @@
+.food-container{
+    margin: 120px 5% 30px 50px;
+}
+
+.logs{
+    margin-top: 200px;
+}
+
+.dropdown{
+    margin: 40px 40px auto 0px;
+}
+
+.filter{
+    margin-top: -102px;
+    margin-left: 195px;
+    padding-bottom: 30px;
+    color: #4F4F4F;
+    font-weight: 0px;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+.dropdown {
+    display: inline;
+}
+
+span{
+    color: #5DC0F9;
+    font-size: 16px;
+}
+
+.nothing-found-propmt {
+    margin-left: 200px;
+    margin-top: 15%;
+    text-align: center;
+}
