@@ -25,13 +25,29 @@ class FoodLogsContainer extends Component {
             account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
         // get all deliveries' id under this agency 
         const deliveriesIdList = [];
-        const now = moment().valueOf().toString();
-        const deliveriesIdSnapshot = await deliveryIndicesRef.child(`${account.umbrella}/${agencyUid}`).orderByKey().endAt(now).once('value');
-        deliveriesIdSnapshot.forEach(dailyDeliveriesIdSnapshot =>
-            dailyDeliveriesIdSnapshot.forEach(deliveryId => {
-                deliveriesIdList.push(deliveryId.key);
-            })
-        );
+        if (account.accountType === AccountType.UMBRELLA) {
+            const dailyDeliveriesIdSet = new Set();
+            const agenciesDeliveriesIdSnap = await deliveryIndicesRef.child(agencyUid).once('value');
+            agenciesDeliveriesIdSnap.forEach(AgencyDeliveriesIdSnap =>
+                AgencyDeliveriesIdSnap.forEach(dailyDeliveriesIdSnapshot => {
+                    if (!dailyDeliveriesIdSet.has(dailyDeliveriesIdSnapshot.key)) { // filter out duplicates
+                        dailyDeliveriesIdSnapshot.forEach(deliveryId => {
+                            deliveriesIdList.push(deliveryId.key);
+                        });
+                        dailyDeliveriesIdSet.add(dailyDeliveriesIdSnapshot.key);
+                    }
+                })
+            );    
+        } else {
+            const now = moment().valueOf().toString();
+            const deliveriesIdSnapshot = 
+                await deliveryIndicesRef.child(`${account.umbrella}/${agencyUid}`).orderByKey().endAt(now).once('value') 
+            deliveriesIdSnapshot.forEach(dailyDeliveriesIdSnapshot =>
+                dailyDeliveriesIdSnapshot.forEach(deliveryId => {
+                    deliveriesIdList.push(deliveryId.key);
+                })
+            );
+        }
         // construct and resolve promises to fetch all deliveries
         const deliveryPromisesList = deliveriesIdList.map(deliveryId => 
             new Promise( async (resolve, reject) => {
