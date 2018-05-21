@@ -1,6 +1,6 @@
 .toggle-wrapper {
   width: 243px;
-  margin: 140px 550px 30px auto;
+  margin: 140px 50% 30px 50%;
 }
 
 .toggle {
@@ -19,6 +19,10 @@
 .recurring-toggle {
   background-color: #2ecc71;
 }
+
+.emergency-toggle:hover, .recurring-toggle:hover{
+  cursor: pointer;
+ }
 
 .toggle-info {
   display: inline-block;
