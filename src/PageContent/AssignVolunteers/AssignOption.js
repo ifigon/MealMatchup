@@ -63,7 +63,7 @@ class AssignOption extends Component {
 
     copyLinkToClipboard(e,f) {
         // stolen from https://stackoverflow.com/a/30810322
-        var textArea = document.createElement("textarea");
+        var textArea = document.createElement('textarea');
 
         //
         // *** This styling is an extra step which is likely not required. ***
@@ -111,25 +111,20 @@ class AssignOption extends Component {
         try {
             document.execCommand('copy');
         } catch (err) {
-            console.log('Oops, unable to copy');
+            return;
         }
 
         document.body.removeChild(textArea);
 
         // update button text to show that it's been copied
-        console.log('updating text');
         e.target.className = 'form-button copy copied'; 
         e.target.innerHTML = 'Link copied to clipboard';
     }
 
     recopyDialog(e, f) {
-        console.log(e.target.classList);
         if (e.target.classList.contains('copied')) {
-            console.log("here");
             e.target.innerHTML = 'Copy link again';
             e.target.onmouseleave = (e) => e.target.innerHTML = 'Link copied to clipboard';
-        } else {
-            console.log("class not there");
         }
     }
 }
