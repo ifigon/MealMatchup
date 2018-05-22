@@ -47,7 +47,11 @@ class AssignOption extends Component {
                     
                     <div className="avi-detail avi-volunteers">
                         {deliverers && deliverers.length === 2 && 
-                            <button type="button" className="form-button" id={this.props.deliveryId} onClick={this.copyLinkToClipboard.bind(this)}>Copy link</button>
+                            <button type="button" 
+                                className="form-button copy" 
+                                id={this.props.deliveryId} 
+                                onClick={this.copyLinkToClipboard.bind(this)}
+                                onMouseEnter={this.recopyDialog.bind(this)}>Copy link</button>
                         }
                     </div>
                 </div>
@@ -105,12 +109,28 @@ class AssignOption extends Component {
         textArea.select();
 
         try {
-            var successful = document.execCommand('copy');
+            document.execCommand('copy');
         } catch (err) {
             console.log('Oops, unable to copy');
         }
 
         document.body.removeChild(textArea);
+
+        // update button text to show that it's been copied
+        console.log('updating text');
+        e.target.className = 'form-button copy copied'; 
+        e.target.innerHTML = 'Link copied to clipboard';
+    }
+
+    recopyDialog(e, f) {
+        console.log(e.target.classList);
+        if (e.target.classList.contains('copied')) {
+            console.log("here");
+            e.target.innerHTML = 'Copy link again';
+            e.target.onmouseleave = (e) => e.target.innerHTML = 'Link copied to clipboard';
+        } else {
+            console.log("class not there");
+        }
     }
 }
 
