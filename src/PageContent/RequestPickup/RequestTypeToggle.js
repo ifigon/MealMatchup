@@ -25,7 +25,7 @@ class RequestTypeToggle extends Component {
                         <div className="emergency-toggle toggle">
                             Schedule Emergency Pickup
                         </div>
-                        )}
+                    )}
                     <a data-tip={infoTooltip}>
                         {' '}
                         <img

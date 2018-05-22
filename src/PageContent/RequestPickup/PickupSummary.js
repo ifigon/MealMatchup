@@ -56,11 +56,11 @@ class PickupSummary extends React.Component {
 
         let style = 'top-line-emergency';
         let truckSrc = redTruck;
-        let truckAlt = "red truck";
+        let truckAlt = 'red truck';
         if (this.props.type === DeliveryType.RECURRING) {
             style = 'top-line-recurring';
             truckSrc = greenTruck;
-            truckAlt = "green truck";
+            truckAlt = 'green truck';
         }
         return (
             <div className="backdrop">
@@ -136,14 +136,14 @@ class PickupSummary extends React.Component {
                                         </div>
                                     </div>
                                 ) : (
-                                        <div className="contact">
-                                            <p>
+                                    <div className="contact">
+                                        <p>
                                                 Request will be sent to all
                                                 participating shelters.
                                         </p>
-                                            <p>Confirmation pending.</p>
-                                        </div>
-                                    )}
+                                        <p>Confirmation pending.</p>
+                                    </div>
+                                )}
                             </div>
                             {this.props.raRequested && (
                                 <Map
@@ -188,14 +188,14 @@ class PickupSummary extends React.Component {
                                         </div>
                                     </div>
                                 ) : (
-                                        <div className="contact">
-                                            <p>
+                                    <div className="contact">
+                                        <p>
                                                 Request will be sent to all
                                                 participating student groups.
                                         </p>
-                                            <p>Confirmation pending.</p>
-                                        </div>
-                                    )}
+                                        <p>Confirmation pending.</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         {this.props.request.notes !== '' ? (
@@ -204,8 +204,8 @@ class PickupSummary extends React.Component {
                                 <p>{this.props.request.notes}</p>
                             </div>
                         ) : (
-                                <br />
-                            )}
+                            <br />
+                        )}
                     </div>
                     {this.props.submissionError && (
                         <p>
