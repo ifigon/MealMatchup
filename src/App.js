@@ -4,7 +4,9 @@ import { auth, accountsRef } from './FirebaseConfig.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
-import { Routes, PageContent } from './Enums';
+import { Routes, PageContent, AccountType } from './Enums';
+import './App.css';
+// import { connect } from 'tls';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -19,7 +21,8 @@ class App extends Component {
             // TODO: a hack to prevent showing logged out page first.. better way?
             authenticated: false,
             signInDenied: false,
-            account: null
+            account: null,
+            isChrome: !!window.chrome && !!window.chrome.webstore
         };
     }
 
@@ -31,7 +34,8 @@ class App extends Component {
                     // grab user's account object
                     accountsRef
                         .child(user.uid)
-                        .on('value',  // continually listens changes on this account
+                        .once('value')
+                        .then(
                             function(snapshot) {
                                 var account = snapshot.val();
                                 account.uid = user.uid;
@@ -60,12 +64,6 @@ class App extends Component {
         );
     }
 
-    componentWillUnmount() {
-        if (this.state.account) {
-            accountsRef.child(this.state.account.uid).off();
-        }
-    }
-
     render() {
         let path = window.location.href.split('/')[3];
         let content = '';
@@ -85,12 +83,23 @@ class App extends Component {
         case Routes.SETTINGS:
             content = PageContent.SETTINGS;
             break;
+        case Routes.PENDING_ACCOUNTS:
+            content = PageContent.PENDING_ACCOUNTS;
+            break;
         default:
             content = PageContent.CALENDAR;
             break;
         }
         return (
             <div className="">
+                {
+                    !this.state.isChrome ? 
+                        <div className="browser-check">
+                        WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
+                        </div>
+                        :
+                        null
+                }
                 {this.state.authenticated ? (
                     this.state.account ? (
                         /* Show Calendar page if user is logged in */
@@ -99,7 +108,14 @@ class App extends Component {
                                 account={this.state.account}
                                 content={content}
                             />
-                            {!path ? <Redirect to={'/calendar'} /> : null}
+                            {!path ? (
+                                this.state.account.accountType ===
+                                AccountType.UMBRELLA ? (
+                                        <Redirect to={'/pending-accounts'} />
+                                    ) : (
+                                        <Redirect to={'/calendar'} />
+                                    )
+                            ) : null}
                         </div>
                     ) : (
                         <div>
