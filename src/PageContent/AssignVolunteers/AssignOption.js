@@ -117,14 +117,19 @@ class AssignOption extends Component {
         document.body.removeChild(textArea);
 
         // update button text to show that it's been copied
+        console.log('updating text');
         e.target.className = 'form-button copy copied'; 
         e.target.innerHTML = 'Link copied to clipboard';
     }
 
     recopyDialog(e, f) {
+        console.log(e.target.classList);
         if (e.target.classList.contains('copied')) {
+            console.log("here");
             e.target.innerHTML = 'Copy link again';
             e.target.onmouseleave = (e) => e.target.innerHTML = 'Link copied to clipboard';
+        } else {
+            console.log("class not there");
         }
     }
 }
