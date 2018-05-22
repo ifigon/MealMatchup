@@ -5,6 +5,7 @@ import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { Routes, PageContent, AccountType } from './Enums';
+import './App.css';
 // import { connect } from 'tls';
 
 // The main entry page to load when user is not signed in.
@@ -20,7 +21,8 @@ class App extends Component {
             // TODO: a hack to prevent showing logged out page first.. better way?
             authenticated: false,
             signInDenied: false,
-            account: null
+            account: null,
+            isChrome: !!window.chrome && !!window.chrome.webstore
         };
     }
 
@@ -90,6 +92,15 @@ class App extends Component {
         }
         return (
             <div className="">
+                
+                {
+                    !this.state.isChrome ? 
+                        <div className="browser-check">
+                        WARNING! You are using an UPSUPPORTED browser. Please use Google Chrome.
+                        </div>
+                        :
+                        null
+                }
                 {this.state.authenticated ? (
                     this.state.account ? (
                         /* Show Calendar page if user is logged in */
