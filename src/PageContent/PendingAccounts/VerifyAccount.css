@@ -108,12 +108,14 @@
   color: #b2b2b2;
 }
 
-.verify-accept:active {
+.verify-accept:active,
+.verify-accept:hover {
   background-color: #5dc0f9;
   color: white;
 }
 
-.verify-reject:active {
+.verify-reject:active,
+.verify-reject:hover {
   background-color: #b2b2b2;
   color: white;
 }

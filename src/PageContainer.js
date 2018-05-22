@@ -8,6 +8,7 @@ import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupR
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
 import PendingAccounts from './PageContent/PendingAccounts/PendingAccounts';
+import PageDoesNotExist from './PageContent/PageDoesNotExist/PageDoesNotExist';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -84,21 +85,27 @@ class PageContainer extends Component {
                     handler={this.navBarHandler}
                 />
 
-                {content === PageContent.CALENDAR && (
-                    <Calendar
-                        id="calendar-container"
-                        account={account}
-                        donatingAgency={donatingAgency}
-                    />
-                )}
+                {content === PageContent.CALENDAR &&
+                    (account.accountType !== AccountType.UMBRELLA ? (
+                        <Calendar
+                            id="calendar-container"
+                            account={account}
+                            donatingAgency={donatingAgency}
+                        />
+                    ) : (
+                        <PageDoesNotExist />
+                    ))}
 
-                {content === PageContent.PENDING_ACCOUNTS && (
-                    <PendingAccounts
-                        id="calendar-container"
-                        account={account}
-                        donatingAgency={donatingAgency}
-                    />
-                )}
+                {content === PageContent.PENDING_ACCOUNTS &&
+                    (account.accountType === AccountType.UMBRELLA ? (
+                        <PendingAccounts
+                            id="calendar-container"
+                            account={account}
+                            donatingAgency={donatingAgency}
+                        />
+                    ) : (
+                        <PageDoesNotExist />
+                    ))}
 
                 {content === PageContent.ASSIGN_VOLUNTEERS && (
                     <AssignVolunteersController account={account} />

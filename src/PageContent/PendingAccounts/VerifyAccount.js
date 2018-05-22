@@ -32,9 +32,11 @@ class VerifyAccount extends Component {
                             {this.props.agencyAddressData.state}{' '}
                             {this.props.agencyAddressData.zipcode}
                         </div>
-                        <div className="officeNo">
-                            Office: {this.props.agencyAddressData.officeNo}
-                        </div>
+                        {this.props.agencyAddressData.officeNo && (
+                            <div className="officeNo">
+                                Office: {this.props.agencyAddressData.officeNo}
+                            </div>
+                        )}
                         <div className="deliveryNote">
                             {this.props.deliveryNote}
                         </div>
