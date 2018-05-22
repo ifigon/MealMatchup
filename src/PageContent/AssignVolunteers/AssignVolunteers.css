@@ -120,6 +120,16 @@
     cursor: pointer;
 }
 
+.form-button.copy {
+    background-color: rgba(46, 204, 113, 0.8);
+    color: white;
+    width: 85%;
+}
+.form-button.copied {
+    background-color: rgba(46, 46, 46, 0.1);
+    color: black;
+}
+
 .confirm-button {
     color: #5DC0F9;
     border: 1px solid #5DC0F9;
