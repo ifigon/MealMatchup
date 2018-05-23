@@ -37,9 +37,11 @@ class VerifyAccount extends Component {
                                 Office: {this.props.agencyAddressData.officeNo}
                             </div>
                         )}
-                        <div className="deliveryNote">
-                            {this.props.deliveryNote}
-                        </div>
+                        {this.props.deliveryNotes && (
+                            <div className="deliveryNote">
+                                {this.props.deliveryNotes}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="agency-wrapper">

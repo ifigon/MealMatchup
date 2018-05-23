@@ -107,16 +107,23 @@ class PageContainer extends Component {
                         <PageDoesNotExist />
                     ))}
 
-                {content === PageContent.ASSIGN_VOLUNTEERS && (
-                    <AssignVolunteersController account={account} />
-                )}
+                {content === PageContent.ASSIGN_VOLUNTEERS &&
+                    (account.accountType === AccountType.DELIVERER_GROUP ? (
+                        <AssignVolunteersController account={account} />
+                    ) : (
+                        <PageDoesNotExist />
+                    ))}
 
-                {content === PageContent.REQUEST_PICKUP && (
-                    <RecurringPickupRequest
-                        account={account}
-                        donatingAgency={donatingAgency}
-                    />
-                )}
+                {content === PageContent.REQUEST_PICKUP &&
+                    (account.accountType ===
+                    AccountType.DONATING_AGENCY_MEMBER ? (
+                            <RecurringPickupRequest
+                                account={account}
+                                donatingAgency={donatingAgency}
+                            />
+                        ) : (
+                            <PageDoesNotExist />
+                        ))}
 
                 {content === PageContent.FOOD_LOGS && (
                     <div style={{ marginTop: '120px', marginLeft: '250px' }}>
