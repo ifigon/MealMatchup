@@ -85,3 +85,8 @@
 .address-wrapper {
   display: inline;
 }
+
+.no-pending-accounts {
+  margin-left: 50px;
+  margin-top: 30px;
+}

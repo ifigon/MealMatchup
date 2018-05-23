@@ -68,7 +68,7 @@ class PendingAccountsListItem extends Component {
                         primaryContact={primaryContact}
                         primaryContactData={agencyObject.primaryContact}
                         emergencyPickup={agencyObject.acceptEmergencyPickups}
-                        deliveryNote={agencyObject.deliveryNotes}
+                        deliveryNotes={agencyObject.deliveryNotes}
                         closeDialog={this.closeDialog}
                     />
                 )}
