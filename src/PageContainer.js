@@ -58,8 +58,7 @@ class PageContainer extends Component {
 
                 <NavBar
                     content={content}
-                    account={account}
-                    donatingAgency={donatingAgency}
+                    accountType={account.accountType}
                     handler={this.navBarHandler}
                     signOut={this.props.signOut}
                 />
