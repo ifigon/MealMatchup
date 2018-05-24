@@ -1,6 +1,5 @@
 // NavBar.js
 import React, { Component } from 'react';
-import { auth } from '../../FirebaseConfig.js';
 import { AccountType, PageContent } from '../../Enums.js';
 import NavBarItem from './NavBarItem';
 import './NavBar.css';
@@ -13,13 +12,20 @@ import assign_volunteer from '../../icons/assign_volunteer.svg';
 import signout from '../../icons/logout.svg';
 import { Link } from 'react-router-dom';
 
+
 class NavBar extends Component {
-    signOut(event) {
-        event.preventDefault();
-        auth.signOut();
-    }
+    // signOut(event) {
+    //     event.preventDefault();
+
+    //     // IMPORTANT: it's important to detach the listener to the account
+    //     // when signing out, since the App component will not unmount yet
+    //     // accountsRef.child(this.props.account.uid).off();
+    //     auth.signOut();
+    // }
 
     render() {
+        const accountType = this.props.account.accountType;
+
         return (
             <div className="navbar">
                 <Link to={'/calendar'} className="nav-link">
@@ -32,7 +38,7 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER && (
+                {accountType === AccountType.DONATING_AGENCY_MEMBER && (
                     <Link to={'/request-pickup'} className="nav-link">
                         <NavBarItem
                             highlighted={
@@ -45,7 +51,7 @@ class NavBar extends Component {
                         />
                     </Link>
                 )}
-                {this.props.accountType === AccountType.DELIVERER_GROUP && (
+                {accountType === AccountType.DELIVERER_GROUP && (
                     <Link to={'/assign-volunteers'} className="nav-link">
                         {' '}
                         <NavBarItem
@@ -92,7 +98,7 @@ class NavBar extends Component {
                 <NavBarItem
                     item={'signout'}
                     icon={signout}
-                    handler={this.signOut.bind(this)}
+                    handler={this.props.signOut}
                 />
             </div>
         );
