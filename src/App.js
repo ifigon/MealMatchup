@@ -6,7 +6,6 @@ import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { Routes, PageContent, AccountType } from './Enums';
 import './App.css';
-// import { connect } from 'tls';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -34,8 +33,7 @@ class App extends Component {
                     // grab user's account object
                     accountsRef
                         .child(user.uid)
-                        .once('value')
-                        .then(
+                        .on('value',  // continually listens changes on this account
                             function(snapshot) {
                                 var account = snapshot.val();
                                 account.uid = user.uid;
@@ -64,6 +62,12 @@ class App extends Component {
         );
     }
 
+    componentWillUnmount() {
+        if (this.state.account) {
+            accountsRef.child(this.state.account.uid).off();
+        }
+    }
+
     render() {
         let path = window.location.href.split('/')[3];
         let content = '';
@@ -82,9 +86,6 @@ class App extends Component {
             break;
         case Routes.SETTINGS:
             content = PageContent.SETTINGS;
-            break;
-        case Routes.PENDING_ACCOUNTS:
-            content = PageContent.PENDING_ACCOUNTS;
             break;
         default:
             content = PageContent.CALENDAR;
@@ -108,14 +109,7 @@ class App extends Component {
                                 account={this.state.account}
                                 content={content}
                             />
-                            {!path ? (
-                                this.state.account.accountType ===
-                                AccountType.UMBRELLA ? (
-                                        <Redirect to={'/pending-accounts'} />
-                                    ) : (
-                                        <Redirect to={'/calendar'} />
-                                    )
-                            ) : null}
+                            {!path ? <Redirect to={'/calendar'} /> : null}
                         </div>
                     ) : (
                         <div>
