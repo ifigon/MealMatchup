@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from './FirebaseConfig.js';
 import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
@@ -16,34 +15,14 @@ import Settings from './PageContent/Settings/Settings.js';
 
 class PageContainer extends Component {
     constructor(props) {
-        // Props: content, account
+        // Props: content, account, donatingAgency, signOut function
         super(props);
 
         this.state = {
             content: this.props.content,
-            donatingAgency: null
         };
-        this.navBarHandler = this.navBarHandler.bind(this);
-    }
 
-    componentDidMount() {
-        // grab the DA entity if user is DA member
-        if (
-            this.props.account.accountType ===
-            AccountType.DONATING_AGENCY_MEMBER
-        ) {
-            var daRef = firebase
-                .database()
-                .ref('donating_agencies')
-                .child(this.props.account.agency);
-            daRef.once('value').then(
-                function(daSnap) {
-                    this.setState({
-                        donatingAgency: daSnap.val()
-                    });
-                }.bind(this)
-            );
-        }
+        this.navBarHandler = this.navBarHandler.bind(this);
     }
 
     navBarHandler(e) {
@@ -57,16 +36,10 @@ class PageContainer extends Component {
             content: props.content
         });
     }
-    render() {
-        // wait for all data to come through
-        let ready = (this.props.account.accountType !== AccountType.DONATING_AGENCY_MEMBER ||
-            this.state.donatingAgency);
-        if (!ready) {
-            return null;
-        }
 
-        const { account } = this.props;
-        const { content, donatingAgency } = this.state;
+    render() {
+        const { account, donatingAgency } = this.props;
+        const { content } = this.state;
 
         let pageTitle;
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
@@ -87,6 +60,7 @@ class PageContainer extends Component {
                     content={content}
                     accountType={account.accountType}
                     handler={this.navBarHandler}
+                    signOut={this.props.signOut}
                 />
 
                 {content === PageContent.CALENDAR &&
