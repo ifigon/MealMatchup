@@ -70,11 +70,12 @@ class DelivererGroupContent extends Component {
     renderDelivererInputs(deliverers) {
         let inputs = [];
         for (let i = 0; i < 2; i++) {
+            let exists = deliverers && deliverers[i];
             inputs.push((
                 <div key={i}>
                     <input
                         className="content-details deliverer-group-details"
-                        defaultValue={deliverers ? deliverers[i].name : ''}
+                        defaultValue={exists ? deliverers[i].name : ''}
                         placeholder={'name ' + (i + 1)}
                         name={'name' + i}
                         type="text"
@@ -82,7 +83,7 @@ class DelivererGroupContent extends Component {
                     />
                     <input
                         className="content-details deliverer-group-details"
-                        defaultValue={deliverers ? deliverers[i].phone : ''}
+                        defaultValue={exists ? deliverers[i].phone : ''}
                         placeholder={'phone ' + (i + 1)}
                         name={'phone' + i}
                         type="tel"
@@ -92,7 +93,7 @@ class DelivererGroupContent extends Component {
                     />
                     <input
                         className="content-details deliverer-group-details"
-                        defaultValue={deliverers ? deliverers[i].email : ''}
+                        defaultValue={exists ? deliverers[i].email : ''}
                         placeholder={'email ' + (i + 1)}
                         name={'email' + i}
                         type="email"
@@ -129,12 +130,12 @@ class DelivererGroupContent extends Component {
                             <div>
                                 {!this.state.edit ? (
                                     <div className="content-details-wrapper">
-                                        <p className="content-details">
-                                            {deliverers[0].name} ({deliverers[0].phone})
-                                        </p>
-                                        <p className="content-details">
-                                            {deliverers[1].name} ({deliverers[1].phone})
-                                        </p>
+                                        { 
+                                            deliverers.map((deliverer, i) =>
+                                                <p className="content-details">
+                                                    {deliverer.name} ({deliverer.phone})
+                                                </p>)
+                                        }
                                     </div>
                                 ) : (
                                     <div className="content-details-wrapper">
