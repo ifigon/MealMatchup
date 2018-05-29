@@ -15,6 +15,7 @@
     border-bottom: 1px solid #DDDDDD;
     margin:20px 20px 0px 20px;
     height: auto;
+    font-size: 22px;
 }
 
 .info{
@@ -48,7 +49,6 @@
 }
 
 p{
-    font-size: 22px;
     margin-bottom: 0px;
 }
 
