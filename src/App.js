@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { auth, accountsRef } from './FirebaseConfig.js';
+import { auth, accountsRef, donatingAgenciesRef } from './FirebaseConfig.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
-import { Routes, PageContent } from './Enums';
+import { AccountType, Routes, PageContent } from './Enums';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -19,8 +19,12 @@ class App extends Component {
             // TODO: a hack to prevent showing logged out page first.. better way?
             authenticated: false,
             signInDenied: false,
-            account: null
+            account: null,
+            donatingAgency: null,
         };
+
+        this.aggrAccount = this.aggrAccount.bind(this);
+        this.signOut = this.signOut.bind(this);
     }
 
     componentDidMount() {
@@ -28,41 +32,79 @@ class App extends Component {
         auth.onAuthStateChanged(
             function(user) {
                 if (user) {
-                    // grab user's account object
+                    // grab and listen to user's account
                     accountsRef
                         .child(user.uid)
-                        .on('value',  // continually listens changes on this account
-                            function(snapshot) {
-                                var account = snapshot.val();
-                                account.uid = user.uid;
-                                if (account.isVerified && account.isActivated) {
-                                    this.setState({
-                                        authenticated: true,
-                                        account: account
-                                    });
-                                } else {
-                                    // account is not verified or activated, deny sign in
-                                    this.setState({
-                                        authenticated: true,
-                                        signInDenied: true
-                                    });
-                                    auth.signOut();
-                                }
-                            }.bind(this)
-                        );
+                        .on('value', this.aggrAccount);
                 } else {
                     this.setState({
                         authenticated: true,
-                        account: null
+                        signInDenied: false,
+                        account: null,
+                        donatingAgency: null,
                     });
                 }
             }.bind(this)
         );
     }
 
+    aggrAccount(snapshot) {
+        let account = snapshot.val();
+        account.uid = snapshot.key;
+
+        if (account.isVerified && account.isActivated) {
+            // also grab and listen to the DA entity if user is DA member
+            if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+                donatingAgenciesRef
+                    .child(account.agency)
+                    .on('value', function(daSnap) {
+                        let da = daSnap.val();
+                        da.uid = daSnap.key;
+                        this.setState({
+                            authenticated: true,
+                            signInDenied: false,
+                            account: account,
+                            donatingAgency: da,
+                        });
+                    }.bind(this));
+            } else {
+                this.setState({
+                    authenticated: true,
+                    signInDenied: false,
+                    account: account,
+                    donatingAgency: null,
+                });
+            }
+        } else {
+            // account is not verified or activated, deny sign in
+            this.setState({
+                authenticated: true,
+                signInDenied: true,
+                account: null,
+                donatingAgency: null,
+            });
+            auth.signOut();
+        }
+    }
+
+    signOut(event) {
+        event.preventDefault();
+
+        // IMPORTANT: it's important to detach the listener to the account
+        // when signing out, since the App component will not unmount yet
+        accountsRef.child(this.state.account.uid).off();
+        if (this.state.donatingAgency) {
+            donatingAgenciesRef.child(this.state.donatingAgency.uid).off();
+        }
+        auth.signOut();
+    }
+
     componentWillUnmount() {
         if (this.state.account) {
             accountsRef.child(this.state.account.uid).off();
+        }
+        if (this.state.donatingAgency) {
+            donatingAgenciesRef.child(this.state.donatingAgency.uid).off();
         }
     }
 
@@ -97,7 +139,9 @@ class App extends Component {
                         <div>
                             <PageContainer
                                 account={this.state.account}
+                                donatingAgency={this.state.donatingAgency}
                                 content={content}
+                                signOut={this.signOut}
                             />
                             {!path ? <Redirect to={'/calendar'} /> : null}
                         </div>

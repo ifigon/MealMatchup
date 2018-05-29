@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Popup.css';
 import RecurringRequestController from './Recurring/RecurringRequestController';
 import close from '../../icons/cross-out.svg';
-import { AccountType, NotificationType, NotificationCategory } from '../../Enums';
+import { AccountType, NotificationType, NotificationContentType } from '../../Enums';
 import RecurringRequestCancelled from './Recurring/RecurringRequestCanceled';
 import { NotificationMap } from './NotificationMap';
 import RecurringRequestConfirmed from './Recurring/RecurringRequestConfirmed';
@@ -19,8 +19,8 @@ class NotificationDetailsController extends Component {
     }
 
     componentDidMount(){
-        let category = NotificationMap[this.state.notification.type].category;
-        if (category === NotificationCategory.RECURRING_PICKUP) {
+        let contentType = NotificationMap[this.state.notification.type].contentType;
+        if (contentType === NotificationContentType.DELIVERY_REQUEST) {
             let genSupplementaryPromise = (pathPrefix, accountId) => (new Promise(async (resolve, reject) =>
                 resolve((await db.ref(`${pathPrefix}/${accountId}`).once('value')).val())));
 

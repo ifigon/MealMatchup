@@ -1,6 +1,5 @@
 // NavBar.js
 import React, { Component } from 'react';
-import { auth } from '../../FirebaseConfig.js';
 import { AccountType, PageContent } from '../../Enums.js';
 import NavBarItem from './NavBarItem';
 import './NavBar.css';
@@ -13,12 +12,8 @@ import assign_volunteer from '../../icons/assign_volunteer.svg';
 import signout from '../../icons/logout.svg';
 import { Link } from 'react-router-dom';
 
-class NavBar extends Component {
-    signOut(event) {
-        event.preventDefault();
-        auth.signOut();
-    }
 
+class NavBar extends Component {
     render() {
         return (
             <div className="navbar">
@@ -92,7 +87,7 @@ class NavBar extends Component {
                 <NavBarItem
                     item={'signout'}
                     icon={signout}
-                    handler={this.signOut.bind(this)}
+                    handler={this.props.signOut}
                 />
             </div>
         );

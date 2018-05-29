@@ -87,29 +87,45 @@ exports.NotificationType = {
        Action: View -> Claim/Reject */
     RECURRING_PICKUP_REQUEST: 'recurring_pickup_request',
     /* When: a recurring pick has been claimed by both RA and DG
-       Receiver: DA
+       Receiver: DA, RA, DG
        Action: View -> View on Calendar */
     RECURRING_PICKUP_CONFIRMED: 'recurring_pickup_confirmed',
     /* When: no RA claims the pickup request within the deadline
        Receiver: DA
-       Action: View? */
+       Action: View */
     RECURRING_PICKUP_EXPIRED_RA: 'recurring_pickup_expired_ra',
     /* When: no DG claims the pickup request within the deadline
        Receiver: DA
-       Action: View? */
+       Action: View */
     RECURRING_PICKUP_EXPIRED_DG: 'recurring_pickup_expired_dg',
     /* When: all RAs rejected the pickup request
        Receiver: DA
-       Action: View? */
+       Action: View */
     RECURRING_PICKUP_REJECTED_RA: 'recurring_pickup_rejected_ra',
     /* When: all DGs rejected the pickup request
        Receiver: DA
-       Action: View? */
+       Action: View */
     RECURRING_PICKUP_REJECTED_DG: 'recurring_pickup_rejected_dg',
     /* When: no available RAs to send to
        Receiver: DA
-       Action: View? */
-    RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable'
+       Action: View */
+    RECURRING_PICKUP_UNAVAILABLE: 'recurring_pickup_unavailable',
+    /* When: a DA requests a new emergency pickup
+       Receiver: RA
+       Action: View -> Claim/Reject */
+    EMERGENCY_PICKUP_REQUESTED: 'emergency_pickup_requested',
+    /* When: a emergency pickup has been claimed by RA
+       Receiver: DA, RA
+       Action: View */
+    EMERGENCY_PICKUP_CONFIRMED: 'emergency_pickup_confirmed',
+    /* When: all RAs rejected the emergency pickup
+       Receiver: DA
+       Action: View */
+    EMERGENCY_PICKUP_REJECTED: 'emergency_pickup_rejected',
+    /* When: no RAs respond to the emergency pickup within the deadline
+       Receiver: DA
+       Action: View */
+    EMERGENCY_PICKUP_EXPIRED: 'emergency_pickup_expired',
 };
 
 exports.DeliveryType = {
@@ -140,8 +156,8 @@ exports.Routes = {
     SETTINGS: 'settings'
 };
 
-exports.NotificationCategory = {
-    RECURRING_PICKUP: 'recurring_pickup',
+exports.NotificationContentType = {
+    DELIVERY_REQUEST: 'delivery_request',
     ACCOUNT: 'account'
 };
 
