@@ -17,12 +17,12 @@
 
 .scs-0-content > h5 {
     font-size: 18px;
-    font-weight: 200;
+    font-weight: inherit;
 }
 
 .scs-0-content > h6, .amd-details-child > h6 {
     font-size: 14px;
-    font-weight: 200;
+    font-weight: inherit;
     margin: 2px 0px 0px 0px;
 }
 
