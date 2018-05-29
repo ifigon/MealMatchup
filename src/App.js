@@ -4,7 +4,7 @@ import { auth, accountsRef, donatingAgenciesRef } from './FirebaseConfig.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
-import { Routes, PageContent } from './Enums';
+import { AccountType, Routes, PageContent } from './Enums';
 import './App.css';
 
 // The main entry page to load when user is not signed in.
