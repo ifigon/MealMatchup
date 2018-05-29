@@ -80,10 +80,10 @@ h4 {
 }
 
 .card { 
-    -moz-box-shadow:    2px 2px 2px 2px #ccc;
+    -moz-box-shadow:    2git stpx 2px 2px 2px #ccc;
     -webkit-box-shadow: 2px 2px 2px 2px #ccc;
     box-shadow:         2px 2px 2px 2px #ccc;
-    margin: 0px 40px 40px 240px;
+    margin: 10px 40px 30px 240px;
     display: block;
     overflow: hidden;
     font-family: 'Open Sans';
