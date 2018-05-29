@@ -7,8 +7,8 @@ div {
 }
 
 hr {
-    border: 0;
-    border-top: 2px solid #DDDDDD;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    max-width: 95%;
 }
 
 h4 {
@@ -31,6 +31,7 @@ h4 {
     vertical-align: middle;
     height: 100%;
     margin-top: 10px;
+    margin-bottom: inherit;
 }
 
 .cardPicture img {
@@ -48,6 +49,11 @@ h4 {
     width: 33.3%;
     height: 10em;
     float: left;
+}
+
+.daMemberList{
+    max-height: fit-content;
+    margin-bottom: 20px;
 }
 
 .orgName {
@@ -79,15 +85,15 @@ h4 {
     width: 100%;
 }
 
-.card { 
-    -moz-box-shadow:    2px 2px 2px 2px #ccc;
-    -webkit-box-shadow: 2px 2px 2px 2px #ccc;
-    box-shadow:         2px 2px 2px 2px #ccc;
+.directory-card { 
     margin: 10px 40px 30px 240px;
     display: block;
     overflow: hidden;
     font-family: 'Open Sans';
     padding-top: 20px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
 }
 
 .title {

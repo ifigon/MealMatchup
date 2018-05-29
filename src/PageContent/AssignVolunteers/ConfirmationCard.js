@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './ConfirmationCard.css';
 import moment from 'moment';
 import { StringFormat } from '../../Enums';
+import volunteer from '../../icons/volunteer.svg';
+import vitamins from '../../icons/vitamins.svg';
+import shelter from '../../icons/shelter.svg';
 
 class ConfirmationCard extends Component {
     render() {
@@ -30,17 +33,15 @@ class ConfirmationCard extends Component {
                         </div>
                     </div>
 
-                    <div className="details-content">
-                        <div className="icon-content">
-                        </div>
+                    <div className="details-content wrapper">
+                        <img className="content-icon" src={volunteer} alt="volunteer" />
                         <div className="delivery-details">
                             <h5>Student Deliverers</h5>
                             {deliverers.map((deliverer, index) => <h6 key={index} className="det">{deliverer.name} ({deliverer.phone})</h6>)}
                         </div>
                     </div>
-                    <div className="details-content">
-                        <div className="icon-content">
-                        </div>
+                    <div className="details-content wrapper">
+                        <img className="content-icon" src={vitamins} alt="logo" />
                         <div className="delivery-details">
                             <h5>Dining Hall</h5>
                             <h4>{donatingAgency.name}</h4>
@@ -49,9 +50,8 @@ class ConfirmationCard extends Component {
                             <h6 className="det">{`${donatingAgency.address.city}, ${donatingAgency.address.state} ${donatingAgency.address.zipcode}`}</h6>
                         </div>
                     </div>
-                    <div className="details-content">
-                        <div className="icon-content">
-                        </div>
+                    <div className="details-content wrapper">
+                        <img className="content-icon" src={shelter} alt="shelter" />
                         <div className="delivery-details">
                             <h5>Recipient</h5>
                             <h4>{receivingAgency.name}</h4>
@@ -59,9 +59,6 @@ class ConfirmationCard extends Component {
                             <h6 className="det">{receivingAgency.address.street1}</h6>
                             <h6 className="det">{`${receivingAgency.address.city}, ${receivingAgency.address.state} ${receivingAgency.address.zipcode}`}</h6>
                         </div>
-                    </div>
-                    <div className="details-content">
-                        <div className="icon-content"></div>
                     </div>
                     <div className="details-content">
                         <div className="button-container">
