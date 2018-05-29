@@ -22,11 +22,11 @@ class DirectoryCard extends Component {
     getDaMemberView() {
         let daMemberListView = this.props.members.map(
             member =>  
-                <div className='card-detail-3' key={member.contactName}>
-                    <h4>{member.contactName}</h4>
-                    <h4>{member.contactTitle}</h4>
-                    <p>{member.contactEmail}</p>
-                    <p>Business: {member.contactNumber}</p>
+                <div className='card-detail-3 daMemberList' key={member.contactName}>
+                    <p>{member.contactName}</p>
+                    <p><i>{member.contactTitle}</i></p>
+                    <p className='note number'>{member.contactEmail}</p>
+                    <p className='note number'>Business: {member.contactNumber}</p>
                 </div>
         );
         return daMemberListView;
@@ -43,7 +43,7 @@ class DirectoryCard extends Component {
             this.getDaMemberView() : null;
 
         return (
-            <div className='card'>
+            <div className='directory-card'>
                 <h1 className='orgName'>{ this.props.organization }</h1>
                 <hr />
                 <div className='cardPicture'>
