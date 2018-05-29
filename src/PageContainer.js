@@ -3,6 +3,7 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import Directory from './PageContent/Directory/DirectoryPage.js';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
@@ -86,11 +87,9 @@ class PageContainer extends Component {
                     <FoodLogs account={account} />
                 )}
 
-                {content === PageContent.DIRECTORY && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
-                )}
+                {this.state.content === PageContent.DIRECTORY &&
+                    <Directory account={this.props.account} />
+                }
 
                 {this.state.content === PageContent.SETTINGS && (
                     <Settings 
