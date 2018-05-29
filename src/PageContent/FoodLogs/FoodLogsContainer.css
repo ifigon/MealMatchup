@@ -31,12 +31,7 @@
     z-index: 1;
 }
 .dropdown {
-    display: inline;
-}
-
-span{
-    color: #5DC0F9;
-    font-size: 16px;
+    display: inline; 
 }
 
 .nothing-found-propmt {
