@@ -24,7 +24,7 @@ class DirectoryPage extends Component {
     }
 
     async componentDidMount() {
-        let umbrellaId = await this.getUmbrellaId();
+        let umbrellaId = this.getUmbrellaId();
         await this.setState({umbrellaId: umbrellaId});
         this.fetchOrgs();
     }
@@ -35,23 +35,12 @@ class DirectoryPage extends Component {
         db.ref('donating_agencies').orderByChild('umbrella').equalTo(this.state.umbrellaId).off();
     }
 
-    async getUmbrellaId() {
+    getUmbrellaId() {
         const { account }= this.props;
-        switch (account.accountType) {
-        case AccountType.DONATING_AGENCY_MEMBER: { // get umbrellaId from db.ref(`donating_agencies)
-            let daSnapshot = await db.ref(`donating_agencies/${account.agency}`).once('value');
-            let { umbrella } = daSnapshot.val();
-            return umbrella;
+        if (account.accountType === AccountType.UMBRELLA) {
+            return account.uid;     
         }
-        case AccountType.RECEIVING_AGENCY:
-            return account.umbrella;
-        case AccountType.DELIVERER_GROUP:
-            return account.umbrella;
-        case AccountType.UMBRELLA: // if the currently logged in account is umbrella, return userId of this account
-            return account.uid;
-        default:
-            return;
-        }
+        return account.umbrella;
     }
 
     fetchOrgs() {
@@ -87,7 +76,7 @@ class DirectoryPage extends Component {
             for (let key in accountObjects) {
                 let accountItem = accountObjects[key];
                 if (accountObjects.hasOwnProperty(key)  // filter out prototype props
-                    && orgTypes.includes(accountItem.accountType)) { // if accountType is in orgTypes 
+                    && orgTypes.includes(accountItem.accountType) && accountItem.isVerified) { // if accountType is in orgTypes 
                     let org = this.aggrRAorDGOrgObj(accountItem);
                     if (accountItem.accountType === AccountType.RECEIVING_AGENCY) {
                         raList.push(org);

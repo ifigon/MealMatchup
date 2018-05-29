@@ -8,7 +8,7 @@ div {
 
 hr {
     border: 0;
-    border-top: 2px solid #ccc;
+    border-top: 2px solid #DDDDDD;
 }
 
 h4 {
@@ -56,6 +56,7 @@ h4 {
     color: #243847;
     padding: 15px;
     font-size: 24px;
+    padding-left: 38px;
 }
 
 .note {
@@ -82,15 +83,16 @@ h4 {
     -moz-box-shadow:    2px 2px 2px 2px #ccc;
     -webkit-box-shadow: 2px 2px 2px 2px #ccc;
     box-shadow:         2px 2px 2px 2px #ccc;
-    margin: 0px 20px 10px 220px;
+    margin: 0px 40px 40px 240px;
     display: block;
     overflow: hidden;
     font-family: 'Open Sans';
+    padding-top: 20px;
 }
 
 .title {
     font-size: 24px;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 10px;
 }
 
