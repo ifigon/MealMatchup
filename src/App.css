@@ -2,6 +2,7 @@
   background-color: red;
   color: white;
   z-index: 9999;
-  position: relative;
+  position: sticky;
   text-align: center;
+  top: 0px;
 }
