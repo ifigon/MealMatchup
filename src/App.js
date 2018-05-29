@@ -4,7 +4,11 @@ import { auth, accountsRef, donatingAgenciesRef } from './FirebaseConfig.js';
 import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
+<<<<<<< HEAD
 import { AccountType, Routes, PageContent } from './Enums';
+=======
+import { Routes, PageContent } from './Enums';
+>>>>>>> d58bc3958d01c8b16ec22188c41dbd92d36d5f25
 import './App.css';
 
 // The main entry page to load when user is not signed in.
@@ -21,7 +25,10 @@ class App extends Component {
             authenticated: false,
             signInDenied: false,
             account: null,
+<<<<<<< HEAD
             donatingAgency: null,
+=======
+>>>>>>> d58bc3958d01c8b16ec22188c41dbd92d36d5f25
             isChrome: !!window.chrome && !!window.chrome.webstore
         };
 
