@@ -5,6 +5,7 @@ import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { AccountType, Routes, PageContent } from './Enums';
+import './App.css';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -21,6 +22,7 @@ class App extends Component {
             signInDenied: false,
             account: null,
             donatingAgency: null,
+            isChrome: !!window.chrome && !!window.chrome.webstore
         };
 
         this.aggrAccount = this.aggrAccount.bind(this);
@@ -133,6 +135,14 @@ class App extends Component {
         }
         return (
             <div className="">
+                {
+                    !this.state.isChrome ? 
+                        <div className="browser-check">
+                        WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
+                        </div>
+                        :
+                        null
+                }
                 {this.state.authenticated ? (
                     this.state.account ? (
                         /* Show Calendar page if user is logged in */
