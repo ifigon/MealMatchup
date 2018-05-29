@@ -32,8 +32,8 @@ class MemberAccount extends Component {
                                         </div>
 
                                     </div>
-                                    
-                                    <button type="button" id={index} className="form-button confirm-button-assign settings-remove-button" onClick={this.handleRemove.bind(this)}>Remove</button>
+                                    {/* TODO: implemement handleRemove */}
+                                    {/* <button type="button" id={index} className="form-button confirm-button-assign settings-remove-button" onClick={this.handleRemove.bind(this)}>Remove</button> */}
 
                                 </div>
                             );
