@@ -29,21 +29,23 @@ class PendingAccountsListItem extends Component {
 
     acceptAccount(uid, daContactId) {
         const updates = { isVerified: true, isActivated: true };
-        if (daContactId) {
-            donatingAgenciesRef.child(uid).update(updates, this.closeDialog);
-            accountsRef.child(daContactId).update(updates, this.closeDialog);
+        if (daContactId) { // accountType == donating agnecy 
+            donatingAgenciesRef.child(uid).update(updates);
+            accountsRef.child(daContactId).update(updates);
         } else {
-            accountsRef.child(uid).update(updates, this.closeDialog);
+            accountsRef.child(uid).update(updates);
         }
+        this.closeDialog();
     }
 
     rejectAccount(uid, daContactId) {
-        if (daContactId) {
-            donatingAgenciesRef.child(uid).remove(this.closeDialog);
-            accountsRef.child(daContactId).remove(this.closeDialog);
+        if (daContactId) { // accountType == donating agnecy 
+            donatingAgenciesRef.child(uid).remove();
+            accountsRef.child(daContactId).remove();
         } else {
-            accountsRef.child(uid).remove(this.closeDialog);
+            accountsRef.child(uid).remove();
         }
+        this.closeDialog();
     }
 
     render() {
