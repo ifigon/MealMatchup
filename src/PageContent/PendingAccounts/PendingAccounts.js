@@ -52,8 +52,9 @@ class PendingAccounts extends Component {
     }
 
     componentWillUnmount() {
-        accountsRef.orderByChild('isVerified').equalTo(false).off();
-        donatingAgenciesRef.orderByChild('isVerified').equalTo(false).off();
+        const { uid } = this.props.account;
+        accountsRef.orderByChild('umbrella').equalTo(uid).off();
+        donatingAgenciesRef.orderByChild('umbrella').equalTo(uid).off();
     }
 
     render() {
