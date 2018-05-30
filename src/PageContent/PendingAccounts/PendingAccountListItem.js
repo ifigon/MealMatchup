@@ -29,7 +29,7 @@ class PendingAccountsListItem extends Component {
 
     acceptAccount(uid, daContactId) {
         const updates = { isVerified: true, isActivated: true };
-        if (daContactId) { // accountType == donating agnecy 
+        if (daContactId) { // accountType == donating agency 
             donatingAgenciesRef.child(uid).update(updates);
             accountsRef.child(daContactId).update(updates);
         } else {
@@ -39,7 +39,7 @@ class PendingAccountsListItem extends Component {
     }
 
     rejectAccount(uid, daContactId) {
-        if (daContactId) { // accountType == donating agnecy 
+        if (daContactId) { // accountType == donating agency 
             donatingAgenciesRef.child(uid).remove();
             accountsRef.child(daContactId).remove();
         } else {
