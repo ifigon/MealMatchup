@@ -36,8 +36,10 @@ class PendingAccounts extends Component {
                 const da = snap.val();
                 if (da.umbrella === uid) {
                     const daPromise = new Promise( async (resolve, reject) => {
-                        const daContactSnapshot = await accountsRef.child(da.primaryContact).once('value');
+                        const daContactId = da.primaryContact;
+                        const daContactSnapshot = await accountsRef.child(daContactId).once('value');
                         da.primaryContact = daContactSnapshot.val();
+                        da.primaryContact.uid = daContactId;
                         const daObj = {};
                         daObj[snap.key] = da;
                         resolve(daObj);

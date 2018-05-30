@@ -84,13 +84,27 @@ class VerifyAccount extends Component {
                 )}
                 <div className="verification-buttons">
                     <div
-                        onClick={this.props.closeDialog}
+                        onClick={() => { 
+                            const { agencyUId, accountType, primaryContactData, acceptAccount } = this.props;
+                            if (accountType === 'Donating Agency') {
+                                acceptAccount(agencyUId, primaryContactData.uid);
+                            } else {
+                                acceptAccount(agencyUId, null);            
+                            }
+                        }}
                         className="verify-accept verify-button"
                     >
                         Accept
                     </div>
                     <div
-                        onClick={this.props.closeDialog}
+                        onClick={() => { 
+                            const { agencyUId, accountType, primaryContactData, rejectAccount } = this.props;
+                            if (accountType === 'Donating Agency') {
+                                rejectAccount(agencyUId, primaryContactData.uid);
+                            } else {
+                                rejectAccount(agencyUId, null);            
+                            }
+                        }}
                         className="verify-reject verify-button"
                     >
                         Reject

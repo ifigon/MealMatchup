@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './PendingAccounts.css';
 import { AccountType } from '../../Enums';
 import VerifyAccount from './VerifyAccount';
+import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig';
 
 class PendingAccountsListItem extends Component {
     constructor(props) {
@@ -11,6 +12,8 @@ class PendingAccountsListItem extends Component {
         };
         this.openDialog = this.openDialog.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
+        this.rejectAccount = this.rejectAccount.bind(this);
+        this.acceptAccount = this.acceptAccount.bind(this);
     }
     openDialog() {
         this.setState({
@@ -23,9 +26,29 @@ class PendingAccountsListItem extends Component {
             dialog: false
         });
     }
+
+    acceptAccount(uid, daContactId) {
+        const updates = { isVerified: true, isActivated: true };
+        if (daContactId) {
+            donatingAgenciesRef.child(uid).update(updates, this.closeDialog);
+            accountsRef.child(daContactId).update(updates, this.closeDialog);
+        } else {
+            accountsRef.child(uid).update(updates, this.closeDialog);
+        }
+    }
+
+    rejectAccount(uid, daContactId) {
+        if (daContactId) {
+            donatingAgenciesRef.child(uid).remove(this.closeDialog);
+            accountsRef.child(daContactId).remove(this.closeDialog);
+        } else {
+            accountsRef.child(uid).remove(this.closeDialog);
+        }
+    }
+
     render() {
-        let keys = Object.keys(this.props.data);
-        let agencyObject = this.props.data[keys];
+        let key = Object.keys(this.props.data);
+        let agencyObject = this.props.data[key];
         let accountType = '';
         switch (agencyObject.accountType) {
         case AccountType.RECEIVING_AGENCY:
@@ -64,12 +87,14 @@ class PendingAccountsListItem extends Component {
                     <VerifyAccount
                         accountType={accountType}
                         agencyName={agencyName}
+                        agencyUId={key[0]}
                         agencyAddressData={agencyObject.address}
                         primaryContact={primaryContact}
                         primaryContactData={agencyObject.primaryContact}
                         emergencyPickup={agencyObject.acceptEmergencyPickups}
                         deliveryNotes={agencyObject.deliveryNotes}
-                        closeDialog={this.closeDialog}
+                        rejectAccount={this.rejectAccount}
+                        acceptAccount={this.acceptAccount}
                     />
                 )}
             </div>
