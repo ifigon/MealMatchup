@@ -1,10 +1,63 @@
 import React, { Component } from 'react';
 import './PendingAccounts.css';
 import PendingAccountsListItem from './PendingAccountListItem';
+import { AccountType } from '../../Enums.js';
+import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig';
 
 class PendingAccounts extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            orgAccounts: [],
+            daAccounts: [],
+        };
+    }
+    
+    componentDidMount() {
+        const { uid } = this.props.account;
+        accountsRef.orderByChild('isVerified').equalTo(false).on('value', (snapshot) => { 
+            let accounts = [];
+            snapshot.forEach(snap => {
+                const account = snap.val();
+                if (account.umbrella === uid 
+                    && account.accountType !== AccountType.DONATING_AGENCY_MEMBER) {  // deal with da member in da table
+                        const acctObj = {};
+                        acctObj[snap.key] = account;
+                        accounts.push(acctObj);
+                }
+            });
+            this.setState({orgAccounts: accounts}); 
+        });
+
+        donatingAgenciesRef.orderByChild('isVerified').equalTo(false).on('value', async (snapshot) => { 
+            let daPromises = [];
+            snapshot.forEach(snap => {
+                const da = snap.val();
+                if (da.umbrella === uid) {
+                    const daPromise = new Promise( async (resolve, reject) => {
+                        const daContactSnapshot = await accountsRef.child(da.primaryContact).once('value');
+                        da.primaryContact = daContactSnapshot.val();
+                        const daObj = {};
+                        daObj[snap.key] = da;
+                        resolve(daObj);
+                    });
+                    daPromises.push(daPromise);
+                }
+            });
+            const daList = await Promise.all(daPromises);
+            this.setState({daAccounts: daList}); 
+        }); 
+    }
+
+    componentWillUnmount() {
+        accountsRef.orderByChild('isVerified').equalTo(false).off();
+        donatingAgenciesRef.orderByChild('isVerified').equalTo(false).off();
+    }
+
     render() {
-        let data = [];
+        const { orgAccounts, daAccounts } = this.state;
+        const data = orgAccounts.concat(daAccounts);
         // dummy data
         // let data = [
         //     {
@@ -114,7 +167,7 @@ class PendingAccounts extends Component {
         //     }
         // ];
         let listItems = data.map((item, index) => {
-            return <PendingAccountsListItem data={item} />;
+            return <PendingAccountsListItem data={item} key={index} />;
         });
 
         return (
