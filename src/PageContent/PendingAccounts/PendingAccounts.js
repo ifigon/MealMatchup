@@ -4,8 +4,7 @@ import PendingAccountsListItem from './PendingAccountListItem';
 import { AccountType } from '../../Enums.js';
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig';
 
-class PendingAccounts extends Component {
-    
+class PendingAccounts extends Component { 
     constructor(props) {
         super(props);
         this.state = {

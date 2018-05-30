@@ -15,6 +15,7 @@ class PendingAccountsListItem extends Component {
         this.rejectAccount = this.rejectAccount.bind(this);
         this.acceptAccount = this.acceptAccount.bind(this);
     }
+    
     openDialog() {
         this.setState({
             dialog: true
