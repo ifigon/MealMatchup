@@ -16,11 +16,12 @@ class PendingAccounts extends Component {
     
     componentDidMount() {
         const { uid } = this.props.account;
-        accountsRef.orderByChild('umbrella').equalTo(uid).on('value', (snapshot) => { 
+        accountsRef.orderByChild('isVerified').equalTo(false).on('value', (snapshot) => { 
             let accounts = [];
             snapshot.forEach(snap => {
                 const account = snap.val();
-                if (account.accountType !== AccountType.DONATING_AGENCY_MEMBER) {  // deal with da member in da table below
+                if (account.umbrella === uid // only accounts under this umbrella
+                    && account.accountType !== AccountType.DONATING_AGENCY_MEMBER) {  // deal with da member in da table below
                     const acctObj = {};
                     acctObj[snap.key] = account;
                     accounts.push(acctObj);
@@ -29,22 +30,24 @@ class PendingAccounts extends Component {
             this.setState({orgAccounts: accounts}); 
         });
 
-        donatingAgenciesRef.orderByChild('umbrella').equalTo(uid).on('value', async (snapshot) => { 
+        donatingAgenciesRef.orderByChild('isVerified').equalTo(false).on('value', async (snapshot) => { 
             let daPromises = [];
             snapshot.forEach(snap => {
                 const da = snap.val();
-                const daPromise = new Promise( async (resolve, reject) => {
-                    // get daContact Info
-                    const daContactId = da.primaryContact;
-                    const daContactSnapshot = await accountsRef.child(daContactId).once('value');
-                    da.primaryContact = daContactSnapshot.val();
-                    da.primaryContact.uid = daContactId;
-                    
-                    const daObj = {};
-                    daObj[snap.key] = da;
-                    resolve(daObj);
-                });
-                daPromises.push(daPromise);
+                if (da.umbrella === uid) { // only accounts under this umbrella
+                    const daPromise = new Promise( async (resolve, reject) => {
+                        // get daContact Info
+                        const daContactId = da.primaryContact;
+                        const daContactSnapshot = await accountsRef.child(daContactId).once('value');
+                        da.primaryContact = daContactSnapshot.val();
+                        da.primaryContact.uid = daContactId;
+                        
+                        const daObj = {};
+                        daObj[snap.key] = da;
+                        resolve(daObj);
+                    });
+                    daPromises.push(daPromise);
+                }
             });
             const daList = await Promise.all(daPromises);
             this.setState({daAccounts: daList}); 
@@ -52,9 +55,8 @@ class PendingAccounts extends Component {
     }
 
     componentWillUnmount() {
-        const { uid } = this.props.account;
-        accountsRef.orderByChild('umbrella').equalTo(uid).off();
-        donatingAgenciesRef.orderByChild('umbrella').equalTo(uid).off();
+        accountsRef.orderByChild('isVerified').equalTo(false).off();
+        donatingAgenciesRef.orderByChild('isVerified').equalTo(false).off();
     }
 
     render() {
