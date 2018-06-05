@@ -18,7 +18,6 @@ class MobileController extends React.Component {
             deliveryObj: {
                 startTime: '',
                 endTime: '',
-                isEmergency: null,
                 donatingAgency: '',
                 daContact: '',
                 receivingAgency: '',
@@ -78,8 +77,8 @@ class MobileController extends React.Component {
     
     getDeliveryObj(rawDelivery) {
         let deliveryObj = ( // pick entries from rawDelivery
-            ({ description, delivererGroup, deliverers, notes, isEmergency, status, pickedUpInfo, deliveredInfo }) => 
-                ({ description, delivererGroup, deliverers, notes, isEmergency, status, pickedUpInfo, deliveredInfo })
+            ({ description, delivererGroup, deliverers, notes, status, pickedUpInfo, deliveredInfo }) => 
+                ({ description, delivererGroup, deliverers, notes, status, pickedUpInfo, deliveredInfo })
         )(rawDelivery);
 
         let startTimeObj = moment(rawDelivery.startTimestamp);

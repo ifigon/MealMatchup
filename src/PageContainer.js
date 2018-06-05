@@ -1,48 +1,31 @@
 import React, { Component } from 'react';
-import firebase from './FirebaseConfig.js';
 import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import Directory from './PageContent/Directory/DirectoryPage.js';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
 import PendingAccounts from './PageContent/PendingAccounts/PendingAccounts';
 import PageDoesNotExist from './PageContent/PageDoesNotExist/PageDoesNotExist';
+import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
+import Settings from './PageContent/Settings/Settings.js';
+
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
 
 class PageContainer extends Component {
     constructor(props) {
-        // Props: content, account
+        // Props: content, account, donatingAgency, signOut function
         super(props);
 
         this.state = {
-            content: this.props.content,
-            donatingAgency: null
+            content: this.props.content
         };
-        this.navBarHandler = this.navBarHandler.bind(this);
-    }
 
-    componentDidMount() {
-        // grab the DA entity if user is DA member
-        if (
-            this.props.account.accountType ===
-            AccountType.DONATING_AGENCY_MEMBER
-        ) {
-            var daRef = firebase
-                .database()
-                .ref('donating_agencies')
-                .child(this.props.account.agency);
-            daRef.once('value').then(
-                function(daSnap) {
-                    this.setState({
-                        donatingAgency: daSnap.val()
-                    });
-                }.bind(this)
-            );
-        }
+        this.navBarHandler = this.navBarHandler.bind(this);
     }
 
     navBarHandler(e) {
@@ -56,6 +39,7 @@ class PageContainer extends Component {
             content: props.content
         });
     }
+
     render() {
         // wait for all data to come through
         let ready =
@@ -64,9 +48,8 @@ class PageContainer extends Component {
         if (!ready) {
             return null;
         }
-
-        const { account } = this.props;
-        const { content, donatingAgency } = this.state;
+        const { account, donatingAgency } = this.props;
+        const { content } = this.state;
 
         let pageTitle;
         if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
@@ -83,6 +66,7 @@ class PageContainer extends Component {
                     content={content}
                     accountType={account.accountType}
                     handler={this.navBarHandler}
+                    signOut={this.props.signOut}
                 />
 
                 {content === PageContent.CALENDAR &&
@@ -126,21 +110,15 @@ class PageContainer extends Component {
                         ))}
 
                 {content === PageContent.FOOD_LOGS && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
+                    <FoodLogs account={account} />
                 )}
 
-                {content === PageContent.DIRECTORY && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
+                {this.state.content === PageContent.DIRECTORY && (
+                    <Directory account={this.props.account} />
                 )}
 
-                {content === PageContent.SETTINGS && (
-                    <div style={{ marginTop: '120px', marginLeft: '250px' }}>
-                        Feature coming soon!
-                    </div>
+                {this.state.content === PageContent.SETTINGS && (
+                    <Settings account={this.props.account} />
                 )}
             </div>
         );

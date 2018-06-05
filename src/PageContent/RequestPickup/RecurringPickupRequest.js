@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import firebase, { accountsRef } from '../../FirebaseConfig.js';
 import {
+    DeliveryType,
+    InputFormat,
     RequestRepeatType,
     RequestEndCriteriaType,
-    RequestStatus,
-    InputFormat
+    RequestStatus
 } from '../../Enums.js';
 import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
@@ -258,6 +259,7 @@ class RecurringPickupRequest extends Component {
 
             // create DeliveryRequest object
             var deliveryRequest = {
+                type: DeliveryType.RECURRING,
                 status: RequestStatus.PENDING,
                 startTimestamp: startTimestamp,
                 endTimestamp: endTimestamp,

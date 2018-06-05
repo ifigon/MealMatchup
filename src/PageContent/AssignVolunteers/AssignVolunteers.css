@@ -67,7 +67,7 @@
 .details {
     font-size: 11px;
     color: #828282;
-    font-weight: 200;
+    font-weight: inherit;
 }
 
 .form-parent {
