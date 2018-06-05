@@ -40,6 +40,24 @@ class ReceivingAgencySignUp3 extends Component {
         );
     }
 
+    checkDaysTime() {
+        let daysTimeList = document.getElementsByClassName('row');
+        for(let key in daysTimeList) {
+            if(daysTimeList[key].childNodes) {
+                let dayCheck = daysTimeList[key].childNodes[0].checked;
+                let startTime =  daysTimeList[key].childNodes[2].value.length;
+                let endTime = daysTimeList[key].childNodes[4].value.length;
+                if((dayCheck && (startTime === 0 || endTime === 0)) || 
+                (startTime > 0 && endTime === 0) || 
+                (startTime === 0 && endTime > 0) || 
+                (startTime > 0 && endTime > 0 && !dayCheck)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     render() {
         return (
             <form onSubmit={this.nextStep}>
@@ -103,8 +121,10 @@ class ReceivingAgencySignUp3 extends Component {
             endLbs: e.target.endLbs.value,
         };
 
-        this.props.saveValues(data);
-        this.props.nextStep();
+        if(this.checkDaysTime()) {
+            this.props.saveValues(data);
+            this.props.nextStep();
+        }
     }
 }
 export default ReceivingAgencySignUp3;
