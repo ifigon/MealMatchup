@@ -56,7 +56,7 @@ class RequestPickup extends Component {
             .child(umbrella)
             .once('value')
             .then(
-                function (umbrellaSnap) {
+                function(umbrellaSnap) {
                     // add receiving agencies in the same umbrella to state.receivingAgencies
                     var ras = umbrellaSnap.val().receivingAgencies;
                     this.addListToState(ras, 'receivingAgencies', false);
@@ -76,7 +76,7 @@ class RequestPickup extends Component {
                 .child(list[key])
                 .once('value')
                 .then(
-                    function (snap) {
+                    function(snap) {
                         var snapVal = snap.val();
 
                         // if adding agencies, only add verified and activated ones
@@ -214,7 +214,8 @@ class RequestPickup extends Component {
                 // compute ending Timestamp
                 let endTimestamp;
                 if (
-                    event.target.endCriteria.value === RequestEndCriteriaType.DATE
+                    event.target.endCriteria.value ===
+                    RequestEndCriteriaType.DATE
                 ) {
                     durationValue = event.target.endDate.value;
                     endTimestamp = dateTimeStringToTimestamp(
@@ -266,7 +267,9 @@ class RequestPickup extends Component {
                     dgInfo['requested'] = dgRequested.id;
                 } else {
                     // if no specific DG requested, add all DGs to pending list
-                    dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
+                    dgInfo['pending'] = this.state.delivererGroups.map(
+                        dg => dg.id
+                    );
                 }
 
                 primaryContact = this.state.memberList[
@@ -305,9 +308,7 @@ class RequestPickup extends Component {
                 this.toggleModal();
             } else {
                 //BACKEND TODO": fill in create request for EMERGENCY pickups
-
                 //This works, but make sure matches schema
-
                 // var dummyData = {
                 //     delivererGroup: {
                 //         pending: ['TkEYXYz4nPXYDgGgnY6SPSmMvHq1', '5rOE8iMtLtbCHgvOxsoNevqwbzS2']
@@ -327,8 +328,6 @@ class RequestPickup extends Component {
                 //     timezone: 'America/Los_Angeles',
                 //     umbrella: 'NLRZo1xfPHOI8rGpzSKiEJVOOUt2'
                 // };
-
-
                 // let reqTimezone = this.props.donatingAgency.timezone;
                 // let dateTimeStringToTimestamp = (dateString, timeString) =>
                 //     moment
@@ -345,18 +344,15 @@ class RequestPickup extends Component {
                 //     event.target.Date.value,
                 //     event.target.startTime.value
                 // );
-
                 // let endTimestamp = dateTimeStringToTimestamp(
                 //     event.target.Date.value,
                 //     event.target.endTime.value
                 // );
-
                 // let pickupTimeDiffMs = (
                 //     moment(event.target.endTime.value, InputFormat.TIME) -
                 //     moment(event.target.startTime.value, InputFormat.TIME)
                 // ).valueOf();
                 // endTimestamp += pickupTimeDiffMs; //encode endTime
-
                 // if (raIndex) {
                 //     raRequested = this.state.receivingAgencies[raIndex];
                 //     raInfo['requested'] = raRequested.id;
@@ -366,7 +362,6 @@ class RequestPickup extends Component {
                 //         ra => ra.id
                 //     );
                 // }
-
                 // if (dgIndex) {
                 //     dgRequested = this.state.delivererGroups[dgIndex];
                 //     dgInfo['requested'] = dgRequested.id;
@@ -376,7 +371,6 @@ class RequestPickup extends Component {
                 //         dg => dg.id
                 //     );
                 // }
-
                 // // Recurring DeliveryRequest object
                 // deliveryRequest = {
                 //     status: RequestStatus.PENDING,
@@ -393,14 +387,12 @@ class RequestPickup extends Component {
                 //     foodItems: this.state.foodRows,
                 //     requestTimestamp: Date.now()
                 // };
-
                 // this.setState({
                 //     request: deliveryRequest,
                 //     primaryContact: primaryContact,
                 //     raRequested: raRequested,
                 //     dgRequested: dgRequested
                 // });
-
                 // this.toggleModal();
             }
         }
@@ -430,14 +422,19 @@ class RequestPickup extends Component {
         if (name !== '' && weight !== '' && label !== '') {
             this.setState(prevState => {
                 let foodRows = prevState.foodRows;
-                foodRows.push({ foodName: name, foodWeight: weight, foodWeightLabel: label });
+                foodRows.push({
+                    foodName: name,
+                    foodWeight: weight,
+                    foodWeightLabel: label
+                });
                 return { foodRows: foodRows };
             });
         } else {
-            alert('To add another row, please fill out the name, weight and unit of each food item.');
+            alert(
+                'To add another row, please fill out the name, weight and unit of each food item.'
+            );
         }
     }
-
 
     render() {
         return (
@@ -450,49 +447,49 @@ class RequestPickup extends Component {
                         memberList={this.state.memberList}
                         delivererGroups={this.state.delivererGroups}
                         receivingAgencies={this.state.receivingAgencies}
-                    // handleChange={this.handleChange}
+                        // handleChange={this.handleChange}
                     />
                 ) : (
-                        <EmergencyPickupForm
-                            createRequest={this.createRequest}
-                            errors={this.state.errors}
-                            memberList={this.state.memberList}
-                            handleChange={this.handleChange}
-                            foodRows={this.state.foodRows}
-                            addFood={this.addFood}
-                        />
-                    )}
+                    <EmergencyPickupForm
+                        createRequest={this.createRequest}
+                        errors={this.state.errors}
+                        memberList={this.state.memberList}
+                        handleChange={this.handleChange}
+                        foodRows={this.state.foodRows}
+                        addFood={this.addFood}
+                    />
+                )}
 
                 {this.state.showPopup &&
                     this.props.formType === DeliveryType.RECURRING && (
-                        <PickupSummary
-                            title={'Request Recurring Pickup'}
-                            request={this.state.request}
-                            donatingAgency={this.props.donatingAgency}
-                            primaryContact={this.state.primaryContact}
-                            raRequested={this.state.raRequested}
-                            dgRequested={this.state.dgRequested}
-                            onClose={this.toggleModal}
-                            onConfirm={this.submitRequest}
-                            submissionError={this.state.submissionError}
-                            type={this.props.formType}
-                        />
-                    )}
+                    <PickupSummary
+                        title={'Request Recurring Pickup'}
+                        request={this.state.request}
+                        donatingAgency={this.props.donatingAgency}
+                        primaryContact={this.state.primaryContact}
+                        raRequested={this.state.raRequested}
+                        dgRequested={this.state.dgRequested}
+                        onClose={this.toggleModal}
+                        onConfirm={this.submitRequest}
+                        submissionError={this.state.submissionError}
+                        type={this.props.formType}
+                    />
+                )}
                 {this.state.showPopup &&
                     this.props.formType === DeliveryType.EMERGENCY && (
-                        <PickupSummary
-                            title={'Request Emergency Pickup'}
-                            request={this.state.request}
-                            donatingAgency={this.props.donatingAgency}
-                            primaryContact={this.state.primaryContact}
-                            raRequested={this.state.raRequested}
-                            dgRequested={this.state.dgRequested}
-                            onClose={this.toggleModal}
-                            onConfirm={this.submitRequest}
-                            submissionError={this.state.submissionError}
-                            type={this.props.formType}
-                        />
-                    )}
+                    <PickupSummary
+                        title={'Request Emergency Pickup'}
+                        request={this.state.request}
+                        donatingAgency={this.props.donatingAgency}
+                        primaryContact={this.state.primaryContact}
+                        raRequested={this.state.raRequested}
+                        dgRequested={this.state.dgRequested}
+                        onClose={this.toggleModal}
+                        onConfirm={this.submitRequest}
+                        submissionError={this.state.submissionError}
+                        type={this.props.formType}
+                    />
+                )}
                 {this.state.showConfirmation && (
                     <PickupRequestedConfirmation
                         request={this.state.request}

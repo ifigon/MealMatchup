@@ -22,10 +22,10 @@ class RequestTypeToggle extends Component {
                             Schedule Recurring Pickup
                         </div>
                     ) : (
-                            <div className="emergency-toggle toggle">
-                                Schedule Emergency Pickup
+                        <div className="emergency-toggle toggle">
+                            Schedule Emergency Pickup
                         </div>
-                        )}
+                    )}
                     <a data-tip={infoTooltip}>
                         {' '}
                         <img
