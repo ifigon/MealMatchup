@@ -29,7 +29,9 @@ class PendingAccountsListItem extends Component {
 
     closeDialog() {
         this.setState({
-            dialog: false
+            dialog: false,
+            acceptPopUp: false,
+            rejectPopUp: false
         });
     }
     acceptPopUp() {
@@ -116,12 +118,14 @@ class PendingAccountsListItem extends Component {
                     <ConfirmActivate
                         confirmAccept={this.confirmAccept}
                         back={this.back}
+                        closeDialog={this.closeDialog}
                     />
                 )}
                 {this.state.rejectPopUp && (
                     <ConfirmReject
                         confirmReject={this.confirmReject}
                         back={this.back}
+                        closeDialog={this.closeDialog}
                     />
                 )}
             </div>

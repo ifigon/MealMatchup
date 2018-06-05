@@ -21,3 +21,22 @@
 .confirm-button-wrapper {
   margin-top: 300px;
 }
+
+.close-dialog {
+  display: inline;
+}
+
+.close-x-confirm {
+  position: relative;
+  padding-left: 20px;
+  vertical-align: top;
+  padding-top: 10px;
+}
+.close-x-confirm:hover {
+  cursor: pointer;
+}
+
+.confirmation-message {
+  display: inline-block;
+  width: 700px;
+}
