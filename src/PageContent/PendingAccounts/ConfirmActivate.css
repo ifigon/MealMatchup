@@ -1,0 +1,23 @@
+* {
+  font-family: "Open Sans", sans-serif;
+}
+.confirm-activate-wrapper {
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+  width: 759px;
+  margin: 120px auto 0px -49px;
+  height: 61vh;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  padding: 70px;
+  padding-top: 40px;
+  overflow: scroll;
+  top: 0px;
+}
+
+.confirm-button-wrapper {
+  margin-top: 300px;
+}

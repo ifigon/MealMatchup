@@ -2,15 +2,24 @@ import React, { Component } from 'react';
 import './PendingAccounts.css';
 import { AccountType } from '../../Enums';
 import VerifyAccount from './VerifyAccount';
+import ConfirmActivate from './ConfirmActivate';
+import ConfirmReject from './ConfirmReject';
 
 class PendingAccountsListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialog: false
+            dialog: false,
+            acceptPopUp: false,
+            rejectPopUp: false
         };
         this.openDialog = this.openDialog.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
+        this.acceptPopUp = this.acceptPopUp.bind(this);
+        this.back = this.back.bind(this);
+        this.confirmAccept = this.confirmAccept.bind(this);
+        this.confirmReject = this.confirmReject.bind(this);
+        this.rejectPopUp = this.rejectPopUp.bind(this);
     }
     openDialog() {
         this.setState({
@@ -23,6 +32,35 @@ class PendingAccountsListItem extends Component {
             dialog: false
         });
     }
+    acceptPopUp() {
+        this.setState({
+            acceptPopUp: true
+        });
+    }
+    rejectPopUp() {
+        this.setState({
+            rejectPopUp: true
+        });
+    }
+    confirmAccept() {
+        this.setState({
+            acceptPopUp: false,
+            dialog: false
+        });
+    }
+    confirmReject() {
+        this.setState({
+            rejectPopUp: false,
+            dialog: false
+        });
+    }
+    back() {
+        this.setState({
+            acceptPopUp: false,
+            rejectPopUp: false
+        });
+    }
+
     render() {
         let keys = Object.keys(this.props.data);
         let agencyObject = this.props.data[keys];
@@ -70,6 +108,20 @@ class PendingAccountsListItem extends Component {
                         emergencyPickup={agencyObject.acceptEmergencyPickups}
                         deliveryNotes={agencyObject.deliveryNotes}
                         closeDialog={this.closeDialog}
+                        acceptPopUp={this.acceptPopUp}
+                        rejectPopUp={this.rejectPopUp}
+                    />
+                )}
+                {this.state.acceptPopUp && (
+                    <ConfirmActivate
+                        confirmAccept={this.confirmAccept}
+                        back={this.back}
+                    />
+                )}
+                {this.state.rejectPopUp && (
+                    <ConfirmReject
+                        confirmReject={this.confirmReject}
+                        back={this.back}
                     />
                 )}
             </div>
