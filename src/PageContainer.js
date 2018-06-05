@@ -5,7 +5,6 @@ import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
 import RequestPickupWrapper from './PageContent/RequestPickup/RequestPickupWrapper.js';
 import Directory from './PageContent/Directory/DirectoryPage.js';
-// import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
 import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
