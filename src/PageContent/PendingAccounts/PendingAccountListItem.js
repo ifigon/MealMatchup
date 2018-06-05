@@ -119,6 +119,7 @@ class PendingAccountsListItem extends Component {
                         confirmAccept={this.confirmAccept}
                         back={this.back}
                         closeDialog={this.closeDialog}
+                        agencyName={agencyName}
                     />
                 )}
                 {this.state.rejectPopUp && (
@@ -126,6 +127,7 @@ class PendingAccountsListItem extends Component {
                         confirmReject={this.confirmReject}
                         back={this.back}
                         closeDialog={this.closeDialog}
+                        agencyName={agencyName}
                     />
                 )}
             </div>
