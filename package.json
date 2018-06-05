@@ -7,6 +7,7 @@
     "firebase": "^4.9.1",
     "google-maps-react": "^1.1.2",
     "lodash.once": "^4.1.1",
+    "lodash.pick": "^4.4.0",
     "merge-class-names": "^1.1.1",
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",

@@ -212,6 +212,7 @@ h1 {
 
 .pickup-details p {
   margin: 0px;
+  font-size: inherit;
 }
 
 h2 {

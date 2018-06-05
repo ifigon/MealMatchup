@@ -195,9 +195,9 @@ function createDeliveries(rootRef, requestSnap) {
 
     // create delivery obj with common fields
     let dTemplate = {
+        type: request.type,
         status: enums.DeliveryStatus.SCHEDULED,
         timezone: request.timezone,
-        isEmergency: false,
         spawningDeliveryRequest: requestSnap.key,
         donatingAgency: request.donatingAgency,
         daContact: request.primaryContact,

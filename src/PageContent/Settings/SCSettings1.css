@@ -1,0 +1,56 @@
+.amd-details-1 {
+    width: 100%;
+}
+
+.scs-1-content {
+    flex-basis: 100%;
+    padding-left: 50px;
+}
+
+.amd-edit-1 {
+    width: 100%;
+}
+
+.scs-1-editing {
+    display: flex;
+    flex-direction: column;
+}
+
+.editing-box {
+    display: flex;
+}
+
+.editing-child-1 {
+    flex-basis: 10%;
+    font-size: 18px;
+    flex-direction: row;
+    line-height: 25px;
+}
+
+.editing-child-2 {
+    flex-basis: 90%;
+    flex-direction: row;
+    line-height: 23px;
+}
+
+.amd-editing-2 {
+    flex-basis: 50%;
+    flex-direction: row;
+}
+
+.editing-row {
+    flex-direction: column;
+}
+
+.amd-row {
+    margin-top: 32px;
+    flex-direction: row;
+}
+
+.settings-remove-button {
+    display: flex;
+    width: 68px;
+    font-size: 8px;
+    justify-content: flex-start;
+    margin-top: 12px;
+}
