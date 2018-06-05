@@ -7,15 +7,15 @@ class RequestPickupWrapper extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            typeUserViewing: DeliveryType.RECURRING
+            formType: DeliveryType.RECURRING
         };
     }
 
     toggle() {
-        if (this.state.typeUserViewing === DeliveryType.RECURRING) {
-            this.setState({ typeUserViewing: DeliveryType.EMERGENCY });
+        if (this.state.formType === DeliveryType.RECURRING) {
+            this.setState({ formType: DeliveryType.EMERGENCY });
         } else {
-            this.setState({ typeUserViewing: DeliveryType.RECURRING });
+            this.setState({ formType: DeliveryType.RECURRING });
         }
     }
 
@@ -23,13 +23,13 @@ class RequestPickupWrapper extends Component {
         return (
             <div>
                 <RequestTypeToggle
-                    type={this.state.typeUserViewing}
+                    formType={this.state.formType}
                     toggle={this.toggle.bind(this)}
                 />
                 <RequestPickup
                     account={this.props.account}
                     donatingAgency={this.props.donatingAgency}
-                    type={this.state.typeUserViewing}
+                    formType={this.state.formType}
                 />
             </div>
         );

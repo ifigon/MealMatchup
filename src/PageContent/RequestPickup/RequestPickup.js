@@ -14,7 +14,7 @@ import moment from 'moment-timezone';
 import RecurringPickupForm from './RecurringPickupForm';
 import EmergencyPickupForm from './EmergencyPickupForm';
 
-class RecurringPickupRequest extends Component {
+class RequestPickup extends Component {
     constructor(props) {
         // Props: account, donatingAgency
         super(props);
@@ -182,7 +182,7 @@ class RecurringPickupRequest extends Component {
         if (!this.handleValidation.bind(this)) {
             alert('Form has errors');
         } else {
-            var deliveryRequest;
+            var deliveryRequest = {};
             var raInfo = {};
             var raRequested = null;
             var dgInfo = {};
@@ -192,88 +192,8 @@ class RecurringPickupRequest extends Component {
             ];
             var raIndex,
                 dgIndex = '';
-
-            if (this.props.type === DeliveryType.RECURRING) {
-                raIndex = event.target.receivingAgency.value;
-                dgIndex = event.target.delivererGroup.value;
-            }
-            if (this.props.type === DeliveryType.EMERGENCY) {
+            if (this.props.formType === DeliveryType.RECURRING) {
                 // force request's timezone to be the same as DA's
-                let reqTimezone = this.props.donatingAgency.timezone;
-                let dateTimeStringToTimestamp = (dateString, timeString) =>
-                    moment
-                        .tz(
-                            dateString + timeString,
-                            InputFormat.DATE + InputFormat.TIME,
-                            reqTimezone
-                        )
-                        .valueOf();
-                let dateTimestamp = dateTimeStringToTimestamp(
-                    event.target.Date.value
-                );
-                let startTimestamp = dateTimeStringToTimestamp(
-                    event.target.Date.value,
-                    event.target.startTime.value
-                );
-
-                //TODO: end time is not displayed same as user input
-                let endTimestamp = dateTimeStringToTimestamp(
-                    event.target.Date.value,
-                    event.target.endTime.value
-                );
-
-                let pickupTimeDiffMs = (
-                    moment(event.target.endTime.value, InputFormat.TIME) -
-                    moment(event.target.startTime.value, InputFormat.TIME)
-                ).valueOf();
-                endTimestamp += pickupTimeDiffMs; //encode endTime
-
-                if (raIndex) {
-                    raRequested = this.state.receivingAgencies[raIndex];
-                    raInfo['requested'] = raRequested.id;
-                } else {
-                    // if no specific RA requested, add all RAs to pending list
-                    raInfo['pending'] = this.state.receivingAgencies.map(
-                        ra => ra.id
-                    );
-                }
-
-                if (dgIndex) {
-                    dgRequested = this.state.delivererGroups[dgIndex];
-                    dgInfo['requested'] = dgRequested.id;
-                } else {
-                    // if no specific DG requested, add all DGs to pending list
-                    dgInfo['pending'] = this.state.delivererGroups.map(
-                        dg => dg.id
-                    );
-                }
-
-                // Emergency DeliveryRequest object
-                deliveryRequest = {
-                    status: RequestStatus.PENDING,
-                    dateTimestamp: dateTimestamp,
-                    startTimestamp: startTimestamp,
-                    endTimestamp: endTimestamp,
-                    timezone: reqTimezone,
-                    primaryContact: primaryContact.id,
-                    notes: event.target.notes.value,
-                    umbrella: this.props.donatingAgency.umbrella,
-                    donatingAgency: this.props.account.agency,
-                    requester: this.props.account.name,
-                    receivingAgency: raInfo,
-                    delivererGroup: dgInfo,
-                    requestTimestamp: Date.now()
-                };
-
-                this.setState({
-                    request: deliveryRequest,
-                    primaryContact: primaryContact,
-                    raRequested: raRequested,
-                    dgRequested: dgRequested
-                });
-
-                this.toggleModal();
-            } else {
                 let reqTimezone = this.props.donatingAgency.timezone;
                 let dateTimeStringToTimestamp = (dateString, timeString) =>
                     moment
@@ -292,8 +212,7 @@ class RecurringPickupRequest extends Component {
                 // compute ending Timestamp
                 let endTimestamp;
                 if (
-                    event.target.endCriteria.value ===
-                    RequestEndCriteriaType.DATE
+                    event.target.endCriteria.value === RequestEndCriteriaType.DATE
                 ) {
                     durationValue = event.target.endDate.value;
                     endTimestamp = dateTimeStringToTimestamp(
@@ -324,6 +243,9 @@ class RecurringPickupRequest extends Component {
                 ).valueOf();
                 endTimestamp += pickupTimeDiffMs; //encode endTime
 
+                raInfo = {};
+                raRequested = null;
+                raIndex = event.target.receivingAgency.value;
                 if (raIndex) {
                     raRequested = this.state.receivingAgencies[raIndex];
                     raInfo['requested'] = raRequested.id;
@@ -334,18 +256,24 @@ class RecurringPickupRequest extends Component {
                     );
                 }
 
+                dgInfo = {};
+                dgRequested = null;
+                dgIndex = event.target.delivererGroup.value;
                 if (dgIndex) {
                     dgRequested = this.state.delivererGroups[dgIndex];
                     dgInfo['requested'] = dgRequested.id;
                 } else {
                     // if no specific DG requested, add all DGs to pending list
-                    dgInfo['pending'] = this.state.delivererGroups.map(
-                        dg => dg.id
-                    );
+                    dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
                 }
 
-                // Recurring DeliveryRequest object
+                primaryContact = this.state.memberList[
+                    event.target.primaryContact.value
+                ];
+
+                // create DeliveryRequest object
                 deliveryRequest = {
+                    type: DeliveryType.RECURRING,
                     status: RequestStatus.PENDING,
                     startTimestamp: startTimestamp,
                     endTimestamp: endTimestamp,
@@ -354,6 +282,7 @@ class RecurringPickupRequest extends Component {
                         type: event.target.endCriteria.value,
                         value: durationValue
                     },
+                    repeats: event.target.repeats.value,
                     primaryContact: primaryContact.id,
                     notes: event.target.notes.value,
                     umbrella: this.props.donatingAgency.umbrella,
@@ -361,7 +290,6 @@ class RecurringPickupRequest extends Component {
                     requester: this.props.account.name,
                     receivingAgency: raInfo,
                     delivererGroup: dgInfo,
-                    foodItems: this.state.foodRows,
                     requestTimestamp: Date.now()
                 };
 
@@ -373,6 +301,103 @@ class RecurringPickupRequest extends Component {
                 });
 
                 this.toggleModal();
+            } else {
+                //BACKEND TODO": fill in create request for EMERGENCY pickups
+
+                var dummyData = {
+                    delivererGroup: {
+                        pending: ['TkEYXYz4nPXYDgGgnY6SPSmMvHq1', '5rOE8iMtLtbCHgvOxsoNevqwbzS2']
+                    },
+                    donatingAgency: 'autoGeneratedKey1',
+                    endTimestamp: 1529539500000,
+                    foodItems: [
+                        { foodName: 'potato', foodWeight: '44', foodWeightLabel: 'lb' }, { foodName: 'tomato', foodWeight: '3', foodWeightLabel: 'cases' }
+                    ],
+                    notes: 'notes',
+                    primaryContact: 'sgt9FJg1pUZWSANEhPWhCj4snp03',
+                    receivingAgency: { pending: ['gEhgrFpeAxh30aZVQIb1Ppj0Kbf1', 'cjwxWFcJnyUYenUkinJBYJBVDC22'] },
+                    requestTimestamp: 1528169351077,
+                    requester: 'Test DA1Admin',
+                    startTimestamp: 1529532180000,
+                    status: 'pending',
+                    timezone: 'America/Los_Angeles',
+                    umbrella: 'NLRZo1xfPHOI8rGpzSKiEJVOOUt2'
+                };
+
+
+                // let reqTimezone = this.props.donatingAgency.timezone;
+                // let dateTimeStringToTimestamp = (dateString, timeString) =>
+                //     moment
+                //         .tz(
+                //             dateString + timeString,
+                //             InputFormat.DATE + InputFormat.TIME,
+                //             reqTimezone
+                //         )
+                //         .valueOf();
+                // let dateTimestamp = dateTimeStringToTimestamp(
+                //     event.target.Date.value
+                // );
+                // let startTimestamp = dateTimeStringToTimestamp(
+                //     event.target.Date.value,
+                //     event.target.startTime.value
+                // );
+
+                // let endTimestamp = dateTimeStringToTimestamp(
+                //     event.target.Date.value,
+                //     event.target.endTime.value
+                // );
+
+                // let pickupTimeDiffMs = (
+                //     moment(event.target.endTime.value, InputFormat.TIME) -
+                //     moment(event.target.startTime.value, InputFormat.TIME)
+                // ).valueOf();
+                // endTimestamp += pickupTimeDiffMs; //encode endTime
+
+                // if (raIndex) {
+                //     raRequested = this.state.receivingAgencies[raIndex];
+                //     raInfo['requested'] = raRequested.id;
+                // } else {
+                //     // if no specific RA requested, add all RAs to pending list
+                //     raInfo['pending'] = this.state.receivingAgencies.map(
+                //         ra => ra.id
+                //     );
+                // }
+
+                // if (dgIndex) {
+                //     dgRequested = this.state.delivererGroups[dgIndex];
+                //     dgInfo['requested'] = dgRequested.id;
+                // } else {
+                //     // if no specific DG requested, add all DGs to pending list
+                //     dgInfo['pending'] = this.state.delivererGroups.map(
+                //         dg => dg.id
+                //     );
+                // }
+
+                // // Recurring DeliveryRequest object
+                // deliveryRequest = {
+                //     status: RequestStatus.PENDING,
+                //     startTimestamp: startTimestamp,
+                //     endTimestamp: endTimestamp,
+                //     timezone: reqTimezone,
+                //     primaryContact: primaryContact.id,
+                //     notes: event.target.notes.value,
+                //     umbrella: this.props.donatingAgency.umbrella,
+                //     donatingAgency: this.props.account.agency,
+                //     requester: this.props.account.name,
+                //     receivingAgency: raInfo,
+                //     delivererGroup: dgInfo,
+                //     foodItems: this.state.foodRows,
+                //     requestTimestamp: Date.now()
+                // };
+
+                // this.setState({
+                //     request: deliveryRequest,
+                //     primaryContact: primaryContact,
+                //     raRequested: raRequested,
+                //     dgRequested: dgRequested
+                // });
+
+                // this.toggleModal();
             }
         }
     }
@@ -400,7 +425,7 @@ class RecurringPickupRequest extends Component {
     render() {
         return (
             <div className="form">
-                {this.props.type === DeliveryType.RECURRING ? (
+                {this.props.formType === DeliveryType.RECURRING ? (
                     <RecurringPickupForm
                         createRequest={this.createRequest}
                         errors={this.state.errors}
@@ -410,45 +435,45 @@ class RecurringPickupRequest extends Component {
                         receivingAgencies={this.state.receivingAgencies}
                     />
                 ) : (
-                    <EmergencyPickupForm
-                        createRequest={this.createRequest}
-                        errors={this.state.errors}
-                        memberList={this.state.memberList}
-                        handleChange={this.handleChange}
+                        <EmergencyPickupForm
+                            createRequest={this.createRequest}
+                            errors={this.state.errors}
+                            memberList={this.state.memberList}
+                            handleChange={this.handleChange}
 
-                    />
-                )}
+                        />
+                    )}
 
                 {this.state.showPopup &&
-                    this.props.type === DeliveryType.RECURRING && (
-                    <PickupSummary
-                        title={'Request Recurring Pickup'}
-                        request={this.state.request}
-                        donatingAgency={this.props.donatingAgency}
-                        primaryContact={this.state.primaryContact}
-                        raRequested={this.state.raRequested}
-                        dgRequested={this.state.dgRequested}
-                        onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}
-                        submissionError={this.state.submissionError}
-                        type={this.props.type}
-                    />
-                )}
+                    this.props.formType === DeliveryType.RECURRING && (
+                        <PickupSummary
+                            title={'Request Recurring Pickup'}
+                            request={this.state.request}
+                            donatingAgency={this.props.donatingAgency}
+                            primaryContact={this.state.primaryContact}
+                            raRequested={this.state.raRequested}
+                            dgRequested={this.state.dgRequested}
+                            onClose={this.toggleModal}
+                            onConfirm={this.submitRequest}
+                            submissionError={this.state.submissionError}
+                            type={this.props.formType}
+                        />
+                    )}
                 {this.state.showPopup &&
-                    this.props.type === DeliveryType.EMERGENCY && (
-                    <PickupSummary
-                        title={'Request Emergency Pickup'}
-                        request={this.state.request}
-                        donatingAgency={this.props.donatingAgency}
-                        primaryContact={this.state.primaryContact}
-                        raRequested={this.state.raRequested}
-                        dgRequested={this.state.dgRequested}
-                        onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}
-                        submissionError={this.state.submissionError}
-                        type={this.props.type}
-                    />
-                )}
+                    this.props.formType === DeliveryType.EMERGENCY && (
+                        <PickupSummary
+                            title={'Request Emergency Pickup'}
+                            request={this.state.request}
+                            donatingAgency={this.props.donatingAgency}
+                            primaryContact={this.state.primaryContact}
+                            raRequested={this.state.raRequested}
+                            dgRequested={this.state.dgRequested}
+                            onClose={this.toggleModal}
+                            onConfirm={this.submitRequest}
+                            submissionError={this.state.submissionError}
+                            type={this.props.formType}
+                        />
+                    )}
                 {this.state.showConfirmation && (
                     <PickupRequestedConfirmation
                         request={this.state.request}
@@ -462,4 +487,4 @@ class RecurringPickupRequest extends Component {
     }
 }
 
-export default RecurringPickupRequest;
+export default RequestPickup;

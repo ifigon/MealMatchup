@@ -17,8 +17,7 @@ class EmergencyPickupForm extends Component {
             raRequested: null,
             dgRequested: null,
             submissionError: null,
-            foodRows: [{ foodName: '', foodWeight: '', foodWeightLabel: '' }],
-            waiting: true
+            foodRows: [{ foodName: '', foodWeight: '', foodWeightLabel: '' }]
         };
     }
 
