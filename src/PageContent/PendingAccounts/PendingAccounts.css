@@ -90,3 +90,16 @@
   margin-left: 50px;
   margin-top: 30px;
 }
+
+.close-dialog {
+  display: inline;
+}
+
+.close-x {
+  position: relative;
+  padding-left: 320px;
+  vertical-align: bottom;
+}
+.close-x:hover {
+  cursor: pointer;
+}
