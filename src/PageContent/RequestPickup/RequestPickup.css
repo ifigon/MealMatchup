@@ -13,6 +13,10 @@
   justify-content: space-between;
 }
 
+.grid {
+  padding: 3px;
+}
+
 .red {
   color: #f77676;
 }
@@ -52,11 +56,11 @@ label {
   box-sizing: border-box;
   border-radius: 4px;
   height: 40px;
-  width: 200px;
+  width: 170px;
   outline: none;
   font-family: "Open Sans", sans-serif;
   color: #5dc0f9;
-  margin: 10px 0px 20px 0px;
+  margin: 0px 0px 20px 0px;
   font-size: 15px;
 }
 
