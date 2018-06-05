@@ -31,7 +31,7 @@ class RequestPickup extends Component {
             raRequested: null,
             dgRequested: null,
             submissionError: null,
-            foodRows: []
+            foodRows: [{ foodName: '', foodWeight: '', foodWeightLabel: '' }]
         };
 
         this.formId = 'recurringRequestForm';
@@ -450,6 +450,7 @@ class RequestPickup extends Component {
                         memberList={this.state.memberList}
                         delivererGroups={this.state.delivererGroups}
                         receivingAgencies={this.state.receivingAgencies}
+                    // handleChange={this.handleChange}
                     />
                 ) : (
                         <EmergencyPickupForm

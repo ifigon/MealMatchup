@@ -2,33 +2,6 @@ import React, { Component } from 'react';
 import { RequestRepeatType, RequestEndCriteriaType } from '../../Enums.js';
 
 class RecurringPickupForm extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            memberList: [],
-            delivererGroups: [],
-            receivingAgencies: [],
-            fields: {},
-            errors: {},
-            showPopup: false,
-            request: {},
-            primaryContact: {},
-            raRequested: null,
-            dgRequested: null,
-            submissionError: null
-        };
-    }
-
-    handleChange(field, e) {
-        var val = e.target.value;
-        this.setState(prevState => {
-            let fields = prevState.fields;
-            fields[field] = val;
-            return { fields: fields };
-        });
-    }
-
     render() {
         return (
             <form
@@ -40,7 +13,7 @@ class RecurringPickupForm extends Component {
                     {Object.keys(this.props.errors).map((error, i) => {
                         return (
                             <p className="error" key={i}>
-                                {this.state.errors[error]}
+                                {this.props.errors[error]}
                             </p>
                         );
                     })}
@@ -53,7 +26,7 @@ class RecurringPickupForm extends Component {
                             <input
                                 type="date"
                                 name="startDate"
-                                onChange={this.handleChange.bind(
+                                onChange={this.props.handleChange.bind(
                                     this,
                                     'startDate'
                                 )}
@@ -72,7 +45,7 @@ class RecurringPickupForm extends Component {
                                     type="radio"
                                     name="endCriteria"
                                     value={RequestEndCriteriaType.OCCUR}
-                                    onChange={this.handleChange.bind(
+                                    onChange={this.props.handleChange.bind(
                                         this,
                                         'endCriteria'
                                     )}
@@ -82,7 +55,7 @@ class RecurringPickupForm extends Component {
                                 <input
                                     type="number"
                                     name="numOccurrences"
-                                    onChange={this.handleChange.bind(
+                                    onChange={this.props.handleChange.bind(
                                         this,
                                         'occurTimes'
                                     )}
@@ -94,7 +67,7 @@ class RecurringPickupForm extends Component {
                                     type="radio"
                                     name="endCriteria"
                                     value={RequestEndCriteriaType.DATE}
-                                    onChange={this.handleChange.bind(
+                                    onChange={this.props.handleChange.bind(
                                         this,
                                         'endCriteria'
                                     )}
@@ -103,7 +76,7 @@ class RecurringPickupForm extends Component {
                                 <input
                                     type="date"
                                     name="endDate"
-                                    onChange={this.handleChange.bind(
+                                    onChange={this.props.handleChange.bind(
                                         this,
                                         'endDate'
                                     )}
@@ -168,7 +141,7 @@ class RecurringPickupForm extends Component {
                             <input
                                 type="time"
                                 name="startTime"
-                                onChange={this.handleChange.bind(
+                                onChange={this.props.handleChange.bind(
                                     this,
                                     'startTime'
                                 )}
@@ -183,7 +156,7 @@ class RecurringPickupForm extends Component {
                             <input
                                 type="time"
                                 name="endTime"
-                                onChange={this.handleChange.bind(
+                                onChange={this.props.handleChange.bind(
                                     this,
                                     'endTime'
                                 )}
