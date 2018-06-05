@@ -2,46 +2,6 @@ import React, { Component } from 'react';
 import FoodItem from './FoodItem';
 
 class EmergencyPickupForm extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            memberList: [],
-            delivererGroups: [],
-            receivingAgencies: [],
-            fields: {},
-            errors: {},
-            showPopup: false,
-            request: {},
-            primaryContact: {},
-            raRequested: null,
-            dgRequested: null,
-            submissionError: null,
-            foodRows: [{ foodName: '', foodWeight: '', foodWeightLabel: '' }]
-        };
-    }
-
-    handleChange(field, e) {
-        var val = e.target.value;
-        this.setState(prevState => {
-            let fields = prevState.fields;
-            fields[field] = val;
-            return { fields: fields };
-        });
-    }
-
-    addFood(name, label, weight, event) {
-        if (name !== '' && weight !== '' && label !== '') {
-            this.setState(prevState => {
-                let foodRows = prevState.foodRows;
-                foodRows.push({ foodName: name, foodWeight: weight, foodWeightLabel: label });
-                return { foodRows: foodRows };
-            });
-        } else {
-            alert('To add another row, please fill out the name, weight and unit of each food item.');
-        }
-    }
-
     render() {
         return (
             <form
@@ -55,7 +15,7 @@ class EmergencyPickupForm extends Component {
                     {Object.keys(this.props.errors).map((error, i) => {
                         return (
                             <p className="error" key={i}>
-                                {this.state.errors[error]}
+                                {this.props.errors[error]}
                             </p>
                         );
                     })}
@@ -69,7 +29,7 @@ class EmergencyPickupForm extends Component {
                             <input
                                 type="date"
                                 name="Date"
-                                onChange={this.handleChange.bind(this, 'Date')}
+                                onChange={this.props.handleChange.bind(this, 'Date')}
                                 required
                             />
                             <br />
@@ -108,7 +68,7 @@ class EmergencyPickupForm extends Component {
                             <input
                                 type="time"
                                 name="startTime"
-                                onChange={this.handleChange.bind(
+                                onChange={this.props.handleChange.bind(
                                     this,
                                     'startTime'
                                 )}
@@ -123,7 +83,7 @@ class EmergencyPickupForm extends Component {
                             <input
                                 type="time"
                                 name="endTime"
-                                onChange={this.handleChange.bind(
+                                onChange={this.props.handleChange.bind(
                                     this,
                                     'endTime'
                                 )}
@@ -134,13 +94,13 @@ class EmergencyPickupForm extends Component {
 
                     <p id="form-heading">Food Items</p>
                     <div id="food-items">
-                        {this.state.foodRows.map((foodItem, i) => {
+                        {this.props.foodRows.map((foodItem, i) => {
                             return (
                                 <FoodItem
                                     key={i}
-                                    addFood={this.addFood.bind(this)}
+                                    addFood={this.props.addFood.bind(this)}
                                     active={
-                                        i === this.state.foodRows.length - 1
+                                        i === this.props.foodRows.length - 1
                                     }
                                 />
                             );

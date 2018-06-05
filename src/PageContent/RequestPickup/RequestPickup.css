@@ -60,10 +60,6 @@ label {
   font-size: 15px;
 }
 
-#food-items > div > span:nth-child(3) > select {
-  width:auto; 
-}
-
 .smaller {
   font-size: 15px;
 }
@@ -121,16 +117,6 @@ input[type="radio"] {
   /* position: absolute; */
   opacity: 0;
   cursor: pointer;
-}
-
-input[name="foodName"], input[name="foodWeight"], input[name="foodWeightLabel"]
-  {
-  margin: 10px 0px 20px 0px;
-  
-}
-
-input[type="date"] {
-  margin: 10px 0px 20px 0px;  
 }
 
 .checkmark {
@@ -238,7 +224,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
-#food-items > div > img {
-  margin-left: 0px;
-  margin-top: 15px;
-}
+/* .add-food-item {
+  color: black;
+} */

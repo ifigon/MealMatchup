@@ -17,10 +17,6 @@ class FoodItem extends Component {
         };
     }
 
-    componentDidMount() {
-        // this.props.update(this.state, this.props.key);
-    }
-
     changeName(e) {
         this.setState({
             foodName: e.target.value
