@@ -7,9 +7,8 @@ class ConfirmActivate extends Component {
         return (
             <div className="confirm-activate-wrapper">
                 <h1 className="confirmation-message">
-                    {' '}
-                    Are you sure? Once an account is accepted, the user will be
-                    able to log in.{' '}
+                    Are you sure you want to accept {this.props.agencyName}{' '}
+                    account? Their account will be fully activated.
                 </h1>
                 <div className="close-dialog">
                     <img
