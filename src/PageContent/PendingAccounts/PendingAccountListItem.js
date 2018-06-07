@@ -3,17 +3,24 @@ import './PendingAccounts.css';
 import { AccountType } from '../../Enums';
 import VerifyAccount from './VerifyAccount';
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig';
+import ConfirmActivate from './ConfirmActivate';
+import ConfirmReject from './ConfirmReject';
 
 class PendingAccountsListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialog: false
+            dialog: false,
+            acceptPopUp: false,
+            rejectPopUp: false
         };
         this.openDialog = this.openDialog.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
-        this.rejectAccount = this.rejectAccount.bind(this);
-        this.acceptAccount = this.acceptAccount.bind(this);
+        this.acceptPopUp = this.acceptPopUp.bind(this);
+        this.back = this.back.bind(this);
+        this.confirmAccept = this.confirmAccept.bind(this);
+        this.confirmReject = this.confirmReject.bind(this);
+        this.rejectPopUp = this.rejectPopUp.bind(this);
     }
     
     openDialog() {
@@ -24,11 +31,23 @@ class PendingAccountsListItem extends Component {
 
     closeDialog() {
         this.setState({
-            dialog: false
+            dialog: false,
+            acceptPopUp: false,
+            rejectPopUp: false
+        });
+    }
+    acceptPopUp() {
+        this.setState({
+            acceptPopUp: true
+        });
+    }
+    rejectPopUp() {
+        this.setState({
+            rejectPopUp: true
         });
     }
 
-    acceptAccount(uid, daContactId) {
+    confirmAccept(uid, daContactId) {
         const updates = { isVerified: true, isActivated: true };
         if (daContactId) { // accountType == donating agency 
             donatingAgenciesRef.child(uid).update(updates);
@@ -36,17 +55,30 @@ class PendingAccountsListItem extends Component {
         } else {
             accountsRef.child(uid).update(updates);
         }
-        this.closeDialog();
+        this.setState({
+            acceptPopUp: false,
+            dialog: false,
+        });
     }
 
-    rejectAccount(uid, daContactId) {
+    confirmReject(uid, daContactId) {
         if (daContactId) { // accountType == donating agency 
             donatingAgenciesRef.child(uid).remove();
             accountsRef.child(daContactId).remove();
         } else {
             accountsRef.child(uid).remove();
         }
-        this.closeDialog();
+        this.setState({
+            rejectPopUp: false,
+            dialog: false,
+        });
+    }
+
+    back() {
+        this.setState({
+            acceptPopUp: false,
+            rejectPopUp: false
+        });
     }
 
     render() {
@@ -90,14 +122,36 @@ class PendingAccountsListItem extends Component {
                     <VerifyAccount
                         accountType={accountType}
                         agencyName={agencyName}
-                        agencyUId={key[0]}
                         agencyAddressData={agencyObject.address}
                         primaryContact={primaryContact}
                         primaryContactData={agencyObject.primaryContact}
                         emergencyPickup={agencyObject.acceptEmergencyPickups}
                         deliveryNotes={agencyObject.deliveryNotes}
-                        rejectAccount={this.rejectAccount}
-                        acceptAccount={this.acceptAccount}
+                        closeDialog={this.closeDialog}
+                        acceptPopUp={this.acceptPopUp}
+                        rejectPopUp={this.rejectPopUp}
+                    />
+                )}
+                {this.state.acceptPopUp && (
+                    <ConfirmActivate
+                        confirmAccept={this.confirmAccept}
+                        back={this.back}
+                        closeDialog={this.closeDialog}
+                        agencyName={agencyName}
+                        agencyUId={key[0]}
+                        accountType={accountType}
+                        primaryContactData={agencyObject.primaryContact}
+                    />
+                )}
+                {this.state.rejectPopUp && (
+                    <ConfirmReject
+                        confirmReject={this.confirmReject}
+                        back={this.back}
+                        closeDialog={this.closeDialog}
+                        agencyName={agencyName}
+                        agencyUId={key[0]}
+                        accountType={accountType}
+                        primaryContactData={agencyObject.primaryContact}
                     />
                 )}
             </div>

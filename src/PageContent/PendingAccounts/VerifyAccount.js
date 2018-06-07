@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './VerifyAccount.css';
 import truck from '../../icons/red_truck.svg';
 import Map from '../../Map/Map';
+import close from '../../icons/cross-out.svg';
 
 class VerifyAccount extends Component {
     render() {
@@ -10,6 +11,14 @@ class VerifyAccount extends Component {
                 <h1 className="verify-header">
                     {this.props.accountType} Account Request
                 </h1>
+                <div className="close-dialog">
+                    <img
+                        className="close-x"
+                        src={close}
+                        onClick={this.props.closeDialog}
+                        alt="close"
+                    />
+                </div>
                 <div className="verify-map-wrapper">
                     <Map
                         address={this.props.agencyAddressData}
@@ -84,27 +93,13 @@ class VerifyAccount extends Component {
                 )}
                 <div className="verification-buttons">
                     <div
-                        onClick={() => { 
-                            const { agencyUId, accountType, primaryContactData, acceptAccount } = this.props;
-                            if (accountType === 'Donating Agency') {
-                                acceptAccount(agencyUId, primaryContactData.uid);
-                            } else {
-                                acceptAccount(agencyUId, null);            
-                            }
-                        }}
+                        onClick={this.props.acceptPopUp}
                         className="verify-accept verify-button"
                     >
                         Accept
                     </div>
                     <div
-                        onClick={() => { 
-                            const { agencyUId, accountType, primaryContactData, rejectAccount } = this.props;
-                            if (accountType === 'Donating Agency') {
-                                rejectAccount(agencyUId, primaryContactData.uid);
-                            } else {
-                                rejectAccount(agencyUId, null);            
-                            }
-                        }}
+                        onClick={this.props.rejectPopUp}
                         className="verify-reject verify-button"
                     >
                         Reject

@@ -1,0 +1,128 @@
+/* TODO: MOBILE FRIENDLY CSS DESIGNS FOR DIRECTORY CARDS */
+
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
+div {
+    font-family: Roboto;
+}
+
+hr {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    max-width: 95%;
+}
+
+h4 {
+    margin: 0px;
+    margin-bottom: 5px;
+}
+
+.cardDetails p {
+    margin: 0px;
+    margin-bottom: 5px; 
+}
+
+.cardPicture {
+    width: 25%;
+    float: left;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    margin-top: 10px;
+    margin-bottom: inherit;
+}
+
+.cardPicture img {
+    width: 175px;
+    height: auto;
+}
+
+.cardDetails {
+    width: 75%;
+    float: left;
+    margin-top: 10px;
+}
+
+.card-detail-3 {
+    width: 33.3%;
+    height: 10em;
+    float: left;
+}
+
+.daMemberList{
+    max-height: fit-content;
+    margin-bottom: 20px;
+}
+
+.orgName {
+    font-size: 30px;
+    margin: 0px;
+    color: #243847;
+    padding: 15px;
+    font-size: 24px;
+    padding-left: 38px;
+}
+
+.note {
+    font-size: 16px;
+    color: #828282;
+}
+
+.number {
+    font-size: 14px;
+}
+
+.filter {
+    margin-top: 120px;
+    margin-left: 220px;
+    display: block;
+    overflow: hidden;
+    font-family: 'Open Sans';
+    /* position: fixed; */
+    background-color: white;
+    width: 100%;
+}
+
+.directory-card { 
+    margin: 10px 40px 30px 240px;
+    display: block;
+    overflow: hidden;
+    font-family: 'Open Sans';
+    padding-top: 20px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+}
+
+.title {
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+/* Filter CSS items below */
+
+.filter {
+    margin-bottom: 40px;
+}
+
+.dropDownFilter {
+    float: left;
+}
+
+.dropDownOption {
+    color: #5DC0F9;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.dropDownOption:hover {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
