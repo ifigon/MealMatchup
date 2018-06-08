@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EventCard from './EventCard';
 
 class EventCardSlot extends Component {
+    //Events for this day
     getEventCards() {
         // no deliveries for today
         if (!this.props.deliveries) {
@@ -13,7 +14,7 @@ class EventCardSlot extends Component {
             eventCardSlotClass = 'multiple-events';
         }
 
-        return this.props.deliveries.map((item, i) =>(
+        return this.props.deliveries.map((item, i) => (
             <EventCard
                 key={i}
                 account={this.props.account}
@@ -24,12 +25,7 @@ class EventCardSlot extends Component {
     }
 
     render() {
-
-        return (
-            <div className="slot-container">
-                {this.getEventCards()}
-            </div>
-        );
+        return <div className="slot-container">{this.getEventCards()}</div>;
     }
 }
 

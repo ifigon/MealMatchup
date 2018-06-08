@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 
 class RequestTypeToggle extends Component {
     render() {
+        // Information hover text about other type of form that is not currently displayed
         let infoTooltip = '';
         if (this.props.formType === DeliveryType.EMERGENCY) {
             infoTooltip =
@@ -14,6 +15,7 @@ class RequestTypeToggle extends Component {
             infoTooltip =
                 'An emergency pickup is a one  <br /> time donation where a shelter  <br /> will pickup the food directly.';
         }
+        // On toggle click, change form type
         return (
             <div className="toggle-wrapper" onClick={this.props.toggle}>
                 <div className="toggle-container">

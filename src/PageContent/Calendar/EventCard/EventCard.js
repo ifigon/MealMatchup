@@ -19,12 +19,14 @@ class EventCard extends Component {
         this.closeDialog = this.closeDialog.bind(this);
     }
 
+    // Open dialog showing event details
     openDialog() {
         this.setState({
             dialogOpen: true
         });
     }
 
+    // Close dialog showing event details
     closeDialog() {
         this.setState({
             dialogOpen: false
@@ -38,10 +40,13 @@ class EventCard extends Component {
         let iconClass = 'eventcard-icon ';
         let style = 'event-container ';
         let futureEvent = moment(delivery.startTimestamp).isAfter(moment());
-        let actionNeeded = futureEvent && (
-            (account.accountType === AccountType.DELIVERER_GROUP && !delivery.deliverers) ||
-            (account.accountType === AccountType.DONATING_AGENCY_MEMBER && 
-                (!delivery.description || !delivery.description.foodItems)));
+        let actionNeeded =
+            futureEvent &&
+            ((account.accountType === AccountType.DELIVERER_GROUP &&
+                !delivery.deliverers) ||
+                (account.accountType === AccountType.DONATING_AGENCY_MEMBER &&
+                    (!delivery.description ||
+                        !delivery.description.foodItems)));
 
         if (futureEvent) {
             style += 'event-container-future';
@@ -70,9 +75,12 @@ class EventCard extends Component {
             }
         }
 
-        let startTime = moment(delivery.startTimestamp).format(StringFormat.TIME);
+        let startTime = moment(delivery.startTimestamp).format(
+            StringFormat.TIME
+        );
         let endTime = moment(delivery.endTimestamp).format(StringFormat.TIME);
 
+        // Multiple events in one day
         let multiple = false;
         if (this.props.eventClass === 'multiple-events') {
             multiple = true;
@@ -103,11 +111,7 @@ class EventCard extends Component {
                 ) : (
                     <div className={style} onClick={this.openDialog}>
                         <h1 className="event-header">Reccuring Pick Up</h1>
-                        <img
-                            className={iconClass}
-                            src={icon}
-                            alt={iconAlt}
-                        />
+                        <img className={iconClass} src={icon} alt={iconAlt} />
                         <p className="event-time">
                             {startTime} - {endTime}
                         </p>

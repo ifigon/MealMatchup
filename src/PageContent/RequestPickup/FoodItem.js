@@ -1,12 +1,9 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 import add from '../../icons/plus-button-blue.svg';
-import {
-    FoodUnit
-} from '../../Enums';
+import { FoodUnit } from '../../Enums';
 import './Toggle.css';
 
+// Creates food item object to add to emergency pickup request
 class FoodItem extends Component {
     constructor(props) {
         super(props);
@@ -76,7 +73,11 @@ class FoodItem extends Component {
                         </option>
                         {Object.keys(FoodUnit).map((type, i) => {
                             return (
-                                <option key={i} value={type} required={this.props.active}>
+                                <option
+                                    key={i}
+                                    value={type}
+                                    required={this.props.active}
+                                >
                                     {type.toLowerCase()}
                                 </option>
                             );

@@ -11,6 +11,7 @@ class RequestPickupWrapper extends Component {
         };
     }
 
+    // Change type of form that is being shown
     toggle() {
         if (this.state.formType === DeliveryType.RECURRING) {
             this.setState({ formType: DeliveryType.EMERGENCY });
