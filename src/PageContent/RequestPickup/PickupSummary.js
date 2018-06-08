@@ -1,12 +1,15 @@
 import React from 'react';
 import './PickupSummary.css';
-import truck from '../../icons/green-truck.svg';
+import greenTruck from '../../icons/green_truck.svg';
+import redTruck from '../../icons/red_truck.svg';
 import Map from '../../Map/Map.js';
+
 import {
     RequestRepeatType,
     RequestEndCriteriaType,
     StringFormat,
-    InputFormat
+    InputFormat,
+    DeliveryType
 } from '../../Enums.js';
 import moment from 'moment';
 
@@ -15,28 +18,31 @@ class PickupSummary extends React.Component {
         let dayOfWeek = moment(this.props.request.startTimestamp).format(
             StringFormat.WEEKDAY
         );
+
         var repeatMap = {
             [RequestRepeatType.WEEKLY]: 'every ' + dayOfWeek,
             [RequestRepeatType.BIWEEKLY]: 'every other ' + dayOfWeek,
             // TODO: calculate nth day of month
             [RequestRepeatType.MONTHLY]: 'monthly'
         };
-
-        var durationText = '';
-        if (
-            this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
-        ) {
-            durationText =
-                this.props.request.endCriteria.value + ' pickups requested';
-        } else {
-            durationText =
-                'Ending ' +
-                moment(
-                    this.props.request.endCriteria.value,
-                    InputFormat.DATE
-                ).format(StringFormat.DATE_FULL);
+        if (this.props.title === DeliveryType.RECURRING) {
+            var durationText = '';
+            if (
+                this.props.request.endCriteria.type ===
+                RequestEndCriteriaType.OCCUR
+            ) {
+                durationText =
+                    this.props.request.endCriteria.value + ' pickups requested';
+            } else {
+                durationText =
+                    'Ending ' +
+                    moment(
+                        this.props.request.endCriteria.value,
+                        InputFormat.DATE
+                    ).format(StringFormat.DATE_FULL);
+            }
+            durationText += ' for ' + repeatMap[this.props.request.repeats];
         }
-        durationText += ' for ' + repeatMap[this.props.request.repeats];
 
         let start_date_with_weekday = moment(
             this.props.request.startTimestamp
@@ -47,16 +53,25 @@ class PickupSummary extends React.Component {
         let endTime = moment(this.props.request.endTimestamp).format(
             StringFormat.TIME
         );
+
+        let style = 'top-line-emergency';
+        let truckSrc = redTruck;
+        let truckAlt = 'red truck';
+        if (this.props.type === DeliveryType.RECURRING) {
+            style = 'top-line-recurring';
+            truckSrc = greenTruck;
+            truckAlt = 'green truck';
+        }
         return (
             <div className="backdrop">
                 {/* TODO: fix background opacity. Maybe with iFrame. */}
                 <div className="modal">
-                    <div className="top-line" />
+                    <div className={style} />
                     <p id="exit" onClick={this.props.onClose}>
                         &times;
                     </p>
                     <div className="summary-title flex">
-                        <img src={truck} alt="truck" />
+                        <img src={truckSrc} alt={truckAlt} />
                         <p id="title">{this.props.title}</p>
                     </div>
                     <div className="summary-wrapper grid">
@@ -123,8 +138,8 @@ class PickupSummary extends React.Component {
                                 ) : (
                                     <div className="contact">
                                         <p>
-                                            Request will be sent to all
-                                            participating shelters.
+                                                Request will be sent to all
+                                                participating shelters.
                                         </p>
                                         <p>Confirmation pending.</p>
                                     </div>
@@ -175,8 +190,8 @@ class PickupSummary extends React.Component {
                                 ) : (
                                     <div className="contact">
                                         <p>
-                                            Request will be sent to all
-                                            participating student groups.
+                                                Request will be sent to all
+                                                participating student groups.
                                         </p>
                                         <p>Confirmation pending.</p>
                                     </div>

@@ -3,8 +3,8 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import RequestPickupWrapper from './PageContent/RequestPickup/RequestPickupWrapper.js';
 import Directory from './PageContent/Directory/DirectoryPage.js';
-import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
 import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
@@ -20,7 +20,7 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: this.props.content,
+            content: this.props.content
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -51,11 +51,7 @@ class PageContainer extends Component {
 
         return (
             <div>
-                <PageHeader
-                    account={account}
-                    logo={logo}
-                    title={pageTitle}
-                />
+                <PageHeader account={account} logo={logo} title={pageTitle} />
 
                 <NavBar
                     content={content}
@@ -64,37 +60,35 @@ class PageContainer extends Component {
                     signOut={this.props.signOut}
                 />
 
-                {content === PageContent.CALENDAR &&
-                    <Calendar 
-                        id="calendar-container" 
+                {content === PageContent.CALENDAR && (
+                    <Calendar
+                        id="calendar-container"
                         account={account}
                         donatingAgency={donatingAgency}
                     />
-                }
+                )}
 
                 {content === PageContent.ASSIGN_VOLUNTEERS && (
                     <AssignVolunteersController account={account} />
                 )}
 
-                {content === PageContent.REQUEST_PICKUP &&
-                    <RecurringPickupRequest
+                {content === PageContent.REQUEST_PICKUP && (
+                    <RequestPickupWrapper
                         account={account}
                         donatingAgency={donatingAgency}
                     />
-                }
+                )}
 
                 {content === PageContent.FOOD_LOGS && (
                     <FoodLogs account={account} />
                 )}
 
-                {this.state.content === PageContent.DIRECTORY &&
+                {this.state.content === PageContent.DIRECTORY && (
                     <Directory account={this.props.account} />
-                }
+                )}
 
                 {this.state.content === PageContent.SETTINGS && (
-                    <Settings 
-                        account={this.props.account}
-                    />
+                    <Settings account={this.props.account} />
                 )}
             </div>
         );

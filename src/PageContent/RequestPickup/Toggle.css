@@ -1,0 +1,47 @@
+.toggle-wrapper {
+  width: 243px;
+  margin: 140px 50% 30px 50%;
+}
+
+.toggle {
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 20px;
+  padding: 10px;
+  margin-right: 20px;
+  width: 210px;
+}
+
+.emergency-toggle {
+  background-color: #eb5757;
+}
+.recurring-toggle {
+  background-color: #2ecc71;
+}
+
+.emergency-toggle:hover, .recurring-toggle:hover{
+  cursor: pointer;
+ }
+
+.toggle-info {
+  display: inline-block;
+}
+
+.toggle-container {
+  display: flex;
+  width: 280px;
+  justify-content: space-between;
+}
+
+.__react_component_tooltip {
+  z-index: 999;
+}
+
+.__react_component_tooltip.type-dark {
+  background-color: white;
+}
+
+div.__react_component_tooltip.show.place-right.type-dark {
+  border: 1px solid black;
+}
