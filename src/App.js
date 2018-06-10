@@ -141,7 +141,12 @@ class App extends Component {
                         WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
                         </div>
                         :
-                        null
+                        document.documentElement.clientWidth < 1400 ?
+                            <div className="browser-check">
+                        WARNING! Your browser is too small, use at your own risk.
+                            </div>
+                            :
+                            null
                 }
                 {this.state.authenticated ? (
                     this.state.account ? (
