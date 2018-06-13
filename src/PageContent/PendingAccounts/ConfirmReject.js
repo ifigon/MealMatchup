@@ -8,8 +8,11 @@ class ConfirmReject extends Component {
             <div className="confirm-activate-wrapper">
                 <h1 className="confirmation-message">
                     {' '}
-                    Are you sure you want to reject {this.props.agencyName}? The
-                    account will immediately be deleted from the system.{' '}
+                    Are you sure you want to reject{' '}
+                    <div className="agency-name-style">
+                        {this.props.agencyName}
+                    </div>? The account will immediately be deleted from the
+                    system.{' '}
                 </h1>
                 <div className="close-dialog">
                     <img
@@ -19,18 +22,19 @@ class ConfirmReject extends Component {
                         alt="close"
                     />
                 </div>
-                <div className="confirm-button-wrapper" />
-                <div
-                    onClick={this.props.confirmReject}
-                    className="verify-accept verify-button"
-                >
-                    Confirm
-                </div>
-                <div
-                    onClick={this.props.back}
-                    className="verify-reject verify-button"
-                >
-                    Back
+                <div className="confirm-button-wrapper">
+                    <div
+                        onClick={this.props.confirmReject}
+                        className="verify-accept-popup verify-button-popup"
+                    >
+                        Confirm
+                    </div>
+                    <div
+                        onClick={this.props.back}
+                        className="verify-reject-popup verify-button-popup"
+                    >
+                        Back
+                    </div>
                 </div>
             </div>
         );
