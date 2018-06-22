@@ -118,13 +118,13 @@ class AssignOption extends Component {
 
         // update button text to show that it's been copied
         e.target.className = 'form-button copy copied'; 
-        e.target.innerHTML = 'Link copied to clipboard';
+        e.target.innerHTML = 'Copied to clipboard';
     }
 
     recopyDialog(e, f) {
         if (e.target.classList.contains('copied')) {
             e.target.innerHTML = 'Copy link again';
-            e.target.onmouseleave = (e) => e.target.innerHTML = 'Link copied to clipboard';
+            e.target.onmouseleave = (e) => e.target.innerHTML = 'Copied to clipboard';
         }
     }
 }
