@@ -105,7 +105,6 @@
 .form-buttons-container {
     box-sizing: border-box;
     margin-top: 28px;
-    padding-left: 15%;
 }
 
 .form-button {
@@ -121,13 +120,15 @@
 }
 
 .form-button.copy {
-    background-color: rgba(46, 204, 113, 0.8);
+    background-color: #9DCC6F;
     color: white;
     width: 85%;
+    border: 1px solid #9DCC6F;
 }
 .form-button.copied {
     background-color: rgba(46, 46, 46, 0.1);
     color: black;
+    border: 1px solid rgba(46, 46, 46, 0.1);
 }
 
 .confirm-button {
