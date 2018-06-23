@@ -35,13 +35,15 @@ class App extends Component {
             function(user) {
                 if (user) {
                     // grab and listen to user's account
-                    accountsRef.child(user.uid).on('value', this.aggrAccount);
+                    accountsRef
+                        .child(user.uid)
+                        .on('value', this.aggrAccount);
                 } else {
                     this.setState({
                         authenticated: true,
                         signInDenied: false,
                         account: null,
-                        donatingAgency: null
+                        donatingAgency: null,
                     });
                 }
             }.bind(this)
@@ -55,25 +57,24 @@ class App extends Component {
         if (account.isVerified && account.isActivated) {
             // also grab and listen to the DA entity if user is DA member
             if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-                donatingAgenciesRef.child(account.agency).on(
-                    'value',
-                    function(daSnap) {
+                donatingAgenciesRef
+                    .child(account.agency)
+                    .on('value', function(daSnap) {
                         let da = daSnap.val();
                         da.uid = daSnap.key;
                         this.setState({
                             authenticated: true,
                             signInDenied: false,
                             account: account,
-                            donatingAgency: da
+                            donatingAgency: da,
                         });
-                    }.bind(this)
-                );
+                    }.bind(this));
             } else {
                 this.setState({
                     authenticated: true,
                     signInDenied: false,
                     account: account,
-                    donatingAgency: null
+                    donatingAgency: null,
                 });
             }
         } else {
@@ -82,7 +83,7 @@ class App extends Component {
                 authenticated: true,
                 signInDenied: true,
                 account: null,
-                donatingAgency: null
+                donatingAgency: null,
             });
             auth.signOut();
         }

@@ -7,10 +7,10 @@ import Directory from './PageContent/Directory/DirectoryPage.js';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
 import Calendar from './PageContent/Calendar/Calendar.js';
-import PendingAccounts from './PageContent/PendingAccounts/PendingAccounts';
-import PageDoesNotExist from './PageContent/PageDoesNotExist/PageDoesNotExist';
 import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
 import Settings from './PageContent/Settings/Settings.js';
+import PendingAccounts from './PageContent/PendingAccounts/PendingAccounts';
+import PageDoesNotExist from './PageContent/PageDoesNotExist/PageDoesNotExist';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -21,7 +21,7 @@ class PageContainer extends Component {
         super(props);
 
         this.state = {
-            content: this.props.content
+            content: this.props.content,
         };
 
         this.navBarHandler = this.navBarHandler.bind(this);
@@ -40,13 +40,6 @@ class PageContainer extends Component {
     }
 
     render() {
-        // wait for all data to come through
-        let ready =
-            this.props.account.accountType !==
-                AccountType.DONATING_AGENCY_MEMBER || this.state.donatingAgency;
-        if (!ready) {
-            return null;
-        }
         const { account, donatingAgency } = this.props;
         const { content } = this.state;
 
@@ -112,12 +105,14 @@ class PageContainer extends Component {
                     <FoodLogs account={account} />
                 )}
 
-                {this.state.content === PageContent.DIRECTORY && (
+                {this.state.content === PageContent.DIRECTORY &&
                     <Directory account={this.props.account} />
-                )}
+                }
 
                 {this.state.content === PageContent.SETTINGS && (
-                    <Settings account={this.props.account} />
+                    <Settings 
+                        account={this.props.account}
+                    />
                 )}
             </div>
         );
