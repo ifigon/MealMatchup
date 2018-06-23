@@ -25,13 +25,13 @@ class Map extends Component {
         };
     }
 
-    componentDidMount() {
+    componentDidMount(){
         this.updateMapInfo(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
-            this.updateMapInfo(nextProps);
+            this.updateMapInfo(nextProps); 
         }
     }
 
