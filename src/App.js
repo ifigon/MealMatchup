@@ -137,12 +137,19 @@ class App extends Component {
         }
         return (
             <div className="">
-                {!this.state.isChrome ? (
-                    <div className="browser-check">
-                        WARNING! You are using an UNSUPPORTED browser. Please
-                        use Google Chrome.
-                    </div>
-                ) : null}
+                {
+                    !this.state.isChrome ? 
+                        <div className="browser-check">
+                        WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
+                        </div>
+                        :
+                        document.documentElement.clientWidth < 1400 ?
+                            <div className="browser-check">
+                        WARNING! Your browser is too small, use at your own risk.
+                            </div>
+                            :
+                            null
+                }
                 {this.state.authenticated ? (
                     this.state.account ? (
                         /* Show Calendar page if user is logged in */

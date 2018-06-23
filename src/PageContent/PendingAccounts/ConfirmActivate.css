@@ -4,22 +4,28 @@
 .confirm-activate-wrapper {
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
   border-radius: 3px;
-  width: 759px;
-  margin: 120px auto 0px -49px;
-  height: 61vh;
+  width: 450px;
+  margin-top: 200px;
+  margin-left: 350px;
+  height: 150px;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   overflow: hidden;
   position: absolute;
+  border-top: 15px solid #5dc0f9;
   background-color: white;
   padding: 70px;
-  padding-top: 40px;
-  overflow: scroll;
+  padding-top: 10px;
+  padding-right: 20px;
   top: 0px;
 }
 
 .confirm-button-wrapper {
-  margin-top: 300px;
+  margin-top: 30px;
+  width: 500px;
+  display: block;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .close-dialog {
@@ -28,9 +34,10 @@
 
 .close-x-confirm {
   position: relative;
-  padding-left: 20px;
+  padding-left: 10px;
   vertical-align: top;
   padding-top: 10px;
+  width: 20px;
 }
 .close-x-confirm:hover {
   cursor: pointer;
@@ -38,5 +45,48 @@
 
 .confirmation-message {
   display: inline-block;
-  width: 700px;
+  width: 410px;
+  font-size: 20px;
+}
+
+.agency-name-style {
+  font-style: italic;
+  display: inline;
+}
+.verify-reject-popup {
+  color: #bdbdbd;
+  border: solid 1px #e0e0e0;
+}
+
+.verify-accept-popup {
+  background-color: #5dc0f9;
+  color: white;
+}
+.verify-button-popup {
+  display: inline-block;
+  width: 120px;
+  height: 20px;
+  padding: 6px;
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 5px;
+  border-radius: 3px;
+}
+
+.verify-button-popup:hover {
+  cursor: pointer;
+}
+
+.overlay-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  background-color: #4f4f4f65;
+  padding: 70px;
+  padding-top: 10px;
+  padding-right: 20px;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
