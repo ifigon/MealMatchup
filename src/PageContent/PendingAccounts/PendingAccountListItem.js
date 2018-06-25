@@ -61,13 +61,39 @@ class PendingAccountsListItem extends Component {
         });
     }
 
-    confirmReject(uid, daContactId) {
+    async confirmReject(accountType, agencyUId, umbrellaUId, daContactId) {
+        // remove agency account
         if (daContactId) { // accountType == donating agency 
-            donatingAgenciesRef.child(uid).remove();
+            donatingAgenciesRef.child(agencyUId).remove();
             accountsRef.child(daContactId).remove();
         } else {
-            accountsRef.child(uid).remove();
+            accountsRef.child(agencyUId).remove();
         }
+
+        // remove agency uid from umbrella
+        let accountRefChild = ''; // fields in umbrella account object
+        switch (accountType) {
+        case 'Receiving Agency':
+            accountRefChild = 'receivingAgencies';
+            break;
+        case 'Deliverer Group':
+            accountRefChild = 'delivererGroups';
+            break;
+        case 'Donating Agency': 
+            accountRefChild = 'donatingAgencies';
+            break;
+        default:
+            break;
+        }
+        // get all agency ids of that accountType
+        const agencyUIdsSnapshot = await accountsRef.child(`${umbrellaUId}/${accountRefChild}`).once('value');
+        // search for and remove agencyUId
+        agencyUIdsSnapshot.forEach(agencyUIdSnap => {
+            if (agencyUIdSnap.val() === agencyUId) {
+                accountsRef.child(`${umbrellaUId}/${accountRefChild}/${agencyUIdSnap.key}`).remove();
+            }
+        });
+        
         this.setState({
             rejectPopUp: false,
             dialog: false,
@@ -97,6 +123,7 @@ class PendingAccountsListItem extends Component {
         }
         let agencyName = agencyObject.name;
         let primaryContact = agencyObject.primaryContact.name;
+        let umbrellaUId = agencyObject.umbrella;
 
         let statusStyle = '';
         let statusText = '';
@@ -151,6 +178,7 @@ class PendingAccountsListItem extends Component {
                         agencyName={agencyName}
                         agencyUId={key[0]}
                         accountType={accountType}
+                        umbrellaUId={umbrellaUId}
                         primaryContactData={agencyObject.primaryContact}
                     />
                 )}

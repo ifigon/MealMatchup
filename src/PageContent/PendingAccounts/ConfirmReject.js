@@ -26,11 +26,11 @@ class ConfirmReject extends Component {
                     <div className="confirm-button-wrapper">
                         <div
                             onClick={() => { 
-                                const { agencyUId, accountType, primaryContactData, confirmReject } = this.props;
+                                const { agencyUId, umbrellaUId, accountType, primaryContactData, confirmReject } = this.props;
                                 if (accountType === 'Donating Agency') {
-                                    confirmReject(agencyUId, primaryContactData.uid);
+                                    confirmReject(accountType, agencyUId, umbrellaUId, primaryContactData.uid);
                                 } else {
-                                    confirmReject(agencyUId, null);            
+                                    confirmReject(accountType, agencyUId, umbrellaUId, null);            
                                 }
                             }}
                             className="verify-accept-popup verify-button-popup"
