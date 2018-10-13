@@ -1,27 +1,12 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import { auth } from '../FirebaseConfig';
-import './SignUpIn.scss'
+import styles from './SignUpIn.module.css'
 
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 const FormItem = Form.Item;
 
 @Form.create()
 class LoginOrRegister extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.createAccount = this.createAccount.bind(this);
-    //     this.signIn = this.signIn.bind(this);
-    // }
-    // createAccount(e) {
-    //     e.preventDefault();
-    //     this.props.createAccount();
-    // }
-    // signIn(e) {
-    //     e.preventDefault();
-    //     this.props.signIn();
-    // }
-
     handleSubmit = (e) => {
         e.preventDefault();
         const { form } = this.props
@@ -53,10 +38,10 @@ class LoginOrRegister extends React.Component {
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldDecorator } = this.props.form
         return (
-            <div className="signup-wrapper">
-                <div className='login-wrapper'>
+            <div className={styles['signup-wrapper']}>
+                <div className={styles['login-wrapper']}>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem>
                         {getFieldDecorator('email', {

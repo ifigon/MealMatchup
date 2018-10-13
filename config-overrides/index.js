@@ -6,7 +6,7 @@ const path = require('path')
 const { injectBabelPlugin } = require('react-app-rewired')
 const rewireLess = require('react-app-rewire-less')
 const rewireSass = require('react-app-rewire-scss')
-const rewireCssModules = require('react-app-rewire-css-modules');
+const rewireCssModules = require('@watiko/react-app-rewire-css-modules')
 const antdTheme = require('./antd')
 
 module.exports = function override (config, env) {

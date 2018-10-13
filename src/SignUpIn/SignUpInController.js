@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-// import { Redirect } from 'react-router-dom';
 import './SignUpIn.scss';
 import UserTypeController from './UserTypeController';
 import SignUpIn from './SignUpIn';
-import SignIn from './SignIn';
 
 class SignUpInController extends Component {
     constructor(props) {
@@ -12,43 +10,22 @@ class SignUpInController extends Component {
             step: 0
         };
     }
-    signIn() {
-        this.setState({
-            step: 1
-        });
-    }
 
-    createAccount() {
-        this.setState({
-            step: 2
-        });
-    }
+    back = () => this.setState({ step: 0 })
 
-    back() {
-        this.setState({
-            step: 0
-        });
-    }
+    createAccount = () => this.setState({ step: 1 })
 
-    showStep() {
+    showStep () {
         switch (this.state.step) {
         default:
             return (
                 <SignUpIn
-                    signIn={this.signIn.bind(this)}
-                    createAccount={this.createAccount.bind(this)}
+                    signIn={this.signIn}
+                    createAccount={this.createAccount}
                 />
             );
         case 1:
-            return (
-                <SignIn
-                    signInDenied={this.props.signInDenied}
-                    back={this.back.bind(this)}
-                />
-            ); //(
-
-        case 2:
-            return <UserTypeController back={this.back.bind(this)} />;
+            return <UserTypeController back={this.back} />;
         }
     }
     render() {
