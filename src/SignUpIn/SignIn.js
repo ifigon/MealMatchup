@@ -12,7 +12,20 @@ class SignIn extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        const { email, password } = values
+        console.log('Received values of form: ', values, Object.keys(auth))
+        auth
+            .signInWithEmailAndPassword(email, password)
+            .then(user => {
+                console.log('SIGNED IN', user)
+                message.success(`Welcome, ${'USERNAME'}`)
+            })
+            .catch(error => {
+                console.error(err)
+                console.log(`Error: ${'ERROR'}`)
+            })
+      } else {
+        console.warning(`Form incomplete.`)
       }
     });
   }

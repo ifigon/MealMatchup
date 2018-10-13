@@ -8,5 +8,7 @@ the entire style bundle.
 https://ant.design/docs/react/customize-theme
 */
 module.exports = {
-  '@primary-color': '#1DA57A'
+  '@font-family': '"Open Sans", sans-serif',
+  '@code-family': 'monospace'
+  // '@primary-color': '#1DA57A'
 }
