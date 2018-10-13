@@ -2,10 +2,18 @@
   "name": "uw-foodwaste",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "serve": "serve -s build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/ --ext .js",
+    "lint-functions": "cd functions && npm run lint"
+  },
   "dependencies": {
-    "create-react-class": "^15.6.3",
+    "antd": "^3.10.1",
     "firebase": "^4.9.1",
-    "google-maps-react": "^1.1.2",
     "lodash.once": "^4.1.1",
     "lodash.pick": "^4.4.0",
     "merge-class-names": "^1.1.1",
@@ -16,24 +24,24 @@
     "react-geocode": "0.0.7",
     "react-lifecycles-compat": "^3.0.2",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.1.4",
-    "roboto-fontface": "^0.8.0",
-    "styled-components": "^3.0.2",
+    "react-scripts": "^1.1.5",
     "typeface-roboto": "0.0.54"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "lint": "eslint src/ --ext .js",
-    "lint-functions": "cd functions && npm run lint"
-  },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-import": "^1.9.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "eslint": "^4.19.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.7.0",
     "google-map-react": "^0.32.0",
-    "react-notification-badge": "^1.3.4"
+    "less": "^3.8.1",
+    "node-sass": "^4.9.3",
+    "react-app-rewire-css-modules": "^1.0.0",
+    "react-app-rewire-less": "^2.1.3",
+    "react-app-rewire-scss": "^1.0.2",
+    "react-app-rewired": "^1.6.2",
+    "react-notification-badge": "^1.3.4",
+    "sass-loader": "^7.1.0"
   }
 }
