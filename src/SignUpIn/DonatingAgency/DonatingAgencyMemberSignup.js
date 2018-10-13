@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase, { auth, accountsRef } from '../../FirebaseConfig';
 import { AccountType, StringFormat } from '../../Enums';
-import '../SignUpIn.css';
+import '../SignUpIn.scss';
 import { formatPhone } from '../../utils/Utils';
 
 class DonatingAgencyMemberSignup extends Component {

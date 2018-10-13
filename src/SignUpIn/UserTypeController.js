@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './SignUpIn.css';
+import './SignUpIn.scss';
 import UserTypeSignUp from './UserTypeSignUp';
 import ReceivingAgencySignUpController from './ReceivingAgency/ReceivingAgencySignUpController';
 import DelivererGroupSignUpController from './DelivererGroup/DelivererGroupSignUpController';

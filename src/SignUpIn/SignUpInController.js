@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Redirect } from 'react-router-dom';
-import './SignUpIn.css';
+import './SignUpIn.scss';
 import UserTypeController from './UserTypeController';
 import SignUpIn from './SignUpIn';
 import SignIn from './SignIn';
