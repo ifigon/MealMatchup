@@ -7,6 +7,12 @@
     flex-basis: 25%;
 }
 
+.avi-volunteers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .avi-volunteers > h5 {
     margin: 0px 0px 2px 0px;
     font-weight: 500;
@@ -15,11 +21,12 @@
 
 .avi-details-container {
     display: flex;
+    align-items: center;
     width: 100%;
-    margin-top: 8px;
+    /* margin-top: 8px;
     margin-bottom: 4px;
     font-size: 14px;
-    margin-right: auto;
+    margin-right: auto; */
 }
 
 .avi-headings {

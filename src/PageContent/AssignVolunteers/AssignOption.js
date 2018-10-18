@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {DeliveryStatus} from '../../Enums.js';
-import {StringFormat} from '../../Enums.js';
+import { DeliveryStatus } from '../../Enums.js';
+import { StringFormat } from '../../Enums.js';
 import moment from 'moment';
 
 class AssignOption extends Component {
@@ -28,7 +28,8 @@ class AssignOption extends Component {
             <div className="avi-row">
                 <div className="container avi-details-container">
                     <div className="avi-detail">
-                        {date} Pick-up 
+                        {date}
+                        <p>Pick-up</p>
                     </div>
                     <div className="avi-detail">
                         {receivingAgency.name}
@@ -42,14 +43,14 @@ class AssignOption extends Component {
                     </div>
                     <div className="avi-detail avi-volunteers">
                         {this.getButton(status, deliverers)}
-                        
+
                     </div>
-                    
+
                     <div className="avi-detail avi-volunteers">
-                        {deliverers && deliverers.length === 2 && 
-                            <button type="button" 
-                                className="form-button copy" 
-                                id={this.props.deliveryId} 
+                        {deliverers && deliverers.length === 2 &&
+                            <button type="button"
+                                className="form-button copy"
+                                id={this.props.deliveryId}
                                 onClick={this.copyLinkToClipboard.bind(this)}
                                 onMouseEnter={this.recopyDialog.bind(this)}>Copy link</button>
                         }
@@ -61,7 +62,7 @@ class AssignOption extends Component {
 
 
 
-    copyLinkToClipboard(e,f) {
+    copyLinkToClipboard(e, f) {
         // stolen from https://stackoverflow.com/a/30810322
         var textArea = document.createElement('textarea');
 
@@ -117,7 +118,7 @@ class AssignOption extends Component {
         document.body.removeChild(textArea);
 
         // update button text to show that it's been copied
-        e.target.className = 'form-button copy copied'; 
+        e.target.className = 'form-button copy copied';
         e.target.innerHTML = 'Copied to clipboard';
     }
 

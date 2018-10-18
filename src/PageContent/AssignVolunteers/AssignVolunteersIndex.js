@@ -51,6 +51,7 @@ class AssignVolunteersIndex extends Component {
             );
         }
     }
+  }
 }
 
 export default AssignVolunteersIndex;
