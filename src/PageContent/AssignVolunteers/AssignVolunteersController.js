@@ -13,7 +13,8 @@ class AssignVolunteersController extends Component {
         this.state = {
             deliveries: {},
             hitUpdateTime: -1,
-            deliveriesExist: false,
+            deliveriesExist: true,
+            finishedCall: true,
             onConfirm: false,
             step: 0,
             selectedDeliveryId: -1,
@@ -58,15 +59,16 @@ class AssignVolunteersController extends Component {
 
         let processTimestampIndex = (timestampIndex) => {
             for (let deliveryId of Object.keys(timestampIndex)) {
-                this.setState({deliveriesExist: true});
                 if (!this.state.deliveries[deliveryId]) {
                     genDeliveryListener(deliveryId);
                 }
             }
         };
+
         myDeliveriesRef.on('child_added', async (snap) => processTimestampIndex(snap.val()));
         myDeliveriesRef.on('child_changed', async (snap) => processTimestampIndex(snap.val()));
     }
+
 
     componentWillUnmount() {
         // detach all listeners
@@ -173,11 +175,13 @@ class AssignVolunteersController extends Component {
         switch(this.state.step) {
         case 0:
             return (
+                this.state.finishedCall ? 
                 <AssignVolunteersIndex 
                     handleEditClick={this.handleEditClick.bind(this)}
                     deliveries={this.state.deliveries}
                     deliveriesExist={this.state.deliveriesExist}
-                />
+                /> :
+                <div>Loading...</div>
             );
 
         case 1:

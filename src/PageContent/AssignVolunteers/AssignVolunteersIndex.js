@@ -7,8 +7,8 @@ class AssignVolunteersIndex extends Component {
     render() {
         const {
             deliveries,
-            deliveriesExist,
             handleEditClick,
+            deliveriesExist
         } = this.props;
 
         //if(Object.keys(deliveries).length === 0) {
