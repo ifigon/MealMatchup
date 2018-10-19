@@ -1,61 +1,60 @@
 .avi-container {
-    display: flex;
-    flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .avi-row {
-    display: flex;
-    margin-top: 40px;
+  display: flex;
+  margin-top: 40px;
 }
 
 .avi-detail {
-    /* remove this to have avi-headings flex work */
-    flex-basis: 25%;
+  /* remove this to have avi-headings flex work */
+  flex-basis: 25%;
 }
 
 .avi-volunteers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .avi-volunteers > h5 {
-    margin: 0px 0px 2px 0px;
-    font-weight: 500;
-    font-size: 14px;
+  margin: 0px 0px 2px 0px;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .avi-details-container {
-    display: flex;
-    /* justify-content: space-between; */
-    align-items: center;
-    width: 100%;
-    border-top: solid 5px #5DC0F9;
-    /* border-top-width: 5px; */
-    /* margin-top: 8px;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 100%;
+  border-top: solid 5px #5dc0f9;
+  /* border-top-width: 5px; */
+  /* margin-top: 8px;
     margin-bottom: 4px;
     font-size: 14px;
     margin-right: auto; */
-    transition: all 250ms ease;
+  transition: all 250ms ease;
 }
 
 .avi-details-container:hover {
-    border-top-width: 7px;
-    border-top-color: rgb(71, 150, 196)
+  border-top-width: 7px;
+  border-top-color: rgb(71, 150, 196);
 }
 
 .avi-headings {
-    display: flex;
-    justify-content: space-around;
-    /* padding: 0 44px 0 80px; */
-    /* width: 90%; */
-    /* margin-top: 8px;
+  display: flex;
+  justify-content: space-around;
+  /* padding: 0 44px 0 80px; */
+  /* width: 90%; */
+  /* margin-top: 8px;
     margin-bottom: 4px;
     box-shadow: none;
     margin-right: auto; */
 }
 
 .avi-heading {
-    display: inline;
+  display: inline;
 }
