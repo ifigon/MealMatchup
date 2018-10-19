@@ -11,8 +11,9 @@ class AssignVolunteersIndex extends Component {
             handleEditClick,
         } = this.props;
 
-        if(!deliveriesExist) {
-            return <h5>No deliveries scheduled</h5>;
+        //if(Object.keys(deliveries).length === 0) {
+        if(!deliveriesExist) { 
+            return <h5>No deliveries scheduled at this time... keep an eye out for more openings!</h5>;
         } else {
             return (
                 <div className="avi-container">  

@@ -13,7 +13,7 @@ class AssignVolunteersController extends Component {
         this.state = {
             deliveries: {},
             hitUpdateTime: -1,
-            deliveriesExist: true,
+            deliveriesExist: false,
             onConfirm: false,
             step: 0,
             selectedDeliveryId: -1,
@@ -58,10 +58,8 @@ class AssignVolunteersController extends Component {
 
         let processTimestampIndex = (timestampIndex) => {
             for (let deliveryId of Object.keys(timestampIndex)) {
+                this.setState({deliveriesExist: true});
                 if (!this.state.deliveries[deliveryId]) {
-                    if (!this.state.deliveriesExist) {
-                        this.setState({deliveriesExist: true});
-                    }
                     genDeliveryListener(deliveryId);
                 }
             }
@@ -94,7 +92,6 @@ class AssignVolunteersController extends Component {
                     /> :
                     <div />
                 }
-
             </div>
         );
 
