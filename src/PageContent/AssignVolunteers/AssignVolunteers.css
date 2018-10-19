@@ -119,6 +119,7 @@
     /* border: 1px solid #B2B2B2; */
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 250ms ease;
 }
 
 .form-button.copy {
@@ -127,6 +128,11 @@
     width: 180px;
     border: 1px solid #9DCC6F;
 }
+
+.form-button.copy:hover {
+    background-color: rgb(131, 170, 92);
+}
+
 .form-button.copied {
     background-color: rgba(46, 46, 46, 0.1);
     color: black;
@@ -140,11 +146,20 @@
     width: 180px;
 }
 
+.confirm-button:hover {
+    background-color: rgb(69, 145, 189);
+}
+
 .confirm-button-assign {
     background-color: #F77676;
-    border-radius: 1px solid #F77676;
+    /* border-radius: 1px solid #F77676; */
     color: white;
     width: 180px;
+    /* transition: background-color 250ms ease; */
+}
+
+.confirm-button-assign:hover {
+    background-color: rgb(187, 87, 87)
 }
 
 .already-completed-button {

@@ -31,11 +31,18 @@
     /* justify-content: space-between; */
     align-items: center;
     width: 100%;
-    border-top: 5px solid #5DC0F9 
+    border-top: solid 5px #5DC0F9;
+    /* border-top-width: 5px; */
     /* margin-top: 8px;
     margin-bottom: 4px;
     font-size: 14px;
     margin-right: auto; */
+    transition: all 250ms ease;
+}
+
+.avi-details-container:hover {
+    border-top-width: 7px;
+    border-top-color: rgb(71, 150, 196)
 }
 
 .avi-headings {
