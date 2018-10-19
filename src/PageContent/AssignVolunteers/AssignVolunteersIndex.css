@@ -1,9 +1,16 @@
+.avi-container {
+    display: flex;
+    flex-direction: column;
+
+}
+
 .avi-row {
     display: flex;
-    margin-top: 8px;
+    margin-top: 40px;
 }
 
 .avi-detail {
+    /* remove this to have avi-headings flex work */
     flex-basis: 25%;
 }
 
@@ -21,8 +28,10 @@
 
 .avi-details-container {
     display: flex;
+    /* justify-content: space-between; */
     align-items: center;
     width: 100%;
+    border-top: 5px solid #5DC0F9 
     /* margin-top: 8px;
     margin-bottom: 4px;
     font-size: 14px;
@@ -31,9 +40,15 @@
 
 .avi-headings {
     display: flex;
-    width: 100%;
-    margin-top: 8px;
+    justify-content: space-around;
+    /* padding: 0 44px 0 80px; */
+    /* width: 90%; */
+    /* margin-top: 8px;
     margin-bottom: 4px;
     box-shadow: none;
-    margin-right: auto;
+    margin-right: auto; */
+}
+
+.avi-heading {
+    display: inline;
 }

@@ -1,8 +1,10 @@
 .container {
     font-family: 'Open Sans', sans-serif;
     box-shadow: 0px 0px 3px 1px #eee;
-    margin-right: 45px;
+    /* margin-right: 45px; */
     padding: 12px;
+    width: 75%;
+
 }
 
 .assign-volunteers-container {
@@ -110,19 +112,19 @@
 .form-button {
     font-size: 16px;
     margin: 4px;
-    color: #B2B2B2;
+    /* color: #B2B2B2; */
     padding: 8px 18px 8px 18px;
-    background-blend-mode: color;
-    background-color: none;
-    border: 1px solid #B2B2B2;
-    border-radius: 8px;
+    /* background-blend-mode: color; */
+    /* background-color: none; */
+    /* border: 1px solid #B2B2B2; */
+    border-radius: 4px;
     cursor: pointer;
 }
 
 .form-button.copy {
     background-color: #9DCC6F;
     color: white;
-    width: 85%;
+    width: 180px;
     border: 1px solid #9DCC6F;
 }
 .form-button.copied {
@@ -132,7 +134,8 @@
 }
 
 .confirm-button {
-    color: #5DC0F9;
+    background-color: #5DC0F9;
+    color: white;
     border: 1px solid #5DC0F9;
     width: 180px;
 }
