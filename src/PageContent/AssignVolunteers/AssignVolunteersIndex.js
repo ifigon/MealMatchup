@@ -22,7 +22,7 @@ class AssignVolunteersIndex extends Component {
               <div className="avi-heading">Destination</div>
               <div className="avi-heading">Volunteers</div>
               <div className="avi-heading">Assign</div>
-              <div className="avi-heading">Send link to volunteers</div>
+              <div className="avi-heading">Link for volunteers</div>
             </div>
           </div>
           {Object.keys(deliveries)
