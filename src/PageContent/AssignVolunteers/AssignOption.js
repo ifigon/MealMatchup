@@ -53,10 +53,8 @@ class AssignOption extends Component {
     return (
       <div className="avi-row">
         <div className="container avi-details-container">
-          <div className="avi-detail">
-            {date}
-            <p>Pick-up</p>
-          </div>
+          <div className="avi-left-border" />
+          <div className="avi-detail">{date}</div>
           <div className="avi-detail">{receivingAgency.name}</div>
           <div className="avi-detail avi-volunteers">
             {deliverers &&

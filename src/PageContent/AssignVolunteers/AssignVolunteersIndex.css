@@ -26,17 +26,25 @@
 
 .avi-details-container {
   display: flex;
+  position: relative;
   align-items: center;
   width: 100%;
-  border-left: solid 5px #5dc0f9;
   box-shadow: 0px 0px 3px 1px #eee;
   height: 100px;
+}
+
+.avi-left-border {
+  position: absolute;
+  background-color: #5dc0f9;
+  left: 0;
+  height: 100%;
+  width: 5px;
   transition: all 250ms ease;
 }
 
-.avi-details-container:hover {
-  border-left-width: 7px;
-  border-left-color: rgb(71, 150, 196);
+.avi-left-border:hover {
+  width: 7px;
+  background-color: #4084ac;
 }
 
 .avi-headings {
@@ -47,6 +55,6 @@
 .avi-heading {
   width: 170px;
   text-align: center;
-  margin-left: 25px;
+  margin-left: 12px;
   font-size: 20px;
 }

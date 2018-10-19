@@ -18,7 +18,7 @@ class AssignVolunteersIndex extends Component {
         <div className="avi-container">
           <div>
             <div className="avi-headings">
-              <div className="avi-heading">Date</div>
+              <div className="avi-heading">Pick-Up Date</div>
               <div className="avi-heading">Destination</div>
               <div className="avi-heading">Volunteers</div>
               <div className="avi-heading">Assign</div>
