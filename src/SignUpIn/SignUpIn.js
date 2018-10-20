@@ -2,7 +2,7 @@ import React from 'react';
 import { auth } from '../FirebaseConfig';
 import styles from './SignUpIn.module.css'
 
-import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
+import { Form, Icon, Input, Button, message } from 'antd'
 const FormItem = Form.Item;
 
 @Form.create()

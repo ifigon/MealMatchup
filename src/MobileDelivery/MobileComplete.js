@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import './Mobile.css';
+import './Mobile.scss';
 import MobileConfirm from './MobileConfirm';
 import { StringFormat } from '../Enums';
 

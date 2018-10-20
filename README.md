@@ -496,7 +496,7 @@ This project setup uses [Webpack](https://webpack.js.org/) for handling all asse
 
 ```js
 import React, { Component } from 'react';
-import './Button.css'; // Tell Webpack that Button.js uses these styles
+import './Button.scss'; // Tell Webpack that Button.js uses these styles
 
 class Button extends Component {
   render() {
@@ -777,8 +777,8 @@ yarn add react-bootstrap bootstrap@3
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
 
 ```js
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+import 'bootstrap/dist/css/bootstrap.scss';
+import 'bootstrap/dist/css/bootstrap-theme.scss';
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 ```

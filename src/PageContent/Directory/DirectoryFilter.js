@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Directory.css';
+import './Directory.scss';
 import 'typeface-roboto';
 
 // Component for directory filter

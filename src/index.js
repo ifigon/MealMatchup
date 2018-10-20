@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import 'typeface-roboto';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import MobileController from './MobileDelivery/MobileController';
 import App from './App';
 import DonatingAgencyMemberSignup from './SignUpIn/DonatingAgency/DonatingAgencyMemberSignup.js';
+// import UserTypeController from './SignUpIn/UserTypeController';
+// import SignIn from './SignUpIn/SignIn';
 
 ReactDOM.render(
     <Router>

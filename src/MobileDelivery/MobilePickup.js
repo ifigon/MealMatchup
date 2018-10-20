@@ -1,7 +1,7 @@
 import React from 'react';
 import Map from '../Map/Map';
 import moment from 'moment';
-import './Mobile.css';
+import './Mobile.scss';
 import { DeliveryStatus, StringFormat } from '../Enums';
 
 import firebase from '../FirebaseConfig';

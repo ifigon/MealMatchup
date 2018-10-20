@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Popup.css';
+import './Popup.scss';
 import RecurringRequestController from './Recurring/RecurringRequestController';
 import close from '../../icons/cross-out.svg';
 import { AccountType, NotificationType, NotificationContentType } from '../../Enums';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../Popup.css';
+import '../Popup.scss';
 import { AccountType } from '../../../Enums';
 import RecurringRequestDetails from './RecurringRequestDetails';
 import RecurringRequestDisclaimer from './RecurringRequestDisclaimer';

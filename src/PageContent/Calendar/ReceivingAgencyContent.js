@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Content.css';
+import './Content.scss';
 import shelter from '../../icons/shelter.svg';
 
 class ReceivingAgencyContent extends Component {

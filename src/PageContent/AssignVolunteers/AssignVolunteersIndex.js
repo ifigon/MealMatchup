@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './AssignVolunteersIndex.css';
+import './AssignVolunteersIndex.scss';
 import AssignOption from './AssignOption';
 
 class AssignVolunteersIndex extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NotificationMap } from './NotificationMap';
-import './Popup.css';
+import './Popup.scss';
 
 class Notification extends Component {
     constructor(props){

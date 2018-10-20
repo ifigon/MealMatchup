@@ -4,8 +4,8 @@ import AccountManager from './AccountManager';
 import { AccountType, SettingsFields } from '../../Enums';
 import MemberAccount from './MemberAccount';
 import PersonalAccount from './PersonalAccount';
-import './SCSettings0.css';
-import './SCSettings1.css';
+import './SCSettings0.scss';
+import './SCSettings1.scss';
 
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig.js';
 import { pick } from 'lodash';

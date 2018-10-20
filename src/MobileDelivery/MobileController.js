@@ -1,5 +1,5 @@
 import React from 'react';
-import './Mobile.css';
+import './Mobile.scss';
 import MobileStart from './MobileStart';
 import MobilePickup from './MobilePickup';
 import MobileDelivery from './MobileDelivery';

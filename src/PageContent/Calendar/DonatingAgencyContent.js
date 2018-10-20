@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Content.css';
+import './Content.scss';
 import vitamins from '../../icons/vitamins.svg';
 
 class DonatingAgencyContent extends Component {

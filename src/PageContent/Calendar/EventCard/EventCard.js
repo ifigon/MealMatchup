@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './EventCard.css';
+import './EventCard.scss';
 import green_truck from '../../../icons/green_truck.svg';
 import grey_truck from '../../../icons/grey_truck.svg';
 import white_truck from '../../../icons/white_truck.svg';

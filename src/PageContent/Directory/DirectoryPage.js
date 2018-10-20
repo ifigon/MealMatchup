@@ -3,7 +3,7 @@ import DirectoryCard from './DirectoryCard.js';
 import firebase from '../../FirebaseConfig.js';
 import {AccountType, DaysOfWeek, StringFormat} from '../../Enums.js';
 import moment from 'moment';
-import './Directory.css';
+import './Directory.scss';
 const db = firebase.database();
 
 // import DirectoryFilter from './DirectoryFilter.js'; // TODO: DirectoryFilter Implementation

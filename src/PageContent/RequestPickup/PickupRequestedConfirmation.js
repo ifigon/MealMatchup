@@ -1,7 +1,7 @@
 import React from 'react';
 import RequestTime from '../../PageLayout/Notification/Details/RequestTime';
-import './PickupSummary.css';
-import './Confirmation.css';
+import './PickupSummary.scss';
+import './Confirmation.scss';
 import truck from '../../icons/green_truck.svg';
 import close from '../../icons/cross-out.svg';
 

@@ -3,7 +3,7 @@ import moment from 'moment';
 import { AccountType, StringFormat } from '../../Enums';
 import { deliveriesRef } from '../../FirebaseConfig';
 import { formatPhone, objectsAreEqual } from '../../utils/Utils';
-import './Content.css';
+import './Content.scss';
 import volunteer from '../../icons/volunteer.svg';
 
 class DelivererGroupContent extends Component {

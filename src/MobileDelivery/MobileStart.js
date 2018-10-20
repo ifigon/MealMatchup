@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import './Mobile.css';
+import './Mobile.scss';
 import { DeliveryStatus, StringFormat } from '../Enums';
 
 import firebase from '../FirebaseConfig';

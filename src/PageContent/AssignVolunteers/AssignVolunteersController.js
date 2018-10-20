@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase, { deliveriesRef } from '../../FirebaseConfig.js';
-import './AssignVolunteers.css';
+import './AssignVolunteers.scss';
 import Edit from './Edit';
 import ConfirmationCard from './ConfirmationCard';
 import AssignVolunteersIndex from './AssignVolunteersIndex';

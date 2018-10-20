@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { accountsRef, deliveriesRef, donatingAgenciesRef } from '../../FirebaseConfig';
 import { AccountType, StringFormat } from '../../Enums';
-import './Content.css';
+import './Content.scss';
 import phone from '../../icons/phone.svg';
 import { formatPhone, objectsAreEqual } from '../../utils/Utils';
 

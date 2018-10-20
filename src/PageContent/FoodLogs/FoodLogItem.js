@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import './FoodLogItem.css';
+import './FoodLogItem.scss';
 import { StringFormat } from '../../Enums';
 class FoodLogItem extends Component{
     constructor(props){

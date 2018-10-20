@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Dialog.css';
+import './Dialog.scss';
 import Header from './Header.js';
 import DialogContent from './DialogContent';
 

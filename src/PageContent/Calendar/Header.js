@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AccountType, StringFormat } from '../../Enums';
-import './Header.css';
+import './Header.scss';
 import white_cross from '../../icons/white_cross.svg';
 import moment from 'moment';
 

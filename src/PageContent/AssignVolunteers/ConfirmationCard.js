@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './ConfirmationCard.css';
+import './ConfirmationCard.scss';
 import moment from 'moment';
 import { StringFormat } from '../../Enums';
 import volunteer from '../../icons/volunteer.svg';

@@ -3,7 +3,7 @@ import moment from 'moment';
 import { AccountType, FoodUnit, StringFormat } from '../../Enums';
 import { deliveriesRef } from '../../FirebaseConfig';
 import { objectsAreEqual } from '../../utils/Utils';
-import './Content.css';
+import './Content.scss';
 import groceries from '../../icons/groceries.svg';
 import plus from '../../icons/plus-button.svg';
 

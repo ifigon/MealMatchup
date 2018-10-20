@@ -1,5 +1,5 @@
 import React from 'react';
-import './PickupSummary.css';
+import './PickupSummary.scss';
 import truck from '../../icons/green-truck.svg';
 import Map from '../../Map/Map.js';
 import {

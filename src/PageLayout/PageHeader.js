@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './PageHeader.css';
+import './PageHeader.scss';
 import notification from '../icons/notification.svg';
 import NotificationBadge from 'react-notification-badge';
 import { AccountType } from '../Enums.js';

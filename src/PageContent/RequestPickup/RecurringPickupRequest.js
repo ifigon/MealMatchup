@@ -7,7 +7,7 @@ import {
     RequestEndCriteriaType,
     RequestStatus
 } from '../../Enums.js';
-import './RequestPickup.css';
+import './RequestPickup.scss';
 import PickupSummary from './PickupSummary.js';
 import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';

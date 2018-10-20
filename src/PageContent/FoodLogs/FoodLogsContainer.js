@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './FoodLogsContainer.css';
+import './FoodLogsContainer.scss';
 import FoodLogItem from './FoodLogItem';
 import { AccountType, DeliveryStatus } from '../../Enums';
 import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../FirebaseConfig';

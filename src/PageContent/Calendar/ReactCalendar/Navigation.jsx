@@ -14,7 +14,7 @@ import {
 } from './shared/dates';
 import { formatMonthYear as defaultFormatMonthYear } from './shared/dateFormatter';
 import { isView, isViews } from './shared/propTypes';
-import './Calendar.css';
+import './Calendar.scss';
 
 export default class Navigation extends Component {
     shouldComponentUpdate(nextProps) {
