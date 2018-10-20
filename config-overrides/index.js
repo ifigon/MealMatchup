@@ -13,8 +13,9 @@ module.exports = function override (config, env) {
   BABEL:
   babel-plugin-import:          Required by antd for tree shaking
   transform-decorators-legacy:  @decorator support, very nice
+  (NOTE: babel-preset-stage-3 is implicitly loaded by react-geocode as an unmarked peer dependency)
   */
-  config = injectBabelPlugin(['lodash'])
+  config = injectBabelPlugin(['lodash', {}], config)
   config = injectBabelPlugin(['transform-decorators-legacy', {}], config)
 
   /*
