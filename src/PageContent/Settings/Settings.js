@@ -8,7 +8,7 @@ import './SCSettings0.css';
 import './SCSettings1.css';
 
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig.js';
-import pick from 'lodash.pick';
+import { pick } from 'lodash';
 
 class Settings extends Component {
 

@@ -14,6 +14,7 @@ module.exports = function override (config, env) {
   babel-plugin-import:          Required by antd for tree shaking
   transform-decorators-legacy:  @decorator support, very nice
   */
+  config = injectBabelPlugin(['lodash'])
   config = injectBabelPlugin(['transform-decorators-legacy', {}], config)
 
   /*
