@@ -1,0 +1,22 @@
+.signup-wrapper {
+  background-image: url("./SignUpBG.png");
+  background-size: auto 100vh;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+
+.login-wrapper {
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 30em;
+  margin: 0 auto;
+  margin-top: 30vh;
+  padding: 30px;
+  border-radius: 12px;
+  form {
+    padding-top: 20px;
+    margin: 0 auto;
+    width: 70%;
+  }
+}

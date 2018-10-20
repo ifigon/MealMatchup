@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment-timezone';
-import '../SignUpIn.css';
+import '../SignUpIn.scss';
 import { accountsRef, auth } from '../../FirebaseConfig.js';
 import DelivererGroupSignUp1 from './DelivererGroupSignUp1';
 import DelivererGroupSignUp2 from './DelivererGroupSignUp2';
