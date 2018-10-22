@@ -176,12 +176,12 @@ class AssignVolunteersController extends Component {
         case 0:
             return (
                 this.state.finishedCall ? 
-                <AssignVolunteersIndex 
-                    handleEditClick={this.handleEditClick.bind(this)}
-                    deliveries={this.state.deliveries}
-                    deliveriesExist={this.state.deliveriesExist}
-                /> :
-                <div>Loading...</div>
+                    <AssignVolunteersIndex 
+                        handleEditClick={this.handleEditClick.bind(this)}
+                        deliveries={this.state.deliveries}
+                        deliveriesExist={this.state.deliveriesExist}
+                    /> :
+                    <div>Loading...</div>
             );
 
         case 1:
