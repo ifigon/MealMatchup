@@ -25,7 +25,7 @@
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject",
     "lint": "eslint src/ --ext .js",
-    "lint-functions": "cd functions && npm run lint"
+    "lint-functions": "eslint functions/db/ --ext .js"
   },
   "devDependencies": {
     "@watiko/react-app-rewire-css-modules": "^1.1.2",
