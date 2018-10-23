@@ -13,8 +13,8 @@ class AssignVolunteersController extends Component {
         this.state = {
             deliveries: {},
             hitUpdateTime: -1,
-            deliveriesExist: true,
-            finishedCall: true,
+            deliveriesExist: false,
+            finishedCall: false,
             onConfirm: false,
             step: 0,
             selectedDeliveryId: -1,
@@ -58,6 +58,7 @@ class AssignVolunteersController extends Component {
             .orderByKey().startAt(`${moment().valueOf()}`);
 
         let processTimestampIndex = (timestampIndex) => {
+            console.log("test 2!");
             for (let deliveryId of Object.keys(timestampIndex)) {
                 if (!this.state.deliveries[deliveryId]) {
                     genDeliveryListener(deliveryId);
@@ -65,8 +66,14 @@ class AssignVolunteersController extends Component {
             }
         };
 
+        let updateLoading = (children, myDeliveriesRef) => {
+            if(children) { this.setState({deliveriesExist : true}); }
+            this.setState({finishedCall : true});
+        }
+
         myDeliveriesRef.on('child_added', async (snap) => processTimestampIndex(snap.val()));
         myDeliveriesRef.on('child_changed', async (snap) => processTimestampIndex(snap.val()));
+        myDeliveriesRef.once('value', (snap) => updateLoading(snap.val(), myDeliveriesRef));
     }
 
 
@@ -177,11 +184,12 @@ class AssignVolunteersController extends Component {
             return (
                 this.state.finishedCall ? 
                 <AssignVolunteersIndex 
-                    handleEditClick={this.handleEditClick.bind(this)}
-                    deliveries={this.state.deliveries}
-                    deliveriesExist={this.state.deliveriesExist}
-                /> :
+                handleEditClick={this.handleEditClick.bind(this)}
+                deliveries={this.state.deliveries}
+                deliveriesExist={this.state.deliveriesExist} 
+                /> : 
                 <div>Loading...</div>
+
             );
 
         case 1:

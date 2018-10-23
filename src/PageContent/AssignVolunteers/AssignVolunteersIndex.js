@@ -13,7 +13,7 @@ class AssignVolunteersIndex extends Component {
 
         //if(Object.keys(deliveries).length === 0) {
         if(!deliveriesExist) { 
-            return <h5>No deliveries scheduled at this time... keep an eye out for more openings!</h5>;
+            return <h3>No Deliveries Found</h3>;
         } else {
             return (
                 <div className="avi-container">  
