@@ -58,7 +58,6 @@ class AssignVolunteersController extends Component {
             .orderByKey().startAt(`${moment().valueOf()}`);
 
         let processTimestampIndex = (timestampIndex) => {
-            console.log("test 2!");
             for (let deliveryId of Object.keys(timestampIndex)) {
                 if (!this.state.deliveries[deliveryId]) {
                     genDeliveryListener(deliveryId);
