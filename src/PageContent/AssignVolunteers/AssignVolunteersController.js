@@ -68,7 +68,7 @@ class AssignVolunteersController extends Component {
         let updateLoading = (children, myDeliveriesRef) => {
             if(children) { this.setState({deliveriesExist : true}); }
             this.setState({finishedCall : true});
-        }
+        };
 
         myDeliveriesRef.on('child_added', async (snap) => processTimestampIndex(snap.val()));
         myDeliveriesRef.on('child_changed', async (snap) => processTimestampIndex(snap.val()));
@@ -180,14 +180,13 @@ class AssignVolunteersController extends Component {
     showStep() {
         switch(this.state.step) {
         case 0:
-            return (
-                this.state.finishedCall ? 
-                <AssignVolunteersIndex 
-                handleEditClick={this.handleEditClick.bind(this)}
-                deliveries={this.state.deliveries}
-                deliveriesExist={this.state.deliveriesExist} 
-                /> : 
-                <div>Loading...</div>
+            return (this.state.finishedCall
+                ? <AssignVolunteersIndex 
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    deliveries={this.state.deliveries}
+                    deliveriesExist={this.state.deliveriesExist} 
+                />
+                : <div>Loading...</div>
 
             );
 
