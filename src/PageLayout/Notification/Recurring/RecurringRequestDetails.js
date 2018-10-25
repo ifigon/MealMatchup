@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
-import { AccountType } from '../../../Enums';
 import RequestSummary from '../Details/RequestSummary';
+import { AccountType, NotificationType, NotificationContentType } from '../../../Enums';
 
 class RecurringRequestDetails extends Component {
     render() {
+        /*
         let title = 'Recurring Pickup Requested';
         if (this.props.accountType === AccountType.RECEIVING_AGENCY) {
             title = 'Recurring Delivery Requested';
         }
+        */
+       let title = "";
+       this.props.notificationType === NotificationType.EMERGENCY_PICKUP_REQUESTED ?
+        title = 'Emergency ' : title = 'Recurring ';
+       this.props.accountType === AccountType.RECEIVING_AGENCY ?
+        title += 'Delivery Requested' : title += 'Pickup Requested'; 
+
         return (
             <div>
                 <RequestSummary 
                     title={title}
-                    details={this.props.details} />
+                    details={this.props.details} 
+                    notificationType={this.props.notificationType} />
                 {
                     this.props.accountType === AccountType.DELIVERER_GROUP &&
                     <div className="popup-buttons">
