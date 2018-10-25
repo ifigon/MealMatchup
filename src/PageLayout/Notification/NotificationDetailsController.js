@@ -98,6 +98,7 @@ class NotificationDetailsController extends Component {
                         closePopUp={closePopUp.bind(this)}
                         details={this.state.details}
                         addressNotificationAndClose={addressAndClose}
+                        notificationType={this.state.notification.type}
                     />
                 }
                 {
@@ -120,12 +121,28 @@ class NotificationDetailsController extends Component {
                     addressNotificationAndClose={addressAndClose}
                 />
             </div>;
+
+        case 'red':
+            return <div className="popup-wrapper emergency">
+            <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+                {
+                    notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
+                    <RecurringRequestController
+                        account={account}
+                        closePopUp={closePopUp.bind(this)}
+                        details={this.state.details}
+                        addressNotificationAndClose={addressAndClose}
+                        notificationType={this.state.notification.type}
+                    />
+                }            
+
+            </div>
         }
     }
 
     render() {
         return (
-            <div>
+            <div className="popup-wrapper">
                 {this.showDetail()}
             </div>
         );

@@ -1,6 +1,7 @@
 import { NotificationType,NotificationContentType } from '../../Enums.js';
 import truckGreen from '../../icons/green_truck.svg';
 import truckGrey from '../../icons/grey_truck.svg';
+import truckRed from '../../icons/red_truck.svg';
 
 export const NotificationMap = {
     [NotificationType.RECURRING_PICKUP_REQUEST]: {
@@ -35,5 +36,11 @@ export const NotificationMap = {
         detailMsg: 'Unfortunately, no participating shelter is available during the requested time.',
         color: 'grey',
         contentType: NotificationContentType.DELIVERY_REQUEST
+    },
+    [NotificationType.EMERGENCY_PICKUP_REQUESTED]: {
+        iconSrc: truckRed,
+        msg: 'Emergency pickup requested',
+        color: 'red',
+        contentType: NotificationType.EMERGENCY_PICKUP_REQUESTED
     }
 };

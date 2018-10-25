@@ -54,6 +54,11 @@
   background-color: white;
 }
 
+.emergency {
+  border-top: solid 20px #F77676;
+  background-color: white;
+}
+
 .popup-flex{
   display: grid;
   top: 90px;

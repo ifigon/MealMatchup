@@ -112,6 +112,7 @@ class RecurringRequestController extends Component {
                     nextStep={this.nextStep.bind(this)}
                     close={this.props.closePopUp}
                     onReject={this.rejectRequest.bind(this)}
+                    notificationType={this.props.notificationType}
                 />;
             case 2:
                 return <RecurringRequestDisclaimer
