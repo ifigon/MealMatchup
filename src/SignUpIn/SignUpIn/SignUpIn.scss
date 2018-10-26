@@ -1,0 +1,517 @@
+.signup-wrapper {
+  background-image: url("./SignUpBG.png");
+  background-size: auto 100vh;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+.signup {
+  margin: 0 auto;
+  width: 35vw;
+  background-color: rgba(255, 255, 255, 0.95);
+  height: 100vh;
+  font-family: "Open Sans", sans-serif;
+}
+
+.signup-content {
+  padding-top: 10px;
+}
+
+form {
+  padding-top: 20px;
+  margin: 0 auto;
+  width: 70%;
+}
+
+.form-block {
+  padding: 50px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+
+label.form-component {
+  font-size: 1.5vw;
+  color: black;
+  margin-bottom: 10px;
+}
+
+input.form-component {
+  width: 95%;
+  margin-top: 10px;
+  height: 25px;
+  border: 2px solid #bdbdbd;
+  font-size: 12px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.disclaimer {
+  font-size: 12px;
+  color: #4f4f4f;
+  bottom: 0;
+  position: absolute;
+  padding-bottom: 70px;
+  padding-left: 60px;
+}
+
+.buttons {
+  font-weight: 600;
+  padding-top: 15px;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 30px;
+  padding-left: 30px;
+  font-size: 1.4vw;
+}
+.next {
+  margin-left: 20vw;
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  font-size: 1.4vw;
+}
+
+.next:hover {
+  cursor: pointer;
+}
+
+.cancel:hover {
+  cursor: pointer;
+}
+/* Form placeholder color */
+::placeholder {
+  color: #bdbdbd;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #bdbdbd;
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #bdbdbd;
+}
+
+.button {
+  font-size: 1.7vw;
+  font-weight: 600;
+  color: #243847;
+  width: 20vw;
+  height: 11vh;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 10px;
+}
+
+.button:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+.button-wrapper {
+  width: 20%;
+  margin: 0 auto;
+  padding: 25px;
+  display: table;
+}
+.login-buttons {
+  width: 100%;
+  padding-top: 35vh;
+}
+
+.user-type-wrapper {
+  padding-top: 20vh;
+}
+
+select {
+  appearance: none;
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: "";
+
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+
+  background-color: white;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  padding: 7.8px;
+  padding-left: 3px;
+  color: #bdbdbd;
+  border: 2px solid #bdbdbd;
+  border-radius: 3px;
+  width: 45%;
+  margin-right: 9.4%;
+}
+select::-ms-expand {
+  display: none;
+}
+
+option {
+  background-color: white;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  padding: 7px;
+  padding-left: 3px;
+  color: #bdbdbd;
+  border: 2px solid #bdbdbd;
+  border-radius: 3px;
+  width: 45%;
+  margin-right: 9.4%;
+}
+
+.user-type-box {
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 30vw;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 10px;
+  color: #243847;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+}
+#zip {
+  width: 40%;
+}
+
+.user-type,
+.user-type-label {
+  padding: 30px;
+  font-size: 22px;
+}
+
+.user-type:hover {
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+label.signup-complete-label, a.ok-button {
+  margin-bottom: 10px;
+  font-size: 1.7vw;
+}
+
+label.signup-complete-label,
+.ok-button {
+  font-weight: 600;
+}
+.signup-complete-wrapper {
+  padding-top: 30vh;
+}
+.signup-complete {
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 30%;
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  color: #4f4f4f;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+  margin: 0 auto;
+  font-size: 1.5vw;
+}
+
+.ok-button {
+  color: black;
+  padding-top: 10px;
+}
+
+.ok-button:hover {
+  cursor: pointer;
+  color: #4f4f4f;
+}
+
+.circle {
+  width: 4px;
+  height: 4px;
+  background-color: #5dc0f9;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  border: #5dc0f9 solid 1px;
+  display: inline-block;
+  margin: 4px;
+}
+
+.open {
+  background-color: transparent;
+
+  border-radius: 30px;
+}
+
+.circle-wrapper {
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.side-by-side input {
+  float: left;
+}
+
+i {
+  font-size: 1vw;
+}
+
+.week {
+  width: 10%;
+  margin: 5px;
+  margin-right: 0px;
+  height: 2vh;
+}
+
+label.delivery {
+  display: block;
+}
+
+.am {
+  font-weight: 300;
+}
+
+.PM {
+  font-weight: 700;
+}
+
+.am-pm {
+  font-size: 0.7rem;
+  color: #5dc0f9;
+  display: inline-block;
+  float: right;
+  vertical-align: middle;
+  padding: 3px;
+}
+
+input.week {
+  display: inline-block;
+  width: 3vw;
+  height: 0.8rem;
+  margin: 0px;
+  border: transparent;
+  background: transparent;
+  vertical-align: middle;
+}
+
+.checkbox {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 3px;
+  vertical-align: middle;
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+}
+
+.row {
+  font-size: 1.1vw;
+}
+
+.input-wrapper {
+  background: white;
+  border: solid 1px #bdbdbd;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.day {
+    display: inline-block;
+    width: 45px;
+    margin-left: 5%;
+}
+
+.checkbox:checked:after {
+  background-color: #5dc0f9;
+}
+
+.time-input-wrapper {
+  float: right;
+}
+
+.emergency-pickup-label {
+  font-size: 1.4vw;
+  display: block;
+  margin-bottom: -30px;
+}
+
+.pickup-p {
+  display: inline-block;
+  width: 80%;
+  vertical-align: middle;
+  padding-left: 10px;
+  font-size: 0.9rem;
+}
+
+.lbs {
+  width: 4vw;
+  background: white;
+  border: solid #bdbdbd 1px;
+  border-radius: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.food-weight {
+  font-size: 0.9rem;
+}
+
+.lbs-wrapper {
+  font-size: 1.3rem;
+  display: inline;
+}
+.lbs-wrapper1 {
+  margin-right: 40px;
+}
+
+.lbs-wrapper2 {
+  margin-left: 40px;
+}
+
+.gap {
+  padding-top: 40px;
+}
+
+.icon {
+  position: absolute;
+  margin-top: 1.3vh;
+  margin-left: 19.5vw;
+  fill: #f77676;
+}
+
+.user-icon {
+  height: 2.4 vh;
+  padding-right: 30px;
+  vertical-align: middle;
+}
+
+.login-wrapper {
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 30vw;
+  margin: 0 auto;
+  margin-top: 30vh;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.login-button {
+  background-color: #4f4f4f;
+  color: white;
+  border-radius: 12px;
+  font-size: 1.5vw;
+  padding-right: 3vw;
+  padding-left: 3vw;
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+
+.login-button:hover {
+  cursor: pointer;
+}
+
+.login-button-wrapper {
+  padding: 30px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+input.login-input {
+  width: 70%;
+  align-content: center;
+}
+.login-input-wrapper {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.forgot {
+  margin: 0 auto;
+  text-align: center;
+}
+p.forgot {
+  color: #4f4f4f;
+  padding: 10px;
+}
+p.forgot:hover {
+  cursor: pointer;
+}
+
+.sign-in-error {
+  margin: 0 auto;
+  text-align: center;
+  color: #f77676;
+  padding: 10px;
+}
+
+input.login-wrapper {
+  width: 40vw;
+}
+
+form {
+  margin: 0px;
+  width: 100%;
+}
+
+form {
+    padding-top: 0px;
+}
+
+.ra3-inputBox {
+    width: 25% !important;
+}
+
+.ra3-spacing {
+    padding: 0px 8px 0px 8px;
+}
+
+.ra3-buttons {
+    position: relative;
+    margin-bottom: 0;
+    padding-left: 0;
+    text-align: center;
+}
+
+.ra3-form-block {
+    height: 100%;
+    overflow: scroll;
+}
+
+.login-reroute {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  font-size: 16px;
+}
+
+.login-reroute:hover {
+  background-color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+}
+
+.back:hover {
+  cursor: pointer;
+}
+
+.temp-link {
+  margin: 0px !important;
+}
+
+a .ok-button{
+
+}
