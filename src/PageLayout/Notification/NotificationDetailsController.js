@@ -124,7 +124,7 @@ class NotificationDetailsController extends Component {
 
         case 'red':
             return <div className="popup-wrapper emergency">
-            <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
+                <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
                 {
                     notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
                     <RecurringRequestController
@@ -136,7 +136,7 @@ class NotificationDetailsController extends Component {
                     />
                 }            
 
-            </div>
+            </div>;
         }
     }
 

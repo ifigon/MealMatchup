@@ -10,11 +10,11 @@ class RecurringRequestDetails extends Component {
             title = 'Recurring Delivery Requested';
         }
         */
-       let title = "";
-       this.props.notificationType === NotificationType.EMERGENCY_PICKUP_REQUESTED ?
-        title = 'Emergency ' : title = 'Recurring ';
-       this.props.accountType === AccountType.RECEIVING_AGENCY ?
-        title += 'Delivery Requested' : title += 'Pickup Requested'; 
+        let title = '';
+        this.props.notificationType === NotificationType.EMERGENCY_PICKUP_REQUESTED ?
+            title = 'Emergency ' : title = 'Recurring ';
+        this.props.accountType === AccountType.RECEIVING_AGENCY ?
+            title += 'Delivery Requested' : title += 'Pickup Requested'; 
 
         return (
             <div>
