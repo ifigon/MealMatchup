@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { AccountType, PageContent } from '../../Enums.js';
 import NavBarItem from './NavBarItem';
-import './NavBar.css';
+import styles from './NavBar.module.css';
 import calendar from '../../icons/calendar.svg';
 import directory from '../../icons/directory.svg';
 import foodLog from '../../icons/food_logs.svg';
@@ -16,8 +16,8 @@ import { Link } from 'react-router-dom';
 class NavBar extends Component {
     render() {
         return (
-            <div className="navbar">
-                <Link to={'/calendar'} className="nav-link">
+            <div className={styles['navbar']}>
+                <Link to={'/calendar'} className={styles['nav-link']}>
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.CALENDAR
@@ -28,7 +28,7 @@ class NavBar extends Component {
                     />
                 </Link>
                 {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER && (
-                    <Link to={'/request-pickup'} className="nav-link">
+                    <Link to={'/request-pickup'} className={styles['nav-link']}>
                         <NavBarItem
                             highlighted={
                                 this.props.content ===
@@ -41,7 +41,7 @@ class NavBar extends Component {
                     </Link>
                 )}
                 {this.props.accountType === AccountType.DELIVERER_GROUP && (
-                    <Link to={'/assign-volunteers'} className="nav-link">
+                    <Link to={'/assign-volunteers'} className={styles['nav-link']}>
                         {' '}
                         <NavBarItem
                             highlighted={
@@ -54,7 +54,7 @@ class NavBar extends Component {
                         />
                     </Link>
                 )}
-                <Link to={'/food-logs'} className="nav-link">
+                <Link to={'/food-logs'} className={styles['nav-link']}>
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.FOOD_LOGS
@@ -64,7 +64,7 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                <Link to={'/directory'} className="nav-link">
+                <Link to={'/directory'} className={styles['nav-link']}>
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.DIRECTORY
@@ -74,7 +74,7 @@ class NavBar extends Component {
                         handler={this.props.handler}
                     />
                 </Link>
-                <Link to={'/settings'} className="nav-link">
+                <Link to={'/settings'} className={styles['nav-link']}>
                     <NavBarItem
                         highlighted={
                             this.props.content === PageContent.SETTINGS

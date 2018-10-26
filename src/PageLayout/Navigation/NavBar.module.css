@@ -1,0 +1,26 @@
+.navbar {
+  display: block;
+  box-shadow: inset -1px 0px 0px #dddddd;
+  position: absolute;
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  top: 103px;
+  background-color: white;
+}
+
+.signout {
+  position: fixed;
+  bottom: 0px;
+  border-top: 1px solid #dddddd;
+  left: 10px;
+  padding-right: 50px;
+}
+
+.signout:hover {
+  border-top: 1px solid #5dc0f9;
+}
+
+.nav-link {
+  margin: 0px !important;
+}

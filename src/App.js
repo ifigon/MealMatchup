@@ -5,7 +5,7 @@ import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { AccountType, Routes, PageContent } from './Enums';
-import './App.css';
+import styles from './App.module.css';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -111,6 +111,7 @@ class App extends Component {
     }
 
     render() {
+        console.log('APP.js styles', styles)
         let path = window.location.href.split('/')[3];
         let content = '';
         switch (path) {
@@ -134,15 +135,15 @@ class App extends Component {
             break;
         }
         return (
-            <div className="">
+            <div>
                 {
                     !this.state.isChrome ? 
-                        <div className="browser-check">
+                        <div className={styles['browser-check']}>
                         WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
                         </div>
                         :
                         document.documentElement.clientWidth < 1400 ?
-                            <div className="browser-check">
+                            <div className={styles['browser-check']}>
                         WARNING! Your browser is too small, use at your own risk.
                             </div>
                             :

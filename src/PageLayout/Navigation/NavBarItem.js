@@ -1,6 +1,6 @@
 // NavBarButton.js
 import React, {Component} from 'react';
-import './NavBarItem.css';
+import styles from './NavBarItem.module.css';
 
 class NavBarItem extends Component {
     render(){
@@ -9,15 +9,15 @@ class NavBarItem extends Component {
         return(
             <div>
                 {this.props.item === 'signout' ?
-                    <div className="navbar-item signout" onClick={this.props.handler}>
-                        <img src={this.props.icon} className="navbar-icon" alt="icon"/>
-                        <p className="navbar-name">Sign Out</p>
+                    <div className={styles['navbar-item'] + ' ' + styles['signout']} onClick={this.props.handler}>
+                        <img src={this.props.icon} className={styles['navbar-icon']} alt="icon"/>
+                        <span className={styles['navbar-name']}>Sign Out</span>
                     </div>
                     :
-                    <div className="navbar-item" style={{background: itemColor}} onClick={() => this.props.handler(this.props.item)}>
-                        <div style={{background: lineColor}} className="left-line"></div>
-                        <img src={this.props.icon} className="navbar-icon" alt="icon"/>
-                        <p className="navbar-name">{this.props.item}</p>
+                    <div className={styles['navbar-item']} style={{background: itemColor}} onClick={() => this.props.handler(this.props.item)}>
+                        <div style={{background: lineColor}} className={styles['left-line']}></div>
+                        <img src={this.props.icon} className={styles['navbar-icon']} alt="icon"/>
+                        <span className={styles['navbar-name']}>{this.props.item}</span>
                     </div>
                 }
             </div>

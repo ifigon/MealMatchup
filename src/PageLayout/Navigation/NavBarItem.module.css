@@ -1,0 +1,33 @@
+.navbar-item {
+    display: flex;
+    align-items: center;
+}
+.navbar-icon {
+    position: relative; 
+    width: 26px;
+    height: 30px;
+    margin: 13px; 
+}
+
+.navbar-name {
+    display: block;
+    left: 76px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 16px;
+    color: #687178;
+}
+/* .navbar-name .signout {
+    padding-right: 30px;
+} */
+.signout {
+    padding-right: 30px;
+}
+.left-line {
+    width: 5px;
+    height: 60px;
+    margin-left: 0px;
+}
+
