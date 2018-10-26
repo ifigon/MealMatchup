@@ -1,7 +1,7 @@
 import React from 'react';
 import RequestTime from './RequestTime';
 import greenTruck from '../../../icons/green_truck.svg';
-import redTruck from '../../../icons/red_truck.svg'
+import redTruck from '../../../icons/red_truck.svg';
 import Map from '../../../Map/Map.js';
 import { NotificationType } from '../../../Enums.js';
 
@@ -12,8 +12,8 @@ class RequestSummary extends React.Component {
             <div className="modal-wrapper">
                 <div className="modal-header-flex">
                     { this.props.notificationType === NotificationType.EMERGENCY_PICKUP_REQUESTED ?
-                    <img className="icon" src={redTruck} alt="icon" /> :
-                    <img className="icon" src={greenTruck} alt="icon" />
+                        <img className="icon" src={redTruck} alt="icon" /> :
+                        <img className="icon" src={greenTruck} alt="icon" />
                     }
                     <h1 id="modal-step1">{title}</h1>
                 </div>
