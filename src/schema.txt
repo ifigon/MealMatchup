@@ -437,3 +437,16 @@ delivery_indices: {
 
 -----------------------------------------------------
 
+DONATION TALLY ("/donation_tally/{umbrellaId}")
+// This only keeps the running total for the entire system to provide
+// fast query for the square space front page.
+// Additional on the fly calculation implementation is needed to get 
+// the analytical total for each agency.
+
+donation_tally: {
+	// one for each unit in Enums.FoodUnit
+	lb: 1000,
+	cases: 100,
+	loaves: 500,
+}
+
