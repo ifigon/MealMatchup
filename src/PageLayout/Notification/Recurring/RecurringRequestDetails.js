@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RequestSummary from '../Details/RequestSummary';
-import { AccountType, NotificationType, NotificationContentType } from '../../../Enums';
+import { AccountType, NotificationType } from '../../../Enums';
 
 class RecurringRequestDetails extends Component {
     render() {
