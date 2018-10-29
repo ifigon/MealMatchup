@@ -68,7 +68,7 @@ class AssignVolunteersController extends Component {
         let updateLoading = (children, myDeliveriesRef) => {
             if(children) { this.setState({deliveriesExist : true}); }
             this.setState({finishedCall : true});
-        }
+        };
 
         // TODO: Currently a redundant call on child added and value when initialized. There
         // may be a better way to do this without the redundancy
@@ -182,14 +182,13 @@ class AssignVolunteersController extends Component {
     showStep() {
         switch(this.state.step) {
         case 0:
-            return (
-                this.state.finishedCall ? 
-                <AssignVolunteersIndex 
-                handleEditClick={this.handleEditClick.bind(this)}
-                deliveries={this.state.deliveries}
-                deliveriesExist={this.state.deliveriesExist} 
-                /> : 
-                <div>Loading...</div>
+            return (this.state.finishedCall
+                ? <AssignVolunteersIndex 
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    deliveries={this.state.deliveries}
+                    deliveriesExist={this.state.deliveriesExist} 
+                />
+                : <div>Loading...</div>
 
             );
 
