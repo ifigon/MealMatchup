@@ -166,6 +166,19 @@ input[type="radio"]{
     float: right;
     padding-top: 20px;
 }
+.button {
+    padding: 5px;
+}
+.toggle {
+    padding-left: 380px;
+    width:100px;
+    margin: 0;
+    display: flex;
+}
+
+input[value="Emergency"] {
+    background-color: #e60000;
+}
 
 input[value="Cancel"]{
     color: #BDBDBD;
@@ -210,6 +223,10 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     color:#F77676;
     margin: 0px;
     visibility: show;
+}
+
+.header {
+
 }
 
 @media screen and (max-width: 1090px) {

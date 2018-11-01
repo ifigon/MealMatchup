@@ -11,6 +11,8 @@ import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
+import Switch from "react-toggle-switch";
+import ToggleButton from 'react-toggle-button'
 
 class RecurringPickupRequest extends Component {
     constructor(props) {
@@ -38,6 +40,7 @@ class RecurringPickupRequest extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.addListToState = this.addListToState.bind(this);
         this.closeConfirm = this.closeConfirm.bind(this);
+
     }
 
     // Query DB to populate lists in this.state
@@ -312,236 +315,270 @@ class RecurringPickupRequest extends Component {
 
     render() {
         return (
-            <div className="form">
-                <form id={this.formId} onSubmit={this.createRequest}>
-                    <div className="info">
-                        <p id="form-heading">Schedule Recurring Pickup</p>
-                        {Object.keys(this.state.errors).map((error, i) => {
-                            return (
-                                <p className="error" key={i}>
-                                    {this.state.errors[error]}
-                                </p>
-                            );
-                        })}
-                        <span className="flex">
-                            <span className="grid">
-                                <label>
-                                    Start Date <span className="red">*</span>
-                                </label>
-                                <br />
-                                <input
-                                    type="date"
-                                    name="startDate"
-                                    onChange={this.handleChange.bind(
-                                        this,
-                                        'startDate'
-                                    )}
-                                    required
-                                />
-                                <br />
-                            </span>
-                            <span className="grid">
-                                <label>
-                                    {' '}
-                                    End Criteria <span className="red">*</span>
-                                </label>
-                                <br />
-                                <label className="container-smaller">
+            <div> 
+                <div className="form">
+                    {/* <div className = "toggle"> 
+                        <input type="item" value="Emergency" />
+                        <input type="item" value="Regular" />
+                    </div>} */}
+                   { /*<label>*/}
+
+                    <div className= "toggle">
+                        <span>Regular</span>
+                        <div className="button">
+                        <ToggleButton className="button"
+                                inactiveLabel={""}
+                                activeLabel={""}
+                                colors={{
+                                    active: {
+                                        base: '#e60000',
+                                    },
+                                    inactive: {
+                                        base: 'rgb(0, 153, 51)',
+                                    }
+                                }}
+                                value={this.state.value}
+                                onToggle={(value) => {
+                                    this.setState({
+                                        value: !value,
+
+                                    })
+                                }} 
+                            /> 
+                            </div>
+                            <span> Emergency</span>
+
+                    </div>
+                    {/*</label>*/}
+                    <form id={this.formId} onSubmit={this.createRequest}>
+                        <div className="info">
+                            <p id="form-heading">Schedule Recurring Pickup</p>
+                            {Object.keys(this.state.errors).map((error, i) => {
+                                return (
+                                    <p className="error" key={i}>
+                                        {this.state.errors[error]}
+                                    </p>
+                                );
+                            })}
+                            <span className="flex">
+                                <span className="grid">
+                                    <label>
+                                        Start Date <span className="red">*</span>
+                                    </label>
+                                    <br />
                                     <input
-                                        type="radio"
-                                        name="endCriteria"
-                                        value={RequestEndCriteriaType.OCCUR}
+                                        type="date"
+                                        name="startDate"
                                         onChange={this.handleChange.bind(
                                             this,
-                                            'endCriteria'
+                                            'startDate'
                                         )}
                                         required
                                     />
-                                    <span className="checkmark" />After{' '}
-                                    <input
-                                        type="number"
-                                        name="numOccurrences"
-                                        onChange={this.handleChange.bind(
-                                            this,
-                                            'occurTimes'
-                                        )}
-                                    />{' '}
-                                    times<br />
-                                </label>
-                                <label className="container-smaller">
-                                    <input
-                                        type="radio"
-                                        name="endCriteria"
-                                        value={RequestEndCriteriaType.DATE}
-                                        onChange={this.handleChange.bind(
-                                            this,
-                                            'endCriteria'
-                                        )}
-                                    />
-                                    <span className="checkmark" />End on
-                                    <input
-                                        type="date"
-                                        name="endDate"
-                                        onChange={this.handleChange.bind(
-                                            this,
-                                            'endDate'
-                                        )}
-                                    />
-                                </label>
-                                <br />
+                                    <br />
+                                </span>
+                                <span className="grid">
+                                    <label>
+                                        {' '}
+                                        End Criteria <span className="red">*</span>
+                                    </label>
+                                    <br />
+                                    <label className="container-smaller">
+                                        <input
+                                            type="radio"
+                                            name="endCriteria"
+                                            value={RequestEndCriteriaType.OCCUR}
+                                            onChange={this.handleChange.bind(
+                                                this,
+                                                'endCriteria'
+                                            )}
+                                            required
+                                        />
+                                        <span className="checkmark" />After{' '}
+                                        <input
+                                            type="number"
+                                            name="numOccurrences"
+                                            onChange={this.handleChange.bind(
+                                                this,
+                                                'occurTimes'
+                                            )}
+                                        />{' '}
+                                        times<br />
+                                    </label>
+                                    <label className="container-smaller">
+                                        <input
+                                            type="radio"
+                                            name="endCriteria"
+                                            value={RequestEndCriteriaType.DATE}
+                                            onChange={this.handleChange.bind(
+                                                this,
+                                                'endCriteria'
+                                            )}
+                                        />
+                                        <span className="checkmark" />End on
+                                        <input
+                                            type="date"
+                                            name="endDate"
+                                            onChange={this.handleChange.bind(
+                                                this,
+                                                'endDate'
+                                            )}
+                                        />
+                                    </label>
+                                    <br />
+                                </span>
                             </span>
-                        </span>
-                        <span className="flex">
-                            <span className="grid">
-                                <label>
-                                    Repeats <span className="red">*</span>
-                                </label>
-                                <br />
-                                <select name="repeats" defaultValue="" required>
-                                    <option value="" disabled>
-                                        Select
-                                    </option>
-                                    <option value={RequestRepeatType.WEEKLY}>
-                                        Weekly
-                                    </option>
-                                    <option value={RequestRepeatType.BIWEEKLY}>
-                                        Every other week
-                                    </option>
-                                    {/* TODO warning if not every month in the range has this date */}
-                                    {/* <option value={RequestRepeatType.MONTHLY}>Monthly</option> */}
-                                    {/* (TODO SPR18) Nth Weekday of Month */}
-                                    {/* <option value={RequestRepeatType.??}>Monthly, on the ith of X</option> */}
-                                </select>
-                                <br />
-                            </span>
-                            <span className="grid">
-                                <label>
-                                    Primary Contact{' '}
-                                    <span className="red">*</span>
-                                </label>
-                                <br />
-                                <select
-                                    name="primaryContact"
-                                    defaultValue=""
-                                    required
-                                >
-                                    <option value="" disabled>
-                                        Select
-                                    </option>
-                                    {this.state.memberList.map((member, i) => {
-                                        return (
-                                            <option key={i} value={i}>
-                                                {member.name}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                                <br />
-                            </span>
-                        </span>
-                        <span className="flex">
-                            <span className="grid">
-                                <label>
-                                    Start Time <span className="red">*</span>
-                                </label>
-                                <br />
-                                <input
-                                    type="time"
-                                    name="startTime"
-                                    onChange={this.handleChange.bind(
-                                        this,
-                                        'startTime'
-                                    )}
-                                    required
-                                />
-                            </span>
-                            <span className="grid">
-                                <label>
-                                    End Time <span className="red">*</span>
-                                </label>
-                                <br />
-                                <input
-                                    type="time"
-                                    name="endTime"
-                                    onChange={this.handleChange.bind(
-                                        this,
-                                        'endTime'
-                                    )}
-                                    required
-                                />
-                            </span>
-                        </span>
-                        <span className="grid">
-                            <p id="form-heading">Notes for Pickup</p>
-                            <textarea
-                                name="notes"
-                                placeholder="Ex: Use the underground parking garage upon entrance. Key card access required after 3:00pm."
-                            />
-                        </span>
-                        <p id="form-heading">Agencies involved</p>
-                        <span className="flex">
-                            <span className="grid">
-                                <label>Student Group</label>
-                                <br />
-                                <select name="delivererGroup" defaultValue="">
-                                    <option value="">Select</option>
-                                    {this.state.delivererGroups.map((dg, i) => {
-                                        return (
-                                            <option key={i} value={i}>
-                                                {dg.name}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </span>
-                            <span className="grid">
-                                <label>Shelter</label>
-                                <br />
-                                <select name="receivingAgency" defaultValue="">
-                                    <option value="">Select</option>
-                                    {this.state.receivingAgencies.map(
-                                        (ra, i) => {
+                            <span className="flex">
+                                <span className="grid">
+                                    <label>
+                                        Repeats <span className="red">*</span>
+                                    </label>
+                                    <br />
+                                    <select name="repeats" defaultValue="" required>
+                                        <option value="" disabled>
+                                            Select
+                                        </option>
+                                        <option value={RequestRepeatType.WEEKLY}>
+                                            Weekly
+                                        </option>
+                                        <option value={RequestRepeatType.BIWEEKLY}>
+                                            Every other week
+                                        </option>
+                                        {/* TODO warning if not every month in the range has this date */}
+                                        {/* <option value={RequestRepeatType.MONTHLY}>Monthly</option> */}
+                                        {/* (TODO SPR18) Nth Weekday of Month */}
+                                        {/* <option value={RequestRepeatType.??}>Monthly, on the ith of X</option> */}
+                                    </select>
+                                    <br />
+                                </span>
+                                <span className="grid">
+                                    <label>
+                                        Primary Contact{' '}
+                                        <span className="red">*</span>
+                                    </label>
+                                    <br />
+                                    <select
+                                        name="primaryContact"
+                                        defaultValue=""
+                                        required
+                                    >
+                                        <option value="" disabled>
+                                            Select
+                                        </option>
+                                        {this.state.memberList.map((member, i) => {
                                             return (
                                                 <option key={i} value={i}>
-                                                    {ra.name}
+                                                    {member.name}
                                                 </option>
                                             );
-                                        }
-                                    )}
-                                </select>
+                                        })}
+                                    </select>
+                                    <br />
+                                </span>
                             </span>
-                        </span>
-                        <div className="buttons-form">
-                            <input type="submit" value="Done" />
-                            <input type="reset" value="Cancel" />
+                            <span className="flex">
+                                <span className="grid">
+                                    <label>
+                                        Start Time <span className="red">*</span>
+                                    </label>
+                                    <br />
+                                    <input
+                                        type="time"
+                                        name="startTime"
+                                        onChange={this.handleChange.bind(
+                                            this,
+                                            'startTime'
+                                        )}
+                                        required
+                                    />
+                                </span>
+                                <span className="grid">
+                                    <label>
+                                        End Time <span className="red">*</span>
+                                    </label>
+                                    <br />
+                                    <input
+                                        type="time"
+                                        name="endTime"
+                                        onChange={this.handleChange.bind(
+                                            this,
+                                            'endTime'
+                                        )}
+                                        required
+                                    />
+                                </span>
+                            </span>
+                            <span className="grid">
+                                <p id="form-heading">Notes for Pickup</p>
+                                <textarea
+                                    name="notes"
+                                    placeholder="Ex: Use the underground parking garage upon entrance. Key card access required after 3:00pm."
+                                />
+                            </span>
+                            <p id="form-heading">Agencies involved</p>
+                            <span className="flex">
+                                <span className="grid">
+                                    <label>Student Group</label>
+                                    <br />
+                                    <select name="delivererGroup" defaultValue="">
+                                        <option value="">Select</option>
+                                        {this.state.delivererGroups.map((dg, i) => {
+                                            return (
+                                                <option key={i} value={i}>
+                                                    {dg.name}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </span>
+                                <span className="grid">
+                                    <label>Shelter</label>
+                                    <br />
+                                    <select name="receivingAgency" defaultValue="">
+                                        <option value="">Select</option>
+                                        {this.state.receivingAgencies.map(
+                                            (ra, i) => {
+                                                return (
+                                                    <option key={i} value={i}>
+                                                        {ra.name}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                </span>
+                            </span>
+                            <div className="buttons-form">
+                                <input type="submit" value="Done" />
+                                <input type="reset" value="Cancel" />
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
-                {this.state.showPopup && (
-                    <PickupSummary
-                        title={'Request Recurring Pickup'}
-                        request={this.state.request}
-                        donatingAgency={this.props.donatingAgency}
-                        primaryContact={this.state.primaryContact}
-                        raRequested={this.state.raRequested}
-                        dgRequested={this.state.dgRequested}
-                        onClose={this.toggleModal}
-                        onConfirm={this.submitRequest}
-                        submissionError={this.state.submissionError}
-                    />
-                )}
-                {this.state.showConfirmation && (
-                    <PickupRequestedConfirmation
-                        request={this.state.request}
-                        closeConfirm={this.closeConfirm}
-                        donatingAgency={this.props.donatingAgency}
-                        raRequested={this.state.raRequested}
-                    />
-                )}
+                    {this.state.showPopup && (
+                        <PickupSummary
+                            title={'Request Recurring Pickup'}
+                            request={this.state.request}
+                            donatingAgency={this.props.donatingAgency}
+                            primaryContact={this.state.primaryContact}
+                            raRequested={this.state.raRequested}
+                            dgRequested={this.state.dgRequested}
+                            onClose={this.toggleModal}
+                            onConfirm={this.submitRequest}
+                            submissionError={this.state.submissionError}
+                        />
+                    )}
+                    {this.state.showConfirmation && (
+                        <PickupRequestedConfirmation
+                            request={this.state.request}
+                            closeConfirm={this.closeConfirm}
+                            donatingAgency={this.props.donatingAgency}
+                            raRequested={this.state.raRequested}
+                        />
+                    )}
+                </div>
             </div>
         );
     }
 }
-
 export default RecurringPickupRequest;
