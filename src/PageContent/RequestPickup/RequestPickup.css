@@ -166,12 +166,15 @@ input[type="radio"]{
     float: right;
     padding-top: 20px;
 }
+
 .button {
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
+
 .toggle {
-    padding-left: 380px;
-    width:100px;
+    padding-left: 350px;
+    width:90px;
     margin: 0;
     display: flex;
 }

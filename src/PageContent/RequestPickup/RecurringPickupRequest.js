@@ -317,41 +317,33 @@ class RecurringPickupRequest extends Component {
         return (
             <div> 
                 <div className="form">
-                    {/* <div className = "toggle"> 
-                        <input type="item" value="Emergency" />
-                        <input type="item" value="Regular" />
-                    </div>} */}
-                   { /*<label>*/}
-
-                    <div className= "toggle">
-                        <span>Regular</span>
-                        <div className="button">
-                        <ToggleButton className="button"
-                                inactiveLabel={""}
-                                activeLabel={""}
-                                colors={{
-                                    active: {
-                                        base: '#e60000',
-                                    },
-                                    inactive: {
-                                        base: 'rgb(0, 153, 51)',
-                                    }
-                                }}
-                                value={this.state.value}
-                                onToggle={(value) => {
-                                    this.setState({
-                                        value: !value,
-
-                                    })
-                                }} 
-                            /> 
-                            </div>
-                            <span> Emergency</span>
-
-                    </div>
-                    {/*</label>*/}
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
+                            <label className= "toggle">
+                                <span>Regular</span>
+                                <div className = "button">
+                                    <ToggleButton
+                                        inactiveLabel={""}
+                                        activeLabel={""}
+                                        colors={{
+                                            active: {
+                                                base: '#e60000',
+                                            },
+                                            inactive: {
+                                                base: 'rgb(0, 153, 51)',
+                                            }
+                                        }}
+                                        value={this.state.value}
+                                        onToggle={(value) => {
+                                            this.setState({
+                                                value: !value,
+
+                                            })
+                                        }} 
+                                    /> 
+                                </div>
+                                <span>Emergency</span>
+                            </label>
                             <p id="form-heading">Schedule Recurring Pickup</p>
                             {Object.keys(this.state.errors).map((error, i) => {
                                 return (
