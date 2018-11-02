@@ -11,7 +11,6 @@ import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
-import Switch from 'react-toggle-switch';
 import ToggleButton from 'react-toggle-button';
 
 class RecurringPickupRequest extends Component {
@@ -341,7 +340,7 @@ class RecurringPickupRequest extends Component {
                                                 value: !value,
                                                 
                                             });
-                                            this.state.isEmergency = !this.state.isEmergency;
+                                            this.setState({isEmergency: !this.state.isEmergency});
                                         }} 
                                     /> 
                                 </div>
