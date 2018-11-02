@@ -313,6 +313,10 @@ class RecurringPickupRequest extends Component {
             });
     }
 
+    componentWillUnmount() {
+        this.isEmergency = false;
+    }
+
     render() {
         return (
             <div> 
@@ -338,9 +342,10 @@ class RecurringPickupRequest extends Component {
                                         onToggle={(value) => {
                                             this.setState({
                                                 value: !value,
+                                                isEmergency: !this.state.isEmergency,
                                                 
                                             });
-                                            this.setState({isEmergency: !this.state.isEmergency});
+                                            {/*this.setState({isEmergency: !this.state.isEmergency});*/}
                                         }} 
                                     /> 
                                 </div>
