@@ -345,7 +345,7 @@ class RecurringPickupRequest extends Component {
                                                 value: !value,
                                                 
                                             });
-                                            this.handleToggle;
+                                            this.handleToggle();
                                         }} 
                                     /> 
                                 </div>
