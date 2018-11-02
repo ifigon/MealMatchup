@@ -175,9 +175,8 @@ input[type="radio"]{
 
 .toggle {
     padding-left: 350px;
-    width: 100px;
-    margin: 0;
     display: flex;
+    height: 30px;
 }
 
 input[value="Emergency"] {
