@@ -340,13 +340,13 @@ class RecurringPickupRequest extends Component {
                                             this.setState({
                                                 value: !value,
                                                 
-                                            })
+                                            });
                                             this.state.isEmergency = !this.state.isEmergency;
                                         }} 
                                     /> 
                                 </div>
                                 <span>Emergency</span>
-                             </label>
+                            </label>
                             <p id="form-heading">Schedule Recurring Pickup</p>
                             {Object.keys(this.state.errors).map((error, i) => {
                                 return (
