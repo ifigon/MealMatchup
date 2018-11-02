@@ -3,6 +3,7 @@ import './EventCard.css';
 import green_truck from '../../../icons/green_truck.svg';
 import grey_truck from '../../../icons/grey_truck.svg';
 import white_truck from '../../../icons/white_truck.svg';
+import red_truck from '../../../icons/red_truck.svg';
 import plus from '../../../icons/plus-button.svg';
 import moment from 'moment';
 import { AccountType, StringFormat } from '../../../Enums';
@@ -38,18 +39,26 @@ class EventCard extends Component {
         let iconClass = 'eventcard-icon ';
         let style = 'event-container ';
         let futureEvent = moment(delivery.startTimestamp).isAfter(moment());
+
         let actionNeeded = futureEvent && (
             (account.accountType === AccountType.DELIVERER_GROUP && !delivery.deliverers) ||
-            (account.accountType === AccountType.DONATING_AGENCY_MEMBER && 
+            (account.accountType === AccountType.DONATING_AGENCY_MEMBER &&
                 (!delivery.description || !delivery.description.foodItems)));
 
+        let emergencyDelivery = delivery.type === "emergency"
+
         if (futureEvent) {
-            style += 'event-container-future';
+            //If it is an emergency delivery use .event-container-emergency-future class
+            emergencyDelivery ? style += 'event-container-emergency-future' : style += 'event-container-future';
             if (actionNeeded) {
                 // use red plus icon if an action is required for this delivery
                 icon = plus;
                 iconAlt = 'plus';
                 iconClass += 'eventcard-plus-icon';
+            } else if (emergencyDelivery) {
+                icon = red_truck
+                iconAlt = 'red truck';
+                iconClass += 'truck-icon';
             } else {
                 icon = green_truck;
                 iconAlt = 'green truck';
@@ -101,18 +110,18 @@ class EventCard extends Component {
                         </div>
                     </div>
                 ) : (
-                    <div className={style} onClick={this.openDialog}>
-                        <h1 className="event-header">Reccuring Pick Up</h1>
-                        <img
-                            className={iconClass}
-                            src={icon}
-                            alt={iconAlt}
-                        />
-                        <p className="event-time">
-                            {startTime} - {endTime}
-                        </p>
-                    </div>
-                )}
+                        <div className={style} onClick={this.openDialog}>
+                            <h1 className="event-header">Reccuring Pick Up</h1>
+                            <img
+                                className={iconClass}
+                                src={icon}
+                                alt={iconAlt}
+                            />
+                            <p className="event-time">
+                                {startTime} - {endTime}
+                            </p>
+                        </div>
+                    )}
             </div>
         );
     }

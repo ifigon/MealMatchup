@@ -18,6 +18,16 @@
   border-left: 3.8px solid #2ecc71;
 }
 
+.event-container-emergency-future {
+  background-color: rgba(204, 46, 46, 0.1);
+  border-left: 3.8px solid #cc2e2e;
+}
+
+.event-container-emergency-future-clicked {
+  background-color: #cc2e2e;
+  border-left: 3.8px solid #cc2e2e;
+}
+
 .event-container-past {
   background-color: #eef1f7;
   border-left: 3.8px solid #8c97b2;
