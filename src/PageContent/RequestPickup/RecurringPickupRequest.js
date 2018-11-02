@@ -316,7 +316,7 @@ class RecurringPickupRequest extends Component {
     handleToggle() {
         this.setState({
             isEmergency: !this.state.isEmergency,
-        })
+        });
     }
     render() {
         return (
@@ -345,7 +345,7 @@ class RecurringPickupRequest extends Component {
                                                 value: !value,
                                                 
                                             });
-                                            this.handleToggle
+                                            this.handleToggle;
                                         }} 
                                     /> 
                                 </div>
