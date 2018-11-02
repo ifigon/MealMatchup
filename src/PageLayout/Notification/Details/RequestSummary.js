@@ -4,6 +4,8 @@ import greenTruck from '../../../icons/green_truck.svg';
 import redTruck from '../../../icons/red_truck.svg';
 import Map from '../../../Map/Map.js';
 import { NotificationType } from '../../../Enums.js';
+import { NotificationMap } from '../NotificationMap';
+
 
 class RequestSummary extends React.Component {
     render() {
@@ -11,9 +13,9 @@ class RequestSummary extends React.Component {
         return (
             <div className="modal-wrapper">
                 <div className="modal-header-flex">
-                    { this.props.notificationType === NotificationType.EMERGENCY_PICKUP_REQUESTED ?
-                        <img className="icon" src={redTruck} alt="icon" /> :
-                        <img className="icon" src={greenTruck} alt="icon" />
+                    { NotificationMap[this.props.notificationType].color === "green" ?
+                        <img className="icon" src={greenTruck} alt="icon" /> :
+                        <img className="icon" src={redTruck} alt="icon" />
                     }
                     <h1 id="modal-step1">{title}</h1>
                 </div>
