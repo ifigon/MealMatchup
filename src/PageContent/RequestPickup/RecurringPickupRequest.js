@@ -324,8 +324,8 @@ class RecurringPickupRequest extends Component {
                 <div className="form">
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
-                            <label className= "toggle">
-                                <span>Regular</span>
+                            <div className= "toggle">
+                                <label><span>Regular</span></label>
                                 <div className = "button">
                                     <ToggleButton
                                         inactiveLabel={''}
@@ -349,8 +349,8 @@ class RecurringPickupRequest extends Component {
                                         }} 
                                     /> 
                                 </div>
-                                <span>Emergency</span>
-                            </label>
+                                <label> <span>Emergency</span></label>
+                            </div>
                             <p id="form-heading">Schedule Recurring Pickup</p>
                             {Object.keys(this.state.errors).map((error, i) => {
                                 return (
