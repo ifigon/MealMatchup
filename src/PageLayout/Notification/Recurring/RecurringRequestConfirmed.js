@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import RequestSummary from '../Details/RequestSummary';
 import { AccountType } from '../../../Enums';
+import { NotificationType } from '../../../Enums.js';
+
 
 class RecurringRequestConfirmed extends Component {
     render() {
         return (
             <div className="modal-wrapper">
                 <RequestSummary
-                    title="Recurring Pickup Confirmed"
+                    title={this.props.notificationType === NotificationType.RECURRING_PICKUP_CONFIRMED  ? 
+                        "Recurring Pickup Confirmed" :
+                        "Emergency Pickup Confirmed"}
                     details={this.props.details}
                 />
                 <p>

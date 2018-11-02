@@ -121,6 +121,7 @@ class RecurringRequestController extends Component {
                     details={this.props.details}
                     close={this.props.closePopUp}
                     raPrimaryContact={this.state.raPrimaryContact}
+                    notificationType={this.props.notificationType}
                 />;
             case 3:
                 return <EnterPrimaryContact
@@ -128,6 +129,7 @@ class RecurringRequestController extends Component {
                     details={this.props.details}
                     savePrimaryContact={this.savePrimaryContact.bind(this)}
                     close={this.props.closePopUp}
+                    notificationType={this.props.notificationType}
                 />;
             }
         }

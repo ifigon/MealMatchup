@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { AccountType } from '../../../Enums';
-import truck from '../../../icons/green_truck.svg';
+import { AccountType, NotificationType } from '../../../Enums';
+import truckGreen from '../../../icons/green_truck.svg';
+import truckRed from '../../../icons/red_truck.svg';
 import RequestTime from '../Details/RequestTime';
 
 class RecurringRequestDisclaimer extends Component {
@@ -23,7 +24,9 @@ class RecurringRequestDisclaimer extends Component {
             <div className="modal-wrapper">
                 <img
                     className="icon"
-                    src={truck}
+                    src={this.props.notificationType ===  NotificationType.EMERGENCY_PICKUP_REQUESTED ?
+                            truckRed :
+                            truckGreen }
                     id="disclaimer-icon"
                     alt="icon"
                 />
