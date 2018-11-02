@@ -170,11 +170,12 @@ input[type="radio"]{
 .button {
     padding-left: 5px;
     padding-right: 5px;
+
 }
 
 .toggle {
     padding-left: 350px;
-    width:90px;
+    width: 100px;
     margin: 0;
     display: flex;
 }

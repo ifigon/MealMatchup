@@ -11,8 +11,8 @@ import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
-import Switch from "react-toggle-switch";
-import ToggleButton from 'react-toggle-button'
+import Switch from 'react-toggle-switch';
+import ToggleButton from 'react-toggle-button';
 
 class RecurringPickupRequest extends Component {
     constructor(props) {
@@ -30,7 +30,8 @@ class RecurringPickupRequest extends Component {
             primaryContact: {},
             raRequested: null,
             dgRequested: null,
-            submissionError: null
+            submissionError: null,
+            isEmergency: false
         };
 
         this.formId = 'recurringRequestForm';
@@ -323,8 +324,8 @@ class RecurringPickupRequest extends Component {
                                 <span>Regular</span>
                                 <div className = "button">
                                     <ToggleButton
-                                        inactiveLabel={""}
-                                        activeLabel={""}
+                                        inactiveLabel={''}
+                                        activeLabel={''}
                                         colors={{
                                             active: {
                                                 base: '#e60000',
@@ -334,16 +335,18 @@ class RecurringPickupRequest extends Component {
                                             }
                                         }}
                                         value={this.state.value}
+
                                         onToggle={(value) => {
                                             this.setState({
                                                 value: !value,
-
+                                                
                                             })
+                                            this.state.isEmergency = !this.state.isEmergency;
                                         }} 
                                     /> 
                                 </div>
                                 <span>Emergency</span>
-                            </label>
+                             </label>
                             <p id="form-heading">Schedule Recurring Pickup</p>
                             {Object.keys(this.state.errors).map((error, i) => {
                                 return (
