@@ -4,9 +4,11 @@
         "es6": true
     },
     "extends": "eslint:recommended",
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
+            "classes": true,
             "jsx": true
         },
         "ecmaVersion": 2017,

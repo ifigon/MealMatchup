@@ -31,23 +31,23 @@ class App extends Component {
 
     componentDidMount() {
         // check whether user is logged in
-        auth.onAuthStateChanged(
-            function(user) {
-                if (user) {
-                    // grab and listen to user's account
-                    accountsRef
-                        .child(user.uid)
-                        .on('value', this.aggrAccount);
-                } else {
-                    this.setState({
-                        authenticated: true,
-                        signInDenied: false,
-                        account: null,
-                        donatingAgency: null,
-                    });
-                }
-            }.bind(this)
-        );
+        auth.onAuthStateChanged(this.deserializeUser);
+    }
+
+    deserializeUser = (user) => {
+        if (user) {
+            // grab and listen to user's account
+            accountsRef
+                .child(user.uid)
+                .on('value', this.aggrAccount);
+        } else {
+            this.setState({
+                authenticated: true,
+                signInDenied: false,
+                account: null,
+                donatingAgency: null,
+            });
+        }
     }
 
     aggrAccount(snapshot) {
