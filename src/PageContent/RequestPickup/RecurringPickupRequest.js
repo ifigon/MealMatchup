@@ -13,6 +13,27 @@ import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
 import ToggleButton from 'react-toggle-button';
 
+const emergencyDiffs = {
+    formTitle: {
+        true: "Schedule Emergency Pickup",
+        false: "Schedule pickup"
+    },
+    startDate: {
+        true: 'Date',
+        false: 'Start Date',
+    },
+};
+
+const emergencyFields = ["startDate", ""];
+
+const regularFields = ["startDate", "endCriteria"];
+
+const validationMessages = {
+    startDate: "Start date cannot be empty",
+    endCriteria: "Must select radio button",
+
+}
+
 class RecurringPickupRequest extends Component {
     constructor(props) {
         // Props: account, donatingAgency
@@ -114,40 +135,67 @@ class RecurringPickupRequest extends Component {
         let errors = {};
         let formIsValid = true;
 
-        //Date
+        // BEGIN: both emergency and regular deliveries
         if (!fields['startDate']) {
             formIsValid = false;
             errors['startDate'] = 'Start date cannot be empty';
         }
-
-        if (!fields['endCriteria']) {
-            // the they need to have one or the other error msg
-            errors['endCriteria'] = 'Must select radio button';
-            formIsValid = false;
-        } else if (fields['endCriteria'] === RequestEndCriteriaType.DATE) {
-            // perform all endDate related checks
-            if (fields['endDate'] < fields['startDate']) {
-                formIsValid = false;
-                errors['endBeforeStart'] =
-                    'End date cannot be before start date';
-            } else if (fields['endDate'] === '' || !fields['endDate']) {
-                formIsValid = false;
-                errors['endBeforeStart'] = 'Enter an end date';
-            }
-        } else if (
-            fields['occurTimes'] === '' ||
-            !fields['occurTimes'] ||
-            fields['occurTimes'] < 2
-        ) {
-            formIsValid = false;
-            errors['invalidOccurTimes'] = 'Pickup must recur at least once';
-        }
-
-        //Time
         if (fields['endTime'] < fields['startTime']) {
             formIsValid = false;
             errors['time'] = 'Invalid time range';
         }
+        // END: both emergency and regular deliveries
+
+        // BEGIN: only regular deliveries
+        if (!this.state.isEmergency) {
+            if (!fields['endCriteria']) {
+                // the they need to have one or the other error msg
+                errors['endCriteria'] = 'Must select radio button';
+                formIsValid = false;
+            } else if (fields['endCriteria'] === RequestEndCriteriaType.DATE) {
+                // perform all endDate related checks
+                if (fields['endDate'] < fields['startDate']) {
+                    formIsValid = false;
+                    errors['endBeforeStart'] =
+                        'End date cannot be before start date';
+                } else if (fields['endDate'] === '' || !fields['endDate']) {
+                    formIsValid = false;
+                    errors['endBeforeStart'] = 'Enter an end date';
+                }
+            } else if (
+                fields['occurTimes'] === '' ||
+                !fields['occurTimes'] ||
+                fields['occurTimes'] < 2
+            ) {
+                formIsValid = false;
+                errors['invalidOccurTimes'] = 'Pickup must recur at least once';
+            }
+            if (!fields['endCriteria']) {
+                // the they need to have one or the other error msg
+                errors['endCriteria'] = 'Must select radio button';
+                formIsValid = false;
+            } else if (fields['endCriteria'] === RequestEndCriteriaType.DATE) {
+                // perform all endDate related checks
+                if (fields['endDate'] < fields['startDate']) {
+                    formIsValid = false;
+                    errors['endBeforeStart'] =
+                        'End date cannot be before start date';
+                } else if (fields['endDate'] === '' || !fields['endDate']) {
+                    formIsValid = false;
+                    errors['endBeforeStart'] = 'Enter an end date';
+                }
+            } else if (
+                fields['occurTimes'] === '' ||
+                !fields['occurTimes'] ||
+                fields['occurTimes'] < 2
+            ) {
+                formIsValid = false;
+                errors['invalidOccurTimes'] = 'Pickup must recur at least once';
+            }
+        }
+        // END: only regular deliveries
+        
+        // TODO: Only emergency deliveries
 
         this.setState({
             errors: errors
@@ -181,116 +229,115 @@ class RecurringPickupRequest extends Component {
         event.preventDefault();
         if (!this.handleValidation()) {
             alert('Form has errors');
-        } else {
-            // force request's timezone to be the same as DA's
-            let reqTimezone = this.props.donatingAgency.timezone;
-            let dateTimeStringToTimestamp = (dateString, timeString) =>
-                moment
-                    .tz(
-                        dateString + timeString,
-                        InputFormat.DATE + InputFormat.TIME,
-                        reqTimezone
-                    )
-                    .valueOf();
-            let startTimestamp = dateTimeStringToTimestamp(
-                event.target.startDate.value,
+            return;
+        }
+        // BEGIN: both emergency and regular
+        // force request's timezone to be the same as DA's
+        let reqTimezone = this.props.donatingAgency.timezone;
+        let dateTimeStringToTimestamp = (dateString, timeString) =>
+            moment
+                .tz(
+                    dateString + timeString,
+                    InputFormat.DATE + InputFormat.TIME,
+                    reqTimezone
+                )
+                .valueOf();
+        let startTimestamp = dateTimeStringToTimestamp(
+            event.target.startDate.value,
+            event.target.startTime.value
+        );
+
+        let durationValue;
+        // compute ending Timestamp
+        let endTimestamp;
+        if (event.target.endCriteria.value === RequestEndCriteriaType.DATE) {
+            durationValue = event.target.endDate.value;
+            endTimestamp = dateTimeStringToTimestamp(
+                durationValue,
                 event.target.startTime.value
             );
-
-            let durationValue;
-            // compute ending Timestamp
-            let endTimestamp;
-            if (
-                event.target.endCriteria.value === RequestEndCriteriaType.DATE
-            ) {
-                durationValue = event.target.endDate.value;
-                endTimestamp = dateTimeStringToTimestamp(
-                    durationValue,
-                    event.target.startTime.value
-                );
+        } else {
+            durationValue = event.target.numOccurrences.value;
+            let freq = event.target.repeats.value;
+            if (freq === RequestRepeatType.WEEKLY) {
+                endTimestamp = moment
+                    .tz(startTimestamp, reqTimezone)
+                    .add((durationValue - 1) * 7, 'days')
+                    .valueOf();
+            } else if (freq === RequestRepeatType.BIWEEKLY) {
+                endTimestamp = moment
+                    .tz(startTimestamp, reqTimezone)
+                    .add((durationValue - 1) * 14, 'days')
+                    .valueOf();
             } else {
-                durationValue = event.target.numOccurrences.value;
-                let freq = event.target.repeats.value;
-                if (freq === RequestRepeatType.WEEKLY) {
-                    endTimestamp = moment
-                        .tz(startTimestamp, reqTimezone)
-                        .add((durationValue - 1) * 7, 'days')
-                        .valueOf();
-                } else if (freq === RequestRepeatType.BIWEEKLY) {
-                    endTimestamp = moment
-                        .tz(startTimestamp, reqTimezone)
-                        .add((durationValue - 1) * 14, 'days')
-                        .valueOf();
-                } else {
-                    // TODO (jkbach): handle monthly
-                    endTimestamp = -1;
-                }
+                // TODO (jkbach): handle monthly
+                endTimestamp = -1;
             }
-            let pickupTimeDiffMs = (
-                moment(event.target.endTime.value, InputFormat.TIME) -
-                moment(event.target.startTime.value, InputFormat.TIME)
-            ).valueOf();
-            endTimestamp += pickupTimeDiffMs; //encode endTime
-
-            var raInfo = {};
-            var raRequested = null;
-            var raIndex = event.target.receivingAgency.value;
-            if (raIndex) {
-                raRequested = this.state.receivingAgencies[raIndex];
-                raInfo['requested'] = raRequested.id;
-            } else {
-                // if no specific RA requested, add all RAs to pending list
-                raInfo['pending'] = this.state.receivingAgencies.map(
-                    ra => ra.id
-                );
-            }
-
-            var dgInfo = {};
-            var dgRequested = null;
-            var dgIndex = event.target.delivererGroup.value;
-            if (dgIndex) {
-                dgRequested = this.state.delivererGroups[dgIndex];
-                dgInfo['requested'] = dgRequested.id;
-            } else {
-                // if no specific DG requested, add all DGs to pending list
-                dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
-            }
-
-            var primaryContact = this.state.memberList[
-                event.target.primaryContact.value
-            ];
-
-            // create DeliveryRequest object
-            var deliveryRequest = {
-                type: DeliveryType.RECURRING,
-                status: RequestStatus.PENDING,
-                startTimestamp: startTimestamp,
-                endTimestamp: endTimestamp,
-                timezone: reqTimezone,
-                endCriteria: {
-                    type: event.target.endCriteria.value,
-                    value: durationValue
-                },
-                repeats: event.target.repeats.value,
-                primaryContact: primaryContact.id,
-                notes: event.target.notes.value,
-                umbrella: this.props.donatingAgency.umbrella,
-                donatingAgency: this.props.account.agency,
-                requester: this.props.account.name,
-                receivingAgency: raInfo,
-                delivererGroup: dgInfo,
-                requestTimestamp: Date.now()
-            };
-
-            this.setState({
-                request: deliveryRequest,
-                primaryContact: primaryContact,
-                raRequested: raRequested,
-                dgRequested: dgRequested
-            });
-
-            this.toggleModal();
         }
+        let pickupTimeDiffMs = (
+            moment(event.target.endTime.value, InputFormat.TIME) -
+            moment(event.target.startTime.value, InputFormat.TIME)
+        ).valueOf();
+        endTimestamp += pickupTimeDiffMs; //encode endTime
+
+        var raInfo = {};
+        var raRequested = null;
+        var raIndex = event.target.receivingAgency.value;
+        if (raIndex) {
+            raRequested = this.state.receivingAgencies[raIndex];
+            raInfo['requested'] = raRequested.id;
+        } else {
+            // if no specific RA requested, add all RAs to pending list
+            raInfo['pending'] = this.state.receivingAgencies.map(
+                ra => ra.id
+            );
+        }
+
+        var dgInfo = {};
+        var dgRequested = null;
+        var dgIndex = event.target.delivererGroup.value;
+        if (dgIndex) {
+            dgRequested = this.state.delivererGroups[dgIndex];
+            dgInfo['requested'] = dgRequested.id;
+        } else {
+            // if no specific DG requested, add all DGs to pending list
+            dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
+        }
+
+        var primaryContact = this.state.memberList[
+            event.target.primaryContact.value
+        ];
+
+        // create DeliveryRequest object
+        var deliveryRequest = {
+            type: DeliveryType.RECURRING,
+            status: RequestStatus.PENDING,
+            startTimestamp: startTimestamp,
+            endTimestamp: endTimestamp,
+            timezone: reqTimezone,
+            endCriteria: {
+                type: event.target.endCriteria.value,
+                value: durationValue
+            },
+            repeats: event.target.repeats.value,
+            primaryContact: primaryContact.id,
+            notes: event.target.notes.value,
+            umbrella: this.props.donatingAgency.umbrella,
+            donatingAgency: this.props.account.agency,
+            requester: this.props.account.name,
+            receivingAgency: raInfo,
+            delivererGroup: dgInfo,
+            requestTimestamp: Date.now()
+        };
+
+        this.setState({
+            request: deliveryRequest,
+            primaryContact: primaryContact,
+            raRequested: raRequested,
+            dgRequested: dgRequested
+        });
+
+        this.toggleModal();
     }
 
     // when "Confirm" is clicked on the summary popup
@@ -313,11 +360,6 @@ class RecurringPickupRequest extends Component {
             });
     }
 
-    handleToggle() {
-        this.setState({
-            isEmergency: !this.state.isEmergency,
-        });
-    }
     render() {
         return (
             <div> 
@@ -338,20 +380,16 @@ class RecurringPickupRequest extends Component {
                                                 base: 'rgb(0, 153, 51)',
                                             }
                                         }}
-                                        value={this.state.value}
-
+                                        value={this.state.isEmergency}
                                         onToggle={(value) => {
-                                            this.setState({
-                                                value: !value,
-                                                
-                                            });
-                                            this.handleToggle();
+                                            this.setState({isEmergency: !value});
                                         }} 
                                     /> 
                                 </div>
-                                <label> <span>Emergency</span></label>
-                            </div>
-                            <p id="form-heading">Schedule Recurring Pickup</p>
+                                <span>Emergency</span>
+                            </label>
+
+                            <p className="form-heading">{emergencyDiffs.formTitle[this.state.isEmergency]}</p>
                             {Object.keys(this.state.errors).map((error, i) => {
                                 return (
                                     <p className="error" key={i}>
@@ -362,7 +400,7 @@ class RecurringPickupRequest extends Component {
                             <span className="flex">
                                 <span className="grid">
                                     <label>
-                                        Start Date <span className="red">*</span>
+                                        {emergencyDiffs.startDate[this.state.isEmergency]} <span className="red">*</span>
                                     </label>
                                     <br />
                                     <input
@@ -376,80 +414,84 @@ class RecurringPickupRequest extends Component {
                                     />
                                     <br />
                                 </span>
-                                <span className="grid">
-                                    <label>
-                                        {' '}
-                                        End Criteria <span className="red">*</span>
-                                    </label>
-                                    <br />
-                                    <label className="container-smaller">
-                                        <input
-                                            type="radio"
-                                            name="endCriteria"
-                                            value={RequestEndCriteriaType.OCCUR}
-                                            onChange={this.handleChange.bind(
-                                                this,
-                                                'endCriteria'
-                                            )}
-                                            required
-                                        />
-                                        <span className="checkmark" />After{' '}
-                                        <input
-                                            type="number"
-                                            name="numOccurrences"
-                                            onChange={this.handleChange.bind(
-                                                this,
-                                                'occurTimes'
-                                            )}
-                                        />{' '}
-                                        times<br />
-                                    </label>
-                                    <label className="container-smaller">
-                                        <input
-                                            type="radio"
-                                            name="endCriteria"
-                                            value={RequestEndCriteriaType.DATE}
-                                            onChange={this.handleChange.bind(
-                                                this,
-                                                'endCriteria'
-                                            )}
-                                        />
-                                        <span className="checkmark" />End on
-                                        <input
-                                            type="date"
-                                            name="endDate"
-                                            onChange={this.handleChange.bind(
-                                                this,
-                                                'endDate'
-                                            )}
-                                        />
-                                    </label>
-                                    <br />
-                                </span>
+                                {!this.state.isEmergency &&
+                                    <span className="grid">
+                                        <label>
+                                            {' '}
+                                            End Criteria <span className="red">*</span>
+                                        </label>
+                                        <br />
+                                        <label className="container-smaller">
+                                            <input
+                                                type="radio"
+                                                name="endCriteria"
+                                                value={RequestEndCriteriaType.OCCUR}
+                                                onChange={this.handleChange.bind(
+                                                    this,
+                                                    'endCriteria'
+                                                )}
+                                                required
+                                            />
+                                            <span className="checkmark" />After{' '}
+                                            <input
+                                                type="number"
+                                                name="numOccurrences"
+                                                onChange={this.handleChange.bind(
+                                                    this,
+                                                    'occurTimes'
+                                                )}
+                                            />{' '}
+                                            times<br />
+                                        </label>
+                                        <label className="container-smaller">
+                                            <input
+                                                type="radio"
+                                                name="endCriteria"
+                                                value={RequestEndCriteriaType.DATE}
+                                                onChange={this.handleChange.bind(
+                                                    this,
+                                                    'endCriteria'
+                                                )}
+                                            />
+                                            <span className="checkmark" />End on
+                                            <input
+                                                type="date"
+                                                name="endDate"
+                                                onChange={this.handleChange.bind(
+                                                    this,
+                                                    'endDate'
+                                                )}
+                                            />
+                                        </label>
+                                        <br />
+                                    </span>
+                                }
                             </span>
                             <span className="flex">
-                                <span className="grid">
-                                    <label>
-                                        Repeats <span className="red">*</span>
-                                    </label>
-                                    <br />
-                                    <select name="repeats" defaultValue="" required>
-                                        <option value="" disabled>
-                                            Select
-                                        </option>
-                                        <option value={RequestRepeatType.WEEKLY}>
-                                            Weekly
-                                        </option>
-                                        <option value={RequestRepeatType.BIWEEKLY}>
-                                            Every other week
-                                        </option>
-                                        {/* TODO warning if not every month in the range has this date */}
-                                        {/* <option value={RequestRepeatType.MONTHLY}>Monthly</option> */}
-                                        {/* (TODO SPR18) Nth Weekday of Month */}
-                                        {/* <option value={RequestRepeatType.??}>Monthly, on the ith of X</option> */}
-                                    </select>
-                                    <br />
-                                </span>
+                                {!this.state.isEmergency &&
+                                    <span className="grid">
+                                        <label>
+                                            Repeats <span className="red">*</span>
+                                        </label>
+                                        <br />
+                                        <select name="repeats" defaultValue="" required>
+                                            <option value="" disabled>
+                                                Select
+                                            </option>
+                                            <option value={RequestRepeatType.WEEKLY}>
+                                                Weekly
+                                            </option>
+                                            <option value={RequestRepeatType.BIWEEKLY}>
+                                                Every other week
+                                            </option>
+                                            {/* TODO warning if not every month in the range has this date */}
+                                            {/* <option value={RequestRepeatType.MONTHLY}>Monthly</option> */}
+                                            {/* (TODO SPR18) Nth Weekday of Month */}
+                                            {/* <option value={RequestRepeatType.??}>Monthly, on the ith of X</option> */}
+                                        </select>
+                                        <br />
+                                    </span>
+                                }
                                 <span className="grid">
                                     <label>
                                         Primary Contact{' '}
@@ -507,46 +549,54 @@ class RecurringPickupRequest extends Component {
                                     />
                                 </span>
                             </span>
+                            {this.state.isEmergency &&
+                                <span className="grid">
+                                    <p className="form-heading"> Food items (TODO) </p>
+                                    </span>
+                            }
                             <span className="grid">
-                                <p id="form-heading">Notes for Pickup</p>
+                                <p className="form-heading">Notes for Pickup</p>
                                 <textarea
                                     name="notes"
                                     placeholder="Ex: Use the underground parking garage upon entrance. Key card access required after 3:00pm."
                                 />
                             </span>
-                            <p id="form-heading">Agencies involved</p>
-                            <span className="flex">
-                                <span className="grid">
-                                    <label>Student Group</label>
-                                    <br />
-                                    <select name="delivererGroup" defaultValue="">
-                                        <option value="">Select</option>
-                                        {this.state.delivererGroups.map((dg, i) => {
-                                            return (
-                                                <option key={i} value={i}>
-                                                    {dg.name}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </span>
-                                <span className="grid">
-                                    <label>Shelter</label>
-                                    <br />
-                                    <select name="receivingAgency" defaultValue="">
-                                        <option value="">Select</option>
-                                        {this.state.receivingAgencies.map(
-                                            (ra, i) => {
+                            {!this.state.isEmergency &&
+                            <div>
+                                <p className="form-heading">Agencies involved</p>
+                                <span className="flex">
+                                    <span className="grid">
+                                        <label>Student Group</label>
+                                        <br />
+                                        <select name="delivererGroup" defaultValue="">
+                                            <option value="">Select</option>
+                                            {this.state.delivererGroups.map((dg, i) => {
                                                 return (
                                                     <option key={i} value={i}>
-                                                        {ra.name}
+                                                        {dg.name}
                                                     </option>
                                                 );
-                                            }
-                                        )}
-                                    </select>
+                                            })}
+                                        </select>
+                                    </span>
+                                    <span className="grid">
+                                        <label>Shelter</label>
+                                        <br />
+                                        <select name="receivingAgency" defaultValue="">
+                                            <option value="">Select</option>
+                                            {this.state.receivingAgencies.map(
+                                                (ra, i) => {
+                                                    return (
+                                                        <option key={i} value={i}>
+                                                            {ra.name}
+                                                        </option>
+                                                    );
+                                                }
+                                            )}
+                                        </select>
+                                    </span>
                                 </span>
-                            </span>
+                                </div>}
                             <div className="buttons-form">
                                 <input type="submit" value="Done" />
                                 <input type="reset" value="Cancel" />
@@ -580,4 +630,6 @@ class RecurringPickupRequest extends Component {
         );
     }
 }
+
+
 export default RecurringPickupRequest;
