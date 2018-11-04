@@ -22,7 +22,12 @@ class SignIn extends Component {
 
         auth
             .signInWithEmailAndPassword(email, password)
-            .then(user => {
+            /*
+            NOTE: This Firebase promise doesn't return a user!
+            Thus, the redirect flow is handled by a controller instead.
+            https://firebase.google.com/docs/auth/web/password-auth#create_a_password-based_account
+            */
+            .then(() => {
                 this.setState({
                     error: null
                 });
