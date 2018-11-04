@@ -230,10 +230,10 @@ class RecurringPickupRequest extends Component {
         var raRequested = null;
         var dgInfo = {};
         var dgRequested = null;
-        var durationValue;
+        var durationValue = null;
         let endTimestamp;
-        let repeatFrequency;
-        let endCriteriaType;
+        let repeatFrequency = null;
+        let endCriteriaType = null;
 
         // BEGIN: both emergency and regular
         // force request's timezone to be the same as DA's
@@ -293,7 +293,7 @@ class RecurringPickupRequest extends Component {
         // END fields for both emergency and regular requests
 
         // BEGIN: fields for only regular requests
-        if (!this.isEmergency) {
+        if (!this.state.isEmergency) {
             var raIndex = event.target.receivingAgency.value;
             if (raIndex) {
                 raRequested = this.state.receivingAgencies[raIndex];
