@@ -25,68 +25,71 @@ class App extends Component {
             isChrome: !!window.chrome && !!window.chrome.webstore
         };
 
-        this.aggrAccount = this.aggrAccount.bind(this);
         this.signOut = this.signOut.bind(this);
     }
 
     componentDidMount() {
         // check whether user is logged in
-        auth.onAuthStateChanged(this.deserializeUser);
+        auth.onAuthStateChanged(this.handleAuth);
     }
 
-    deserializeUser = (user) => {
-        if (user) {
-            // grab and listen to user's account
-            accountsRef
+    // HandleAuth: Deserialize user account data, or setState for unauthorized users
+    handleAuth = (user) => {
+        user
+            ? accountsRef
                 .child(user.uid)
-                .on('value', this.aggrAccount);
-        } else {
-            this.setState({
-                authenticated: true,
-                signInDenied: false,
-                account: null,
-                donatingAgency: null,
-            });
-        }
+                .on('value', this.deserializeUser)
+            : this.handleUnauthorized();
     }
 
-    aggrAccount(snapshot) {
+    deserializeUser = (snapshot) => {
         let account = snapshot.val();
         account.uid = snapshot.key;
-
-        if (account.isVerified && account.isActivated) {
-            // also grab and listen to the DA entity if user is DA member
-            if (account.accountType === AccountType.DONATING_AGENCY_MEMBER) {
-                donatingAgenciesRef
-                    .child(account.agency)
-                    .on('value', function(daSnap) {
-                        let da = daSnap.val();
-                        da.uid = daSnap.key;
-                        this.setState({
-                            authenticated: true,
-                            signInDenied: false,
-                            account: account,
-                            donatingAgency: da,
-                        });
-                    }.bind(this));
-            } else {
-                this.setState({
-                    authenticated: true,
-                    signInDenied: false,
-                    account: account,
-                    donatingAgency: null,
+        console.warn('deserializeUser', snapshot, account);
+        // Destructure user authN / authZ properties
+        const { isActivated, isVerified, isAdmin, accountType } = account;
+        // Handle unauthorized users
+        if (!isActivated) {
+            console.warn('Not Activated - toast user');
+            return this.handleUnauthorized(account);
+        } else if (!isVerified) {
+            console.warn('Not Verified - toast user');
+            return this.handleUnauthorized(account);
+        }
+        // Hydrate special accounttype data
+        switch (accountType) {
+        case AccountType.DONATING_AGENCY_MEMBER:
+            donatingAgenciesRef
+                .child(account.agency)
+                .on('value', (daSnap) => {
+                    let donatingAgency = daSnap.val();
+                    donatingAgency.uid = daSnap.key;
+                    this.setState({
+                        account,
+                        authenticated: true,
+                        signInDenied: false,
+                        donatingAgency
+                    });
                 });
-            }
-        } else {
-            // account is not verified or activated, deny sign in
+            break;
+        default:
             this.setState({
+                account,
                 authenticated: true,
-                signInDenied: true,
-                account: null,
+                signInDenied: false,
                 donatingAgency: null,
             });
-            auth.signOut();
         }
+    }
+
+    handleUnauthorized = (account) => {
+        this.setState({
+            authenticated: true,
+            signInDenied: true,
+            account: null,
+            donatingAgency: null,
+        });
+        if (account) auth.signOut();
     }
 
     signOut(event) {
