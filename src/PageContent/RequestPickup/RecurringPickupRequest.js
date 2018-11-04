@@ -24,15 +24,9 @@ const emergencyDiffs = {
     },
 };
 
-const emergencyFields = ["startDate", ""];
+const emergencyFields = ["startDate"];
 
 const regularFields = ["startDate", "endCriteria"];
-
-const validationMessages = {
-    startDate: "Start date cannot be empty",
-    endCriteria: "Must select radio button",
-
-}
 
 class RecurringPickupRequest extends Component {
     constructor(props) {
@@ -231,6 +225,16 @@ class RecurringPickupRequest extends Component {
             alert('Form has errors');
             return;
         }
+
+        var raInfo = {};
+        var raRequested = null;
+        var dgInfo = {};
+        var dgRequested = null;
+        var durationValue;
+        let endTimestamp;
+        let repeatFrequency;
+        let endCriteriaType;
+
         // BEGIN: both emergency and regular
         // force request's timezone to be the same as DA's
         let reqTimezone = this.props.donatingAgency.timezone;
@@ -247,79 +251,81 @@ class RecurringPickupRequest extends Component {
             event.target.startTime.value
         );
 
-        let durationValue;
         // compute ending Timestamp
-        let endTimestamp;
-        if (event.target.endCriteria.value === RequestEndCriteriaType.DATE) {
-            durationValue = event.target.endDate.value;
-            endTimestamp = dateTimeStringToTimestamp(
-                durationValue,
-                event.target.startTime.value
-            );
-        } else {
-            durationValue = event.target.numOccurrences.value;
-            let freq = event.target.repeats.value;
-            if (freq === RequestRepeatType.WEEKLY) {
-                endTimestamp = moment
-                    .tz(startTimestamp, reqTimezone)
-                    .add((durationValue - 1) * 7, 'days')
-                    .valueOf();
-            } else if (freq === RequestRepeatType.BIWEEKLY) {
-                endTimestamp = moment
-                    .tz(startTimestamp, reqTimezone)
-                    .add((durationValue - 1) * 14, 'days')
-                    .valueOf();
+        if (!this.state.isEmergency) { 
+            // compute from given criteria
+            repeatFrequency = event.target.repeatFrequency.value;
+            endCriteriaType = event.target.endCriteria.value;
+            if (endCriteriaType === RequestEndCriteriaType.DATE) {
+                durationValue = event.target.endDate.value;
+                endTimestamp = dateTimeStringToTimestamp(
+                    durationValue,
+                    event.target.startTime.value
+                );
             } else {
-                // TODO (jkbach): handle monthly
-                endTimestamp = -1;
+                durationValue = event.target.numOccurrences.value;
+                if (repeatFrequency === RequestRepeatType.WEEKLY) {
+                    endTimestamp = moment
+                        .tz(startTimestamp, reqTimezone)
+                        .add((durationValue - 1) * 7, 'days')
+                        .valueOf();
+                } else if (repeatFrequency === RequestRepeatType.BIWEEKLY) {
+                    endTimestamp = moment
+                        .tz(startTimestamp, reqTimezone)
+                        .add((durationValue - 1) * 14, 'days')
+                        .valueOf();
+                } else {
+                    // TODO (jkbach): handle monthly
+                    endTimestamp = -1;
+                }
             }
+        } else { // Emergency pickup
+            endTimestamp = startTimestamp;
         }
+        
         let pickupTimeDiffMs = (
             moment(event.target.endTime.value, InputFormat.TIME) -
             moment(event.target.startTime.value, InputFormat.TIME)
         ).valueOf();
         endTimestamp += pickupTimeDiffMs; //encode endTime
 
-        var raInfo = {};
-        var raRequested = null;
-        var raIndex = event.target.receivingAgency.value;
-        if (raIndex) {
-            raRequested = this.state.receivingAgencies[raIndex];
-            raInfo['requested'] = raRequested.id;
-        } else {
-            // if no specific RA requested, add all RAs to pending list
-            raInfo['pending'] = this.state.receivingAgencies.map(
-                ra => ra.id
-            );
-        }
+        var primaryContact = this.state.memberList[event.target.primaryContact.value];
+        // END fields for both emergency and regular requests
 
-        var dgInfo = {};
-        var dgRequested = null;
-        var dgIndex = event.target.delivererGroup.value;
-        if (dgIndex) {
-            dgRequested = this.state.delivererGroups[dgIndex];
-            dgInfo['requested'] = dgRequested.id;
-        } else {
-            // if no specific DG requested, add all DGs to pending list
-            dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
+        // BEGIN: fields for only regular requests
+        if (!this.isEmergency) {
+            var raIndex = event.target.receivingAgency.value;
+            if (raIndex) {
+                raRequested = this.state.receivingAgencies[raIndex];
+                raInfo['requested'] = raRequested.id;
+            } else {
+                // if no specific RA requested, add all RAs to pending list
+                raInfo['pending'] = this.state.receivingAgencies.map(
+                    ra => ra.id
+                );
+            }
+            var dgIndex = event.target.delivererGroup.value;
+            if (dgIndex) {
+                dgRequested = this.state.delivererGroups[dgIndex];
+                dgInfo['requested'] = dgRequested.id;
+            } else {
+                // if no specific DG requested, add all DGs to pending list
+                dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
+            }
         }
-
-        var primaryContact = this.state.memberList[
-            event.target.primaryContact.value
-        ];
 
         // create DeliveryRequest object
         var deliveryRequest = {
-            type: DeliveryType.RECURRING,
+            type: this.state.isEmergency ? DeliveryType.EMERGENCY : DeliveryType.RECURRING,
             status: RequestStatus.PENDING,
             startTimestamp: startTimestamp,
             endTimestamp: endTimestamp,
             timezone: reqTimezone,
             endCriteria: {
-                type: event.target.endCriteria.value,
+                type: endCriteriaType,
                 value: durationValue
             },
-            repeats: event.target.repeats.value,
+            repeats: repeatFrequency,
             primaryContact: primaryContact.id,
             notes: event.target.notes.value,
             umbrella: this.props.donatingAgency.umbrella,
@@ -367,7 +373,7 @@ class RecurringPickupRequest extends Component {
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
                             <div className= "toggle">
-                                <label><span>Regular</span></label>
+                                <span>Regular</span>
                                 <div className = "button">
                                     <ToggleButton
                                         inactiveLabel={''}
@@ -387,7 +393,7 @@ class RecurringPickupRequest extends Component {
                                     /> 
                                 </div>
                                 <span>Emergency</span>
-                            </label>
+                            </div>
 
                             <p className="form-heading">{emergencyDiffs.formTitle[this.state.isEmergency]}</p>
                             {Object.keys(this.state.errors).map((error, i) => {
@@ -474,7 +480,7 @@ class RecurringPickupRequest extends Component {
                                             Repeats <span className="red">*</span>
                                         </label>
                                         <br />
-                                        <select name="repeats" defaultValue="" required>
+                                        <select name="repeatFrequency" defaultValue="" required>
                                             <option value="" disabled>
                                                 Select
                                             </option>
