@@ -17,7 +17,7 @@
     color:#F77676;
 }
 
-#form-heading{
+.form-heading{
     font-size: 24px;
     color: #243847;
     margin: 0px 0px 10px 0px;
@@ -167,6 +167,23 @@ input[type="radio"]{
     padding-top: 20px;
 }
 
+.button {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 10px;
+
+}
+
+.toggle {
+    padding-left: 350px;
+    display: flex;
+    height: 30px;
+}
+
+input[value="Emergency"] {
+    background-color: #e60000;
+}
+
 input[value="Cancel"]{
     color: #BDBDBD;
     border: 1px solid #BDBDBD;
@@ -210,6 +227,10 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     color:#F77676;
     margin: 0px;
     visibility: show;
+}
+
+.header {
+
 }
 
 @media screen and (max-width: 1090px) {
