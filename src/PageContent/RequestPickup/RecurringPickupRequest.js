@@ -312,8 +312,11 @@ class RecurringPickupRequest extends Component {
                 // if no specific DG requested, add all DGs to pending list
                 dgInfo['pending'] = this.state.delivererGroups.map(dg => dg.id);
             }
+            // END: fields for only regular requests
+        } else {
+            // BEGIN: fields for only emergency requests
+            raInfo['pending'] = raRequested.id;
         }
-
         // create DeliveryRequest object
         var deliveryRequest = {
             type: this.state.isEmergency ? DeliveryType.EMERGENCY : DeliveryType.RECURRING,
