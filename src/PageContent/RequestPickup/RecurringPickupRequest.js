@@ -300,9 +300,7 @@ class RecurringPickupRequest extends Component {
                 raInfo['requested'] = raRequested.id;
             } else {
                 // if no specific RA requested, add all RAs to pending list
-                raInfo['pending'] = this.state.receivingAgencies.map(
-                    ra => ra.id
-                );
+                raInfo['pending'] = this.state.receivingAgencies.map(ra => ra.id);
             }
             var dgIndex = event.target.delivererGroup.value;
             if (dgIndex) {
@@ -315,7 +313,7 @@ class RecurringPickupRequest extends Component {
             // END: fields for only regular requests
         } else {
             // BEGIN: fields for only emergency requests
-            raInfo['pending'] = raRequested.id;
+            raInfo['pending'] = this.state.receivingAgencies.map(ra => ra.id);
         }
         // create DeliveryRequest object
         var deliveryRequest = {

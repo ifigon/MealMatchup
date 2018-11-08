@@ -27,7 +27,7 @@ exports.InputFormat = {
 exports.AccountType = {
     UMBRELLA: 'umbrella',
     DONATING_AGENCY_MEMBER: 'donating_agency_member',
-    RECEIVING_AGENCY : 'receiving_agency',
+    RECEIVING_AGENCY: 'receiving_agency',
     DELIVERER_GROUP: 'deliverer_group',
     DONATING_AGENCY: 'donating_agency',
 };
@@ -85,7 +85,7 @@ exports.NotificationType = {
     /* When: a DA requests a new recurring pick
        Receiver: RA, DG
        Action: View -> Claim/Reject */
-    RECURRING_PICKUP_REQUEST: 'recurring_pickup_request',
+    RECURRING_PICKUP_REQUESTED: 'recurring_pickup_request',
     /* When: a recurring pick has been claimed by both RA and DG
        Receiver: DA, RA, DG
        Action: View -> View on Calendar */
@@ -163,15 +163,15 @@ exports.NotificationContentType = {
 
 exports.SettingsFields = {
     ORGANIZATION: [
-        'address', 
-        'name', 
-        'numVolunteers', 
-        'deliveryNotes', 
-        'acceptEmergencyPickups', 
+        'address',
+        'name',
+        'numVolunteers',
+        'deliveryNotes',
+        'acceptEmergencyPickups',
         'uid',
     ],
     MANAGER: [
-        'primaryContact', 
+        'primaryContact',
         'secondaryContact',
         'uid',
     ],
