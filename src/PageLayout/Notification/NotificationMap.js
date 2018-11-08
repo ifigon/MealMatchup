@@ -3,7 +3,7 @@ import truckGreen from '../../icons/green_truck.svg';
 import truckGrey from '../../icons/grey_truck.svg';
 
 export const NotificationMap = {
-    [NotificationType.RECURRING_PICKUP_REQUEST]: {
+    [NotificationType.RECURRING_PICKUP_REQUESTED]: {
         iconSrc: truckGreen,
         msg: 'Recurring pickup requested',
         color: 'green',

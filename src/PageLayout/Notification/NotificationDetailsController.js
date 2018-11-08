@@ -92,7 +92,7 @@ class NotificationDetailsController extends Component {
             return <div className="popup-wrapper recurring" id={`notification-popup-${notificationId}`}>
                 <img className="close" src={close} alt="close" onClick={closePopUp} />
                 {
-                    notification.type === NotificationType.RECURRING_PICKUP_REQUEST && 
+                    notification.type === NotificationType.RECURRING_PICKUP_REQUESTED &&
                     <RecurringRequestController
                         account={account}
                         closePopUp={closePopUp.bind(this)}
