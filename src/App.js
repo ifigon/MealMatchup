@@ -85,7 +85,7 @@ class App extends Component {
     handleUnauthorized = (account) => {
         this.setState({
             authenticated: true,
-            signInDenied: true,
+            signInDenied: !!account,
             account: null,
             donatingAgency: null,
         });
