@@ -42,6 +42,7 @@ class SignUpInController extends Component {
         case 1:
             return (
                 <SignIn
+                    account={this.props.account}
                     signInDenied={this.props.signInDenied}
                     back={this.back.bind(this)}
                 />

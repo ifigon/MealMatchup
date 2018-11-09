@@ -19,6 +19,8 @@ class App extends Component {
         this.state = {
             // TODO: a hack to prevent showing logged out page first.. better way?
             authenticated: false,
+            isActivated: false,
+            isVerified: false,
             signInDenied: false,
             account: null,
             donatingAgency: null,
@@ -34,7 +36,8 @@ class App extends Component {
     }
 
     // HandleAuth: Deserialize user account data, or setState for unauthorized users
-    handleAuth = (user) => {
+    handleAuth = (user = {}) => {
+        console.log('handleAuth', user);
         user
             ? accountsRef
                 .child(user.uid)
@@ -66,6 +69,8 @@ class App extends Component {
                     donatingAgency.uid = daSnap.key;
                     this.setState({
                         account,
+                        isActivated,
+                        isVerified,
                         authenticated: true,
                         signInDenied: false,
                         donatingAgency
@@ -75,6 +80,8 @@ class App extends Component {
         default:
             this.setState({
                 account,
+                isActivated,
+                isVerified,
                 authenticated: true,
                 signInDenied: false,
                 donatingAgency: null,
@@ -82,10 +89,13 @@ class App extends Component {
         }
     }
 
-    handleUnauthorized = (account) => {
+    handleUnauthorized = (account = {}) => {
+        const { isActivated, isVerified } = account;
         this.setState({
             authenticated: true,
-            signInDenied: !!account,
+            isActivated,
+            isVerified,
+            signInDenied: account && (!isActivated || !isVerified),
             account: null,
             donatingAgency: null,
         });
@@ -114,6 +124,12 @@ class App extends Component {
     }
 
     render() {
+        const {
+            isChrome,
+            account, donatingAgency,
+            authenticated, isVerified, isActivated,
+            signInDenied
+        } = this.state;
         let path = window.location.href.split('/')[3];
         let content = '';
         switch (path) {
@@ -137,7 +153,7 @@ class App extends Component {
             break;
         }
         return (
-            <div className="">
+            <div>
                 {
                     !this.state.isChrome ? 
                         <div className="browser-check">
@@ -151,13 +167,13 @@ class App extends Component {
                             :
                             null
                 }
-                {this.state.authenticated ? (
-                    this.state.account ? (
+                {authenticated ? (
+                    account ? (
                         /* Show Calendar page if user is logged in */
                         <div>
                             <PageContainer
-                                account={this.state.account}
-                                donatingAgency={this.state.donatingAgency}
+                                account={account}
+                                donatingAgency={donatingAgency}
                                 content={content}
                                 signOut={this.signOut}
                             />
@@ -167,7 +183,10 @@ class App extends Component {
                         <div>
                             <Redirect to={'/'} />
                             <SignUpInController
-                                signInDenied={this.state.signInDenied}
+                                account={account}
+                                isActivated={isActivated}
+                                isVerified={isVerified}
+                                signInDenied={signInDenied}
                             />
                         </div>
                     )

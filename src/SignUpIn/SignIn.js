@@ -27,11 +27,7 @@ class SignIn extends Component {
             Thus, the redirect flow is handled by a controller instead.
             https://firebase.google.com/docs/auth/web/password-auth#create_a_password-based_account
             */
-            .then(() => {
-                this.setState({
-                    error: null
-                });
-            })
+            .then(() => this.setState({ error: null }))
             .catch(error => {
                 this.setState({
                     error: error.message
@@ -40,6 +36,7 @@ class SignIn extends Component {
     }
 
     render() {
+        console.log('SignIn Account', this.props);
         return (
             <div className="signup-wrapper">
                 <form onSubmit={this.signIn}>
