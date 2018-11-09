@@ -12,6 +12,8 @@ import PickupSummary from './PickupSummary.js';
 import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
 import ToggleButton from 'react-toggle-button';
+import greenTruck from '../../icons/green_truck.svg';
+import redTruck from '../../icons/red_truck.svg';
 
 const emergencyDiffs = {
     formTitle: {
@@ -368,6 +370,17 @@ class RecurringPickupRequest extends Component {
     }
 
     render() {
+        let notificationResources = {};
+        if(this.state.isEmergency) {
+            notificationResources.topLine = "emergency";
+            notificationResources.name = "Emergency";
+            notificationResources.truck = redTruck;
+        } else {
+            notificationResources.topLine = "recurring"
+            notificationResources.name = "Recurring";
+            notificationResources.truck = greenTruck;
+        }
+
         return (
             <div> 
                 <div className="form">
@@ -613,7 +626,6 @@ class RecurringPickupRequest extends Component {
 
                     {this.state.showPopup && (
                         <PickupSummary
-                            title={'Request Recurring Pickup'}
                             request={this.state.request}
                             donatingAgency={this.props.donatingAgency}
                             primaryContact={this.state.primaryContact}
@@ -622,6 +634,8 @@ class RecurringPickupRequest extends Component {
                             onClose={this.toggleModal}
                             onConfirm={this.submitRequest}
                             submissionError={this.state.submissionError}
+                            notificationResources={notificationResources}
+                            isEmergency={this.state.isEmergency}
                         />
                     )}
                     {this.state.showConfirmation && (
@@ -630,6 +644,8 @@ class RecurringPickupRequest extends Component {
                             closeConfirm={this.closeConfirm}
                             donatingAgency={this.props.donatingAgency}
                             raRequested={this.state.raRequested}
+                            notificationResources={notificationResources}
+                            isEmergency={this.state.isEmergency}
                         />
                     )}
                 </div>

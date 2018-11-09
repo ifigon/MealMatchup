@@ -28,6 +28,7 @@ class NotificationDetailsController extends Component {
                 .on('value', async (snap) => {
                     let deliveryRequest = snap.val();
                     // kick all promises off
+                    console.log(deliveryRequest);
                     let donatingAgencyPromise = genSupplementaryPromise('donating_agencies', deliveryRequest.donatingAgency);
                     let donatingAgencyContactPromise = genSupplementaryPromise('accounts', deliveryRequest.primaryContact);
                     let delivererGroupPromise = (deliveryRequest.delivererGroup && deliveryRequest.delivererGroup.claimed) ?

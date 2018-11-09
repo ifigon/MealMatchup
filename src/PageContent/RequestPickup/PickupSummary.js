@@ -1,6 +1,7 @@
 import React from 'react';
 import './PickupSummary.css';
-import truck from '../../icons/green-truck.svg';
+import greenTruck from '../../icons/green-truck.svg';
+import redTruck from '../../icons/red_truck.svg';
 import Map from '../../Map/Map.js';
 import {
     RequestRepeatType,
@@ -23,20 +24,23 @@ class PickupSummary extends React.Component {
         };
 
         var durationText = '';
-        if (
-            this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
-        ) {
-            durationText =
-                this.props.request.endCriteria.value + ' pickups requested';
-        } else {
-            durationText =
-                'Ending ' +
-                moment(
-                    this.props.request.endCriteria.value,
-                    InputFormat.DATE
-                ).format(StringFormat.DATE_FULL);
+        
+        if(!this.props.isEmergency) {
+            if (
+                this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
+            ) {
+                durationText =
+                    this.props.request.endCriteria.value + ' pickups requested';
+            } else {
+                durationText =
+                    'Ending ' +
+                    moment(
+                        this.props.request.endCriteria.value,
+                        InputFormat.DATE
+                    ).format(StringFormat.DATE_FULL);
+            }
+            durationText += ' for ' + repeatMap[this.props.request.repeats];
         }
-        durationText += ' for ' + repeatMap[this.props.request.repeats];
 
         let start_date_with_weekday = moment(
             this.props.request.startTimestamp
@@ -51,13 +55,13 @@ class PickupSummary extends React.Component {
             <div className="backdrop">
                 {/* TODO: fix background opacity. Maybe with iFrame. */}
                 <div className="modal">
-                    <div className="top-line" />
+                    <div className={this.props.notificationResources.topLine} />
                     <p id="exit" onClick={this.props.onClose}>
                         &times;
                     </p>
                     <div className="summary-title flex">
-                        <img src={truck} alt="truck" />
-                        <p id="title">{this.props.title}</p>
+                        <img src={this.props.notificationResources.truck} alt="truck" />
+                        <p id="title">{this.props.notificationResources.name} pickup requested</p>
                     </div>
                     <div className="summary-wrapper grid">
                         <div className="details grid">

@@ -2,7 +2,8 @@ import React from 'react';
 import RequestTime from '../../PageLayout/Notification/Details/RequestTime';
 import './PickupSummary.css';
 import './Confirmation.css';
-import truck from '../../icons/green_truck.svg';
+import greenTruck from '../../icons/green_truck.svg';
+import redTruck from '../../icons/red_truck.svg';
 import close from '../../icons/cross-out.svg';
 
 class PickupRequestedConfirmation extends React.Component {
@@ -22,14 +23,14 @@ class PickupRequestedConfirmation extends React.Component {
                             alt="close"
                         />
                     </div>
-                    <div className="top-line" />
+                    <div className={this.props.notificationResources.topLine} />
                     <img
                         className="truck-icon-confirmation"
-                        src={truck}
+                        src={this.props.notificationResources.truck}
                         alt="truck"
                     />
                     <h1 className="confirmation-header">
-                        Recurring delivery is requested. We will notify you when
+                        {this.props.notificationResources.name} delivery is requested. We will notify you when
                         it is confirmed by all parties and scheduled.
                     </h1>
                     <div className="confirmation-content-wrapper">
@@ -44,6 +45,7 @@ class PickupRequestedConfirmation extends React.Component {
                         <RequestTime
                             request={this.props.request}
                             title={false}
+                            isEmergency={this.props.isEmergency}
                         />
                     </div>
                 </div>
