@@ -6,6 +6,8 @@ import { NotificationType } from '../../../Enums.js';
 
 class RecurringRequestConfirmed extends Component {
     render() {
+        console.log("test 1:" + this.props.notificationType);
+        console.log(this.props);
         return (
             <div className="modal-wrapper">
                 <RequestSummary
@@ -13,6 +15,7 @@ class RecurringRequestConfirmed extends Component {
                         "Recurring Pickup Confirmed" :
                         "Emergency Pickup Confirmed"}
                     details={this.props.details}
+                    notificationType={this.props.notificationType}
                 />
                 <p>
                     You can now see these

@@ -85,7 +85,6 @@ class NotificationDetailsController extends Component {
         if (!this.state.details) { // TODO: fill this with loading gif
             return <div className="popup-wrapper"></div>;
         }
-
         switch(NotificationMap[this.state.notification.type].color){
         // default color is green
         default:
@@ -141,7 +140,7 @@ class NotificationDetailsController extends Component {
                         details={this.state.details}
                         accountType={account.accountType}
                         addressNotificationAndClose={addressAndClose}
-                        notificationType={this.state.notificationType}
+                        notificationType={this.state.notification.type}
                     />
                 }
             </div>;

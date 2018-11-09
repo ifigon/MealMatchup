@@ -9,14 +9,21 @@ import { NotificationMap } from '../NotificationMap';
 
 class RequestSummary extends React.Component {
     render() {
-        const { details, title } = this.props;
-        return (
-            <div className="modal-wrapper">
-                <div className="modal-header-flex">
-                    { NotificationMap[this.props.notificationType].color === "green" ?
+        /*
+                            { NotificationMap[this.props.notificationType].color === "green" ?
                         <img className="icon" src={greenTruck} alt="icon" /> :
                         <img className="icon" src={redTruck} alt="icon" />
                     }
+        */
+        const { details, title } = this.props;
+        console.log(this.props.notificationType);
+        console.log(NotificationMap);
+        console.log(NotificationMap[this.props.notificationType]);
+        return (
+            <div className="modal-wrapper">
+                <div className="modal-header-flex">
+                
+
                     <h1 id="modal-step1">{title}</h1>
                 </div>
                 <div className="details-scroll">
