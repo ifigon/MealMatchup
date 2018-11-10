@@ -49,7 +49,6 @@ class App extends Component {
     deserializeUser = (snapshot) => {
         let account = snapshot.val();
         account.uid = snapshot.key;
-        console.warn('deserializeUser', snapshot, account);
         // Destructure user authN / authZ properties
         const { isActivated, isVerified, isAdmin, accountType } = account;
         // Handle unauthorized users
@@ -63,7 +62,6 @@ class App extends Component {
         // Hydrate special accounttype data
         switch (accountType) {
         case AccountType.DONATING_AGENCY_MEMBER:
-            console.log('AGENT')
             donatingAgenciesRef
                 .child(account.agency)
                 .on('value', (daSnap) => {
@@ -80,7 +78,6 @@ class App extends Component {
                 });
             break;
         default:
-            console.log('DEF')
             this.setState({
                 account,
                 isActivated,

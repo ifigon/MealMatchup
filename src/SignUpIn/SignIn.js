@@ -37,7 +37,7 @@ class SignIn extends React.Component {
     }
 
     render() {
-        const { back, auth: { signInDenied } } = this.props;
+        const { back, auth: { signInDenied, isActivated, isVerified } } = this.props;
         const { error } = this.state;
         console.log('AUTH:', this.props.auth);
         return (
@@ -45,45 +45,46 @@ class SignIn extends React.Component {
                 <div className="signup-wrapper">
                     <form onSubmit={this.signIn}>
                         <div className="login-wrapper">
-                            <div className="login-input-wrapper">
-                                <input
-                                    name="email"
-                                    type="email"
-                                    id="email"
-                                    className="login-input form-component"
-                                    placeholder="Email"
-                                    required
-                                />
-                                <br />
-                                <input
-                                    name="password"
-                                    type="password"
-                                    id="password"
-                                    className="login-input form-component"
-                                    placeholder="Password"
-                                    required
-                                />
-                                <br />
-                            </div>
-                            {this.props.signInDenied && (
-                                <h4 className="sign-in-error">
-
-                                    {JSON.stringify(this.props)}
-                                    Log in denied. Account is not verified or
-                                    activated.
-                                </h4>
-                            )}
-                            {this.state.error && (
-                                /* TODO: give better error msg */
-                                <p className="sign-in-error">
-                                    Unable to log in.
-                                </p>
-                            )}
-                            <div className="login-button-wrapper">
-                                <button type="submit" className="login-button">
-                                    login
-                                </button>
-                            </div>
+                            {(!signInDenied && !error)
+                                ? ( //  Render general UI
+                                    <React.Fragment>
+                                        <div className="login-input-wrapper">
+                                            <input
+                                                name="email"
+                                                type="email"
+                                                id="email"
+                                                className="login-input form-component"
+                                                placeholder="Email"
+                                                required
+                                            />
+                                            <br />
+                                            <input
+                                                name="password"
+                                                type="password"
+                                                id="password"
+                                                className="login-input form-component"
+                                                placeholder="Password"
+                                                required
+                                            />
+                                            <br />
+                                        </div>
+                                        <div className="login-button-wrapper">
+                                            <button type="submit" className="login-button">
+                                                login
+                                            </button>
+                                        </div>
+                                    </React.Fragment>
+                                )
+                                : ( //  Render denial prompts (could be several)
+                                    <div className="sign-in-error">
+                                        <h2>Unable to Sign In</h2>
+                                        <hr />
+                                        {error && <p>Invalid credentials</p>}
+                                        {!error && !isActivated && <p>Your account must be activated by an administrator. This usually takes 1-2 business days.</p>}
+                                        {!error && !isVerified && <p>Your account is in our system, but an agency must verify your identity before you have full access.</p>}
+                                        <hr />
+                                    </div>
+                                )}
                             <div className="forgot">
                                 {/* TODO: Add functionality to reset username and password */}
                                 {/* <p className="forgot">forgot password?</p> */}
