@@ -1,10 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import { auth } from '../FirebaseConfig';
-import { withAuth } from '../context/Auth';
+import { withAuth, AuthProps } from '../context/Auth';
 import './SignUpIn.css';
 
 class SignIn extends React.Component {
+    static propTypes = {
+        back: PropTypes.func.isRequired,
+        auth: AuthProps
+    }
     constructor(props) {
         super(props);
 
