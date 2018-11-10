@@ -33,17 +33,17 @@ class App extends Component {
 
     componentDidMount() {
         // check whether user is logged in
-        auth.onAuthStateChanged(this.handleAuth);
-    }
-
-    // HandleAuth: Deserialize user account data, or setState for unauthorized users
-    handleAuth = (user = {}) => {
-        console.log('handleAuth', user);
-        user
-            ? accountsRef
-                .child(user.uid)
-                .on('value', this.deserializeUser)
-            : this.handleUnauthorized();
+        // auth.onAuthStateChanged(this.handleAuth);
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // grab and listen to user's account
+                accountsRef
+                    .child(user.uid)
+                    .on('value', this.deserializeUser);
+            } else {
+                this.setState({ authenticated: true });
+            }
+        });
     }
 
     deserializeUser = (snapshot) => {
@@ -63,6 +63,7 @@ class App extends Component {
         // Hydrate special accounttype data
         switch (accountType) {
         case AccountType.DONATING_AGENCY_MEMBER:
+            console.log('AGENT')
             donatingAgenciesRef
                 .child(account.agency)
                 .on('value', (daSnap) => {
@@ -79,6 +80,7 @@ class App extends Component {
                 });
             break;
         default:
+            console.log('DEF')
             this.setState({
                 account,
                 isActivated,
@@ -91,15 +93,14 @@ class App extends Component {
     }
 
     handleUnauthorized = (account = {}) => {
-        const { isActivated, isVerified } = account;
-        console.log('handleUnauthorized', account)
+        const { uid, isActivated, isVerified } = account;
         this.setState({
             authenticated: true,
-            signInDenied: account.uid ? (!isActivated || !isVerified) : false,
+            signInDenied: (!isActivated || !isVerified),
             account: null,
             donatingAgency: null,
         });
-        if (account && account.uid) auth.signOut();
+        if (uid) auth.signOut();
     }
 
     signOut(event) {
