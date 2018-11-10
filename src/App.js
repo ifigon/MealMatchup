@@ -92,15 +92,14 @@ class App extends Component {
 
     handleUnauthorized = (account = {}) => {
         const { isActivated, isVerified } = account;
+        console.log('handleUnauthorized', account)
         this.setState({
             authenticated: true,
-            isActivated,
-            isVerified,
-            signInDenied: account && (!isActivated || !isVerified),
+            signInDenied: account.uid ? (!isActivated || !isVerified) : false,
             account: null,
             donatingAgency: null,
         });
-        if (account) auth.signOut();
+        if (account && account.uid) auth.signOut();
     }
 
     signOut(event) {

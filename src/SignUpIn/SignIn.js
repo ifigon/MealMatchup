@@ -37,7 +37,9 @@ class SignIn extends React.Component {
     }
 
     render() {
-        console.log('SignIn Account', this.props.auth);
+        const { back, auth: { signInDenied } } = this.props;
+        const { error } = this.state;
+        console.log('AUTH:', this.props.auth);
         return (
             <div>
                 <div className="signup-wrapper">
