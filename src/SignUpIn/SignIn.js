@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import { Link } from 'react-router-dom';
 import { auth } from '../FirebaseConfig';
+import { withAuth } from '../context/Auth';
 import './SignUpIn.css';
 
-class SignIn extends Component {
+class SignIn extends React.Component {
     constructor(props) {
         super(props);
 
@@ -36,64 +37,69 @@ class SignIn extends Component {
     }
 
     render() {
-        console.log('SignIn Account', this.props);
+        console.log('SignIn Account', this.props.auth);
         return (
-            <div className="signup-wrapper">
-                <form onSubmit={this.signIn}>
-                    <div className="login-wrapper">
-                        <div className="login-input-wrapper">
-                            <input
-                                name="email"
-                                type="email"
-                                id="email"
-                                className="login-input form-component"
-                                placeholder="Email"
-                                required
-                            />
-                            <br />
-                            <input
-                                name="password"
-                                type="password"
-                                id="password"
-                                className="login-input form-component"
-                                placeholder="Password"
-                                required
-                            />
-                            <br />
-                        </div>
-                        {this.props.signInDenied && (
-                            <p className="sign-in-error">
-                                Log in denied. Account is not verified or
-                                activated.
-                            </p>
-                        )}
-                        {this.state.error && (
-                            /* TODO: give better error msg */
-                            <p className="sign-in-error">
-                                Unable to log in.
-                            </p>
-                        )}
-                        <div className="login-button-wrapper">
-                            <button type="submit" className="login-button">
-                                login
-                            </button>
-                        </div>
-                        <div className="forgot">
-                            {/* TODO: Add functionality to reset username and password */}
-                            {/* <p className="forgot">forgot password?</p> */}
-                            {/* <p className="forgot">forgot username?</p> */}
-                        </div>
-                        <div className="signup-reroute">
-                            {/* TODO: Link straight to signup when login routing is ready */}
-                            {/* <Link to={'/signup'}>Create Account</Link> */}
-                            <div className="back" onClick={this.props.back}>
-                                Back
+            <div>
+                <div className="signup-wrapper">
+                    <form onSubmit={this.signIn}>
+                        <div className="login-wrapper">
+                            <div className="login-input-wrapper">
+                                <input
+                                    name="email"
+                                    type="email"
+                                    id="email"
+                                    className="login-input form-component"
+                                    placeholder="Email"
+                                    required
+                                />
+                                <br />
+                                <input
+                                    name="password"
+                                    type="password"
+                                    id="password"
+                                    className="login-input form-component"
+                                    placeholder="Password"
+                                    required
+                                />
+                                <br />
+                            </div>
+                            {this.props.signInDenied && (
+                                <h4 className="sign-in-error">
+
+                                    {JSON.stringify(this.props)}
+                                    Log in denied. Account is not verified or
+                                    activated.
+                                </h4>
+                            )}
+                            {this.state.error && (
+                                /* TODO: give better error msg */
+                                <p className="sign-in-error">
+                                    Unable to log in.
+                                </p>
+                            )}
+                            <div className="login-button-wrapper">
+                                <button type="submit" className="login-button">
+                                    login
+                                </button>
+                            </div>
+                            <div className="forgot">
+                                {/* TODO: Add functionality to reset username and password */}
+                                {/* <p className="forgot">forgot password?</p> */}
+                                {/* <p className="forgot">forgot username?</p> */}
+                            </div>
+                            <div className="signup-reroute">
+                                {/* TODO: Link straight to signup when login routing is ready */}
+                                {/* <Link to={'/signup'}>Create Account</Link> */}
+                                <div className="back" onClick={this.props.back}>
+                                    Back
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         );
     }
 }
-export default SignIn;
+
+export default withAuth(SignIn);

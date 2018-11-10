@@ -5,6 +5,7 @@ import PageContainer from './PageContainer.js';
 import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { AccountType, Routes, PageContent } from './Enums';
+import { Auth } from './context/Auth';
 import './App.css';
 
 // The main entry page to load when user is not signed in.
@@ -153,7 +154,7 @@ class App extends Component {
             break;
         }
         return (
-            <div>
+            <Auth.Provider value={this.state}>
                 {
                     !this.state.isChrome ? 
                         <div className="browser-check">
@@ -194,7 +195,7 @@ class App extends Component {
                     /* Show blank page if initial authentication hasn't finished */
                     <div />
                 )}
-            </div>
+            </Auth.Provider>
         );
     }
 }
