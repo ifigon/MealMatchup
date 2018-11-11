@@ -8,7 +8,7 @@ import './SignUpIn.css';
 class SignIn extends React.Component {
     static propTypes = {
         back: PropTypes.func.isRequired,
-        auth: AuthProps
+        auth: AuthProps.isRequired
     }
     constructor(props) {
         super(props);
@@ -34,17 +34,12 @@ class SignIn extends React.Component {
             https://firebase.google.com/docs/auth/web/password-auth#create_a_password-based_account
             */
             .then(() => this.setState({ error: null }))
-            .catch(error => {
-                this.setState({
-                    error: error.message
-                });
-            });
+            .catch(error => this.setState({ error: error.message }));
     }
 
     render() {
         const { back, auth: { signInDenied, isActivated, isVerified } } = this.props;
         const { error } = this.state;
-        console.log('AUTH:', this.props.auth);
         return (
             <div>
                 <div className="signup-wrapper">
@@ -98,9 +93,7 @@ class SignIn extends React.Component {
                             <div className="signup-reroute">
                                 {/* TODO: Link straight to signup when login routing is ready */}
                                 {/* <Link to={'/signup'}>Create Account</Link> */}
-                                <div className="back" onClick={this.props.back}>
-                                    Back
-                                </div>
+                                <div className="back" onClick={back}>Back</div>
                             </div>
                         </div>
                     </form>

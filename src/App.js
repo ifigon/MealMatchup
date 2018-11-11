@@ -18,7 +18,6 @@ class App extends Component {
         super(props);
 
         this.state = {
-            // TODO: a hack to prevent showing logged out page first.. better way?
             authenticated: false,
             isActivated: false,
             isVerified: false,
@@ -33,7 +32,6 @@ class App extends Component {
 
     componentDidMount() {
         // check whether user is logged in
-        // auth.onAuthStateChanged(this.handleAuth);
         auth.onAuthStateChanged((user) => {
             if (user) {
                 // grab and listen to user's account
@@ -50,7 +48,7 @@ class App extends Component {
         let account = snapshot.val();
         account.uid = snapshot.key;
         // Destructure user authN / authZ properties
-        const { isActivated, isVerified, isAdmin, accountType } = account;
+        const { isActivated, isVerified, accountType } = account;
         // Handle unauthorized users
         if (!isActivated) {
             console.warn('Not Activated - toast user');
@@ -109,7 +107,14 @@ class App extends Component {
         if (this.state.donatingAgency) {
             donatingAgenciesRef.child(this.state.donatingAgency.uid).off();
         }
-        auth.signOut();
+        auth
+            .signOut()
+            .then(() => {
+                this.handleUnauthorized();
+                this.props.history.push('/');
+                //  Will prevent stale data bugs
+                this.forceUpdate();
+            });
     }
 
     componentWillUnmount() {
@@ -123,7 +128,7 @@ class App extends Component {
 
     render() {
         const {
-            isChrome,
+            // isChrome,
             account, donatingAgency,
             authenticated, isVerified, isActivated,
             signInDenied
