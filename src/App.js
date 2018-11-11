@@ -51,10 +51,10 @@ class App extends Component {
         const { isActivated, isVerified, accountType } = account;
         // Handle unauthorized users
         if (!isActivated) {
-            console.warn('Not Activated - toast user');
+            console.warn('Not Activated - toast user'); // eslint-disable-line no-console
             return this.handleUnauthorized(account);
         } else if (!isVerified) {
-            console.warn('Not Verified - toast user');
+            console.warn('Not Verified - toast user');  // eslint-disable-line no-console
             return this.handleUnauthorized(account);
         }
         // Hydrate special accounttype data
