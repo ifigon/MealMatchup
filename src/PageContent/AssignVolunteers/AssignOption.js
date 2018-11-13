@@ -79,7 +79,7 @@ class AssignOption extends Component {
                                 onMouseEnter={this.recopyDialog.bind(this)}
                             >
                                 Copy link
-                        </button>
+                            </button>
                         )}
                     </div>
                 </div>
@@ -129,7 +129,7 @@ class AssignOption extends Component {
 
         textArea.value = `${window.location.origin}/mobile/delivery/${
             this.props.deliveryId
-            }`;
+        }`;
 
         document.body.appendChild(textArea);
         textArea.focus();
