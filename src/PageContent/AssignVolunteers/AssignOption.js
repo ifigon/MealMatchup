@@ -69,18 +69,18 @@ class AssignOption extends Component {
                     <div className="avi-detail avi-volunteers">
                         {deliverers &&
                             deliverers.length === 2 && (
-                                <button
-                                    type="button"
-                                    className="form-button copy"
-                                    id={this.props.deliveryId}
-                                    onClick={this.copyLinkToClipboard.bind(
-                                        this
-                                    )}
-                                    onMouseEnter={this.recopyDialog.bind(this)}
-                                >
-                                    Copy link
-                                </button>
-                            )}
+                            <button
+                                type="button"
+                                className="form-button copy"
+                                id={this.props.deliveryId}
+                                onClick={this.copyLinkToClipboard.bind(
+                                    this
+                                )}
+                                onMouseEnter={this.recopyDialog.bind(this)}
+                            >
+                                Copy link
+                        </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@ class AssignOption extends Component {
 
         textArea.value = `${window.location.origin}/mobile/delivery/${
             this.props.deliveryId
-        }`;
+            }`;
 
         document.body.appendChild(textArea);
         textArea.focus();
