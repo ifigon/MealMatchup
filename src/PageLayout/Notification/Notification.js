@@ -5,7 +5,6 @@ import './Popup.css';
 class Notification extends Component {
     constructor(props){
         super(props);
-        console.log(this.props);
         this.state = {
             info: NotificationMap[this.props.notificationType]
         };
