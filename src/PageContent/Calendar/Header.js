@@ -15,7 +15,11 @@ class Header extends Component {
 
         let headerClass = '';
         if (this.props.futureEvent) {
-            headerClass = 'header future-header';
+            if (this.props.delivery.type === 'emergency') {
+                headerClass = 'header emergency-header';
+            } else {
+                headerClass = 'header future-header';
+            }
         } else {
             headerClass = 'header past-header';
         }

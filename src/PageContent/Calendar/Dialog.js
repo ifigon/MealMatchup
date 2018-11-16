@@ -16,6 +16,7 @@ class Dialog extends Component {
                         endTime={this.props.delivery.endTimestamp}
                         futureEvent={this.props.futureEvent}
                         accountType={this.props.account.accountType}
+                        delivery={this.props.delivery}
                     />
                     <DialogContent
                         futureEvent={this.props.futureEvent}

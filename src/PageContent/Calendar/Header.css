@@ -29,8 +29,13 @@
 .past-header {
   background-color: #8c97b2;
 }
+
 .future-header {
   background-color: #2ecc71;
+}
+
+.emergency-header {
+  background-color: #F77676;
 }
 .header-time {
   padding: 0px;

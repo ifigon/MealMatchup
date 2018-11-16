@@ -45,7 +45,7 @@ class EventCard extends Component {
             (account.accountType === AccountType.DONATING_AGENCY_MEMBER &&
                 (!delivery.description || !delivery.description.foodItems)));
 
-        let emergencyDelivery = delivery.type === "emergency"
+        let emergencyDelivery = delivery.type === "emergency";
 
         if (futureEvent) {
             //If it is an emergency delivery use .event-container-emergency-future class
