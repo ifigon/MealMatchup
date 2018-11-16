@@ -15,18 +15,14 @@ import ToggleButton from 'react-toggle-button';
 
 const emergencyDiffs = {
     formTitle: {
-        true: "Schedule Emergency Pickup",
-        false: "Schedule pickup"
+        true: 'Schedule Emergency Pickup',
+        false: 'Schedule pickup'
     },
     startDate: {
         true: 'Date',
         false: 'Start Date',
     },
 };
-
-const emergencyFields = ["startDate"];
-
-const regularFields = ["startDate", "endCriteria"];
 
 class RecurringPickupRequest extends Component {
     constructor(props) {
@@ -561,7 +557,7 @@ class RecurringPickupRequest extends Component {
                             {this.state.isEmergency &&
                                 <span className="grid">
                                     <p className="form-heading"> Food items (TODO) </p>
-                                    </span>
+                                </span>
                             }
                             <span className="grid">
                                 <p className="form-heading">Notes for Pickup</p>
@@ -605,7 +601,7 @@ class RecurringPickupRequest extends Component {
                                         </select>
                                     </span>
                                 </span>
-                                </div>}
+                            </div>}
                             <div className="buttons-form">
                                 <input type="submit" value="Done" />
                                 <input type="reset" value="Cancel" />
