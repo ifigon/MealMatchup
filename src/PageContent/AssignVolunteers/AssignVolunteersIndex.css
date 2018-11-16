@@ -42,11 +42,6 @@
   transition: all 250ms ease;
 }
 
-.avi-left-border:hover {
-  width: 7px;
-  background-color: #4084ac;
-}
-
 .avi-headings {
   display: flex;
   justify-content: space-around;
