@@ -45,7 +45,7 @@ class EventCard extends Component {
             (account.accountType === AccountType.DONATING_AGENCY_MEMBER &&
                 (!delivery.description || !delivery.description.foodItems)));
 
-        let emergencyDelivery = delivery.type === "emergency";
+        let emergencyDelivery = delivery.type === 'emergency';
 
         if (futureEvent) {
             //If it is an emergency delivery use .event-container-emergency-future class
@@ -56,7 +56,7 @@ class EventCard extends Component {
                 iconAlt = 'plus';
                 iconClass += 'eventcard-plus-icon';
             } else if (emergencyDelivery) {
-                icon = red_truck
+                icon = red_truck;
                 iconAlt = 'red truck';
                 iconClass += 'truck-icon';
             } else {
@@ -110,18 +110,18 @@ class EventCard extends Component {
                         </div>
                     </div>
                 ) : (
-                        <div className={style} onClick={this.openDialog}>
-                            <h1 className="event-header">Reccuring Pick Up</h1>
-                            <img
-                                className={iconClass}
-                                src={icon}
-                                alt={iconAlt}
-                            />
-                            <p className="event-time">
-                                {startTime} - {endTime}
-                            </p>
-                        </div>
-                    )}
+                    <div className={style} onClick={this.openDialog}>
+                        <h1 className="event-header">Reccuring Pick Up</h1>
+                        <img
+                            className={iconClass}
+                            src={icon}
+                            alt={iconAlt}
+                        />
+                        <p className="event-time">
+                            {startTime} - {endTime}
+                        </p>
+                    </div>
+                )}
             </div>
         );
     }
