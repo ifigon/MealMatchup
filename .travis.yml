@@ -22,11 +22,6 @@ before_script:
   ## else it would block execution and hang travis
   - npm run start &
 script:
-  ## Run our old lint checks
-  - npm run lint 
-  - npm run lint-functions
-  ## Test a build
-  - npm run build
   ## now run cypress headlessly
   ## and record all of the tests.
   ## Cypress will search for a
