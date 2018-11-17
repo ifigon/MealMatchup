@@ -21,3 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 .vscode*
 *.log*
+
+# tests
+cypress/videos/

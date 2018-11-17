@@ -1,6 +1,4 @@
 {
   "projectName": "mealmatchup",
-  "video": false,
-  "viewportWidth": 300,
-  "viewportHeight": 100
+  "baseUrl": "http://localhost:3000"
 }
