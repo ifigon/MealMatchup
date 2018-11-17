@@ -9,7 +9,7 @@ cache:
     - ~/.cache
 ## use the new "ci" command for fastest installs on CI
 install:
-  - npm ci
+  - yarn install
 before_script:
   ## runs the 'start' script
   ## the '-- --silent' suppresses output
