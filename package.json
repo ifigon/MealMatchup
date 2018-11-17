@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^4.9.1",
+    "firebase": "4.9.1",
     "google-map-react": "^0.32.0",
     "lodash": "^4.17.11",
     "merge-class-names": "^1.1.1",
