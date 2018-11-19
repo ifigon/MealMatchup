@@ -4,7 +4,7 @@ import FoodLogItem from './FoodLogItem';
 import { AccountType, DeliveryStatus } from '../../Enums';
 import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../FirebaseConfig';
 import moment from 'moment';
-import pick from 'lodash.pick';
+import { pick } from 'lodash';
 
 class FoodLogsContainer extends Component {
     constructor(props){

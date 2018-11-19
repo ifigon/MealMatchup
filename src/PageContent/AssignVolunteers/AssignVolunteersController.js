@@ -13,7 +13,8 @@ class AssignVolunteersController extends Component {
         this.state = {
             deliveries: {},
             hitUpdateTime: -1,
-            deliveriesExist: true,
+            deliveriesExist: false,
+            finishedCall: false,
             onConfirm: false,
             step: 0,
             selectedDeliveryId: -1,
@@ -59,16 +60,23 @@ class AssignVolunteersController extends Component {
         let processTimestampIndex = (timestampIndex) => {
             for (let deliveryId of Object.keys(timestampIndex)) {
                 if (!this.state.deliveries[deliveryId]) {
-                    if (!this.state.deliveriesExist) {
-                        this.setState({deliveriesExist: true});
-                    }
                     genDeliveryListener(deliveryId);
                 }
             }
         };
+
+        let updateLoading = (children, myDeliveriesRef) => {
+            if(children) { this.setState({deliveriesExist : true}); }
+            this.setState({finishedCall : true});
+        };
+
+        // TODO: Currently a redundant call on child added and value when initialized. There
+        // may be a better way to do this without the redundancy
         myDeliveriesRef.on('child_added', async (snap) => processTimestampIndex(snap.val()));
         myDeliveriesRef.on('child_changed', async (snap) => processTimestampIndex(snap.val()));
+        myDeliveriesRef.once('value', (snap) => updateLoading(snap.val(), myDeliveriesRef));
     }
+
 
     componentWillUnmount() {
         // detach all listeners
@@ -94,7 +102,6 @@ class AssignVolunteersController extends Component {
                     /> :
                     <div />
                 }
-
             </div>
         );
 
@@ -175,12 +182,14 @@ class AssignVolunteersController extends Component {
     showStep() {
         switch(this.state.step) {
         case 0:
-            return (
-                <AssignVolunteersIndex 
+            return (this.state.finishedCall
+                ? <AssignVolunteersIndex 
                     handleEditClick={this.handleEditClick.bind(this)}
                     deliveries={this.state.deliveries}
-                    deliveriesExist={this.state.deliveriesExist}
+                    deliveriesExist={this.state.deliveriesExist} 
                 />
+                : <div>Loading...</div>
+
             );
 
         case 1:

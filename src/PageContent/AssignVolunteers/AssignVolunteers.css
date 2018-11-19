@@ -1,12 +1,11 @@
 .container {
     font-family: 'Open Sans', sans-serif;
-    box-shadow: 0px 0px 3px 1px #eee;
-    margin-right: 45px;
     padding: 12px;
+    width: 75%;
 }
 
 .assign-volunteers-container {
-    margin-top: 120px; 
+    margin-top: 120px;
     margin-left: 250px;
 }
 
@@ -47,12 +46,12 @@
 
 .map-marker {
     font-size: 18px;
-    color: #F77676;
+    color: #f77676;
 }
 
 .circle-marker {
     font-size: 12px;
-    color: #85BF4B;
+    color: #85bf4b;
 }
 
 .spacing {
@@ -105,32 +104,53 @@
 .form-buttons-container {
     box-sizing: border-box;
     margin-top: 28px;
-    padding-left: 15%;
 }
 
 .form-button {
     font-size: 16px;
     margin: 4px;
-    color: #B2B2B2;
     padding: 8px 18px 8px 18px;
-    background-blend-mode: color;
-    background-color: none;
-    border: 1px solid #B2B2B2;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 250ms ease;
+}
+
+.form-button.copy {
+    background-color: #9dcc6f;
+    color: white;
+    width: 180px;
+    border: 1px solid #9dcc6f;
+}
+
+.form-button.copy:hover {
+    background-color: rgb(131, 170, 92);
+}
+
+.form-button.copied {
+    background-color: rgba(46, 46, 46, 0.1);
+    color: black;
+    border: 1px solid rgba(46, 46, 46, 0.1);
 }
 
 .confirm-button {
-    color: #5DC0F9;
-    border: 1px solid #5DC0F9;
+    background-color: #5dc0f9;
+    color: white;
+    border: 1px solid #5dc0f9;
     width: 180px;
 }
 
+.confirm-button:hover {
+    background-color: rgb(69, 145, 189);
+}
+
 .confirm-button-assign {
-    background-color: #F77676;
-    border-radius: 1px solid #F77676;
+    background-color: #f77676;
     color: white;
     width: 180px;
+}
+
+.confirm-button-assign:hover {
+    background-color: rgb(187, 87, 87);
 }
 
 .already-completed-button {
