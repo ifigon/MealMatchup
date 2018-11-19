@@ -1,0 +1,60 @@
+#!/bin/bash
+# Usage: ./prod_deploy
+# Note: 
+# IMPORTANT: 
+# 	* make sure to run it at the root of the project
+# 	* do not rely on the script to switch to development branch,
+# 	  please make sure that your local is clean and up to date 
+# 	  before running this script. 
+
+if [ -z "$(git status --porcelain)" ] && [ -z "$(git diff origin/master..HEAD)" ]; then
+	# check uncommitted changes as well as potential unpushed commits
+	# working directory is clean, we can continue
+
+	# Make sure it's on master branch and up to date
+	echo "> 1. Double checking you are on master and it is up-to-date..." &&
+	echo "> \$ git checkout master" &&
+	git checkout master &&
+	echo "> \$ git pull" &&
+	git pull &&
+	echo &&
+
+	echo "> 2. Overwriting configs..." &&
+	echo "> .firebaserc" &&
+	cp ./prodConfigs/.firebaserc ./ &&
+	echo "> FirebaseConfig.js" &&
+	cp ./prodConfigs/FirebaseConfig.js ./src/ &&
+	echo "> UmbrellaConfig.js" &&
+	cp ./prodConfigs/UmbrellaConfig.js ./src/ &&
+	echo "> favicon.ico" &&
+	cp ./prodConfigs/favicon.ico ./public/ &&
+	echo &&
+
+	echo "> 3. Just a sanity check..." &&
+	echo "> \$ git status" &&
+	git status &&
+	echo &&
+
+	echo "> 4. Building..." &&
+	echo "> \$ npm run build" &&
+	npm run build &&
+	echo &&
+
+	echo "> 5. Deploying..." &&
+	echo "> \$ firebase deploy" &&
+	firebase deploy &&
+	echo &&
+
+	echo "> 6. Cleaning up..." &&
+	echo "> \$ git reset --hard" &&
+	git reset --hard &&
+	echo &&
+
+	echo "Done."
+
+else
+	# there are uncommitted local changes, abort!
+	echo "> There are local changes, ABORTING!"
+	echo "> Make sure your working directory is clean (no uncommitted local changes or"
+	echo "> unpushed local commits) AND you are on master, AND it is up-to-date."
+fi
