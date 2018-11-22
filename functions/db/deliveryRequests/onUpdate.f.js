@@ -230,7 +230,7 @@ function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
         let dgRef = accountsRef.child(request.delivererGroup.claimed);
         accounts.push({label: 'DG', ref: dgRef});
     }
-    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED);
+    return multiNotify(accounts, requestPath, NotificationType.RECURRING_PICKUP_CONFIRMED);
 }
 
 // Listener 1 & 2 case B handler
@@ -241,13 +241,13 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
     if (rejectType === RequestStatus.REJECTED_RA) {
         console.info('Listener1: all RA rejected -> update status and notify DA');
 
-        notifType = nt.RECURRING_PICKUP_REJECTED_RA;
+        notifType = NotificationType.RECURRING_PICKUP_REJECTED_RA;
     } else {
         console.info('Listener2: all DGs rejected -> update status and send notify DA and RA');
 
         let raRef = accountsRef.child(requestSnap.val().receivingAgency.claimed);
         accounts.push({ label: 'RA', ref: raRef });
-        notifType = nt.RECURRING_PICKUP_REJECTED_DG;
+        notifType = NotificationType.RECURRING_PICKUP_REJECTED_DG;
     }
 
     let promises = [
@@ -289,7 +289,7 @@ function sendRequestToDGs(accountsRef, request, requestPath) {
     }
 
     return Promise.all(pending.map(dgId => utils.notifyRequestUpdate(
-        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUESTED)));
+        'DG', accountsRef.child(dgId), requestPath, NotificationType.RECURRING_PICKUP_REQUESTED)));
 }
 // ----------------------- End Listener 1 -----------------------
 
