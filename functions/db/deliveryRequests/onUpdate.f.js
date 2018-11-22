@@ -4,6 +4,7 @@ const utils = require('../../Utils.js');
 const enums = require('../../Enums.js');
 
 const DeliveryStatus = enums.DeliveryStatus;
+const DeliveryType = enums.DeliveryType;
 const InputFormat = enums.InputFormat;
 const NotificationType = enums.NotificationType;
 const RequestRepeatType = enums.RequestRepeatType;
