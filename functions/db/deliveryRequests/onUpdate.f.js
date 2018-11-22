@@ -260,7 +260,7 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
 
 // ----------------------- Listener 1 handlers -----------------------
 // case A2 handler
-function sendRequestToDGs(accountsRef, requst, requestPath) {
+function sendRequestToDGs(accountsRef, request, requestPath) {
     let dgInfo = request.delivererGroup;
 
     console.info('Listener1: a RA claimed -> send notifications to DGs');
