@@ -126,7 +126,6 @@ class NotificationDetailsController extends Component {
             </div>;
 
         case 'red':
-
             return <div className="popup-wrapper emergency">
                 <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
                 {
@@ -146,6 +145,7 @@ class NotificationDetailsController extends Component {
                         accountType={account.accountType}
                         addressNotificationAndClose={addressAndClose}
                         notificationType={this.state.notification.type}
+
                     />
                 }
             </div>;

@@ -19,8 +19,10 @@ class RequestSummary extends React.Component {
         return (
             <div className="modal-wrapper">
                 <div className="modal-header-flex">
-                
-
+                    { NotificationMap[this.props.notificationType].color === "green" ?
+                        <img className="icon" src={greenTruck} alt="icon" /> :
+                        <img className="icon" src={redTruck} alt="icon" />
+                    }
                     <h1 id="modal-step1">{title}</h1>
                 </div>
                 <div className="details-scroll">

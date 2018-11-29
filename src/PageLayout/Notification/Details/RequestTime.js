@@ -49,7 +49,11 @@ class RequestTime extends React.Component {
             <div className="">
                 {this.props.title && <h2>Pickup Details</h2>}
                 <p>Start Date: {start_date_with_weekday} </p>
+<<<<<<< HEAD
                 {!this.props.isEmergency &&
+=======
+                {this.props.notificationType !== NotificationType.EMERGENCY_PICKUP_REQUESTED &&
+>>>>>>> 688d46c05879efbae904ce538299afef98750d5b
                         <p>{durationText}</p> }
                 <p>
                     Pickup between {startTime} and {endTime}
