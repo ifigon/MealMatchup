@@ -4,7 +4,7 @@ import { AccountType, FoodUnit, StringFormat } from '../../Enums';
 import { deliveriesRef } from '../../FirebaseConfig';
 import { objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
-import notes from '../../icons/food_logs.svg'
+import notes from '../../icons/food_logs.svg';
 import groceries from '../../icons/groceries.svg';
 import plus from '../../icons/plus-button.svg';
 
@@ -121,7 +121,7 @@ class DescriptionContent extends Component {
         updates['notes'] = this.state.currentNote;
         // console.log(e.target.value); Not sure why this is undefined?
         deliveriesRef.child(this.props.delivery.id).update(updates).then(() => {
-                // record timestamp of when the write was done
+            // record timestamp of when the write was done
             this.setState({ savedTimestamp: moment().valueOf() });
         });
         this.setState({ waiting: false, isEditingNotes: false });    
@@ -195,10 +195,11 @@ class DescriptionContent extends Component {
         }
 
         let editable = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingFoodItems && futureEvent);
+            !this.state.isEditingFoodItems && !this.state.isEditingNotes && futureEvent);
 
         return (
             <div className="wrapper">
+                // FOOD ITEMS
                 <img className="content-icon groceries" src={groceries} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
@@ -272,76 +273,49 @@ class DescriptionContent extends Component {
                         </div>
                     )}
                 </div>
-               {/*<img className="content-icon" src={notes} alt="notes"/>
-                {!this.state.isEditingNotes ? (
-                    <div>
-                        <div className="content-details-wrapper">
-                            <h1 className="section-header">Notes for Pickup</h1>
-                            <p>{delivery.notes}</p>
-                        </div>
-                        
 
-                    </div>
-                ) : (
-                    <div className="content-details-wrapper">
-                        <form className="edit-dg" onSubmit={this.saveNotes}>
-                            <div className="input-wrapper">
-
-                                <textarea value={this.state.currentNote} onChange={this.getEditNotes}/>
-
-                            </div>
-                            <div className="save-button-wrapper">
-                                <input
-                                    type="submit"
-                                    className="description-edit-button"
-                                    value={this.state.waiting ? 'saving...' : 'save'}
-                                />
-                            </div>
-                        </form>
-
-                    </div>
-                )} 
-            </div>*/}
+                // NOTES
                 <img className="content-icon" src={notes} alt="notes"/>
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Notes for Pickup</h1>
-
-                        {!this.state.isEditingNotes ? (
-                            <div>
-                                {delivery.notes ? (
-                                    <div>
-                                        <div className="content-details-wrapper">
-                                            <p className="content-details description-content">
-                                                {delivery.notes}
-                                            </p>
-                                        </div>
-                                        {accountType === AccountType.DONATING_AGENCY_MEMBER &&
-                                            <button type="button" className="edit-button" onClick={this.editNotes}>
-                                                Edit
-                                            </button>
-                                        }
+                        
+                    {!this.state.isEditingNotes ? (
+                        <div>
+                            {delivery.notes ? (
+                                <div>
+                                    <div className="content-details-wrapper">
+                                        <p className="content-details description-content">
+                                            {delivery.notes}
+                                        </p>
                                     </div>
-                                ) : (
-                                    <p>Left empty</p>
-                                )}{' '}
-                            </div>
-                        ) : (
-                            <div className="content-details-wrapper">
-                                <form className="edit-dg" onSubmit={this.saveNotes}>
-                                    <div className="input-wrapper">
-                                        <textarea value={this.state.currentNote} onChange={this.getEditNotes}/>
-                                    </div>
-                                    <div className="save-button-wrapper">
-                                        <input
-                                            type="submit"
-                                            className="description-edit-button"
-                                            value={this.state.waiting ? 'saving...' : 'save'}
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                        )}
-                    </div>
+                                    {/*{accountType === AccountType.DONATING_AGENCY_MEMBER */}
+                                    {editable &&
+                                        <button type="button" className="edit-button" onClick={this.editNotes}>
+                                            Edit
+                                        </button>
+                                    }
+                                </div>
+                            ) : (
+                                <p>Left empty</p>
+                            )}{' '}
+                        </div>
+                    ) : (
+                        <div className="content-details-wrapper">
+                            <form className="edit-dg" onSubmit={this.saveNotes}>
+                                <div className="input-wrapper">
+                                    <textarea value={this.state.currentNote} onChange={this.getEditNotes}/>
+                                </div>
+                                <div className="save-button-wrapper">
+                                    <input
+                                        type="submit"
+                                        className="description-edit-button"
+                                        value={this.state.waiting ? 'saving...' : 'save'}
+                                    />
+                                </div>
+                            </form>
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }
