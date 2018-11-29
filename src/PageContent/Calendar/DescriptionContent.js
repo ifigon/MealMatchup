@@ -14,7 +14,8 @@ class DescriptionContent extends Component {
         this.state = {
             isEditingFoodItems: false,
             isEditingNotes: false,
-            currentNote: null,
+            currentNote: this.props.delivery.notes,
+
 
             // 'waiting' is true after 'Saved' is clicked and before changes
             // from db is propagated down. While it is true, input fields are
@@ -23,7 +24,9 @@ class DescriptionContent extends Component {
             savedTimestamp: null,
             foodRows: null, // for rendering editable rows only
         };
-        this.getEditNotes = this.getEditNotes.bind(this);
+
+        this.saveNotes = this.saveNotes.bind(this);
+        this.getEditNotes = this.getEditNotes.bind(this); // used to get current note in textbox
         this.editNotes = this.editNotes.bind(this);
         this.editFoodItems = this.editFoodItems.bind(this);
         this.saveFoodItems = this.saveFoodItems.bind(this);
@@ -74,8 +77,9 @@ class DescriptionContent extends Component {
     }
 
     getEditNotes(e) {
+        // console.log(e.target.value);
+        // console.log(this.state.currentNote)
         this.setState({currentNote: e.target.value});
-
     }
 
     getEditDonation() {
@@ -110,6 +114,18 @@ class DescriptionContent extends Component {
         });
     }
 
+    saveNotes(e) {
+        e.preventDefault();
+        this.setState({ waiting: true });
+        let updates = {};
+        updates['notes'] = this.state.currentNote;
+        // console.log(e.target.value); Not sure why this is undefined?
+        deliveriesRef.child(this.props.delivery.id).update(updates).then(() => {
+                // record timestamp of when the write was done
+            this.setState({ savedTimestamp: moment().valueOf() });
+        });
+        this.setState({ waiting: false, isEditingNotes: false });    
+    }
 
     saveFoodItems(e) {
         e.preventDefault();
@@ -275,7 +291,9 @@ class DescriptionContent extends Component {
                     <div className="content-details-wrapper">
                         <form className="edit-dg" onSubmit={this.saveNotes}>
                             <div className="input-wrapper">
+
                                 <textarea value={this.state.currentNote} onChange={this.getEditNotes}/>
+
                             </div>
                             <div className="save-button-wrapper">
                                 <input
