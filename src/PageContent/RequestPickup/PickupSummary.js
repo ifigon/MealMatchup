@@ -97,7 +97,7 @@ class PickupSummary extends React.Component {
                         <div className="flex">
                             <div className="agency grid">
                                 <p id="subheading">Recipient</p>
-                                {this.props.raRequested ? (
+                                {this.props.raRequested  ? (
                                     <div>
                                         <p id="name">
                                             {this.props.raRequested.name}
@@ -147,46 +147,50 @@ class PickupSummary extends React.Component {
                             )}
                         </div>
                         <div className="flex">
-                            <div className="agency grid">
-                                <p id="subheading">Student Group</p>
-                                {this.props.dgRequested ? (
-                                    <div>
-                                        <p id="name">
-                                            {this.props.dgRequested.name}
-                                        </p>
+                            {!this.props.isEmergency && 
+                                <div className="agency grid">
+                                    <p id="subheading">Student Group</p>
+                                    {this.props.dgRequested ? (
+                                        <div>
+                                            <p id="name">
+                                                {this.props.dgRequested.name}
+                                            </p>
+                                            <div className="contact">
+                                                <p>
+                                                    {
+                                                        this.props.dgRequested
+                                                            .primaryContact.name
+                                                    }
+                                                </p>
+                                                <p>
+                                                    {
+                                                        this.props.dgRequested
+                                                            .primaryContact.phone
+                                                    }
+                                                </p>
+                                                <p>
+                                                    {
+                                                        this.props.dgRequested
+                                                            .primaryContact.email
+                                                    }
+                                                </p>
+                                                <p>Confirmation pending.</p>
+                                            </div>
+                                        </div>
+                                    ) : (
                                         <div className="contact">
                                             <p>
-                                                {
-                                                    this.props.dgRequested
-                                                        .primaryContact.name
-                                                }
-                                            </p>
-                                            <p>
-                                                {
-                                                    this.props.dgRequested
-                                                        .primaryContact.phone
-                                                }
-                                            </p>
-                                            <p>
-                                                {
-                                                    this.props.dgRequested
-                                                        .primaryContact.email
-                                                }
+                                                Request will be sent to all
+                                                participating student groups.
                                             </p>
                                             <p>Confirmation pending.</p>
                                         </div>
-                                    </div>
-                                ) : (
-                                    <div className="contact">
-                                        <p>
-                                            Request will be sent to all
-                                            participating student groups.
-                                        </p>
-                                        <p>Confirmation pending.</p>
-                                    </div>
-                                )}
-                            </div>
+                                    )}
+                                    
+                                </div> 
+                            }
                         </div>
+                        
                         {this.props.request.notes !== '' ? (
                             <div className="details grid">
                                 <p id="subheading">Notes for Pickup</p>

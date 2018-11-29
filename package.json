@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.10.9",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "create-react-class": "^15.6.3",

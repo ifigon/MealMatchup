@@ -21,20 +21,22 @@ class RequestTime extends React.Component {
         };
 
         var durationText = '';
-        if (
-            this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
-        ) {
-            durationText =
-                this.props.request.endCriteria.value + ' pickups requested';
-        } else {
-            durationText =
-                'Ending ' +
-                moment(
-                    this.props.request.endCriteria.value,
-                    InputFormat.DATE
-                ).format(StringFormat.DATE_FULL);
+        if(!this.props.isEmergency) {
+            if (
+                this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
+            ) {
+                durationText =
+                    this.props.request.endCriteria.value + ' pickups requested';
+            } else {
+                durationText =
+                    'Ending ' +
+                    moment(
+                        this.props.request.endCriteria.value,
+                        InputFormat.DATE
+                    ).format(StringFormat.DATE_FULL);
+            }
+            durationText += ' for ' + repeatMap[this.props.request.repeats];
         }
-        durationText += ' for ' + repeatMap[this.props.request.repeats];
 
         let start_date_with_weekday = moment(
             this.props.request.startTimestamp
@@ -49,11 +51,8 @@ class RequestTime extends React.Component {
             <div className="">
                 {this.props.title && <h2>Pickup Details</h2>}
                 <p>Start Date: {start_date_with_weekday} </p>
-<<<<<<< HEAD
-                {!this.props.isEmergency &&
-=======
+
                 {this.props.notificationType !== NotificationType.EMERGENCY_PICKUP_REQUESTED &&
->>>>>>> 688d46c05879efbae904ce538299afef98750d5b
                         <p>{durationText}</p> }
                 <p>
                     Pickup between {startTime} and {endTime}
