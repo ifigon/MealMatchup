@@ -82,13 +82,15 @@ class NotificationDetailsController extends Component {
             removeNotification();
             closePopUp();
         };
-
+        console.log('details');
+        console.log(this.state.details);
         if (!this.state.details) { // TODO: fill this with loading gif
             return <div className="popup-wrapper"></div>;
         }
         switch(NotificationMap[this.state.notification.type].color){
         // default color is green
         default:
+
             return <div className="popup-wrapper recurring" id={`notification-popup-${notificationId}`}>
                 <img className="close" src={close} alt="close" onClick={closePopUp} />
                 {
@@ -112,6 +114,7 @@ class NotificationDetailsController extends Component {
             </div>;
         
         case 'grey':
+
             return <div className="popup-wrapper recurring-canceled">
                 <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
                 <RecurringRequestCancelled
@@ -123,6 +126,7 @@ class NotificationDetailsController extends Component {
             </div>;
 
         case 'red':
+
             return <div className="popup-wrapper emergency">
                 <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
                 {

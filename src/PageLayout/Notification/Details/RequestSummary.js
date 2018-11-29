@@ -16,9 +16,6 @@ class RequestSummary extends React.Component {
                     }
         */
         const { details, title } = this.props;
-        console.log(this.props.notificationType);
-        console.log(NotificationMap);
-        console.log(NotificationMap[this.props.notificationType]);
         return (
             <div className="modal-wrapper">
                 <div className="modal-header-flex">
