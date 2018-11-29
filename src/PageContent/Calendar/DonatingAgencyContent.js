@@ -18,7 +18,7 @@ class DonatingAgencyContent extends Component {
                             {daContact.name} ({daContact.phone})
                         </p>
                     </div>
-                </div>
+                </div> 
             </div>
         );
     }

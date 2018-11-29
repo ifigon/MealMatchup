@@ -4,6 +4,7 @@ import { AccountType, FoodUnit, StringFormat } from '../../Enums';
 import { deliveriesRef } from '../../FirebaseConfig';
 import { objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
+import notes from '../../icons/food_logs.svg'
 import groceries from '../../icons/groceries.svg';
 import plus from '../../icons/plus-button.svg';
 
@@ -117,7 +118,7 @@ class DescriptionContent extends Component {
                 this.setState({ savedTimestamp: moment().valueOf() });
             });
         } else {
-            // nothing changed
+            //nothing changed
             this.setState({ waiting: false, edit: false });
         }
     }
@@ -146,6 +147,7 @@ class DescriptionContent extends Component {
         const { account, delivery, futureEvent } = this.props;
         const accountType = account.accountType;
         const description = delivery.description;
+        {/*const notes = delivery.notes;*/}
 
         let lastEdited = null;
         if (accountType === AccountType.DONATING_AGENCY_MEMBER &&
@@ -172,6 +174,7 @@ class DescriptionContent extends Component {
                             {' '}Last edited by {lastEdited.name},{' '}{lastEdited.time}
                         </p>
                     }
+
 
                     {!this.state.edit ? (
                         <div>
@@ -229,11 +232,23 @@ class DescriptionContent extends Component {
                                             className="description-edit-button"
                                             value={this.state.waiting ? 'saving...' : 'save'}
                                         />
-                                    </div>
+                                    </div>   
                                 </fieldset>
                             </form>
                         </div>
                     )}
+                </div>
+               {/*} <img className="content-icon" src={notes} alt="notes" />*/}
+                <div className="content-details-wrapper">
+                    <h1 className="section-header">Notes for Pickup</h1>
+                    <p>{delivery.notes}</p>
+                    {/*if (accountType === AccountType.DONATING_AGENCY_MEMBER) {*/}
+                    {/*{editable &&*/}
+                    {accountType === AccountType.DONATING_AGENCY_MEMBER &&
+                        <button type="button" className="edit-button">
+                            Edit
+                        </button>
+                    }  
                 </div>
             </div>
         );
