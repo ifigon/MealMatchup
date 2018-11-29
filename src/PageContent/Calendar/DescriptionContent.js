@@ -12,7 +12,8 @@ class DescriptionContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: false,
+            isEditingFoodItems: false,
+            isEditingNotes: false,
             // 'waiting' is true after 'Saved' is clicked and before changes
             // from db is propagated down. While it is true, input fields are
             // disabled
@@ -21,7 +22,8 @@ class DescriptionContent extends Component {
             foodRows: null, // for rendering editable rows only
         };
 
-        this.edit = this.edit.bind(this);
+        this.editNotes = this.editNotes.bind(this);
+        this.editFoodItems = this.editFoodItems.bind(this);
         this.saveFoodItems = this.saveFoodItems.bind(this);
         this.addRow = this.addRow.bind(this);
     }
@@ -30,11 +32,18 @@ class DescriptionContent extends Component {
         // update state to reflect values properly saved if we were waiting
         // on the update and the update happened after we wrote to db.
         if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
-            this.setState({ waiting: false, edit: false, foodRows: null });
+            this.setState({ waiting: false, isEditingFoodItems: false, foodRows: null });
         }
     }
 
-    edit() {
+    editNotes() {
+        {/*const notes = this.props.delivery.notes;*/}
+        this.setState({
+            isEditingNotes: true,
+        });
+    }
+
+    editFoodItems() {
         const description = this.props.delivery.description;
 
         // copy current food items into state for editing purposes
@@ -44,14 +53,14 @@ class DescriptionContent extends Component {
         }
 
         this.setState({
-            edit: true,
+            isEditingFoodItems: true,
             foodRows: foodRows,
         });
     }
 
     addRow() {
-        if (!this.state.edit) {
-            this.edit();
+        if (!this.state.isEditingFoodItems) {
+            this.editFoodItems();
         }
 
         this.setState(prevState => {
@@ -119,7 +128,7 @@ class DescriptionContent extends Component {
             });
         } else {
             //nothing changed
-            this.setState({ waiting: false, edit: false });
+            this.setState({ waiting: false, isEditingFoodItems: false });
         }
     }
 
@@ -161,7 +170,7 @@ class DescriptionContent extends Component {
         }
 
         let editable = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.edit && futureEvent);
+            !this.state.isEditingFoodItems && futureEvent);
 
         return (
             <div className="wrapper">
@@ -176,7 +185,7 @@ class DescriptionContent extends Component {
                     }
 
 
-                    {!this.state.edit ? (
+                    {!this.state.isEditingFoodItems ? (
                         <div>
                             {description && description.foodItems ? (
                                 <div>
@@ -190,7 +199,7 @@ class DescriptionContent extends Component {
                                         </p>
                                     </div>
                                     {editable &&
-                                        <button type="button" className="edit-button" onClick={this.edit}>
+                                        <button type="button" className="edit-button" onClick={this.editFoodItems}>
                                             Edit
                                         </button>
                                     }
@@ -239,17 +248,35 @@ class DescriptionContent extends Component {
                     )}
                 </div>
                {/*} <img className="content-icon" src={notes} alt="notes" />*/}
-                <div className="content-details-wrapper">
-                    <h1 className="section-header">Notes for Pickup</h1>
-                    <p>{delivery.notes}</p>
-                    {/*if (accountType === AccountType.DONATING_AGENCY_MEMBER) {*/}
-                    {/*{editable &&*/}
-                    {accountType === AccountType.DONATING_AGENCY_MEMBER &&
-                        <button type="button" className="edit-button">
-                            Edit
-                        </button>
-                    }  
-                </div>
+                {!this.state.isEditingNotes ? (
+                    <div>
+                        <div className="content-details-wrapper">
+                            <h1 className="section-header">Notes for Pickup</h1>
+                            <p>{delivery.notes}</p>
+                            {/*if (accountType === AccountType.DONATING_AGENCY_MEMBER) {*/}
+                            {/*{editable &&*/}
+                        </div>
+                        {accountType === AccountType.DONATING_AGENCY_MEMBER &&
+                            <button type="button" className="edit-button" onClick={this.editNotes}>
+                                Edit
+                            </button>
+                        }
+                    </div>
+                ) : (
+                    <div className="content-details-wrapper">
+                        <form className="edit-dg" onSubmit={this.saveNotes}>
+                            <textarea value={delivery.notes}/>
+                            
+                            <div className="save-button-wrapper">
+                                <input
+                                    type="submit"
+                                    className="description-edit-button"
+                                    value={this.state.waiting ? 'saving...' : 'save'}
+                                />
+                            </div> 
+                        </form>
+                    </div>
+                )} 
             </div>
         );
     }
