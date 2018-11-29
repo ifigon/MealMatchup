@@ -77,8 +77,6 @@ class DescriptionContent extends Component {
     }
 
     getEditNotes(e) {
-        // console.log(e.target.value);
-        // console.log(this.state.currentNote)
         this.setState({currentNote: e.target.value});
     }
 
@@ -119,7 +117,6 @@ class DescriptionContent extends Component {
         this.setState({ waiting: true });
         let updates = {};
         updates['notes'] = this.state.currentNote;
-        // console.log(e.target.value); Not sure why this is undefined?
         deliveriesRef.child(this.props.delivery.id).update(updates).then(() => {
             // record timestamp of when the write was done
             this.setState({ savedTimestamp: moment().valueOf() });
@@ -199,7 +196,7 @@ class DescriptionContent extends Component {
 
         return (
             <div className="wrapper">
-                // FOOD ITEMS
+                {/*FOOD ITEMS/*}
                 <img className="content-icon groceries" src={groceries} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
@@ -274,7 +271,7 @@ class DescriptionContent extends Component {
                     )}
                 </div>
 
-                // NOTES
+                {/*NOTES*/}
                 <img className="content-icon" src={notes} alt="notes"/>
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Notes for Pickup</h1>
