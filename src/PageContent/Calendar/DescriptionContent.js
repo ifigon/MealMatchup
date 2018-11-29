@@ -14,6 +14,8 @@ class DescriptionContent extends Component {
         this.state = {
             isEditingFoodItems: false,
             isEditingNotes: false,
+            currentNote: null,
+
             // 'waiting' is true after 'Saved' is clicked and before changes
             // from db is propagated down. While it is true, input fields are
             // disabled
@@ -21,7 +23,7 @@ class DescriptionContent extends Component {
             savedTimestamp: null,
             foodRows: null, // for rendering editable rows only
         };
-
+        this.getEditNotes = this.getEditNotes.bind(this);
         this.editNotes = this.editNotes.bind(this);
         this.editFoodItems = this.editFoodItems.bind(this);
         this.saveFoodItems = this.saveFoodItems.bind(this);
@@ -35,11 +37,12 @@ class DescriptionContent extends Component {
             this.setState({ waiting: false, isEditingFoodItems: false, foodRows: null });
         }
     }
-
+    
     editNotes() {
         {/*const notes = this.props.delivery.notes;*/}
         this.setState({
             isEditingNotes: true,
+            currentNote: this.props.delivery.notes,
         });
     }
 
@@ -68,6 +71,11 @@ class DescriptionContent extends Component {
             foodRows.push({ food: '', quantity: 0, unit: '' });
             return { foodRows: foodRows };
         });
+    }
+
+    getEditNotes(e) {
+        this.setState({currentNote: e.target.value});
+
     }
 
     getEditDonation() {
@@ -101,6 +109,7 @@ class DescriptionContent extends Component {
             );
         });
     }
+
 
     saveFoodItems(e) {
         e.preventDefault();
@@ -265,16 +274,18 @@ class DescriptionContent extends Component {
                 ) : (
                     <div className="content-details-wrapper">
                         <form className="edit-dg" onSubmit={this.saveNotes}>
-                            <textarea value={delivery.notes}/>
-                            
+                            <div className="input-wrapper">
+                                <textarea value={this.state.currentNote} onChange={this.getEditNotes}/>
+                            </div>
                             <div className="save-button-wrapper">
                                 <input
                                     type="submit"
                                     className="description-edit-button"
                                     value={this.state.waiting ? 'saving...' : 'save'}
                                 />
-                            </div> 
+                            </div>
                         </form>
+
                     </div>
                 )} 
             </div>
