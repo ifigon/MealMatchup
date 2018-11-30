@@ -276,23 +276,21 @@ class DescriptionContent extends Component {
                         
                     {!this.state.isEditingNotes ? (
                         <div>
-                            {delivery.notes ? (
-                                <div>
-                                    <div className="content-details-wrapper">
-                                        <p className="content-details description-content">
-                                            {delivery.notes}
-                                        </p>
-                                    </div>
-                                    {/*{accountType === AccountType.DONATING_AGENCY_MEMBER */}
-                                    {editable &&
-                                        <button type="button" className="edit-button" onClick={this.editNotes}>
-                                            Edit
-                                        </button>
-                                    }
-                                </div>
-                            ) : (
-                                <p>Left empty</p>
-                            )}{' '}
+                            <div className="content-details-wrapper">
+                                {delivery.notes ? (
+                                    <p className="content-details description-content">
+                                        {delivery.notes}
+                                    </p>
+                                        
+                                ) : (
+                                    <p>Left empty</p>
+                                )}{' '}
+                            </div>
+                            {editable &&
+                                <button type="button" className="edit-button" onClick={this.editNotes}>
+                                    Edit
+                                </button>
+                            }
                         </div>
                     ) : (
                         <div className="content-details-wrapper">
