@@ -42,7 +42,6 @@ class DescriptionContent extends Component {
     }
     
     editNotes() {
-        {/*const notes = this.props.delivery.notes;*/}
         this.setState({
             isEditingNotes: true,
             currentNote: this.props.delivery.notes,
@@ -178,7 +177,6 @@ class DescriptionContent extends Component {
         const { account, delivery, futureEvent } = this.props;
         const accountType = account.accountType;
         const description = delivery.description;
-        {/*const notes = delivery.notes;*/}
 
         let lastEdited = null;
         if (accountType === AccountType.DONATING_AGENCY_MEMBER &&
@@ -196,7 +194,7 @@ class DescriptionContent extends Component {
 
         return (
             <div className="wrapper">
-                {/*FOOD ITEMS/*}
+                {/*FOOD ITEMS*/}
                 <img className="content-icon groceries" src={groceries} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
