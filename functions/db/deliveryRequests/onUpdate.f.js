@@ -241,7 +241,9 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
     if (rejectType === RequestStatus.REJECTED_RA) {
         console.info('Listener1: all RA rejected -> update status and notify DA');
 
-        notifType = NotificationType.RECURRING_PICKUP_REJECTED_RA;
+        notifType = requestSnap.val().type === DeliveryType.EMERGENCY ?
+            NotificationType.EMERGENCY_PICKUP_REJECTED :
+            NotificationType.RECURRING_PICKUP_REJECTED_RA;
     } else {
         console.info('Listener2: all DGs rejected -> update status and send notify DA and RA');
 
