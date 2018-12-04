@@ -73,6 +73,8 @@ exports = module.exports = functions.database
 
         // ------------- Listener 1 triggers -------------
         if (wasClaimedBy('receivingAgency', change)) {  // case A
+            console.info('receiving agency updated');
+            console.info(request);
             if (request.type === DeliveryType.EMERGENCY) { // case A1
                 return createDeliveries(rootRef, requestSnap)
                     .then(() => notifyConfirmAll(request, accountsRef, daRef, requestPath));
@@ -220,17 +222,19 @@ function updateDeliveryIndices(dIndicesRef, dTemplate, dIds, isEmergency) {
 // listener 1 case A1 & 2 case A handler 2
 function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
     console.info('Notifying all parties of the confirmed delivery');
-
+    let isEmergency = request.type === DeliveryType.EMERGENCY;
     let raRef = accountsRef.child(request.receivingAgency.claimed);
     let accounts = [
         {label: 'DA', ref: daRef},
         {label: 'RA', ref: raRef},
     ];
-    if (request.type === DeliveryType.RECURRING) {
+    if (!isEmergency) {
         let dgRef = accountsRef.child(request.delivererGroup.claimed);
         accounts.push({label: 'DG', ref: dgRef});
     }
-    return multiNotify(accounts, requestPath, NotificationType.RECURRING_PICKUP_CONFIRMED);
+    return multiNotify(accounts, requestPath, isEmergency ?
+        NotificationType.EMERGENCY_PICKUP_CONFIRMED :
+        NotificationType.RECURRING_PICKUP_CONFIRMED);
 }
 
 // Listener 1 & 2 case B handler
