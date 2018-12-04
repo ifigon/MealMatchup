@@ -6,6 +6,8 @@ import { NotificationType } from '../../../Enums.js';
 
 class RecurringRequestConfirmed extends Component {
     render() {
+        console.log('in rec req confirmed');
+        console.log(this.props);
         return (
             <div className="modal-wrapper">
                 <RequestSummary

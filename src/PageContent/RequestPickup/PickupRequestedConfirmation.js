@@ -45,7 +45,6 @@ class PickupRequestedConfirmation extends React.Component {
                         <RequestTime
                             request={this.props.request}
                             title={false}
-                            isEmergency={this.props.isEmergency}
                         />
                     </div>
                 </div>

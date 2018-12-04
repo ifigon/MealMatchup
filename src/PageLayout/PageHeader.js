@@ -33,7 +33,9 @@ class PageHeader extends Component {
         } else {
             ref = accountsRef.child(`${this.props.account.uid}/notifications`);
         }
-        ref.on('value', (snap) => this.setState({notifications: snap.val() ? snap.val() : []}));
+        ref.on('value', (snap) => {
+            this.setState({notifications: snap.val() ? snap.val() : []});
+        });
         this.setState({notificationsRef: ref});
     }
 

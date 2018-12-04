@@ -19,16 +19,22 @@ class NotificationDetailsController extends Component {
     }
 
     componentDidMount(){
-        let contentType = NotificationMap[this.state.notification.type].contentType;
+        console.log('in componentDidMount');
+        console.log('props');
+        console.log(this.props);
+        console.log('state');
+        console.log(this.state);
+        const contentType = NotificationMap[this.state.notification.type].contentType;
+        console.log(`content Type: ${contentType}`);
         if (contentType === NotificationContentType.DELIVERY_REQUEST) {
+            console.log('inside if');
             let genSupplementaryPromise = (pathPrefix, accountId) => (new Promise(async (resolve, reject) =>
                 resolve((await db.ref(`${pathPrefix}/${accountId}`).once('value')).val())));
-
+            console.log('got sup promise');
             db.ref(`delivery_requests/${this.props.account.umbrella}/${this.state.notification.content}`)
                 .on('value', async (snap) => {
                     let deliveryRequest = snap.val();
                     // kick all promises off
-                    console.log(deliveryRequest);
                     let donatingAgencyPromise = genSupplementaryPromise('donating_agencies', deliveryRequest.donatingAgency);
                     let donatingAgencyContactPromise = genSupplementaryPromise('accounts', deliveryRequest.primaryContact);
                     let delivererGroupPromise = (deliveryRequest.delivererGroup && deliveryRequest.delivererGroup.claimed) ?
@@ -82,7 +88,6 @@ class NotificationDetailsController extends Component {
             removeNotification();
             closePopUp();
         };
-        console.log('details');
         console.log(this.state.details);
         if (!this.state.details) { // TODO: fill this with loading gif
             return <div className="popup-wrapper"></div>;
@@ -106,8 +111,9 @@ class NotificationDetailsController extends Component {
                 {
                     notification.type === NotificationType.RECURRING_PICKUP_CONFIRMED &&
                     <RecurringRequestConfirmed
-                        details={this.state.details}
                         accountType={account.accountType}
+                        details={this.state.details}
+                        notificationType={notification.type}
                         addressNotificationAndClose={addressAndClose}
                     />
                 }
@@ -126,6 +132,7 @@ class NotificationDetailsController extends Component {
             </div>;
 
         case 'red':
+            console.log('in switch case');
             return <div className="popup-wrapper emergency">
                 <img className="close" src={close} alt="close" onClick={this.props.closePopUp} />
                 {
@@ -144,7 +151,7 @@ class NotificationDetailsController extends Component {
                         details={this.state.details}
                         accountType={account.accountType}
                         addressNotificationAndClose={addressAndClose}
-                        notificationType={this.state.notification.type}
+                        notificationType={notification.type}
 
                     />
                 }
@@ -153,6 +160,7 @@ class NotificationDetailsController extends Component {
     }
 
     render() {
+        console.log('rendering notification details controller');
         return (
             <div className="popup-wrapper">
                 {this.showDetail()}

@@ -1,14 +1,22 @@
 import React from 'react';
 import {
+    DeliveryType,
+    InputFormat,
+    NotificationType,
     RequestRepeatType,
     RequestEndCriteriaType,
     StringFormat,
-    InputFormat,
-    NotificationType
 } from '../../../Enums.js';
 import moment from 'moment';
 
 class RequestTime extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isEmergency: props.request.type === DeliveryType.EMERGENCY
+        };
+    }
+
     render() {
         let dayOfWeek = moment(this.props.request.startTimestamp).format(
             StringFormat.WEEKDAY
@@ -21,7 +29,7 @@ class RequestTime extends React.Component {
         };
 
         var durationText = '';
-        if(!this.props.isEmergency) {
+        if(!this.state.isEmergency) {
             if (
                 this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
             ) {

@@ -96,6 +96,7 @@ class RecurringRequestController extends Component {
             return <RecurringRequestClaimed
                 close={this.props.addressNotificationAndClose}
                 details={this.props.details}
+                notificationType={this.props.notificationType}
             />;
         } else if (unableToClaim(deliveryRequest, deliveryChildField, this.props.account.uid)) {
             // someone has already claimed this event

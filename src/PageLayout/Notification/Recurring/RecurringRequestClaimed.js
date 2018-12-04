@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
-import truck from '../../../icons/green_truck.svg';
+import { NotificationType } from '../../../Enums';
+import truckGreen from '../../../icons/green_truck.svg';
+import truckRed from '../../../icons/red_truck.svg';
 import RequestTime from '../Details/RequestTime';
+import { NotificationMap } from '../NotificationMap';
 
 class RecurringRequestClaimed extends Component {
     render() {
+        const notificationSpecs = NotificationMap[this.props.notificationType];
         return (
             <div className="modal-wrapper">
                 <img
                     className="icon"
                     id="disclaimer-icon"
-                    src={truck}
+                    src={notificationSpecs.iconSrc}
                     alt="icon"
                 />
                 <div className="modal-left-align">
-                    <h1> Recurring pickup is claimed</h1>
+                    <h1> {notificationSpecs.detailMsg}</h1>
                     <p>
                         We will notify you when it is confirmed by all parties
                         and scheduled.
@@ -31,6 +35,7 @@ class RecurringRequestClaimed extends Component {
                         <RequestTime
                             request={this.props.details}
                             title={true}
+                            notificationType={this.props.notificationType}
                         />
                     </div>
                     <div className="popup-buttons">

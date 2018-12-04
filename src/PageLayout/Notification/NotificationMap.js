@@ -41,6 +41,19 @@ export const NotificationMap = {
         iconSrc: truckRed,
         msg: 'Emergency pickup requested',
         color: 'red',
-        contentType: NotificationType.EMERGENCY_PICKUP_REQUESTED
-    }
+        contentType: NotificationContentType.DELIVERY_REQUEST
+    },
+    [NotificationType.EMERGENCY_PICKUP_CONFIRMED]: {
+        iconSrc: truckRed,
+        msg: 'An emergency pickup has been confirmed',
+        color: 'red',
+        contentType: NotificationContentType.DELIVERY_REQUEST,
+    },
+    [NotificationType.EMERGENCY_PICKUP_REJECTED]: {
+        iconSrc: truckGrey,
+        msg: 'An emergency pickup was rejected',
+        detailMsg: 'Unfortunately, this emergency pickup was rejected by all notified shelters.',
+        color: 'grey',
+        contentType: NotificationContentType.DELIVERY_REQUEST
+    },
 };

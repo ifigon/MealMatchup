@@ -43,6 +43,7 @@ class RecurringRequestDisclaimer extends Component {
                         <RequestTime
                             request={this.props.details}
                             title={true}
+                            notificationType={this.props.notificationType}
                         />
                     </div>
                     <div className="popup-buttons">
