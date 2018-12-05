@@ -20,7 +20,8 @@ class DescriptionContent extends Component {
             // 'waiting' is true after 'Saved' is clicked and before changes
             // from db is propagated down. While it is true, input fields are
             // disabled
-            waiting: false,
+            isWaitingNotes: false,
+            isWaitingFood: false,
             savedTimestamp: null,
             foodRows: null, // for rendering editable rows only
         };
@@ -36,8 +37,8 @@ class DescriptionContent extends Component {
     componentWillReceiveProps(nextProps) {
         // update state to reflect values properly saved if we were waiting
         // on the update and the update happened after we wrote to db.
-        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
-            this.setState({ waiting: false, isEditingFoodItems: false, foodRows: null });
+        if (this.state.isWaitingFood && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ isWaitingFood: false, isEditingFoodItems: false, foodRows: null });
         }
     }
     
@@ -113,21 +114,22 @@ class DescriptionContent extends Component {
 
     saveNotes(e) {
         e.preventDefault();
-        this.setState({ waiting: true });
+        this.setState({ isWaitingNotes: true });
         let updates = {};
         updates['notes'] = this.state.currentNote;
         deliveriesRef.child(this.props.delivery.id).update(updates).then(() => {
             // record timestamp of when the write was done
             this.setState({ savedTimestamp: moment().valueOf() });
+            this.setState({ isWaitingNotes: false, isEditingNotes: false }); 
         });
-        this.setState({ waiting: false, isEditingNotes: false });    
+        //this.setState({ waiting: false, isEditingNotes: false });    
     }
 
     saveFoodItems(e) {
         e.preventDefault();
 
         // disable input fields first
-        this.setState({ waiting: true });
+        this.setState({ isWaitingFood: true });
 
         let newFoodItems = [];
         for (let i = 0; i < this.state.foodRows.length; i++) {
@@ -149,7 +151,7 @@ class DescriptionContent extends Component {
             });
         } else {
             //nothing changed
-            this.setState({ waiting: false, isEditingFoodItems: false });
+            this.setState({ isWaitingFood: false, isEditingFoodItems: false });
         }
     }
 
@@ -189,8 +191,10 @@ class DescriptionContent extends Component {
             };
         }
 
-        let editable = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingFoodItems && !this.state.isEditingNotes && futureEvent);
+        let isEditableFood = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
+            !this.state.isEditingFoodItems && futureEvent);
+        let isEditableNotes = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
+            !this.state.isEditingNotes && futureEvent);
 
         return (
             <div className="wrapper">
@@ -219,13 +223,13 @@ class DescriptionContent extends Component {
                                             }
                                         </p>
                                     </div>
-                                    {editable &&
+                                    {isEditableFood &&
                                         <button type="button" className="edit-button" onClick={this.editFoodItems}>
                                             Edit
                                         </button>
                                     }
                                 </div>
-                            ) : editable ? (
+                            ) : isEditableFood ? (
                                 <button className="add-food" onClick={this.addRow}>
                                     Add Food Items
                                 </button>
@@ -238,7 +242,7 @@ class DescriptionContent extends Component {
                     ) : (
                         <div className="content-details-wrapper">
                             <form className="edit-dg" onSubmit={this.saveFoodItems}>
-                                <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                <fieldset className="fieldset-wrapper" disabled={this.state.isWaitingFood}>
                                     <div className="input-wrapper">
                                         <div className="food-label">
                                             Food Item<span className="required">*</span>
@@ -248,7 +252,7 @@ class DescriptionContent extends Component {
                                         </div>
                                         {this.getEditDonation()}
                                     </div>
-                                    {!this.state.waiting &&
+                                    {!this.state.isWaitingFood &&
                                         <img
                                             src={plus}
                                             alt="plus"
@@ -260,7 +264,7 @@ class DescriptionContent extends Component {
                                         <input
                                             type="submit"
                                             className="description-edit-button"
-                                            value={this.state.waiting ? 'saving...' : 'save'}
+                                            value={this.state.isWaitingFood ? 'saving...' : 'save'}
                                         />
                                     </div>   
                                 </fieldset>
@@ -286,7 +290,7 @@ class DescriptionContent extends Component {
                                     <p>Left empty</p>
                                 )}{' '}
                             </div>
-                            {editable &&
+                            {isEditableNotes &&
                                 <button type="button" className="edit-button" onClick={this.editNotes}>
                                     Edit
                                 </button>
@@ -302,7 +306,7 @@ class DescriptionContent extends Component {
                                     <input
                                         type="submit"
                                         className="description-edit-button"
-                                        value={this.state.waiting ? 'saving...' : 'save'}
+                                        value={this.state.isWaitingNotes ? 'saving...' : 'save'}
                                     />
                                 </div>
                             </form>
