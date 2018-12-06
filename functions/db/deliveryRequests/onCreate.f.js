@@ -2,8 +2,8 @@ const functions = require('firebase-functions');
 const moment = require('moment-timezone');
 const enums = require('../../Enums.js');
 const utils = require('../../Utils.js');
-const mailUtil = require('../../EmailUtil.js');
 const nodemailer = require('nodemailer');
+const EmailUtil = require('../../EmailUtil.js');
 
 const nt = enums.NotificationType;
 const EmailTypes = enums.EmailTypes;
@@ -26,7 +26,8 @@ exports = module.exports = functions.database
         // TODO: setup Admin SDK in the future? So that we can use absolute path.
         const rootRef = snap.ref.parent.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
-        
+        const daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
+
         if (request.status !== enums.RequestStatus.PENDING) {
             return Promise.reject(
                 new Error('Request should have pending status upon request.'));
@@ -47,8 +48,9 @@ exports = module.exports = functions.database
         if (raInfo.requested) {
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
+            console.info('raInfo requested');
             getRASnapPromise(accountsRef, raInfo.requested).then(
-                (RASnap) => sendNotificationEmail([RASnap.val()], request)
+                (RASnap) => sendNotificationEmail([RASnap.val()], request, daRef)
             );
             return utils.notifyRequestUpdate(
                 'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST);
@@ -90,7 +92,6 @@ exports = module.exports = functions.database
                 reqUpdates['status'] = enums.RequestStatus.UNAVAILABLE;
 
                 console.info('No RA available, notifying DA.');
-                var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
                 promises.push(
                     utils.notifyRequestUpdate(
                         'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE));
@@ -176,17 +177,21 @@ function isAvailable(ra, request) {
     return false;
 }
 
-function sendNotificationEmail(receivingRAsAccountInfo, request) {
-    accountsRef.child(request.donatingAgency).once((snap) => {
+function sendNotificationEmail(receivingRAsAccountInfo, request, daRef) {
+    daRef.once('value', (snap) => {
         donatingAgencyInfo = snap.val();
+        console.log(donatingAgencyInfo);
 
         let messageConfig = {
             subject: `New Delivery Request from ${donatingAgencyInfo.name}`,
             html: '<p>foo</p>',
         };
 
+        console.info(receivingRAsAccountInfo);
+
         // loop over RAs, send email
-        for (accountInfo in receivingRAsAccountInfo) {
+        for (let accountInfo of receivingRAsAccountInfo) {
+            console.info(accountInfo);
             EmailUtil.sendMailWithAccountInfo(
                 messageConfig,
                 accountInfo,
@@ -194,5 +199,6 @@ function sendNotificationEmail(receivingRAsAccountInfo, request) {
             );
         }
     });
+    console.info('sendNotificationEmail called!');
 }
 

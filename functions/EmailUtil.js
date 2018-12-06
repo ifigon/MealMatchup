@@ -22,7 +22,7 @@ const mailTransport = nodemailer.createTransport({
  * This allows us to query user email preferences to determine if they should be sent an 
  * email before actually sending it to them.
  *
- * String userId: user account ID as it appears in Firebase
+ * String userId: recipient user account ID as it appears in Firebase
  * Object messageConfig: https://nodemailer.com/message/
  *      Note: email address will be filled based on userId. Passed "To" field is overwritten.
  *
@@ -57,7 +57,7 @@ function sendMailWithAccountInfo(messageConfig, accountInfo, emailType = EmailTy
         return;
     }
     
-    console.info(userId + ' ' + accountInfo);
+    console.info(accountInfo);
     
     let message = {
         ...messageConfig,
@@ -69,7 +69,7 @@ function sendMailWithAccountInfo(messageConfig, accountInfo, emailType = EmailTy
 
     // TODO: remove. This is testing.
     message.to = 'kaltenbach.john@gmail.com';
-    
+
     mailTransport.sendMail(message, (err, info) => {
         console.info(err);
         console.info(info);
@@ -81,7 +81,11 @@ function emailPreferencesAllow(accountInfo, emailType) {
     return true;
 }
 
+function testFunc() {
+    console.info('test func call success!');
+}
 module.exports = {
     sendMail: sendMail,
     sendMailWithAccountInfo: sendMailWithAccountInfo,
+    testFunc: testFunc,
 };
