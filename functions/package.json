@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "camelcase": "^4.1.0",
-    "firebase-admin": "^5.11.0",
-    "firebase-functions": "^1.0.0",
+    "firebase-admin": "^6.3.0",
+    "firebase-functions": "^2.1.0",
     "glob": "^7.1.2",
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
