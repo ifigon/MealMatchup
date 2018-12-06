@@ -2,8 +2,11 @@ const functions = require('firebase-functions');
 const moment = require('moment-timezone');
 const enums = require('../../Enums.js');
 const utils = require('../../Utils.js');
+const mailUtil = require('../../EmailUtil.js');
+const nodemailer = require('nodemailer');
 
 const nt = enums.NotificationType;
+const EmailTypes = enums.EmailTypes;
 
 /*
  * When a delivery request is created, send notifications to 
@@ -44,6 +47,9 @@ exports = module.exports = functions.database
         if (raInfo.requested) {
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
+            getRASnapPromise(accountsRef, raInfo.requested).then(
+                (RASnap) => sendNotificationEmail([RASnap.val()], request)
+            );
             return utils.notifyRequestUpdate(
                 'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST);
         }
@@ -168,5 +174,25 @@ function isAvailable(ra, request) {
     }
 
     return false;
+}
+
+function sendNotificationEmail(receivingRAsAccountInfo, request) {
+    accountsRef.child(request.donatingAgency).once((snap) => {
+        donatingAgencyInfo = snap.val();
+
+        let messageConfig = {
+            subject: `New Delivery Request from ${donatingAgencyInfo.name}`,
+            html: '<p>foo</p>',
+        };
+
+        // loop over RAs, send email
+        for (accountInfo in receivingRAsAccountInfo) {
+            EmailUtil.sendMailWithAccountInfo(
+                messageConfig,
+                accountInfo,
+                EmailTypes.DELIVERY_UPDATE
+            );
+        }
+    });
 }
 

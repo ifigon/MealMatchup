@@ -33,8 +33,9 @@ exports.InputFormat = {
 exports.AccountType = {
     UMBRELLA: 'umbrella',
     DONATING_AGENCY_MEMBER: 'donating_agency_member',
-    RECEIVING_AGENCY: 'receiving_agency',
-    DELIVERER_GROUP: 'deliverer_group'
+    RECEIVING_AGENCY : 'receiving_agency',
+    DELIVERER_GROUP: 'deliverer_group',
+    DONATING_AGENCY: 'donating_agency',
 };
 
 // For now (as of 3/5/2018), the only umbrella
@@ -138,6 +139,7 @@ exports.DeliveryType = {
     EMERGENCY: 'emergency'
 };
 
+exports.DaysOfWeek = ['Sun', 'M', 'T', 'W', 'Th', 'F', 'Sat'];
 exports.DeliveryStatus = {
     SCHEDULED: 'scheduled',
     STARTED: 'started',
@@ -163,4 +165,34 @@ exports.Routes = {
 exports.NotificationContentType = {
     DELIVERY_REQUEST: 'delivery_request',
     ACCOUNT: 'account'
+};
+
+exports.SettingsFields = {
+    ORGANIZATION: [
+        'address', 
+        'name', 
+        'numVolunteers', 
+        'deliveryNotes', 
+        'acceptEmergencyPickups', 
+        'uid',
+    ],
+    MANAGER: [
+        'primaryContact', 
+        'secondaryContact',
+        'uid',
+    ],
+    MEMBER: [
+        'email',
+        'name',
+        'phone',
+        'position',
+        'uid',
+    ],
+};
+
+exports.EmailTypes = {
+    LOW_PRIORITY : 'low_priority',
+    DELIVERY_UPDATE : 'delivery_update',
+    ACCOUNT_INFO : 'account_info',
+    HIGH_PRIORITY : 'high_priority',
 };

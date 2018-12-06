@@ -183,3 +183,10 @@ exports.SettingsFields = {
         'uid',
     ],
 };
+
+exports.EmailTypes = {
+    LOW_PRIORITY : 'low_priority',
+    DELIVERY_UPDATE : 'delivery_update',
+    ACCOUNT_INFO : 'account_info',
+    HIGH_PRIORITY : 'high_priority',
+};
