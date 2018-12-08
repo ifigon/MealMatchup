@@ -22,10 +22,10 @@ Cypress.Commands.add('logout', () => {
     .then((pathname) => {
       if (pathname && pathname !== '/') {
         cy
-          .log('Logging Out', pathname)
+          .log('Logging Out')
           .get('.signout', { log: false })
           .click({ log: false })
-          .location('pathname').should('eq', '/', 'Logout Redirct')
+          .location('pathname', { log: false }).should('eq', '/', 'Logout Redirect')
           .as('Logout')
       }
     })
@@ -35,31 +35,33 @@ Cypress.Commands.add('login', (type) => {
   cy
     //  Logout if possible - prevents session conflicts
     .logout()
+    .log(`Logging in as ${type}`)
     .fixture('users')
     .then((users) => {
       const user = users[type]
       //  Visit the login page, fill out the form
       cy.visit('/', { log: false })
+      // I know it's ugly to disable logs 
       cy
-        .get('.login-buttons')
-        .contains('button', 'LOGIN')
-        .click()
+        .get('.login-buttons', { log: false })
+        .contains('button', 'LOGIN', { log: false })
+        .click({ log: false })
       cy
-        .get('.login-input-wrapper')
-        .get('input[type=email')
-        .type(user.email)
-        .parent()
-        .get('input[type=password')
-        .type(user.password)
+        .get('.login-input-wrapper', { log: false })
+        .get('input[type=email]', { log: false })
+        .type(user.email, { log: false })
+        .parent({ log: false })
+        .get('input[type=password]', { log: false })
+        .type(user.password, { log: false })
       cy
-        .get('.login-button-wrapper')
-        .get('button[type=submit]')
-        .click()
+        .get('.login-button-wrapper', { log: false })
+        .get('button[type=submit]', { log: false })
+        .click({ log: false })
     })
     // Wait for FB to verify and get account info, prior to redirect
     .wait('@VerifyAcc', { log: false })
     .wait('@GetAcc', { log: false })
     // Wait for redirect
-    .location('pathname').should('eq', '/calendar', 'Login Redirect')
+    .location('pathname', { log: false }).should('eq', '/calendar', 'Login Redirect')
     .as('Login')
 })

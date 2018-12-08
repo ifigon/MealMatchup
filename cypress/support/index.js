@@ -34,9 +34,9 @@ beforeEach(function () { // May need to reference `this` in the future
   cy.server({ onRequest, onResponse, onAbort })
   // You can now refer to this with `cy.wait('@API');` inside tests if you want
   cy.route('googleapis.com/**').as('Firebase')  //  
-  cy.route('/sockjs-node/**').as('WebSocket')
   cy.route({ method: 'POST', url: '/identitytoolkit/**/relyingparty/verifyPassword**' }).as('VerifyAcc')
   cy.route({ method: 'POST', url: '/identitytoolkit/**/relyingparty/getAccountInfo**' }).as('GetAcc')
+  cy.route('/sockjs-node/**').as('WebSockets')
 })
 
 // Wait for tests to resolve XHR, so API calls don't "bleed" into other tests and user sessions
