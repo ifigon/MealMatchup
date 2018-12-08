@@ -15,11 +15,6 @@
     "plugins": [
         "react"
     ],
-    "globals": {
-        "Cypress": true,
-        "cy": true,
-        "expect": true
-    },
     "rules": {
         "indent": [
             "error",
