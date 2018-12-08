@@ -1,30 +1,36 @@
 context('Login Flow', () => {
-  beforeEach(() => {
-    cy.visit('/')
-  })
-
-  describe('When the app initializes', () => {
-    it('should render the login prompt', () => {
+  // NOTE: For most of these, location is implicitly asserted via login/logout commands
+  describe('General UI and Routing', () => {
+    it('should redirect unauthenticated users to a login prompt', () => {
+      cy
+        .logout()
+        .visit('/calendar')
+        .location('pathname').should('eq', '/')
       cy
         .get('.login-buttons')
         .contains('button', 'LOGIN')
         .as('LoginButton')
         .should('exist')
-        .click() // Opens the login prompt
-      // TODO: Load a user from fixtures.
-      // Then make this a command, not a test
-      cy
-        .get('.login-wrapper .login-input-wrapper')
-        .get('input[type=email')
-        .type('foo@bar.com')
-        .parent()
-        .get('input[type=password')
-        .type('vietnam.123')
-      cy
-        .get('.login-button-wrapper')
-        .get('button[type=submit]')
-        .click()
-      // XHR in the background will fail, but the test passes for now
+    })
+
+    it('should redirect authenticated users to /calendar', () => {
+      cy.login('Donating Agency')
     })
   })
+
+  describe('AuthN / AuthZ via Cypress commands', () => {
+    it('can login to many different accounts in command chains', () => {
+      cy
+        .login('Donating Agency')
+        .login('Receiving Agency')
+        .login('Deliverer Group')
+    })
+
+    it('redirects to the login prompt when signing out', () => {
+      cy
+        .login('Donating Agency')
+        .logout()
+    })
+  })
+  
 })

@@ -5,48 +5,61 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+// NOTE: Please be mindful of what you log, try disabling logs when possible, otherwise you spam the inspector
+
 Cypress.Commands.add('awaitXHR', () =>
   cy
     // Use any cy.get() cb so cypress timeouts are applied to should() expressions
-    .log('Resolving in-flight XHR')
     .window({ log: false })
-    .should(() => expect(cy._apiCount || 0).to.equal(0))
+    .should(() => expect(cy._apiCount || 0, 'In-Flight XHR').to.equal(0))
 )
 
+
+// Logs a user out via the signup button (client auth can't be manipulated via Cypress programmatically)
 Cypress.Commands.add('logout', () => {
-  // TODO: DELETE user sessions (?)
-  cy.log('Logout').as('Logout')
+  cy
+    .location('pathname', { log: false })
+    .then((pathname) => {
+      if (pathname && pathname !== '/') {
+        cy
+          .log('Logging Out', pathname)
+          .get('.signout', { log: false })
+          .click({ log: false })
+          .location('pathname').should('eq', '/', 'Logout Redirct')
+          .as('Logout')
+      }
+    })
 })
 
 Cypress.Commands.add('login', (type) => {
   cy
+    //  Logout if possible - prevents session conflicts
     .logout()
     .fixture('users')
     .then((users) => {
       const user = users[type]
-      // Visit the login page
-      cy
-        .visit('/')
-        .location('pathname').should('eq', '/')
+      //  Visit the login page, fill out the form
+      cy.visit('/', { log: false })
       cy
         .get('.login-buttons')
         .contains('button', 'LOGIN')
-        .as('LoginButton')
-        .should('exist')
-        .click() // Opens the login prompt
-      // TODO: Load a user from fixtures.
-      // Then make this a command, not a test
+        .click()
       cy
-        .get('.login-wrapper .login-input-wrapper')
+        .get('.login-input-wrapper')
         .get('input[type=email')
-        .type('foo@bar.com')
+        .type(user.email)
         .parent()
         .get('input[type=password')
-        .type('vietnam.123')
+        .type(user.password)
       cy
         .get('.login-button-wrapper')
         .get('button[type=submit]')
         .click()
-      // XHR in the background will fail, but the test passes for now
     })
+    // Wait for FB to verify and get account info, prior to redirect
+    .wait('@VerifyAcc', { log: false })
+    .wait('@GetAcc', { log: false })
+    // Wait for redirect
+    .location('pathname').should('eq', '/calendar', 'Login Redirect')
+    .as('Login')
 })

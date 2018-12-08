@@ -9,9 +9,9 @@ before(() => {
     .readFile('node_modules/unfetch/dist/unfetch.umd.js')
     .then(file => polyfill = file)
   Cypress.on('window:before:load', (win) => {
-    // Spy on console output
-    cy.spy(win.console, 'log')
-    cy.spy(win.console, 'error')
+    // Spy on console output - Disabled for now (so many background routing errs...)
+    // cy.spy(win.console, 'log')
+    // cy.spy(win.console, 'error')
     // Cy does not support fetch - make it fallback to XHR, which is supported by Cy
     delete win.fetch
     win.eval(polyfill)
@@ -33,10 +33,18 @@ beforeEach(function () { // May need to reference `this` in the future
   const onAbort = () => { cy._apiCount-- }
   cy.server({ onRequest, onResponse, onAbort })
   // You can now refer to this with `cy.wait('@API');` inside tests if you want
-  cy.route('/v1/**').as('API')
+  cy.route('googleapis.com/**').as('Firebase')  //  
+  cy.route('/sockjs-node/**').as('WebSocket')
+  cy.route({ method: 'POST', url: '/identitytoolkit/**/relyingparty/verifyPassword**' }).as('VerifyAcc')
+  cy.route({ method: 'POST', url: '/identitytoolkit/**/relyingparty/getAccountInfo**' }).as('GetAcc')
 })
 
 // Wait for tests to resolve XHR, so API calls don't "bleed" into other tests and user sessions
 afterEach(function () {
   cy.awaitXHR()
+})
+
+// Before each - silently visit (load) the app. You still have to manually login and visit other routes, but the app will have initialized
+beforeEach(function () {
+  cy.visit('/', { log: false })
 })
