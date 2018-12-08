@@ -5,32 +5,32 @@ context('Login Flow', () => {
       cy
         .logout()
         .visit('/calendar')
-        .location('pathname').should('eq', '/')
+        .location('pathname').should('eq', '/');
       cy
         .get('.login-buttons')
         .contains('button', 'LOGIN')
         .as('LoginButton')
-        .should('exist')
-    })
+        .should('exist');
+    });
 
     it('should redirect authenticated users to /calendar', () => {
-      cy.login('Donating Agency')
-    })
-  })
+      cy.login('Donating Agency');
+    });
+  });
 
   describe('AuthN / AuthZ via Cypress commands', () => {
     it('can login to many different accounts in command chains', () => {
       cy
         .login('Donating Agency')
         .login('Receiving Agency')
-        .login('Deliverer Group')
-    })
+        .login('Deliverer Group');
+    });
 
     it('redirects to the login prompt when signing out', () => {
       cy
         .login('Donating Agency')
-        .logout()
-    })
-  })
+        .logout();
+    });
+  });
   
-})
+});

@@ -7,6 +7,7 @@
     "build": "react-app-rewired build",
     "lint": "eslint src/ --ext .js",
     "lint-functions": "cd functions && npm run lint",
+    "lint-cypress": "cd cypress && npm run lint",
     "test": "cypress run",
     "test:open": "cypress open"
   },

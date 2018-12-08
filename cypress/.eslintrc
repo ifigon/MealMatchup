@@ -12,8 +12,9 @@
     "chai-friendly"
   ],
   "rules": {
+    "indent": ["warn", 2],
     "no-console": 0,
     "no-unused-expressions": 0,
-    "chai-friendly/no-unusued/expressions": 2
+    "chai-friendly/no-unused-expressions": 2
   }
 }
