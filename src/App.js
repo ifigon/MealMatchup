@@ -22,7 +22,7 @@ class App extends Component {
             signInDenied: false,
             account: null,
             donatingAgency: null,
-            isChrome: !!window.chrome //&& !!window.chrome.webstore
+            isChrome: !!window.chrome
         };
 
         this.aggrAccount = this.aggrAccount.bind(this);
