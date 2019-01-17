@@ -15,8 +15,6 @@ class DescriptionContent extends Component {
             isEditingFoodItems: false,
             isEditingNotes: false,
             currentNote: this.props.delivery.notes,
-
-
             // 'waiting' is true after 'Saved' is clicked and before changes
             // from db is propagated down. While it is true, input fields are
             // disabled
@@ -207,7 +205,6 @@ class DescriptionContent extends Component {
                             {' '}Last edited by {lastEdited.name},{' '}{lastEdited.time}
                         </p>
                     }
-
 
                     {!this.state.isEditingFoodItems ? (
                         <div>
