@@ -121,8 +121,7 @@ class DescriptionContent extends Component {
             // record timestamp of when the write was done
             this.setState({ savedTimestamp: moment().valueOf() });
             this.setState({ isWaitingNotes: false, isEditingNotes: false }); 
-        });
-        //this.setState({ waiting: false, isEditingNotes: false });    
+        });  
     }
 
     saveFoodItems(e) {
@@ -192,9 +191,9 @@ class DescriptionContent extends Component {
         }
 
         let isEditableFood = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingFoodItems && futureEvent);
+            !this.state.isEditingFoodItems);
         let isEditableNotes = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingNotes && futureEvent);
+            !this.state.isEditingNotes);
 
         return (
             <div className="wrapper">
@@ -266,7 +265,7 @@ class DescriptionContent extends Component {
                                             className="description-edit-button"
                                             value={this.state.isWaitingFood ? 'saving...' : 'save'}
                                         />
-                                    </div>   
+                                    </div>
                                 </fieldset>
                             </form>
                         </div>
