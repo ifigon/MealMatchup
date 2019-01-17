@@ -15,8 +15,6 @@ class DescriptionContent extends Component {
             isEditingFoodItems: false,
             isEditingNotes: false,
             currentNote: this.props.delivery.notes,
-
-
             // 'waiting' is true after 'Saved' is clicked and before changes
             // from db is propagated down. While it is true, input fields are
             // disabled
@@ -121,7 +119,8 @@ class DescriptionContent extends Component {
             // record timestamp of when the write was done
             this.setState({ savedTimestamp: moment().valueOf() });
             this.setState({ isWaitingNotes: false, isEditingNotes: false }); 
-        });  
+        });
+        //this.setState({ waiting: false, isEditingNotes: false });    
     }
 
     saveFoodItems(e) {
@@ -191,9 +190,9 @@ class DescriptionContent extends Component {
         }
 
         let isEditableFood = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingFoodItems);
+            !this.state.isEditingFoodItems && futureEvent);
         let isEditableNotes = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingNotes);
+            !this.state.isEditingNotes && futureEvent);
 
         return (
             <div className="wrapper">
@@ -201,14 +200,11 @@ class DescriptionContent extends Component {
                 <img className="content-icon groceries" src={groceries} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
-
                     {lastEdited &&
                         <p className="edited">
                             {' '}Last edited by {lastEdited.name},{' '}{lastEdited.time}
                         </p>
                     }
-
-
                     {!this.state.isEditingFoodItems ? (
                         <div>
                             {description && description.foodItems ? (
