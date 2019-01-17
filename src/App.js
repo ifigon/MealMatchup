@@ -22,7 +22,7 @@ class App extends Component {
             signInDenied: false,
             account: null,
             donatingAgency: null,
-            isChrome: !!window.chrome //&& !!window.chrome.webstore
+            isChrome: !!window.chrome && !!window.chrome.webstore
         };
 
         this.aggrAccount = this.aggrAccount.bind(this);
@@ -141,7 +141,7 @@ class App extends Component {
                         WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
                         </div>
                         :
-                        document.documentElement.clientWidth < 1000 ?
+                        document.documentElement.clientWidth < 1400 ?
                             <div className="browser-check">
                         WARNING! Your browser is too small, use at your own risk.
                             </div>
