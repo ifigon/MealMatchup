@@ -11,7 +11,7 @@ import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
-import ToggleButton from 'react-toggle-button';
+//import ToggleButton from 'react-toggle-button';
 
 const emergencyDiffs = {
     formTitle: {
@@ -369,7 +369,10 @@ class RecurringPickupRequest extends Component {
                 <div className="form">
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
-                            {/* <div className= "toggle">
+                            {/* Emergency delivery toggle disabled temporarily until
+                                all functionality is finished.
+                            
+                                <div className= "toggle">
                                 <span>Regular</span>
                                 <div className = "button">
                                     <ToggleButton
