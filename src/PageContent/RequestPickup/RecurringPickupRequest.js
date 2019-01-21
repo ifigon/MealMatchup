@@ -11,7 +11,7 @@ import './RequestPickup.css';
 import PickupSummary from './PickupSummary.js';
 import PickupRequestedConfirmation from './PickupRequestedConfirmation';
 import moment from 'moment-timezone';
-import ToggleButton from 'react-toggle-button';
+//import ToggleButton from 'react-toggle-button';
 
 const emergencyDiffs = {
     formTitle: {
@@ -296,9 +296,7 @@ class RecurringPickupRequest extends Component {
                 raInfo['requested'] = raRequested.id;
             } else {
                 // if no specific RA requested, add all RAs to pending list
-                raInfo['pending'] = this.state.receivingAgencies.map(
-                    ra => ra.id
-                );
+                raInfo['pending'] = this.state.receivingAgencies.map(ra => ra.id);
             }
             var dgIndex = event.target.delivererGroup.value;
             if (dgIndex) {
@@ -311,7 +309,7 @@ class RecurringPickupRequest extends Component {
             // END: fields for only regular requests
         } else {
             // BEGIN: fields for only emergency requests
-            raInfo['pending'] = raRequested.id;
+            raInfo['pending'] = this.state.receivingAgencies.map(ra => ra.id);
         }
         // create DeliveryRequest object
         var deliveryRequest = {
@@ -371,7 +369,10 @@ class RecurringPickupRequest extends Component {
                 <div className="form">
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
-                            <div className= "toggle">
+                            {/* Emergency delivery toggle disabled temporarily until
+                                all functionality is finished.
+                            
+                                <div className= "toggle">
                                 <span>Regular</span>
                                 <div className = "button">
                                     <ToggleButton
@@ -392,7 +393,7 @@ class RecurringPickupRequest extends Component {
                                     /> 
                                 </div>
                                 <span>Emergency</span>
-                            </div>
+                                </div> */ }
 
                             <p className="form-heading">{emergencyDiffs.formTitle[this.state.isEmergency]}</p>
                             {Object.keys(this.state.errors).map((error, i) => {

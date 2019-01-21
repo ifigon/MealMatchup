@@ -1,9 +1,10 @@
 const functions = require('firebase-functions');
 const moment = require('moment-timezone');
-const enums = require('../../Enums.js');
 const utils = require('../../Utils.js');
-
-const nt = enums.NotificationType;
+const enums = require('../../Enums.js');
+const DeliveryType = enums.DeliveryType;
+const NotificationType = enums.NotificationType;
+const RequestStatus = enums.RequestStatus;
 
 /*
  * When a delivery request is created, send notifications to 
@@ -16,7 +17,7 @@ const nt = enums.NotificationType;
 exports = module.exports = functions.database
     .ref('/delivery_requests/{umbrellaId}/{daId}/{pushId}')
     .onCreate((snap, context) => {
-        console.info('New recurring request added: ' + snap.key);
+        console.info('New delivery request added: ' + snap.key);
         const requestPath = context.params.daId + '/' + context.params.pushId;
         var request = snap.val();
 
@@ -24,7 +25,8 @@ exports = module.exports = functions.database
         const rootRef = snap.ref.parent.parent.parent.parent;
         const accountsRef = rootRef.child('accounts');
         
-        if (request.status !== enums.RequestStatus.PENDING) {
+        // BEGIN: field validation
+        if (request.status !== RequestStatus.PENDING) {
             return Promise.reject(
                 new Error('Request should have pending status upon request.'));
         }
@@ -39,13 +41,22 @@ exports = module.exports = functions.database
         if (!raInfo.requested && !raInfo.pending) {
             return Promise.reject(new Error('No RAs in the request to notify.'));
         }
+        // END: field validation
+
+        const isEmergency = request.type === DeliveryType.EMERGENCY;
+        const notificationLabels = {
+            requested: isEmergency ?
+                NotificationType.EMERGENCY_PICKUP_REQUESTED
+                : NotificationType.RECURRING_PICKUP_REQUESTED,
+            unavailable: NotificationType.RECURRING_PICKUP_UNAVAILABLE,
+        };
 
         // If a specific RA was requested, force push notification
         if (raInfo.requested) {
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
             return utils.notifyRequestUpdate(
-                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST);
+                'RA', raRef, requestPath, notificationLabels.requested);
         }
 
         console.info('No specific RA requested, ' + raInfo.pending.length + 
@@ -64,14 +75,16 @@ exports = module.exports = functions.database
             var rasLeft = [];
             for (let i in results) {
                 var raSnap = results[i];
-                var available = isAvailable(raSnap.val(), request);
+
+                //emergency requests don't care about time
+                var available = isEmergency || isAvailable(raSnap.val(), request);
 
                 console.info('RA "' + raSnap.key + '": available=' + available);
 
                 if (available) {
                     promises.push(
                         utils.notifyRequestUpdate(
-                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST));
+                            'RA', raSnap.ref, requestPath, notificationLabels.requested));
                     rasLeft.push(raSnap.key);
                 }
             }
@@ -81,13 +94,14 @@ exports = module.exports = functions.database
             // no available RA, send notification back to DA
             if (rasLeft.length === 0) {
                 // update status of the request
-                reqUpdates['status'] = enums.RequestStatus.UNAVAILABLE;
+                reqUpdates['status'] = RequestStatus.UNAVAILABLE;
 
                 console.info('No RA available, notifying DA.');
                 var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
                 promises.push(
                     utils.notifyRequestUpdate(
-                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE));
+                        'DA', daRef, requestPath,
+                        notificationLabels.unavailable));
             }
 
             // need to update RA pending list and status at the same time, otherwise
