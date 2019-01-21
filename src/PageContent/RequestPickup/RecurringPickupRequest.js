@@ -369,7 +369,7 @@ class RecurringPickupRequest extends Component {
                 <div className="form">
                     <form id={this.formId} onSubmit={this.createRequest}>
                         <div className="info">
-                            <div className= "toggle">
+                            {/* <div className= "toggle">
                                 <span>Regular</span>
                                 <div className = "button">
                                     <ToggleButton
@@ -390,7 +390,7 @@ class RecurringPickupRequest extends Component {
                                     /> 
                                 </div>
                                 <span>Emergency</span>
-                            </div>
+                                </div> */ }
 
                             <p className="form-heading">{emergencyDiffs.formTitle[this.state.isEmergency]}</p>
                             {Object.keys(this.state.errors).map((error, i) => {
