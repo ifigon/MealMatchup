@@ -68,7 +68,7 @@ function sendMailWithAccountInfo(messageConfig, accountInfo, emailType = EmailTy
     console.info(message);
 
     // TODO: remove. This is testing.
-    message.to = 'kaltenbach.john@gmail.com';
+    message.to = 'ifigon@outlook.com';
 
     mailTransport.sendMail(message, (err, info) => {
         console.info(err);
