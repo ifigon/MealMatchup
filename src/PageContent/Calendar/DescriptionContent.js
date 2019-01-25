@@ -120,15 +120,12 @@ class DescriptionContent extends Component {
             this.setState({ savedTimestamp: moment().valueOf() });
             this.setState({ isWaitingNotes: false, isEditingNotes: false }); 
         });
-        //this.setState({ waiting: false, isEditingNotes: false });    
     }
 
     saveFoodItems(e) {
         e.preventDefault();
-
         // disable input fields first
         this.setState({ isWaitingFood: true });
-
         let newFoodItems = [];
         for (let i = 0; i < this.state.foodRows.length; i++) {
             let food = e.target['food' + i].value;
