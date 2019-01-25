@@ -1,0 +1,61 @@
+.food-history {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.food-log-header {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 7px;
+}
+
+.food-log-time-selector {
+    display: flex;
+    padding: 7px 0px;
+}
+
+.food-log-time-selector button {
+    display: block;
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    min-width: 125px;
+    text-align: center;
+    font: 18px "Open Sans",sans-serif;
+    letter-spacing: .25px;
+    color: #222;
+    outline: 0;
+}
+
+.log-button-active {
+    background-color: rgb(242, 242, 242);
+}
+
+.food-data {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.food-data > div {
+    width: 45%;
+    font-family: 'Open Sans';
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.food-data > div:nth-child(odd) {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.food-name {
+    font-weight: bold;
+}
+
+.food-log-header > span {
+    font-size: 30px;
+}
