@@ -116,13 +116,58 @@ class FoodLogsContainer extends Component {
         return(
             <div className="food-container ">
                 {/* TODO: Filter feature */}
+                <div className="food-log-margin">
+                    <ul className="food-log-nav-items">
+                        <li className="one" onClick={() => this.setState({showHistory: false})}>Total Donations</li>
+                        <li className="two" onClick={() => this.setState({showHistory: true})}>History</li>
+                        <div className={this.state.showHistory ? "underline section-active" : "underline"} />
+                    </ul>               
+                </div>
+                <hr className="food-log-margin" />
                 {this.state.deliveries !== null ? 
                     this.state.deliveries.length > 0 ?
-                        this.state.deliveries.map((completedDelivery, i) => {
-                            return (
-                                <FoodLogItem delivery={completedDelivery} key={i}/>
-                            );
-                        })
+                        this.state.showHistory ? 
+                            this.state.deliveries.map((completedDelivery, i) => {
+                                return (
+                                    <FoodLogItem delivery={completedDelivery} key={i}/>
+                                );
+                            })
+                            : (
+                            <div className="food-log-margin">
+                                <div className="food-history">
+                                    <div className="food-log-header">Since January 17th you've donated 22 lbs. of food!</div>
+                                    <div className="food-log-time-selector">
+                                        <button className="log-button-active">1 Week</button>
+                                        <button>1 Month</button>
+                                        <button>6 Months</button>
+                                        <button>1 Year</button>
+                                        <button>All Time</button>
+                                    </div>
+                                </div>
+                                <div className="food-data">
+                                    <div>
+                                        <div className="food-name">White Bread</div>
+                                        <div className="food-quantity">1 lb.</div>
+                                    </div>
+                                    <div>
+                                        <div className="food-name">Eggs</div>
+                                        <div className="food-quantity">5 lb.</div>
+                                    </div>
+                                    <div>
+                                        <div className="food-name">Sugar</div>
+                                        <div className="food-quantity">3 lb.</div>
+                                    </div>
+                                    <div>
+                                        <div className="food-name">Lettuce</div>
+                                        <div className="food-quantity">5 lb.</div>
+                                    </div>
+                                    <div>
+                                        <div className="food-name">Sandwiches</div>
+                                        <div className="food-quantity">9 lb.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            )
                         :
                         (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
                     : null} 
