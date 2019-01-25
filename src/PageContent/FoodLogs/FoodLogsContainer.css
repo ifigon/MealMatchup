@@ -39,3 +39,88 @@
     margin-top: 15%;
     text-align: center;
 }
+
+.food-log-margin {
+    margin-left: 200px;
+}
+
+.food-log-nav-items li {
+    list-style-type: none;
+}
+
+.food-log-nav-items li {
+    display: inline;
+    text-align: center;
+    display: inline-block;
+    width: 50%;
+    padding: .75rem 0;
+    margin: 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.underline {
+    height: .25rem;
+    width: 50%;
+    background: #5DC0F9;
+    border: none;
+    transition: .3s ease-in-out;
+}
+
+.two:hover ~ .underline, .section-active {
+    margin-left: 50%;
+}
+
+.one:hover ~ .underline {
+    margin: 0;
+}
+
+.food-history {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.food-log-header {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 7px;
+}
+
+.food-log-time-selector {
+    display: flex;
+    padding: 7px 0px;
+}
+
+.food-log-time-selector button {
+    display: block;
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    min-width: 125px;
+    text-align: center;
+    font: 18px "Open Sans",sans-serif;
+    letter-spacing: .25px;
+    color: #222;
+    outline: 0;
+}
+
+.log-button-active {
+    background-color: rgb(242, 242, 242);
+}
+
+.food-data > div {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-family: 'Open Sans';
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.food-name {
+    font-weight: bold;
+}
