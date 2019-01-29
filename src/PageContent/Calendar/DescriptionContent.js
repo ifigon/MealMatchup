@@ -202,6 +202,7 @@ class DescriptionContent extends Component {
                             {' '}Last edited by {lastEdited.name},{' '}{lastEdited.time}
                         </p>
                     }
+
                     {!this.state.isEditingFoodItems ? (
                         <div>
                             {description && description.foodItems ? (
