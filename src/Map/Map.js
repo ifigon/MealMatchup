@@ -41,12 +41,14 @@ class Map extends Component{
         var address = keyOrder.map(key => props.address[key]).join(' ');
 
         // Convert address to Lat, Long
-        Geocode.fromAddress(address).then(
+        Geocode.fromAddress(address, GoogleMap_API_KEY).then(
+
             response => {
                 this.setState({
                     center: response.results[0].geometry.location,
                     address: address,
                 });
+                console.log('YOO');
             },
             error => {
                 this.setState((prevState) => {
@@ -67,7 +69,7 @@ class Map extends Component{
         };
         return (
             <div className='google-map' style={style}>
-                {this.state.validAddress ?
+                {/*{this.state.validAddress ?*/}
                     <GoogleMap
                         bootstrapURLKeys={{
                             key: GoogleMap_API_KEY,
@@ -80,9 +82,9 @@ class Map extends Component{
                             lng={this.state.center.lng}
                         />
                     </GoogleMap>
-                    :
-                    <div className="error">Unable to load map</div>
-                }
+                   {/* :
+                    <div className="error">Unable to load map</div>*/}
+                {/*}*/}
                 {/* Prompts user to open maps on their phone or shows link to Google Maps */}
                 {
                     isMobile() ?
