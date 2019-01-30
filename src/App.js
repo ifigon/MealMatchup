@@ -141,6 +141,7 @@ class App extends Component {
                         WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
                         </div>
                         :
+                        /*size of window*/
                         document.documentElement.clientWidth < 1000 ?
                             <div className="browser-check">
                         WARNING! Your browser is too small, use at your own risk.
