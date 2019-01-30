@@ -142,9 +142,7 @@ exports.DeliveryStatus = {
 };
 
 exports.FoodUnit = {
-    LB: 'lb',
-    CASES: 'cases',
-    LOAVES: 'loaves'
+    LB: 'lb'
 };
 
 exports.Routes = {
