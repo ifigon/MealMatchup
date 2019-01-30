@@ -133,7 +133,7 @@ class FoodLogsContainer extends Component {
                                     <FoodLogItem delivery={completedDelivery} key={i}/>
                                 );
                             })
-                            : (<FoodLogStats />)
+                            : (<FoodLogStats deliveries={this.state.deliveries} />)
                         :
                         (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
                     : null} 
