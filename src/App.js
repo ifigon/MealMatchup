@@ -6,6 +6,7 @@ import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { AccountType, Routes, PageContent } from './Enums';
 import './App.css';
+import mealMatchupLogo from './SignUpIn/mealMatchupLogo.png';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -164,6 +165,7 @@ class App extends Component {
                         <div>
                             <Redirect to={'/'} />
                             <SignUpInController
+                                logo={mealMatchupLogo}
                                 signInDenied={this.state.signInDenied}
                             />
                         </div>
