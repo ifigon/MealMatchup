@@ -119,15 +119,13 @@ class DescriptionContent extends Component {
             // record timestamp of when the write was done
             this.setState({ savedTimestamp: moment().valueOf() });
             this.setState({ isWaitingNotes: false, isEditingNotes: false }); 
-        });  
+        });
     }
 
     saveFoodItems(e) {
         e.preventDefault();
-
         // disable input fields first
         this.setState({ isWaitingFood: true });
-
         let newFoodItems = [];
         for (let i = 0; i < this.state.foodRows.length; i++) {
             let food = e.target['food' + i].value;
@@ -189,9 +187,9 @@ class DescriptionContent extends Component {
         }
 
         let isEditableFood = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingFoodItems);
+            !this.state.isEditingFoodItems && futureEvent);
         let isEditableNotes = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.isEditingNotes);
+            !this.state.isEditingNotes && futureEvent);
 
         return (
             <div className="wrapper">
@@ -199,7 +197,6 @@ class DescriptionContent extends Component {
                 <img className="content-icon groceries" src={groceries} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
-
                     {lastEdited &&
                         <p className="edited">
                             {' '}Last edited by {lastEdited.name},{' '}{lastEdited.time}

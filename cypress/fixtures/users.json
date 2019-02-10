@@ -1,0 +1,14 @@
+{
+  "Donating Agency": {
+    "email": "testdonate1member1@test.com",
+    "password": "123456"
+  },
+  "Receiving Agency": {
+    "email": "testreceiving@test.com",
+    "password": "123456"
+  },
+  "Deliverer Group": {
+    "email": "testdeliverergroup@test.com",
+    "password": "123456"
+  }
+}

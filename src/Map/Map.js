@@ -41,7 +41,8 @@ class Map extends Component{
         var address = keyOrder.map(key => props.address[key]).join(' ');
 
         // Convert address to Lat, Long
-        Geocode.fromAddress(address).then(
+        Geocode.fromAddress(address, GoogleMap_API_KEY).then(
+
             response => {
                 this.setState({
                     center: response.results[0].geometry.location,
