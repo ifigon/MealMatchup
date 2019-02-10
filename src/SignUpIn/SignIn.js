@@ -6,7 +6,6 @@ import './SignUpIn.css';
 class SignIn extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             error: null
         };

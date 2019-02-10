@@ -107,7 +107,6 @@ export default {
       }
 
       let url = `${GOOGLE_API}?address=${encodeURI(address)}`;
-
       if (apiKey || API_KEY) {
         API_KEY = apiKey || API_KEY;
         url += `&key=${API_KEY}`;
