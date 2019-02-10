@@ -10,35 +10,29 @@ class FoodLogStats extends Component{
     }
 
     componentDidMount() {
-        const deliveries = this.aggregateDonationStats();
-    }
-
-    aggregateDonationStats() {
         let allFoods = {};
-        console.log(this.props.deliveries);
-
         this.props.deliveries.forEach((delivery) => {
             if(delivery.description) {
                 let items = delivery.description.foodItems;
                 items.forEach((item) => {
                     let food = item.food.toLowerCase();
-                    let quantity = parseInt(item.quantity);
+                    let quantity = parseInt(item.quantity, 10);
                     allFoods[food] = allFoods.hasOwnProperty(food) ? 
                             allFoods[food] + quantity : quantity;
                 });
             }
         })
-        this.setState({foodAggregate : allFoods})
+        this.setState({foodAggregate : allFoods})    
     }
 
     render() {
         let totalQuantity = 0;
-        let foodData = Object.keys(this.state.foodAggregate).map((food) => {
+        let foodData = Object.keys(this.state.foodAggregate).map((food, index) => {
             totalQuantity += this.state.foodAggregate[food];
-            return <div>
-                <div className="food-name">{food}</div>
-                <div className="food-quantity">{this.state.foodAggregate[food]} lbs.</div>
-            </div>
+            return( <div key={index}>
+                        <div className="food-name">{food}</div>
+                        <div className="food-quantity">{this.state.foodAggregate[food]} lbs.</div>
+                    </div>);
         });
 
         return(

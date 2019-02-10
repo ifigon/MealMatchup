@@ -13,6 +13,11 @@ class MobilePickup extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidMount() {
+        //const test = await db.ref(this.props.dbRef).child('description').once('value');
+        //console.log(test);
+    }
+
     onSubmit(e){
         e.preventDefault();
         var pickedUpInfo = {
@@ -64,6 +69,12 @@ class MobilePickup extends React.Component {
                         <div id="ms-confirm">
                             <p className="ms-content-header">Confirmation Signature</p>
                             <p className="ms-notes">Get a confirmation signature from {this.props.da.primaryContact.name} at {this.props.da.agency} after you pick-up food items at the destination.</p>
+                            {/* TODO: Signature */}
+                            <input name="signature" className="ms-signature" type="text" placeholder="Signature" required/>
+                        </div>
+                        <div id="ms-delivery-items">
+                            <p className="ms-content-header">Confirm / Input Delivery Items</p>
+                            <p className="ms-notes">Make sure that all of the items you're delivering today are inputted with their weights so they can be tracked.</p>
                             {/* TODO: Signature */}
                             <input name="signature" className="ms-signature" type="text" placeholder="Signature" required/>
                         </div>
