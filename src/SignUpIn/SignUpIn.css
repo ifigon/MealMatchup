@@ -16,14 +16,11 @@
   font-family: "Open Sans", sans-serif;
 }
 
-.mealMatchupLogo {
-  margin: 0 auto;
-  position: relative;
-  float: left;
-  height: auto;
-  max-height: 100px;
+.meal-matchup-logo {
+  position: relative; left: 50%;
+  transform: translateX(-50%);
+  height: 100px;
   width: auto;
-  max-width: 100%;
   padding: 20px;
 }
 

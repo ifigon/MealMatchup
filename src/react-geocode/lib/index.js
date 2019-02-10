@@ -100,16 +100,13 @@ export default {
    * @returns {Promise}
    */
   fromAddress(address, apiKey) {
-    console.log(apiKey)
     return _asyncToGenerator(function* () {
       if (!address) {
-
         log("Provided address is invalid", true);
         return Promise.reject(new Error("Provided address is invalid"));
       }
 
       let url = `${GOOGLE_API}?address=${encodeURI(address)}`;
-      console.log(API_KEY)
       if (apiKey || API_KEY) {
         API_KEY = apiKey || API_KEY;
         url += `&key=${API_KEY}`;
