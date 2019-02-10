@@ -77,7 +77,7 @@ class FoodLogsContainer extends Component {
             });
         });
         const deliveries = await Promise.all(deliveryPromisesList);
-        this.setState({deliveries: deliveries});
+        this.setState({deliveries: deliveries.reverse()});
     }
 
 
