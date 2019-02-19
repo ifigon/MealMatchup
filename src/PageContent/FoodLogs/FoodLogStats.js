@@ -6,6 +6,7 @@ class FoodLogStats extends Component{
         super(props);
         this.state = {
             foodAggregate: {},
+            weeks: 5200,
         }
     }
 
@@ -25,6 +26,10 @@ class FoodLogStats extends Component{
         this.setState({foodAggregate : allFoods})    
     }
 
+    filterTime(weeksToFilter) {
+        this.setState({weeks: weeksToFilter})
+    }
+
     render() {
         let totalQuantity = 0;
         let foodData = Object.keys(this.state.foodAggregate).map((food, index) => {
@@ -35,17 +40,21 @@ class FoodLogStats extends Component{
                     </div>);
         });
 
+        let filterTimeButtons = [
+
+        ]
+
         return(
             <div className="food-log-margin">
                 <div className="food-history">
                     <div className="food-log-header"><span>{totalQuantity}</span> Total Pounds Donated</div>
                     <div className="food-log-time-selector">
-                        <button className="log-button-active">1 Week</button>
-                        <button>1 Month</button>
-                        <button>2 Months</button>
-                        <button>6 Months</button>
-                        <button>1 Year</button>
-                        <button>All Time</button>
+                        <button className={this.state.weeks === 1 ? "log-button-active" : ""} onClick={() => this.filterTime(1)}>1 Week</button>
+                        <button className={this.state.weeks === 4 ? "log-button-active" : ""} onClick={() => this.filterTime(4)}>1 Month</button>
+                        <button className={this.state.weeks === 8 ? "log-button-active" : ""} onClick={() => this.filterTime(8)}>2 Months</button>
+                        <button className={this.state.weeks === 24 ? "log-button-active" : ""} onClick={() => this.filterTime(24)}>6 Months</button>
+                        <button className={this.state.weeks === 52 ? "log-button-active" : ""} onClick={() => this.filterTime(52)}>1 Year</button>
+                        <button className={this.state.weeks === 5200 ? "log-button-active" : ""} onClick={() => this.filterTime(5200)}>All Time</button>
                     </div>
                 </div>
                 <div className="food-data">
