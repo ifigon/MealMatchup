@@ -5,7 +5,7 @@ import moment from 'moment';
 class FoodLogStats extends Component{
     constructor(props) {
         super(props);
-        this.allTime = 5200;  // arbitrary value to represent "all time" filter, filters for last 5200 weeks/ 100 years
+        this.allTime = 5200;  // arbitrary constant to represent "all time" filter, filters for last 5200 weeks/ 100 years
         this.state = {
             foodAggregate: {},
             weeks: this.allTime,        
