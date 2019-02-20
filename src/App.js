@@ -6,6 +6,7 @@ import 'typeface-roboto';
 import SignUpInController from './SignUpIn/SignUpInController.js';
 import { AccountType, Routes, PageContent } from './Enums';
 import './App.css';
+import mealMatchupLogo from './SignUpIn/mealMatchupLogo.png';
 
 // The main entry page to load when user is not signed in.
 // Currently (win18), it is just the first page of sign in/up (select account type).
@@ -22,7 +23,7 @@ class App extends Component {
             signInDenied: false,
             account: null,
             donatingAgency: null,
-            isChrome: !!window.chrome && !!window.chrome.webstore
+            isChrome: !!window.chrome
         };
 
         this.aggrAccount = this.aggrAccount.bind(this);
@@ -141,7 +142,7 @@ class App extends Component {
                         WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
                         </div>
                         :
-                        document.documentElement.clientWidth < 1400 ?
+                        document.documentElement.clientWidth < 1000 ?
                             <div className="browser-check">
                         WARNING! Your browser is too small, use at your own risk.
                             </div>
@@ -164,6 +165,7 @@ class App extends Component {
                         <div>
                             <Redirect to={'/'} />
                             <SignUpInController
+                                logo={mealMatchupLogo}
                                 signInDenied={this.state.signInDenied}
                             />
                         </div>

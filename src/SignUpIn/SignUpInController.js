@@ -52,7 +52,10 @@ class SignUpInController extends Component {
         }
     }
     render() {
-        return <div className="signup-wrapper">{this.showStep()}</div>;
+        return <div>
+                   <div className="signup-wrapper">{this.showStep()}</div>
+                   <img src={this.props.logo} className="meal-matchup-logo" alt="Logo"/>
+                </div>;
     }
 }
 export default SignUpInController;

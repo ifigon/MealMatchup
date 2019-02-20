@@ -4,6 +4,7 @@ import { AccountType, FoodUnit, StringFormat } from '../../Enums';
 import { deliveriesRef } from '../../FirebaseConfig';
 import { objectsAreEqual } from '../../utils/Utils';
 import './Content.css';
+import notes from '../../icons/food_logs.svg';
 import groceries from '../../icons/groceries.svg';
 import plus from '../../icons/plus-button.svg';
 
@@ -11,16 +12,22 @@ class DescriptionContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: false,
+            isEditingFoodItems: false,
+            isEditingNotes: false,
+            currentNote: this.props.delivery.notes,
             // 'waiting' is true after 'Saved' is clicked and before changes
             // from db is propagated down. While it is true, input fields are
             // disabled
-            waiting: false,
+            isWaitingNotes: false,
+            isWaitingFood: false,
             savedTimestamp: null,
             foodRows: null, // for rendering editable rows only
         };
 
-        this.edit = this.edit.bind(this);
+        this.saveNotes = this.saveNotes.bind(this);
+        this.getEditNotes = this.getEditNotes.bind(this); // used to get current note in textbox
+        this.editNotes = this.editNotes.bind(this);
+        this.editFoodItems = this.editFoodItems.bind(this);
         this.saveFoodItems = this.saveFoodItems.bind(this);
         this.addRow = this.addRow.bind(this);
     }
@@ -28,12 +35,19 @@ class DescriptionContent extends Component {
     componentWillReceiveProps(nextProps) {
         // update state to reflect values properly saved if we were waiting
         // on the update and the update happened after we wrote to db.
-        if (this.state.waiting && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
-            this.setState({ waiting: false, edit: false, foodRows: null });
+        if (this.state.isWaitingFood && nextProps.delivery.updatedTimestamp > this.state.savedTimestamp) {
+            this.setState({ isWaitingFood: false, isEditingFoodItems: false, foodRows: null });
         }
     }
+    
+    editNotes() {
+        this.setState({
+            isEditingNotes: true,
+            currentNote: this.props.delivery.notes,
+        });
+    }
 
-    edit() {
+    editFoodItems() {
         const description = this.props.delivery.description;
 
         // copy current food items into state for editing purposes
@@ -43,14 +57,14 @@ class DescriptionContent extends Component {
         }
 
         this.setState({
-            edit: true,
+            isEditingFoodItems: true,
             foodRows: foodRows,
         });
     }
 
     addRow() {
-        if (!this.state.edit) {
-            this.edit();
+        if (!this.state.isEditingFoodItems) {
+            this.editFoodItems();
         }
 
         this.setState(prevState => {
@@ -58,6 +72,10 @@ class DescriptionContent extends Component {
             foodRows.push({ food: '', quantity: 0, unit: '' });
             return { foodRows: foodRows };
         });
+    }
+
+    getEditNotes(e) {
+        this.setState({currentNote: e.target.value});
     }
 
     getEditDonation() {
@@ -92,12 +110,22 @@ class DescriptionContent extends Component {
         });
     }
 
+    saveNotes(e) {
+        e.preventDefault();
+        this.setState({ isWaitingNotes: true });
+        let updates = {};
+        updates['notes'] = this.state.currentNote;
+        deliveriesRef.child(this.props.delivery.id).update(updates).then(() => {
+            // record timestamp of when the write was done
+            this.setState({ savedTimestamp: moment().valueOf() });
+            this.setState({ isWaitingNotes: false, isEditingNotes: false }); 
+        });
+    }
+
     saveFoodItems(e) {
         e.preventDefault();
-
         // disable input fields first
-        this.setState({ waiting: true });
-
+        this.setState({ isWaitingFood: true });
         let newFoodItems = [];
         for (let i = 0; i < this.state.foodRows.length; i++) {
             let food = e.target['food' + i].value;
@@ -117,8 +145,8 @@ class DescriptionContent extends Component {
                 this.setState({ savedTimestamp: moment().valueOf() });
             });
         } else {
-            // nothing changed
-            this.setState({ waiting: false, edit: false });
+            //nothing changed
+            this.setState({ isWaitingFood: false, isEditingFoodItems: false });
         }
     }
 
@@ -158,22 +186,24 @@ class DescriptionContent extends Component {
             };
         }
 
-        let editable = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
-            !this.state.edit && futureEvent);
+        let isEditableFood = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
+            !this.state.isEditingFoodItems && futureEvent);
+        let isEditableNotes = (accountType === AccountType.DONATING_AGENCY_MEMBER &&
+            !this.state.isEditingNotes && futureEvent);
 
         return (
             <div className="wrapper">
+                {/*FOOD ITEMS*/}
                 <img className="content-icon groceries" src={groceries} alt="volunteer" />
                 <div className="content-wrapper content-wrapper-description">
                     <h1 className="section-header">Donation Description</h1>
-
                     {lastEdited &&
                         <p className="edited">
                             {' '}Last edited by {lastEdited.name},{' '}{lastEdited.time}
                         </p>
                     }
 
-                    {!this.state.edit ? (
+                    {!this.state.isEditingFoodItems ? (
                         <div>
                             {description && description.foodItems ? (
                                 <div>
@@ -186,13 +216,13 @@ class DescriptionContent extends Component {
                                             }
                                         </p>
                                     </div>
-                                    {editable &&
-                                        <button type="button" className="edit-button" onClick={this.edit}>
+                                    {isEditableFood &&
+                                        <button type="button" className="edit-button" onClick={this.editFoodItems}>
                                             Edit
                                         </button>
                                     }
                                 </div>
-                            ) : editable ? (
+                            ) : isEditableFood ? (
                                 <button className="add-food" onClick={this.addRow}>
                                     Add Food Items
                                 </button>
@@ -205,7 +235,7 @@ class DescriptionContent extends Component {
                     ) : (
                         <div className="content-details-wrapper">
                             <form className="edit-dg" onSubmit={this.saveFoodItems}>
-                                <fieldset className="fieldset-wrapper" disabled={this.state.waiting}>
+                                <fieldset className="fieldset-wrapper" disabled={this.state.isWaitingFood}>
                                     <div className="input-wrapper">
                                         <div className="food-label">
                                             Food Item<span className="required">*</span>
@@ -215,7 +245,7 @@ class DescriptionContent extends Component {
                                         </div>
                                         {this.getEditDonation()}
                                     </div>
-                                    {!this.state.waiting &&
+                                    {!this.state.isWaitingFood &&
                                         <img
                                             src={plus}
                                             alt="plus"
@@ -227,10 +257,51 @@ class DescriptionContent extends Component {
                                         <input
                                             type="submit"
                                             className="description-edit-button"
-                                            value={this.state.waiting ? 'saving...' : 'save'}
+                                            value={this.state.isWaitingFood ? 'saving...' : 'save'}
                                         />
                                     </div>
                                 </fieldset>
+                            </form>
+                        </div>
+                    )}
+                </div>
+
+                {/*NOTES*/}
+                <img className="content-icon" src={notes} alt="notes"/>
+                <div className="content-wrapper content-wrapper-description">
+                    <h1 className="section-header">Notes for Pickup</h1>
+                        
+                    {!this.state.isEditingNotes ? (
+                        <div>
+                            <div className="content-details-wrapper">
+                                {delivery.notes ? (
+                                    <p className="content-details description-content">
+                                        {delivery.notes}
+                                    </p>
+                                        
+                                ) : (
+                                    <p>Left empty</p>
+                                )}{' '}
+                            </div>
+                            {isEditableNotes &&
+                                <button type="button" className="edit-button" onClick={this.editNotes}>
+                                    Edit
+                                </button>
+                            }
+                        </div>
+                    ) : (
+                        <div className="content-details-wrapper">
+                            <form className="edit-dg" onSubmit={this.saveNotes}>
+                                <div className="input-wrapper">
+                                    <textarea value={this.state.currentNote} onChange={this.getEditNotes}/>
+                                </div>
+                                <div className="save-button-wrapper">
+                                    <input
+                                        type="submit"
+                                        className="description-edit-button"
+                                        value={this.state.isWaitingNotes ? 'saving...' : 'save'}
+                                    />
+                                </div>
                             </form>
                         </div>
                     )}

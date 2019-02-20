@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
 .signup-wrapper {
-  background-image: url("./SignUpBG.jpg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url("./SignUpBG.jpg");
   background-size: auto 100vh;
   background-repeat: no-repeat;
   width: 100vw;
@@ -14,6 +14,14 @@
   background-color: rgba(255, 255, 255, 0.95);
   height: 100vh;
   font-family: "Open Sans", sans-serif;
+}
+
+.meal-matchup-logo {
+  position: relative; left: 50%;
+  transform: translateX(-50%);
+  height: 100px;
+  width: auto;
+  padding: 20px;
 }
 
 .signup-content {

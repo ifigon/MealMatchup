@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './FoodLogsContainer.css';
 import FoodLogItem from './FoodLogItem';
+import FoodLogStats from './FoodLogStats';
 import { AccountType, DeliveryStatus } from '../../Enums';
 import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../FirebaseConfig';
 import moment from 'moment';
@@ -76,7 +77,7 @@ class FoodLogsContainer extends Component {
             });
         });
         const deliveries = await Promise.all(deliveryPromisesList);
-        this.setState({deliveries: deliveries});
+        this.setState({deliveries: deliveries.reverse()});
     }
 
 
@@ -116,13 +117,23 @@ class FoodLogsContainer extends Component {
         return(
             <div className="food-container ">
                 {/* TODO: Filter feature */}
+                <div className="food-log-margin">
+                    <ul className="food-log-nav-items">
+                        <li className="one" onClick={() => this.setState({showHistory: false})}>Total Donations</li>
+                        <li className="two" onClick={() => this.setState({showHistory: true})}>History</li>
+                        <div className={this.state.showHistory ? "underline section-active" : "underline"} />
+                    </ul>               
+                </div>
+                <hr className="food-log-margin" />
                 {this.state.deliveries !== null ? 
                     this.state.deliveries.length > 0 ?
-                        this.state.deliveries.map((completedDelivery, i) => {
-                            return (
-                                <FoodLogItem delivery={completedDelivery} key={i}/>
-                            );
-                        })
+                        this.state.showHistory ? 
+                            this.state.deliveries.map((completedDelivery, i) => {
+                                return (
+                                    <FoodLogItem delivery={completedDelivery} key={i}/>
+                                );
+                            })
+                            : (<FoodLogStats deliveries={this.state.deliveries} />)
                         :
                         (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
                     : null} 

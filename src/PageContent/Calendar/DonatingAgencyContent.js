@@ -7,7 +7,7 @@ class DonatingAgencyContent extends Component {
         const { donatingAgency, daContact } = this.props.delivery;
         return (
             <div className="wrapper">
-                <img className="content-icon" src={vitamins} alt="volunteer" />
+                <img className="content-icon" src={vitamins} alt="volunteer"/>
                 <div className="content-wrapper">
                     <h1 className="section-header">Dining Hall</h1>
                     <h2 className="organization">
