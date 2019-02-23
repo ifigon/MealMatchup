@@ -2,15 +2,67 @@ import React, { Component } from 'react';
 import Map from '../../Map/Map.js';
 import { AccountType } from '../../Enums';
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig.js';
+import moment from 'moment-timezone';
 
 class OrganizationDetails extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isEditing: false
+            isEditing: false,
+            times: [],
         };
+        this.convertTimes = this.convertTimes.bind(this);
+        this.dayRow = this.dayRow.bind(this);
+        this.dayNames = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+
+
     }
+
+    dayRow(i, day) {
+
+        var checkboxName = day + 'Check';
+        var startName = day + 'Start';
+        var endName = day + 'End';
+
+        // populate default values if exists
+        var checked = false;
+        var startTime = '';
+        var endTime = '';
+        var availabilities = this.props.org.availabilities;
+        if (availabilities && availabilities[i]) {
+            checked = true;
+            startTime = availabilities[i].startTimestamp;
+            endTime = availabilities[i].endTimestamp;
+            console.log('startTime:', startTime)
+        }
+
+        return (
+            <div className="row" key={day}> 
+                <input type="checkbox" name={checkboxName} defaultChecked={checked} />
+                <div className="day">{day}</div>
+                {/* TODO: AM/PM UI */}
+                <input type="time" name={startName} defaultValue={moment(startTime).format("HH:mm")} className="ra3-inputBox" />
+                <span className="ra3-spacing">to</span>
+                <input type="time" name={endName} defaultValue={moment(endTime).format("HH:mm")} className="ra3-inputBox" />
+            </div>
+        );
+    }
+
+    convertTimes() {
+        var convert = []
+        var dayNames = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+        for (var i = 0; i < this.props.org.availabilities.length; i++) {
+             if (this.props.org.availabilities[i]) {
+                convert.push(<li>{dayNames[i] + ' ' + moment(this.props.org.availabilities[i].startTimestamp).format("h:mm a") + '-' + moment(this.props.org.availabilities[i].endTimestamp).format("h:mm a")}</li>)
+            }
+            
+        }
+
+        return convert;
+    }
+
+    
 
     render() {
         return (
@@ -43,6 +95,12 @@ class OrganizationDetails extends Component {
                         {this.props.org.deliveryNotes ? <h6>Delivery Notes: {this.props.org.deliveryNotes}</h6> : <span />}
                         {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
                             <h6>Emergency Pickup Activated: {this.props.org.acceptEmergencyPickups ? 'Yes' : 'No'}</h6> 
+                            : 
+                            <span />
+                        }
+                        {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
+                            <h6>Availabilities: {this.convertTimes()}</h6> 
+                            
                             : 
                             <span />
                         }
@@ -83,8 +141,14 @@ class OrganizationDetails extends Component {
                                         :
                                         <span />
                                     }
+
                                     {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
                                         <label className="label-component details">Emergency Pickup</label>
+                                        :
+                                        <span />
+                                    }
+                                    {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
+                                        <label className="label-component details">Availability</label>
                                         :
                                         <span />
                                     }
@@ -111,7 +175,18 @@ class OrganizationDetails extends Component {
                                         <span />
                                     }
                                     {this.props.accountType === AccountType.RECEIVING_AGENCY ? 
-                                        <input type="checkbox" name="ep" defaultChecked={this.props.org.acceptEmergencyPickups}/>
+                                        <div>
+                                            <input type="checkbox" name="ep" defaultChecked={this.props.org.acceptEmergencyPickups}/><br /><br />
+                                        </div>
+                                        :
+                                        <span />
+                                    }
+                                    {this.props.accountType === AccountType.RECEIVING_AGENCY ?  
+                                        <div>        
+                                        {this.dayNames.map((day, i) => {
+                                            return this.dayRow(i, day);
+                                        })}
+                                        </div>
                                         :
                                         <span />
                                     }
@@ -148,10 +223,30 @@ class OrganizationDetails extends Component {
             zipcode: e.target.zip.value,
             officeNo: e.target.officeNo.value
         };
+        var availabilities = {};
+        for (let i in this.dayNames) {
+            var day = this.dayNames[i];
+            var checkboxName = day + 'Check';
+
+            // only add availability if checkbox was checked
+            if (e.target[checkboxName].checked ) {
+                var startStr = e.target[day + 'Start'].value; // eg "10:00"
+                var endStr = e.target[day + 'End'].value; // eg "17:00"
+                var dayTimeFormat = 'e HH:mm';  // eg "3 10:00" for Wed 10AM
+                var startTimestamp = moment(i + ' ' + startStr, dayTimeFormat);
+                var endTimestamp = moment(i + ' ' + endStr, dayTimeFormat);
+
+                availabilities[i] = {
+                    startTimestamp: startTimestamp.valueOf(),
+                    endTimestamp: endTimestamp.valueOf()
+                };
+            }
+        }
 
         let updates = {
             address: address,
             name: name,
+            availabilities: availabilities 
         };
 
         if (e.target.num_vol)

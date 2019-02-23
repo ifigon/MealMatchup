@@ -6,6 +6,7 @@ import MemberAccount from './MemberAccount';
 import PersonalAccount from './PersonalAccount';
 import './SCSettings0.css';
 import './SCSettings1.css';
+import moment from 'moment-timezone';
 
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig.js';
 import { pick } from 'lodash';
@@ -32,7 +33,6 @@ class Settings extends Component {
             });
         }
     }
-
     componentWillReceiveProps(nextProps) {
         if (this.props.account !== nextProps.account) {
             // remove listener
@@ -56,7 +56,26 @@ class Settings extends Component {
                 manager: pick(account, SettingsFields.MANAGER),
             });
         }
+        // if (account.accountType === AccountType.RECEIVING_AGENCY) {
+        //      this.convertTimes(account);
+        // }
     }
+
+    // convertTimes(account) {
+    //     var convert = []
+    //     console.log(this.account.org + 'ORG');
+    //     var dayNames = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+    //     for (var i = 0; i < this.org.availabilities.length; i++) {
+    //         if (this.state.org.availabilities[i]) {
+    //             convert.push(dayNames[i].toString() + ' ' + moment(this.state.org.availabilities[i].startTimestamp).format("h:mm a").toString()
+    //              + '-' + moment(this.state.org.availabilities[i].endTimestamp).format("h:mm a").toString());
+    //         }    
+    //     } 
+        
+        // this.setState({account.availabilities: convert});
+     //   console.log(convert)
+     //   console.log(this.org.availabilities)
+   // }
 
     async getDaInfo(account) {
         // get da org info
@@ -111,7 +130,7 @@ class Settings extends Component {
                                 <div>Loading...</div>  
                             }
                         </div>
-
+                        <div> {this.props.availabilities}</div>
                         <div className="scs-spacing" />
 
                         <div className="container">
