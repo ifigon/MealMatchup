@@ -56,26 +56,7 @@ class Settings extends Component {
                 manager: pick(account, SettingsFields.MANAGER),
             });
         }
-        // if (account.accountType === AccountType.RECEIVING_AGENCY) {
-        //      this.convertTimes(account);
-        // }
     }
-
-    // convertTimes(account) {
-    //     var convert = []
-    //     console.log(this.account.org + 'ORG');
-    //     var dayNames = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
-    //     for (var i = 0; i < this.org.availabilities.length; i++) {
-    //         if (this.state.org.availabilities[i]) {
-    //             convert.push(dayNames[i].toString() + ' ' + moment(this.state.org.availabilities[i].startTimestamp).format("h:mm a").toString()
-    //              + '-' + moment(this.state.org.availabilities[i].endTimestamp).format("h:mm a").toString());
-    //         }    
-    //     } 
-        
-        // this.setState({account.availabilities: convert});
-     //   console.log(convert)
-     //   console.log(this.org.availabilities)
-   // }
 
     async getDaInfo(account) {
         // get da org info
