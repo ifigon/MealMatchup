@@ -6,7 +6,6 @@ import MemberAccount from './MemberAccount';
 import PersonalAccount from './PersonalAccount';
 import './SCSettings0.css';
 import './SCSettings1.css';
-import moment from 'moment-timezone';
 
 import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig.js';
 import { pick } from 'lodash';
