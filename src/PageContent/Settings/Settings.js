@@ -32,6 +32,7 @@ class Settings extends Component {
             });
         }
     }
+    
     componentWillReceiveProps(nextProps) {
         if (this.props.account !== nextProps.account) {
             // remove listener
@@ -110,7 +111,7 @@ class Settings extends Component {
                                 <div>Loading...</div>  
                             }
                         </div>
-                        <div> {this.props.availabilities}</div>
+                        {/* <div> {this.props.availabilities}</div> */}
                         <div className="scs-spacing" />
 
                         <div className="container">
