@@ -110,6 +110,7 @@ class MobilePickup extends React.Component {
                         </div>
                     </div>
                     <form onSubmit={this.onSubmit}>
+                        <p className="ms-notes">Only one volunteer should fill out this form.</p>
                         <div className="ms-temp">
                             <p className="ms-content-header">Temperature Directions</p>
                             <p className="ms-notes">Take the initial temperature of the freezer where the food being delivered is stored before delivering.</p>
