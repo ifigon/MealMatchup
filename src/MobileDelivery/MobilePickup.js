@@ -110,6 +110,7 @@ class MobilePickup extends React.Component {
                         </div>
                     </div>
                     <form onSubmit={this.onSubmit}>
+                        <p className="ms-notes">Only one volunteer should fill out this form.</p>
                         <div className="ms-temp">
                             <p className="ms-content-header">Temperature Directions</p>
                             <p className="ms-notes">Take the initial temperature of the freezer where the food being delivered is stored before delivering.</p>
@@ -123,7 +124,7 @@ class MobilePickup extends React.Component {
                                 <ul className="mobile-food-list">
                                     {this.state.currentItems.map((item, idx) => (
                                         <li className="mobile-food-item" key={idx}>
-                                            <input type="text" placeholder="Add an item" value={item.food} onChange={this.changeFoodItem(idx, true)} />
+                                            <input type="text" placeholder="Add an item" value={item.food} onChange={this.changeFoodItem(idx, true)} required />
                                             <input type="number" placeholder={idx + 1} value={item.quantity} onChange={this.changeFoodItem(idx, false)} /><span>lbs.</span>
                                             <button type="button" onClick={() => this.deleteFoodItem(idx)}><img src={minus} alt="minus" /></button>
                                         </li>

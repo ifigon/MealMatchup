@@ -27,7 +27,6 @@ class FoodLogStats extends Component{
 
         this.props.deliveries.forEach((delivery) => {
             if(delivery.description && delivery.endTimestamp > timeCutOff) {
-                console.log(delivery);
                 let items = delivery.description.foodItems;
                 items.forEach((item) => {
                     let food = item.food.toLowerCase();
