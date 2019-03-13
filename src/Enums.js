@@ -167,6 +167,7 @@ exports.SettingsFields = {
         'deliveryNotes', 
         'acceptEmergencyPickups', 
         'uid',
+        'availabilities'
     ],
     MANAGER: [
         'primaryContact', 
