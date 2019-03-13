@@ -76,3 +76,45 @@
 .one:hover ~ .underline {
     margin: 0;
 }
+
+.add-delivery {
+    border-style: none;
+    color: #828282;
+}
+
+.add-delivery-container {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.add-delivery-warning {
+    padding: 20px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.red-text {
+    color: #F77676;
+}
+
+.warning-button {
+    margin: 15px;
+    font-size: 15pt;
+    border-radius: 5px;
+    padding: 6px;
+    border-color:#828282;
+}
+
+.warning-button-group {
+    display: flex;
+    justify-content: center;
+}
+
+#manual-dialog {
+    position: fixed;
+    width: 80%;
+    overflow-y: auto;
+    top: 5%;
+    height: 80vh;
+    padding: 30px;
+}

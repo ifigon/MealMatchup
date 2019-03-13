@@ -6,12 +6,16 @@ import { AccountType, DeliveryStatus } from '../../Enums';
 import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../FirebaseConfig';
 import moment from 'moment';
 import { pick } from 'lodash';
+import plus from '../../icons/plus-button.svg';
+import AddDeliveryModal from './AddDeliveryModal';
+
 
 class FoodLogsContainer extends Component {
     constructor(props){
         super(props);
         this.state = {
             deliveries: null,
+            modalOpen: false,
         };
     }
 
@@ -64,19 +68,33 @@ class FoodLogsContainer extends Component {
             rawDelivery => rawDelivery.status === DeliveryStatus.COMPLETED
         );
         const deliveryPromisesList = filteredRawDeliveries.map(rawDelivery => {
-            const agenciesInfoPromise = this.makeAgenciesInfoPromise( 
-                rawDelivery.delivererGroup,
-                rawDelivery.receivingAgency, 
-                rawDelivery.donatingAgency, 
-                rawDelivery.daContact,
-            );
-            return new Promise( async (resolve, reject) => {
-                const agenciesInfo = await Promise.all(agenciesInfoPromise);
-                const delivery = this.aggrDelivery(rawDelivery, agenciesInfo);
-                resolve(delivery);
-            });
+            if(!rawDelivery.manuallyAdded) {
+                const agenciesInfoPromise = this.makeAgenciesInfoPromise( 
+                    rawDelivery.delivererGroup,
+                    rawDelivery.receivingAgency, 
+                    rawDelivery.donatingAgency, 
+                    rawDelivery.daContact,
+                );
+                return new Promise( async (resolve, reject) => {
+                    const agenciesInfo = await Promise.all(agenciesInfoPromise);
+                    const delivery = this.aggrDelivery(rawDelivery, agenciesInfo);
+                    resolve(delivery);
+                });
+            } else {
+                return new Promise( async (resolve, reject) => {
+                    const agenciesInfo = [
+                        rawDelivery.manuallyAdded.delivererGroup,
+                        rawDelivery.manuallyAdded.receivingAgency,
+                        rawDelivery.manuallyAdded.donatingAgency,
+                        rawDelivery.manuallyAdded.daContact
+                    ]
+                    const delivery = this.aggrDelivery(rawDelivery, agenciesInfo);
+                    resolve(delivery);
+                });
+            }
         });
         const deliveries = await Promise.all(deliveryPromisesList);
+        console.log(deliveries);
         this.setState({deliveries: deliveries.reverse()});
     }
 
@@ -113,9 +131,16 @@ class FoodLogsContainer extends Component {
         return delivery;
     }
 
+    closeModal = () => {
+        this.setState({ modalOpen : false});
+    }
+
     render(){
         return(
             <div className="food-container ">
+                {this.state.modalOpen &&
+                    <AddDeliveryModal closeModal={this.closeModal} />
+                }
                 {/* TODO: Filter feature */}
                 <div className="food-log-margin">
                     <ul className="food-log-nav-items">
@@ -125,6 +150,11 @@ class FoodLogsContainer extends Component {
                     </ul>               
                 </div>
                 <hr className="food-log-margin" />
+                {this.state.showHistory &&
+                <div className="food-log-margin add-delivery-container">
+                    <img src={plus} alt="add delivery"/>
+                    <button className="add-delivery" onClick={() => this.setState({modalOpen : true})}>Add a Past Delivery</button>
+                </div>}
                 {this.state.deliveries !== null ? 
                     this.state.deliveries.length > 0 ?
                         this.state.showHistory ? 
