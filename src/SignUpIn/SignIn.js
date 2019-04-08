@@ -25,7 +25,6 @@ class SignIn extends Component {
     forgotPassword(e) {
         e.preventDefault()
         let email = e.target.email.value;
-
         auth
             .sendPasswordResetEmail(email)
             .then(user => {
@@ -38,6 +37,9 @@ class SignIn extends Component {
                     error: error.message
                 });
             });
+        this.setState({
+            forgot: false
+        })
     }
 
     signIn(e) {
