@@ -68,7 +68,7 @@ class AssignOption extends Component {
 
                     <div className="avi-detail avi-volunteers">
                         {deliverers &&
-                            deliverers.length === 2 && (
+                            (deliverers.length === 1 || deliverers.length === 2) && (
                             <button
                                 type="button"
                                 className="form-button copy"

@@ -37,19 +37,41 @@ class Edit extends Component {
                         <div className="form-parent">
                             {(() => {
                                 let volunteerRows = [];
-                                for (let i = 0; i < 2; i++) {
-                                    let present = deliverers && deliverers[i];
-                                    volunteerRows.push(
-                                        <div key={i} className="form-child">
-                                            <label className="label-component details">Student {i + 1}</label><br />
-                                            <input name={`name${(i + 1)}`} type="text" className="form-input" defaultValue={present ? deliverers[i].name : ''} required/><br />
-                                            <label className="label-component details">Phone</label><br />
-                                            <input name={`phone${(i + 1)}`} onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={present ? deliverers[i].phone : ''} required/><br />
-                                            <label className="label-component details">Email</label><br />
-                                            <input name={`email${(i + 1)}`} type="email" className="form-input" defaultValue={present ? deliverers[i].email : ''} required/>
-                                        </div>
-                                    );
-                                }
+                                // for (let i = 0; i < 2; i++) {
+                                //     let present = deliverers && deliverers[i];
+                                //     volunteerRows.push(
+                                //         <div key={i} className="form-child">
+                                //             <label className="label-component details">Student {i + 1}</label><br />
+                                //             <input name={`name${(i + 1)}`} type="text" className="form-input" defaultValue={present ? deliverers[i].name : ''} required/><br />
+                                //             <label className="label-component details">Phone</label><br />
+                                //             <input name={`phone${(i + 1)}`} onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={present ? deliverers[i].phone : ''} required/><br />
+                                //             <label className="label-component details">Email</label><br />
+                                //             <input name={`email${(i + 1)}`} type="email" className="form-input" defaultValue={present ? deliverers[i].email : ''} required/>
+                                //         </div>
+                                //     );
+                                // }
+                                let present = deliverers && deliverers[0];
+                                volunteerRows.push(
+                                    <div key={0} className="form-child">
+                                        <label className="label-component details">Student {1}</label><br />
+                                        <input name={`name${(1)}`} type="text" className="form-input" defaultValue={present ? deliverers[0].name : ''} required/><br />
+                                        <label className="label-component details">Phone</label><br />
+                                        <input name={`phone${(1)}`} onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={present ? deliverers[0].phone : ''} required/><br />
+                                        <label className="label-component details">Email</label><br />
+                                        <input name={`email${(1)}`} type="email" className="form-input" defaultValue={present ? deliverers[0].email : ''} required/>
+                                    </div>
+                                );
+                                present = deliverers && deliverers[1];
+                                volunteerRows.push(
+                                    <div key={1} className="form-child">
+                                        <label className="label-component details">Student {2}</label><br />
+                                        <input name={`name${(2)}`} type="text" className="form-input" defaultValue={present ? deliverers[1].name : ''}/><br />
+                                        <label className="label-component details">Phone</label><br />
+                                        <input name={`phone${(2)}`} onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-input" defaultValue={present ? deliverers[1].phone : ''}/><br />
+                                        <label className="label-component details">Email</label><br />
+                                        <input name={`email${(2)}`} type="email" className="form-input" defaultValue={present ? deliverers[1].email : ''}/>
+                                    </div>
+                                );
                                 return volunteerRows;
                             })()}
                             {/* <div className="form-child second-row">
@@ -68,17 +90,24 @@ class Edit extends Component {
 
     handleConfirmClick(e) {
         e.preventDefault();
+        console.log('sup');
         let d1 = {
             name: e.target.name1.value,
             phone: e.target.phone1.value,
             email: e.target.email1.value
         };
-        let d2 = {
-            name: e.target.name2.value,
-            phone: e.target.phone2.value,
-            email: e.target.email2.value
-        };
-        this.props.handleConfirmClick(d1, d2);
+        if (e.target.name2.value !== '') {
+            console.log('hey');
+            let d2 = {
+                name: e.target.name2.value,
+                phone: e.target.phone2.value,
+                email: e.target.email2.value
+            };
+            this.props.handleConfirmClick2(d1, d2);
+        } else {
+            console.log('yo');
+            this.props.handleConfirmClick1(d1);
+        }
     }
 }
 
