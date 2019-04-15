@@ -27,7 +27,7 @@ class PickupSummary extends React.Component {
             this.props.request.endCriteria.type === RequestEndCriteriaType.OCCUR
         ) {
             durationText =
-                this.props.request.endCriteria.value + ' pickups requested';
+                this.props.request.endCriteria.value + ' pickup(s) requested';
         } else {
             durationText =
                 'Ending ' +

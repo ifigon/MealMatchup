@@ -134,7 +134,7 @@ class RecurringPickupRequest extends Component {
         } else if (
             fields['occurTimes'] === '' ||
             !fields['occurTimes'] ||
-            fields['occurTimes'] < 2
+            fields['occurTimes'] < 1
         ) {
             formIsValid = false;
             errors['invalidOccurTimes'] = 'Pickup must recur at least once';
