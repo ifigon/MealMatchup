@@ -94,7 +94,6 @@ class FoodLogsContainer extends Component {
             }
         });
         const deliveries = await Promise.all(deliveryPromisesList);
-        console.log(deliveries);
         this.setState({deliveries: deliveries.reverse()});
     }
 
@@ -139,7 +138,7 @@ class FoodLogsContainer extends Component {
         return(
             <div className="food-container ">
                 {this.state.modalOpen &&
-                    <AddDeliveryModal closeModal={this.closeModal} />
+                    <AddDeliveryModal closeModal={this.closeModal} account={this.props.account} />
                 }
                 {/* TODO: Filter feature */}
                 <div className="food-log-margin">

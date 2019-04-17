@@ -115,6 +115,81 @@
     width: 80%;
     overflow-y: auto;
     top: 5%;
-    height: 80vh;
     padding: 30px;
+}
+
+.past-delivery-margin {
+    margin-left: 0px;
+}
+
+.past-delivery-margin-p{
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.dialog-radius {
+    border-radius: 1%;
+}
+
+.small-dialog {
+    height: 30vh;
+}
+
+.big-dialog {
+    height: 80vh;
+}
+
+.form-component-past-delivery {
+    width: 70%;
+    margin-bottom: 10px;
+    height: 25px;
+    border: 2px solid #bdbdbd;
+    font-size: 12px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.form-title {
+    width: 20%;
+    padding-top:10px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.past-delivery-inputs > h3 {
+    margin-bottom: 15px;
+}
+
+.close-button-img {
+    width: 18px;
+    height: 18px;
+    fill:#f77676;
+    display: block;
+}
+
+.close-button {
+	background: none;
+	color: inherit;
+    border: none;
+}
+
+.modal-header {
+    justify-content: space-between;
+}
+
+.past-delivery-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.past-delivery-modal-button {
+    display:block;
+    border: 3px solid #E0E0E0;
+    border-radius: 3px;
+    font-size: 12pt;
+    margin-left: 5px;
+    margin-right: 5px;
 }
