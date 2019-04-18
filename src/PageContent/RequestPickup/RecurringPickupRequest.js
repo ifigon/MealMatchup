@@ -400,7 +400,7 @@ class RecurringPickupRequest extends Component {
                                 <label>
                                     Repeats <span className="red">
                                     {(this.state.fields['endCriteria'] === RequestEndCriteriaType.OCCUR &&
-                                        this.state.fields['occurTimes'] == 1 ? "" : "*")}</span>
+                                        this.state.fields['occurTimes'] === '1' ? "" : "*")}</span>
                                 </label>
                                 <br />
                                 <select name="repeats" defaultValue="" required>
