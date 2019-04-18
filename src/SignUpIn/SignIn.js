@@ -79,7 +79,7 @@ class SignIn extends Component {
                             </div>
                             <div className="login-button-wrapper">
                                 <button type="submit" className="login-button">
-                                     Send Password
+                                     Reset Password
                                 </button>
                             </div>
                             <div className="signup-reroute">
@@ -136,10 +136,12 @@ class SignIn extends Component {
                                     login
                                 </button>
                             </div>
-                            <div className="forgot">
+                            <div className="forgot-button-wrapper">
                                 {/* TODO: Add functionality to reset username and password */}
                                 {/*<p className="forgot">forgot password?</p> */}
-                                <button onClick={this.setForgot}>Forgot password?</button>
+                                <button className="forgot-button" onClick={this.setForgot}>
+                                    Forgot password?
+                                </button>
                                 {/* <p className="forgot">forgot username?</p> */}
                             </div>
                             <div className="signup-reroute">
