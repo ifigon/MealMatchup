@@ -457,7 +457,6 @@ input.login-input {
   padding: 10px;
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
-  /*text-align: center;*/
 }
 
 .forgot-button-wrapper {
@@ -465,15 +464,6 @@ input.login-input {
   display: block;
   text-align: center;
 }
-
-/* .forgot-button-wrapper {
-  margin: 0 auto;
-  text-align: center;
-}
-p.forgot-button-wrapper {
-  color: #4f4f4f;
-  padding: 10px;
-} */
 
 p.forgot-button:hover {
   cursor: pointer;
