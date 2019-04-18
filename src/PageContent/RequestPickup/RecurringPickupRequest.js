@@ -28,7 +28,9 @@ class RecurringPickupRequest extends Component {
             primaryContact: {},
             raRequested: null,
             dgRequested: null,
-            submissionError: null
+            submissionError: null,
+            // required: true,
+            // star: "*"
         };
 
         this.formId = 'recurringRequestForm';
@@ -157,6 +159,8 @@ class RecurringPickupRequest extends Component {
         this.setState(prevState => {
             let fields = prevState.fields;
             fields[field] = val;
+            // star = (fields['occurTimes'] > 1) ? "*" : "";
+            // required = (fields['ocucurTimes'] > 1)
             return { fields: fields };
         });
     }
@@ -394,7 +398,9 @@ class RecurringPickupRequest extends Component {
                         <span className="flex">
                             <span className="grid">
                                 <label>
-                                    Repeats <span className="red">*</span>
+                                    Repeats <span className="red">
+                                    {(this.state.fields['endCriteria'] === RequestEndCriteriaType.OCCUR &&
+                                        this.state.fields['occurTimes'] == 1 ? "" : "*")}</span>
                                 </label>
                                 <br />
                                 <select name="repeats" defaultValue="" required>
