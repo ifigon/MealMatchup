@@ -41,8 +41,8 @@ class Edit extends Component {
                 <div className="form-container">
                     <form onSubmit={this.handleConfirmClick.bind(this)}>
                         <label className="label-component">Student Deliverers</label>
-                        <div className="form-child first-row second-row form-buttons-container"></div>
-                            <button className="form-button" type="button" onClick={this.handleAdd}> 
+                        <div className="form-child second-row form-buttons-container"></div>
+                            <button className="add-button" type="button" onClick={this.handleAdd}> 
                                 {this.state.numVolunteers === 1 ? "Add Second Volunteer" : "Remove Second Vounteer"}
                             </button> 
                         <div className="form-parent">
