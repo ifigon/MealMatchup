@@ -118,27 +118,6 @@
     "promise/catch-or-return": 2,
 
     // Warn against nested then() or catch() statements
-    "promise/no-nesting": 1,
-
-
-    // Custom rules for MealMatch project:
-    // same style rules as client side code
-    "indent": [
-        "error",
-        4
-      ],
-      "linebreak-style": [
-        "error",
-        "unix"
-      ],
-      "quotes": [
-        "error",
-        "single"
-      ],
-      "semi": [
-        "error",
-        "always"
-      ],
-      "no-unused-vars": 0
+    "promise/no-nesting": 1
   }
 }
