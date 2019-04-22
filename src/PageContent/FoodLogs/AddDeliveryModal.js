@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './FoodLogsContainer.css';
-import './FoodLogStats.css';
-import { StringFormat, InputFormat, DeliveryStatus } from '../../Enums'
+import firebase, {deliveryIndicesRef, deliveriesRef} from '../../FirebaseConfig';
+import { StringFormat, InputFormat, DeliveryStatus, AccountType } from '../../Enums'
 import { formatPhone } from '../../utils/Utils'
 import minus from '../../icons/minus-button.svg'
 import close from '../../icons/close.svg'
@@ -49,8 +49,6 @@ class AddDeliveryModal extends Component {
 
     submitDelivery = (event) => {
         event.preventDefault();
-
-        // HANDLE VALIDATION
         let reqTimezone = this.props.account.timezone;
         let dateTimeStringToTimestamp = (dateString, timeString) =>
             moment
@@ -60,6 +58,8 @@ class AddDeliveryModal extends Component {
                     reqTimezone
                 )
                 .valueOf();
+
+        // Format all data so that it mirrors the delivery object stored in Firebase
         let timestamp = dateTimeStringToTimestamp(
             event.target.deliveryDate.value,
             event.target.deliveryTime.value
@@ -67,7 +67,8 @@ class AddDeliveryModal extends Component {
 
         let manuallyAdded = {
             donatingAgency: event.target.donatingName.value,
-            daContact: event.target.donatingContactName.value,
+            daContact: event.target.donatingContactPhone.value,
+            raContact: event.target.receivingContactPhone.value,
             receivingAgency: event.target.receivingAgency.value,
             delivererGroup: event.target.delivererGroup.value
         }
@@ -126,8 +127,38 @@ class AddDeliveryModal extends Component {
 
         console.log(delivery);
 
-        // push to firebase
+        let account = this.props.account;
 
+        let agencyUid = 
+                account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
+
+
+        deliveryIndicesRef
+            .child(account.umbrella)
+            .child(agencyUid)
+            .push()
+
+        deliveriesRef
+            .push(delivery)
+            .then((snap) => {
+                // hide popup and clear form
+                this.props.closeModal();
+                let newKey = snap.key;
+                let deliveryIndex = { [newKey] : true };
+                console.log(deliveryIndex);
+
+                deliveryIndicesRef
+                    .child(account.umbrella)
+                    .child(agencyUid)
+                    .child(timestamp)
+                    .set(deliveryIndex);
+                //document.getElementById(this.formId).reset();
+                //this.setState({ showConfirmation: true });
+            })
+            .catch(error => {
+                console.log('catastrophic failure');
+                console.log(error);
+            });
 
         // next - check FoodLogsContainer to add a "manually added" note and make sure it won't break stuff
     }
@@ -153,8 +184,8 @@ class AddDeliveryModal extends Component {
                         </div>
                         <p className="past-delivery-margin-p">Leave input blank if unsure.</p>
                         <form className="past-delivery-inputs" onSubmit={this.submitDelivery}>
-                            <div className="d-flex"><div className="form-title">Date</div> <input name="deliveryDate" type="date" className="past-delivery-margin form-component-past-delivery"/></div>
-                            <div className="d-flex"><div className="form-title">Time</div> <input name="deliveryTime" type="time" className="past-delivery-margin form-component-past-delivery"/></div>
+                            <div className="d-flex"><div className="form-title">Date</div> <input name="deliveryDate" type="date" className="past-delivery-margin form-component-past-delivery" required/></div>
+                            <div className="d-flex"><div className="form-title">Time</div> <input name="deliveryTime" type="time" className="past-delivery-margin form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Notes</div> <input name="notes" type="text" className="form-component-past-delivery" /></div>
 
                             <h3>Donating Agency</h3>

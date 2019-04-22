@@ -88,18 +88,21 @@ class FoodLogItem extends Component{
                 <div className="heading">
                     <p className="delivery">Delivery Complete &nbsp;</p> 
                     <p className="date"> &nbsp; on &nbsp; {moment(delivery.deliveredInfo.timestamp).format('LLL')}</p>
+                    {delivery.manuallyAdded &&
+                        <p className="header-manual">Manually Added</p>
+                    }
                 </div>
                 <div className="flex">
                     <div className="info ">
                         <div className="subitem">
                             <p className="info-title">Donating Agency</p>
-                            <p className="info-subtitle">{delivery.donatingAgency.name} ({delivery.daContact.phone})</p>
+                            <p className="info-subtitle">{delivery.manuallyAdded ? delivery.manuallyAdded.donatingAgency : delivery.donatingAgency.name} - {delivery.manuallyAdded ? delivery.manuallyAdded.daContact : delivery.daContact.phone}</p>
                             <p className="info-detail">Signed by: {delivery.pickedUpInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
-                            <p className="info-subtitle">{delivery.receivingAgency.name} ({delivery.raContact.phone})</p>
+                            <p className="info-subtitle">{delivery.manuallyAdded ? delivery.manuallyAdded.receivingAgency : delivery.receivingAgency.name} - {delivery.manuallyAdded ? delivery.manuallyAdded.raContact : delivery.raContact.phone}</p>
                             <p className="info-detail">Signed by: {delivery.deliveredInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
@@ -129,7 +132,7 @@ class FoodLogItem extends Component{
                         </div>
                         <div className="subitem">
                             <p className="info-title">Picked Up Donation</p>
-                            <p className="info-subtitle">{delivery.delivererGroup.name}</p>
+                            <p className="info-subtitle">{delivery.manuallyAdded ? delivery.manuallyAdded.delivererGroup : delivery.delivererGroup.name}</p>
                             <div className="foodlog-deliverers flex">
                                 {
                                     delivery.deliverers.map((deliverer, i) => {

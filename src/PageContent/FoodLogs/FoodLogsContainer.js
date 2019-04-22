@@ -20,6 +20,10 @@ class FoodLogsContainer extends Component {
     }
 
     async componentDidMount(){
+        this.renderFoodItems();
+    }
+
+    async renderFoodItems() {
         const rawDeliveries = await this.fetchDeliveries();
         this.aggrFoodLogsInfo(rawDeliveries);
     }
@@ -133,6 +137,8 @@ class FoodLogsContainer extends Component {
     closeModal = () => {
         this.setState({ modalOpen : false});
     }
+
+
 
     render(){
         return(
