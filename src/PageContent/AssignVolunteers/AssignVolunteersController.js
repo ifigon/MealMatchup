@@ -162,54 +162,8 @@ class AssignVolunteersController extends Component {
     }
     
     handleConfirmClick2(d1, d2) {
-       // let updatedTime = moment().valueOf();
         let deliverers = [d1, d2];
         this.updateConfirmClick(deliverers);
-    //     if (this.deliverersAreEqual(deliverers, this.state.deliveries[this.state.selectedDeliveryId].deliverers)) {
-    //         // There was no change. I shouldn't send an update request,
-    //         // I should simply say that this delivery is up to date.
-    //         this.setState(prevState => {
-    //             let deliveries = prevState.deliveries;
-    //             deliveries[this.state.selectedDeliveryId].updatedTime = updatedTime + 1;
-    //             return {
-    //                 deliveries: deliveries,  // indicate that it is up to date, despite not triggering a db event
-    //                 onConfirm: true,
-    //                 hitUpdateTime: updatedTime,
-    //             };
-    //         });
-    //     } else {
-    //         let path = `/${this.state.selectedDeliveryId}/deliverers`;
-    //         let update = {};
-    //         update[path] = deliverers;
-    //         deliveriesRef.update(update).then(() => {
-    //             this.setState({
-    //                 onConfirm: true,
-    //                 hitUpdateTime: updatedTime,
-    //             });
-    //         });
-    //     }   
-    // }
-
-    // deliverersAreEqual(deliverers1, deliverers2) {
-    //     // this is to prevent us trying to make update requests if we don't
-    //     // change the deliverers
-    //     if (!deliverers1 && !deliverers2) {
-    //         return true; // nothing equals nothing
-    //     } else if ((deliverers1 && !deliverers2) || (deliverers2 && !deliverers1) 
-    //             || deliverers1.length !== deliverers2.length) {
-    //         return false;
-    //     }
-
-    //     for (let i = 0; i < deliverers1.length; i++) {
-    //         let curr1 = deliverers1[i];
-    //         let curr2 = deliverers2[i];
-    //         for (let key in curr1) {
-    //             if (curr1[key] !== curr2[key]) {
-    //                 return false;
-    //             }
-    //         }
-    //     }
-    //     return true;
     }
 
     handleCloseClick() {
@@ -244,7 +198,6 @@ class AssignVolunteersController extends Component {
                     deliveriesExist={this.state.deliveriesExist} 
                 />
                 : <div>Loading...</div>
-
             );
 
         case 1:
