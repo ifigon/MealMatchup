@@ -449,15 +449,23 @@ input.login-input {
   text-align: center;
 }
 
-.forgot {
+.forgot-button {
+  background-color: #4f4f4f;
+  color: white;
+  border-radius: 10px;
+  font-size: .9vw;
+  padding: 10px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+
+.forgot-button-wrapper {
   margin: 0 auto;
+  display: block;
   text-align: center;
 }
-p.forgot {
-  color: #4f4f4f;
-  padding: 10px;
-}
-p.forgot:hover {
+
+p.forgot-button:hover {
   cursor: pointer;
 }
 
