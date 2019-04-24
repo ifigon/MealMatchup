@@ -103,7 +103,21 @@
 
 .form-buttons-container {
     box-sizing: border-box;
-    margin-top: 28px;
+    margin-top: 170px;
+    position: absolute;
+}
+
+.add-button {
+    font-size: 10px;
+    margin-top: 10px;
+    padding: 8px 18px 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 250ms ease;
+    background-color: #9dcc6f;
+    color: white;
+    display: block;
+    width: 18%;
 }
 
 .form-button {

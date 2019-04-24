@@ -107,9 +107,8 @@ class AssignVolunteersController extends Component {
 
     }
 
-    handleConfirmClick(d1, d2) {
+    updateConfirmClick(deliverers) {
         let updatedTime = moment().valueOf();
-        let deliverers = [d1, d2];
         if (this.deliverersAreEqual(deliverers, this.state.deliveries[this.state.selectedDeliveryId].deliverers)) {
             // There was no change. I shouldn't send an update request,
             // I should simply say that this delivery is up to date.
@@ -156,6 +155,16 @@ class AssignVolunteersController extends Component {
         }
         return true;
     }
+    
+    handleConfirmClick1(d1) {
+        let deliverers = [d1];
+        this.updateConfirmClick(deliverers);
+    }
+    
+    handleConfirmClick2(d1, d2) {
+        let deliverers = [d1, d2];
+        this.updateConfirmClick(deliverers);
+    }
 
     handleCloseClick() {
         this.setState({
@@ -189,14 +198,14 @@ class AssignVolunteersController extends Component {
                     deliveriesExist={this.state.deliveriesExist} 
                 />
                 : <div>Loading...</div>
-
             );
 
         case 1:
             return (
                 <Edit
                     delivery={this.state.deliveries[this.state.selectedDeliveryId]}
-                    handleConfirmClick={this.handleConfirmClick.bind(this)}
+                    handleConfirmClick2={this.handleConfirmClick2.bind(this)}
+                    handleConfirmClick1={this.handleConfirmClick1.bind(this)}
                     handleCancelClick={this.handleCancelClick.bind(this)}
                 />
             );
