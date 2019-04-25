@@ -12,6 +12,7 @@ class FoodLogsContainer extends Component {
         super(props);
         this.state = {
             deliveries: null,
+            finishedCall: false,
         };
     }
 
@@ -78,6 +79,7 @@ class FoodLogsContainer extends Component {
         });
         const deliveries = await Promise.all(deliveryPromisesList);
         this.setState({deliveries: deliveries.reverse()});
+        this.setState({finishedCall: true});
     }
 
 
@@ -114,10 +116,13 @@ class FoodLogsContainer extends Component {
     }
 
     render(){
+      
         return(
             <div className="food-container ">
-                {/* TODO: Filter feature */}
-                <div className="food-log-margin">
+               {this.showStep()}
+                
+                {/*TODO: Filter feature*/}
+                {/* <div className="food-log-margin">
                     <ul className="food-log-nav-items">
                         <li className="one" onClick={() => this.setState({showHistory: false})}>Total Donations</li>
                         <li className="two" onClick={() => this.setState({showHistory: true})}>History</li>
@@ -136,8 +141,43 @@ class FoodLogsContainer extends Component {
                             : (<FoodLogStats deliveries={this.state.deliveries} />)
                         :
                         (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
-                    : null} 
+                        : null} */}
             </div>
+        ); 
+        
+    }
+
+    showStep() {
+        return (this.state.finishedCall 
+            ?
+                <div className="food-container ">
+                
+                    {/* TODO: Filter feature */}
+                    <div className="food-log-margin">
+                        <ul className="food-log-nav-items">
+                            <li className="one" onClick={() => this.setState({showHistory: false})}>Total Donations</li>
+                            <li className="two" onClick={() => this.setState({showHistory: true})}>History</li>
+                            <div className={this.state.showHistory ? "underline section-active" : "underline"} />
+                        </ul>               
+                    </div>
+                    <hr className="food-log-margin" />
+                    {this.state.deliveries !== null ? 
+                        this.state.deliveries.length > 0 ?
+                            this.state.showHistory ? 
+                                this.state.deliveries.map((completedDelivery, i) => {
+                                    return (
+                                        <FoodLogItem delivery={completedDelivery} key={i}/>
+                                    );
+                                })
+                                : (<FoodLogStats deliveries={this.state.deliveries} />)
+                            :
+                            (<h3 className="nothing-found-propmt">No Food Logs Found</h3>)
+                        : null} 
+                </div>
+            :
+                <div className="food-container loading">
+                    <div>Loading...</div>
+                </div>
         );
     }
 }
