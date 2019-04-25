@@ -12,7 +12,7 @@ class FoodLogsContainer extends Component {
         super(props);
         this.state = {
             deliveries: null,
-            finishedCall: false,
+            isLoading: true,
         };
     }
 
@@ -79,9 +79,8 @@ class FoodLogsContainer extends Component {
         });
         const deliveries = await Promise.all(deliveryPromisesList);
         this.setState({deliveries: deliveries.reverse()});
-        this.setState({finishedCall: true});
+        this.setState({isLoading: false});
     }
-
 
     makeAgenciesInfoPromise(dgId, raId, daId, daContactId) {
         const dgPromise = new Promise( async (resolve, reject) => {
@@ -118,7 +117,7 @@ class FoodLogsContainer extends Component {
     render(){
         return(
             <div className="food-container ">
-                {this.state.finishedCall ? (
+                {!this.state.isLoading ? (
                     <div>
                         <div className="food-log-margin">
                         <ul className="food-log-nav-items">
