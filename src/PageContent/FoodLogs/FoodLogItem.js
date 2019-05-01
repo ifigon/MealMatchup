@@ -15,11 +15,13 @@ class FoodLogItem extends Component{
         this.handleClickPrev = this.handleClickPrev.bind(this);
         this.handleClickNext = this.handleClickNext.bind(this);
     }
+
     handleClick(event){
         this.setState({
             currentPage: Number(event.target.id)
         });
     }
+
     handleClickPrev(){
         if(this.state.currentPage > 1){
             this.setState({
@@ -27,6 +29,7 @@ class FoodLogItem extends Component{
             });
         }
     }
+
     handleClickNext(){
         if(this.state.currentPage < this.state.pageNumbers){
             this.setState({
@@ -34,6 +37,7 @@ class FoodLogItem extends Component{
             });
         }
     }
+
     componentDidMount(){
         const { delivery } = this.props;
         let pageNumbers = delivery.description && delivery.description.foodItems ? 
@@ -48,6 +52,7 @@ class FoodLogItem extends Component{
             });
         }
     }
+
     render(){
         // TODO: Pagination for deliveries (foodlog cards)
         const { currentPage, foodPerPage } = this.state;
@@ -96,13 +101,13 @@ class FoodLogItem extends Component{
                     <div className="info ">
                         <div className="subitem">
                             <p className="info-title">Donating Agency</p>
-                            <p className="info-subtitle">{delivery.manuallyAdded ? delivery.manuallyAdded.donatingAgency : delivery.donatingAgency.name} - {delivery.manuallyAdded ? delivery.manuallyAdded.daContact : delivery.daContact.phone}</p>
+                            <p className="info-subtitle">{delivery.donatingAgency} - {delivery.daContact.phone}</p>
                             <p className="info-detail">Signed by: {delivery.pickedUpInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
-                            <p className="info-subtitle">{delivery.manuallyAdded ? delivery.manuallyAdded.receivingAgency : delivery.receivingAgency.name} - {delivery.manuallyAdded ? delivery.manuallyAdded.raContact : delivery.raContact.phone}</p>
+                            <p className="info-subtitle">{delivery.receivingAgency} - {delivery.raContact.phone}</p>
                             <p className="info-detail">Signed by: {delivery.deliveredInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
@@ -132,7 +137,7 @@ class FoodLogItem extends Component{
                         </div>
                         <div className="subitem">
                             <p className="info-title">Picked Up Donation</p>
-                            <p className="info-subtitle">{delivery.manuallyAdded ? delivery.manuallyAdded.delivererGroup : delivery.delivererGroup.name}</p>
+                            <p className="info-subtitle">{delivery.delivererGroup.name}</p>
                             <div className="foodlog-deliverers flex">
                                 {
                                     delivery.deliverers.map((deliverer, i) => {

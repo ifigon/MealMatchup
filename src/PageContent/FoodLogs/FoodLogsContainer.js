@@ -3,9 +3,9 @@ import './FoodLogsContainer.css';
 import FoodLogItem from './FoodLogItem';
 import FoodLogStats from './FoodLogStats';
 import { AccountType, DeliveryStatus } from '../../Enums';
-import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../FirebaseConfig';
+import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef, manualDeliveriesRef } from '../../FirebaseConfig';
 import moment from 'moment';
-import { pick } from 'lodash';
+import { pick, toArray } from 'lodash';
 import plus from '../../icons/plus-button.svg';
 import AddDeliveryModal from './AddDeliveryModal';
 
@@ -17,6 +17,7 @@ class FoodLogsContainer extends Component {
             deliveries: null,
             modalOpen: false,
         };
+        this.renderFoodItems = this.renderFoodItems.bind(this);
     }
 
     async componentDidMount(){
@@ -25,7 +26,13 @@ class FoodLogsContainer extends Component {
 
     async renderFoodItems() {
         const rawDeliveries = await this.fetchDeliveries();
-        this.aggrFoodLogsInfo(rawDeliveries);
+        let deliveries = await this.aggrFoodLogsInfo(rawDeliveries);
+        let manualDeliveries = await this.getManuallyAddedDeliveries();
+        let combinedDeliveries = deliveries.concat(manualDeliveries);
+        combinedDeliveries.sort((a, b) => {
+            return b.endTimestamp - a.endTimestamp;
+        });
+        this.setState({deliveries: combinedDeliveries});
     }
 
     async fetchDeliveries() {
@@ -72,35 +79,30 @@ class FoodLogsContainer extends Component {
             rawDelivery => rawDelivery.status === DeliveryStatus.COMPLETED
         );
         const deliveryPromisesList = filteredRawDeliveries.map(rawDelivery => {
-            if(!rawDelivery.manuallyAdded) {
-                const agenciesInfoPromise = this.makeAgenciesInfoPromise( 
-                    rawDelivery.delivererGroup,
-                    rawDelivery.receivingAgency, 
-                    rawDelivery.donatingAgency, 
-                    rawDelivery.daContact,
-                );
-                return new Promise( async (resolve, reject) => {
-                    const agenciesInfo = await Promise.all(agenciesInfoPromise);
-                    const delivery = this.aggrDelivery(rawDelivery, agenciesInfo);
-                    resolve(delivery);
-                });
-            } else {
-                return new Promise( async (resolve, reject) => {
-                    const agenciesInfo = [
-                        rawDelivery.manuallyAdded.delivererGroup,
-                        rawDelivery.manuallyAdded.receivingAgency,
-                        rawDelivery.manuallyAdded.donatingAgency,
-                        rawDelivery.manuallyAdded.daContact
-                    ]
-                    const delivery = this.aggrDelivery(rawDelivery, agenciesInfo);
-                    resolve(delivery);
-                });
-            }
+            const agenciesInfoPromise = this.makeAgenciesInfoPromise( 
+                rawDelivery.delivererGroup,
+                rawDelivery.receivingAgency, 
+                rawDelivery.donatingAgency, 
+                rawDelivery.daContact,
+            );
+            return new Promise( async (resolve, reject) => {
+                const agenciesInfo = await Promise.all(agenciesInfoPromise);
+                const delivery = this.aggrDelivery(rawDelivery, agenciesInfo);
+                resolve(delivery);
+            });
         });
         const deliveries = await Promise.all(deliveryPromisesList);
-        this.setState({deliveries: deliveries.reverse()});
+        return deliveries;
     }
 
+    async getManuallyAddedDeliveries() {
+        const { account } = this.props; 
+        const agencyUid = 
+            account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
+        const snap = await manualDeliveriesRef.child(agencyUid).once('value');
+        let deliveries = toArray(snap.val());
+        return deliveries;
+    }
 
     makeAgenciesInfoPromise(dgId, raId, daId, daContactId) {
         const dgPromise = new Promise( async (resolve, reject) => {
@@ -138,13 +140,11 @@ class FoodLogsContainer extends Component {
         this.setState({ modalOpen : false});
     }
 
-
-
     render(){
         return(
             <div className="food-container ">
                 {this.state.modalOpen &&
-                    <AddDeliveryModal closeModal={this.closeModal} account={this.props.account} />
+                    <AddDeliveryModal closeModal={this.closeModal} account={this.props.account} renderFoodItems={this.renderFoodItems} />
                 }
                 {/* TODO: Filter feature */}
                 <div className="food-log-margin">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './FoodLogsContainer.css';
-import firebase, {deliveryIndicesRef, deliveriesRef} from '../../FirebaseConfig';
+import {manualDeliveriesRef} from '../../FirebaseConfig';
 import { StringFormat, InputFormat, DeliveryStatus, AccountType } from '../../Enums'
 import { formatPhone } from '../../utils/Utils'
 import minus from '../../icons/minus-button.svg'
@@ -13,19 +13,10 @@ class AddDeliveryModal extends Component {
         this.state = {
             continue: false,
             currentItems: [],
-            fields: {},
+            error: ''
         };
         this.submitDelivery.bind(this);
     }
-
-    // handleChange(field, e) {
-    //     var val = e.target.value;
-    //     this.setState(prevState => {
-    //         let fields = prevState.fields;
-    //         fields[field] = val;
-    //         return { fields: fields };
-    //     });
-    // }
 
     changeFoodItem = (index, isName) => event => {
         const newFoodItems = this.state.currentItems.map((item, foodIndex) => {
@@ -49,6 +40,25 @@ class AddDeliveryModal extends Component {
 
     submitDelivery = (event) => {
         event.preventDefault();
+        let delivery = this.formatDataForEntry(event);
+        let account = this.props.account;
+        let agencyUid = 
+                account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid;
+
+        manualDeliveriesRef
+            .child(agencyUid)
+            .push(delivery)
+            .then((snap) => {
+                this.props.closeModal();
+            })    
+            .catch(error => {
+                this.setState({error: error});
+            });    
+            
+        this.props.renderFoodItems();
+    }
+
+    formatDataForEntry(event) {
         let reqTimezone = this.props.account.timezone;
         let dateTimeStringToTimestamp = (dateString, timeString) =>
             moment
@@ -59,19 +69,11 @@ class AddDeliveryModal extends Component {
                 )
                 .valueOf();
 
-        // Format all data so that it mirrors the delivery object stored in Firebase
+        // Format all data so that it mirrors the typical delivery object stored in Firebase
         let timestamp = dateTimeStringToTimestamp(
             event.target.deliveryDate.value,
             event.target.deliveryTime.value
         );
-
-        let manuallyAdded = {
-            donatingAgency: event.target.donatingName.value,
-            daContact: event.target.donatingContactPhone.value,
-            raContact: event.target.receivingContactPhone.value,
-            receivingAgency: event.target.receivingAgency.value,
-            delivererGroup: event.target.delivererGroup.value
-        }
 
         let raContact = {
             email: event.target.receivingEmail.value,
@@ -110,7 +112,16 @@ class AddDeliveryModal extends Component {
             foodItems: this.state.currentItems
         }
 
+        let daContact = {
+            name: event.target.donatingContactName.value,
+            phone: event.target.donatingContactPhone.value
+        }
+
         let delivery = {
+            daContact: daContact,
+            donatingAgency: event.target.donatingName.value, 
+            delivererGroup: event.target.delivererGroup.value,
+            receivingAgency: event.target.receivingAgency.value,
             type: 'recurring',
             status: DeliveryStatus.COMPLETED,
             timezone: this.props.account.timezone,
@@ -122,45 +133,10 @@ class AddDeliveryModal extends Component {
             notes: event.target.notes.value,
             deliveredInfo: deliveredInfo,
             pickedUpInfo: pickedUpInfo,
-            manuallyAdded: manuallyAdded
+            manuallyAdded: true
         }
 
-        console.log(delivery);
-
-        let account = this.props.account;
-
-        let agencyUid = 
-                account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
-
-
-        deliveryIndicesRef
-            .child(account.umbrella)
-            .child(agencyUid)
-            .push()
-
-        deliveriesRef
-            .push(delivery)
-            .then((snap) => {
-                // hide popup and clear form
-                this.props.closeModal();
-                let newKey = snap.key;
-                let deliveryIndex = { [newKey] : true };
-                console.log(deliveryIndex);
-
-                deliveryIndicesRef
-                    .child(account.umbrella)
-                    .child(agencyUid)
-                    .child(timestamp)
-                    .set(deliveryIndex);
-                //document.getElementById(this.formId).reset();
-                //this.setState({ showConfirmation: true });
-            })
-            .catch(error => {
-                console.log('catastrophic failure');
-                console.log(error);
-            });
-
-        // next - check FoodLogsContainer to add a "manually added" note and make sure it won't break stuff
+        return delivery;
     }
 
     render() {
@@ -227,7 +203,9 @@ class AddDeliveryModal extends Component {
                                 <p className="mobile-empty-items">It looks like no items have been inputted. Add them below.</p>
                             }
                             <button type="button" className="mobile-add-item past-delivery-margin" onClick={this.addFoodItem} ><img src="/static/media/plus-button.21dea89e.svg" alt="plus" /><span className="mobile-add-item-text">Add New Item</span></button><br/>
-
+                            {this.state.error && 
+                                <div className="add-delivery-error">{this.state.error}</div>
+                            }
                             <div className="past-delivery-button-container">
                                 <button type="submit" className="past-delivery-modal-button past-delivery-margin">Add Delivery</button>
                                 <button type="button" onClick={this.props.closeModal} className="past-delivery-modal-button past-delivery-margin">Exit</button>
