@@ -2,6 +2,13 @@
     margin: 120px 5% 30px 50px;
 }
 
+.loading {
+    font-family: 'Open Sans', sans-serif;
+    padding: 12px;
+    width: 75%;
+    margin-left: 200px;
+}
+
 .logs{
     margin-top: 200px;
 }
