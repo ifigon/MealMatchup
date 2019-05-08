@@ -157,7 +157,7 @@ class FoodLogsContainer extends Component {
                 <hr className="food-log-margin" />
                 {this.state.showHistory &&
                 <div className="food-log-margin add-delivery-container">
-                    <img src={plus} alt="add delivery"/>
+                    <img src={plus} alt="add delivery" className="add-delivery-button"/>
                     <button className="add-delivery" onClick={() => this.setState({modalOpen : true})}>Add a Past Delivery</button>
                 </div>}
                 {this.state.deliveries !== null ? 

@@ -158,25 +158,25 @@ class AddDeliveryModal extends Component {
                             <h1>Add Delivery Details</h1>
                             <button onClick={this.props.closeModal} className="close-button"><img src={close} alt="close modal" className="close-button-img"></img></button>
                         </div>
-                        <p className="past-delivery-margin-p">Leave input blank if unsure.</p>
+                        <p className="past-delivery-margin-p">Fields marked with a <span className="red">*</span> are required</p>
                         <form className="past-delivery-inputs" onSubmit={this.submitDelivery}>
-                            <div className="d-flex"><div className="form-title">Date</div> <input name="deliveryDate" type="date" className="past-delivery-margin form-component-past-delivery" required/></div>
-                            <div className="d-flex"><div className="form-title">Time</div> <input name="deliveryTime" type="time" className="past-delivery-margin form-component-past-delivery" required/></div>
+                            <div className="d-flex"><div className="form-title">Date <span className="red">*</span></div> <input name="deliveryDate" type="date" className="past-delivery-margin form-component-past-delivery" required/></div>
+                            <div className="d-flex"><div className="form-title">Time <span className="red">*</span></div> <input name="deliveryTime" type="time" className="past-delivery-margin form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Notes</div> <input name="notes" type="text" className="form-component-past-delivery" /></div>
 
                             <h3>Donating Agency</h3>
-                            <div className="d-flex"><div className="form-title">Agency Name</div> <input name="donatingName" type="text" className="form-component-past-delivery"/></div>
+                            <div className="d-flex"><div className="form-title">Agency Name <span className="red">*</span></div> <input name="donatingName" type="text" className="form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Contact Name</div> <input name="donatingContactName" type="text" className="form-component-past-delivery"/></div>
                             <div className="d-flex"><div className="form-title">Contact Phone</div> <input name="donatingContactPhone" onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-component-past-delivery" placeholder="555-555-5555" id="primaryPhone" /></div>
 
                             <h3>Receiving Agency</h3>
-                            <div className="d-flex"><div className="form-title">Agency Name</div> <input name="receivingAgency" type="text" className="form-component-past-delivery" /></div>
+                            <div className="d-flex"><div className="form-title">Agency Name <span className="red">*</span></div> <input name="receivingAgency" type="text" className="form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Contact Name</div> <input name="receivingContactName" type="text" className="form-component-past-delivery" /></div>
                             <div className="d-flex"><div className="form-title">Contact Phone</div> <input name="receivingContactPhone" onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-component-past-delivery" placeholder="555-555-5555" id="primaryPhone" /></div>
                             <div className="d-flex"><div className="form-title">Contact Email</div> <input name="receivingEmail" type="email" className="form-component-past-delivery" /></div>
 
                             <h3>Deliverer Group</h3>
-                            <div className="d-flex"><div className="form-title">Group Name</div> <input name="delivererGroup" type="text" className="form-component-past-delivery" /></div>
+                            <div className="d-flex"><div className="form-title">Group Name <span className="red">*</span></div> <input name="delivererGroup" type="text" className="form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Volunteer 1 Email</div> <input name="volunteerEmail" type="email" className="form-component-past-delivery" /></div>
                             <div className="d-flex"><div className="form-title">Volunteer 1 Name</div> <input name="volunteerName" type="text" className="form-component-past-delivery" /></div>
                             <div className="d-flex"><div className="form-title">Volunteer 1 Phone</div> <input name="volunteerPhone" onChange={formatPhone} type="tel" pattern={StringFormat.PHONE} className="form-component-past-delivery" placeholder="555-555-5555" id="primaryPhone" /></div>

@@ -201,3 +201,12 @@
     background-color: #f77676;
     border-radius: 3px;
 }
+
+.add-delivery-button {
+    width: 20px;
+    height: auto;
+}
+
+.red {
+    color:#F77676;
+}

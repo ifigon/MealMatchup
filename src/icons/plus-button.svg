@@ -1,21 +1,2 @@
-<svg width="22" height="22" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="Canvas" fill="none">
-<g id="ADD">
-<g id="action item">
-<g id="Ellipse">
-<circle cx="11" cy="11" r="11" fill="#F77676"/>
-</g>
-</g>
-<g id="add">
-<g id="Group">
-<g id="Group_2">
-<g id="Vector">
-<path d="M 11.2783 5.16278L 6.79472 5.16278L 6.79472 0.651164C 6.79472 0.445641 6.51737 0 5.96271 0C 5.40804 0 5.13069 0.445665 5.13069 0.651164L 5.13069 5.16281L 0.647116 5.16281C 0.442895 5.16278 0 5.44186 0 5.99998C 0 6.55809 0.442895 6.83719 0.647116 6.83719L 5.13072 6.83719L 5.13072 11.3488C 5.13072 11.5543 5.40804 12 5.96273 12C 6.51742 12 6.79474 11.5543 6.79474 11.3488L 6.79474 6.83719L 11.2783 6.83719C 11.4825 6.83719 11.9255 6.55814 11.9255 5.99998C 11.9255 5.44181 11.4825 5.16278 11.2783 5.16278Z" transform="translate(4.96899 5)" fill="white"/>
-</g>
-</g>
-</g>
-</g>
-</g>
-</g>
-</svg>
-
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 192 192" width="48px" height="48px"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,192v-192h192v192z" fill="none"/><g id="Layer_1"><g id="surface1_34_"><path d="M176,96c0,44.18 -35.82,80 -80,80c-44.18,0 -80,-35.82 -80,-80c0,-44.18 35.82,-80 80,-80c44.18,0 80,35.82 80,80z" fill="#2ecc71"/><path d="M84,56h24v80h-24z" fill="#ffffff"/><path d="M56,84h80v24h-80z" fill="#ffffff"/></g></g></g></svg>
