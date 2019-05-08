@@ -21,7 +21,14 @@ class ConfirmActivate extends Component {
                     </div>
                     <div className="confirm-button-wrapper">
                         <div
-                            onClick={this.props.confirmAccept}
+                            onClick={() => { 
+                                const { agencyUId, accountType, primaryContactData, confirmAccept } = this.props;
+                                if (accountType === 'Donating Agency') {
+                                    confirmAccept(agencyUId, primaryContactData.uid);
+                                } else {
+                                    confirmAccept(agencyUId, null);            
+                                }
+                            }}
                             className="verify-accept-popup verify-button-popup"
                         >
                             Confirm

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './PendingAccounts.css';
 import { AccountType } from '../../Enums';
 import VerifyAccount from './VerifyAccount';
+import { accountsRef, donatingAgenciesRef } from '../../FirebaseConfig';
 import ConfirmActivate from './ConfirmActivate';
 import ConfirmReject from './ConfirmReject';
 
@@ -21,6 +22,7 @@ class PendingAccountsListItem extends Component {
         this.confirmReject = this.confirmReject.bind(this);
         this.rejectPopUp = this.rejectPopUp.bind(this);
     }
+    
     openDialog() {
         this.setState({
             dialog: true
@@ -44,18 +46,60 @@ class PendingAccountsListItem extends Component {
             rejectPopUp: true
         });
     }
-    confirmAccept() {
+
+    confirmAccept(uid, daContactId) {
+        const updates = { isVerified: true, isActivated: true };
+        if (daContactId) { // accountType == donating agency 
+            donatingAgenciesRef.child(uid).update(updates);
+            accountsRef.child(daContactId).update(updates);
+        } else {
+            accountsRef.child(uid).update(updates);
+        }
         this.setState({
             acceptPopUp: false,
-            dialog: false
+            dialog: false,
         });
     }
-    confirmReject() {
+
+    async confirmReject(accountType, agencyUId, umbrellaUId, daContactId) {
+        // remove agency account
+        if (daContactId) { // accountType == donating agency 
+            donatingAgenciesRef.child(agencyUId).remove();
+            accountsRef.child(daContactId).remove();
+        } else {
+            accountsRef.child(agencyUId).remove();
+        }
+
+        // remove agency uid from umbrella
+        let accountRefChild = ''; // fields in umbrella account object
+        switch (accountType) {
+        case 'Receiving Agency':
+            accountRefChild = 'receivingAgencies';
+            break;
+        case 'Deliverer Group':
+            accountRefChild = 'delivererGroups';
+            break;
+        case 'Donating Agency': 
+            accountRefChild = 'donatingAgencies';
+            break;
+        default:
+            break;
+        }
+        // get all agency ids of that accountType
+        const agencyUIdsSnapshot = await accountsRef.child(`${umbrellaUId}/${accountRefChild}`).once('value');
+        // search for and remove agencyUId
+        agencyUIdsSnapshot.forEach(agencyUIdSnap => {
+            if (agencyUIdSnap.val() === agencyUId) {
+                accountsRef.child(`${umbrellaUId}/${accountRefChild}/${agencyUIdSnap.key}`).remove();
+            }
+        });
+        
         this.setState({
             rejectPopUp: false,
-            dialog: false
+            dialog: false,
         });
     }
+
     back() {
         this.setState({
             acceptPopUp: false,
@@ -64,8 +108,8 @@ class PendingAccountsListItem extends Component {
     }
 
     render() {
-        let keys = Object.keys(this.props.data);
-        let agencyObject = this.props.data[keys];
+        let key = Object.keys(this.props.data);
+        let agencyObject = this.props.data[key];
         let accountType = '';
         switch (agencyObject.accountType) {
         case AccountType.RECEIVING_AGENCY:
@@ -79,6 +123,7 @@ class PendingAccountsListItem extends Component {
         }
         let agencyName = agencyObject.name;
         let primaryContact = agencyObject.primaryContact.name;
+        let umbrellaUId = agencyObject.umbrella;
 
         let statusStyle = '';
         let statusText = '';
@@ -120,6 +165,9 @@ class PendingAccountsListItem extends Component {
                         back={this.back}
                         closeDialog={this.closeDialog}
                         agencyName={agencyName}
+                        agencyUId={key[0]}
+                        accountType={accountType}
+                        primaryContactData={agencyObject.primaryContact}
                     />
                 )}
                 {this.state.rejectPopUp && (
@@ -128,6 +176,10 @@ class PendingAccountsListItem extends Component {
                         back={this.back}
                         closeDialog={this.closeDialog}
                         agencyName={agencyName}
+                        agencyUId={key[0]}
+                        accountType={accountType}
+                        umbrellaUId={umbrellaUId}
+                        primaryContactData={agencyObject.primaryContact}
                     />
                 )}
             </div>
