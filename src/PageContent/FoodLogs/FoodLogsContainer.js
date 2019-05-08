@@ -31,8 +31,9 @@ class FoodLogsContainer extends Component {
         let manualDeliveries = await this.getManuallyAddedDeliveries();
         let combinedDeliveries = deliveries.concat(manualDeliveries);
         combinedDeliveries.sort((a, b) => {
-            return b.endTimestamp - a.endTimestamp;
+            return b.deliveredInfo.timestamp - a.deliveredInfo.timestamp;
         });
+        console.log(combinedDeliveries);
         this.setState({deliveries: combinedDeliveries});
         this.setState({isLoading: false});
     }
@@ -145,6 +146,9 @@ class FoodLogsContainer extends Component {
     render(){
         return(
             <div className="food-container ">
+                {this.state.modalOpen &&
+                    <AddDeliveryModal closeModal={this.closeModal} account={this.props.account} renderFoodItems={this.renderFoodItems} />
+                }
                 {!this.state.isLoading ? (
                     <div>
                         <div className="food-log-margin">
@@ -155,6 +159,11 @@ class FoodLogsContainer extends Component {
                         </ul>               
                     </div>
                     <hr className="food-log-margin" />
+                    {this.state.showHistory &&
+                    <div className="food-log-margin add-delivery-container">
+                        <img src={plus} alt="add delivery" className="add-delivery-button"/>
+                        <button className="add-delivery" onClick={() => this.setState({modalOpen : true})}>Add a Past Delivery</button>
+                    </div>}
                     {this.state.deliveries !== null ? 
                         this.state.deliveries.length > 0 ?
                             this.state.showHistory ? 

@@ -189,7 +189,7 @@ class AddDeliveryModal extends Component {
                             <div className="d-flex"><div className="form-title">At Receiving Agency</div> <input name="signedByReceiving" type="text" className="form-component-past-delivery"/></div>
                             <div className="d-flex"><div className="form-title">Freezer Temperature (F)</div> <input name="temperature" type="number" className="form-component-past-delivery"/></div>
                             
-                            <h3>Food Items</h3>
+                            <h3>Food Items <span className="red">*</span></h3>
                             { this.state.currentItems.length > 0 ? 
                                 <ul className="mobile-food-list past-delivery-margin">
                                     {this.state.currentItems.map((item, idx) => (
