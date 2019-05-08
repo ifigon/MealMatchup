@@ -6,10 +6,15 @@ class ReceivingAgencySignUp3 extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            req: [false, false, false, false, false, false, false]
+        };
+
         this.dayNames = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
 
         this.nextStep = this.nextStep.bind(this);
         this.dayRow = this.dayRow.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
     dayRow(i, day) {
@@ -30,14 +35,43 @@ class ReceivingAgencySignUp3 extends Component {
 
         return (
             <div className="row" key={day}> 
-                <input type="checkbox" name={checkboxName} defaultChecked={checked} />
+                <input type="checkbox" name={checkboxName} defaultChecked={checked} onChange={this.handleCheck} id={i} />
                 <div className="day">{day}</div>
                 {/* TODO: AM/PM UI */}
-                <input type="time" name={startName} defaultValue={startTime} className="ra3-inputBox" />
+                <input type="time" name={startName} defaultValue={startTime} className="ra3-inputBox" required={this.state.req[i]} onChange={this.handleTime} />
                 <span className="ra3-spacing">to</span>
-                <input type="time" name={endName} defaultValue={endTime} className="ra3-inputBox" />
+                <input type="time" name={endName} defaultValue={endTime} className="ra3-inputBox" required={this.state.req[i]} />
             </div>
         );
+    }
+
+    // Wherever this function returns add a required field over there before returning
+
+    checkDaysTime() {
+        let daysTimeList = document.getElementsByClassName('row');
+        for(let key in daysTimeList) {
+            if(daysTimeList[key].childNodes) {
+                let dayCheck = daysTimeList[key].childNodes[0].checked;
+                let startTime =  daysTimeList[key].childNodes[2].value.length;
+                let endTime = daysTimeList[key].childNodes[4].value.length;
+                if((dayCheck && (startTime === 0 || endTime === 0)) || 
+                (startTime > 0 && endTime === 0) || 
+                (startTime === 0 && endTime > 0) || 
+                (startTime > 0 && endTime > 0 && !dayCheck)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    handleCheck(e) {
+        let index = parseInt(e.target.id, 10);
+        let reqCopy = this.state.req;
+        reqCopy[index] = e.target.checked;
+        this.setState({
+            req: reqCopy
+        });
     }
 
     render() {
@@ -103,8 +137,10 @@ class ReceivingAgencySignUp3 extends Component {
             endLbs: e.target.endLbs.value,
         };
 
-        this.props.saveValues(data);
-        this.props.nextStep();
+        if(this.checkDaysTime()) {
+            this.props.saveValues(data);
+            this.props.nextStep();
+        }
     }
 }
 export default ReceivingAgencySignUp3;

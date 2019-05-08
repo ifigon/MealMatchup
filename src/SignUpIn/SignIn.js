@@ -62,6 +62,29 @@ class SignIn extends Component {
             });
     }
 
+    // TODO: Add UI
+    handleForgotPassword() {
+        let email = document.getElementById('email').value;
+        auth
+            .sendPasswordResetEmail(email)
+            .then(() => {
+                this.setState({
+                    emailSent: true
+                });
+            })
+            .catch(error => {
+                this.setState({
+                    error: error.message
+                });
+            });
+    }
+
+    handleForgotClick() {
+        this.setState({
+            onForgot: true
+        });
+    }
+
     render() {
         if (this.state.forgot) {
             return(
