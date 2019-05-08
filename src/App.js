@@ -130,6 +130,9 @@ class App extends Component {
         case Routes.SETTINGS:
             content = PageContent.SETTINGS;
             break;
+        case Routes.PENDING_ACCOUNTS:
+            content = PageContent.PENDING_ACCOUNTS;
+            break;
         default:
             content = PageContent.CALENDAR;
             break;
@@ -159,7 +162,14 @@ class App extends Component {
                                 content={content}
                                 signOut={this.signOut}
                             />
-                            {!path ? <Redirect to={'/calendar'} /> : null}
+                            {!path ? (
+                                this.state.account.accountType ===
+                                AccountType.UMBRELLA ? (
+                                        <Redirect to={'/pending-accounts'} />
+                                    ) : (
+                                        <Redirect to={'/calendar'} />
+                                    )
+                            ) : null}
                         </div>
                     ) : (
                         <div>

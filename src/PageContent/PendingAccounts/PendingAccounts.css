@@ -1,0 +1,105 @@
+.pending-accounts-wrapper {
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+  width: 900px;
+  margin: 120px auto 30px 260px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  padding: 40px 0px 40px 0px;
+  overflow: scroll;
+  height: 64vh;
+}
+
+.label {
+  display: inline;
+  padding: 65px;
+  color: #243847;
+  font-weight: 800;
+}
+
+.group-label {
+  padding-left: 50px;
+}
+
+.value {
+  display: inline-block;
+  padding: 20px;
+  color: #243847;
+  width: 200px;
+  font-size: 14px;
+}
+
+.group-value {
+  padding-left: 0px;
+}
+
+.pending-accounts-item-wrapper {
+  border: #dddddd 1px solid;
+  border-radius: 4px;
+  margin: 30px;
+  padding: 20px;
+}
+
+.status-button {
+  width: 100px;
+  color: white;
+  background-color: #5dc0f9;
+  border-radius: 3px;
+  display: inline-block;
+  text-align: center;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-left: -20px;
+}
+
+.verified {
+  background-color: #85bf4b;
+}
+.verified:hover {
+  cursor: auto;
+}
+.unverified {
+  background-color: #5dc0f9;
+}
+.unverified:hover {
+  cursor: pointer;
+}
+
+.emergency-pickup-note {
+  color: #4f4f4f;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.verify-truck-icon {
+  width: 70px;
+  vertical-align: 10px;
+}
+
+.emergency-pickup-content {
+  width: 50%;
+  display: inline-block;
+  margin-left: 40px;
+}
+
+.address-wrapper {
+  display: inline;
+}
+
+.no-pending-accounts {
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.close-dialog {
+  display: inline;
+}
+
+.close-x {
+  position: relative;
+  padding-left: 320px;
+  vertical-align: bottom;
+}
+.close-x:hover {
+  cursor: pointer;
+}

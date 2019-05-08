@@ -38,6 +38,7 @@ ReactDOM.render(
             <Route path="/food-logs" component={App} />
             <Route path="/settings" component={App} />
             <Route path="/request-pickup" component={App} />
+            <Route path="/pending-accounts" component={App} />
         </Switch>
     </Router>,
     document.getElementById('root')

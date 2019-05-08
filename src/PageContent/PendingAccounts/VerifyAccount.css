@@ -1,0 +1,121 @@
+* {
+  font-family: "Open Sans", sans-serif;
+}
+.verify-accounts-wrapper {
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+  width: 759px;
+  margin: 120px auto 0px -49px;
+  height: 61vh;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  padding: 70px;
+  padding-top: 40px;
+  overflow: scroll;
+  top: 0px;
+}
+
+.verify-header {
+  color: #243847;
+  font-size: 24px;
+}
+
+.subheader {
+  font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.address {
+  color: #243847;
+  font-size: 14px;
+}
+.officeNo {
+  color: #243847;
+  font-size: 14px;
+  padding-top: 10px;
+}
+
+.deliveryNote {
+  padding-top: 5px;
+  color: #828282;
+  font-size: 12px;
+}
+
+.contact-value {
+  font-size: 14px;
+  padding-top: 5px;
+  color: #243847;
+}
+.gray-contact {
+  color: #828282;
+  font-size: 14px;
+}
+
+.address-wrapper {
+  margin-top: 30px;
+  margin-left: 400px;
+  display: block;
+}
+
+.verify-map-wrapper {
+  vertical-align: top;
+  position: absolute;
+  float: left;
+  margin-top: 30px;
+}
+
+.agency-wrapper {
+  position: relative;
+  margin-top: 30px;
+  margin-left: 400px;
+}
+
+.emergency-pickup-wrapper {
+  margin-left: 280px;
+  position: relative;
+}
+
+.verify-emergency-pickup-content {
+  width: 300px;
+  display: inline-block;
+}
+.verify-truck-icon {
+  margin-right: 50px;
+}
+
+.verify-button {
+  width: 80px;
+  padding: 5px 0px 5px 0px;
+  border-radius: 10px;
+  text-align: center;
+  display: inline-block;
+  margin: 10px;
+  float: right;
+}
+.verify-button:hover {
+  cursor: pointer;
+}
+
+.verify-accept {
+  color: #5dc0f9;
+  border: solid #5dc0f9 1px;
+}
+.verify-reject {
+  border: solid #b2b2b2 1px;
+  color: #b2b2b2;
+}
+
+.verify-accept:active,
+.verify-accept:hover {
+  background-color: #5dc0f9;
+  color: white;
+}
+
+.verify-reject:active,
+.verify-reject:hover {
+  background-color: #b2b2b2;
+  color: white;
+}
