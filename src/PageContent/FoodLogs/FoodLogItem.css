@@ -107,3 +107,10 @@ p{
 .hidden{
     display: none;
 }
+
+.header-manual {
+    flex-grow: 100;
+    text-align: right;
+    font-size: 15px;
+    color: #828282;
+}

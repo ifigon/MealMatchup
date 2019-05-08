@@ -3,9 +3,12 @@ import './FoodLogsContainer.css';
 import FoodLogItem from './FoodLogItem';
 import FoodLogStats from './FoodLogStats';
 import { AccountType, DeliveryStatus } from '../../Enums';
-import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef } from '../../FirebaseConfig';
+import { accountsRef, deliveriesRef, deliveryIndicesRef, donatingAgenciesRef, manualDeliveriesRef } from '../../FirebaseConfig';
 import moment from 'moment';
-import { pick } from 'lodash';
+import { pick, toArray } from 'lodash';
+import plus from '../../icons/plus-button.svg';
+import AddDeliveryModal from './AddDeliveryModal';
+
 
 class FoodLogsContainer extends Component {
     constructor(props){
@@ -13,12 +16,25 @@ class FoodLogsContainer extends Component {
         this.state = {
             deliveries: null,
             isLoading: true,
+            modalOpen: false,
         };
+        this.renderFoodItems = this.renderFoodItems.bind(this);
     }
 
     async componentDidMount(){
+        this.renderFoodItems();
+    }
+
+    async renderFoodItems() {
         const rawDeliveries = await this.fetchDeliveries();
-        this.aggrFoodLogsInfo(rawDeliveries);
+        let deliveries = await this.aggrFoodLogsInfo(rawDeliveries);
+        let manualDeliveries = await this.getManuallyAddedDeliveries();
+        let combinedDeliveries = deliveries.concat(manualDeliveries);
+        combinedDeliveries.sort((a, b) => {
+            return b.endTimestamp - a.endTimestamp;
+        });
+        this.setState({deliveries: combinedDeliveries});
+        this.setState({isLoading: false});
     }
 
     async fetchDeliveries() {
@@ -78,8 +94,16 @@ class FoodLogsContainer extends Component {
             });
         });
         const deliveries = await Promise.all(deliveryPromisesList);
-        this.setState({deliveries: deliveries.reverse()});
-        this.setState({isLoading: false});
+        return deliveries;
+    }
+
+    async getManuallyAddedDeliveries() {
+        const { account } = this.props; 
+        const agencyUid = 
+            account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
+        const snap = await manualDeliveriesRef.child(agencyUid).once('value');
+        let deliveries = toArray(snap.val());
+        return deliveries;
     }
 
     makeAgenciesInfoPromise(dgId, raId, daId, daContactId) {
@@ -112,6 +136,10 @@ class FoodLogsContainer extends Component {
         delivery.donatingAgency = daInfo.name;
         delivery.daContact = pick(daContactInfo, ['name', 'phone']);
         return delivery;
+    }
+
+    closeModal = () => {
+        this.setState({ modalOpen : false});
     }
 
     render(){

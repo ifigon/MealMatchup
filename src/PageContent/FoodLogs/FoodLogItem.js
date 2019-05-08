@@ -15,11 +15,13 @@ class FoodLogItem extends Component{
         this.handleClickPrev = this.handleClickPrev.bind(this);
         this.handleClickNext = this.handleClickNext.bind(this);
     }
+
     handleClick(event){
         this.setState({
             currentPage: Number(event.target.id)
         });
     }
+
     handleClickPrev(){
         if(this.state.currentPage > 1){
             this.setState({
@@ -27,6 +29,7 @@ class FoodLogItem extends Component{
             });
         }
     }
+
     handleClickNext(){
         if(this.state.currentPage < this.state.pageNumbers){
             this.setState({
@@ -34,6 +37,7 @@ class FoodLogItem extends Component{
             });
         }
     }
+
     componentDidMount(){
         const { delivery } = this.props;
         let pageNumbers = delivery.description && delivery.description.foodItems ? 
@@ -48,6 +52,7 @@ class FoodLogItem extends Component{
             });
         }
     }
+
     render(){
         // TODO: Pagination for deliveries (foodlog cards)
         const { currentPage, foodPerPage } = this.state;
@@ -88,18 +93,21 @@ class FoodLogItem extends Component{
                 <div className="heading">
                     <p className="delivery">Delivery Complete &nbsp;</p> 
                     <p className="date"> &nbsp; on &nbsp; {moment(delivery.deliveredInfo.timestamp).format('LLL')}</p>
+                    {delivery.manuallyAdded &&
+                        <p className="header-manual">Manually Added</p>
+                    }
                 </div>
                 <div className="flex">
                     <div className="info ">
                         <div className="subitem">
                             <p className="info-title">Donating Agency</p>
-                            <p className="info-subtitle">{delivery.donatingAgency.name} ({delivery.daContact.phone})</p>
+                            <p className="info-subtitle">{delivery.donatingAgency} - {delivery.daContact.phone}</p>
                             <p className="info-detail">Signed by: {delivery.pickedUpInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.pickedUpInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
                         <div className="subitem">
                             <p className="info-title">Receiving Agency</p>
-                            <p className="info-subtitle">{delivery.receivingAgency.name} ({delivery.raContact.phone})</p>
+                            <p className="info-subtitle">{delivery.receivingAgency} - {delivery.raContact.phone}</p>
                             <p className="info-detail">Signed by: {delivery.deliveredInfo.signature}</p>
                             <p className="info-detail">Timestamp: {moment(delivery.deliveredInfo.timestamp).format(StringFormat.TIME)}</p>
                         </div>
