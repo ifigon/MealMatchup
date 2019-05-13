@@ -403,7 +403,7 @@ class RecurringPickupRequest extends Component {
                                         this.state.fields['occurTimes'] === '1' ? "" : "*")}</span>
                                 </label>
                                 <br />
-                                <select name="repeats" defaultValue="" required>
+                                <select name="repeats" defaultValue="" required={this.state.fields['occurTimes'] !== '1'}>
                                     <option value="" disabled>
                                         Select
                                     </option>
