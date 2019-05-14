@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const enums = require('../../Enums.js');
 const moment = require('moment-timezone');
 const utils = require('../../Utils.js');
+const admin = require('firebase-admin');
 
 const nt = enums.NotificationType;
 
@@ -124,10 +125,26 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
         notifType = nt.RECURRING_PICKUP_REJECTED_DG;
     }
 
-    let promises = [
-        requestSnap.ref.child('status').set(rejectType),
-        multiNotify(accounts, requestPath, notifType),
-    ];
+    let promises = [];
+
+    // If all RA's rejected, notify DA with this sendgrid ID: d-45fa851d56ce4a1e84bbfe602ef797c3
+    if(notifType === nt.RECURRING_PICKUP_REJECTED_RA) {
+        promises = [
+            requestSnap.ref.child('status').set(rejectType),
+            multiNotify(accounts, requestPath, notifType, 'd-45fa851d56ce4a1e84bbfe602ef797c3'),
+        ];    
+        // else if all DGs reject, nitify DA and RA with sendgrid ID: d-1d1f04d0b4024d41bdbd335a1607fdca
+    } else if(notifType === nt.RECURRING_PICKUP_REJECTED_DG) {
+        promises = [
+            requestSnap.ref.child('status').set(rejectType),
+            multiNotify(accounts, requestPath, notifType, 'd-1d1f04d0b4024d41bdbd335a1607fdca'),
+        ];   
+    }
+
+    // let promises = [
+    //     requestSnap.ref.child('status').set(rejectType),
+    //     multiNotify(accounts, requestPath, notifType),
+    // ];
     return Promise.all(promises);
 }
 // ----------------------- End Common -----------------------
@@ -261,13 +278,15 @@ function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
         {label: 'RA', ref: raRef},
         {label: 'DG', ref: dgRef},
     ];
-    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED);
+    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED, 'd-3248d17c3f2a4f70b07146400bde2f8e');
 }
 // ----------------------- End Listener 2 -----------------------
 
 
 // ----------------------- Utils -----------------------
-function multiNotify(accounts, requestPath, notifType) {
+function multiNotify(accounts, requestPath, notifType, templateId) {
     return Promise.all(accounts.map(acct => 
-        utils.notifyRequestUpdate(acct.label, acct.ref, requestPath, notifType)));
+        // d-3248d17c3f2a4f70b07146400bde2f8e is the template ID for a send grid email template to notify all parties that the delivery has been confirmed.
+        utils.notifyRequestUpdate(acct.label, acct.ref, requestPath, notifType, templateId))
+    );
 }
