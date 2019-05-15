@@ -23,7 +23,7 @@ class App extends Component {
             signInDenied: false,
             account: null,
             donatingAgency: null,
-            isChrome: !!window.chrome
+            isChrome: !!window.chrome,
         };
 
         this.aggrAccount = this.aggrAccount.bind(this);
@@ -152,6 +152,7 @@ class App extends Component {
                             :
                             null
                 }
+
                 {this.state.authenticated ? (
                     this.state.account ? (
                         /* Show Calendar page if user is logged in */
@@ -182,7 +183,9 @@ class App extends Component {
                     )
                 ) : (
                     /* Show blank page if initial authentication hasn't finished */
-                    <div />
+                    <div className="loading">
+                        <div>Loading...</div>
+                    </div>
                 )}
             </div>
         );
