@@ -134,7 +134,7 @@ class SignIn extends Component {
                             {this.state.error && (
                                 /* TODO: give better error msg */
                                 <p className="sign-in-error">
-                                    Unable to log in.
+                                    Unable to log in. Incorrect email or password entered.
                                 </p>
                             )}
                             <div className="login-button-wrapper">
