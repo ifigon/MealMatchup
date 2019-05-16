@@ -183,7 +183,7 @@ class App extends Component {
                     )
                 ) : (
                     /* Show blank page if initial authentication hasn't finished */
-                    <div className="loading">
+                    <div className="loading-app">
                         <div>Loading...</div>
                     </div>
                 )}
