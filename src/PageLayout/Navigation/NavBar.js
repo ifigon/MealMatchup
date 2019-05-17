@@ -10,6 +10,7 @@ import settings from '../../icons/settings.svg';
 import truck from '../../icons/truck.svg';
 import assign_volunteer from '../../icons/assign_volunteer.svg';
 import signout from '../../icons/logout.svg';
+import hand from '../../icons/hand.png';
 import { Link } from 'react-router-dom';
 
 
@@ -40,6 +41,21 @@ class NavBar extends Component {
                         />
                     </Link>
                 )}
+
+                {this.props.accountType === AccountType.DONATING_AGENCY_MEMBER && (
+                    <Link to={'/general-volunteer'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content ===
+                                PageContent.GENERAL_VOLUNTEER
+                            }
+                            item={PageContent.GENERAL_VOLUNTEER}
+                            icon={hand}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+
                 {this.props.accountType === AccountType.DELIVERER_GROUP && (
                     <Link to={'/assign-volunteers'} className="nav-link">
                         {' '}

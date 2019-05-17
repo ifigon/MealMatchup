@@ -1,0 +1,229 @@
+.form {
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+    width: 600px;
+    margin: 140px auto 30px auto;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    padding: 40px 0px 40px 0px;
+    overflow: hidden;
+}
+
+.flex {
+    justify-content: space-between;
+}
+
+.red {
+    color: #F77676;
+}
+
+#form-heading {
+    font-size: 24px;
+    color: #243847;
+    margin: 0px 0px 10px 0px;
+}
+
+label {
+    font-size: 18px;
+    color: #828282;
+}
+
+.info {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.form input {
+    border: 1px solid #828282;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 15px;
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    color: #5DC0F9;
+    margin-bottom: 5px;
+    text-indent: 3px;
+}
+
+.form select {
+    border: 1px solid #828282;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 40px;
+    width: 200px;
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    color: #5DC0F9;
+    margin: 10px 0px 20px 0px;
+    font-size: 15px;
+}
+
+.smaller {
+    font-size: 15px;
+}
+
+    .smaller input {
+        height: 30px;
+        border: 1px solid #828282;
+        box-sizing: border-box;
+        border-radius: 4px;
+        text-indent: 3px;
+        font-size: 13px;
+    }
+
+        .smaller input[type="date"]::-webkit-calendar-picker-indicator {
+            display: block;
+            background: url('../../icons/calendar_for_date.svg') no-repeat;
+            width: 13px;
+            height: 13px;
+            border-width: thin;
+        }
+
+textarea {
+    resize: none;
+    outline: none;
+    width: 100%;
+    height: 100px;
+    border-radius: 4px;
+    border: 1px solid #828282;
+    margin-bottom: 30px;
+    color: #5DC0F9;
+    font-size: 15px;
+}
+
+input[name="numRecurrences"] {
+    width: 40px;
+    margin: 0px 10px 0px 16px;
+    text-align: center;
+}
+
+input[name="startDate"] {
+    width: 200px;
+    margin-top: 10px;
+}
+
+input[name="endDate"] {
+    width: 140px;
+    margin: 10px 0px 20px 10px;
+    height: 30px;
+}
+
+input[type="time"] {
+    width: 200px;
+    margin: 10px 0px 20px 0px;
+    background-color: white;
+}
+
+input[type="radio"] {
+    /* position: absolute; */
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    display: inline-block;
+    margin: 7px 5px auto auto;
+    height: 15px;
+    width: 15px;
+    background: #F2F2F2;
+    box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.container-smaller input:checked ~ .checkmark {
+    background-color: #5DC0F9;
+}
+
+.container-smaller input {
+    font-size: 14px;
+}
+
+    .container-smaller input[type="number"] {
+        font-size: 14px;
+        width: 20%;
+        height: 30px;
+    }
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkmark:hover {
+    background-color: #ccc;
+}
+
+.buttons-form input[type="submit"] {
+    width: 150px;
+}
+
+.buttons-form input[type="reset"] {
+    width: 150px;
+}
+
+.buttons-form {
+    display: flex;
+    float: right;
+    padding-top: 20px;
+}
+
+input[value="Cancel"] {
+    color: #BDBDBD;
+    border: 1px solid #BDBDBD;
+    margin-left: 50px;
+}
+
+    input[value="Cancel"]:hover {
+        background-color: #BDBDBD;
+        color: #FFFFFF;
+    }
+
+input[value="Done"] {
+    color: #5DC0F9;
+    border: 1px solid #5DC0F9;
+}
+
+    input[value="Done"]:hover {
+        background-color: #5DC0F9;
+        color: #FFFFFF;
+    }
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+input[name="numRecurrences"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+    background: url('../../icons/calendar_for_date.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    border-width: thin;
+}
+
+.error {
+    color: #F77676;
+    margin: 0px;
+    visibility: show;
+}
+
+@media screen and (max-width: 1090px) {
+    .form {
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+        border-radius: 3px;
+        margin: 140px 150px 30px 220px;
+        font-family: 'Open Sans', sans-serif;
+        font-style: normal;
+        padding: 40px 0px 40px 0px;
+        overflow: hidden;
+    }
+}

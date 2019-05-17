@@ -124,6 +124,9 @@ class App extends Component {
         case Routes.FOOD_LOGS:
             content = PageContent.FOOD_LOGS;
             break;
+        case Routes.GENERAL_VOLUNTEER:
+            content = PageContent.GENERAL_VOLUNTEER;
+            break;
         case Routes.REQUEST_PICKUP:
             content = PageContent.REQUEST_PICKUP;
             break;

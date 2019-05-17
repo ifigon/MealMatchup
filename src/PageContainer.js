@@ -3,6 +3,7 @@ import { AccountType, PageContent } from './Enums.js';
 import NavBar from './PageLayout/Navigation/NavBar.js';
 import PageHeader from './PageLayout/PageHeader.js';
 import logo from './icons/temp-logo.svg';
+import RequestGeneralVolunteer from './PageContent/GeneralVolunteer/RequestGeneralVolunteer.js';
 import Directory from './PageContent/Directory/DirectoryPage.js';
 import RecurringPickupRequest from './PageContent/RequestPickup/RecurringPickupRequest.js';
 import AssignVolunteersController from './PageContent/AssignVolunteers/AssignVolunteersController.js';
@@ -78,6 +79,13 @@ class PageContainer extends Component {
 
                 {content === PageContent.REQUEST_PICKUP &&
                     <RecurringPickupRequest
+                        account={account}
+                        donatingAgency={donatingAgency}
+                    />
+                }
+
+                {content === PageContent.GENERAL_VOLUNTEER &&
+                    <RequestGeneralVolunteer
                         account={account}
                         donatingAgency={donatingAgency}
                     />

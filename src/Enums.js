@@ -45,7 +45,8 @@ exports.PageContent = {
     DIRECTORY: 'Directory',
     FOOD_LOGS: 'Food Logs',
     REQUEST_PICKUP: 'Request Pickup',
-    SETTINGS: 'Settings'
+    SETTINGS: 'Settings',
+    GENERAL_VOLUNTEER: 'General Volunteer'
 };
 
 exports.RequestEndCriteriaType = {
@@ -151,7 +152,8 @@ exports.Routes = {
     DIRECTORY: 'directory',
     FOOD_LOGS: 'food-logs',
     REQUEST_PICKUP: 'request-pickup',
-    SETTINGS: 'settings'
+    SETTINGS: 'settings',
+    GENERAL_VOLUNTEER: 'general-volunteer'
 };
 
 exports.NotificationContentType = {
