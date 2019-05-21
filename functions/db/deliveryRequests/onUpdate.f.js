@@ -127,17 +127,17 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
 
     let promises = [];
 
-    // If all RA's rejected, notify DA with this sendgrid ID: d-45fa851d56ce4a1e84bbfe602ef797c3
+    // If all RA's rejected, notify DA with this sendgrid ID: no_available_RAs
     if(notifType === nt.RECURRING_PICKUP_REJECTED_RA) {
         promises = [
             requestSnap.ref.child('status').set(rejectType),
-            multiNotify(accounts, requestPath, notifType, 'd-45fa851d56ce4a1e84bbfe602ef797c3'),
+            multiNotify(accounts, requestPath, notifType, 'no_available_RAs'),
         ];    
-        // else if all DGs reject, nitify DA and RA with sendgrid ID: d-1d1f04d0b4024d41bdbd335a1607fdca
+        // else if all DGs reject, nitify DA and RA with sendgrid ID: DG_rejection
     } else if(notifType === nt.RECURRING_PICKUP_REJECTED_DG) {
         promises = [
             requestSnap.ref.child('status').set(rejectType),
-            multiNotify(accounts, requestPath, notifType, 'd-1d1f04d0b4024d41bdbd335a1607fdca'),
+            multiNotify(accounts, requestPath, notifType, 'DG_rejection'),
         ];   
     }
 
@@ -278,7 +278,7 @@ function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
         {label: 'RA', ref: raRef},
         {label: 'DG', ref: dgRef},
     ];
-    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED, 'd-3248d17c3f2a4f70b07146400bde2f8e');
+    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED, 'email_all');
 }
 // ----------------------- End Listener 2 -----------------------
 
@@ -286,7 +286,7 @@ function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
 // ----------------------- Utils -----------------------
 function multiNotify(accounts, requestPath, notifType, templateId) {
     return Promise.all(accounts.map(acct => 
-        // d-3248d17c3f2a4f70b07146400bde2f8e is the template ID for a send grid email template to notify all parties that the delivery has been confirmed.
+        // email_all is the template ID for a send grid email template to notify all parties that the delivery has been confirmed.
         utils.notifyRequestUpdate(acct.label, acct.ref, requestPath, notifType, templateId))
     );
 }

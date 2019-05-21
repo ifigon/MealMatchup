@@ -1,9 +1,6 @@
 'use strict';
 const admin = require('firebase-admin');
 // admin.initializeApp();
-const sgMail = require('@sendgrid/mail');
-const SENDGRID_API_KEY = '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';
-sgMail.setApiKey(SENDGRID_API_KEY);
 // Source: https://github.com/TarikHuber/react-most-wanted/blob/master/functions/index.js
 /** EXPORT ALL FUNCTIONS
  *

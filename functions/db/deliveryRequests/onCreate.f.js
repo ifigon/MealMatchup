@@ -47,24 +47,11 @@ exports = module.exports = functions.database
         if (raInfo.requested) {
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
-            // Sends an email to the RA 
-
-
-            // var path = ('accounts/' + raInfo.requested + '/email');
-            // admin.database().ref(path).once('value').then(snapshot => {
-            //     console.log(snapshot.val());
-            //     // d-ca2c6c05fbb94de7a29fbe2819e7ec9a is the send grid template ID for a specied RA email notification
-            //     return utils.emailNotification(snapshot.val(), 'd-ca2c6c05fbb94de7a29fbe2819e7ec9a');
-                
-            // })
-            //     .catch(err => {
-            //         console.log(err);
-            //     });  
 
 
             return utils.notifyRequestUpdate(
-                // d-ca2c6c05fbb94de7a29fbe2819e7ec9a is the template ID for a send grid email template to notify the RA they have been specifically requested
-                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST, 'd-ca2c6c05fbb94de7a29fbe2819e7ec9a');
+                // specified_RA is the template ID for a send grid email template to notify the RA they have been specifically requested
+                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST, 'specified_RA');
         }
 
         console.info('No specific RA requested, ' + raInfo.pending.length + 
@@ -87,11 +74,11 @@ exports = module.exports = functions.database
 
                 console.info('RA "' + raSnap.key + '": available=' + available);
 
-                // d-8a27e24d696d42d89b7e16aeb4f9facc is the sendgrid template to send to RAs when a DA sends in a delivery request that the RAs can accept
+                // email_RAs is the sendgrid template to send to RAs when a DA sends in a delivery request that the RAs can accept
                 if (available) {
                     promises.push(
                         utils.notifyRequestUpdate(
-                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST, 'd-8a27e24d696d42d89b7e16aeb4f9facc'));
+                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST, 'email_RAs'));
                     rasLeft.push(raSnap.key);
                 }
             }
@@ -102,40 +89,16 @@ exports = module.exports = functions.database
             if (rasLeft.length === 0) {
                 // update status of the request
                 reqUpdates['status'] = enums.RequestStatus.UNAVAILABLE;
-
-                // var path = ('accounts/' + request.donatingAgency + '/email');
-                // admin.database().ref(path).once('value').then(snapshot => {
-                //     console.log(snapshot.val());
-                //     const msgbody = {
-                //         to: 'lucaswoo23@yahoo.com',
-                //         from: 'no-replymealmatchup@email.com',
-                //         subject: 'Delivery Confirmation',
-                //         text: 'Hello, Sorry, the donation unable to be confirmed because of no RA availability',
-                //     };        
-                //     sgMail.send(msgbody)
-                //         .then(() => console.log('email sent succcessfully :)'))
-                //         .catch((error) => {
-                //             console.log(error);
-                //             return;
-                //         });
-                //     return snapshot.val();
-                // })
-                //     .catch(err => {
-                //         console.log(err);
-                //     }); 
-
-
-
                 console.info('No RA available, notifying DA.');
                 var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
                 // get the child for the members
                 // loop through all the members
                 // rootRef.child('accounts/' + memberId)
                 //
-                // d-45fa851d56ce4a1e84bbfe602ef797c3 is the send grid template to send an email when there are no RA's available, emails the DA the update
+                // no_available_RAs is the send grid template to send an email when there are no RA's available, emails the DA the update
                 promises.push(
                     utils.notifyRequestUpdate(
-                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE, 'd-45fa851d56ce4a1e84bbfe602ef797c3'));
+                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE, 'no_available_RAs'));
 
             }
 
