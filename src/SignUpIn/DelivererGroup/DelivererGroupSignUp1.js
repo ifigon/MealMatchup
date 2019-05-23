@@ -4,10 +4,23 @@ class DelivererGroupSignUp1 extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
+        this.state = {
+            modalOpen: false,
+        };
     }
     render() {
         return (
             <form onSubmit={this.nextStep}>
+                {this.state.modalOpen &&
+                    <div className="dialog-wrapper">
+                        {/* close dialog if anywhere outside of dialog is clicked */}
+                        <div className="dialog-overlay" onClick={() => this.setState({ modalOpen : false })}></div> 
+                        <dialog id="manual-dialog" className={"event-dialog dialog-radius" + (!this.state.continue ? " small-dialog" : " big-dialog")} open>
+                            <h2 className="umbrella-modal-padding">What's an umbrella?</h2>
+                            <div>Umbrellas are what Meal Matchup uses to divide deliveries in different areas. There's typically one umbrella for everywhere Meal Matchup is available (i.e. University of Washington) to ensure requests in that area aren't sent out anywhere else. Select your areas umbrella below, and if you don't see your area yet reach out to us to start Meal Matchup in your area! </div>
+                        </dialog>
+                    </div>
+                }
                 <div className="signup-content">
                     <div className="form-block">
                         <label className="form-component">Organization Details</label><br />
@@ -71,6 +84,19 @@ class DelivererGroupSignUp1 extends Component {
                             </select>
                             <input name="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip} required />
                         </span>
+
+                        <div className="umbrella-header">
+                            <div className="umbrella-header-text">Umbrella</div>
+                            <div className="umbrella-header-text">
+                                <button className="add-delivery umbrella-header-button" onClick={(e) => {
+                                    e.preventDefault();
+                                    this.setState({modalOpen : true});
+                                }}>What's an umbrella?</button>
+                            </div>
+                        </div>
+                        <select name="umbrella" type="text" id="umbrella" className="form-component umbrella-select" defaultValue="Select Umbrella" required>
+                            <option value="University of Washington">University of Washington</option>
+                        </select>
                     </div>
 
                     <div className="disclaimer">
