@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import {umbrellasRef} from '../../FirebaseConfig';
+import { toArray } from 'lodash';
+
+
 
 class DelivererGroupSignUp1 extends Component {
     constructor(props) {
@@ -6,8 +10,15 @@ class DelivererGroupSignUp1 extends Component {
         this.nextStep = this.nextStep.bind(this);
         this.state = {
             modalOpen: false,
+            umbrellas: [],
         };
     }
+
+    async componentDidMount() {
+        let umbrellaSnap = await umbrellasRef.once('value');
+        this.setState({"umbrellas": umbrellaSnap.val()});
+    }
+
     render() {
         return (
             <form onSubmit={this.nextStep}>
@@ -95,7 +106,10 @@ class DelivererGroupSignUp1 extends Component {
                             </div>
                         </div>
                         <select name="umbrella" type="text" id="umbrella" className="form-component umbrella-select" defaultValue="Select Umbrella" required>
-                            <option value="University of Washington">University of Washington</option>
+                            {Object.keys(this.state.umbrellas).map((key) => {
+                                console.log(key);
+                                return <option value={key}>{this.state.umbrellas[key].name}</option>
+                            })}
                         </select>
                     </div>
 

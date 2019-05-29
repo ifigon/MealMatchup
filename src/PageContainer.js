@@ -107,7 +107,12 @@ class PageContainer extends Component {
                 )}
 
                 {content === PageContent.ADD_UMBRELLA && (
-                    <AddUmbrella account={account} />
+                    (account.accountType ===
+                    AccountType.ADMIN ? (
+                        <AddUmbrella account={account} />
+                    ) : (
+                        <PageDoesNotExist />
+                    ))
                 )}
 
                 {this.state.content === PageContent.DIRECTORY &&
