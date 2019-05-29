@@ -42,10 +42,12 @@ class AddDeliveryModal extends Component {
         event.preventDefault();
         let delivery = this.formatDataForEntry(event);
         let account = this.props.account;
+        let umbrellaID = account.accountType === AccountType.UMBRELLA ? account.uid : account.umbrella;
         let agencyUid = 
                 account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid;
 
         manualDeliveriesRef
+            .child(umbrellaID)
             .child(agencyUid)
             .push(delivery)
             .then((snap) => {

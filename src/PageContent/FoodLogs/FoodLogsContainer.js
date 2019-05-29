@@ -33,7 +33,6 @@ class FoodLogsContainer extends Component {
         combinedDeliveries.sort((a, b) => {
             return b.deliveredInfo.timestamp - a.deliveredInfo.timestamp;
         });
-        console.log(combinedDeliveries);
         this.setState({deliveries: combinedDeliveries});
         this.setState({isLoading: false});
     }
@@ -100,10 +99,23 @@ class FoodLogsContainer extends Component {
 
     async getManuallyAddedDeliveries() {
         const { account } = this.props; 
-        const agencyUid = 
-            account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
-        const snap = await manualDeliveriesRef.child(agencyUid).once('value');
-        let deliveries = toArray(snap.val());
+        let deliveries;
+        if (account.accountType === AccountType.UMBRELLA) {
+            const umbrellaID = account.uid;
+            const snap = await manualDeliveriesRef.child(umbrellaID).once('value');
+            let agencies = toArray(snap.val());
+            deliveries = [];
+            agencies.forEach((agency) => {
+                let newDeliveries = toArray(agency);
+                deliveries = deliveries.concat(newDeliveries);
+            });
+        } else {
+            const umbrellaID = account.umbrella;
+            const agencyUid = 
+                account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid; 
+            const snap = await manualDeliveriesRef.child(umbrellaID).child(agencyUid).once('value');
+            deliveries = toArray(snap.val());
+        }
         return deliveries;
     }
 
