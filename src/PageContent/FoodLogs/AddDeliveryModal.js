@@ -13,7 +13,8 @@ class AddDeliveryModal extends Component {
         this.state = {
             continue: false,
             currentItems: [],
-            error: ''
+            error: '',
+            errors: []
         };
         this.submitDelivery.bind(this);
     }
@@ -37,9 +38,31 @@ class AddDeliveryModal extends Component {
             currentItems: this.state.currentItems.filter((item, itemIndex) => index !== itemIndex)
         });
     }
+handleValidation() {
+        let fields = this.state.currentItems;
+        let errors = {};
+        let formIsValid = true;
+
+        //Date
+        if (fields.length === 0) {
+            formIsValid = false;
+            errors['foodRequired'] = "must select food items";
+        }
+
+        this.setState({
+            errors: errors
+        });
+
+        return formIsValid;
+    }
+
 
     submitDelivery = (event) => {
-        event.preventDefault();
+            event.preventDefault();
+
+        if (!this.handleValidation()) {
+                alert('No food items have been added. Must add food items.');
+        } else {
         let delivery = this.formatDataForEntry(event);
         let account = this.props.account;
         let agencyUid = 
@@ -56,6 +79,7 @@ class AddDeliveryModal extends Component {
             });    
             
         this.props.renderFoodItems();
+    }
     }
 
     formatDataForEntry(event) {
@@ -160,6 +184,14 @@ class AddDeliveryModal extends Component {
                         </div>
                         <p className="past-delivery-margin-p">Fields marked with a <span className="red">*</span> are required</p>
                         <form className="past-delivery-inputs" onSubmit={this.submitDelivery}>
+                                                <p id="form-heading">Schedule Recurring Pickup</p>
+                                                {Object.keys(this.state.errors).map((error, i) => {
+                                                    return (
+                                                        <p className="error" key={i}>
+                                                            {this.state.errors[error]}
+                                                        </p>
+                                                    );
+                                                })}
                             <div className="d-flex"><div className="form-title">Date <span className="red">*</span></div> <input name="deliveryDate" type="date" className="past-delivery-margin form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Time <span className="red">*</span></div> <input name="deliveryTime" type="time" className="past-delivery-margin form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Notes</div> <input name="notes" type="text" className="form-component-past-delivery" /></div>
