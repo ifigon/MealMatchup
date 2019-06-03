@@ -328,11 +328,7 @@ class AccountManager extends Component {
                 email: e.target.email.value,
                 phone: e.target.phone.value,
             },
-            settings: {
-                confirmationNotification: e.target.confirmationNotification.value,
-                // dgUnavailableNotification: e.target.dgUnavailableNotification,
-                // raUnavailableNotification: e.target.raUnavailableNotification
-            }
+            settings: this.state.settings
         };
 
         if (e.target.sname) {
@@ -346,8 +342,7 @@ class AccountManager extends Component {
 
         // write updates to db
         if (accountType === AccountType.DONATING_AGENCY_MEMBER) { // write to /donatingAgencies/
-            accountsRef.child(account.uid).update(updates.settings);
-            accountsRef.child(account.uid).update(updates.primaryContact, this.setState({isEditing: false}));
+            accountsRef.child(account.uid).update(updates, this.setState({isEditing: false}));
         } else { // write to /accounts/
             accountsRef.child(account.uid).update(updates.settings);
             accountsRef.child(account.uid).update(updates, this.setState({isEditing: false}));
@@ -367,7 +362,6 @@ class AccountManager extends Component {
     }
 
     handleChange = (event) => {
-        event.preventDefault();
         let field = event.target.name;
         // console.log(field);
         // console.log(event.target.value);
@@ -375,13 +369,12 @@ class AccountManager extends Component {
         // let value = !event.target.value;
         // console.log(value);
         let currSettings = this.state.settings;
+        console.log(currSettings);
         let value = !currSettings[field] 
-        console.log(currSettings);
-        console.log(currSettings[field]);
-        currSettings[field] = value;
-        console.log(currSettings[field]);
-        console.log(currSettings);
-        this.setState(currSettings);     // Update state
+        let newSettings = currSettings;
+        newSettings[field] = value;
+        console.log(newSettings);
+        this.setState(newSettings);     
     }
 
 
