@@ -173,6 +173,7 @@ exports.SettingsFields = {
         'primaryContact', 
         'secondaryContact',
         'uid',
+        'settings',
     ],
     MEMBER: [
         'email',
@@ -182,3 +183,4 @@ exports.SettingsFields = {
         'uid',
     ],
 };
+

@@ -81,7 +81,8 @@ class ReceivingAgencySignUpController extends Component {
         // show the user the error but don't advance
 
         auth.createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
-            .then(user => {   
+            .then(user => { 
+                let settings = {confirmationNotification: true, dgUnavailableNotification: true, raSpecifiedNotification: true, raUnspecifiedNotification: true}  
                 let postData = {
                     accountType: AccountType.RECEIVING_AGENCY,
                     // TODO: Manually setting this for now. In future, users should
@@ -118,7 +119,8 @@ class ReceivingAgencySignUpController extends Component {
                     emergencyQuantity: {
                         min: fieldValues.startLbs,
                         max: fieldValues.endLbs
-                    }
+                    },
+                    settings
                 };
 
                 // write account to db

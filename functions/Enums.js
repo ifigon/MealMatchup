@@ -164,3 +164,30 @@ exports.NotificationContentType = {
     DELIVERY_REQUEST: 'delivery_request',
     ACCOUNT: 'account'
 };
+
+exports.EmailTemplate = {
+    EMAIL_ALL: {
+        subject: 'Meal Matchup Delivery Confirmation',
+        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>The delivery that you are a part of has been confirmed by all 3 parties. To see the updated status of the delivery, please login here: </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span>.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+    },
+    NO_AVAILABLE_RAS: {
+        subject: 'Meal Matchup Delivery Cancelation',
+        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>All receiving agencies are unable at the time requested for pickup. Please login here: </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> if you would like to see more or schedule for a different pick-up date/time.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+    },
+    SPECIFIED_RA: {
+        subject: 'Meal Matchup Delivery Request',
+        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A donation agency has specified you to receive their donation agency. Please login at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> to either confirm or deny this delivery request.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+    },
+    DG_REJECTION: {
+        subject: 'Meal Matchup Delivery Cancelation',
+        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A delivery group is unable to make the delivery at the requested time. You can see more by going to the notification by logging in at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span>.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+    },
+    EMAIL_RAS: {
+        subject: 'Meal Matchup Delivery Cancelation',
+        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A delivery group is unable to make the delivery at the requested time. You can see more by going to the notification by logging in at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span>.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+    },
+    DG_REQUEST: {
+        subject: 'Meal Matchup New Delivery Request',
+        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>You have been requested for a donation delivery. Please login at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> to reject or accept the delivery.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+    }
+};

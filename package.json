@@ -26,6 +26,7 @@
     "moment-timezone": "^0.5.14",
     "nodemailer": "^6.1.1",
     "react": "^16.2.0",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.2.0",
     "react-geocode": "^0.1.2",
     "react-lifecycles-compat": "^3.0.2",

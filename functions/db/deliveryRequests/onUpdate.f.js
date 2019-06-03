@@ -127,13 +127,13 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
 
     let promises = [];
 
-    // If all RA's rejected, notify DA with this sendgrid ID: no_available_RAs
+    // If all RA's rejected, notify DA with this template ID: no_available_RAs
     if(notifType === nt.RECURRING_PICKUP_REJECTED_RA) {
         promises = [
             requestSnap.ref.child('status').set(rejectType),
             multiNotify(accounts, requestPath, notifType, 'no_available_RAs'),
         ];    
-        // else if all DGs reject, nitify DA and RA with sendgrid ID: DG_rejection
+        // else if all DGs reject, notify DA and RA with this template ID: DG_rejection
     } else if(notifType === nt.RECURRING_PICKUP_REJECTED_DG) {
         promises = [
             requestSnap.ref.child('status').set(rejectType),
@@ -179,9 +179,9 @@ function sendRequestToDGs(accountsRef, requestSnap, requestPath) {
         pending = dgInfo.pending;
         console.info('No specific DG requested, ' + pending.length + ' pending DGs');
     }
-
+    // notify DG's and use email template of dg_reguest
     return Promise.all(pending.map(dgId => utils.notifyRequestUpdate(
-        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUEST)));
+        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUEST, 'dg_request')));
 }
 // ----------------------- End Listener 1 -----------------------
 
@@ -286,7 +286,7 @@ function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
 // ----------------------- Utils -----------------------
 function multiNotify(accounts, requestPath, notifType, templateId) {
     return Promise.all(accounts.map(acct => 
-        // email_all is the template ID for a send grid email template to notify all parties that the delivery has been confirmed.
+        // email_all specifies which email template to notify all parties that the delivery has been confirmed.
         utils.notifyRequestUpdate(acct.label, acct.ref, requestPath, notifType, templateId))
     );
 }

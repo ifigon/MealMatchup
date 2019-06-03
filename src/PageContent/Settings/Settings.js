@@ -64,13 +64,13 @@ class Settings extends Component {
         const daAgency = daSnapshot.val();
         let org = pick(daAgency, SettingsFields.ORGANIZATION);
         org.uid = account.agency;
-
         // get da primaryContact info
         const daContactSnapshot = await accountsRef.child(daAgency.primaryContact).once('value');
         let manager = {};
-        manager.primaryContact = pick(daContactSnapshot.val(), SettingsFields.MEMBER);
+        let daContactVal = daContactSnapshot.val();
+        manager.primaryContact = pick(daContactVal, SettingsFields.MEMBER);
         manager.uid = daAgency.primaryContact;
-
+        manager.settings = daContactVal.settings;
         //set org and manager states
         this.setState({org : org, manager: manager});
 

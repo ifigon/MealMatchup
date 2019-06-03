@@ -1,11 +1,10 @@
 const admin = require('firebase-admin');
 admin.initializeApp();
-// const sgMail = require('@sendgrid/mail');
-// const sgMail = require('@sendgrid/mail');
+
 // Push the given notification obj to account.notifications
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
-
+const enums = require('./Enums.js');
 
 var pushNotification = function (label, acctRef, notification, templateId) {
     let promise = acctRef.child('notifications').push(notification);
@@ -82,40 +81,49 @@ var emailNotification = function (email, templateId) {
 
 var selectTemplates = function (templateId, email) {
     console.log(email);
+    let email_content = {};
     if(templateId === 'email_all') {
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
-            subject: 'Meal Matchup Delivery Confirmation',
-            html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>The delivery that you are a part of has been confirmed by all 3 parties. To see the updated status of the delivery, please login here: </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span>.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+            subject: enums.EmailTemplate.EMAIL_ALL.subject,
+            html: enums.EmailTemplate.EMAIL_ALL.html
         };
     } else if(templateId === 'no_available_RAs') {
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
-            subject: 'Meal Matchup Delivery Cancelation',
-            html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>All receiving agencies are unable at the time requested for pickup. Please login here: </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> if you would like to see more or schedule for a different pick-up date/time.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+            subject: enums.EmailTemplate.NO_AVAILABLE_RAS.subject,
+            html: enums.EmailTemplate.NO_AVAILABLE_RAS.html
         };
     } else if(templateId === 'specified_RA') {
         email_content = {
-            from: 'noreplymealmatchup.com',
+            from: 'noreplymealmatchup.com', 
             to: email,
-            subject: 'Meal Matchup Donation Request',
-            html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A donation agency has specified you to receive their donation agency. Please login at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> to either confirm or deny this delivery request.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+            subject: enums.EmailTemplate.SPECIFIED_RA.subject,
+            html: enums.EmailTemplate.SPECIFIED_RA.html
         };
+        
     } else if(templateId === 'DG_rejection') {
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
-            subject: 'Meal Matchup Delivery Cancelation',
-            html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A delivery group is unable to make the delivery at the requested time. You can see more by going to the notification by logging in at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span>.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+            subject: enums.EmailTemplate.DG_REJECTION.subject,
+            html: enums.EmailTemplate.DG_REJECTION.html
         };
     } else if(templateId === 'email_RAs') {  
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
-            subject: 'Meal Matchup New Delivery Request',
-            html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A donation agency just requested your availability for an upcoming donation. Please login at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> to reject or accept the donation.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+            subject: enums.EmailTemplate.EMAIL_RAS.subject,
+            html: enums.EmailTemplate.EMAIL_RAS.html
+        };
+    } else if(templateId === 'dg_request') {  
+        email_content = {
+            from: 'noreplymealmatchup.com',
+            to: email,
+            subject: enums.EmailTemplate.DG_REJECTION.subject,
+            html: enums.EmailTemplate.DG_REJECTION.html
         };
     }
     return email_content;

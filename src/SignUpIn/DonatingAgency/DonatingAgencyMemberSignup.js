@@ -45,6 +45,7 @@ class DonatingAgencyMemberSignup extends Component {
         auth.createUserWithEmailAndPassword(e.target.memberEmail.value, e.target.memberPassword.value)
             .then(user => {
                 // write account to db
+                let settings = {confirmationNotification: true, raUnavailableNotification: true, dgUnavailableNotification: true}
                 var postData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
                     agency: this.state.agency.key,
@@ -53,9 +54,10 @@ class DonatingAgencyMemberSignup extends Component {
                     phone: values.phone,
                     position: values.position,
                     isAdmin: false,
-                    isVerified: true,
+                    isVerified: true, 
                     isActivated: true,
-                    timezone: this.state.agency.timezone
+                    timezone: this.state.agency.timezone,
+                    settings
                 };
                 accountsRef.child(user.uid).set(postData);
 
