@@ -26,7 +26,7 @@ class DelivererGroupSignUp1 extends Component {
                     <div className="dialog-wrapper">
                         {/* close dialog if anywhere outside of dialog is clicked */}
                         <div className="dialog-overlay" onClick={() => this.setState({ modalOpen : false })}></div> 
-                        <dialog id="manual-dialog" className={"event-dialog dialog-radius" + (!this.state.continue ? " small-dialog" : " big-dialog")} open>
+                        <dialog id="manual-dialog" className="event-dialog dialog-radius smaller-dialog" open>
                             <h2 className="umbrella-modal-padding">What's an umbrella?</h2>
                             <div>Umbrellas are what Meal Matchup uses to divide deliveries in different areas. There's typically one umbrella for everywhere Meal Matchup is available (i.e. University of Washington) to ensure requests in that area aren't sent out anywhere else. Select your areas umbrella below, and if you don't see your area yet reach out to us to start Meal Matchup in your area! </div>
                         </dialog>

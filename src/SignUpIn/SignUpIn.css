@@ -565,3 +565,7 @@ a .ok-button{
   margin-bottom: 5px;
   margin-top: 0;
 }
+
+.smaller-dialog {
+  height: 20vh;
+}

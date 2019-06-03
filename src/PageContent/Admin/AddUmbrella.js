@@ -34,7 +34,14 @@ class AddUmbrella extends Component {
                     <div className="umbrella-response">{this.state.response}</div>
                 }
                 <form id={this.formId} onSubmit={this.createUmbrella}>
-                    <input name="name" type="text" className="umbrella-name-form" placeholder="Umbrella Name" required /><br />
+                    <div className="umbrella-descriptor">Umbrella Name</div>
+                    <input name="name" type="text" className="umbrella-name-form" placeholder="University of Washington" required /><br />
+                    <div className="umbrella-descriptor">Umbrella Account Email</div>
+                    <input name="email" type="text" className="umbrella-name-form" placeholder="uwadmin@uw.edu" required /><br />
+                    <div className="umbrella-descriptor">Password</div>
+                    <input name="password" type="password" className="umbrella-name-form" required /><br />                
+                    <div className="umbrella-descriptor">Confirm Password</div>
+                    <input name="confirmpass" type="password" className="umbrella-name-form" required /><br />                
                     <button type="submit" className="umbrella-form-submit">Add</button>
                 </form>
             </div>

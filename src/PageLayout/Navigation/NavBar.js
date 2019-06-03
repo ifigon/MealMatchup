@@ -25,7 +25,7 @@ class NavBar extends Component {
                                 this.props.content === PageContent.ADD_UMBRELLA
                             }
                             item={PageContent.ADD_UMBRELLA}
-                            icon={calendar}
+                            icon={pendingAccount}
                             handler={this.props.handler}
                         />
                     </Link>
