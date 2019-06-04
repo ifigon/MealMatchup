@@ -50,7 +50,7 @@ exports = module.exports = functions.database
 
             return utils.notifyRequestUpdate(
                 // specified_RA is the specified template to notify the RA they have been specifically requested
-                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST, 'specified_RA');
+                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST, 'raSpecifiedNotification');
         }
 
         console.info('No specific RA requested, ' + raInfo.pending.length + 
@@ -73,11 +73,11 @@ exports = module.exports = functions.database
 
                 console.info('RA "' + raSnap.key + '": available=' + available);
 
-                // email_RAs specifies to use a template to send to RAs when a DA sends in a delivery request that the RAs can accept
+                // raUnspecifiedNotification specifies to use a template to send to RAs when a DA sends in a delivery request that the RAs can accept
                 if (available) {
                     promises.push(
                         utils.notifyRequestUpdate(
-                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST, 'email_RAs'));
+                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST, 'raUnspecifiedNotification'));
                     rasLeft.push(raSnap.key);
                 }
             }
@@ -94,7 +94,7 @@ exports = module.exports = functions.database
                 // no_available_RAs specifies to use a template to send an email when there are no RA's available, emails the DA the update
                 promises.push(
                     utils.notifyRequestUpdate(
-                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE, 'no_available_RAs'));
+                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE, 'raUnavailableNotification'));
 
             }
 

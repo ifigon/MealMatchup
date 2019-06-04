@@ -127,17 +127,17 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
 
     let promises = [];
 
-    // If all RA's rejected, notify DA with this template ID: no_available_RAs
+    // If all RA's rejected, notify DA with this template ID: raUnavailableNotification
     if(notifType === nt.RECURRING_PICKUP_REJECTED_RA) {
         promises = [
             requestSnap.ref.child('status').set(rejectType),
-            multiNotify(accounts, requestPath, notifType, 'no_available_RAs'),
+            multiNotify(accounts, requestPath, notifType, 'raUnavailableNotification'),
         ];    
-        // else if all DGs reject, notify DA and RA with this template ID: DG_rejection
+        // else if all DGs reject, notify DA and RA with this template ID: dgUnavailableNotification
     } else if(notifType === nt.RECURRING_PICKUP_REJECTED_DG) {
         promises = [
             requestSnap.ref.child('status').set(rejectType),
-            multiNotify(accounts, requestPath, notifType, 'DG_rejection'),
+            multiNotify(accounts, requestPath, notifType, 'dgUnavailableNotification'),
         ];   
     }
 
@@ -181,7 +181,7 @@ function sendRequestToDGs(accountsRef, requestSnap, requestPath) {
     }
     // notify DG's and use email template of dg_reguest
     return Promise.all(pending.map(dgId => utils.notifyRequestUpdate(
-        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUEST, 'dg_request')));
+        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUEST, 'dgRequestNotification')));
 }
 // ----------------------- End Listener 1 -----------------------
 
@@ -278,7 +278,7 @@ function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
         {label: 'RA', ref: raRef},
         {label: 'DG', ref: dgRef},
     ];
-    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED, 'email_all');
+    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED, 'confirmationNotification');
 }
 // ----------------------- End Listener 2 -----------------------
 

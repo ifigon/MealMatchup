@@ -284,8 +284,6 @@ class AccountManager extends Component {
                                             </div> 
 
                                             <div className="editing-child-3">
-                                                Recieve Notifications via<br />
-                                                <h6>Feature coming soon!</h6>
                                                 {/* <input type="checkbox" name="smsNotif" value="smsNotif" defaultChecked={this.props.account.smsNotif}/><label className="label-component details">SMS/Text Message</label><br />
                                                 <input type="checkbox" name="emailNotif" value="emailNotif" defaultChecked={this.props.account.emailNotif}/><label className="label-component details">Email</label> */}
                                             </div>    
@@ -363,17 +361,10 @@ class AccountManager extends Component {
 
     handleChange = (event) => {
         let field = event.target.name;
-        // console.log(field);
-        // console.log(event.target.value);
-        // console.log(event.target.value);
-        // let value = !event.target.value;
-        // console.log(value);
         let currSettings = this.state.settings;
-        console.log(currSettings);
         let value = !currSettings[field] 
         let newSettings = currSettings;
         newSettings[field] = value;
-        console.log(newSettings);
         this.setState(newSettings);     
     }
 

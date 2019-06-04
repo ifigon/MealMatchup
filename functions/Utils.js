@@ -82,21 +82,21 @@ var emailNotification = function (email, templateId) {
 var selectTemplates = function (templateId, email) {
     console.log(email);
     let email_content = {};
-    if(templateId === 'email_all') {
+    if(templateId === 'confirmationNotification') {
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
             subject: enums.EmailTemplate.EMAIL_ALL.subject,
             html: enums.EmailTemplate.EMAIL_ALL.html
         };
-    } else if(templateId === 'no_available_RAs') {
+    } else if(templateId === 'raUnavailableNotification') {
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
             subject: enums.EmailTemplate.NO_AVAILABLE_RAS.subject,
             html: enums.EmailTemplate.NO_AVAILABLE_RAS.html
         };
-    } else if(templateId === 'specified_RA') {
+    } else if(templateId === 'raSpecifiedNotification') {
         email_content = {
             from: 'noreplymealmatchup.com', 
             to: email,
@@ -104,21 +104,21 @@ var selectTemplates = function (templateId, email) {
             html: enums.EmailTemplate.SPECIFIED_RA.html
         };
         
-    } else if(templateId === 'DG_rejection') {
+    } else if(templateId === 'dgUnavailableNotification') {
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
             subject: enums.EmailTemplate.DG_REJECTION.subject,
             html: enums.EmailTemplate.DG_REJECTION.html
         };
-    } else if(templateId === 'email_RAs') {  
+    } else if(templateId === 'raUnspecifiedNotification') {  
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
             subject: enums.EmailTemplate.EMAIL_RAS.subject,
             html: enums.EmailTemplate.EMAIL_RAS.html
         };
-    } else if(templateId === 'dg_request') {  
+    } else if(templateId === 'dgRequestNotification') {  
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,

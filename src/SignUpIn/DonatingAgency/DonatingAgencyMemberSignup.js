@@ -34,7 +34,6 @@ class DonatingAgencyMemberSignup extends Component {
 
     submitRegistration(e) {
         e.preventDefault();
-
         var values = {
             name: e.target.memberName.value,
             email: e.target.memberEmail.value,
@@ -45,6 +44,7 @@ class DonatingAgencyMemberSignup extends Component {
         auth.createUserWithEmailAndPassword(e.target.memberEmail.value, e.target.memberPassword.value)
             .then(user => {
                 // write account to db
+                // why doesn't settings write to db?
                 let settings = {confirmationNotification: true, raUnavailableNotification: true, dgUnavailableNotification: true}
                 var postData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
@@ -54,10 +54,10 @@ class DonatingAgencyMemberSignup extends Component {
                     phone: values.phone,
                     position: values.position,
                     isAdmin: false,
-                    isVerified: true, 
-                    isActivated: true,
+                    isVerified: false, 
+                    isActivated: false,
                     timezone: this.state.agency.timezone,
-                    settings
+                    settings: settings
                 };
                 accountsRef.child(user.uid).set(postData);
 
