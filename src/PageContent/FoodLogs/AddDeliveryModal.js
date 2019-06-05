@@ -13,8 +13,7 @@ class AddDeliveryModal extends Component {
         this.state = {
             continue: false,
             currentItems: [],
-            error: '',
-            errors: []
+            error: ''
         };
         this.submitDelivery.bind(this);
     }
@@ -39,16 +38,22 @@ class AddDeliveryModal extends Component {
         });
     }
 
-    addedFoodItems() {
+    isValidForm() {
         let fields = this.state.currentItems;
-        return fields.length > 0;
+        let validQuantities = true;
+        fields.forEach((item) => {
+            if(!item.quantity || parseInt(item.quantity) <= 0) {
+                validQuantities = false;
+            }
+        })
+        return fields.length > 0 && validQuantities;
     }
 
     submitDelivery = (event) => {
         event.preventDefault();
 
-        if (!this.addedFoodItems()) {
-            alert('No food items have been added. Must add food items.');
+        if (!this.isValidForm()) {
+            alert('Invalid food items. Ensure you have food items added and correct quantities for all.');
         } else {
             let delivery = this.formatDataForEntry(event);
             let account = this.props.account;
@@ -151,6 +156,7 @@ class AddDeliveryModal extends Component {
     }
 
     render() {
+        console.log(this.state.currentItems);
         return(
             <div className="dialog-wrapper">
                 {/* close dialog if anywhere outside of dialog is clicked */}

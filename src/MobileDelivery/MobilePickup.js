@@ -34,20 +34,24 @@ class MobilePickup extends React.Component {
 
     onSubmit(e){
         e.preventDefault();
-        var pickedUpInfo = {
-            temperature: e.target.temp.value,
-            signature: e.target.signature.value,
-            timestamp: moment().valueOf(),
-        };
-
-        let updates = {};
-        updates['status'] = DeliveryStatus.PICKED_UP;
-        updates['pickedUpInfo'] = pickedUpInfo;
-        if(this.foodItemsChanged()) {
-            updates['description/foodItems'] = this.state.currentItems;
-            updates[`description/updatedBy/${moment().valueOf()}`] = this.props.deliveryObj.delivererGroup;
-        } 
-        db.ref(this.props.dbRef).update(updates);
+        if (!this.isValidForm()) {
+            alert('Invalid food items. Ensure you have food items added and correct quantities for all.');
+        } else {
+            var pickedUpInfo = {
+                temperature: e.target.temp.value,
+                signature: e.target.signature.value,
+                timestamp: moment().valueOf(),
+            };
+    
+            let updates = {};
+            updates['status'] = DeliveryStatus.PICKED_UP;
+            updates['pickedUpInfo'] = pickedUpInfo;
+            if(this.foodItemsChanged()) {
+                updates['description/foodItems'] = this.state.currentItems;
+                updates[`description/updatedBy/${moment().valueOf()}`] = this.props.deliveryObj.delivererGroup;
+            } 
+            db.ref(this.props.dbRef).update(updates);
+        }
     }
 
     foodItemsChanged() {
@@ -78,6 +82,18 @@ class MobilePickup extends React.Component {
             currentItems: this.state.currentItems.filter((item, itemIndex) => index !== itemIndex)
         });
     }
+
+    isValidForm() {
+        let fields = this.state.currentItems;
+        let validQuantities = true;
+        fields.forEach((item) => {
+            if(!item.quantity || parseInt(item.quantity) <= 0) {
+                validQuantities = false;
+            }
+        })
+        return fields.length > 0 && validQuantities;
+    }
+
 
     render() {
         return (
