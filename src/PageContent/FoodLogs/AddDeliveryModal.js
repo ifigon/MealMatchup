@@ -38,48 +38,35 @@ class AddDeliveryModal extends Component {
             currentItems: this.state.currentItems.filter((item, itemIndex) => index !== itemIndex)
         });
     }
-handleValidation() {
+
+    addedFoodItems() {
         let fields = this.state.currentItems;
-        let errors = {};
-        let formIsValid = true;
-
-        //Date
-        if (fields.length === 0) {
-            formIsValid = false;
-            errors['foodRequired'] = "must select food items";
-        }
-
-        this.setState({
-            errors: errors
-        });
-
-        return formIsValid;
+        return fields.length > 0;
     }
-
 
     submitDelivery = (event) => {
-            event.preventDefault();
+        event.preventDefault();
 
-        if (!this.handleValidation()) {
-                alert('No food items have been added. Must add food items.');
+        if (!this.addedFoodItems()) {
+            alert('No food items have been added. Must add food items.');
         } else {
-        let delivery = this.formatDataForEntry(event);
-        let account = this.props.account;
-        let agencyUid = 
-                account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid;
+            let delivery = this.formatDataForEntry(event);
+            let account = this.props.account;
+            let agencyUid = 
+                    account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid;
 
-        manualDeliveriesRef
-            .child(agencyUid)
-            .push(delivery)
-            .then((snap) => {
-                this.props.closeModal();
-            })    
-            .catch(error => {
-                this.setState({error: error});
-            });    
-            
-        this.props.renderFoodItems();
-    }
+            manualDeliveriesRef
+                .child(agencyUid)
+                .push(delivery)
+                .then((snap) => {
+                    this.props.closeModal();
+                })    
+                .catch(error => {
+                    this.setState({error: error});
+                });    
+                
+            this.props.renderFoodItems();
+        }
     }
 
     formatDataForEntry(event) {
@@ -184,14 +171,6 @@ handleValidation() {
                         </div>
                         <p className="past-delivery-margin-p">Fields marked with a <span className="red">*</span> are required</p>
                         <form className="past-delivery-inputs" onSubmit={this.submitDelivery}>
-                                                <p id="form-heading">Schedule Recurring Pickup</p>
-                                                {Object.keys(this.state.errors).map((error, i) => {
-                                                    return (
-                                                        <p className="error" key={i}>
-                                                            {this.state.errors[error]}
-                                                        </p>
-                                                    );
-                                                })}
                             <div className="d-flex"><div className="form-title">Date <span className="red">*</span></div> <input name="deliveryDate" type="date" className="past-delivery-margin form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Time <span className="red">*</span></div> <input name="deliveryTime" type="time" className="past-delivery-margin form-component-past-delivery" required/></div>
                             <div className="d-flex"><div className="form-title">Notes</div> <input name="notes" type="text" className="form-component-past-delivery" /></div>
