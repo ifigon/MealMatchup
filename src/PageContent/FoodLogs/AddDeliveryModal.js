@@ -156,7 +156,6 @@ class AddDeliveryModal extends Component {
     }
 
     render() {
-        console.log(this.state.currentItems);
         return(
             <div className="dialog-wrapper">
                 {/* close dialog if anywhere outside of dialog is clicked */}
