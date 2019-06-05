@@ -120,7 +120,7 @@ class ReceivingAgencySignUpController extends Component {
                         min: fieldValues.startLbs,
                         max: fieldValues.endLbs
                     },
-                    settings
+                    settings: settings
                 };
 
                 // write account to db

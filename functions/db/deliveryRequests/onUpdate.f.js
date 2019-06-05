@@ -2,7 +2,6 @@ const functions = require('firebase-functions');
 const enums = require('../../Enums.js');
 const moment = require('moment-timezone');
 const utils = require('../../Utils.js');
-const admin = require('firebase-admin');
 
 const nt = enums.NotificationType;
 

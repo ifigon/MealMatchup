@@ -95,7 +95,7 @@ class DelivererGroupSignUpController extends Component {
                     numVolunteers: fieldValues.numVolunteers,
                     isActivated: false,
                     isVerified: false,
-                    settings
+                    settings: settings
                 };
 
                 // write account to db

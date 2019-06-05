@@ -45,7 +45,6 @@ class DonatingAgencyMemberSignup extends Component {
             .then(user => {
                 // write account to db
                 // why doesn't settings write to db?
-                let settings = {confirmationNotification: true, raUnavailableNotification: true, dgUnavailableNotification: true}
                 var postData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
                     agency: this.state.agency.key,
@@ -57,8 +56,8 @@ class DonatingAgencyMemberSignup extends Component {
                     isVerified: false, 
                     isActivated: false,
                     timezone: this.state.agency.timezone,
-                    settings: settings
                 };
+            
                 accountsRef.child(user.uid).set(postData);
 
                 // add this new member to the DA's members list

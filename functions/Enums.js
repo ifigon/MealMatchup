@@ -176,7 +176,7 @@ exports.EmailTemplate = {
     },
     SPECIFIED_RA: {
         subject: 'Meal Matchup Delivery Request',
-        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A donation agency has specified you to receive their donation agency. Please login at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> to either confirm or deny this delivery request.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
+        html:'<html> <head> <title></title> </head> <body><p>Hello,</p><div> </div><span>A donation agency has specified you to receive their donation. Please login at </span><a href="https://www.mealmatchup.org/">https://www.mealmatchup.org/</a><span> to either confirm or deny this delivery request.</span><p>Thank you!</p><p>Meal Matchup</p></body></html>'
     },
     DG_REJECTION: {
         subject: 'Meal Matchup Delivery Cancelation',

@@ -68,6 +68,7 @@ class DonatingAgencySignUpController extends Component {
 
         auth.createUserWithEmailAndPassword(fieldValues.adminEmail, fieldValues.adminPassword)
             .then(user => {
+                let settings = {confirmationNotification: true, raUnavailableNotification: true, dgUnavailableNotification: true}
                 let dasRef = firebase.database().ref('donating_agencies');
                 let agencyKey = dasRef.push().key;
                 let timezone = moment.tz.guess();
@@ -83,7 +84,8 @@ class DonatingAgencySignUpController extends Component {
                     isAdmin: true,
                     isVerified: false,
                     isActivated: false,
-                    timezone: timezone
+                    timezone: timezone,
+                    settings: settings
                 };
 
                 let agencyPostData = {

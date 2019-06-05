@@ -11,6 +11,7 @@ var pushNotification = function (label, acctRef, notification, templateId) {
 
     console.info('Notified ' + label + ' "' + acctRef.key + '": ', notification);
     var path = ('accounts/' + acctRef.key + '/email');
+    console.log(path);
     // If it is a donating agency, have to first get the primary contact from firebase
     if(label === 'DA') {
         primaryContactPath = ('donating_agencies/' + acctRef.key + '/primaryContact');
@@ -18,28 +19,58 @@ var pushNotification = function (label, acctRef, notification, templateId) {
         admin.database().ref(primaryContactPath).once('value').then(snapshot => {
             // Set path to primary contact email
             path = ('accounts/' + snapshot.val() + '/email');
-            // Send an email with updated path
-            admin.database().ref(path).once('value').then(snapshot => {
-                return emailNotification(snapshot.val(), templateId);
+            // Get the donation agency email notification settings
+            let daSettingPath = ('accounts/' + snapshot.val() + '/settings/' + templateId);
+            admin.database().ref(daSettingPath).once('value').then(snapshot => {
+                // If the value is true (they want an email notification, then send an email 
+                // by calling emailNotification passing in the email address and template
+                if(snapshot.val()) { 
+                    admin.database().ref(path).once('value').then(snapshot => {
+                        return emailNotification(snapshot.val(), templateId);
+                    })
+                        .catch(err => {
+                            console.log(err);
+                        });  
+                    return promise;
+                } else {
+                    console.log('the party does not want to receive notification for this');
+                    return 'no email wanted';
+                }
             })
                 .catch(err => {
                     console.log(err);
                 });  
-            return path;
+            return promise;
         })
             .catch(err => {
                 console.log(err);
             });  
         return promise;
     }
-
-    admin.database().ref(path).once('value').then(snapshot => {
-        return emailNotification(snapshot.val(), templateId);
+    // Get the path to the email setting (true of false if they want notifications)
+    let emailSettingPath = ('accounts/' + acctRef.key + '/settings/' + templateId);
+    // Get the value of if they want an email notification or not
+    admin.database().ref(emailSettingPath).once('value').then(snapshot => {
+        // If the value is true (they want an email notification, then send an email 
+        // by calling emailNotification passing in the email address and template
+        if(snapshot.val()) {
+            admin.database().ref(path).once('value').then(snapshot => {
+                return emailNotification(snapshot.val(), templateId);
+            })
+                .catch(err => {
+                    console.log(err);
+                });  
+            return promise;
+        } else {
+            console.log('the party does not want to receive notification for this');
+            return 'no email wanted';
+        }
     })
         .catch(err => {
             console.log(err);
         });  
     return promise;
+
 };
 
 // Create a notification obj for the given pickup request and notification
@@ -82,6 +113,7 @@ var emailNotification = function (email, templateId) {
 var selectTemplates = function (templateId, email) {
     console.log(email);
     let email_content = {};
+    // template IDs are the same as the fields in the firebase DB so that they can be access easily
     if(templateId === 'confirmationNotification') {
         email_content = {
             from: 'noreplymealmatchup.com',
@@ -122,8 +154,8 @@ var selectTemplates = function (templateId, email) {
         email_content = {
             from: 'noreplymealmatchup.com',
             to: email,
-            subject: enums.EmailTemplate.DG_REJECTION.subject,
-            html: enums.EmailTemplate.DG_REJECTION.html
+            subject: enums.EmailTemplate.DG_REQUEST.subject,
+            html: enums.EmailTemplate.DG_REQUEST.html
         };
     }
     return email_content;

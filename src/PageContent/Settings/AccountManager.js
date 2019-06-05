@@ -29,7 +29,8 @@ class AccountManager extends Component {
         let raUnspecifiedCheckBox = <p></p>;
         let dgRequestCheckBox = <p></p>;
         let raUnavailableCheckBox = <p></p>;
-        
+
+        // If the account is a donating agency, they have 3 different types of notification they can receive
         if(this.props.accountType === AccountType.DONATING_AGENCY_MEMBER) {
             if(this.state.settings.confirmationNotification) {
                 confirmationStatus = <p>Email notifications for delivery confirmations: Enabled</p>
@@ -37,14 +38,14 @@ class AccountManager extends Component {
                 confirmationStatus = <p>Email notifications for delivery confirmations: Disabled</p>
             }
             if(this.state.settings.dgUnavailableNotification) {
-                dgUnavailableStatus = <p>Email notifications when delivery groups unavailable: Enabled </p>     
+                dgUnavailableStatus = <p>Email notifications when all delivery groups unavailable: Enabled </p>     
             } else {
-                dgUnavailableStatus = <p>Email notifications when delivery groups unavailable: Disabled </p>
+                dgUnavailableStatus = <p>Email notifications when all delivery groups unavailable: Disabled </p>
             }
             if(this.state.settings.raUnavailableNotification) {
-                raUnavailableStatus = <p>Email notifications when receiving agencies are unavailable: Enabled </p>
+                raUnavailableStatus = <p>Email notifications when all receiving agencies are unavailable: Enabled </p>
             } else {
-                raUnavailableStatus = <p>Email notifications when receiving agencies are unavailable: Disabled </p>
+                raUnavailableStatus = <p>Email notifications when all receiving agencies are unavailable: Disabled </p>
             }
             confirmationCheckBox = (
                 <p>Email notifications for delivery confirmations
@@ -56,7 +57,7 @@ class AccountManager extends Component {
                 />
                 </p>);
             dgUnavailableCheckBox = (
-                <p>Email notifications when delivery groups unavailable
+                <p>Email notifications when all delivery groups unavailable
                 <input 
                 type='checkbox'
                 checked = {this.state.settings.dgUnavailableNotification}
@@ -65,7 +66,7 @@ class AccountManager extends Component {
                 />
                 </p>);
             raUnavailableCheckBox = (
-                <p>Email notifications when delivery groups unavailable
+                <p>Email notifications when all receiving agencies unavailable
                 <input 
                 type='checkbox'
                 checked = {this.state.settings.raUnavailableNotification}
@@ -73,6 +74,7 @@ class AccountManager extends Component {
                 onChange={this.handleChange}
                 />
                 </p>);
+        // Receiving agencies have 4 different notifications they can receive.
         } else if(this.props.accountType === AccountType.RECEIVING_AGENCY) {
             if(this.state.settings.confirmationNotification) {
                 confirmationStatus = <p>Receive email notifications for delivery confirmations: Enabled</p>
@@ -80,7 +82,7 @@ class AccountManager extends Component {
                 confirmationStatus = <p>Receive email notifications for delivery confirmations: Disabled</p>
             } 
             if(this.state.settings.dgUnavailableNotification) {
-                dgUnavailableStatus = <p>Email notifications when delivery groups unavailable: Enabled </p>
+                dgUnavailableStatus = <p>Email notifications when all delivery groups unavailable: Enabled </p>
             } else {
                 dgUnavailableStatus = <p>Email notifications when delivery groups unavailable: Disabled </p>
             }
@@ -130,6 +132,7 @@ class AccountManager extends Component {
                 onChange={this.handleChange}
                 />
                 </p>);
+        // Deliverer groups have just 2 different types of notification they can receive.
         } else {
             if(this.state.settings.confirmationNotification) {
                 confirmationStatus = <p>Receive email notifications for delivery confirmations: Enabled</p>
@@ -154,15 +157,13 @@ class AccountManager extends Component {
                 <p>Receive email notifications when you're request to deliver a donation
                 <input 
                 type='checkbox'
-                checked = {this.state.settings.confirmationNotification}
+                checked = {this.state.settings.dgRequestNotification}
                 name = 'dgRequestNotification'
                 onChange={this.handleChange}
                 />
                 </p>);
         }
-        // console.log(this.state);
-        // console.log(dgUnavailableStatus);
-        // console.log(this.state.settings.raUnavailableNotification);
+
         return (
             <div className="scs-0">
                 <div className="scs-0-content scs-1-content">
@@ -208,8 +209,6 @@ class AccountManager extends Component {
                                         </div>
                                         
                                         <div className="amd-details-child">
-                                            <h6>Recieve Notifications via</h6>
-                                            <h6>Feature coming soon!</h6>
                                             {/* {this.props.account.smsNotif ? <h6>SMS/Text Message</h6> : <div/>}
                                             {this.props.account.emailNotif ? <h6>Email</h6> : <div/>} */}
                                         </div>
@@ -251,7 +250,6 @@ class AccountManager extends Component {
                                     </div> 
 
                                     <div className="editing-child-3">
-
                                     {confirmationCheckBox}
                                     {dgUnavailableCheckBox}
                                     {raSpecifiedCheckBox}
@@ -359,6 +357,8 @@ class AccountManager extends Component {
         });
     }
 
+    // Updates the email notification everytime they click to change their preference of whether they
+    // want emails or not.
     handleChange = (event) => {
         let field = event.target.name;
         let currSettings = this.state.settings;
