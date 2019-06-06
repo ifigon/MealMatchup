@@ -42,7 +42,7 @@ class AddDeliveryModal extends Component {
         let fields = this.state.currentItems;
         let validQuantities = true;
         fields.forEach((item) => {
-            if(!item.quantity || parseInt(item.quantity) <= 0) {
+            if(!item.quantity || parseInt(item.quantity, 10) <= 0) {
                 validQuantities = false;
             }
         })
