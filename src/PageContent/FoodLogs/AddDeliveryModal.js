@@ -38,26 +38,43 @@ class AddDeliveryModal extends Component {
         });
     }
 
+    isValidForm() {
+        let fields = this.state.currentItems;
+        let validQuantities = true;
+        fields.forEach((item) => {
+            if(!item.quantity || parseInt(item.quantity) <= 0) {
+                validQuantities = false;
+            }
+        })
+        return fields.length > 0 && validQuantities;
+    }
+
     submitDelivery = (event) => {
         event.preventDefault();
-        let delivery = this.formatDataForEntry(event);
-        let account = this.props.account;
-        let umbrellaID = account.accountType === AccountType.UMBRELLA ? account.uid : account.umbrella;
-        let agencyUid = 
-                account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid;
 
-        manualDeliveriesRef
-            .child(umbrellaID)
-            .child(agencyUid)
-            .push(delivery)
-            .then((snap) => {
-                this.props.closeModal();
-            })    
-            .catch(error => {
-                this.setState({error: error});
-            });    
-            
-        this.props.renderFoodItems();
+
+        if (!this.isValidForm()) {
+            alert('Invalid food items. Ensure you have food items added and correct quantities for all.');
+        } else {
+            let delivery = this.formatDataForEntry(event);
+            let account = this.props.account;
+            let umbrellaID = account.accountType === AccountType.UMBRELLA ? account.uid : account.umbrella;
+            let agencyUid = 
+                    account.accountType === AccountType.DONATING_AGENCY_MEMBER ? account.agency : account.uid;
+    
+            manualDeliveriesRef
+                .child(umbrellaID)
+                .child(agencyUid)
+                .push(delivery)
+                .then((snap) => {
+                    this.props.closeModal();
+                })    
+                .catch(error => {
+                    this.setState({error: error});
+                });    
+                
+            this.props.renderFoodItems();
+        }
     }
 
     formatDataForEntry(event) {
