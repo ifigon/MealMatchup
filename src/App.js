@@ -19,6 +19,7 @@ class App extends Component {
 
         this.state = {
             // TODO: a hack to prevent showing logged out page first.. better way?
+            tooSmall: false,
             authenticated: false,
             signInDenied: false,
             account: null,
@@ -30,7 +31,21 @@ class App extends Component {
         this.signOut = this.signOut.bind(this);
     }
 
+
+    updateDimensions(){
+        if (document.documentElement.clientWidth < 1000) {
+            this.setState({tooSmall: true});
+         } else {
+            this.setState({tooSmall: false});
+         }
+
+    }
+
+
     componentDidMount() {
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+
         // check whether user is logged in
         auth.onAuthStateChanged(
             function(user) {
@@ -103,6 +118,8 @@ class App extends Component {
     }
 
     componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+
         if (this.state.account) {
             accountsRef.child(this.state.account.uid).off();
         }
@@ -138,14 +155,14 @@ class App extends Component {
             break;
         }
         return (
-            <div className="">
+            <div id = "check">
                 {
-                    !this.state.isChrome ? 
+                    !this.state.isChrome ?
                         <div className="browser-check">
                         WARNING! You are using an UNSUPPORTED browser. Please use Google Chrome.
                         </div>
                         :
-                        document.documentElement.clientWidth < 1000 ?
+                        document.documentElement.clientWidth < 1000 || this.state.tooSmall ?
                             <div className="browser-check">
                         WARNING! Your browser is too small, use at your own risk.
                             </div>
