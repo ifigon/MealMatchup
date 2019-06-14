@@ -72,9 +72,7 @@ class DelivererGroupSignUpController extends Component {
                 // create the account
                 let postData = {
                     accountType: AccountType.DELIVERER_GROUP,
-                    // TODO: Manually setting this for now. In future, users should
-                    // choose which umbrella they are signing up under.
-                    umbrella: UMBRELLA_ID,
+                    umbrella: fieldValues.umbrella,
                     name: fieldValues.organizationName,
                     email: fieldValues.email,
                     address: {

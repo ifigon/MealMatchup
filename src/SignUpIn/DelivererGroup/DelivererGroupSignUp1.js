@@ -134,7 +134,8 @@ class DelivererGroupSignUp1 extends Component {
             address2: e.target.address2.value,
             city: e.target.city.value,
             state: e.target.state.value,
-            zip: e.target.zip.value
+            zip: e.target.zip.value,
+            umbrella: e.target.umbrella.value
         };
         this.props.saveValues(data);
         this.props.nextStep();
