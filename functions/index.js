@@ -1,5 +1,6 @@
 'use strict';
-
+const admin = require('firebase-admin');
+// admin.initializeApp();
 // Source: https://github.com/TarikHuber/react-most-wanted/blob/master/functions/index.js
 /** EXPORT ALL FUNCTIONS
  *

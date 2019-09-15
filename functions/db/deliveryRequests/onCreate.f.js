@@ -4,6 +4,7 @@ const enums = require('../../Enums.js');
 const utils = require('../../Utils.js');
 
 const nt = enums.NotificationType;
+// initalizes firebase so that you can access firebase references
 
 /*
  * When a delivery request is created, send notifications to 
@@ -41,11 +42,15 @@ exports = module.exports = functions.database
         }
 
         // If a specific RA was requested, force push notification
+        // Send email to RA if directly requested
         if (raInfo.requested) {
             console.info('A specific RA requested: ' + raInfo.requested);
             var raRef = accountsRef.child(raInfo.requested);
+
+
             return utils.notifyRequestUpdate(
-                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST);
+                // specified_RA is the specified template to notify the RA they have been specifically requested
+                'RA', raRef, requestPath, nt.RECURRING_PICKUP_REQUEST, 'raSpecifiedNotification');
         }
 
         console.info('No specific RA requested, ' + raInfo.pending.length + 
@@ -68,26 +73,29 @@ exports = module.exports = functions.database
 
                 console.info('RA "' + raSnap.key + '": available=' + available);
 
+                // raUnspecifiedNotification specifies to use a template to send to RAs when a DA sends in a delivery request that the RAs can accept
                 if (available) {
                     promises.push(
                         utils.notifyRequestUpdate(
-                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST));
+                            'RA', raSnap.ref, requestPath, nt.RECURRING_PICKUP_REQUEST, 'raUnspecifiedNotification'));
                     rasLeft.push(raSnap.key);
                 }
             }
             // update the ra pending list
             let reqUpdates = { ['receivingAgency/pending']: rasLeft };
 
-            // no available RA, send notification back to DA
+            // no available RA, send notification back to DA 
             if (rasLeft.length === 0) {
                 // update status of the request
                 reqUpdates['status'] = enums.RequestStatus.UNAVAILABLE;
-
                 console.info('No RA available, notifying DA.');
                 var daRef = rootRef.child(`donating_agencies/${request.donatingAgency}`);
+ 
+                // no_available_RAs specifies to use a template to send an email when there are no RA's available, emails the DA the update
                 promises.push(
                     utils.notifyRequestUpdate(
-                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE));
+                        'DA', daRef, requestPath, nt.RECURRING_PICKUP_UNAVAILABLE, 'raUnavailableNotification'));
+
             }
 
             // need to update RA pending list and status at the same time, otherwise

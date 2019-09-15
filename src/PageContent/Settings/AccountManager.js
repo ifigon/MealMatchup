@@ -3,16 +3,166 @@ import { AccountType, StringFormat } from '../../Enums';
 import { formatPhone } from '../../utils/Utils';
 import { accountsRef } from '../../FirebaseConfig.js';
 
+
 class AccountManager extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isEditing: false
+            isEditing: false,
+            settings: this.props.account.settings,
         };
     }
 
     render() {
+        //  Different accounts have different email notifications, must check to see which account type and then show notification status based off that
+        // set to default empty tags so that only the ones that correspond to the user are updated
+        let confirmationStatus = <p></p>;
+        let dgUnavailableStatus = <p></p>;
+        let raSpecifiedStatus = <p></p>;
+        let raUnspecifiedStatus = <p></p>;
+        let dgRequestStatus = <p></p>;
+        let raUnavailableStatus = <p></p>;
+        let confirmationCheckBox = <p></p>;
+        let dgUnavailableCheckBox = <p></p>;
+        let raSpecifiedCheckBox = <p></p>;
+        let raUnspecifiedCheckBox = <p></p>;
+        let dgRequestCheckBox = <p></p>;
+        let raUnavailableCheckBox = <p></p>;
+
+        // If the account is a donating agency, they have 3 different types of notification they can receive
+        if(this.props.accountType === AccountType.DONATING_AGENCY_MEMBER) {
+            if(this.state.settings.confirmationNotification) {
+                confirmationStatus = <p>Email notifications for delivery confirmations: Enabled</p>
+            } else {
+                confirmationStatus = <p>Email notifications for delivery confirmations: Disabled</p>
+            }
+            if(this.state.settings.dgUnavailableNotification) {
+                dgUnavailableStatus = <p>Email notifications when all delivery groups unavailable: Enabled </p>     
+            } else {
+                dgUnavailableStatus = <p>Email notifications when all delivery groups unavailable: Disabled </p>
+            }
+            if(this.state.settings.raUnavailableNotification) {
+                raUnavailableStatus = <p>Email notifications when all receiving agencies are unavailable: Enabled </p>
+            } else {
+                raUnavailableStatus = <p>Email notifications when all receiving agencies are unavailable: Disabled </p>
+            }
+            confirmationCheckBox = (
+                <p>Email notifications for delivery confirmations
+                    <input 
+                type='checkbox'
+                checked = {this.state.settings.confirmationNotification}
+                name = 'confirmationNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+            dgUnavailableCheckBox = (
+                <p>Email notifications when all delivery groups unavailable
+                <input 
+                type='checkbox'
+                checked = {this.state.settings.dgUnavailableNotification}
+                name = 'dgUnavailableNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+            raUnavailableCheckBox = (
+                <p>Email notifications when all receiving agencies unavailable
+                <input 
+                type='checkbox'
+                checked = {this.state.settings.raUnavailableNotification}
+                name = 'raUnavailableNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+        // Receiving agencies have 4 different notifications they can receive.
+        } else if(this.props.accountType === AccountType.RECEIVING_AGENCY) {
+            if(this.state.settings.confirmationNotification) {
+                confirmationStatus = <p>Receive email notifications for delivery confirmations: Enabled</p>
+            } else {
+                confirmationStatus = <p>Receive email notifications for delivery confirmations: Disabled</p>
+            } 
+            if(this.state.settings.dgUnavailableNotification) {
+                dgUnavailableStatus = <p>Email notifications when all delivery groups unavailable: Enabled </p>
+            } else {
+                dgUnavailableStatus = <p>Email notifications when delivery groups unavailable: Disabled </p>
+            }
+            if(this.state.settings.raSpecifiedNotification) {
+                raSpecifiedStatus = <p>Email notifications when you're requested to receive a donation: Enabled </p>
+            } else {
+                raSpecifiedStatus = <p>Email notifications when you're requested to receive a donation: Disabled </p>
+            }
+            if(this.state.settings.raUnspecifiedNotification) {
+                raUnspecifiedStatus = <p>Email notifications when a donation agency posts a new donation: Enabled </p>
+            } else {
+                raUnspecifiedStatus = <p>Email notifications when a donation agency posts a new donation: Disabled </p>
+            }
+            confirmationCheckBox = (
+                <p>Email notifications for delivery confirmations
+                    <input 
+                type='checkbox'
+                checked = {this.state.settings.confirmationNotification}
+                name = 'confirmationNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+             dgUnavailableCheckBox = (
+                <p>Email notifications when delivery groups unavailable
+                <input 
+                type='checkbox'
+                checked = {this.state.settings.dgUnavailableNotification}
+                name = 'dgUnavailableNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+            raSpecifiedCheckBox = (
+                <p>Email notifications when you're requested to receive a donation
+                <input 
+                type='checkbox'
+                checked = {this.state.settings.raSpecifiedNotification}
+                name = 'raSpecifiedNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+            raUnspecifiedCheckBox = (
+                <p>Email notifications when a donation agency posts a new donation
+                <input 
+                type='checkbox'
+                checked = {this.state.settings.raUnspecifiedNotification}
+                name = 'raUnspecifiedNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+        // Deliverer groups have just 2 different types of notification they can receive.
+        } else {
+            if(this.state.settings.confirmationNotification) {
+                confirmationStatus = <p>Receive email notifications for delivery confirmations: Enabled</p>
+            } else {
+                confirmationStatus = <p>Receive email notifications for delivery confirmations: Disabled</p>
+            }
+            if(this.state.settings.dgRequestNotification) {
+                dgRequestStatus = <p>Receive email notifications when you're request to deliver a donation: Enabled</p>
+            } else {
+                dgRequestStatus = <p>Receive email notifications when you're request to deliver a donation: Disabled</p>
+            }
+            confirmationCheckBox = (
+                <p>Email notifications for delivery confirmations
+                    <input 
+                type='checkbox'
+                checked = {this.state.settings.confirmationNotification}
+                name = 'confirmationNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+            dgRequestCheckBox = (
+                <p>Receive email notifications when you're request to deliver a donation
+                <input 
+                type='checkbox'
+                checked = {this.state.settings.dgRequestNotification}
+                name = 'dgRequestNotification'
+                onChange={this.handleChange}
+                />
+                </p>);
+        }
 
         return (
             <div className="scs-0">
@@ -34,8 +184,13 @@ class AccountManager extends Component {
                                     </div>
                                     
                                     <div className="amd-details-child">
-                                        <h6>Recieve Notifications via</h6>
-                                        <h6>Feature coming soon!</h6>
+
+                                    {confirmationStatus}
+                                    {dgUnavailableStatus}
+                                    {raSpecifiedStatus}
+                                    {raUnspecifiedStatus}
+                                    {dgRequestStatus}
+                                    {raUnavailableStatus}
                                         {/* {this.props.account.smsNotif ? <h6>SMS/Text Message</h6> : <div/>}
                                         {this.props.account.emailNotif ? <h6>Email</h6> : <div/>} */}
                                     </div>
@@ -54,8 +209,6 @@ class AccountManager extends Component {
                                         </div>
                                         
                                         <div className="amd-details-child">
-                                            <h6>Recieve Notifications via</h6>
-                                            <h6>Feature coming soon!</h6>
                                             {/* {this.props.account.smsNotif ? <h6>SMS/Text Message</h6> : <div/>}
                                             {this.props.account.emailNotif ? <h6>Email</h6> : <div/>} */}
                                         </div>
@@ -97,8 +250,12 @@ class AccountManager extends Component {
                                     </div> 
 
                                     <div className="editing-child-3">
-                                        Recieve Notifications via<br />
-                                        <h6>Feature coming soon!</h6>
+                                    {confirmationCheckBox}
+                                    {dgUnavailableCheckBox}
+                                    {raSpecifiedCheckBox}
+                                    {raUnspecifiedCheckBox}
+                                    {dgRequestCheckBox}
+                                    {raUnavailableCheckBox}
                                         {/* <input type="checkbox" name="smsNotif" value="smsNotif" defaultChecked={this.props.account.smsNotif}/><label className="label-component details">SMS/Text Message</label><br />
                                         <input type="checkbox" name="emailNotif" value="emailNotif" defaultChecked={this.props.account.emailNotif}/><label className="label-component details">Email</label> */}
                                     </div>    
@@ -125,8 +282,6 @@ class AccountManager extends Component {
                                             </div> 
 
                                             <div className="editing-child-3">
-                                                Recieve Notifications via<br />
-                                                <h6>Feature coming soon!</h6>
                                                 {/* <input type="checkbox" name="smsNotif" value="smsNotif" defaultChecked={this.props.account.smsNotif}/><label className="label-component details">SMS/Text Message</label><br />
                                                 <input type="checkbox" name="emailNotif" value="emailNotif" defaultChecked={this.props.account.emailNotif}/><label className="label-component details">Email</label> */}
                                             </div>    
@@ -159,16 +314,17 @@ class AccountManager extends Component {
 
     // Backend TODO: Uncomment the data!!
     handleSubmit(e) {
+        console.log(e.target.confirmationNotification.value)
         e.preventDefault();
         const { account, accountType } = this.props;
-
         let updates = {
             primaryContact: {
                 name: e.target.name.value,
                 position: e.target.position.value,
                 email: e.target.email.value,
                 phone: e.target.phone.value,
-            }
+            },
+            settings: this.state.settings
         };
 
         if (e.target.sname) {
@@ -177,13 +333,14 @@ class AccountManager extends Component {
                 position: e.target.sposition.value,
                 email: e.target.semail.value,
                 phone: e.target.sphone.value
-            };
-        }
+            }
+        };
 
         // write updates to db
         if (accountType === AccountType.DONATING_AGENCY_MEMBER) { // write to /donatingAgencies/
-            accountsRef.child(account.uid).update(updates.primaryContact, this.setState({isEditing: false}));
+            accountsRef.child(account.uid).update(updates, this.setState({isEditing: false}));
         } else { // write to /accounts/
+            accountsRef.child(account.uid).update(updates.settings);
             accountsRef.child(account.uid).update(updates, this.setState({isEditing: false}));
         }
     }
@@ -199,6 +356,18 @@ class AccountManager extends Component {
             isEditing: false
         });
     }
+
+    // Updates the email notification everytime they click to change their preference of whether they
+    // want emails or not.
+    handleChange = (event) => {
+        let field = event.target.name;
+        let currSettings = this.state.settings;
+        let value = !currSettings[field] 
+        let newSettings = currSettings;
+        newSettings[field] = value;
+        this.setState(newSettings);     
+    }
+
 
 }
 

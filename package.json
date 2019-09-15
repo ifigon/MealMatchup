@@ -17,13 +17,16 @@
     ]
   },
   "dependencies": {
+    "ajv": "^6.10.0",
     "firebase": "4.9.1",
     "google-map-react": "^0.32.0",
     "lodash": "^4.17.11",
     "merge-class-names": "^1.1.1",
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
+    "nodemailer": "^6.1.1",
     "react": "^16.2.0",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.2.0",
     "react-geocode": "^0.1.2",
     "react-lifecycles-compat": "^3.0.2",
@@ -31,7 +34,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.5",
     "typeface-roboto": "0.0.54",
-    "webpack": "^3.11.0"
+    "webpack": "^3.11.0",
+    "yarn": "^1.16.0"
   },
   "devDependencies": {
     "@watiko/react-app-rewire-css-modules": "^1.1.2",

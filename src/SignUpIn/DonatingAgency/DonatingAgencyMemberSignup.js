@@ -34,7 +34,6 @@ class DonatingAgencyMemberSignup extends Component {
 
     submitRegistration(e) {
         e.preventDefault();
-
         var values = {
             name: e.target.memberName.value,
             email: e.target.memberEmail.value,
@@ -45,6 +44,7 @@ class DonatingAgencyMemberSignup extends Component {
         auth.createUserWithEmailAndPassword(e.target.memberEmail.value, e.target.memberPassword.value)
             .then(user => {
                 // write account to db
+                // why doesn't settings write to db?
                 var postData = {
                     accountType: AccountType.DONATING_AGENCY_MEMBER,
                     agency: this.state.agency.key,
@@ -53,10 +53,11 @@ class DonatingAgencyMemberSignup extends Component {
                     phone: values.phone,
                     position: values.position,
                     isAdmin: false,
-                    isVerified: true,
-                    isActivated: true,
-                    timezone: this.state.agency.timezone
+                    isVerified: false, 
+                    isActivated: false,
+                    timezone: this.state.agency.timezone,
                 };
+            
                 accountsRef.child(user.uid).set(postData);
 
                 // add this new member to the DA's members list

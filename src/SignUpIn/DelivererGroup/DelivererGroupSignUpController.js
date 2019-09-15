@@ -69,6 +69,7 @@ class DelivererGroupSignUpController extends Component {
         
         auth.createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {
+                let settings = {confirmationNotification: true, dgRequestNotification: true}  
                 // create the account
                 let postData = {
                     accountType: AccountType.DELIVERER_GROUP,
@@ -93,7 +94,8 @@ class DelivererGroupSignUpController extends Component {
                     },
                     numVolunteers: fieldValues.numVolunteers,
                     isActivated: false,
-                    isVerified: false
+                    isVerified: false,
+                    settings: settings
                 };
 
                 // write account to db

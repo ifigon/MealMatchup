@@ -124,10 +124,26 @@ function handleRejection(rejectType, requestSnap, accountsRef, daRef, requestPat
         notifType = nt.RECURRING_PICKUP_REJECTED_DG;
     }
 
-    let promises = [
-        requestSnap.ref.child('status').set(rejectType),
-        multiNotify(accounts, requestPath, notifType),
-    ];
+    let promises = [];
+
+    // If all RA's rejected, notify DA with this template ID: raUnavailableNotification
+    if(notifType === nt.RECURRING_PICKUP_REJECTED_RA) {
+        promises = [
+            requestSnap.ref.child('status').set(rejectType),
+            multiNotify(accounts, requestPath, notifType, 'raUnavailableNotification'),
+        ];    
+        // else if all DGs reject, notify DA and RA with this template ID: dgUnavailableNotification
+    } else if(notifType === nt.RECURRING_PICKUP_REJECTED_DG) {
+        promises = [
+            requestSnap.ref.child('status').set(rejectType),
+            multiNotify(accounts, requestPath, notifType, 'dgUnavailableNotification'),
+        ];   
+    }
+
+    // let promises = [
+    //     requestSnap.ref.child('status').set(rejectType),
+    //     multiNotify(accounts, requestPath, notifType),
+    // ];
     return Promise.all(promises);
 }
 // ----------------------- End Common -----------------------
@@ -162,9 +178,9 @@ function sendRequestToDGs(accountsRef, requestSnap, requestPath) {
         pending = dgInfo.pending;
         console.info('No specific DG requested, ' + pending.length + ' pending DGs');
     }
-
+    // notify DG's and use email template of dg_reguest
     return Promise.all(pending.map(dgId => utils.notifyRequestUpdate(
-        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUEST)));
+        'DG', accountsRef.child(dgId), requestPath, nt.RECURRING_PICKUP_REQUEST, 'dgRequestNotification')));
 }
 // ----------------------- End Listener 1 -----------------------
 
@@ -261,13 +277,15 @@ function notifyConfirmAll(request, accountsRef, daRef, requestPath) {
         {label: 'RA', ref: raRef},
         {label: 'DG', ref: dgRef},
     ];
-    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED);
+    return multiNotify(accounts, requestPath, nt.RECURRING_PICKUP_CONFIRMED, 'confirmationNotification');
 }
 // ----------------------- End Listener 2 -----------------------
 
 
 // ----------------------- Utils -----------------------
-function multiNotify(accounts, requestPath, notifType) {
+function multiNotify(accounts, requestPath, notifType, templateId) {
     return Promise.all(accounts.map(acct => 
-        utils.notifyRequestUpdate(acct.label, acct.ref, requestPath, notifType)));
+        // email_all specifies which email template to notify all parties that the delivery has been confirmed.
+        utils.notifyRequestUpdate(acct.label, acct.ref, requestPath, notifType, templateId))
+    );
 }
