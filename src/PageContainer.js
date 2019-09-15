@@ -11,6 +11,7 @@ import FoodLogs from './PageContent/FoodLogs/FoodLogsContainer.js';
 import Settings from './PageContent/Settings/Settings.js';
 import PendingAccounts from './PageContent/PendingAccounts/PendingAccounts';
 import PageDoesNotExist from './PageContent/PageDoesNotExist/PageDoesNotExist';
+import AddUmbrella from './PageContent/Admin/AddUmbrella';
 // The page to load when user is signed in.
 // Consist of the base page layout and page content depending on which tab is chosen.
 // Default page content is Calendar.
@@ -103,6 +104,15 @@ class PageContainer extends Component {
 
                 {content === PageContent.FOOD_LOGS && (
                     <FoodLogs account={account} />
+                )}
+
+                {content === PageContent.ADD_UMBRELLA && (
+                    (account.accountType ===
+                    AccountType.ADMIN ? (
+                        <AddUmbrella account={account} />
+                    ) : (
+                        <PageDoesNotExist />
+                    ))
                 )}
 
                 {this.state.content === PageContent.DIRECTORY &&

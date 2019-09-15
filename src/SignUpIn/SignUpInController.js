@@ -54,7 +54,7 @@ class SignUpInController extends Component {
     render() {
         return <div>
                    <div className="signup-wrapper">{this.showStep()}</div>
-                   <img src={this.props.logo} className="meal-matchup-logo" alt="Logo"/>
+                   <img src={this.props.logo} className={this.state.step < 2 ? "meal-matchup-logo" : "meal-matchup-logo d-none"} alt="Logo"/>
                 </div>;
     }
 }

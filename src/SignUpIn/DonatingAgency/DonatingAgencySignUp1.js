@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
+import {umbrellasRef} from '../../FirebaseConfig';
 
 class DonatingAgencySignUp1 extends Component {
     constructor(props) {
         super(props);
         this.nextStep = this.nextStep.bind(this);
+        this.state = {
+            modalOpen: false,
+            umbrellas: [],
+        };
     }
+
+    async componentDidMount() {
+        let umbrellaSnap = await umbrellasRef.once('value');
+        this.setState({"umbrellas": umbrellaSnap.val()});
+    }
+
     render() {
         return (
             <form onSubmit={this.nextStep} >
+                {this.state.modalOpen &&
+                    <div className="dialog-wrapper">
+                        {/* close dialog if anywhere outside of dialog is clicked */}
+                        <div className="dialog-overlay" onClick={() => this.setState({ modalOpen : false })}></div> 
+                        <dialog id="manual-dialog" className="event-dialog dialog-radius smaller-dialog" open>
+                            <h2 className="umbrella-modal-padding">What's an umbrella?</h2>
+                            <div>Umbrellas are what Meal Matchup uses to divide deliveries in different areas. There's typically one umbrella for everywhere Meal Matchup is available (i.e. University of Washington) to ensure requests in that area aren't sent out anywhere else. Select your areas umbrella below, and if you don't see your area yet reach out to us to start Meal Matchup in your area! </div>
+                        </dialog>
+                    </div>
+                }
                 <div className="signup-content">
                     <div className="form-block">
                         <label className="form-component">Organization Details</label><br />
@@ -71,6 +92,20 @@ class DonatingAgencySignUp1 extends Component {
                             <input name="zip" type="text" id="zip" className="form-component" placeholder="Zip Code" defaultValue={this.props.fieldValues.zip} required />
                         </span>
                         <input name="officeNumber" type="text" id="office-number" className="form-component" placeholder="Office Number" defaultValue={this.props.fieldValues.officeNumber} />
+                        <div className="umbrella-header">
+                            <div className="umbrella-header-text">Umbrella</div>
+                            <div className="umbrella-header-text">
+                                <button className="add-delivery umbrella-header-button" onClick={(e) => {
+                                    e.preventDefault();
+                                    this.setState({modalOpen : true});
+                                }}>What's an umbrella?</button>
+                            </div>
+                        </div>
+                        <select name="umbrella" type="text" id="umbrella" className="form-component umbrella-select" defaultValue="Select Umbrella" required>
+                            {Object.keys(this.state.umbrellas).map((key) => {
+                                return <option value={key}>{this.state.umbrellas[key].name}</option>
+                            })}
+                        </select>
                     </div>
 
                     <div className="disclaimer">
@@ -93,7 +128,8 @@ class DonatingAgencySignUp1 extends Component {
             city: e.target.city.value,
             state: e.target.state.value,
             zip: e.target.zip.value,
-            officeNumber: e.target.officeNumber.value
+            officeNumber: e.target.officeNumber.value,
+            umbrella: e.target.umbrella.value
         };
 
         this.props.saveValues(data);

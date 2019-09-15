@@ -40,6 +40,7 @@ ReactDOM.render(
             <Route path="/settings" component={App} />
             <Route path="/request-pickup" component={App} />
             <Route path="/pending-accounts" component={App} />
+            <Route path="/add-umbrella" component={App} />
         </Switch>
     </Router>,
     document.getElementById('root')

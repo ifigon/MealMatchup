@@ -25,6 +25,7 @@ exports.InputFormat = {
 };
 
 exports.AccountType = {
+    ADMIN: 'admin',
     UMBRELLA: 'umbrella',
     DONATING_AGENCY_MEMBER: 'donating_agency_member',
     RECEIVING_AGENCY : 'receiving_agency',
@@ -40,6 +41,7 @@ exports.UmbrellaType = {
 };
 
 exports.PageContent = {
+    ADD_UMBRELLA: 'Add Umbrella',
     ASSIGN_VOLUNTEERS: 'Assign Volunteers',
     CALENDAR: 'Calendar',
     DIRECTORY: 'Directory',
@@ -147,6 +149,7 @@ exports.FoodUnit = {
 };
 
 exports.Routes = {
+    ADD_UMBRELLA: 'add-umbrella',
     ASSIGN_VOLUNTEERS: 'assign-volunteers',
     CALENDAR: 'calendar',
     DIRECTORY: 'directory',

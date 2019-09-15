@@ -9,7 +9,6 @@ import ReceivingAgencySignUp4 from './ReceivingAgencySignUp4';
 import SignUpComplete from '../SignUpComplete';
 import UserTypeController from '../UserTypeController';
 import { AccountType } from '../../Enums';
-import UMBRELLA_ID from '../../UmbrellaConfig';
 
 let fieldValues = {
     organizationName: null,
@@ -19,6 +18,7 @@ let fieldValues = {
     state: '',
     zip: null,
     officeNumber: null,
+    umbrella: null,
 
     email: null,
     password: null,
@@ -79,15 +79,12 @@ class ReceivingAgencySignUpController extends Component {
         // Handle via ajax submitting the user data, upon
         // success return this.nextStop(). If it fails,
         // show the user the error but don't advance
-
         auth.createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => { 
                 let settings = {confirmationNotification: true, dgUnavailableNotification: true, raSpecifiedNotification: true, raUnspecifiedNotification: true}  
                 let postData = {
                     accountType: AccountType.RECEIVING_AGENCY,
-                    // TODO: Manually setting this for now. In future, users should
-                    // choose which umbrella they are signing up under.
-                    umbrella: UMBRELLA_ID,
+                    umbrella: fieldValues.umbrella,
                     name: fieldValues.organizationName,
                     email: fieldValues.email,
                     address: {
@@ -125,9 +122,8 @@ class ReceivingAgencySignUpController extends Component {
 
                 // write account to db
                 accountsRef.child(user.uid).set(postData);
-
                 // add agency to umbrella
-                accountsRef.child(UMBRELLA_ID).child('receivingAgencies')
+                accountsRef.child(fieldValues.umbrella).child('receivingAgencies')
                     .push(user.uid);
 
                 // firebase's create account automatically signs the user in

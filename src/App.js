@@ -133,9 +133,22 @@ class App extends Component {
         case Routes.PENDING_ACCOUNTS:
             content = PageContent.PENDING_ACCOUNTS;
             break;
+        case Routes.ADD_UMBRELLA:
+            content = PageContent.ADD_UMBRELLA;
+            break;
         default:
             content = PageContent.CALENDAR;
             break;
+        }
+        let redirect;
+        if(!path && this.state.account) {
+            if(this.state.account.accountType === AccountType.UMBRELLA) {
+                redirect = <Redirect to={'/pending-accounts'} />;
+            } else if(this.state.account.accountType === AccountType.ADMIN) {
+                redirect = <Redirect to={'/add-umbrella'} />;
+            } else {
+                redirect = <Redirect to={'/calendar'} />;
+            }
         }
         return (
             <div className="">
@@ -164,12 +177,7 @@ class App extends Component {
                                 signOut={this.signOut}
                             />
                             {!path ? (
-                                this.state.account.accountType ===
-                                AccountType.UMBRELLA ? (
-                                        <Redirect to={'/pending-accounts'} />
-                                    ) : (
-                                        <Redirect to={'/calendar'} />
-                                    )
+                                redirect
                             ) : null}
                         </div>
                     ) : (
