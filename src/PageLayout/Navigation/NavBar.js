@@ -18,7 +18,19 @@ class NavBar extends Component {
     render() {
         return (
             <div className="navbar">
-                {this.props.accountType !== AccountType.UMBRELLA && (
+                {this.props.accountType === AccountType.ADMIN && (
+                    <Link to={"add-umbrella"} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content === PageContent.ADD_UMBRELLA
+                            }
+                            item={PageContent.ADD_UMBRELLA}
+                            icon={pendingAccount}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+                {(this.props.accountType !== AccountType.UMBRELLA && this.props.accountType !== AccountType.ADMIN) && (
                     <Link to={'/calendar'} className="nav-link">
                         <NavBarItem
                             highlighted={
@@ -71,36 +83,46 @@ class NavBar extends Component {
                         />
                     </Link>
                 )}
-                <Link to={'/food-logs'} className="nav-link">
-                    <NavBarItem
-                        highlighted={
-                            this.props.content === PageContent.FOOD_LOGS
-                        }
-                        item={PageContent.FOOD_LOGS}
-                        icon={foodLog}
-                        handler={this.props.handler}
-                    />
-                </Link>
-                <Link to={'/directory'} className="nav-link">
-                    <NavBarItem
-                        highlighted={
-                            this.props.content === PageContent.DIRECTORY
-                        }
-                        item={PageContent.DIRECTORY}
-                        icon={directory}
-                        handler={this.props.handler}
-                    />
-                </Link>
-                <Link to={'/settings'} className="nav-link">
-                    <NavBarItem
-                        highlighted={
-                            this.props.content === PageContent.SETTINGS
-                        }
-                        item={PageContent.SETTINGS}
-                        icon={settings}
-                        handler={this.props.handler}
-                    />
-                </Link>
+
+                {this.props.accountType !== AccountType.ADMIN && (
+                    <Link to={'/food-logs'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content === PageContent.FOOD_LOGS
+                            }
+                            item={PageContent.FOOD_LOGS}
+                            icon={foodLog}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+
+                {this.props.accountType !== AccountType.ADMIN && (
+                    <Link to={'/directory'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content === PageContent.DIRECTORY
+                            }
+                            item={PageContent.DIRECTORY}
+                            icon={directory}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+
+                {this.props.accountType !== AccountType.ADMIN && (
+                    <Link to={'/settings'} className="nav-link">
+                        <NavBarItem
+                            highlighted={
+                                this.props.content === PageContent.SETTINGS
+                            }
+                            item={PageContent.SETTINGS}
+                            icon={settings}
+                            handler={this.props.handler}
+                        />
+                    </Link>
+                )}
+
                 <NavBarItem
                     item={'signout'}
                     icon={signout}

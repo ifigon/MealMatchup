@@ -17,4 +17,5 @@ export const deliveriesRef = firebase.database().ref('deliveries');
 export const deliveryIndicesRef = firebase.database().ref('delivery_indices');
 export const donatingAgenciesRef = firebase.database().ref('donating_agencies');
 export const manualDeliveriesRef = firebase.database().ref('manual_deliveries');
+export const umbrellasRef = firebase.database().ref('umbrellas');
 export default firebase;

@@ -1,0 +1,33 @@
+.umbrella-name-form {
+    margin-left: 15px;
+    width: 90%;
+}
+
+.umbrella-form-submit {
+    margin-left: 15px;
+    margin-top: 7px;
+    width: 30%;
+    height: 30px;
+    border-radius: 5px;
+    background: none;
+	color: inherit;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.umbrella-response {
+    padding-left: 15px;
+    padding-bottom: 7px;
+}
+
+.umbrella-descriptor {
+    margin-left: 15px;
+    margin-top: 6px;
+    margin-bottom: 3px;
+}
+
+#umbrella-name-select {
+    margin-left: 15px;
+}

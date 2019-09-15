@@ -533,3 +533,39 @@ form {
 a .ok-button{
 
 }
+
+.d-none {
+  display: none;
+}
+
+.umbrella-select {
+  width: 98%;
+  margin-right: 0;
+}
+
+.umbrella-header {
+  margin-top: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.umbrella-header-text {
+  width: 35%;
+}
+
+.umbrella-header-button {
+  padding: 3px;
+  margin-right: 8px;
+  float: right;
+}
+
+.umbrella-modal-padding {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+.smaller-dialog {
+  height: 20vh;
+}
