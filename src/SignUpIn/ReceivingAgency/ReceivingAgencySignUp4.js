@@ -77,8 +77,11 @@ class ReceivingAgencySignUp4 extends Component {
             secondaryPhone: e.target.secondaryPhone.value,
             secondaryPosition: e.target.secondaryPosition.value,
         };
+        console.log('test 1');
 
         if(this.checkSecondaryContact()) {
+            console.log('test 2');
+            console.log(data);
             this.props.saveValues(data);
             this.props.submitRegistration();
         }
