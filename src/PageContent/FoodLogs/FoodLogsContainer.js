@@ -33,7 +33,6 @@ class FoodLogsContainer extends Component {
         combinedDeliveries.sort((a, b) => {
             return b.deliveredInfo.timestamp - a.deliveredInfo.timestamp;
         });
-        console.log(combinedDeliveries);
         this.setState({deliveries: combinedDeliveries});
         this.setState({isLoading: false});
     }

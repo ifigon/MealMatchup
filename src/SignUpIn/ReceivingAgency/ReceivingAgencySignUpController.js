@@ -79,10 +79,8 @@ class ReceivingAgencySignUpController extends Component {
         // Handle via ajax submitting the user data, upon
         // success return this.nextStop(). If it fails,
         // show the user the error but don't advance
-        console.log('test 3');
         auth.createUserWithEmailAndPassword(fieldValues.email, fieldValues.password)
             .then(user => {   
-                console.log('test');
                 let postData = {
                     accountType: AccountType.RECEIVING_AGENCY,
                     umbrella: fieldValues.umbrella,
@@ -122,7 +120,6 @@ class ReceivingAgencySignUpController extends Component {
 
                 // write account to db
                 accountsRef.child(user.uid).set(postData);
-                console.log(user.uid);
                 // add agency to umbrella
                 accountsRef.child(fieldValues.umbrella).child('receivingAgencies')
                     .push(user.uid);

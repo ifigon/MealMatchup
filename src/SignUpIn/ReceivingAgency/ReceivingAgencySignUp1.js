@@ -103,7 +103,6 @@ class ReceivingAgencySignUp1 extends Component {
                         </div>
                         <select name="umbrella" type="text" id="umbrella" className="form-component umbrella-select" defaultValue="Select Umbrella" required>
                             {Object.keys(this.state.umbrellas).map((key) => {
-                                console.log(key);
                                 return <option value={key}>{this.state.umbrellas[key].name}</option>
                             })}
                         </select>
