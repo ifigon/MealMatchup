@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AccountType, StringFormat } from '../../Enums';
 import { formatPhone } from '../../utils/Utils';
 import { accountsRef } from '../../FirebaseConfig.js';
+import VerifyAccount from '../PendingAccounts/VerifyAccount';
 
 
 class AccountManager extends Component {
@@ -133,7 +134,7 @@ class AccountManager extends Component {
                 />
                 </p>);
         // Deliverer groups have just 2 different types of notification they can receive.
-        } else {
+        } else if(this.props.accountType === AccountType.DELIVERER_GROUP) {
             if(this.state.settings.confirmationNotification) {
                 confirmationStatus = <p>Receive email notifications for delivery confirmations: Enabled</p>
             } else {
