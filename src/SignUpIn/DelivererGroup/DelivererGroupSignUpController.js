@@ -100,7 +100,7 @@ class DelivererGroupSignUpController extends Component {
                 accountsRef.child(user.uid).set(postData);
 
                 // add account to umbrella
-                accountsRef.child(UMBRELLA_ID).child('delivererGroups')
+                accountsRef.child(fieldValues.umbrella).child('delivererGroups')
                     .push(user.uid);
 
                 // firebase's create account automatically signs the user in

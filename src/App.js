@@ -24,6 +24,7 @@ class App extends Component {
             account: null,
             donatingAgency: null,
             isChrome: !!window.chrome,
+            error: null
         };
 
         this.aggrAccount = this.aggrAccount.bind(this);
