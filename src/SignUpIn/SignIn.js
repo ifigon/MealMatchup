@@ -100,7 +100,6 @@ class SignIn extends Component {
                 </form>
             );
         } else {
-            console.log(this.props.signInDenied)
             return (
                 <div className="signup-wrapper">
                     

@@ -315,7 +315,6 @@ class AccountManager extends Component {
 
     // Backend TODO: Uncomment the data!!
     handleSubmit(e) {
-        console.log(e.target.confirmationNotification.value)
         e.preventDefault();
         const { account, accountType } = this.props;
         let updates = {
