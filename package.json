@@ -21,7 +21,7 @@
     "firebase": "4.9.1",
     "firebase-functions": "0.6.3",
     "google-map-react": "^0.32.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "merge-class-names": "^1.1.1",
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
