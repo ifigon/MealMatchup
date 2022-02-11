@@ -17,7 +17,7 @@
     ]
   },
   "dependencies": {
-    "ajv": "^6.10.0",
+    "ajv": "^6.12.3",
     "firebase": "4.9.1",
     "firebase-functions": "0.6.3",
     "google-map-react": "^0.32.0",
